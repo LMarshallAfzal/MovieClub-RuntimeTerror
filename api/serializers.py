@@ -1,11 +1,95 @@
-from rest_framework.serializers import ModelSerializer
-from .models import Membership, Movie, User, Club
+
+from rest_framework.serializers import ModelSerializer 
+from rest_framework.exceptions import NotAuthenticated
+from rest_framework import serializers
+from api.models import Club, User, Membership, Movie
+from rest_framework.validators import UniqueValidator
+from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth import authenticate
 
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
 
+class SignUpSerializer(serializers.Serializer):
+    username = serializers.CharField(
+        required = True,
+        validators = [UniqueValidator(queryset=User.objects.all())]
+    )
+
+    first_name = serializers.CharField(
+        required = True
+    )
+
+    last_name = serializers.CharField(
+        required = True
+    )
+
+    email = serializers.CharField(
+        required = True,
+        validators = [UniqueValidator(queryset=User.objects.all())]
+    )
+
+    bio = serializers.CharField(
+        required = False
+    )
+
+    preferences = serializers.CharField(
+        required = True
+    )
+    
+    password = serializers.CharField(write_only = True,required = True,validators=[validate_password])
+    password_confirmation = serializers.CharField(write_only = True,required = True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'bio', 'preferences', 'password', 'password_confirmation']
+        
+    def validate(self,data):
+        if data['password'] != data['password_confirmation']:
+            raise serializers.ValidationError({"password": "Passwords don't match."})
+        return data
+    
+    def create(self,validated_data):
+        user = User.objects.create(
+            username = validated_data['username'],
+            first_name = validated_data['first_name'],
+            last_name = validated_data['last_name'],
+            email = validated_data['email'],
+            bio = validated_data['bio'],
+            preferences = validated_data['preferences']
+        )
+
+        user.set_password(validated_data['password'])
+        user.save()
+
+        return user
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True)
+    password = serializers.CharField(write_only = True ,required = True,validators=[validate_password])
+
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+    
+    def validate(self,data):
+        username = data['username']
+        password = data['password']
+        user = authenticate(request=self.context.get('request'), username=username, password=password)
+        if not user:
+            msg = 'Unable to login'
+            raise serializers.ValidationError(msg, code='authorisation')
+
+        elif User.objects.filter(username=user.username).filter(password=user.password):
+            return user
+
+        else:
+            msg = 'Must include username and password'
+            raise serializers.ValidationError(msg, code='authorisation')
+            
+        
 class ClubSerializer(ModelSerializer):
     class Meta:
         model = Club
