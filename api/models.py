@@ -1,8 +1,5 @@
-from enum import unique
-from re import T
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.forms import CharField
 
 """Creation of user model"""
 
