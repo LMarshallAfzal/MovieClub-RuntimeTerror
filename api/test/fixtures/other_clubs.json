@@ -1,0 +1,29 @@
+[
+    {
+      "model": "api.Club",
+      "pk": 2,
+      "fields": {
+        "club_name":"ADCD",
+        "mission_statement":"Movie and discussion."
+      }
+    },
+
+    {
+        "model": "api.Club",
+        "pk": 3,
+        "fields": {
+          "club_name":"KISS",
+          "mission_statement":"Movie experts!"
+        }
+      },
+
+      {
+        "model": "api.Club",
+        "pk": 4,
+        "fields": {
+          "club_name":"Metallica",
+          "mission_statement":"Next level movie analysis."
+        }
+      }
+
+  ]
