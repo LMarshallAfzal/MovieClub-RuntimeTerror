@@ -1,0 +1,13 @@
+[
+    {
+      "model": "api.movie",
+      "pk": 1,
+      "fields": {
+        "movie_name": "The Godfather",
+        "release_date": "1972-08-24",
+        "genres": "Crime",
+        "director": "Francis Ford Coppola",
+        "cast": "Marlon Brando, Al Pacino, James Caan, Robert Duvall, Diane Keaton, Talia Shire"
+      }
+    }
+  ]
