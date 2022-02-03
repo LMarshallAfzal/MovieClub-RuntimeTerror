@@ -74,6 +74,22 @@ class MovieModelTestCase(APITestCase):
     def test_director_must_not_contain_more_than_50_characters(self):
         self.movie.director = 'x' * 51
         self._assert_movie_is_invalid()
+    
+    def test_cast_need_not_be_unique(self):
+        self.movie.cast = self.second_movie.cast
+        self._assert_movie_is_valid()
+
+    def test_cast_must_not_be_blank(self):
+        self.movie.cast = ''
+        self._assert_movie_is_invalid()
+
+    def test_cast_contain_250_characters_at_most(self):
+        self.movie.cast = 'x' * 250
+        self._assert_movie_is_valid()
+
+    def test_cast_must_not_contain_more_than_250_characters(self):
+        self.movie.cast = 'x' * 251
+        self._assert_movie_is_invalid()
 
     
     
