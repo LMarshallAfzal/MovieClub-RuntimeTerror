@@ -19,7 +19,7 @@ class MovieModelTestCase(APITestCase):
     def test_valid_movie(self):
         self._assert_movie_is_valid()
 
-    def test_movie_must_be_unique(self):
+    def test_movie_name_must_be_unique(self):
         self.movie.movie_name = self.second_movie.movie_name
         self._assert_movie_is_invalid()
 
@@ -34,6 +34,18 @@ class MovieModelTestCase(APITestCase):
     def test_movie_name_must_not_contain_more_than_100_characters(self):
         self.movie.movie_name = 'x' * 101
         self._assert_movie_is_invalid()
+    
+    def test_release_date_must_not_be_blank(self):
+        self.movie.release_date = ''
+        self._assert_movie_is_invalid()
+
+    def test_release_date_need_not_be_unique(self):
+        self.movie.release_date = self.second_movie.release_date
+        self._assert_movie_is_valid()
+    
+
+    
+    
 
     def _assert_movie_is_valid(self):
         try:

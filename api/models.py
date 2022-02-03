@@ -73,7 +73,9 @@ class Movie(models.Model):
 
     release_date = models.DateField(
         auto_now=False,
-        auto_now_add=False
+        auto_now_add=False,
+        blank=False,
+        unique=False
     )
     #genres is currently a CharField and this will need to be changed
     genres = models.CharField(
