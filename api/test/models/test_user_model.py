@@ -107,6 +107,25 @@ class UserModelTestCase(APITestCase):
         self.user.bio = 'x' * 521
         self._assert_user_is_invalid()
 
+    def test_preferences_must_not_be_blank(self):
+        self.user.preferences = ''
+        self._assert_user_is_invalid()
+    
+    def test_preferences_need_not_be_unique(self):
+        self.user.preferences = self.second_user.preferences
+        self._assert_user_is_valid()
+
+    
+    def test_preferences_may_contain_up_to_100_characters(self):
+        self.user.preferences = 'x' * 10
+        self._assert_user_is_valid()
+
+    def test_preferences_must_not_contain_more_than_100_characters(self):
+        self.user.preferences = 'x' * 101
+        self._assert_user_is_invalid()
+    
+
+
     def _assert_user_is_valid(self):
         try:
             self.user.full_clean()

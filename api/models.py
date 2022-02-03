@@ -8,6 +8,8 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=30, blank=False, unique=False)
     email = models.EmailField(unique=True, blank=False)
     bio = models.CharField(max_length=520, blank=True, unique=False)
+    #Preferences is a charfield and this will need to be changed
+    preferences = models.CharField(max_length=100, blank=False, unique=False)
 
     class Meta:
         ordering = ["last_name", "first_name"]
