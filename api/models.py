@@ -1,10 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-
-"""Creation of user model"""
+from django.db import models
 
 class User(AbstractUser):
-
+  
     username = models.CharField(
         max_length = 15,
         unique = True,
@@ -27,22 +25,22 @@ class User(AbstractUser):
         unique = True,
         blank = False
     )
-
-    bio = models.CharField(
-        max_length = 520,
-        blank = True,
-        unique = False
+    
+    #Preferences is a charfield and this will need to be changed
+    preferences = models.CharField(
+        max_length=100, 
+        blank=False, 
+        unique=False
     )
+    
+    class Meta:
+        ordering = ["last_name", "first_name"]
 
     def get_user_clubs(self):
         clubs = Club.objects.all().filter(
             club_members__username=self.username
         )
         return clubs
-
-    class Meta:
-        """Model options."""
-        ordering = ['last_name', 'first_name']
 
 class Club(models.Model):
 
@@ -57,4 +55,3 @@ class Club(models.Model):
         blank=True,
         unique=False
     )
-
