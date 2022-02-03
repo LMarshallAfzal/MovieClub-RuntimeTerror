@@ -58,33 +58,3 @@ class Club(models.Model):
         unique=False
     )
 
-    # club_members = models.ManyToManyField(
-    #     User,through='Membership'
-    # )
-
-    # def get_club_role(self, user):
-    #     return Membership.objects.get(club=self, user=user).role
-
-# class Movie(models.Model):
-#
-#     movie_name = models.CharField(
-#         max_length=100,
-#         blank=False,
-#         unique=True
-#     )
-#
-#     release_date =models.DateField(auto_now=False, auto_now_add=False)
-#
-#     # genre = models.Choices()  # Use dictionary to pass through all genres in the dataset
-#     # cast
-#     director = CharField(
-#
-#         max_length=50,
-#         blank=False,
-#         unique=False,
-#     )
-#     # like  # Relationship with usermodel
-#     # dislike
-#
-#     class Meta:
-#         ordering = ['movie_name']
