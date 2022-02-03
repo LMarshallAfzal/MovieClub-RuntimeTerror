@@ -1,0 +1,10 @@
+[
+    {
+      "model": "api.Club",
+      "pk": 1,
+      "fields": {
+        "club_name":"Beatles",
+        "mission_statement":"Best movie club in town!"
+      }
+    }
+  ]

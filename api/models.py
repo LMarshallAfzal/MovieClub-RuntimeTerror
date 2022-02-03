@@ -1,5 +1,8 @@
 from django.contrib.auth.models import AbstractUser
+from django.db.models.fields.related import ForeignKey
+from django.forms import CharField
 from django.db import models
+
 
 class User(AbstractUser):
   
@@ -62,7 +65,26 @@ class Club(models.Model):
         unique=False
     )
 
-
+class Membership(models.Model):
+    """
+    Membership is an intermediate model that connects Users to Clubs.
+    
+    Apart from the two foreign keys, it contains the nature of the relationship:
+        Club Owner | Organiser | Member
+    """
+    STATUS_CHOICES = [
+        ("C", 'Club Owner'),
+        ("O", 'Organiser'),
+        ("M", 'Member')
+    ]
+    user = ForeignKey(User, on_delete=models.CASCADE)
+    club = ForeignKey(Club, on_delete=models.CASCADE)
+    role = models.CharField(max_length=1, choices=STATUS_CHOICES, default="M")
+    
+    """We must ensure that only one relationship is created per User-Club pair."""
+    class Meta:
+        unique_together = ('user', 'club')
+        
 class Movie(models.Model):
 
     movie_name = models.CharField(
