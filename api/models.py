@@ -32,7 +32,7 @@ class User(AbstractUser):
         blank=True
     )
     
-    #Preferences is a charfield and this will need to be changed
+    #Preferences is a CharField and this will need to be changed
     preferences = models.CharField(
         max_length=100, 
         blank=False, 
@@ -61,3 +61,41 @@ class Club(models.Model):
         blank=True,
         unique=False
     )
+
+
+class Movie(models.Model):
+
+    movie_name = models.CharField(
+        max_length=100,
+        blank=False,
+        unique=True
+    )
+
+    release_date = models.DateField(
+        auto_now=False,
+        auto_now_add=False,
+        blank=False,
+        unique=False
+    )
+    #genres is currently a CharField and this will need to be changed
+    genres = models.CharField(
+        max_length=100,
+        unique=False,
+        blank=False
+    )
+
+    director = models.CharField(
+        max_length=50,
+        blank=False,
+        unique=False
+    )
+
+    #cast is currently a CharField and may need to be changed later on
+    cast = models.CharField(
+        max_length=250,
+        blank=False,
+        unique=False
+    )
+
+    class Meta:
+        ordering = ['movie_name']
