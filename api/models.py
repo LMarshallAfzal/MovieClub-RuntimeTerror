@@ -25,6 +25,12 @@ class User(AbstractUser):
         unique = True,
         blank = False
     )
+
+    bio = models.CharField(
+        max_length=520,
+        unique=False,
+        blank=True
+    )
     
     #Preferences is a charfield and this will need to be changed
     preferences = models.CharField(
