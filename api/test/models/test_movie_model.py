@@ -14,7 +14,7 @@ class MovieModelTestCase(APITestCase):
 
     def setUp(self):
         self.movie = Movie.objects.get(movie_name='The Godfather')
-        self.second_movie = Movie.objects.get(movie_name='FUCK')
+        self.second_movie = Movie.objects.get(movie_name='Pulp Fiction')
 
     def test_valid_movie(self):
         self._assert_movie_is_valid()
