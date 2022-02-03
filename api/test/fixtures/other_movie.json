@@ -3,7 +3,7 @@
       "model": "api.movie",
       "pk": 2,
       "fields": {
-        "movie_name": "FUCK",
+        "movie_name": "Pulp Fiction",
         "release_date": "1994-10-21",
         "genres": "Crime,Comedy",
         "director": "Quentin Tarantino",
