@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 from .serializers import *
 from .models import *
 
@@ -7,21 +8,28 @@ from .models import *
 def getRoutes(request):
     routes = [
         {
-            'Endpoint': '/login/',
+            'Endpoint': '/signup/',
             'method': 'POST',
-            'username': {'username': ""},
-            'password': {'password': ""},
-            'description': 'Return login details'
+            'username': {'username,' ""},
+            'first_name': {'first_name': ""},
+            'last_name': {'last_name': ""},
+            'email': {'email': ""},
+            'bio': {'bio': ""},
+            'description': 'Creates a user with data sent into POST request'
         }
     ]
     return Response(routes)
 
 @api_view(['POST'])
-def login(request):
-    serializer = LoginSerializer(data=request.data)
+def signUp(request):
+    serializer = SignUpSerializer(data=request.data)
     data = {}
     if serializer.is_valid():
-        data['response'] = 'User login successful'
+        user = serializer.save()
+        data['response'] = "successfully signed up"
+        data['email'] = user.email
+        data['username'] = user.username
     else:
-        data['response'] = 'You have entered an invalid username or password'
+        data = serializer.errors
     return Response(data)
+
