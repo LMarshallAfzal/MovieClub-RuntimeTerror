@@ -1,26 +1,33 @@
-from rest_framework.serializers import ModelSerializer,Serializer
-from rest_framework.exceptions import NotAuthenticated
-from .models import Membership, Movie, User, Club
+from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
+from .models import *
 
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
 
-class LoginSerializer(ModelSerializer):
+class SignUpSerializer(ModelSerializer):
+    password_confirmation = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+
     class Meta:
         model = User
-        fields = ['username', 'password']
+        fields = ['__all__', 'password', 'password_confirmation']
         extra_kwargs = {
             'password': {'write_only': True}
         }
 
-    def validate(self,data):
-        username = data.get('username',None)
-        password = data.get('password',None)
-        if User.objects.filter(username=username).filter(password=password).first():
-            return True
-        return NotAuthenticated
+    def save(self):
+        user = User(
+            username = self.validated_data['username'],
+        )
+        password = self.validated_data['password']
+        password_confirmation = self.validated_data['password_confirmation']
+
+        if password != password_confirmation:
+            raise serializers.ValidationError({'password': 'Password fields must match'})
+        user.set_password(password)
+        user.save()
 
 class ClubSerializer(ModelSerializer):
     class Meta:
