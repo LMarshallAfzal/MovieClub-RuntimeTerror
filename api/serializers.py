@@ -20,6 +20,7 @@ class SignUpSerializer(ModelSerializer):
     def save(self):
         user = User(
             username = self.validated_data['username'],
+            email = self.validated_data['email']
         )
         password = self.validated_data['password']
         password_confirmation = self.validated_data['password_confirmation']
