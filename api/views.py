@@ -8,12 +8,18 @@ from api import serializers
 def getRoutes(request):
     routes = [
         {
-            'Endpoint': '/feed/',
-            'method': 'GET',
-            'description': 'Returns an array of notes'
+            'Endpoint': 'login/id',
+            'username': None,
+            'description': 'Return login details'
         }
-
     ]
+    return Response(routes)
+
+@api_view(['GET'])
+def login(request, pk):
+    user = User.objects.get(id=pk)
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data)
 
 
 
