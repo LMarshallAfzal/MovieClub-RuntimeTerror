@@ -34,6 +34,7 @@ def signUp(request):
     data = {}
     serializer = SignUpSerializer(data=request.data)
     if serializer.is_valid():
+        print('false')
         user = serializer.save()
         data['response'] = "successfully signed up"
         data['email'] = user.email
