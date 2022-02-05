@@ -3,7 +3,7 @@ from rest_framework import status
 from django.urls import reverse
 from api.models import User
 
-class TestSignUp(APITestCase):
+class SignUpViewTestCase(APITestCase):
 
     fixtures = [
         'api/test/fixtures/default_user.json',
@@ -13,8 +13,6 @@ class TestSignUp(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.url = reverse('signup')
-        # self.user = User.objects.get(username='johndoe')
-        self.second_user = User.objects.get(username='janedoe')
         self.user = {
             'username': "johndoe",
             'first_name': "John",
@@ -32,11 +30,11 @@ class TestSignUp(APITestCase):
 
     def test_user_cannot_sign_up_without_data(self):
         response = self.client.post(self.url)
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_user_can_sign_up_correctly(self):
         response = self.client.post(self.url, self.user, format="json")
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_api_can_create_user_details(self):
-        self.assertNotEqual(self.response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
