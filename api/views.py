@@ -22,14 +22,20 @@ def getRoutes(request):
 
 @api_view(['POST'])
 def signUp(request):
-    serializer = SignUpSerializer(data=request.data)
     data = {}
+    serializer = SignUpSerializer(data=request.data)
     if serializer.is_valid():
+        print('false')
         user = serializer.save()
         data['response'] = "successfully signed up"
         data['email'] = user.email
         data['username'] = user.username
+        data['first_name'] = user.first_name
+        data['last_name'] = user.last_name
+        data['bio'] = user.bio
+        data['preferences'] = user.preferences
+        return Response(SignUpSerializer(instance=user).data, status=status.HTTP_201_CREATED)
     else:
         data = serializer.errors
-    return Response(data)
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
