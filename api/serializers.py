@@ -6,6 +6,7 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
 
+
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User

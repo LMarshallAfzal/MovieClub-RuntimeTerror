@@ -10,7 +10,6 @@ from rest_framework.permissions import IsAuthenticated
 def getRoutes(request):
     routes = [
         {
-
             'Endpoint': '/log_in/',
             'method': 'POST',
             'username': {'username': ""},
