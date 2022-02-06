@@ -43,11 +43,11 @@ class SignUpSerializer(serializers.Serializer):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'bio', 'preferences', 'password', 'password_confirmation']
-        extra_kwargs = {
-            'first_name': {'required': True},
-            'last_name': {'required': True},
-            'preferences': {'required': True}
-        }
+        # extra_kwargs = {
+        #     'first_name': {'required': True},
+        #     'last_name': {'required': True},
+        #     'preferences': {'required': True}
+        # }
     def validate(self,data):
         if data['password'] != data['password_confirmation']:
             raise serializers.ValidationError({"password": "Passwords don't match."})
