@@ -13,10 +13,10 @@ class LoginViewTestcase(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.get(username='johndoe')
-        self.url = reverse('login')
+        self.url = reverse('log_in')
 
     def test_login_url(self):
-        self.assertEqual(self.url, '/login/')
+        self.assertEqual(self.url, '/log_in/')
 
     def test_user_logged_in_successfully(self):
         details = {'username' : self.user.username, 'password':'Password123'}
