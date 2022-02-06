@@ -68,33 +68,6 @@ class SignUpSerializer(serializers.Serializer):
 
         return user
 
-    # password_confirmation = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-
-    # class Meta:
-    #     model = User
-    #     fields = ['username', 'first_name', 'last_name', 'email', 'bio', 'preferences', 'password', 'password_confirmation']
-    #     extra_kwargs = {
-    #         'password': {'write_only': True}
-    #     }
-
-    # def validate(self,data):
-    #     user = User(
-    #         username = self.validated_data['username'],
-    #         first_name = self.validated_data['first_name'],
-    #         last_name = self.validated_data['last_name'],
-    #         email = self.validated_data['email'],
-    #         bio = self.validated_data['bio'],
-    #         preferences = self.validated_data['preferences']
-    #     )
-    #     password = self.validated_data['password']
-    #     password_confirmation = self.validated_data['password_confirmation']
-
-    #     if password != password_confirmation:
-    #         raise serializers.ValidationError({'password': 'Password fields must match'})
-    #     user.set_password(password)
-    #     user.save()
-    #     return user
-
 class ClubSerializer(ModelSerializer):
     class Meta:
         model = Club
