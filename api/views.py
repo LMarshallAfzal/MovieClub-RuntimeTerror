@@ -10,14 +10,14 @@ def getRoutes(request):
     routes = [
         {
 
-            'Endpoint': '/login/',
+            'Endpoint': '/log_in/',
             'method': 'POST',
             'username': {'username': ""},
             'password': {'password': ""},
             'description': 'Return login details'
         },
         {
-            'Endpoint': '/signup/',
+            'Endpoint': '/sign_up/',
             'method': 'POST',
             'username': {'username,' ""},
             'first_name': {'first_name': ""},
@@ -48,12 +48,14 @@ def signUp(request):
         data = serializer.errors
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def login(request):
-    serializer = LoginSerializer(data=request.data)
     data = {}
+    serializer = LoginSerializer(data=request.data)
     if serializer.is_valid():
         data['response'] = 'User login successful'
+        return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         data['response'] = 'You have entered an invalid username or password'
-    return Response(data)
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
