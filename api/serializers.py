@@ -1,8 +1,12 @@
+
+from rest_framework.serializers import ModelSerializer 
+from rest_framework.exceptions import NotAuthenticated
 from rest_framework import serializers
-from rest_framework.serializers import ModelSerializer
-from .models import *
+from api.models import Club, User, Membership, Movie
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth import authenticate
+#from django.utils.translation import ugettext_lazy as _
 
 
 class UserSerializer(ModelSerializer):
@@ -43,11 +47,7 @@ class SignUpSerializer(serializers.Serializer):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'bio', 'preferences', 'password', 'password_confirmation']
-        # extra_kwargs = {
-        #     'first_name': {'required': True},
-        #     'last_name': {'required': True},
-        #     'preferences': {'required': True}
-        # }
+
     def validate(self,data):
         if data['password'] != data['password_confirmation']:
             raise serializers.ValidationError({"password": "Passwords don't match."})
@@ -68,6 +68,36 @@ class SignUpSerializer(serializers.Serializer):
 
         return user
 
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True)
+    password = serializers.CharField(write_only = True ,required = True,validators=[validate_password])
+
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+        # extra_kwargs = {
+        #     'password': {'write_only': True}
+        # }
+
+    def validate(self,data):
+        username = data['username']
+        password = data['password']
+        user = authenticate(request=self.context.get('request'), username=username, password=password)
+        if not user:
+            msg = 'Unable to login'
+            raise serializers.ValidationError(msg, code='authorisation')
+
+        elif User.objects.filter(username=user.username).filter(password=user.password):
+            return user
+
+        else:
+            msg = 'Must include username and password'
+            raise serializers.ValidationError(msg, code='authorisation')
+            
+        # if User.objects.filter(username=username).filter(password=password):
+        #     return True
+        # return NotAuthenticated
+        
 class ClubSerializer(ModelSerializer):
     class Meta:
         model = Club
