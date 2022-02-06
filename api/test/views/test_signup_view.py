@@ -38,3 +38,12 @@ class SignUpViewTestCase(APITestCase):
         after = User.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_post_to_sign_up_endpoint_with_not_unique_email_does_not_create_new_user(self):
+        before = User.objects.count()
+        input = self.form_input
+        input['email'] = self.second_user.email
+        response = self.client.post(self.url, input)
+        after = User.objects.count()
+        self.assertEqual(after, before)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
