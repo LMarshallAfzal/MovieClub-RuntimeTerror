@@ -15,10 +15,28 @@ class SignUpSerializer(serializers.Serializer):
         required = True,
         validators = [UniqueValidator(queryset=User.objects.all())]
     )
+
+    first_name = serializers.CharField(
+        required = True
+    )
+
+    last_name = serializers.CharField(
+        required = True
+    )
+
     email = serializers.CharField(
         required = True,
         validators = [UniqueValidator(queryset=User.objects.all())]
     )
+
+    bio = serializers.CharField(
+        required = False
+    )
+
+    preferences = serializers.CharField(
+        required = True
+    )
+    
     password = serializers.CharField(write_only = True,required = True,validators=[validate_password])
     password_confirmation = serializers.CharField(write_only = True,required = True)
 
