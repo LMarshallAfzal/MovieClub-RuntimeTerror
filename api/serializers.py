@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.password_validation import validate_password
 from django.core.validators import RegexValidator
 from rest_framework import serializers
 
@@ -82,6 +83,38 @@ class LogInSerializer(serializers.Serializer):
         # return user
         # or perhaps a token?
         return {"username": user.username, "password": user.password}
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True, write_only=True)
+    new_password = serializers.CharField(
+        required=True,
+        write_only=True,
+        validators=[RegexValidator(regex=r"^.*(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$")],
+    )
+    password_confirmation = serializers.CharField(required=True, write_only=True)
+
+    # @Override
+    def validate(self, data):
+        user = self.context["request"].user
+        # Why extracting into two separate
+        # methods mess up type(data)?
+        # Validate old password
+        if not user.check_password(data["old_password"]):
+            raise serializers.ValidationError("The old password entered was invalid.")
+        # Validate new password
+        if data["new_password"] != data["password_confirmation"]:
+            raise serializers.ValidationError(
+                "Your password and confirmation password do not match."
+            )
+        return data
+
+    # @Override
+    def save(self, **kwargs):
+        user = self.context["request"].user
+        user.set_password(self.validated_data["new_password"])
+        user.save()
+        return user
 
 
 class ClubSerializer(serializers.ModelSerializer):
