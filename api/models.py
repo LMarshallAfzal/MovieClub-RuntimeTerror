@@ -35,7 +35,6 @@ class User(AbstractUser):
         blank=True
     )
     
-    #Preferences is a CharField and this will need to be changed
     preferences = models.CharField(
         max_length=100, 
         blank=False, 
@@ -99,7 +98,6 @@ class Movie(models.Model):
         blank=False,
         unique=False
     )
-    #genres is currently a CharField and this will need to be changed
     genres = models.CharField(
         max_length=100,
         unique=False,
@@ -112,7 +110,6 @@ class Movie(models.Model):
         unique=False
     )
 
-    #cast is currently a CharField and may need to be changed later on
     cast = models.CharField(
         max_length=250,
         blank=False,
