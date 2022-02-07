@@ -59,3 +59,7 @@ def login(request):
         data['response'] = 'You have entered an invalid username or password'
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+def editProfile(request):
+    pass
+
