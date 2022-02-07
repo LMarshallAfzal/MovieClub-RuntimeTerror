@@ -18,8 +18,8 @@ class SignUpViewTestCase(APITestCase):
             "email": "johndoe@example.org",
             "bio": "The quick brown fox jumps over the lazy dog.",
             "preferences": "Action, Drama, Horror, Comedy, Science fiction",
-            "password": "complexpassword",
-            "password_confirmation": "complexpassword",
+            "password": "Password123",
+            "password_confirmation": "Password123",
         }
         self.second_user = User.objects.get(username='janedoe')
 
