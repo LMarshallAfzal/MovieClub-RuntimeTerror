@@ -38,7 +38,7 @@ class EditUserViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_post_to_edit_user_endpoint_with_blank_preferences_does_not_edit_the_user(self):
+    def test_post_to_edit_user_endpoint_with_blank_email_does_not_edit_the_user(self):
         before = User.objects.count()
         input = self.form_input
         input['email'] = ''
@@ -47,6 +47,14 @@ class EditUserViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_post_to_edit_user_endpoint_with_blank_preferences_does_not_edit_the_user(self):
+        before = User.objects.count()
+        input = self.form_input
+        input['preferences'] = ''
+        response = self.client.put(self.url, input)
+        after = User.objects.count()
+        self.assertEqual(after, before)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
     
     def test_post_to_edit_user_endpoint_with_blank_first_name_does_not_edit_the_user(self):
         before = User.objects.count()
