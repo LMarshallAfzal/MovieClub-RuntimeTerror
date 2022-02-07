@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from django.urls import reverse
-from api.models import User
+#from api.models import User
 
 class TestSignUp(APITestCase):
 
@@ -14,7 +14,7 @@ class TestSignUp(APITestCase):
         self.client = APIClient()
         self.url = reverse('signup')
         # self.user = User.objects.get(username='johndoe')
-        self.second_user = User.objects.get(username='janedoe')
+        #self.second_user = User.objects.get(username='janedoe')
         self.user = {
             'username': "johndoe",
             'first_name': "John",
@@ -36,7 +36,10 @@ class TestSignUp(APITestCase):
 
     def test_user_can_sign_up_correctly(self):
         response = self.client.post(self.url, self.user, format="json")
+        # self.assertEqual(response.data['username'], self.user['username'])
+        # self.assertEqual(response.data['email'], self.user['email'])
         self.assertEqual(response.status_code, 201)
 
     def test_api_can_create_user_details(self):
         self.assertNotEqual(self.response.status_code, status.HTTP_201_CREATED)
+
