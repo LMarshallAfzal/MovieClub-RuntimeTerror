@@ -36,10 +36,3 @@ class LoginViewTestcase(APITestCase):
         self.assertFalse(response)
         response = self.client.post(self.url,details)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-
-        
-
-
-
-    
