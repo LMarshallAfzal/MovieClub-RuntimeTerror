@@ -114,38 +114,10 @@ class SignUpSerializer(serializers.Serializer):
 #     #     bio = self.validated_data['bio']
 #     #     preferences = self.validated_data['preferences']
 
-class UpdateUserSerializer(serializers.ModelSerialiser):
+class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('first_name', 'last_name','email', 'bio', 'preferences')
-        extra_kwargs = {
-            'first_name': {'required': True},
-            'last_name': {'required': True},
-        } 
-
-    def validate_email(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(pk=user.pk).filter(email=value).exists():
-            raise serializers.ValidationError({"email": "This email is already in use."})
-        return value
-
-    def validate_username(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(pk=user.pk).filter(username=value).exists():
-            raise serializers.ValidationError({"username": "This username is already in use."})
-        return value
-
-    def update(self, instance, validated_data):
-        instance.username = validated_data['username'] 
-        instance.first_name = validated_data['first_name']
-        instance.last_name = validated_data['last_name']
-        instance.email = validated_data['email']
-        instance.bio = validated_data['bio']
-        instance.preferences = validated_data['preferences']
-
-        instance.save()
-
-        return instance
            
 
 

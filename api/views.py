@@ -1,8 +1,9 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .models import *
+from rest_framework.permissions import IsAuthenticated
 
 
 @api_view(['GET'])
@@ -60,13 +61,16 @@ def login(request):
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT'])
-def editProfile(request, user_id):
-    data = {}
-    user = User.objects.get(id = user_id)
-    serializer = EditProfileSerializer(data=request.data)
+#@permission_classes([IsAuthenticated])
+def editProfile(request, pk):
+    data = request.data
+    user = User.objects.get(id = pk)
+    serializer = UpdateUserSerializer(user, data=request.data)
     if serializer.is_valid():
         print("I got this far")
-        serializer.update(user,data)
-        return Response(serializer(instance=user).data, status=status.HTTP_200_OK)    
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)    
     else:
-        return Response(data, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+
+
