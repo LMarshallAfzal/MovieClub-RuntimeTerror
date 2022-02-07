@@ -3,13 +3,21 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .models import *
-from api import serializers
+
 
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
         {
-            'Endpoint': '/signup/',
+
+            'Endpoint': '/log_in/',
+            'method': 'POST',
+            'username': {'username': ""},
+            'password': {'password': ""},
+            'description': 'Return login details'
+        },
+        {
+            'Endpoint': '/sign_up/',
             'method': 'POST',
             'username': {'username,' ""},
             'first_name': {'first_name': ""},
@@ -20,6 +28,7 @@ def getRoutes(request):
         }
     ]
     return Response(routes)
+
 
 @api_view(['POST'])
 def signUp(request):
@@ -37,5 +46,16 @@ def signUp(request):
         return Response(SignUpSerializer(instance=user).data, status=status.HTTP_201_CREATED)
     else:
         data = serializer.errors
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def login(request):
+    data = {}
+    serializer = LoginSerializer(data=request.data)
+    if serializer.is_valid():
+        data['response'] = 'User login successful'
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        data['response'] = 'You have entered an invalid username or password'
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
