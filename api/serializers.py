@@ -1,7 +1,5 @@
 
-from typing import overload
 from rest_framework.serializers import ModelSerializer 
-from rest_framework.exceptions import NotAuthenticated
 from rest_framework import serializers
 from api.models import Club, User, Membership, Movie
 from rest_framework.validators import UniqueValidator
@@ -66,53 +64,6 @@ class SignUpSerializer(serializers.Serializer):
         user.save()
 
         return user
-
-# class EditProfileSerializer(serializers.Serializer):
-#     first_name = serializers.CharField(
-#         required = True
-#     )
-
-#     last_name = serializers.CharField(
-#         required = True
-#     )
-
-#     email = serializers.EmailField(
-#         required = True,
-#         validators = [UniqueValidator(queryset=User.objects.all())]
-#     )
-
-#     bio = serializers.CharField(
-#         required = True
-#     )
-
-#     preferences = serializers.CharField(
-#         required = True
-#     )
-
-#     class Meta:
-#         model = User
-#         fields = ['first_name', 'last_name','email', 'bio', 'preferences']
-
-#     def create(self, data):
-#         return User(**data)    
-    
-#     def update(self, user, validated_data):
-#         print(validated_data)
-#         # user.first_name = validated_data['first_name']
-#         # user.last_name = validated_data['last_name']
-#         # user.email = validated_data['email']
-#         # user.bio = validated_data['bio']
-#         # user.preferences = validated_data['preferences']
-#         # user.save()
-#         return user    
-
-
-#     # def save(self):
-#     #     first_name = self.validated_data['first_name']
-#     #     last_name = self.validated_data['last_name']
-#     #     email = self.validated_data['email']
-#     #     bio = self.validated_data['bio']
-#     #     preferences = self.validated_data['preferences']
 
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
