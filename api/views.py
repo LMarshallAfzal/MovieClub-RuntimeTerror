@@ -61,13 +61,11 @@ def login(request):
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT'])
-#@permission_classes([IsAuthenticated])
 def editProfile(request, pk):
     data = request.data
     user = User.objects.get(id = pk)
     serializer = UpdateUserSerializer(user, data=request.data)
     if serializer.is_valid():
-        print("I got this far")
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)    
     else:

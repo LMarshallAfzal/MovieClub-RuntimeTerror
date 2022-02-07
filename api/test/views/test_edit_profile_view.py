@@ -13,7 +13,7 @@ class EditUserViewTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
         self.second_user = User.objects.get(username='janedoe')
-        self.url = reverse('edit_profile')
+        self.url = reverse('edit_profile', kwargs={'pk':self.user.id})
         self.form_input = {
             "first_name": "John",
             "last_name": "Doe",
@@ -24,7 +24,7 @@ class EditUserViewTestCase(APITestCase):
 
     def test_post_to_edit_user_endpoint_with_valid_data_edits_current_user(self):
         before = User.objects.count()
-        response = self.client.post(self.url, self.form_input)
+        response = self.client.put(self.url, self.form_input)
         after = User.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -33,7 +33,7 @@ class EditUserViewTestCase(APITestCase):
         before = User.objects.count()
         input = self.form_input
         input['email'] = self.second_user.email
-        response = self.client.post(self.url, input)
+        response = self.client.put(self.url, input)
         after = User.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -42,7 +42,7 @@ class EditUserViewTestCase(APITestCase):
         before = User.objects.count()
         input = self.form_input
         input['email'] = ''
-        response = self.client.post(self.url, input)
+        response = self.client.put(self.url, input)
         after = User.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -52,7 +52,7 @@ class EditUserViewTestCase(APITestCase):
         before = User.objects.count()
         input = self.form_input
         input['first_name'] = ''
-        response = self.client.post(self.url, input)
+        response = self.client.put(self.url, input)
         after = User.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -62,7 +62,7 @@ class EditUserViewTestCase(APITestCase):
         before = User.objects.count()
         input = self.form_input
         input['last_name'] = ''
-        response = self.client.post(self.url, input)
+        response = self.client.put(self.url, input)
         after = User.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
