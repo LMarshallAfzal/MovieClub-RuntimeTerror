@@ -6,8 +6,6 @@ from api.models import Club, User, Membership, Movie
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
-#from django.utils.translation import ugettext_lazy as _
-
 
 class UserSerializer(ModelSerializer):
     class Meta:
@@ -75,10 +73,7 @@ class LoginSerializer(serializers.Serializer):
     class Meta:
         model = User
         fields = ['username', 'password']
-        # extra_kwargs = {
-        #     'password': {'write_only': True}
-        # }
-
+    
     def validate(self,data):
         username = data['username']
         password = data['password']
@@ -94,9 +89,6 @@ class LoginSerializer(serializers.Serializer):
             msg = 'Must include username and password'
             raise serializers.ValidationError(msg, code='authorisation')
             
-        # if User.objects.filter(username=username).filter(password=password):
-        #     return True
-        # return NotAuthenticated
         
 class ClubSerializer(ModelSerializer):
     class Meta:
