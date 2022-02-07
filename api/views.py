@@ -59,7 +59,14 @@ def login(request):
         data['response'] = 'You have entered an invalid username or password'
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-def editProfile(request):
-    pass
-
+@api_view(['PUT'])
+def editProfile(request, user_id):
+    data = {}
+    user = User.objects.get(id = user_id)
+    serializer = EditProfileSerializer(data=request.data)
+    if serializer.is_valid():
+        print("I got this far")
+        serializer.update(user,data)
+        return Response(serializer(instance=user).data, status=status.HTTP_200_OK)    
+    else:
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
