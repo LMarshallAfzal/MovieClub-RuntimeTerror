@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
 from rest_framework import serializers
 
@@ -57,6 +58,30 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data["password"])
         user.save()
         return user
+
+
+# Why serializers.Serializer must be used
+# instead of serializers.ModelSerializer?
+class LogInSerializer(serializers.Serializer):
+    # Why is class Meta no longer useable?
+    username = serializers.CharField(required=True)
+    password = serializers.CharField(required=True, write_only=True)
+
+    # @Override
+    def validate(self, data):
+        # This returns a User object
+        # if the credentials are valid
+        user = authenticate(
+            username=data["username"],
+            password=data["password"],
+        )
+        if user is None:
+            raise serializers.ValidationError("The credentials provided are invalid.")
+        # Decide what we wish to return here?
+        # return data
+        # return user
+        # or perhaps a token?
+        return {"username": user.username, "password": user.password}
 
 
 class ClubSerializer(serializers.ModelSerializer):
