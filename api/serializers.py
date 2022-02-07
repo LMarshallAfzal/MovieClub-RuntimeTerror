@@ -67,52 +67,86 @@ class SignUpSerializer(serializers.Serializer):
 
         return user
 
-class EditProfileSerializer(serializers.Serializer):
-    first_name = serializers.CharField(
-        required = True
-    )
+# class EditProfileSerializer(serializers.Serializer):
+#     first_name = serializers.CharField(
+#         required = True
+#     )
 
-    last_name = serializers.CharField(
-        required = True
-    )
+#     last_name = serializers.CharField(
+#         required = True
+#     )
 
-    email = serializers.EmailField(
-        required = True,
-        validators = [UniqueValidator(queryset=User.objects.all())]
-    )
+#     email = serializers.EmailField(
+#         required = True,
+#         validators = [UniqueValidator(queryset=User.objects.all())]
+#     )
 
-    bio = serializers.CharField(
-        required = True
-    )
+#     bio = serializers.CharField(
+#         required = True
+#     )
 
-    preferences = serializers.CharField(
-        required = True
-    )
+#     preferences = serializers.CharField(
+#         required = True
+#     )
 
+#     class Meta:
+#         model = User
+#         fields = ['first_name', 'last_name','email', 'bio', 'preferences']
+
+#     def create(self, data):
+#         return User(**data)    
+    
+#     def update(self, user, validated_data):
+#         print(validated_data)
+#         # user.first_name = validated_data['first_name']
+#         # user.last_name = validated_data['last_name']
+#         # user.email = validated_data['email']
+#         # user.bio = validated_data['bio']
+#         # user.preferences = validated_data['preferences']
+#         # user.save()
+#         return user    
+
+
+#     # def save(self):
+#     #     first_name = self.validated_data['first_name']
+#     #     last_name = self.validated_data['last_name']
+#     #     email = self.validated_data['email']
+#     #     bio = self.validated_data['bio']
+#     #     preferences = self.validated_data['preferences']
+
+class UpdateUserSerializer(serializers.ModelSerialiser):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name','email', 'bio', 'preferences']
+        fields = ('first_name', 'last_name','email', 'bio', 'preferences')
+        extra_kwargs = {
+            'first_name': {'required': True},
+            'last_name': {'required': True},
+        } 
 
-    def create(self, data):
-        return User(**data)    
-    
-    def update(self, user, validated_data):
-        print(validated_data)
-        # user.first_name = validated_data['first_name']
-        # user.last_name = validated_data['last_name']
-        # user.email = validated_data['email']
-        # user.bio = validated_data['bio']
-        # user.preferences = validated_data['preferences']
-        # user.save()
-        return user    
+    def validate_email(self, value):
+        user = self.context['request'].user
+        if User.objects.exclude(pk=user.pk).filter(email=value).exists():
+            raise serializers.ValidationError({"email": "This email is already in use."})
+        return value
 
+    def validate_username(self, value):
+        user = self.context['request'].user
+        if User.objects.exclude(pk=user.pk).filter(username=value).exists():
+            raise serializers.ValidationError({"username": "This username is already in use."})
+        return value
 
-    # def save(self):
-    #     first_name = self.validated_data['first_name']
-    #     last_name = self.validated_data['last_name']
-    #     email = self.validated_data['email']
-    #     bio = self.validated_data['bio']
-    #     preferences = self.validated_data['preferences']
+    def update(self, instance, validated_data):
+        instance.username = validated_data['username'] 
+        instance.first_name = validated_data['first_name']
+        instance.last_name = validated_data['last_name']
+        instance.email = validated_data['email']
+        instance.bio = validated_data['bio']
+        instance.preferences = validated_data['preferences']
+
+        instance.save()
+
+        return instance
+           
 
 
 
