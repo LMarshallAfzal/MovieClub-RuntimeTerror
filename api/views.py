@@ -1,8 +1,10 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .models import *
+from django.contrib.auth import logout
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -57,3 +59,11 @@ def login(request):
         data['response'] = 'You have entered an invalid username or password'
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def log_out(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_403_FORBIDDEN)
