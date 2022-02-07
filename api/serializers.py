@@ -1,11 +1,10 @@
-
 from rest_framework.serializers import ModelSerializer 
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework import serializers
 from api.models import Club, User, Membership, Movie
 from rest_framework.validators import UniqueValidator
-from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
+from django.core.validators import RegexValidator
 
 class UserSerializer(ModelSerializer):
     class Meta:
@@ -39,7 +38,11 @@ class SignUpSerializer(serializers.Serializer):
         required = True
     )
     
-    password = serializers.CharField(write_only = True,required = True,validators=[validate_password])
+    password = serializers.CharField(
+        style={"input_type": "password"},
+        write_only=True,
+        validators=[RegexValidator(regex=r"^.*(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$")],
+    )
     password_confirmation = serializers.CharField(write_only = True,required = True)
 
     class Meta:
@@ -68,7 +71,11 @@ class SignUpSerializer(serializers.Serializer):
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
-    password = serializers.CharField(write_only = True ,required = True,validators=[validate_password])
+    password = serializers.CharField(
+        style={"input_type": "password"},
+        write_only=True,
+        validators=[RegexValidator(regex=r"^.*(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$")],
+    )
 
     class Meta:
         model = User
@@ -88,6 +95,38 @@ class LoginSerializer(serializers.Serializer):
         else:
             msg = 'Must include username and password'
             raise serializers.ValidationError(msg, code='authorisation')
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True, write_only=True)
+    new_password = serializers.CharField(
+        required=True,
+        write_only=True,
+        validators=[RegexValidator(regex=r"^.*(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$")],
+    )
+    password_confirmation = serializers.CharField(required=True, write_only=True)
+
+    # @Override
+    def validate(self, data):
+        user = self.context["request"].user
+        # Why extracting into two separate
+        # methods mess up type(data)?
+        # Validate old password
+        if not user.check_password(data["old_password"]):
+            raise serializers.ValidationError("The old password entered was invalid.")
+        # Validate new password
+        if data["new_password"] != data["password_confirmation"]:
+            raise serializers.ValidationError(
+                "Your password and confirmation password do not match."
+            )
+        return data
+
+    # @Override
+    def save(self, **kwargs):
+        user = self.context["request"].user
+        user.set_password(self.validated_data["new_password"])
+        user.save()
+        return user
             
         
 class ClubSerializer(ModelSerializer):
