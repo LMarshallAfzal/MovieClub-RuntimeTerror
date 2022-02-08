@@ -64,7 +64,7 @@ def login(request):
 def editProfile(request, pk):
     data = request.data
     user = User.objects.get(id = pk)
-    serializer = UpdateUserSerializer(user, data=request.data)
+    serializer = EditProfileSerializer(user, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)    

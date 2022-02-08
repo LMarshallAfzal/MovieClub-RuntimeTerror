@@ -65,7 +65,7 @@ class SignUpSerializer(serializers.Serializer):
 
         return user
 
-class UpdateUserSerializer(serializers.ModelSerializer):
+class EditProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('first_name', 'last_name','email', 'bio', 'preferences')
