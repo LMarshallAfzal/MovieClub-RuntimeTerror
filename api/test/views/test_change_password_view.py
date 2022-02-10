@@ -1,8 +1,8 @@
 from api.models import User
 from django.test import TestCase
 
-
 class ChangePasswordViewTestCase(TestCase):
+
     def setUp(self):
         self.user = User.objects.create_user(
             username="@johndoe",

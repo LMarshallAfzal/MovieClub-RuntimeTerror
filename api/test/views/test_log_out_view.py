@@ -1,19 +1,14 @@
 from api.models import User
 from django.test import TestCase
 
-
 class LogOutViewTestCase(TestCase):
+
+    fixtures = [
+        'api/test/fixtures/default_user.json',
+    ]
+
     def setUp(self):
-        self.user = User.objects.create_user(
-            username="@johndoe",
-            first_name="John",
-            last_name="Doe",
-            email="johndoe@example.org",
-            bio="The quick brown fox jumps over the lazy dog.",
-            preferences="Action, Drama, Horror, Comedy, Science fiction",
-            password="Password123",
-            is_active=True,
-        )
+        self.user = User.objects.get(username='johndoe')
 
     def test_get_of_log_out_endpoint_as_logged_in_user_is_200_ok(self):
         self.client.force_login(self.user)
