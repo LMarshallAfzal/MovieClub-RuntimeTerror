@@ -4,9 +4,6 @@ from django.urls import reverse
 from rest_framework import status
 from api.serializers import UserSerializer
 
-from api.serializers import UserSerializer
-
-
 
 class GetUsersViewTestCase(APITestCase):
 
