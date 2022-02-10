@@ -6,7 +6,6 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
 
-
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
@@ -44,6 +43,7 @@ class SignUpSerializer(serializers.Serializer):
         write_only=True,
         validators=[RegexValidator(regex=r"^.*(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$")],
     )
+    
     password_confirmation = serializers.CharField(write_only = True,required = True)
 
     class Meta:
@@ -70,6 +70,11 @@ class SignUpSerializer(serializers.Serializer):
 
         return user
 
+class UpdateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name','email', 'bio', 'preferences')
+           
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(
@@ -96,7 +101,6 @@ class LoginSerializer(serializers.Serializer):
         else:
             msg = 'Must include username and password'
             raise serializers.ValidationError(msg, code='authorisation')
-
 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True, write_only=True)
@@ -128,8 +132,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         user.set_password(self.validated_data["new_password"])
         user.save()
         return user
-            
-        
+
 class ClubSerializer(ModelSerializer):
     class Meta:
         model = Club
