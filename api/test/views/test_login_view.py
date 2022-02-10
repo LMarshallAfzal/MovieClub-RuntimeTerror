@@ -20,8 +20,22 @@ class LoginViewTestcase(APITestCase):
 
     def test_user_logged_in_successfully(self):
         details = {'username' : self.user.username, 'password':'Pa$$w0rd567'}
+        response = self.client.login(
+            username = details['username'],password = details['password']
+        )
+        self.assertTrue(response)
         response = self.client.post(self.url, details)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    #status code cant be 200
+    def test_user_logged_in_unsuccessfully(self):
+        details = {'username' : "wrongusername", 'password':'Pa$$w0rd567'}
+        response = self.client.login(
+            username = details['username'],password = details['password']
+        )
+        self.assertFalse(response)
+        response = self.client.post(self.url,details)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_wrong_username_returns_400(self):
         details = {'username' : "wrongusername", 'password':'Pa$$w0rd567'}
