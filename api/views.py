@@ -3,14 +3,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .models import *
+from django.contrib.auth import logout
 from rest_framework.permissions import IsAuthenticated
-
 
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
         {
-
             'Endpoint': '/log_in/',
             'method': 'POST',
             'username': {'username': ""},
@@ -29,7 +28,6 @@ def getRoutes(request):
         }
     ]
     return Response(routes)
-
 
 @api_view(['POST'])
 def signUp(request):
@@ -60,6 +58,36 @@ def login(request):
         data['response'] = 'You have entered an invalid username or password'
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def log_out(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    serializer = ChangePasswordSerializer(
+        data=request.data, context={"request": request}
+    )
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_users(request):
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
+  
 @api_view(['PUT'])
 def editProfile(request, pk):
     data = request.data
@@ -70,5 +98,3 @@ def editProfile(request, pk):
         return Response(serializer.data, status=status.HTTP_200_OK)    
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
-
-

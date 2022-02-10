@@ -18,8 +18,8 @@ class SignUpViewTestCase(APITestCase):
             "email": "johndoe@example.org",
             "bio": "The quick brown fox jumps over the lazy dog.",
             "preferences": "Action, Drama, Horror, Comedy, Science fiction",
-            "password": "complexpassword",
-            "password_confirmation": "complexpassword",
+            "password": "Password123",
+            "password_confirmation": "Password123",
         }
         self.second_user = User.objects.get(username='janedoe')
 
@@ -47,3 +47,23 @@ class SignUpViewTestCase(APITestCase):
         after = User.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_passwords_must_match(self):
+        input = self.form_input
+        input['password_confirmation'] = 'wrongpassword'
+        response = self.client.post(self.url, input)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def preferences_must_not_be_blank(self):
+        input = self.form_input
+        input['preferences'] = ''
+        response = self.client.post(self.url, input)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def preferences_need_not_be_unique(self):
+        input = self.form_input
+        response = self.client.post(self.url, input)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.second_user["preferences"] = input["preferences"]
+        second_response = self.client.post(self.url, self.second_user)
+        self.assertEqual(second_response.status_code, status.HTTP_201_CREATED)

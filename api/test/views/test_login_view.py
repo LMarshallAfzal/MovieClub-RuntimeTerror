@@ -37,11 +37,17 @@ class LoginViewTestcase(APITestCase):
         response = self.client.post(self.url,details)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_wrong_username_returns_400(self):
+        details = {'username' : "wrongusername", 'password':'Pa$$w0rd567'}
+        response = self.client.post(self.url,details)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-        
+    def test_username_password_may_not_be_blank(self):
+        details = {'username' : "", 'password':""}
+        response = self.client.post(self.url, details)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-
-
-    
-
-
+    def test_wrong_password_returns_400(self):
+        details = {'username' : self.user.username, 'password':'wrongpassword'}
+        response = self.client.post(self.url, details)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
