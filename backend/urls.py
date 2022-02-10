@@ -18,5 +18,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('', include ('api.urls')),
+=======
+    path('', include('api.urls'))
+>>>>>>> e1-u4-view-other-users-backend
 ]
