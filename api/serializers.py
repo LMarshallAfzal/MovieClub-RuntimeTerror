@@ -70,10 +70,6 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('first_name', 'last_name','email', 'bio', 'preferences')
            
-
-
-
-
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(write_only = True ,required = True,validators=[validate_password])
@@ -96,8 +92,7 @@ class LoginSerializer(serializers.Serializer):
         else:
             msg = 'Must include username and password'
             raise serializers.ValidationError(msg, code='authorisation')
-            
-        
+                    
 class ClubSerializer(ModelSerializer):
     class Meta:
         model = Club
