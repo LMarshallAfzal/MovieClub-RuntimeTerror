@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models.fields.related import ForeignKey
-from django.forms import CharField
 from django.db import models
 
 
@@ -41,8 +40,8 @@ class User(AbstractUser):
         unique=False
     )
     
-    class Meta:
-        ordering = ["last_name", "first_name"]
+    # class Meta:
+    #     ordering = ("last_name", "first_name")
 
     def get_user_clubs(self):
         memberships = Membership.objects.filter(user=self)
@@ -61,6 +60,15 @@ class Club(models.Model):
         blank=True,
         unique=False
     )
+
+    club_members = models.ManyToManyField(User,through='Membership')
+
+    def get_club_membership(self,user):
+        return Membership.objects.get(club = self,user=user).role
+
+    def get_all_club_members(self):
+        return self.club_members.all()
+
 
 class Membership(models.Model):
     """
