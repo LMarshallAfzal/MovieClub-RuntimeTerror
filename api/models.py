@@ -39,9 +39,6 @@ class User(AbstractUser):
         blank=False, 
         unique=False
     )
-    
-    # class Meta:
-    #     ordering = ("last_name", "first_name")
 
     def get_user_clubs(self):
         memberships = Membership.objects.filter(user=self)
