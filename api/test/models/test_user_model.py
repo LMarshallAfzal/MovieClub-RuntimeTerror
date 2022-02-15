@@ -2,7 +2,7 @@
 
 from django.core.exceptions import ValidationError
 from rest_framework.test import APITestCase
-from api.models import User
+from api.models import User, Membership, Club
 
 class UserModelTestCase(APITestCase):
     """Unit tests for the User model."""
@@ -10,6 +10,7 @@ class UserModelTestCase(APITestCase):
     fixtures = [
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/other_users.json',
+        'api/test/fixtures/default_club.json',
     ]
 
     def setUp(self):
@@ -124,7 +125,14 @@ class UserModelTestCase(APITestCase):
         self.user.preferences = 'x' * 101
         self._assert_user_is_invalid()
     
-
+    def test_get_user_clubs(self):
+        # Test that the user has no clubs
+        self.assertEqual(self.user.get_user_clubs(), [])
+        # Then join club:
+        club = Club.objects.get(club_name='Beatles')
+        Membership.objects.create(user=self.user, club=club)
+        # Test that the user has one club:
+        self.assertEqual(self.user.get_user_clubs(), [club])
 
     def _assert_user_is_valid(self):
         try:
