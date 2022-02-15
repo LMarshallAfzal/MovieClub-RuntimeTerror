@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 export function enterButton() {
     return (
-        <Link to='/'>
+        <Link to='google.co.uk'>
             <enterButton className='btn'>enter</enterButton>
         </Link>
     );

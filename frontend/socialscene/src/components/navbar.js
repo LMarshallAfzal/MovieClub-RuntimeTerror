@@ -5,7 +5,7 @@ import {enterButton} from "./enterButton";
 
 
 function Navbar() {
-    const [enterButton, setButton] = useState(true)
+    const [setButton] = useState(true)
 
     const showButton = () => {
         if(window.innerWidth <= 960) {
