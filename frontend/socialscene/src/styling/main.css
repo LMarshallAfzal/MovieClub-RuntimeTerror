@@ -29,13 +29,30 @@ html, body, #root {
     src: url("./fonts/Helvetica-Light.ttf") format("truetype");
 }
 
-.navbar {
+.cover-image {
+    width: 100%;
+    background-size: cover;
+    z-index: -1;
+    filter: blur(20px);
+    overflow: hidden;
+    transform-origin: center;
+
+}
+
+.navbar-black {
     background: black;
     height: 80px;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
     overflow: auto;
+    width: 100%;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
 }
 
 .navbar-red {

@@ -1,20 +1,13 @@
 import React from "react";
-import Navbar from "../components/navbar"
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
-function Homepage() {
-  return (
-      <>
-          <Router>
-              <Navbar />
-              <div className={"container-fluid p-0 flex-grow-1 h-auto"}>
-                  <Routes>
-                      <Route path={"/"} exact />
-                  </Routes>
-              </div>
-          </Router>
-      </>
-  );
+function homepage() {
+    return (
+        <img
+            className={'cover-image'}
+            src="https://m.media-amazon.com/images/M/MV5BNzQxNTIyODAxMV5BMl5BanBnXkFtZTgwNzQyMDA3OTE@._V1_.jpg"
+            alt="new"
+        />
+    );
 }
 
-export default Homepage;
+export default homepage;
