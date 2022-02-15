@@ -1,8 +1,8 @@
 import React from "react";
-import {Navbar} from "../components/navbar"
+import Navbar from "../components/navbar"
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import '../styling/App.css';
-import {enterButton} from ".../components/enterButton";
+import enterButton from "../components/enterButton";
 
 function App() {
   return (
