@@ -1,3 +1,34 @@
+html, body, #root {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+@font-face {
+    font-family: Helvetica;
+    src: url("./fonts/Helvetica.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Helvetica-Bold;
+    src: url("./fonts/Helvetica-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Helvetica-BoldOblique;
+    src: url("./fonts/Helvetica-BoldOblique.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Helvetica-Oblique;
+    src: url("./fonts/Helvetica-Oblique.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Helvetica-light;
+    src: url("./fonts/Helvetica-Light.ttf") format("truetype");
+}
+
 .navbar {
     background: black;
     height: 80px;
@@ -15,6 +46,7 @@
 
 .navbar-enter-button {
     float: right;
+    font-family: Helvetica-Bold, serif;
     margin: auto;
     width: auto;
     padding-right: 10px;
@@ -23,6 +55,7 @@
 
 .navbar-logo {
     color: #fff;
+    font-family: Helvetica, serif;
     float: left;
     margin: auto;
     width: auto;

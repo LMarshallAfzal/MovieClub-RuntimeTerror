@@ -21,7 +21,9 @@ function Navbar() {
         <>
             <div className={"navbar"}>
                 <Link to={"/"} className={"navbar-logo"}>
-                    socialScene.
+                    <span style={{fontFamily: "Helvetica-Light"}}>social</span>
+                    <span style={{fontFamily: "Helvetica-Bold"}}>scene</span>
+                    <span style={{ color: "red", fontWeight: "bold" }}>.</span>
                 </Link>
                 <div className={"navbar-enter-button"}>
                     <enterButton className={"btn"}>

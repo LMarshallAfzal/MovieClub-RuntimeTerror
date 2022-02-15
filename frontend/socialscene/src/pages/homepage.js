@@ -9,9 +9,11 @@ function Homepage() {
       <>
           <Router>
               <Navbar />
-              <Routes>
-                  <Route path={"/"} exact />
-              </Routes>
+              <div className={"container-fluid p-0 flex-grow-1 h-auto"}>
+                  <Routes>
+                      <Route path={"/"} exact />
+                  </Routes>
+              </div>
           </Router>
       </>
   );
