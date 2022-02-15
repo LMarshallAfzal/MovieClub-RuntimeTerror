@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
-import "../styling/navbar.css"
+import "../styling/main.css"
 import {enterButton} from "./enterButton";
 
 
@@ -20,11 +20,9 @@ function Navbar() {
     return (
         <>
             <div className={"navbar"}>
-                <div className={"navbar-logo-div"}>
-                    <Link to={"/"} className={"navbar-logo"}>
-                        socialScene.
-                    </Link>
-                </div>
+                <Link to={"/"} className={"navbar-logo"}>
+                    socialScene.
+                </Link>
                 <div className={"navbar-enter-button"}>
                     <enterButton className={"btn"}>
                     enter
