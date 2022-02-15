@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models.fields.related import ForeignKey
-from django.forms import CharField
 from django.db import models
 
 
@@ -35,21 +34,15 @@ class User(AbstractUser):
         blank=True
     )
     
-    #Preferences is a CharField and this will need to be changed
     preferences = models.CharField(
         max_length=100, 
         blank=False, 
         unique=False
     )
-    
-    class Meta:
-        ordering = ["last_name", "first_name"]
 
     def get_user_clubs(self):
-        clubs = Club.objects.all().filter(
-            club_members__username=self.username
-        )
-        return clubs
+        memberships = Membership.objects.filter(user=self)
+        return [membership.club for membership in memberships]
 
 class Club(models.Model):
 
@@ -64,6 +57,15 @@ class Club(models.Model):
         blank=True,
         unique=False
     )
+
+    club_members = models.ManyToManyField(User,through='Membership')
+
+    def get_club_membership(self,user):
+        return Membership.objects.get(club = self,user=user).role
+
+    def get_all_club_members(self):
+        return self.club_members.all()
+
 
 class Membership(models.Model):
     """
@@ -99,7 +101,6 @@ class Movie(models.Model):
         blank=False,
         unique=False
     )
-    #genres is currently a CharField and this will need to be changed
     genres = models.CharField(
         max_length=100,
         unique=False,
@@ -112,7 +113,6 @@ class Movie(models.Model):
         unique=False
     )
 
-    #cast is currently a CharField and may need to be changed later on
     cast = models.CharField(
         max_length=250,
         blank=False,
