@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import '../styling/App.css';
 import enterButton from "../components/enterButton";
 
-function App() {
+function Homepage() {
   return (
       <>
           <Router>
@@ -18,4 +18,4 @@ function App() {
   );
 }
 
-export default App;
+export default Homepage;
