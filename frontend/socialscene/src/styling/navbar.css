@@ -1,0 +1,47 @@
+.navbar {
+    background: black;
+    height: 80px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    overflow: auto;
+}
+
+.navbar-red {
+    height: 10px;
+    display: flex;
+    background: red;
+}
+
+.navbar-enter-button {
+    float: right;
+    margin: auto;
+    width: auto;
+    padding-right: 10px;
+    padding-top: 20px;
+}
+
+.navbar-logo-div {
+    float: left;
+    margin: auto;
+    width: auto;
+}
+
+.navbar-logo {
+    color: #fff;
+    float: left;
+    padding-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+    padding-top: 20px;
+}
+
+@media screen and (max-width: 960px) {
+
+
+
+    button {
+        display: none;
+    }
+}

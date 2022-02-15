@@ -13,7 +13,6 @@ function Homepage() {
                   <Route path={"/"} exact />
               </Routes>
           </Router>
-          <enterButton />
       </>
   );
 }
