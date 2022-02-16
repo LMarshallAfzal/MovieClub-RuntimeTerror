@@ -3,9 +3,9 @@ import React from "react";
 function notFound404() {
     return (
         <>
-
-            <h1>Oops, you got lost.</h1>
-            <h1>404 Not Found.</h1>
+            <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}}> 
+                <h1>Oops, you got lost. 404 Not Found.</h1>
+            </div>
         </>
     );
 }
