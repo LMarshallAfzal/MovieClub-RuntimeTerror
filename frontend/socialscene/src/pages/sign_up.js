@@ -1,20 +1,18 @@
 import React from "react"
 import Navbar from "../components/navbar"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import '../styling/App.css'
-import From from "react-bootstrap/Form"
+import Add from "./components/Add"
 
-function Sign_up() {
-    
+function sign_up() {  
     return (
         <>
-            <Router>
-              <Navbar />
-              <Routes>
-                  <Route path={"/"} exact />
-              </Routes>
-          </Router>
-          <enterButton />
+            <div class="container">
+                <div class = "row">
+                    <div class = "col-12">
+                        <h1>Sign up</h1>
+                    </div>
+                </div>
+            </div>
         </>
-    )
+    );
 }
+export default sign_up
