@@ -14,8 +14,8 @@ function App() {
               <div className={"container-fluid p-0 flex-grow-1 h-auto"}>
                   <Routes>
                       <Route path={"/"} element={(<HomePage />)}/>
-                      <Route path="/login" element={(<LogIn />)}/>
-                      <Route path="*" element={<NotFound404 />}/>
+                      <Route path={"/login"} element={(<LogIn />)}/>
+                      <Route path={"*"} element={<NotFound404 />}/>
                   </Routes>
               </div>
           </Router>

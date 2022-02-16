@@ -27,10 +27,8 @@ function Navbar() {
                         <span style={{ color: "red", fontWeight: "bold" }}>.</span>
                     </Link>
                     <div className={"navbar-enter-button"}>
-                        <enterButton className={"btn"}> 
-                            <Link to="login" style={{ textDecoration: 'none' }}>
-                                enter ➥
-                            </Link>
+                        <enterButton className={"btn"}>
+                            enter
                         </enterButton>
                     </div>
                 </div>
