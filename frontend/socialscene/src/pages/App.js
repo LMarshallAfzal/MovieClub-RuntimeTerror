@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/navbar";
 import HomePage from "../pages/homepage";
 import LogIn from "../pages/login";
+import Dashboard from "../pages/dashboard";
 import NotFound404 from "../pages/notFound404";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
@@ -15,6 +16,7 @@ function App() {
                   <Routes>
                       <Route path={"/"} element={(<HomePage />)}/>
                       <Route path={"/login"} element={(<LogIn />)}/>
+                      <Route path={"/dashboard"} element={(<Dashboard />)}/>
                       <Route path={"*"} element={<NotFound404 />}/>
                   </Routes>
               </div>
