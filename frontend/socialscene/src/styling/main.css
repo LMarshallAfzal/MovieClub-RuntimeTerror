@@ -30,13 +30,15 @@ html, body, #root {
 }
 
 .cover-image {
-    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    position: absolute;
     background-size: cover;
-    z-index: -1;
     filter: blur(20px);
     overflow: hidden;
     transform-origin: center;
-
+    background-size: 'cover';
+    background-repeat: 'no-repeat';
 }
 
 .navbar-black {
@@ -50,7 +52,8 @@ html, body, #root {
 }
 
 .navbar {
-    position: fixed;
+    position: sticky;
+    top: 0;
     width: 100%;
     z-index: 1;
 }
