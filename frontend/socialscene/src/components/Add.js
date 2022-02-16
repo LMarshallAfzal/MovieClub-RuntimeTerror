@@ -32,7 +32,7 @@ class Add extends React.Component{
             },
         })
         .then(response=>response.json())
-        .then((data)=>console.log(data));
+        .then((data)=>console.log(data))
 
         this.setState({
             username:'',
@@ -43,7 +43,7 @@ class Add extends React.Component{
             preferences:'',
             password:'',
             password_confirmation:''
-        });
+        })
     }
 
     render(){
@@ -51,9 +51,15 @@ class Add extends React.Component{
             <table className="table table-bordered">
                 <tbody>
                     <tr>
-                        <th>Full Name</th>
+                        <th>First Name</th>
                         <td>
-                            <input value={this.state.full_name} name="full_name" onChange={this.changeHandler} type="text" className="form-control" />
+                            <input value={this.state.first_name} name="full_name" onChange={this.changeHandler} type="text" className="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Last Name</th>
+                        <td>
+                            <input value={this.state.first_name} name="last_name" onChange={this.changeHandler} type="text" className="form-control" />
                         </td>
                     </tr>
                     <tr>
@@ -63,15 +69,15 @@ class Add extends React.Component{
                         </td>
                     </tr>
                     <tr>
-                        <th>Contact</th>
+                        <th>Bio</th>
                         <td>
-                            <input value={this.state.contact} name="contact" onChange={this.changeHandler} type="text" className="form-control" />
+                            <input value={this.state.bio} name="bio" onChange={this.changeHandler} type="text" className="form-control" />
                         </td>
                     </tr>
                     <tr>
-                        <th>Address</th>
+                        <th>Preferences</th>
                         <td>
-                            <input value={this.state.address} name="address" onChange={this.changeHandler} type="text" className="form-control" />
+                            <input value={this.state.preferences} name="preferences" onChange={this.changeHandler} type="text" className="form-control" />
                         </td>
                     </tr>
                     <tr>
@@ -81,6 +87,6 @@ class Add extends React.Component{
                     </tr>
                 </tbody>
             </table>
-        );
+        )
     }
 }
