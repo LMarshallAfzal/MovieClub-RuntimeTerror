@@ -1,6 +1,6 @@
 import React from "react";
 
-function notFound404() {
+function notFound() {
     return (
         <>
             <div
@@ -17,4 +17,4 @@ function notFound404() {
     );
 }
 
-export default notFound404;
+export default notFound;

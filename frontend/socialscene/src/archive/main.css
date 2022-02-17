@@ -1,0 +1,40 @@
+#root {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+/*$primary-red: #ffffff;*/
+
+@font-face {
+    font-family: Helvetica;
+    src: url("../styling/fonts/Helvetica.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Helvetica-Bold;
+    src: url("../styling/fonts/Helvetica-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Helvetica-BoldOblique;
+    src: url("../styling/fonts/Helvetica-BoldOblique.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Helvetica-Oblique;
+    src: url("../styling/fonts/Helvetica-Oblique.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Helvetica-light;
+    src: url("../styling/fonts/Helvetica-Light.ttf") format("truetype");
+}
+
+/*h1*/
+/*h2*/
+/*h3*/
+/*h4*/
+/*h5*/
+/*h6*/
+/*body*/

@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "../components/navbar";
-import HomePage from "../pages/homepage";
-import LogIn from "../pages/login";
+import "../styling/pages/App.css"
+import Navbar from "../components/Navbar";
+import HomePage from "./Homepage";
+import LogIn from "./Login";
+import NotFound404 from "./NotFound";
 import Dashboard from "../pages/dashboard";
-import NotFound404 from "../pages/notFound404";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 function App() {
   return (
