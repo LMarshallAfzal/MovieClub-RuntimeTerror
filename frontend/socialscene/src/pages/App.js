@@ -1,9 +1,10 @@
 import React from "react";
 import Navbar from "../components/navbar";
-import HomePage from "../pages/homepage";
-import LogIn from "../pages/login";
+import LogIn from "./Login";
+import SignUp from "./SignUp"
 import NotFound404 from "../pages/notFound404";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import Homepage from "./Homepage";
 
 
 function App() {
@@ -12,11 +13,12 @@ function App() {
           <Router>
               <Navbar />
               <div className={"container-fluid p-0 flex-grow-1 h-auto"}>
-                  <Routes>
-                      <Route path={"/"} element={(<HomePage />)}/>
+                  <Switch>
+                      <Route path={"/"} element={(<Homepage />)}/>
                       <Route path="/login" element={(<LogIn />)}/>
+                      <Route path="/signup" element={(<SignUp />)}/>
                       <Route path="*" element={<NotFound404 />}/>
-                  </Routes>
+                  </Switch>
               </div>
           </Router>
       </>

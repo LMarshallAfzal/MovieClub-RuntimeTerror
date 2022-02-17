@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import "../styling/main.css"
-import {enterButton} from "./enterButton";
+import {enterButton} from "./EnterButton";
 
 
 function Navbar() {

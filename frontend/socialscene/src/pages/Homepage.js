@@ -2,7 +2,7 @@ import React from "react";
 
 let background = "https://m.media-amazon.com/images/M/MV5BNzQxNTIyODAxMV5BMl5BanBnXkFtZTgwNzQyMDA3OTE@._V1_.jpg"
 
-function homepage() {
+function Homepage() {
     return (
         <div>
             <div className="cover-image" style={{ backgroundImage: `url(${background})` }}></div>
@@ -18,4 +18,4 @@ function homepage() {
 
 
 
-export default homepage;
+export default Homepage;
