@@ -3,7 +3,7 @@ import Navbar from "../components/navbar";
 import LogIn from "./Login";
 import SignUp from "./SignUp"
 import NotFound404 from "../pages/notFound404";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Homepage from "./Homepage";
 
 
@@ -13,12 +13,12 @@ function App() {
           <Router>
               <Navbar />
               <div className={"container-fluid p-0 flex-grow-1 h-auto"}>
-                  <Switch>
+                  <Routes>
                       <Route path={"/"} element={(<Homepage />)}/>
                       <Route path="/login" element={(<LogIn />)}/>
                       <Route path="/signup" element={(<SignUp />)}/>
                       <Route path="*" element={<NotFound404 />}/>
-                  </Switch>
+                  </Routes>
               </div>
           </Router>
       </>
