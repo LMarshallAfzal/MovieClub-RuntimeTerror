@@ -7,37 +7,43 @@ import * as BsIcons from 'react-icons/bs';
 
 export const SidebarData = [
     {
-        title: 'Home',
+        title: 'home',
         path: '/',
         icon: <AiIcons.AiFillHome />,
         cName: 'sidebar-text'
     },
     {
-        title: 'Clubs',
+        title: 'dashboard',
+        path: '/dashboard',
+        icon: <MdIcons.MdSpaceDashboard />,
+        cName: 'sidebar-text'
+    },
+    {
+        title: 'clubs',
         path: '/',
         icon: <MdIcons.MdGroups />,
         cName: 'sidebar-text'
     },
     {
-        title: 'Movies',
+        title: 'movies',
         path: '/',
         icon: <MdIcons.MdMovie />,
         cName: 'sidebar-text'
     },
     {
-        title: 'What\'s on',
+        title: 'what\'s on',
         path: '/',
         icon: <BsIcons.BsCollectionPlayFill />,
         cName: 'sidebar-text'
     },
     {
-        title: 'Profile',
+        title: 'profile',
         path: '/',
         icon: <FaIcons.FaUserEdit />,
         cName: 'sidebar-text'
     },
     {
-        title: 'Options',
+        title: 'options',
         path: '/',
         icon: <IoIcons.IoMdSettings />,
         cName: 'sidebar-text'
