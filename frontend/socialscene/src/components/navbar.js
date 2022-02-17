@@ -26,11 +26,11 @@ function Navbar() {
                         <span style={{fontFamily: "Helvetica-Bold"}}>scene</span>
                         <span style={{ color: "red", fontWeight: "bold" }}>.</span>
                     </Link>
-                    <div className={"navbar-enter-button"}>
+                    <Link to={"/login"} className={"navbar-enter-button"}>
                         <enterButton className={"btn"}>
                             enter
                         </enterButton>
-                    </div>
+                    </Link>
                 </div>
                 <div className={"navbar-red"} />
             </div>
