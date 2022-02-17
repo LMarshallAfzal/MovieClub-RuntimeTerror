@@ -1,6 +1,6 @@
 import React from "react";
-// import Add from "../components/Add";
-// import {Switch, Route} from 'react-router-dom';
+import Add from "../components/Add";
+import {Routes, Route} from 'react-router-dom';
 
 function SignUp() {  
     return (
@@ -12,9 +12,11 @@ function SignUp() {
                     </div>
                 </div>
             </div>
-            {/* <Switch>
-                <Route path="/add" component={Add} />   
-            </Switch>     */}
+            <Add/>
+            {/* <Route path="/add" component={(<Add/>)} /> */}
+            {/* <Routes>
+                <Route path="/add" component={(<Add/>)} />   
+            </Routes>     */}
         </>
         
 

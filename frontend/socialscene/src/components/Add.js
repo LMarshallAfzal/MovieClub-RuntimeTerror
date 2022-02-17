@@ -53,13 +53,13 @@ class Add extends React.Component{
                     <tr>
                         <th>First Name</th>
                         <td>
-                            <input value={this.state.first_name} name="full_name" onChange={this.changeHandler} type="text" className="form-control" />
+                            <input value={this.state.first_name} name="first_name" onChange={this.changeHandler} type="text" className="form-control" />
                         </td>
                     </tr>
                     <tr>
                         <th>Last Name</th>
                         <td>
-                            <input value={this.state.first_name} name="last_name" onChange={this.changeHandler} type="text" className="form-control" />
+                            <input value={this.state.last_name} name="last_name" onChange={this.changeHandler} type="text" className="form-control" />
                         </td>
                     </tr>
                     <tr>
