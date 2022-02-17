@@ -1,5 +1,5 @@
 import React from "react";
-import "../styling/pages/App.css"
+import "../styling/pages/App.css";
 import Navbar from "../components/Navbar";
 import HomePage from "./Homepage";
 import LogIn from "./Login";
