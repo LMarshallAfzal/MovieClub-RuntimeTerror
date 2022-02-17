@@ -5,6 +5,7 @@ import LogIn from "../pages/login";
 import Dashboard from "../pages/dashboard";
 import NotFound404 from "../pages/notFound404";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
