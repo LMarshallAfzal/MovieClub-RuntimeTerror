@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react"
 
-class Add extends React.Component{
-    constructor(){
+class EditUser extends React.Component {
+    constructor() {
         super()
-        this.state={
+        this.state = {
             username:'',
             first_name:'',
             last_name:'',
@@ -17,45 +17,51 @@ class Add extends React.Component{
         this.submitForm=this.submitForm.bind(this)
     }
 
-    changeHandler(event) {
+    changeHandler(event){
         this.setState({
             [event.target.name]:event.target.value
         });
     }
 
-    submitForm() {
-        fetch('http://127.0.0.1:8000/sign_up/',{
-            method:'POST',
+    submitForm(){
+        var id=this.props.match.params.id;
+        fetch('http://127.0.0.1:8000/editProfile/'+id+'/',{
+            method:'PUT',
             body:JSON.stringify(this.state),
             headers:{
                 'Content-type': 'application/json; charset=UTF-8',
             },
         })
         .then(response=>response.json())
-        .then((data)=>console.log(data))
+        .then((data)=>console.log(data));
+    }
 
-        this.setState({
-            username:'',
-            first_name:'',
-            last_name:'',
-            email:'',
-            bio:'',
-            preferences:'',
-            password:'',
-            password_confirmation:''
-        })
+    fetchData(){
+        var id=this.props.match.params.id;
+        fetch('http://127.0.0.1:8000/editProfile/'+id)
+        .then(response=>response.json())
+        .then((data)=>{
+            this.setState({
+                username:data.full_name,
+                first_name:data.first_name,
+                last_name:data.last_name,
+                email:data.email,
+                bio:data.bio,
+                preferences:data.preferences,
+                password:data.password,
+                password_confirmation:data.password_confirmation
+            });
+        });
+    }
+
+    componentDidMount() {
+        this.fetchData();
     }
 
     render(){
         return (
             <table className="table table-bordered">
                 <tbody>
-                    <tr>
-                        <th>Username</th>
-                        <td>
-                            <input value={this.state.username} name="username" onChange={this.changeHandler} type="text" className="form-control" />
-                        </td>
-                    </tr>
                     <tr>
                         <th>First Name</th>
                         <td>
@@ -87,26 +93,14 @@ class Add extends React.Component{
                         </td>
                     </tr>
                     <tr>
-                        <th>Password</th>
-                        <td>
-                            <input value={this.state.password} name="password" onChange={this.changeHandler} type="password" className="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Password confirmation</th>
-                        <td>
-                            <input value={this.state.password_confirmation} name="password_confirmation" onChange={this.changeHandler} type="password" className="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
                         <td colSpan="2">
                             <input type="submit" onClick={this.submitForm} className="btn btn-dark" />
                         </td>
                     </tr>
                 </tbody>
             </table>
-        )
+        );
     }
 }
 
-export default Add
+export default EditUser
