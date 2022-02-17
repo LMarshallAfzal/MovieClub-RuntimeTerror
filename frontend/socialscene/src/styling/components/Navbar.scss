@@ -1,8 +1,4 @@
-#root, html, body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-}
+@use "../base";
 
 .navbar {
   position: sticky;
@@ -24,11 +20,11 @@
 .navbar-red {
   height: 10px;
   display: flex;
-  background: #FF0000;
+  background: base.$primary-red;
 }
 
 .navbar-logo {
-  color: #FFFFFF;
+  color: base.$primary-white;
   font-family: Helvetica, serif;
   float: left;
   margin: auto;
@@ -49,5 +45,3 @@
   padding-top: 30px;
   text-decoration: none;
 }
-
-/*# sourceMappingURL=Navbar.css.map */

@@ -6,7 +6,6 @@ import LogIn from "./Login";
 import NotFound404 from "./NotFound";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
-
 function App() {
   return (
       <Router>

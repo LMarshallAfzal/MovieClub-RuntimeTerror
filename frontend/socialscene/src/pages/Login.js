@@ -8,7 +8,6 @@ function login() {
                 <Col>
                     log in.
                 </Col>
-
                 <Col>
                     username:
                     password:
@@ -17,7 +16,5 @@ function login() {
         </Container>
     );
 }
-
-
 
 export default login;
