@@ -765,3 +765,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,pycharm,webstorm,visualstudiocode,vim,react,reactnative,python,django
+package-lock.json
