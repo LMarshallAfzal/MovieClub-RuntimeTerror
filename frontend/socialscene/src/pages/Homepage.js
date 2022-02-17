@@ -1,4 +1,5 @@
 import React from "react";
+import "../styling/pages/Homepage.sass"
 
 function homepage() {
     return (
