@@ -68,6 +68,7 @@ html, body, #root {
     width: auto;
     padding-right: 10px;
     padding-top: 30px;
+    text-decoration: none;
 }
 
 .navbar-logo {
