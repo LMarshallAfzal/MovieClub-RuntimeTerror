@@ -51,6 +51,12 @@ class Add extends React.Component{
             <table className="table table-bordered">
                 <tbody>
                     <tr>
+                        <th>Username</th>
+                        <td>
+                            <input value={this.state.username} name="username" onChange={this.changeHandler} type="text" className="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
                         <th>First Name</th>
                         <td>
                             <input value={this.state.first_name} name="first_name" onChange={this.changeHandler} type="text" className="form-control" />
@@ -78,6 +84,18 @@ class Add extends React.Component{
                         <th>Preferences</th>
                         <td>
                             <input value={this.state.preferences} name="preferences" onChange={this.changeHandler} type="text" className="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Password</th>
+                        <td>
+                            <input value={this.state.password} name="password" onChange={this.changeHandler} type="text" className="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Password confirmation</th>
+                        <td>
+                            <input value={this.state.password_confirmation} name="password_confirmation" onChange={this.changeHandler} type="text" className="form-control" />
                         </td>
                     </tr>
                     <tr>

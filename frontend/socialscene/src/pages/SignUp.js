@@ -1,6 +1,5 @@
 import React from "react";
 import Add from "../components/Add";
-// import {Routes, Route} from 'react-router-dom';
 
 function SignUp() {  
     return (
@@ -13,9 +12,6 @@ function SignUp() {
                 </div>
             </div>
             <Add/>
-            {/* <Routes>
-                <Route path="/add" component={(<Add/>)} />   
-            </Routes>     */}
         </>
         
 
