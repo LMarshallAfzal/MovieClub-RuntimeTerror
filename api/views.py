@@ -106,3 +106,14 @@ def editProfile(request, pk):
         return Response(serializer.data, status=status.HTTP_200_OK)    
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["POST"])
+def addRating(request, pk, movie_name):
+    user = User.objects.get(id=pk)
+    movie = Movie.objects.get(movie_name=movie_name)
+    serializer = RatingsSerializer(movie, user, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer._error, status=status.HTTP_400_BAD_REQUEST)

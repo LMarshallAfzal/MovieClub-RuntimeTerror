@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer 
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework import serializers
-from api.models import Club, User, Membership, Movie
+from api.models import Club, User, Membership, Movie,Rating
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
@@ -146,4 +146,9 @@ class MovieSerializer(ModelSerializer):
 class MembershipSerializer(ModelSerializer):
     class Meta:
         model = Membership
+        fields = '__all__'
+
+class RatingsSerializer(ModelSerializer):
+    class Meta:
+        model = Rating
         fields = '__all__'
