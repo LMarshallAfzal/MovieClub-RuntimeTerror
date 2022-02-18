@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import HomePage from "./Homepage";
 import LogIn from "./Login";
 import NotFound404 from "./NotFound";
-import Dashboard from "../pages/dashboard";
+import Dashboard from "../pages/Dashboard";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './sidebarData'
-import '../styling/sidebar.css';
+import "../styling/components/Sidebar.css";
 
 function sidebar() {
   return (

@@ -2,9 +2,10 @@
   width: 100%;
   background-size: cover;
   z-index: -1;
-  filter: blur(20px);
+  -webkit-filter: blur(20px);
+          filter: blur(20px);
   overflow: hidden;
-  transform-origin: center;
+  -webkit-transform-origin: center;
+          transform-origin: center;
 }
-
 /*# sourceMappingURL=Homepage.css.map */
