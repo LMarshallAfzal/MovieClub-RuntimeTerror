@@ -4,6 +4,26 @@
   width: 100%;
 }
 
+@font-face {
+  font-family: Helvetica;
+  src: url("../fonts/Helvetica.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Light;
+  src: url("../fonts/Helvetica-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Oblique;
+  src: url("../fonts/Helvetica-Oblique.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Bold;
+  src: url("../fonts/Helvetica-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-BoldOblique;
+  src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
+}
 .btn {
   padding: 8px 20px;
   outline: none;
@@ -12,6 +32,7 @@
   color: #000000;
   cursor: pointer;
   background-color: #FFFFFF;
+  font-family: Helvetica-Bold, serif;
   border-radius: 99em;
 }
 

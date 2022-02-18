@@ -4,6 +4,26 @@
   width: 100%;
 }
 
+@font-face {
+  font-family: Helvetica;
+  src: url("../fonts/Helvetica.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Light;
+  src: url("../fonts/Helvetica-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Oblique;
+  src: url("../fonts/Helvetica-Oblique.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Bold;
+  src: url("../fonts/Helvetica-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-BoldOblique;
+  src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
+}
 .navbar {
   position: sticky;
   top: 0;
@@ -12,7 +32,7 @@
 }
 
 .navbar-black {
-  background: black;
+  background: #000000;
   height: 80px;
   align-items: center;
   justify-content: center;
@@ -42,7 +62,6 @@
 
 .navbar-enter-button {
   float: right;
-  font-family: Helvetica-Bold, serif;
   margin: auto;
   width: auto;
   padding-right: 10px;
