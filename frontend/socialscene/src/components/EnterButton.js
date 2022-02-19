@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 export function EnterButton() {
     return (
         <Link to='/login'>
-            <enterButton className='btn'>enter</enterButton>
+            <EnterButton className='btn'>enter</EnterButton>
         </Link>
     );
 }
