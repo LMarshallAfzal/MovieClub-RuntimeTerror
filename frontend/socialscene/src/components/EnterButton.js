@@ -1,8 +1,11 @@
 import React from "react";
-import "../styling/components/EnterButton.css";
+import "../styling/enterButton.css";
+import {Link} from "react-router-dom";
 
-export function enterButton() {
+export function EnterButton() {
     return (
-        <enterButton className='btn'>enter</enterButton>
+        <Link to='/login'>
+            <enterButton className='btn'>enter</enterButton>
+        </Link>
     );
 }

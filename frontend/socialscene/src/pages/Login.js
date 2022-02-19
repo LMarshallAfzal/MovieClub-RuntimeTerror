@@ -1,21 +1,19 @@
 import React from "react";
-import "../styling/pages/Login.css";
-import {Col, Container, Row} from "react-bootstrap";
+import AuthUser from "../components/AuthenticateUser";
 
-function login() {
+function Login() {
     return (
-        <Container>
-            <Row>
-                <Col>
-                    log in.
-                </Col>
-                <Col>
-                    username:
-                    password:
-                </Col>
-            </Row>
-        </Container>
+        <>
+            <div class="container">
+                <div class = "row">
+                    <div class = "col-12">
+                        <h1>Log In</h1>
+                        <AuthUser/>
+                    </div>    
+                </div> 
+            </div>    
+        </>
     );
 }
 
-export default login;
+export default Login;

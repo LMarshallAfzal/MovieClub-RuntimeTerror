@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import "../styling/components/Navbar.css";
+import "../styling/main.css"
 import {enterButton} from "./EnterButton";
 
 
 function Navbar() {
-    const [setButton] = useState(true)
+    const [buttonState, setButton] = useState(true)
 
     const showButton = () => {
         if(window.innerWidth <= 960) {
@@ -26,11 +27,20 @@ function Navbar() {
                         <span style={{fontFamily: "Helvetica-Bold"}}>scene</span>
                         <span style={{ color: "red", fontWeight: "bold" }}>.</span>
                     </Link>
-                    <Link to={"/login"} className={"navbar-enter-button"}>
-                        <enterButton className={"btn"}>
-                            enter
-                        </enterButton>
-                    </Link>
+                    <div className={"navbar-enter-button"}>
+                        <Link to="login" style={{ textDecoration: 'none' }}>
+                            <enterButton className={"btn"}> 
+                                Login
+                            </enterButton>
+                        </Link>
+                    </div>
+                    <div className={"navbar-enter-button"}>
+                        <Link to="signup" style={{ textDecoration: 'none' }}>
+                            <enterButton className={"btn"}> 
+                                Sign Up
+                            </enterButton>
+                        </Link>
+                    </div>
                 </div>
                 <div className={"navbar-red"} />
             </div>

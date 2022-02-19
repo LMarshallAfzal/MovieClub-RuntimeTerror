@@ -97,6 +97,7 @@ def get_user(request, pk):
     return Response(serializer.data) 
   
 @api_view(['PUT'])
+@permission_classes([IsAuthenticated])
 def editProfile(request, pk):
     data = request.data
     user = User.objects.get(id = pk)

@@ -1,21 +1,28 @@
 import React from "react";
-import "../styling/pages/App.css";
-import Navbar from "../components/Navbar";
-import HomePage from "./Homepage";
+import Navbar from "../components/navbar";
 import LogIn from "./Login";
-import NotFound404 from "./NotFound";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import SignUp from "./SignUp"
+import UpdateProfile from "./Profile";
+import NotFound404 from "../pages/notFound404";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Homepage from "./Homepage";
 
 function App() {
   return (
-      <Router>
-          <Navbar />
-              <Routes>
-                  <Route path={"/"} element={(<HomePage />)}/>
-                  <Route path={"/login"} element={(<LogIn />)}/>
-                  <Route path={"*"} element={<NotFound404 />}/>
-              </Routes>
-      </Router>
+      <>
+          <Router>
+              <Navbar />
+              <div className={"container-fluid p-0 flex-grow-1 h-auto"}>
+                  <Routes>
+                      <Route path={"/"} element={(<Homepage />)}/>
+                      <Route path="/login" element={(<LogIn />)}/>
+                      <Route path="/signup" element={(<SignUp />)}/>
+                      <Route path="/editProfile/1" element={(<UpdateProfile/>)}/>
+                      <Route path="*" element={<NotFound404 />}/>
+                  </Routes>
+              </div>
+          </Router>
+      </>
   );
 }
 

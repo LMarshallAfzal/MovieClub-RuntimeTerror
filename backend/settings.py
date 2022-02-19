@@ -131,6 +131,11 @@ AUTH_USER_MODEL = 'api.User'
 
 CORS_ALLOW_ORIGINS_ALL = True
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
+
 CORS_ALLOW_ORIGINS = [
-    'http://localhost.localdomain:3000/'
+    'http://localhost.localdomain:3000/',
+    'http://localhost:3000',
 ]
