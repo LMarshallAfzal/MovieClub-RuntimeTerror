@@ -24,7 +24,8 @@ class EditUser extends React.Component {
     }
 
     submitForm(){
-        var id=this.props.id;
+        // var id=this.props.id;
+        // console.log(id)
         fetch('http://127.0.0.1:8000/edit_profile/1/',{
             method:'PUT',
             body:JSON.stringify(this.state),

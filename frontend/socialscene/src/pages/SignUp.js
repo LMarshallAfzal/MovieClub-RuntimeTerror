@@ -13,8 +13,6 @@ function SignUp() {
             </div>
             <Add/>
         </>
-        
-
     );
 }
 export default SignUp

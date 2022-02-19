@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import PropTypes from "prop-types"
+import {Link} from "react-router-dom"
 
 async function LoginUser(credentials) {
     return fetch('http://127.0.0.1:8000/log_in/', {
@@ -38,7 +39,7 @@ export default function AuthUser({ setToken }) {
             <input type="password" onChange={e => setPassword(e.target.value)} />
           </label>
           <div>
-            <button type="submit">Submit</button>
+            <button type="submit">Submit<Link to="/editProfile/1"></Link></button>
           </div>
         </form>
       </div>
