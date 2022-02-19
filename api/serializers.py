@@ -157,7 +157,7 @@ class ChangePasswordSerializer(serializers.Serializer):
 class addRatingSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=False,queryset=User.objects.all())
     movie = serializers.PrimaryKeyRelatedField(read_only=False,queryset=Movie.objects.all())
-    rating = serializers.FloatField(required = True,write_only=True)
+    rating = serializers.FloatField(required = True,write_only=True,validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
     
     class Meta:
         model = Rating

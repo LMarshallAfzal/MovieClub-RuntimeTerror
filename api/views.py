@@ -109,15 +109,15 @@ def editProfile(request, pk):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def addRating(request, pk):
+def addRating(request, movieID):
     try:
-        movie = Movie.objects.get(movieID=pk)
+        movie = Movie.objects.get(movieID=movieID)
         user = User.objects.get(username=request.user.username)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
     request.data._mutable = True
     request.data["user"] = user.id  
-    request.data["movie"] = movie.movieID
+    request.data["movie"] = movie.id
     serializer = addRatingSerializer(data=request.data,context={"request": request})
 
     if serializer.is_valid():
