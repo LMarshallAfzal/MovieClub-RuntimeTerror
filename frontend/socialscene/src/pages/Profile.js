@@ -1,5 +1,7 @@
 import React from "react";
 import EditUser from "../components/EditUser";
+import Add from "../components/Add";
+
 
 function UpdateProfile() {  
     return (

@@ -24,8 +24,8 @@ class EditUser extends React.Component {
     }
 
     submitForm(){
-        var id=this.props.match.params.id;
-        fetch('http://127.0.0.1:8000/editProfile/'+id+'/',{
+        var id=this.props.id;
+        fetch('http://127.0.0.1:8000/edit_profile/1/',{
             method:'PUT',
             body:JSON.stringify(this.state),
             headers:{
@@ -34,29 +34,31 @@ class EditUser extends React.Component {
         })
         .then(response=>response.json())
         .then((data)=>console.log(data));
-    }
 
-    fetchData(){
-        var id=this.props.match.params.id;
-        fetch('http://127.0.0.1:8000/editProfile/'+id)
-        .then(response=>response.json())
-        .then((data)=>{
-            this.setState({
-                username:data.full_name,
-                first_name:data.first_name,
-                last_name:data.last_name,
-                email:data.email,
-                bio:data.bio,
-                preferences:data.preferences,
-                password:data.password,
-                password_confirmation:data.password_confirmation
-            });
-        });
     }
+    
 
-    componentDidMount() {
-        this.fetchData();
-    }
+    // fetchData(){
+    //     var id=this.props.id;
+    //     fetch('http://127.0.0.1:8000/edit_profile/1')
+    //     .then(response=>response.json())
+    //     .then((data)=>{
+    //         this.setState({
+    //             username:data.full_name,
+    //             first_name:data.first_name,
+    //             last_name:data.last_name,
+    //             email:data.email,
+    //             bio:data.bio,
+    //             preferences:data.preferences,
+    //             password:data.password,
+    //             password_confirmation:data.password_confirmation
+    //         });
+    //     });
+    // }
+
+    // componentDidMount() {
+    //     this.fetchData();
+    // }
 
     render(){
         return (

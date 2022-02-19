@@ -18,7 +18,7 @@ function App() {
                       <Route path={"/"} element={(<Homepage />)}/>
                       <Route path="/login" element={(<LogIn />)}/>
                       <Route path="/signup" element={(<SignUp />)}/>
-                      <Route path="/editProfile" element={(<UpdateProfile/>)}/>
+                      <Route path="/editProfile/1" element={(<UpdateProfile/>)}/>
                       <Route path="*" element={<NotFound404 />}/>
                   </Routes>
               </div>
