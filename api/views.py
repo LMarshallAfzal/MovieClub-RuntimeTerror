@@ -107,13 +107,25 @@ def editProfile(request, pk):
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(["POST"])
-def addRating(request, pk, movie_name):
-    user = User.objects.get(id=pk)
-    movie = Movie.objects.get(movie_name=movie_name)
-    serializer = RatingsSerializer(movie, user, data=request.data)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def addRating(request, pk):
+    try:
+        movie = Movie.objects.get(movieID=pk)
+        user = User.objects.get(username=request.user.username)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    request.data._mutable = True
+    request.data["user"] = user.id  
+    request.data["movie"] = movie.movieID
+    serializer = addRatingSerializer(data=request.data,context={"request": request})
+
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
-        return Response(serializer._error, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+    

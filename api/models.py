@@ -91,8 +91,9 @@ class Membership(models.Model):
 
 
 class Movie(models.Model):
+
     movieID = models.PositiveIntegerField(primary_key=True,default=0)
-    
+
     title = models.CharField(
         max_length=100,
         blank=False,
@@ -115,7 +116,12 @@ class Movie(models.Model):
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
     rating = models.FloatField(
+
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
+        
     )
+
