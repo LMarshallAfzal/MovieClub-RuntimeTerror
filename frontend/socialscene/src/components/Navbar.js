@@ -19,7 +19,7 @@ function Navbar() {
 
     return (
         <>
-            <div className={"navbar"}>
+            <div className={"socialscene-navbar"}>
                 <div className={"navbar-black"}>
                     <Link to={"/"} className={"navbar-logo"}>
                         <span style={{fontFamily: "Helvetica-Light"}}>social</span>

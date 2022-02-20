@@ -1,5 +1,4 @@
-@use "../base";
-.sidebar {
+z.sidebar {
   background-color: #F8F7F7;
   height: 100%;
   width: 15rem;
@@ -21,6 +20,7 @@
 }
 
 .sidebar-list .sidebar-text {
+  background-color: #F8F7F7;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 100%;
