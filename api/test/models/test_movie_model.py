@@ -13,34 +13,35 @@ class MovieModelTestCase(APITestCase):
     ]
 
     def setUp(self):
-        self.movie = Movie.objects.get(movie_name='The Godfather')
-        self.second_movie = Movie.objects.get(movie_name='Pulp Fiction')
+        self.movie = Movie.objects.get(movieID=1000)
+        self.second_movie = Movie.objects.get(movieID=1001)
 
     def test_valid_movie(self):
         self._assert_movie_is_valid()
 
-    def test_movie_name_must_be_unique(self):
-        self.movie.movie_name = self.second_movie.movie_name
+    def test_movieID_must_be_unique(self):
+        self.movie.movieID = self.second_movie.movieID
+        print(self.movie.movieID)
         self._assert_movie_is_invalid()
 
-    def test_movie_name_must_not_be_blank(self):
-        self.movie.movie_name = ''
+    def test_title_must_not_be_blank(self):
+        self.movie.title = ''
         self._assert_movie_is_invalid()
 
-    def test_movie_name_may_contain_100_characters_at_most(self):
-        self.movie.movie_name = 'x' * 100
+    def test_title_may_contain_100_characters_at_most(self):
+        self.movie.title = 'x' * 100
         self._assert_movie_is_valid()
 
-    def test_movie_name_must_not_contain_more_than_100_characters(self):
-        self.movie.movie_name = 'x' * 101
+    def test_title_must_not_contain_more_than_100_characters(self):
+        self.movie.title = 'x' * 101
         self._assert_movie_is_invalid()
     
-    def test_release_date_must_not_be_blank(self):
-        self.movie.release_date = ''
+    def test_year_must_not_be_blank(self):
+        self.movie.year = ''
         self._assert_movie_is_invalid()
 
-    def test_release_date_need_not_be_unique(self):
-        self.movie.release_date = self.second_movie.release_date
+    def test_year_need_not_be_unique(self):
+        self.movie.year = self.second_movie.year
         self._assert_movie_is_valid()
     
     def test_genres_need_not_be_unique(self):
@@ -58,41 +59,6 @@ class MovieModelTestCase(APITestCase):
     def test_genres_must_not_contain_more_than_100_characters(self):
         self.movie.genres = 'x' * 101
         self._assert_movie_is_invalid()
-
-    def test_director_need_not_be_unique(self):
-        self.movie.director = self.second_movie.director
-        self._assert_movie_is_valid()
-
-    def test_director_must_not_be_blank(self):
-        self.movie.director = ''
-        self._assert_movie_is_invalid()
-
-    def test_director_contain_50_characters_at_most(self):
-        self.movie.director = 'x' * 50
-        self._assert_movie_is_valid()
-
-    def test_director_must_not_contain_more_than_50_characters(self):
-        self.movie.director = 'x' * 51
-        self._assert_movie_is_invalid()
-    
-    def test_cast_need_not_be_unique(self):
-        self.movie.cast = self.second_movie.cast
-        self._assert_movie_is_valid()
-
-    def test_cast_must_not_be_blank(self):
-        self.movie.cast = ''
-        self._assert_movie_is_invalid()
-
-    def test_cast_contain_250_characters_at_most(self):
-        self.movie.cast = 'x' * 250
-        self._assert_movie_is_valid()
-
-    def test_cast_must_not_contain_more_than_250_characters(self):
-        self.movie.cast = 'x' * 251
-        self._assert_movie_is_invalid()
-
-    
-    
 
     def _assert_movie_is_valid(self):
         try:
