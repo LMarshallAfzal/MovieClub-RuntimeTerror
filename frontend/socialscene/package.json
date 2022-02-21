@@ -15,7 +15,9 @@
     "react-router-dom": "^6.0.0-beta.8",
     "react-scripts": "5.0.0",
     "sass": "^1.49.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "cors": "2.8.5",
+    "express": "4.17.1"
   },
   "scripts": {
     "start": "react-scripts start",

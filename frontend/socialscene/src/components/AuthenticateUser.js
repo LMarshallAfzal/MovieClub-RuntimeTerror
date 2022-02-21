@@ -1,22 +1,22 @@
-import React, {useState} from "react"
+import React,{useState} from "react"
 import PropTypes from "prop-types"
-import {Link} from "react-router-dom"
 
 async function LoginUser(credentials) {
     return fetch('http://127.0.0.1:8000/log_in/', {
         method:'POST',
         headers:{
-            'Content-type': 'application/json; charset=UTF-8',
+            'Content-type': 'application/json',
         },
         body: JSON.stringify(credentials)
     })
-        .then(response=>response.json())
+        .then(data=>data.json())
         .then((data)=>console.log(data))
 }
 
-export default function AuthUser({ setToken }) {
+export default function AuthenticateUser({ setToken }) {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
+
   
     const handleSubmit = async e => {
       e.preventDefault();
@@ -25,6 +25,9 @@ export default function AuthUser({ setToken }) {
         password
       });
       setToken(token);
+      if (!token) {
+        console.log("false")
+      }
     }
   
     return(
@@ -39,13 +42,13 @@ export default function AuthUser({ setToken }) {
             <input type="password" onChange={e => setPassword(e.target.value)} />
           </label>
           <div>
-            <button type="submit">Submit<Link to="/editProfile/1"></Link></button>
+            <button type="submit">Submit</button>
           </div>
         </form>
       </div>
     )
   }
   
-  AuthUser.propTypes = {
+  AuthenticateUser.propTypes = {
     setToken: PropTypes.func.isRequired
   };

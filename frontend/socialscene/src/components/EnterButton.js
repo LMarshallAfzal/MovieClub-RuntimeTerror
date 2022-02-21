@@ -1,5 +1,5 @@
 import React from "react";
-import "../styling/enterButton.css";
+import "../styling/components/EnterButton.css";
 import {Link} from "react-router-dom";
 
 export function EnterButton() {

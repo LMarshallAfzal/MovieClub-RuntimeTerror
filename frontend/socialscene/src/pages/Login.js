@@ -1,19 +1,21 @@
-import React from "react";
-import AuthUser from "../components/AuthenticateUser";
+// import React from "react";
+// import AuthenticateUser from "../components/AuthenticateUser";
 
-function Login() {
-    return (
-        <>
-            <div class="container">
-                <div class = "row">
-                    <div class = "col-12">
-                        <h1>Log In</h1>
-                        <AuthUser/>
-                    </div>    
-                </div> 
-            </div>    
-        </>
-    );
-}
 
-export default Login;
+// function Login() {
+//     return (
+//         <>
+//             <div class="container">
+//                 <div class = "row">
+//                     <div class = "col-12">
+//                         <h1>Log In</h1>
+//                     </div>    
+//                 </div> 
+//             </div>  
+//             <AuthenticateUser/>
+//         </>
+        
+//     );
+// }
+
+// export default Login;
