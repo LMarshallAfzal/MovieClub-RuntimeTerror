@@ -1,7 +1,7 @@
 @use "../base";
 
-.btn {
-  padding: 8px 20px;
+.enter-button {
+  padding: 8px 18px;
   outline: none;
   border: none;
   font-size: 18px;
@@ -9,17 +9,11 @@
   cursor: pointer;
   background-color: base.$primary-white;
   font-family: base.$helvetica-bold;
+  transition: all 0.3s ease-out;
   border-radius: 99em;
   }
 
-.btn:hover {
-  padding: 8px 20px;
-  transition: all 0.3s ease-out;
+.enter-button:hover {
   background-color: base.$primary-red;
   color: base.$primary-white;
-  border-radius: 99em;
-}
-
-.test {
-
 }

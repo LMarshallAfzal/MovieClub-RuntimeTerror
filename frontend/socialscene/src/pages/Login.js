@@ -3,6 +3,7 @@ import "../styling/pages/Login.css";
 // import {Stack} from "react-bootstrap";
 import HeadingCircle from "../components/HeadingCircle";
 import {Stack, TextField} from "@mui/material";
+import FormButton from "../components/FormButton";
 
 
 function login() {
@@ -18,10 +19,15 @@ function login() {
                         label={"username"}
                         variant={"outlined"}
                     />
+
                     <TextField
                         id={"outlined-basic"}
                         label={"password"}
                         variant={"outlined"}
+                    />
+
+                    <FormButton
+                        text={"forgot password"}
                     />
                 </Stack>
             </div>
