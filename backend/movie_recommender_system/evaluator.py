@@ -9,11 +9,11 @@ class Evaluate:
         ed = evaluator_data(dataset, rankings)
         self.dataset = ed
         
-    def AddAlgorithm(self, algorithm, name):
+    def add_algorithm(self, algorithm, name):
         alg = evaluator_algorithm(algorithm, name)
         self.algorithms.append(alg)
         
-    def Evaluate(self, doTopN):
+    def evaluate(self, doTopN):
         results = {}
         for algorithm in self.algorithms:
             print("Evaluating ", algorithm.GetName(), "...")
@@ -45,7 +45,7 @@ class Evaluate:
             print("           for a given user. Higher means more diverse.")
             print("Novelty:   Average popularity rank of recommended items. Higher means more novel.")
         
-    def SampleTopNRecs(self, ml, testSubject=85, k=10):
+    def sample_top_n(self, ml, testSubject=85, k=10):
         
         for algo in self.algorithms:
             print("\nUsing recommender ", algo.GetName())

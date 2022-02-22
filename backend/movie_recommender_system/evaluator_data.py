@@ -18,13 +18,13 @@ class EvaluateData:
         self.simsAlgo = KNNBaseline(sim_options=sim_options)
         self.simsAlgo.fit(self.fullTrainSet)
             
-    def GetFullTrainSet(self):
+    def get_full_trainset(self):
         return self.fullTrainSet
     
-    def GetFullAntiTestSet(self):
+    def get_full_anti_testset(self):
         return self.fullAntiTestSet
     
-    def GetAntiTestSetForUser(self, testSubject):
+    def get_anti_test_set_for_user(self, testSubject):
         trainset = self.fullTrainSet
         fill = trainset.global_mean
         anti_testset = []
@@ -35,23 +35,23 @@ class EvaluateData:
                                  i not in user_items]
         return anti_testset
 
-    def GetTrainSet(self):
+    def get_trainset(self):
         return self.trainSet
     
-    def GetTestSet(self):
+    def get_test_set(self):
         return self.testSet
     
-    def GetLOOCVTrainSet(self):
+    def get_LOOCV_trainSet(self):
         return self.LOOCVTrain
     
-    def GetLOOCVTestSet(self):
+    def get_LOOCV_testset(self):
         return self.LOOCVTest
     
-    def GetLOOCVAntiTestSet(self):
+    def get_LOOCV_anti_testset(self):
         return self.LOOCVAntiTestSet
     
-    def GetSimilarities(self):
+    def get_similarities(self):
         return self.simsAlgo
     
-    def GetPopularityRankings(self):
+    def get_popular_rankings(self):
         return self.rankings
