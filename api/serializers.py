@@ -3,6 +3,7 @@ from rest_framework.exceptions import NotAuthenticated
 from rest_framework import serializers
 from api.models import Club, User, Membership, Movie
 from rest_framework.validators import UniqueValidator
+from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
 
@@ -64,11 +65,13 @@ class SignUpSerializer(serializers.Serializer):
             bio = validated_data['bio'],
             preferences = validated_data['preferences']
         )
+        Token.objects.create(user=user)
 
         user.set_password(validated_data['password'])
         user.save()
 
         return user
+
 
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:

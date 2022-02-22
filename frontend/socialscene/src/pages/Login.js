@@ -1,21 +1,31 @@
-// import React from "react";
-// import AuthenticateUser from "../components/AuthenticateUser";
+import React, {useState} from "react";
+import AuthenticateUser from "../components/AuthenticateUser";
+import EditUser from "../components/EditUser";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Profile from "./Profile";
 
 
-// function Login() {
-//     return (
-//         <>
-//             <div class="container">
-//                 <div class = "row">
-//                     <div class = "col-12">
-//                         <h1>Log In</h1>
-//                     </div>    
-//                 </div> 
-//             </div>  
-//             <AuthenticateUser/>
-//         </>
+function Login() {
+    const [token, setToken] = useState('');
+
+    const userLogin = (tok) => {
+      setToken(tok);
+    }
+    if(!token) {
+        return <AuthenticateUser userLogin={userLogin}/>
+      }
+    return (
+        <>
+            {/* <Router> */}
+                <Routes>
+                    <Route path="/editProfile" element={(<Profile token={token}/>)} />
+                </Routes> 
+            {/* </Router>   */}
+            
+            {/* <EditUser token={token}/> */}
+        </>
         
-//     );
-// }
+    );
+}
 
-// export default Login;
+export default Login;

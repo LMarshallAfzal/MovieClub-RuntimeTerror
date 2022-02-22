@@ -24,9 +24,9 @@ class EditUser extends React.Component {
     }
 
     submitForm(){
-        // var id=this.props.id;
+        var id=this.props.id;
         // console.log(id)
-        fetch('http://127.0.0.1:8000/edit_profile/1/',{
+        fetch('http://127.0.0.1:8000/edit_profile/'+id+'/',{
             method:'PUT',
             body:JSON.stringify(this.state),
             headers:{
@@ -39,27 +39,27 @@ class EditUser extends React.Component {
     }
     
 
-    // fetchData(){
-    //     var id=this.props.id;
-    //     fetch('http://127.0.0.1:8000/edit_profile/1')
-    //     .then(response=>response.json())
-    //     .then((data)=>{
-    //         this.setState({
-    //             username:data.full_name,
-    //             first_name:data.first_name,
-    //             last_name:data.last_name,
-    //             email:data.email,
-    //             bio:data.bio,
-    //             preferences:data.preferences,
-    //             password:data.password,
-    //             password_confirmation:data.password_confirmation
-    //         });
-    //     });
-    // }
+    fetchData(){
+        var id=this.props.id;
+        fetch('http://127.0.0.1:8000/edit_profile/'+id)
+        .then(response=>response.json())
+        .then((data)=>{
+            this.setState({
+                username:data.full_name,
+                first_name:data.first_name,
+                last_name:data.last_name,
+                email:data.email,
+                bio:data.bio,
+                preferences:data.preferences,
+                password:data.password,
+                password_confirmation:data.password_confirmation
+            });
+        });
+    }
 
-    // componentDidMount() {
-    //     this.fetchData();
-    // }
+    componentDidMount() {
+        this.fetchData();
+    }
 
     render(){
         return (
