@@ -1,6 +1,6 @@
 @use "../base";
 
-.flex {
+.login{
   display: flex;
   height: base.$height;
 
@@ -17,5 +17,13 @@
     justify-content: center;
     align-self: center;
     margin: auto;
+  }
+}
+
+.dual-button {
+  display: flex;
+
+  &-child{
+    flex: 1;
   }
 }

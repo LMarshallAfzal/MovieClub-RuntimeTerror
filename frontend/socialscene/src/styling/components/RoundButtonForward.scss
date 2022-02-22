@@ -1,0 +1,16 @@
+@use "../base";
+
+.round-forward {
+  background-color: base.$primary-black;
+  color: base.$primary-white;
+  display: block;
+  height: auto;
+  width: auto;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.round-forward:hover {
+  background-color: base.$primary-red;
+}
+

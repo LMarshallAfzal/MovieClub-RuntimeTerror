@@ -50,29 +50,18 @@ h2--emphasise {
   color: #FF0000;
 }
 
-.login {
-  display: flex;
-  height: calc(100% - 90px);
-}
-.login-left {
-  flex: 1;
-  width: 50%;
-}
-.login-right {
-  width: 50%;
-  padding-right: 20px;
-  flex: 1;
-  max-width: 25em;
-  justify-content: center;
-  align-self: center;
-  margin: auto;
+.round-forward {
+  background-color: #000000;
+  color: #FFFFFF;
+  display: block;
+  height: auto;
+  width: auto;
+  border-radius: 50%;
+  text-align: center;
 }
 
-.dual-button {
-  display: flex;
-}
-.dual-button-child {
-  flex: 1;
+.round-forward:hover {
+  background-color: #FF0000;
 }
 
-/*# sourceMappingURL=Login.css.map */
+/*# sourceMappingURL=RoundButtonForward.css.map */

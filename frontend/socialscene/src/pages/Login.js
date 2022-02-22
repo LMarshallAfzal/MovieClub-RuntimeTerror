@@ -4,15 +4,21 @@ import "../styling/pages/Login.css";
 import HeadingCircle from "../components/HeadingCircle";
 import {Stack, TextField} from "@mui/material";
 import FormButton from "../components/FormButton";
+import RoundButtonForward from "../components/RoundButtonForward";
 
 
 function login() {
     return (
-        <div className={"flex"}>
-            <div className={"flex-left"}>
+        <login className={"login"}>
+
+            <login className={"login-left"}>
+
                 <HeadingCircle title={"log in"}/>
-            </div>
-            <div className={"flex-right"}>
+
+            </login>
+
+            <login className={"login-right"}>
+
                 <Stack spacing={2}>
                     <TextField
                         id={"outlined-basic"}
@@ -26,12 +32,19 @@ function login() {
                         variant={"outlined"}
                     />
 
-                    <FormButton
-                        text={"forgot password"}
-                    />
+                    <div className={"dual-button"}>
+                        <div className={"dual-button-child"}>
+                            <FormButton
+                                text={"forgot password"}
+                            />
+                        </div>
+                        <div className={"dual-button-child"}>
+                            <RoundButtonForward />
+                        </div>
+                    </div>
                 </Stack>
-            </div>
-        </div>
+            </login>
+        </login>
     );
 }
 
