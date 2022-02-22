@@ -1,6 +1,4 @@
 import React from "react"
-import {useParams} from "react-router-dom"
-
 
 class EditUser extends React.Component {
     constructor(props) {
@@ -12,8 +10,6 @@ class EditUser extends React.Component {
             email:'',
             bio:'',
             preferences:'',
-            password:'',
-            password_confirmation:''
         }
         this.changeHandler=this.changeHandler.bind(this)
         this.submitForm=this.submitForm.bind(this)
@@ -26,9 +22,7 @@ class EditUser extends React.Component {
     }
 
     submitForm(){
-        var id=this.props.match.params.id;
-        console.log(id)
-        fetch('http://127.0.0.1:8000/edit_profile/'+id+'/',{
+        fetch('http://127.0.0.1:8000/edit_profile/',{
             method:'PUT',
             body:JSON.stringify(this.state),
             headers:{
@@ -42,8 +36,7 @@ class EditUser extends React.Component {
     
 
     fetchData(){
-        var id=this.props.match.params.id;
-        fetch('http://127.0.0.1:8000/edit_profile/'+ id +'/')
+        fetch('http://127.0.0.1:8000/edit_profile/')
         .then(response=>response.json())
         .then((data)=>{
             this.setState({
@@ -53,8 +46,7 @@ class EditUser extends React.Component {
                 email:data.email,
                 bio:data.bio,
                 preferences:data.preferences,
-                password:data.password,
-                password_confirmation:data.password_confirmation
+                
             });
         });
     }
@@ -63,7 +55,7 @@ class EditUser extends React.Component {
         this.fetchData();
     }
 
-    render(){
+    render() {
         return (
             <table className="table table-bordered">
                 <tbody>

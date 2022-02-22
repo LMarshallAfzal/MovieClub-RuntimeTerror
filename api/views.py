@@ -99,9 +99,8 @@ def get_user(request, pk):
   
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def editProfile(request, pk):
-    data = request.data
-    user = User.objects.get(id = pk)
+def editProfile(request):
+    user = request.user
     serializer = UpdateUserSerializer(user, data=request.data)
     if serializer.is_valid():
         serializer.save()

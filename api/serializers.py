@@ -76,7 +76,7 @@ class SignUpSerializer(serializers.Serializer):
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name','email', 'bio', 'preferences')
+        fields = ('username', 'first_name', 'last_name','email', 'bio', 'preferences')
            
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
