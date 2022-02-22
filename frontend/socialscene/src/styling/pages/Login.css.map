@@ -1,1 +1,9 @@
-{"version":3,"sourceRoot":"","sources":[],"names":[],"mappings":"","file":"Login.css"}
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "Login.scss"
+    ],
+    "names": [],
+    "file": "Login.css"
+}
