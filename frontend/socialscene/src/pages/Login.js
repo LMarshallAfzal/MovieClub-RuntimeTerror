@@ -32,16 +32,19 @@ function login() {
                         variant={"outlined"}
                     />
 
-                    <div className={"dual-button"}>
-                        <div className={"dual-button-child"}>
-                            <FormButton
+                    <FormButton
                                 text={"forgot password"}
                             />
-                        </div>
-                        <div className={"dual-button-child"}>
-                            <RoundButtonForward />
-                        </div>
-                    </div>
+                    {/*<div className={"dual-button"}>*/}
+                    {/*    <div className={"dual-button-child"}>*/}
+                    {/*        <FormButton*/}
+                    {/*            text={"forgot password"}*/}
+                    {/*        />*/}
+                    {/*    </div>*/}
+                    {/*    <div className={"dual-button-child"}>*/}
+                    {/*        <RoundButtonForward />*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </Stack>
             </login>
         </login>
