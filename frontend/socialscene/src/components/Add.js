@@ -44,6 +44,8 @@ class Add extends React.Component{
             password:'',
             password_confirmation:''
         })
+
+        localStorage.setItem('user', JSON.stringify(this.state))
     }
 
     render(){

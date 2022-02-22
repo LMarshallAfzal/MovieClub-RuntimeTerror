@@ -36,19 +36,16 @@ class EditUser extends React.Component {
     
 
     fetchData(){
-        fetch('http://127.0.0.1:8000/edit_profile/')
-        .then(response=>response.json())
-        .then((data)=>{
+        const userData = JSON.parse(localStorage.getItem('user'))
+        console.log(userData)
+        console.log(userData._first_name)
             this.setState({
-                username:data.full_name,
-                first_name:data.first_name,
-                last_name:data.last_name,
-                email:data.email,
-                bio:data.bio,
-                preferences:data.preferences,
-                
+                first_name:userData.first_name,
+                last_name:userData.last_name,
+                email:userData.email,
+                bio:userData.bio,
+                preferences:userData.preferences,
             });
-        });
     }
 
     componentDidMount() {
