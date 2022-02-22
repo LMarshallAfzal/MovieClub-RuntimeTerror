@@ -21,7 +21,7 @@ class Metrics:
             topN[int(user_id)] = ratings[:n]
         return topN
 
-    def HitRate(topN,left_out_predictions):
+    def hit_rate(topN,left_out_predictions):
         total = 0
         hits = 0
 
@@ -39,3 +39,76 @@ class Metrics:
             total+=1
         precision = hits/total
         return precision
+
+    def cummulative_hit_rate(topN,left_out_predictions,cutoff=0):
+        hits = 0
+        total = 0
+
+        for user_id,left_out_movie,rating,predicted_rating,_ in left_out_predictions:
+            if rating>=cutoff:
+                is_hit = False
+                for movie,predicted_rating in topN[int(user_id)]:
+                    if(int(left_out_movie)) == int(movie):
+                        is_hit = True
+                        break
+                if is_hit:
+                    hits += 1
+                total +=1
+
+        precision = hits/total
+        return precision
+
+    def rating_hit_rate(topN,left_out_predictions):
+        hits = defaultdict(float)
+        total = defaultdict(float)
+
+        for user_id,left_out_movie,rating,predicted_rating,_ in left_out_predictions:
+            is_hit = False
+            for movie,predicted_rating in topN[int(user_id)]:
+                if int(left_out_movie) == movie:
+                    is_hit = True
+                    break
+            if is_hit:
+                hits[rating] += 1
+            total[rating]+=1
+
+        for rating in sorted(hits.keys()):
+            print(rating,hits[rating]/total[rating])
+        
+    def reciprocal_hit_rank(topN,left_out_predictions):
+        sum = 0
+        total = 0
+        
+        for user_id,left_out_movie,rating,predicted_rating,_ in left_out_predictions:
+            hit_rank = 0
+            ranking = 0
+            
+            for movie,predicted_rating in topN[int(user_id)]:
+                ranking+=1
+                if int(left_out_movie) == movie:
+                    hit_rank = ranking
+                    break
+            if hit_rank > 0 :
+                sum = sum + (1.0/hit_rank)
+
+            total+=1
+        average = sum/total
+        return average
+
+    def user_coverage(topN,num_users,threshold=0):
+        hits = 0
+        for user_id in topN.keys():
+            is_hit = False
+            for movie,predicted_rating in topN[int(user_id)]:
+                if predicted_rating > threshold:
+                    is_hit = True
+                    break
+            if is_hit:
+                hits+=1
+
+        coverage = hits/num_users
+        return coverage
+
+
+            
+
