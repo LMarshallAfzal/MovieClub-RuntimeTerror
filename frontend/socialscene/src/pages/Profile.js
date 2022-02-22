@@ -5,14 +5,22 @@ import AuthenticateUser from "../components/AuthenticateUser"
 
 
 
-function Profile() {  
+function Profile() {
+    
+    const [token, setToken] = useState('');
+
+    const userLogin = (tok) => {
+      setToken(tok);
+    }
+    if(!token) {
+        return <AuthenticateUser userLogin={userLogin}/>
+      }
     
     return (
         <div className="wrapper">
             <BrowserRouter>
                 <Routes>
                     <Route path="/editUser">
-                        <AuthenticateUser />
                         <EditUser />
                     </Route>
                 </Routes>

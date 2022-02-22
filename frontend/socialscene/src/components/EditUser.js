@@ -1,8 +1,10 @@
 import React from "react"
+import {useParams} from "react-router-dom"
+
 
 class EditUser extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             username:'',
             first_name:'',
@@ -24,8 +26,8 @@ class EditUser extends React.Component {
     }
 
     submitForm(){
-        var id=this.props.id;
-        // console.log(id)
+        var id=this.props.match.params.id;
+        console.log(id)
         fetch('http://127.0.0.1:8000/edit_profile/'+id+'/',{
             method:'PUT',
             body:JSON.stringify(this.state),
@@ -40,8 +42,8 @@ class EditUser extends React.Component {
     
 
     fetchData(){
-        var id=this.props.id;
-        fetch('http://127.0.0.1:8000/edit_profile/'+id)
+        var id=this.props.match.params.id;
+        fetch('http://127.0.0.1:8000/edit_profile/'+ id +'/')
         .then(response=>response.json())
         .then((data)=>{
             this.setState({
