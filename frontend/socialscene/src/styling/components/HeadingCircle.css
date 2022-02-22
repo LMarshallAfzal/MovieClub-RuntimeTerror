@@ -50,24 +50,16 @@ h2--emphasise {
   color: #FF0000;
 }
 
-.btn {
-  padding: 8px 20px;
-  outline: none;
-  border: none;
-  font-size: 18px;
-  color: #000000;
-  cursor: pointer;
-  background-color: #FFFFFF;
-  font-family: Helvetica-Bold, serif;
-  border-radius: 99em;
+.circle {
+  overflow: hidden;
+  width: calc((100% - 90px) / 2);
+  height: calc(100% - 90px);
+  position: absolute;
+  border-top-right-radius: calc(100% - 90px);
+  border-bottom-right-radius: calc(100% - 90px);
+  display: flex;
+  background-color: #D8D8D8;
+  align-items: center;
 }
 
-.btn:hover {
-  padding: 8px 20px;
-  transition: all 0.3s ease-out;
-  background-color: #FF0000;
-  color: #FFFFFF;
-  border-radius: 99em;
-}
-
-/*# sourceMappingURL=EnterButton.css.map */
+/*# sourceMappingURL=HeadingCircle.css.map */

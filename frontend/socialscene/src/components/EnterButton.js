@@ -1,8 +1,10 @@
 import React from "react";
 import "../styling/components/EnterButton.css";
 
-export function enterButton() {
+function EnterButton(props) {
     return (
-        <enterButton className='btn'>enter</enterButton>
+        <enterButton className='btn'>{props.text}</enterButton>
     );
 }
+
+export default EnterButton;

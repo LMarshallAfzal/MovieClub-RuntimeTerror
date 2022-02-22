@@ -5,6 +5,8 @@
   width: 100%;
 }
 
+$height: calc(100% - 90px);
+
 //COlOURS
 $primary-black: #000000;
 
@@ -55,3 +57,51 @@ $helvetica-light: Helvetica-Light, serif;
 $helvetica-oblique: Helvetica-Oblique, serif;
 $helvetica-bold: Helvetica-Bold, serif;
 $helvetica-bold-oblique: Helvetica-BoldOblique, serif;
+
+
+body{
+  font-family: $helvetica;
+  color: $primary-black;
+
+  &--emphasise {
+    color: $primary-red;
+  }
+}
+
+h1{
+  font-family: $helvetica-bold;
+  color: $primary-black;
+  font-size: 25em;
+
+  &--emphasise {
+    color: $primary-red;
+  }
+}
+
+h2{
+  font-family: $helvetica-bold;
+  color: $primary-black;
+  font-size: 12rem;
+
+  &--emphasise {
+    color: $primary-red;
+  }
+}
+
+h3{
+
+}
+
+h4{
+
+}
+
+h5{
+
+}
+
+h6{
+
+}
+
+

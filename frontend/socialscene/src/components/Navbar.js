@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import "../styling/components/Navbar.css";
-import {enterButton} from "./EnterButton";
+import EnterButton from "./EnterButton";
 
 
 function Navbar() {
@@ -27,9 +27,7 @@ function Navbar() {
                         <span style={{ color: "red", fontWeight: "bold" }}>.</span>
                     </Link>
                     <Link to={"/login"} className={"navbar-enter-button"}>
-                        <enterButton className={"btn"}>
-                            enter
-                        </enterButton>
+                        <EnterButton className={"btn"} text={"enter"} />
                     </Link>
                 </div>
                 <div className={"navbar-red"} />

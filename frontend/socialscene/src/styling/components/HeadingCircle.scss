@@ -1,0 +1,18 @@
+@use "../base";
+
+.circle {
+  overflow: hidden;
+  width: calc((100% - 90px) / 2);
+  height: base.$height;
+  position: absolute;
+  border-top-right-radius: calc(100% - 90px);
+  border-bottom-right-radius: calc(100% - 90px);
+  display: flex;
+  background-color: base.$grey-3;
+  align-items: center;
+
+}
+
+.circle-text{
+  //float: right;
+}
