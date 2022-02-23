@@ -1,24 +1,48 @@
 @use "../base";
 
-.login{
-  display: flex;
+.login-grid {
   height: base.$height;
-  width: 100%;
   justify-content: center;
 
   &-left {
-    flex: 1;
+
   }
 
-  &-right {
-    padding-right: 20px;
-    flex: 1;
-    max-width: 25em;
-    justify-content: center;
+  &-right{
+    margin: 0;
     align-self: center;
-    margin: auto;
+    justify-content: center;
+
   }
 }
+
+.form-stack {
+  max-width: 25em;
+  width: 100%;
+
+  &-child {
+    align-self: center;
+  }
+}
+
+//.login{
+//  display: flex;
+//  height: base.$height;
+//  width: 100%;
+//  justify-content: center;
+//
+//  &-left {
+//    flex: 1;
+//  }
+//
+//  &-right {
+//    padding-right: 20px;
+//    flex: 1;
+//    max-width: 25em;
+//    align-self: center;
+//    margin: auto;
+//  }
+//}
 
 //.dual-button {
 //  display: flex;

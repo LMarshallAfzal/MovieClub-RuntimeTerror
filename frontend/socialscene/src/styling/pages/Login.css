@@ -50,22 +50,22 @@ h2--emphasise {
   color: #FF0000;
 }
 
-.login {
-  display: flex;
+.login-grid {
   height: calc(100% - 90px);
-  width: 100%;
   justify-content: center;
 }
-.login-left {
-  flex: 1;
-}
-.login-right {
-  padding-right: 20px;
-  flex: 1;
-  max-width: 25em;
-  justify-content: center;
+.login-grid-right {
+  margin: 0;
   align-self: center;
-  margin: auto;
+  justify-content: center;
+}
+
+.form-stack {
+  max-width: 25em;
+  width: 100%;
+}
+.form-stack-child {
+  align-self: center;
 }
 
 /*# sourceMappingURL=Login.css.map */
