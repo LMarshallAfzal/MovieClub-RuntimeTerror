@@ -3,14 +3,13 @@
 .login{
   display: flex;
   height: base.$height;
+  width: 100%;
 
   &-left {
     flex: 1;
-    width: 50%;
   }
 
   &-right {
-    width: 50%;
     padding-right: 20px;
     flex: 1;
     max-width: 25em;
