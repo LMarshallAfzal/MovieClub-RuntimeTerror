@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,YAAY,CAAC;EACT,aAAa,EAAE,GAAG;EAClB,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;EACZ,gBAAgB,EAAE,KAAK;EACvB,MAAM,EAAE,GAAG;CACd;;AAED,AAAA,kBAAkB,CAAC;EACf,YAAY,EAAE,KAAK;EACnB,OAAO,EAAE,KAAK;EACd,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,KAAK;EACZ,gBAAgB,EAAE,OAAO;CAC5B;;AAED,AAAA,QAAQ,CAAC;EACL,KAAK,EAAE,IAAI;EACX,YAAY,EAAE,GAAG;EACjB,QAAQ,EAAE,MAAM;CACnB",
-    "sources": [
-        "NameHeader.scss"
-    ],
-    "names": [],
-    "file": "NameHeader.css"
-}
+{"version":3,"sourceRoot":"","sources":["NameHeader.scss"],"names":[],"mappings":"AAAA;EACI;EACA;EACA;EACA;EACA;;;AAGJ;EACI;EACA;EACA;EACA;EACA;;;AAGJ;EACI;EACA;EACA","file":"NameHeader.css"}
