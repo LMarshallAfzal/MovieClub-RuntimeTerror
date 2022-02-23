@@ -1,14 +1,35 @@
 from rest_framework.serializers import ModelSerializer 
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework import serializers
-from api.models import Club, User, Membership, Movie
+from api.models import Club, User, Membership, Movie,Rating
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
+        fields = '__all__'
+
+class ClubSerializer(ModelSerializer):
+    class Meta:
+        model = Club
+        fields = '__all__'
+
+class MovieSerializer(ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = '__all__'
+
+class MembershipSerializer(ModelSerializer):
+    class Meta:
+        model = Membership
+        fields = '__all__'
+
+class RatingSerializer(ModelSerializer):
+    class Meta:
+        model = Rating
         fields = '__all__'
 
 class SignUpSerializer(serializers.Serializer):
@@ -133,17 +154,13 @@ class ChangePasswordSerializer(serializers.Serializer):
         user.save()
         return user
 
-class ClubSerializer(ModelSerializer):
+class addRatingSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=False,queryset=User.objects.all())
+    movie = serializers.PrimaryKeyRelatedField(read_only=False,queryset=Movie.objects.all())
+    rating = serializers.FloatField(required = True,write_only=True,validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    
     class Meta:
-        model = Club
-        fields = '__all__'
-
-class MovieSerializer(ModelSerializer):
-    class Meta:
-        model = Movie
-        fields = '__all__'
-
-class MembershipSerializer(ModelSerializer):
-    class Meta:
-        model = Membership
-        fields = '__all__'
+        model = Rating
+        fields = ['user','movie','rating']
+   
+    

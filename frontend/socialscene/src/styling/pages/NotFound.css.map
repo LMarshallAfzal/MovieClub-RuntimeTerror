@@ -1,1 +1,9 @@
-{"version":3,"sourceRoot":"","sources":[],"names":[],"mappings":"","file":"NotFound.css"}
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "NotFound.scss"
+    ],
+    "names": [],
+    "file": "NotFound.css"
+}

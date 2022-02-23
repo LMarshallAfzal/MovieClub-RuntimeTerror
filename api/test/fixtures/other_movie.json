@@ -3,11 +3,10 @@
       "model": "api.movie",
       "pk": 2,
       "fields": {
-        "movie_name": "Pulp Fiction",
-        "release_date": "1994-10-21",
-        "genres": "Crime,Comedy",
-        "director": "Quentin Tarantino",
-        "cast": "John Travolta, Uma Thurman, Samuel L. Jackson, Bruce Willis, Ving Rhames"
+        "movieID": 1001,
+        "title": "Pulp Fiction",
+        "year": 1994,
+        "genres": "Crime,Comedy"
       }
     }
   ]
