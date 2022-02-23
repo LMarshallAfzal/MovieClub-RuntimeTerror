@@ -35,6 +35,26 @@ class Login extends Component {
       }
     )
     .catch(error => console.error(error))
+    fetch('http://127.0.0.1:8000/user/' + this.state.credentials.username + '/', {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+    })
+    .then(data => data.json())
+    .then(data => console.log(data))
+    // .then(data => localStorage.setItem('user', JSON.stringify(data.first_name)))
+    .catch(error => console.error(error))
+    this.setState({
+      username:'',
+      first_name:'',
+      last_name:'',
+      email:'',
+      bio:'',
+      preferences:'',
+      password:'',
+      password_confirmation:''
+  })
+
+  // localStorage.setItem('user', JSON.stringify(this.state))
   }
 
   inputChanged = event => {

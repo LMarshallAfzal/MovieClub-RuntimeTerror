@@ -22,7 +22,10 @@ class EditUser extends React.Component {
     }
 
     submitForm(){
-        fetch('http://127.0.0.1:8000/edit_profile/',{
+        // const token = JSON.parse(localStorage.getItem('token'))
+        const userData = JSON.parse(localStorage.getItem('user'))
+        console.log(userData.username)
+        fetch('http://127.0.0.1:8000/edit_profile/' + userData.username ,{
             method:'PUT',
             body:JSON.stringify(this.state),
             headers:{
@@ -30,16 +33,16 @@ class EditUser extends React.Component {
             },
         })
         .then(response=>response.json())
-        .then((data)=>console.log(data));
-
+        .then((data)=>console.log(data))
+        localStorage.setItem('user', JSON.stringify(this.state))
     }
     
 
     fetchData(){
         const userData = JSON.parse(localStorage.getItem('user'))
         console.log(userData)
-        console.log(userData._first_name)
             this.setState({
+                username: userData.username,
                 first_name:userData.first_name,
                 last_name:userData.last_name,
                 email:userData.email,
