@@ -1,58 +1,57 @@
 z.sidebar {
-    background-color: #F8F7F7;
-    height: 100%;
-    width: 15rem;
-    display: flex;
-    justify-content: start;
-    align-items: center;
+  background-color: #F8F7F7;
+  height: 100%;
+  width: 15rem;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
 
-.sidebar-list{
-    margin: 0%;
-    padding: 0;
-    width: 15rem;
+.sidebar-list {
+  margin: 0%;
+  padding: 0;
+  width: 15rem;
 }
 
-.sidebar-list .sidebar-text{
-    background-color: #F8F7F7;
-    box-sizing: border-box;
-    width: 100%;
-    height: 40px;
-    list-style-type: none;
-    border-left: 10px solid #F8F7F7;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+.sidebar-list .sidebar-text {
+  background-color: #F8F7F7;
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  list-style-type: none;
+  border-left: 10px solid #F8F7F7;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-.sidebar-text #icon{
-    flex: 30%;
-    display: grid;
-    place-items: center;
+.sidebar-text #icon {
+  flex: 30%;
+  display: grid;
+  place-items: center;
 }
 
-.sidebar-text #title{
-    flex: 70%;
-    padding-left: 10px;
+.sidebar-text #title {
+  flex: 70%;
+  padding-left: 10px;
 }
 
-.sidebar-list .sidebar-text:hover{
-    cursor: pointer;
-    border-left: 10px solid #FF8585;
+.sidebar-list .sidebar-text:hover {
+  cursor: pointer;
+  border-left: 10px solid #FF8585;
 }
 
-.sidebar-list #active{
-    background-color: #D8D8D8;
-    border-left: 10px solid #FF0000;
+.sidebar-list #active {
+  background-color: #D8D8D8;
+  border-left: 10px solid #FF0000;
 }
 
- /* .menu-bars {
+/* .menu-bars {
     margin-left: 2rem;
     font-size: 2rem;
     background: none;
 } */
-
 /* .sidebar-menu {
     background-color: white;
     width: 250px;
@@ -61,7 +60,6 @@ z.sidebar {
     justify-content: center;
     position: fixed;
 } */
-
 /* .sidebar-text {
     display: flex;
     justify-content: start;
@@ -70,7 +68,6 @@ z.sidebar {
     list-style: none;
     height: 60px;
 } */
-
 /* .sidebar-text a {
     text-decoration: none;
     color: black;
@@ -82,7 +79,6 @@ z.sidebar {
     padding: 0 16px;
     border-radius: 4px;
 } */
-
 /* .sidebar-menu-items a:hover {
     cursor: pointer;
     background-color: lightgray;
@@ -101,3 +97,5 @@ sidebar-toggle{
     align-items: center;
 }
  */
+
+/*# sourceMappingURL=Sidebar.css.map */
