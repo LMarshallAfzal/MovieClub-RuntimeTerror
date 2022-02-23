@@ -1,9 +1,9 @@
 import React from "react";
 import "../styling/components/RoundButtonForward.css";
 
-function RoundButtonForward() {
+function RoundButtonForward(props) {
     return (
-        <roundButton className='round-forward'>></roundButton>
+        <roundButton className='round-forward'>{props.text}</roundButton>
     );
 }
 

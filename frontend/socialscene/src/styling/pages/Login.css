@@ -54,6 +54,7 @@ h2--emphasise {
   display: flex;
   height: calc(100% - 90px);
   width: 100%;
+  justify-content: center;
 }
 .login-left {
   flex: 1;
@@ -65,13 +66,6 @@ h2--emphasise {
   justify-content: center;
   align-self: center;
   margin: auto;
-}
-
-.dual-button {
-  display: flex;
-}
-.dual-button-child {
-  flex: 1;
 }
 
 /*# sourceMappingURL=Login.css.map */

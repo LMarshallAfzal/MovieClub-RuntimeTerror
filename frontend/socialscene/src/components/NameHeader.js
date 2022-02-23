@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'react-bootstrap/Image';
-// import "../styling/components/NameHeader.css";
+import "../styling/components/NameHeader.css";
 
 function NameHeader() {
   return (

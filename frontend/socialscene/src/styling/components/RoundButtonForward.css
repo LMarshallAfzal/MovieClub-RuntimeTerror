@@ -51,17 +51,24 @@ h2--emphasise {
 }
 
 .round-forward {
-  background-color: #000000;
-  color: #FFFFFF;
-  display: block;
-  height: auto;
+  padding: 18px;
+  outline: none;
+  border: none;
   width: auto;
-  border-radius: 50%;
+  font-size: 18px;
+  color: #FFFFFF;
+  cursor: pointer;
+  background-color: #000000;
+  font-family: Helvetica-Bold, serif;
+  transition: all 0.3s ease-out;
+  display: block;
+  border-radius: 100%;
   text-align: center;
 }
 
 .round-forward:hover {
   background-color: #FF0000;
+  color: #000000;
 }
 
 /*# sourceMappingURL=RoundButtonForward.css.map */
