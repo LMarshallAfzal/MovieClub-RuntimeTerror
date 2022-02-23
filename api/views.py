@@ -107,6 +107,25 @@ def editProfile(request, pk):
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_clubs(request):
+    clubs = Club.objects.all()
+    serializer = ClubSerializer(clubs, many=True)
+    return Response(serializer.data)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def create_club(request):
+    serializer = CreateClubSerializer(data=request.data)
+    if serializer.is_valid():
+        club = serializer.save()
+        Membership.objects.create(user=request.user, club=club, role="C")
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        errors = serializer.errors
+        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def addRating(request, movieID):

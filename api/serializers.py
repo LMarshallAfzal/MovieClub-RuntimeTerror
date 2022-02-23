@@ -5,7 +5,7 @@ from api.models import Club, User, Membership, Movie,Rating
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, MaxLengthValidator
 
 class UserSerializer(ModelSerializer):
     class Meta:
@@ -153,6 +153,25 @@ class ChangePasswordSerializer(serializers.Serializer):
         user.set_password(self.validated_data["new_password"])
         user.save()
         return user
+
+class CreateClubSerializer(serializers.Serializer):
+    club_name = serializers.CharField(
+        required = True,
+        validators = [MaxLengthValidator(50)]
+    )
+
+    mission_statement = serializers.CharField(
+        required = False,
+        validators = [MaxLengthValidator(500)]
+    )
+
+    def create(self, validated_data):
+        club = Club.objects.create(**validated_data)
+        return club
+    
+    class Meta:
+        model = Club
+        fields = '__all__'
 
 class addRatingSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=False,queryset=User.objects.all())
