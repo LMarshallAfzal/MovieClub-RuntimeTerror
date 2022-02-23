@@ -5,7 +5,7 @@ from collections import defaultdict
 from operator import itemgetter
 
 test_user_id = '3'
-constant = 5
+constant = 10
 
 ml = Data()
 data = ml.load_movie_data
@@ -46,5 +46,5 @@ for item_id,rating_sum in sorted(candidates.items(),key=itemgetter(1),reverse=Tr
         movie_id = trainSet.to_raw_iid(item_id)
         print(ml.get_movie_title(int(movie_id)),rating_sum)
         position += 1
-        if (position > 5):
+        if (position > 10):
             break

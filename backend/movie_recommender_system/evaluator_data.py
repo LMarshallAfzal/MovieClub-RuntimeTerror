@@ -41,7 +41,7 @@ class EvaluateData:
     def get_test_set(self):
         return self.testSet
     
-    def get_LOOCV_trainSet(self):
+    def get_LOOCV_trainset(self):
         return self.LOOCVTrain
     
     def get_LOOCV_testset(self):
