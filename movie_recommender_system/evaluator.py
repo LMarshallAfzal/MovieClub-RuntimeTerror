@@ -1,23 +1,23 @@
-from evaluator_data import evaluator_data
-from evaluator_algorithm import evaluator_algorithm
+from .evaluator_data import EvaluateData
+from .evaluator_algorithm import EvaluatedAlgorithm
 
 class Evaluate:
 
     algorithms = []
     
     def __init__(self, dataset, rankings):
-        ed = evaluator_data(dataset, rankings)
+        ed = EvaluateData(dataset, rankings)
         self.dataset = ed
         
     def add_algorithm(self, algorithm, name):
-        alg = evaluator_algorithm(algorithm, name)
+        alg = EvaluatedAlgorithm(algorithm, name)
         self.algorithms.append(alg)
         
     def evaluate(self, doTopN):
         results = {}
         for algorithm in self.algorithms:
             print("Evaluating ", algorithm.GetName(), "...")
-            results[algorithm.GetName()] = algorithm.Evaluate(self.dataset, doTopN)
+            results[algorithm.GetName()] = algorithm.evaluate(self.dataset, doTopN)
 
         print("\n")
         

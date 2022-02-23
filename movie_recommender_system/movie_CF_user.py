@@ -1,14 +1,14 @@
 from surprise import KNNBasic
-from data import Data
+from .data import Data
 import heapq as pq
 from collections import defaultdict
 from operator import itemgetter
 
-test_user_id = '3'
+test_user_id = '7'
 constant = 10
 
 ml = Data()
-data = ml.load_movie_data
+data = ml.load_movie_data()
 
 trainSet = data.build_full_trainset()
 
@@ -44,7 +44,7 @@ position = 0
 for item_id,rating_sum in sorted(candidates.items(),key=itemgetter(1),reverse=True):
     if not item_id in rated:
         movie_id = trainSet.to_raw_iid(item_id)
-        print(ml.get_movie_title(int(movie_id)),rating_sum)
+        print(ml.get_movie_title(int(movie_id)))
         position += 1
         if (position > 10):
             break

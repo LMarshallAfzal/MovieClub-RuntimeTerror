@@ -1,7 +1,7 @@
-from data import Data
+from .data import Data
 from surprise import KNNBasic
 from surprise import NormalPredictor
-from evaluator import Evaluate
+from .evaluator import Evaluate
 
 import random
 import numpy as np

@@ -1,5 +1,5 @@
-from metrics import Metrics
-from evaluator_data import EvaluateData
+from .metrics import Metrics
+from .evaluator_data import EvaluateData
 
 
 class EvaluatedAlgorithm:
@@ -24,7 +24,7 @@ class EvaluatedAlgorithm:
                 evaluation_data.get_LOOCV_testset())
             allPredictions = self.algorithm.test(
                 evaluation_data.get_LOOCV_anti_testset())
-            topNPredicted = Metrics.getTopN(allPredictions, constant)
+            topNPredicted = Metrics.get_top_N(allPredictions, constant)
             if (verbose):
                 print("Computing hit-rate and rank metrics...")
             metrics["HR"] = Metrics.hit_rate(topNPredicted, leftOutPredictions)
@@ -38,14 +38,21 @@ class EvaluatedAlgorithm:
             self.algorithm.fit(evaluation_data.get_full_trainset())
             allPredictions = self.algorithm.test(
                 evaluation_data.get_full_anti_testset())
-            topNPredicted = Metrics.getTopN(allPredictions, constant)
+            topNPredicted = Metrics.get_top_N(allPredictions, constant)
             if (verbose):
                 print("Analyzing coverage, diversity, and novelty...")
             metrics["Coverage"] = Metrics.user_coverage(topNPredicted,
-                                                        evaluation_data.get().n_users,
+                                                        evaluation_data.get_full_trainset().n_users,
                                                         ratingThreshold=4.0)
             metrics["Diversity"] = Metrics.recommendation_diversity(
                 topNPredicted, evaluation_data.get_similarities())
 
             metrics["Novelty"] = Metrics.novelty(topNPredicted,
                                                  evaluation_data.get_popular_rankings())
+    def GetName(self):
+        return self.name
+    
+    def GetAlgorithm(self):
+        return self.algorithm
+    
+    

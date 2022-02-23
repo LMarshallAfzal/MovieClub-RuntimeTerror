@@ -1,11 +1,11 @@
-from data import Data
+from .data import Data
 from surprise import KNNBasic, Trainset
 import heapq as pq
 from collections import defaultdict
 from operator import itemgetter
 from surprise.model_selection import LeaveOneOut
-from metrics import Metrics
-from evaluator_data import EvaluateData 
+from .metrics import Metrics
+from .evaluator_data import EvaluateData 
 
 def load_data():
     ml = Data()

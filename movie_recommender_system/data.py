@@ -1,16 +1,13 @@
-import os
 import csv
 import sys
-import re
 from surprise import Dataset,Reader
 from collections import defaultdict
 import numpy as np
 from api.models import Movie
-
 class Data:
     movieID_to_title = {}
     title_to_movieID = {}
-    ratingsPath = '../dataset/ratings.csv'
+    ratingsPath = './dataset/ratings.csv'
     #moviesPath = '../dataset/movies.csv'
 
     def load_movie_data(self):
@@ -22,7 +19,7 @@ class Data:
         ratingsDataset = Dataset.load_from_file(self.ratingsPath, reader = reader)
 
         for movie in Movie.objects.all():
-            self.movieID_to_title[movie.movieID] = movie.movieName
+            self.movieID_to_title[movie.movieID] = movie.title
             self.title_to_movieID[movie.title] = movie.movieID
         return ratingsDataset
 

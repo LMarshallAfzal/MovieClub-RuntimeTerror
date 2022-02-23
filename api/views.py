@@ -5,6 +5,8 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from rest_framework.permissions import IsAuthenticated
+from movie_recommender_system import movie_CF_user
+
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -126,6 +128,11 @@ def addRating(request, movieID):
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+#this is a test view to recommend for the test user specified in the movie_CF_user file.
+@api_view(['GET'])
+def recommend(request):
+    movie_CF_user
+    return Response(status=status.HTTP_200_OK)
+    
 
     
