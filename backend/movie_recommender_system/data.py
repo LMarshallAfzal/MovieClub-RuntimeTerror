@@ -13,7 +13,7 @@ class Data:
     ratingsPath = '../dataset/ratings.csv'
     #moviesPath = '../dataset/movies.csv'
 
-    def loadMovieData(self):
+    def load_movie_data(self):
         ratingsDataset = 0
         self.movieID_to_title = {}
         self.title_to_movieID = {}
@@ -27,7 +27,7 @@ class Data:
         return ratingsDataset
 
     #Subject to change with ratings from the database
-    def getUserRating(self,user):
+    def get_user_rating(self,user):
         ratings = []
         user_hit = False
         with open(self.ratingsPath,newlines='') as file:
@@ -44,7 +44,7 @@ class Data:
                     break
         return ratings
 
-    def popularityRanking(self):
+    def popularity_ranking(self):
         ratings = defaultdict(float)
         rankings = defaultdict(int)
         with open(self.ratingsPath, newline='') as file:
@@ -59,7 +59,7 @@ class Data:
             rank += 1
         return rankings
 
-    def getMovieGenres(self):
+    def get_movie_genres(self):
         genres = defaultdict(list)
         genreIDs = {}
         maxGenreID = 0
@@ -83,7 +83,7 @@ class Data:
 
         return genres
 
-    def getReleaseYear(self):
+    def get_release_year(self):
         years = defaultdict(int)
         for movie in Movie.objects.all():
             year = movie.year
@@ -91,13 +91,13 @@ class Data:
                 years[movie.movieID] = int(year)
         return years
 
-    def getMovieTitle(self, movie_id):
+    def get_movie_title(self, movie_id):
         if movie_id in self.movieID_to_title:
             return self.movieID_to_title[movie_id]
         else:
             return ''
             
-    def getMovieID(self, title):
+    def get_movie_id(self, title):
         if title in self.title_to_movieID:
             return self.title_to_movieID[title]
         else:
