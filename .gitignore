@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/windows,linux,macos,pycharm,webstorm,visualstudiocode,vim,react,reactnative,python,django
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,linux,macos,pycharm,webstorm,visualstudiocode,vim,react,reactnative,python,django
+# Created by https://www.toptal.com/developers/gitignore/api/vim,linux,react,macos,python,django,pycharm,windows,webstorm,reactnative,visualstudiocode,sass
+# Edit at https://www.toptal.com/developers/gitignore?templates=vim,linux,react,macos,python,django,pycharm,windows,webstorm,reactnative,visualstudiocode,sass
 
 ### Django ###
 *.log
@@ -625,6 +625,12 @@ xcuserdata/
 
 # Directories potentially created on remote AFP share
 
+### Sass ###
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
+
 ### Vim ###
 # Swap
 [._]*.s[a-v][a-z]
@@ -764,5 +770,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,pycharm,webstorm,visualstudiocode,vim,react,reactnative,python,django
-package-lock.json
+# End of https://www.toptal.com/developers/gitignore/api/vim,linux,react,macos,python,django,pycharm,windows,webstorm,reactnative,visualstudiocode,sass
