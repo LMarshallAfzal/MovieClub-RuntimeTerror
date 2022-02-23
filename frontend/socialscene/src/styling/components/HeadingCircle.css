@@ -50,22 +50,16 @@ h2--emphasise {
   color: #FF0000;
 }
 
-.enter-button {
-  padding: 8px 18px;
-  outline: none;
-  border: none;
-  font-size: 18px;
-  color: #000000;
-  cursor: pointer;
-  background-color: #FFFFFF;
-  font-family: Helvetica-Bold, serif;
-  transition: all 0.3s ease-out;
-  border-radius: 99em;
+.circle {
+  overflow: hidden;
+  width: calc((100% - 90px) / 2);
+  height: calc(100% - 90px);
+  position: absolute;
+  border-top-right-radius: calc(100% - 90px);
+  border-bottom-right-radius: calc(100% - 90px);
+  display: flex;
+  background-color: #D8D8D8;
+  align-items: center;
 }
 
-.enter-button:hover {
-  background-color: #FF0000;
-  color: #FFFFFF;
-}
-
-/*# sourceMappingURL=EnterButton.css.map */
+/*# sourceMappingURL=HeadingCircle.css.map */

@@ -1,0 +1,28 @@
+@use "../base";
+
+.login{
+  display: flex;
+  height: base.$height;
+  width: 100%;
+
+  &-left {
+    flex: 1;
+  }
+
+  &-right {
+    padding-right: 20px;
+    flex: 1;
+    max-width: 25em;
+    justify-content: center;
+    align-self: center;
+    margin: auto;
+  }
+}
+
+.dual-button {
+  display: flex;
+
+  &-child{
+    flex: 1;
+  }
+}

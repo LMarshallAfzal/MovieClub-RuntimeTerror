@@ -25,7 +25,7 @@
 
 .navbar-logo {
   color: base.$primary-white;
-  font-family: Helvetica, serif;
+  font-family: base.$helvetica;
   float: left;
   margin: auto;
   width: auto;
@@ -38,7 +38,6 @@
 
 .navbar-enter-button {
   float: right;
-  font-family: Helvetica-Bold, serif;
   margin: auto;
   width: auto;
   padding-right: 10px;

@@ -50,22 +50,18 @@ h2--emphasise {
   color: #FF0000;
 }
 
-.enter-button {
-  padding: 8px 18px;
-  outline: none;
-  border: none;
-  font-size: 18px;
-  color: #000000;
-  cursor: pointer;
-  background-color: #FFFFFF;
-  font-family: Helvetica-Bold, serif;
-  transition: all 0.3s ease-out;
-  border-radius: 99em;
-}
-
-.enter-button:hover {
-  background-color: #FF0000;
+.round-forward {
+  background-color: #000000;
   color: #FFFFFF;
+  display: block;
+  height: auto;
+  width: auto;
+  border-radius: 50%;
+  text-align: center;
 }
 
-/*# sourceMappingURL=EnterButton.css.map */
+.round-forward:hover {
+  background-color: #FF0000;
+}
+
+/*# sourceMappingURL=RoundButtonForward.css.map */

@@ -4,7 +4,6 @@
   width: 100%;
 }
 
-.socialscene-navbar {
   position: sticky;
   top: 0;
   width: 100%;
@@ -12,7 +11,7 @@
 }
 
 .navbar-black {
-  background: black;
+  background: #000000;
   height: 80px;
   align-items: center;
   justify-content: center;
@@ -42,7 +41,6 @@
 
 .navbar-enter-button {
   float: right;
-  font-family: Helvetica-Bold, serif;
   margin: auto;
   width: auto;
   padding-right: 10px;
