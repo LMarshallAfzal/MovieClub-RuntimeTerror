@@ -21,7 +21,6 @@ class MovieModelTestCase(APITestCase):
 
     def test_movieID_must_be_unique(self):
         self.movie.movieID = self.second_movie.movieID
-        print(self.movie.movieID)
         self._assert_movie_is_invalid()
 
     def test_title_must_not_be_blank(self):
