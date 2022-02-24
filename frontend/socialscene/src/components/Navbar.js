@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import "../styling/components/Navbar.css";
 import EnterButton from "./EnterButton";
 
@@ -14,14 +14,31 @@ function Navbar() {
                         <span style={{fontFamily: "Helvetica-Bold"}}>scene</span>
                         <span style={{ color: "red", fontWeight: "bold" }}>.</span>
                     </Link>
-                    <Link to={"/login"} className={"navbar-enter-button"}>
-                        <EnterButton text={"enter"} />
-                    </Link>
+
+                    <NavbarButton />
                 </div>
                 <div className={"navbar-red"} />
             </div>
         </>
     );
 }
+export default Navbar;
 
-export default Navbar
+function NavbarButton() {
+    const location = useLocation();
+    switch (location.pathname){
+        case "/":
+            return <Link to={"/login"} className={"navbar-enter-button"}>
+                <EnterButton
+                    text={"enter"}/>
+            </Link>
+
+        case "/login":
+            return <Link to={"/join"} className={"navbar-enter-button"}>
+                <EnterButton text={"join"}/>
+            </Link>
+
+        default:
+            return <></>
+    }
+}

@@ -68,4 +68,9 @@ h2--emphasise {
   align-self: center;
 }
 
+.link-form-button {
+  text-decoration: none;
+  width: auto;
+}
+
 /*# sourceMappingURL=Login.css.map */

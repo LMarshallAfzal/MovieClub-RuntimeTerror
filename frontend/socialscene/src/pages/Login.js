@@ -1,6 +1,6 @@
 import React from "react";
 import "../styling/pages/Login.css";
-// import {Stack} from "react-bootstrap";
+import {Link} from "react-router-dom"
 import HeadingCircle from "../components/HeadingCircle";
 import {Grid, Stack, TextField} from "@mui/material";
 import FormButton from "../components/FormButton";
@@ -31,10 +31,11 @@ function login() {
                     <FormButton
                         text={"forgot password"}
                     />
-
-                    <FormButton
-                        text={"log in"}
-                    />
+                    <Link className={"link-form-button"} to={"/dashboard"}>
+                        <FormButton
+                            text={"log in"}
+                        />
+                    </Link>
                 </Stack>
             </Grid>
         </Grid>
