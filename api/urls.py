@@ -11,5 +11,5 @@ urlpatterns = [
     path("users/", views.get_users, name = "users"),
     path("user/<int:pk>/",views.get_user, name = "user"),
     path("add_rating/<int:movieID>/",views.addRating,name = "add_rating"),
-    path("rec/", views.recommend, name = "rec"),
+    
 ]
