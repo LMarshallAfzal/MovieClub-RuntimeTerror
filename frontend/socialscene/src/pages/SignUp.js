@@ -2,17 +2,14 @@ import { Fragment, useState } from "react";
 
 const SignUp = () => {
   const [formInput, setFormInput] = useState({
-    // Values are pre-filled
-    // for testing purposes
-    // otherwise set to ""
-    username: "@johndoe",
-    first_name: "John",
-    last_name: "Doe",
-    email: "johndoe@example.org",
-    bio: "The quick brown fox jumps over the lazy dog.",
-    preferences: "Action, Drama, Horror, Comedy, Science fiction",
-    password: "Password123",
-    password_confirmation: "Password123",
+    username: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    bio: "",
+    preferences: "",
+    password: "",
+    password_confirmation: "",
   });
 
   const handleChange = (e) =>
