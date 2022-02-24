@@ -28,18 +28,24 @@ function NavbarButton() {
     const location = useLocation();
     switch (location.pathname){
         case "/":
-            return <Link to={"/login"} className={"navbar-enter-button"}>
+            return (
+                <Link to={"/login"} className={"navbar-enter-button"}>
                 <EnterButton
                     text={"enter"}/>
-            </Link>
+                </Link>
+            )
 
         case "/login":
-            return <Link to={"/join"} className={"navbar-enter-button"}>
+            return (
+                <Link to={"/signup"} className={"navbar-enter-button"}>
                 <EnterButton
                     text={"sign up"}/>
-            </Link>
+                </Link>
+            )
 
         default:
-            return <></>
+            return (
+                <></>
+            )
     }
 }
