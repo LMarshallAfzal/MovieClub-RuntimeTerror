@@ -56,8 +56,6 @@ h2--emphasise {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-  width: 80%;
-  padding: 20px;
   text-align: center;
   text-shadow: 2px 2px 2px #000000;
   pointer-events: none;
@@ -77,6 +75,7 @@ h2--emphasise {
   width: 100%;
   height: calc(100% - 90px);
   object-fit: cover;
+  display: block;
   z-index: -1;
   filter: blur(8px);
   overflow: hidden;

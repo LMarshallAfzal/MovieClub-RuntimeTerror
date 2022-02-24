@@ -53,7 +53,7 @@ h2--emphasise {
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 99;
 }
 
 .navbar-black {
