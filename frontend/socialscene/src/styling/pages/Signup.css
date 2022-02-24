@@ -49,23 +49,4 @@ h2--emphasise {
   color: #FF0000;
 }
 
-.form-button {
-  padding: 18px;
-  outline: none;
-  border: none;
-  display: block;
-  width: auto;
-  font-size: 18px;
-  color: #FFFFFF;
-  cursor: pointer;
-  background-color: #000000;
-  font-family: Helvetica-Bold, serif;
-  transition: all 0.3s ease-out;
-}
-
-.form-button:hover {
-  background-color: #D8D8D8;
-  color: #000000;
-}
-
-/*# sourceMappingURL=FormButton.css.map */
+/*# sourceMappingURL=Signup.css.map */

@@ -1,8 +1,49 @@
+@use "../base";
+
+.welcome-text {
+  color: base.$primary-white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+  text-shadow: 2px 2px 2px base.$primary-black;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.spotlight {
+  position: absolute;
+  height: calc(100% - 90px);
+  width: 100%;
+  z-index: 1;
+  background-image: radial-gradient(
+                  circle,
+                  transparent 160px,
+                  rgba(0, 0, 0, 0.60) 200px
+  );
+}
+
 .cover-image {
   width: 100%;
-  background-size: cover;
+  height: base.$height;
+  object-fit: cover;
+  display: block;
   z-index: -1;
-  filter: blur(20px);
+  filter: blur(8px);
   overflow: hidden;
   transform-origin: center;
 }
+
+//.welcome-poster {
+//  background-image: url("https://m.media-amazon.com/images/M/MV5BNzQxNTIyODAxMV5BMl5BanBnXkFtZTgwNzQyMDA3OTE@._V1_.jpg");
+//  height: base.$height;
+//  background-repeat: no-repeat;
+//  background-position: center;
+//  background-size: cover;
+//  display: grid;
+//  place-items: center;
+//  //filter: blur(20px);
+//}

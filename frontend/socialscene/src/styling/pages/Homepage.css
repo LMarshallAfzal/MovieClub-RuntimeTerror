@@ -1,11 +1,85 @@
+#root, html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+@font-face {
+  font-family: Helvetica;
+  src: url("../fonts/Helvetica.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Light;
+  src: url("../fonts/Helvetica-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Oblique;
+  src: url("../fonts/Helvetica-Oblique.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Bold;
+  src: url("../fonts/Helvetica-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-BoldOblique;
+  src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
+}
+body {
+  font-family: Helvetica, serif;
+  color: #000000;
+}
+body--emphasise {
+  color: #FF0000;
+}
+
+h1 {
+  font-family: Helvetica-Bold, serif;
+  color: #000000;
+  font-size: 25em;
+}
+h1--emphasise {
+  color: #FF0000;
+}
+
+h2 {
+  font-family: Helvetica-Bold, serif;
+  font-size: 12rem;
+}
+h2--emphasise {
+  color: #FF0000;
+}
+
+.welcome-text {
+  color: #FFFFFF;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+  text-shadow: 2px 2px 2px #000000;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.spotlight {
+  position: absolute;
+  height: calc(100% - 90px);
+  width: 100%;
+  z-index: 1;
+  background-image: radial-gradient(circle, transparent 160px, rgba(0, 0, 0, 0.6) 200px);
+}
+
 .cover-image {
   width: 100%;
-  background-size: cover;
+  height: calc(100% - 90px);
+  object-fit: cover;
+  display: block;
   z-index: -1;
-  -webkit-filter: blur(20px);
-          filter: blur(20px);
+  filter: blur(8px);
   overflow: hidden;
-  -webkit-transform-origin: center;
-          transform-origin: center;
+  transform-origin: center;
 }
+
 /*# sourceMappingURL=Homepage.css.map */

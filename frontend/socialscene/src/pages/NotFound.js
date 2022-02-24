@@ -3,18 +3,9 @@ import "../styling/pages/NotFound.css";
 
 function notFound() {
     return (
-        <>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "100vh",
-                }}
-            >
-                <h1>Oops, you just got lost. 404 Not Found.</h1>
-            </div>
-        </>
+        <div className={"not-found"}>
+            <h1>404 not found<h1--emphasise>.</h1--emphasise></h1>
+        </div>
     );
 }
 

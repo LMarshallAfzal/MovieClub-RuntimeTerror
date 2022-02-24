@@ -7,7 +7,7 @@ function NameHeader() {
     <table class="name-header-table">
       <tbody>
         <td>
-          <img className='profile-img' src="./logo512.png" alt="" />
+          <Image className='profile-img' src="./logo512.png" alt="" />
         </td>
         <td>
           <tr><div style={{ fontFamily: "Helvetica-Bold" }} className='name-td'>Emmanouil</div></tr>
