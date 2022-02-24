@@ -5,7 +5,6 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from rest_framework.permissions import IsAuthenticated
-from movie_recommender_system import movie_CF_user
 
 
 @api_view(['GET'])
