@@ -10,6 +10,8 @@ urlpatterns = [
     path('edit_profile/<int:pk>/', views.editProfile, name = 'edit_profile'),
     path("users/", views.get_users, name = "users"),
     path("user/<int:pk>/",views.get_user, name = "user"),
+    path("clubs/",views.get_clubs, name = "clubs"),
+    path("create_club/",views.create_club, name = "create_club"),
     path("add_rating/<int:movieID>/",views.addRating,name = "add_rating"),
     
 ]
