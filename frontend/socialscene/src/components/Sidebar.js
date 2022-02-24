@@ -1,7 +1,4 @@
 import React from 'react';
-import { NavLink } from "react-router-dom";
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './SidebarData'
 import "../styling/components/Sidebar.css";
 
@@ -14,7 +11,7 @@ function sidebar() {
             return (
               <li key={index}
                 className={item.cName} //sidebar-text
-                id={window.location.pathname == item.path ? "active" : ""}
+                id={window.location.pathname === item.path ? "active" : ""}
                 onClick={() => { window.location.pathname = item.path; }}>
                 <div id='title'>{item.title}</div>
               </li>
