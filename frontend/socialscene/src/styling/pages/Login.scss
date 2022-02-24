@@ -11,55 +11,23 @@
   &-right{
     margin: 0;
     align-self: center;
-    justify-content: center;
 
   }
 }
 
 .form-stack {
   max-width: 25em;
-  width: 100%;
 
   &-child {
-    align-self: center;
+
   }
 }
 
 .link-form-button {
   text-decoration: none;
-  width: auto;
 }
 
-//.login{
-//  display: flex;
-//  height: base.$height;
-//  width: 100%;
-//  justify-content: center;
-//
-//  &-left {
-//    flex: 1;
-//  }
-//
-//  &-right {
-//    padding-right: 20px;
-//    flex: 1;
-//    max-width: 25em;
-//    align-self: center;
-//    margin: auto;
-//  }
-//}
-
-//.dual-button {
-//  display: flex;
-//
-//  &-left{
-//    flex: 1;
-//    width: auto;
-//  }
-//
-//  &-right{
-//    justify-content: flex-end;
-//    align-self: center;
-//  }
-//}
+.dual-button {
+  width: 100%;
+}
 

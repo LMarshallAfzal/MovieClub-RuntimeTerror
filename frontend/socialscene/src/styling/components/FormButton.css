@@ -54,6 +54,7 @@ h2--emphasise {
   padding: 18px;
   outline: none;
   border: none;
+  display: block;
   width: auto;
   font-size: 18px;
   color: #FFFFFF;

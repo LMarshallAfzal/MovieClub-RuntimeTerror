@@ -57,20 +57,17 @@ h2--emphasise {
 .login-grid-right {
   margin: 0;
   align-self: center;
-  justify-content: center;
 }
 
 .form-stack {
   max-width: 25em;
-  width: 100%;
 }
-.form-stack-child {
-  align-self: center;
-}
-
 .link-form-button {
   text-decoration: none;
-  width: auto;
+}
+
+.dual-button {
+  width: 100%;
 }
 
 /*# sourceMappingURL=Login.css.map */
