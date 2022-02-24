@@ -1,5 +1,7 @@
+@use "../base";
+
 z.sidebar {
-    background-color: #F8F7F7;
+    background-color: base.$grey-4;
     height: 100%;
     width: 15rem;
     display: flex;
@@ -8,18 +10,18 @@ z.sidebar {
 }
 
 .sidebar-list{
-    margin: 0%;
+    margin: 0;
     padding: 0;
     width: 15rem;
 }
 
 .sidebar-list .sidebar-text{
-    background-color: #F8F7F7;
+    background-color: base.$grey-4;
     box-sizing: border-box;
     width: 100%;
     height: 40px;
     list-style-type: none;
-    border-left: 10px solid #F8F7F7;
+    border-left: 10px solid base.$grey-4;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -39,12 +41,13 @@ z.sidebar {
 
 .sidebar-list .sidebar-text:hover{
     cursor: pointer;
-    border-left: 10px solid #FF8585;
+    border-left: 10px solid base.$pale-red;
 }
 
 .sidebar-list #active{
-    background-color: #D8D8D8;
-    border-left: 10px solid #FF0000;
+    font-family: base.$helvetica-bold;
+    background-color: base.$grey-3;
+    border-left: 10px solid base.$primary-red;
 }
 
  /* .menu-bars {

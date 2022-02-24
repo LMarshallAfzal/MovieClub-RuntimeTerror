@@ -36,7 +36,7 @@ function NavbarButton() {
         case "/login":
             return <Link to={"/join"} className={"navbar-enter-button"}>
                 <EnterButton
-                    text={"join"}/>
+                    text={"sign up"}/>
             </Link>
 
         default:

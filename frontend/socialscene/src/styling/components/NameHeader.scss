@@ -1,8 +1,10 @@
+@use "../base";
+
 .profile-img {
     border-radius: 50%;
-    width: 5rem;
-    height: 5rem;
-    background-color: white;
+    width: 5em;
+    height: 5em;
+    background-color: base.$primary-white;
     margin: 6px;
 }
 
@@ -11,7 +13,7 @@
     display: block;
     height: 6rem;
     width: 15rem;
-    background-color: #C4C4C4;
+    background-color: base.$grey-2;
 }
 
 .name-td {
