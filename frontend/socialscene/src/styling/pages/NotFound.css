@@ -1,3 +1,60 @@
+#root, html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
 
+@font-face {
+  font-family: Helvetica;
+  src: url("../fonts/Helvetica.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Light;
+  src: url("../fonts/Helvetica-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Oblique;
+  src: url("../fonts/Helvetica-Oblique.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Bold;
+  src: url("../fonts/Helvetica-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-BoldOblique;
+  src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
+}
+body {
+  font-family: Helvetica, serif;
+  color: #000000;
+}
+body--emphasise {
+  color: #FF0000;
+}
+
+h1 {
+  font-family: Helvetica-Bold, serif;
+  color: #000000;
+  font-size: 25em;
+}
+h1--emphasise {
+  color: #FF0000;
+}
+
+h2 {
+  font-family: Helvetica-Bold, serif;
+  color: #000000;
+  font-size: 12rem;
+}
+h2--emphasise {
+  color: #FF0000;
+}
+
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 90px);
+}
 
 /*# sourceMappingURL=NotFound.css.map */

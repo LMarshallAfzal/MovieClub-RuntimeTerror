@@ -1,1 +1,8 @@
+@use "../base";
 
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: base.$height;
+}
