@@ -12,6 +12,8 @@ const SignUp = () => {
     password_confirmation: "",
   });
 
+  const [error, setError] = useState(null);
+
   const handleChange = (e) =>
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
 
@@ -20,20 +22,29 @@ const SignUp = () => {
     // whole page every time
     // button is clicked
     e.preventDefault();
-    // Consider handling exceptions?
     fetch("http://127.0.0.1:8000/sign_up/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(formInput),
-    }).then((response) => response.json()); // Is this necessary?
+    })
+      .then((response) => {
+        if (!response.ok) {
+          setError(true);
+          throw new Error("Something went wrong...");
+        } else {
+          return response.json();
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
     <Fragment>
       <h1>Sign up</h1>
       <p>Here goes the sign up form...</p>
+      {error && <span>Something went wrong...</span>}
       <form onSubmit={handleSubmit}>
         <label>
           Username:
