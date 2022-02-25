@@ -1,7 +1,7 @@
 import React from 'react';
 import { SidebarData } from './SidebarData'
 import "../styling/components/Sidebar.css";
-import {Router, Route,Link, useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 function sidebar() {
   return (
