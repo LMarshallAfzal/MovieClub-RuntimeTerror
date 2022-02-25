@@ -1,8 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react';
 import SideNavbar from '../components/Sidebar';
 import NameHeader from '../components/NameHeader';
+import Login from './Login';
 
-function dashboard() {
+function Dashboard() {
+    const [token, setToken] = useState('');
+
+    const userLogin = (tok) => {
+      setToken(tok);
+    }
+    
+    if(!token) {
+        return <Login userLogin={userLogin}/>
+    }
+
     return (
         <>
             <NameHeader />
@@ -11,4 +22,4 @@ function dashboard() {
     );
 }
 
-export default dashboard;
+export default Dashboard;

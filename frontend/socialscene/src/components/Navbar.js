@@ -29,13 +29,13 @@ function NavbarButton() {
     switch (location.pathname){
         case "/":
             return (
-                <Link to={"/login"} className={"navbar-enter-button"}>
+                <Link to={"/dashboard"} className={"navbar-enter-button"}>
                 <EnterButton
                     text={"enter"}/>
                 </Link>
             )
 
-        case "/login":
+        case "/dashboard":
             return (
                 <Link to={"/signup"} className={"navbar-enter-button"}>
                 <EnterButton
