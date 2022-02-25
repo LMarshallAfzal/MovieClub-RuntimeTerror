@@ -88,12 +88,10 @@ class Login extends Component {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                    <Link className={"link-form-button"} to={"/dashboard"}>
                                         <FormButton
                                             text={"log in"}
                                             onClick={this.login}
                                         />
-                                    </Link>
                                 </Box>
 
                                 <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>
