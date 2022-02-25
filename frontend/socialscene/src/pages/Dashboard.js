@@ -1,12 +1,11 @@
-import React from 'react'
-import SideNavbar from '../components/Sidebar';
-import NameHeader from '../components/NameHeader';
+import React from "react";
+
 
 function dashboard() {
     return (
         <>
-            <NameHeader />
-            <SideNavbar />
+            <h2>this is a test</h2>
+
         </>
     );
 }

@@ -36,7 +36,7 @@ function login() {
                             }}
                         >
                             <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                <Link className={"link-form-button"} to={"/dashboard"}>
+                                <Link className={"link-form-button"} to={"/home"}>
                                     <FormButton
                                         text={"log in"}
                                     />

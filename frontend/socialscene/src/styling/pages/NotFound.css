@@ -24,6 +24,12 @@
   font-family: Helvetica-BoldOblique;
   src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
 }
+a {
+  display: block;
+  text-decoration: none;
+  color: #000000;
+}
+
 body {
   font-family: Helvetica, serif;
   color: #000000;

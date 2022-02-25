@@ -24,6 +24,12 @@
   font-family: Helvetica-BoldOblique;
   src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
 }
+a {
+  display: block;
+  text-decoration: none;
+  color: #000000;
+}
+
 body {
   font-family: Helvetica, serif;
   color: #000000;
@@ -64,7 +70,7 @@ z.sidebar {
   width: 15rem;
 }
 
-.sidebar-list .sidebar-text {
+.sidebar-list .sidebar-list-item {
   background-color: #F8F7F7;
   box-sizing: border-box;
   width: 100%;
@@ -75,28 +81,34 @@ z.sidebar {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  transition: all 0.2s ease-out;
 }
 
-.sidebar-text #icon {
-  flex: 30%;
-  display: grid;
-  place-items: center;
-}
-
-.sidebar-text #title {
-  flex: 70%;
-  padding-left: 10px;
-}
-
-.sidebar-list .sidebar-text:hover {
+.sidebar-list .sidebar-list-item:hover {
   cursor: pointer;
   border-left: 10px solid #FF8585;
+  background-color: #D8D8D8;
 }
 
 .sidebar-list #active {
   font-family: Helvetica-Bold, serif;
-  background-color: #D8D8D8;
+  background-color: #999999;
   border-left: 10px solid #FF0000;
+}
+
+.sidebar-list-link-box {
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+
+.sidebar-list-link-text {
+  padding-left: 10px;
+  height: 100%;
+  width: calc(100% - 10px);
+  display: flex;
+  align-items: center;
+  user-select: none;
 }
 
 /* .menu-bars {

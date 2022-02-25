@@ -24,6 +24,12 @@
   font-family: Helvetica-BoldOblique;
   src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
 }
+a {
+  display: block;
+  text-decoration: none;
+  color: #000000;
+}
+
 body {
   font-family: Helvetica, serif;
   color: #000000;
@@ -64,12 +70,14 @@ h2--emphasise {
   font-size: 1.2rem;
   overflow: auto;
   width: 100%;
+  user-select: none;
 }
 
 .navbar-red {
   height: 10px;
   display: flex;
   background: #FF0000;
+  user-select: none;
 }
 
 .navbar-logo {
@@ -83,9 +91,11 @@ h2--emphasise {
   text-decoration: none;
   font-size: 2rem;
   padding-top: 20px;
+  user-select: none;
 }
 
 .navbar-enter-button {
+  user-select: none;
   float: right;
   margin: auto;
   width: auto;

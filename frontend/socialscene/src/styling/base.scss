@@ -58,10 +58,17 @@ $helvetica-oblique: Helvetica-Oblique, serif;
 $helvetica-bold: Helvetica-Bold, serif;
 $helvetica-bold-oblique: Helvetica-BoldOblique, serif;
 
+a{
+  display: block;
+  text-decoration: none;
+  color: $primary-black;
+//  height: 100%;
+//  width: 100%;
+}
+
 body{
   font-family: $helvetica;
   color: $primary-black;
-
   &--emphasise {
     color: $primary-red;
   }

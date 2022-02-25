@@ -15,7 +15,7 @@ z.sidebar {
     width: 15rem;
 }
 
-.sidebar-list .sidebar-text{
+.sidebar-list .sidebar-list-item{
     background-color: base.$grey-4;
     box-sizing: border-box;
     width: 100%;
@@ -26,29 +26,37 @@ z.sidebar {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    transition: all 0.2s ease-out;
 }
 
-.sidebar-text #icon{
-    flex: 30%;
-    display: grid;
-    place-items: center;
-}
-
-.sidebar-text #title{
-    flex: 70%;
-    padding-left: 10px;
-}
-
-.sidebar-list .sidebar-text:hover{
+.sidebar-list .sidebar-list-item:hover{
     cursor: pointer;
     border-left: 10px solid base.$pale-red;
+    background-color: base.$grey-3;
+
 }
 
 .sidebar-list #active{
     font-family: base.$helvetica-bold;
-    background-color: base.$grey-3;
+    background-color: base.$grey-2;
     border-left: 10px solid base.$primary-red;
 }
+
+.sidebar-list-link-box {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+}
+
+.sidebar-list-link-text {
+    padding-left: 10px;
+    height: 100%;
+    width: calc(100% - 10px);
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
 
  /* .menu-bars {
     margin-left: 2rem;
