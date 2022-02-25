@@ -69,6 +69,8 @@ a{
 body{
   font-family: $helvetica;
   color: $primary-black;
+  margin: 0;
+
   &--emphasise {
     color: $primary-red;
   }
@@ -98,7 +100,13 @@ h3{
 }
 
 h4{
+  font-family: $helvetica;
+  font-size: 2.5rem;
+  margin: 0;
 
+  &--emphasise {
+    color: $primary-red
+  }
 }
 
 h5{
@@ -106,6 +114,9 @@ h5{
 }
 
 h6{
+  font-family: $helvetica-light ;
+  margin: 0;
+  font-size: 1rem;
 
 }
 

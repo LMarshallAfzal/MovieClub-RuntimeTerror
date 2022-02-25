@@ -3,7 +3,7 @@
 z.sidebar {
     background-color: base.$grey-4;
     height: 100%;
-    width: 15rem;
+    width: 100%;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -12,14 +12,14 @@ z.sidebar {
 .sidebar-list{
     margin: 0;
     padding: 0;
-    width: 15rem;
+    width: 100%;
 }
 
 .sidebar-list .sidebar-list-item{
     background-color: base.$grey-4;
     box-sizing: border-box;
     width: 100%;
-    height: 40px;
+    height: 4em;
     list-style-type: none;
     border-left: 10px solid base.$grey-4;
     display: flex;
@@ -27,6 +27,7 @@ z.sidebar {
     justify-content: center;
     align-items: center;
     transition: all 0.2s ease-out;
+    font-family: base.$helvetica-light;
 }
 
 .sidebar-list .sidebar-list-item:hover{
@@ -37,9 +38,10 @@ z.sidebar {
 }
 
 .sidebar-list #active{
-    font-family: base.$helvetica-bold;
+    font-family: base.$helvetica;
     background-color: base.$grey-2;
     border-left: 10px solid base.$primary-red;
+
 }
 
 .sidebar-list-link-box {
@@ -52,9 +54,11 @@ z.sidebar {
     padding-left: 10px;
     height: 100%;
     width: calc(100% - 10px);
+    font-size: 2rem;
     display: flex;
     align-items: center;
     user-select: none;
+    font-family: inherit;
 }
 
 

@@ -71,24 +71,8 @@ h6 {
   font-size: 1rem;
 }
 
-.form-button {
-  padding: 18px;
-  outline: none;
-  border: none;
-  display: block;
-  width: auto;
-  font-size: 18px;
-  color: #FFFFFF;
-  cursor: pointer;
-  background-color: #000000;
-  font-family: Helvetica-Bold, serif;
-  transition: all 0.3s ease-out;
-  user-select: none;
+.home-grid {
+  height: calc(100% - 90px);
 }
 
-.form-button:hover {
-  background-color: #D8D8D8;
-  color: #000000;
-}
-
-/*# sourceMappingURL=FormButton.css.map */
+/*# sourceMappingURL=Home.css.map */
