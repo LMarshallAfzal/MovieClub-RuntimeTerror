@@ -39,7 +39,8 @@ const SignUp = () => {
           Username:
           <input
             type="text"
-            defaultValue={formInput.username}
+            value={formInput.username}
+            name="username"
             onChange={handleChange}
           />
         </label>
@@ -47,7 +48,8 @@ const SignUp = () => {
           First Name:
           <input
             type="text"
-            defaultValue={formInput.first_name}
+            value={formInput.first_name}
+            name="first_name"
             onChange={handleChange}
           />
         </label>
@@ -55,7 +57,8 @@ const SignUp = () => {
           Last Name:
           <input
             type="text"
-            defaultValue={formInput.last_name}
+            value={formInput.last_name}
+            name="last_name"
             onChange={handleChange}
           />
         </label>
@@ -63,7 +66,8 @@ const SignUp = () => {
           Email:
           <input
             type="email"
-            defaultValue={formInput.email}
+            value={formInput.email}
+            name="email"
             onChange={handleChange}
           />
         </label>
@@ -71,7 +75,8 @@ const SignUp = () => {
           Bio:
           <input
             type="text"
-            defaultValue={formInput.bio}
+            value={formInput.bio}
+            name="bio"
             onChange={handleChange}
           />
         </label>
@@ -79,7 +84,8 @@ const SignUp = () => {
           Preferences:
           <input
             type="text"
-            defaultValue={formInput.preferences}
+            value={formInput.preferences}
+            name="preferences"
             onChange={handleChange}
           />
         </label>
@@ -87,7 +93,8 @@ const SignUp = () => {
           Password:
           <input
             type="password"
-            defaultValue={formInput.password}
+            value={formInput.password}
+            name="password"
             onChange={handleChange}
           />
         </label>
@@ -95,7 +102,8 @@ const SignUp = () => {
           Password Confirmation:
           <input
             type="password"
-            defaultValue={formInput.password_confirmation}
+            value={formInput.password_confirmation}
+            name="password_confirmation"
             onChange={handleChange}
           />
         </label>
