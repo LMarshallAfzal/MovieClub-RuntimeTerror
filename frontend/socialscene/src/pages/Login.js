@@ -104,14 +104,6 @@ class Login extends Component {
                     </Stack>
                 </Grid>
             </Grid>
-                // {/* <Router> */}
-                //     <Routes>
-                //         <Route path="/editProfile" element={(<Profile token={token}/>)} />
-                //     </Routes> 
-                // {/* </Router>   */}
-                
-                // {/* <EditUser token={token}/> */}
-            
         );
     }
 }
