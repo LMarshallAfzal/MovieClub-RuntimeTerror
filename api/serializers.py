@@ -133,7 +133,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         write_only=True,
         validators=[RegexValidator(regex=r"^.*(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$")],
     )
-    password_confirmation = serializers.CharField(required=True, write_only=True)
+    new_password_confirmation = serializers.CharField(required=True, write_only=True)
 
     # @Override
     def validate(self, data):
@@ -144,7 +144,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         if not user.check_password(data["old_password"]):
             raise serializers.ValidationError("The old password entered was invalid.")
         # Validate new password
-        if data["new_password"] != data["password_confirmation"]:
+        if data["new_password"] != data["new_password_confirmation"]:
             raise serializers.ValidationError(
                 "Your password and confirmation password do not match."
             )

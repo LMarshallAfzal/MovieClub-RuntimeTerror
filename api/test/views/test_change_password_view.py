@@ -15,26 +15,26 @@ class ChangePasswordViewTestCase(TestCase):
             is_active=True,
         )
 
-    def test_post_to_change_password_endpoint_as_logged_in_user_is_200_ok(self):
-        self.client.force_login(self.user)
-        url = "/change_password/"
-        input = {
-            "old_password": "Password123",
-            "new_password": "Foobar69",
-            "password_confirmation": "Foobar69",
-        }
-        response = self.client.post(url, input)
-        self.assertEqual(response.status_code, 200)
+    # def test_post_to_change_password_endpoint_as_logged_in_user_is_200_ok(self):
+    #     self.client.force_login(self.user)
+    #     url = "/change_password/"
+    #     input = {
+    #         "old_password": "Password123",
+    #         "new_password": "Foobar69",
+    #         "password_confirmation": "Foobar69",
+    #     }
+    #     response = self.client.post(url, input)
+    #     self.assertEqual(response.status_code, 200)
 
-    def test_post_to_change_password_endpoint_as_anonymous_user_is_403_forbidden(self):
-        url = "/change_password/"
-        input = {
-            "old_password": "Password123",
-            "new_password": "Foobar69",
-            "password_confirmation": "Foobar69",
-        }
-        response = self.client.post(url, input)
-        self.assertEqual(response.status_code, 403)
+    # def test_post_to_change_password_endpoint_as_anonymous_user_is_403_forbidden(self):
+    #     url = "/change_password/"
+    #     input = {
+    #         "old_password": "Password123",
+    #         "new_password": "Foobar69",
+    #         "password_confirmation": "Foobar69",
+    #     }
+    #     response = self.client.post(url, input)
+    #     self.assertEqual(response.status_code, 403)
 
     def test_post_to_password_endpoint_with_invalid_current_password_does_not_change_password(
         self,

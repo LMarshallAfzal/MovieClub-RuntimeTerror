@@ -71,8 +71,8 @@ def log_out(request):
         return Response(status=status.HTTP_403_FORBIDDEN)
 
 
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@api_view(["PUT"])
+# @permission_classes([IsAuthenticated])
 def change_password(request):
     serializer = ChangePasswordSerializer(
         data=request.data, context={"request": request}

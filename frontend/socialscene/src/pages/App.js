@@ -7,6 +7,7 @@ import NotFound404 from "./NotFound";
 import Dashboard from "../pages/Dashboard";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Signup from "./Signup";
+import ChangePassword from "./ChangePassword";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
                       <Route path={"/login"} element={(<LogIn />)}/>
                       <Route path={"/dashboard"} element={(<Dashboard />)}/>
                       <Route path={"/signup"} element={(<Signup />)}/>
+                      <Route path={"/change_password"} element={<ChangePassword />}/>
                       <Route path={"*"} element={<NotFound404 />}/>
                   </Routes>
           </Router>
