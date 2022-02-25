@@ -6,6 +6,7 @@ from .models import *
 from django.contrib.auth import logout
 from rest_framework.permissions import IsAuthenticated
 
+
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
@@ -47,7 +48,8 @@ def signUp(request):
         data = serializer.errors
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
+
+@api_view(['POST', 'GET'])
 def login(request):
     data = {}
     serializer = LoginSerializer(data=request.data)
@@ -89,23 +91,43 @@ def get_users(request):
     return Response(serializer.data)
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def get_user(request, pk):
+# @permission_classes([IsAuthenticated])
+def get_user(request, username):
     data = request.data
-    user = User.objects.get(id=pk)
+    user = User.objects.get(username=username)
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data) 
   
 @api_view(['PUT'])
-def editProfile(request, pk):
-    data = request.data
-    user = User.objects.get(id = pk)
+# @permission_classes([IsAuthenticated])
+def editProfile(request, username):
+    # user = request.user
+    user = User.objects.get(username=username)
     serializer = UpdateUserSerializer(user, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)    
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_clubs(request):
+    clubs = Club.objects.all()
+    serializer = ClubSerializer(clubs, many=True)
+    return Response(serializer.data)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def create_club(request):
+    serializer = CreateClubSerializer(data=request.data)
+    if serializer.is_valid():
+        club = serializer.save()
+        Membership.objects.create(user=request.user, club=club, role="C")
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        errors = serializer.errors
+        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -126,6 +148,3 @@ def addRating(request, movieID):
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-    

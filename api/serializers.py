@@ -3,9 +3,10 @@ from rest_framework.exceptions import NotAuthenticated
 from rest_framework import serializers
 from api.models import Club, User, Membership, Movie,Rating
 from rest_framework.validators import UniqueValidator
+from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, MaxLengthValidator
 
 class UserSerializer(ModelSerializer):
     class Meta:
@@ -69,7 +70,7 @@ class SignUpSerializer(serializers.Serializer):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'bio', 'preferences', 'password', 'password_confirmation']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'bio', 'preferences', 'password', 'password_confirmation']
 
     def validate(self,data):
         if data['password'] != data['password_confirmation']:
@@ -85,16 +86,18 @@ class SignUpSerializer(serializers.Serializer):
             bio = validated_data['bio'],
             preferences = validated_data['preferences']
         )
+        Token.objects.create(user=user)
 
         user.set_password(validated_data['password'])
         user.save()
 
         return user
 
+
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name','email', 'bio', 'preferences')
+        fields = ('username', 'first_name', 'last_name','email', 'bio', 'preferences')
            
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
@@ -106,7 +109,7 @@ class LoginSerializer(serializers.Serializer):
 
     class Meta:
         model = User
-        fields = ['username', 'password']
+        fields = ['id', 'username', 'password']
     
     def validate(self,data):
         username = data['username']
@@ -153,6 +156,25 @@ class ChangePasswordSerializer(serializers.Serializer):
         user.set_password(self.validated_data["new_password"])
         user.save()
         return user
+
+class CreateClubSerializer(serializers.Serializer):
+    club_name = serializers.CharField(
+        required = True,
+        validators = [MaxLengthValidator(50)]
+    )
+
+    mission_statement = serializers.CharField(
+        required = False,
+        validators = [MaxLengthValidator(500)]
+    )
+
+    def create(self, validated_data):
+        club = Club.objects.create(**validated_data)
+        return club
+    
+    class Meta:
+        model = Club
+        fields = '__all__'
 
 class addRatingSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=False,queryset=User.objects.all())

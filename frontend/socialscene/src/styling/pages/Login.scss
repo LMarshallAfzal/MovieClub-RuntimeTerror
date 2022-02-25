@@ -2,32 +2,15 @@
 
 .login-grid {
   height: base.$height;
-  justify-content: center;
-
-  &-left {
-
-  }
-
-  &-right{
-    margin: 0;
-    align-self: center;
-
-  }
 }
 
 .form-stack {
-  max-width: 25em;
-
-  &-child {
-
-  }
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
-.link-form-button {
-  text-decoration: none;
-}
-
-.dual-button {
+.form-field {
   width: 100%;
+  max-width: 60%;
 }
-

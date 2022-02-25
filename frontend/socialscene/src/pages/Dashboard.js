@@ -1,15 +1,24 @@
-import React from 'react'
+import React, {useState} from 'react';
 import SideNavbar from '../components/Sidebar';
 import NameHeader from '../components/NameHeader';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from './Login';
 
-function dashboard() {
+function Dashboard() {
+    const [token, setToken] = useState('');
+
+    const userLogin = (tok) => {
+      setToken(tok);
+    }
+
+    if(!token) {
+        return <Login userLogin={userLogin}/>
+    }
+
     return (
         <>
-            <NameHeader />
-            <SideNavbar />
+            <h1>dash</h1>
         </>
     );
 }
 
-export default dashboard;
+export default Dashboard;
