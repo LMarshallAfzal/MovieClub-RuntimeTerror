@@ -38,7 +38,7 @@ export const SidebarData = [
     },
     {
         title: 'profile',
-        path: '/',
+        path: '/profile',
         icon: <FaIcons.FaUserEdit />,
         cName: 'sidebar-text'
     },

@@ -1,7 +1,7 @@
-@use "../base";
+@import "../base";
 
 z.sidebar {
-    background-color: base.$grey-4;
+    background-color: $grey-4;
     height: 100%;
     width: 15rem;
     display: flex;
@@ -16,16 +16,17 @@ z.sidebar {
 }
 
 .sidebar-list .sidebar-text{
-    background-color: base.$grey-4;
+    background-color: $grey-4;
     box-sizing: border-box;
     width: 100%;
     height: 40px;
     list-style-type: none;
-    border-left: 10px solid base.$grey-4;
+    border-left: 10px solid $grey-4;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    font-family: $helvetica;
 }
 
 .sidebar-text #icon{
@@ -41,66 +42,11 @@ z.sidebar {
 
 .sidebar-list .sidebar-text:hover{
     cursor: pointer;
-    border-left: 10px solid base.$pale-red;
+    border-left: 10px solid $pale-red;
 }
 
 .sidebar-list #active{
-    font-family: base.$helvetica-bold;
-    background-color: base.$grey-3;
-    border-left: 10px solid base.$primary-red;
+    font-family: $helvetica-bold;
+    background-color: $grey-3;
+    border-left: 10px solid $primary-red;
 }
-
- /* .menu-bars {
-    margin-left: 2rem;
-    font-size: 2rem;
-    background: none;
-} */
-
-/* .sidebar-menu {
-    background-color: white;
-    width: 250px;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-} */
-
-/* .sidebar-text {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding: 8px 0px 8px 0px;
-    list-style: none;
-    height: 60px;
-} */
-
-/* .sidebar-text a {
-    text-decoration: none;
-    color: black;
-    font-size: 18px;
-    width: 95%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    border-radius: 4px;
-} */
-
-/* .sidebar-menu-items a:hover {
-    cursor: pointer;
-    background-color: lightgray;
-}
-
-.sidebar-menu-items{
-    width: 100%;
-}
-
-sidebar-toggle{
-    background-color: brown;
-    width: 100%;
-    height: 80px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-}
- */
