@@ -58,9 +58,13 @@ class Login extends Component {
                     <HeadingCircle title={"log in"}/>
                 </Grid>
 
-                <Grid className={"login-grid-right"} item xs={6}>
-                    <Stack className={"form-stack"} spacing={3}>
+                <Grid className={"login-grid-right"} item xs={6}
+                  alignItems="center"
+                  justifyContent="center">
+                    <Stack className={"form-stack"} spacing={3}
+                height={"100%"}>
                         <TextField
+                            className={"form-field"}
                             id={"outlined-basic"}
                             label={"username"}
                             name={"username"}
@@ -70,6 +74,7 @@ class Login extends Component {
                         />
 
                         <TextField
+                            className={"form-field"}
                             id={"outlined-basic"}
                             label={"password"}
                             name={"password"}
@@ -79,7 +84,7 @@ class Login extends Component {
                             onChange={this.inputChanged}
                         />
 
-                        <div className={"dual-button"}>
+                        <div className={"form-field"}>
                             <Box
                                 sx={{
                                     display: 'grid',

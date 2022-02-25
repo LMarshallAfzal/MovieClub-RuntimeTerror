@@ -14,5 +14,6 @@
 }
 
 .circle-text{
-  //float: right;
+  pointer-events: none;
+  user-select: none;
 }

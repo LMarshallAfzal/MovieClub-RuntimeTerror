@@ -1,11 +1,11 @@
 import React from "react";
 
-function profile() {
+function clubs() {
     return (
         <>
-            <h1>profile</h1>
+            <h1>club</h1>
         </>
     );
 }
 
-export default profile;
+export default clubs;

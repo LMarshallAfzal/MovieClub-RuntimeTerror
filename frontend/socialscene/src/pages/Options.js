@@ -1,11 +1,11 @@
 import React from "react";
 
-function profile() {
+function options() {
     return (
         <>
-            <h1>profile</h1>
+            <h1>option</h1>
         </>
     );
 }
 
-export default profile;
+export default options;

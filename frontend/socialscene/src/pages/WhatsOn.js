@@ -1,11 +1,11 @@
 import React from "react";
 
-function profile() {
+function whatsOn() {
     return (
         <>
-            <h1>profile</h1>
+            <h1>new</h1>
         </>
     );
 }
 
-export default profile;
+export default whatsOn;

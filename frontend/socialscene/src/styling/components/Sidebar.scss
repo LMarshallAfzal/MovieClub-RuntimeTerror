@@ -3,104 +3,61 @@
 z.sidebar {
     background-color: base.$grey-4;
     height: 100%;
-    width: 15rem;
+    width: 100%;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
 }
 
 .sidebar-list{
     margin: 0;
     padding: 0;
-    width: 15rem;
+    width: 100%;
 }
 
-.sidebar-list .sidebar-text{
+.sidebar-list .sidebar-list-item{
     background-color: base.$grey-4;
     box-sizing: border-box;
     width: 100%;
-    height: 40px;
+    height: 4em;
     list-style-type: none;
     border-left: 10px solid base.$grey-4;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    transition: all 0.3s ease-out;
+    font-family: base.$helvetica-light;
 }
 
-.sidebar-text #icon{
-    flex: 30%;
-    display: grid;
-    place-items: center;
-}
-
-.sidebar-text #title{
-    flex: 70%;
-    padding-left: 10px;
-}
-
-.sidebar-list .sidebar-text:hover{
+.sidebar-list .sidebar-list-item:hover{
     cursor: pointer;
     border-left: 10px solid base.$pale-red;
+    background-color: base.$grey-3;
+
 }
 
 .sidebar-list #active{
-    font-family: base.$helvetica-bold;
-    background-color: base.$grey-3;
+    font-family: base.$helvetica;
+    background-color: base.$grey-2;
     border-left: 10px solid base.$primary-red;
+
 }
 
- /* .menu-bars {
-    margin-left: 2rem;
-    font-size: 2rem;
-    background: none;
-} */
-
-/* .sidebar-menu {
-    background-color: white;
-    width: 250px;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-} */
-
-/* .sidebar-text {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding: 8px 0px 8px 0px;
-    list-style: none;
-    height: 60px;
-} */
-
-/* .sidebar-text a {
-    text-decoration: none;
-    color: black;
-    font-size: 18px;
-    width: 95%;
+.sidebar-list-link-box {
     height: 100%;
+    width: 100%;
+    align-items: center;
+
+}
+
+.sidebar-list-link-text {
+    padding-left: 10px;
+    height: 100%;
+    width: calc(100% - 10px);
+    font-size: 1.5rem;
     display: flex;
     align-items: center;
-    padding: 0 16px;
-    border-radius: 4px;
-} */
-
-/* .sidebar-menu-items a:hover {
-    cursor: pointer;
-    background-color: lightgray;
+    user-select: none;
+    font-family: inherit;
 }
-
-.sidebar-menu-items{
-    width: 100%;
-}
-
-sidebar-toggle{
-    background-color: brown;
-    width: 100%;
-    height: 80px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-}
- */

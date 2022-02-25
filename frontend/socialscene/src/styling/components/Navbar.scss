@@ -15,12 +15,14 @@
   font-size: 1.2rem;
   overflow: auto;
   width: 100%;
+  user-select: none;
 }
 
 .navbar-red {
   height: 10px;
   display: flex;
   background: base.$primary-red;
+  user-select: none;
 }
 
 .navbar-logo {
@@ -34,9 +36,11 @@
   text-decoration: none;
   font-size: 2rem;
   padding-top: 20px;
+  user-select: none;
 }
 
 .navbar-enter-button {
+  user-select: none;
   float: right;
   margin: auto;
   width: auto;

@@ -10,15 +10,13 @@ function Dashboard() {
       setToken(tok);
     }
 
-    
     if(!token) {
         return <Login userLogin={userLogin}/>
     }
 
     return (
         <>
-            <NameHeader />
-            <SideNavbar />
+            <h1>dash</h1>
         </>
     );
 }

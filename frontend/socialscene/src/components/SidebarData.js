@@ -1,51 +1,40 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react'
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
-import * as MdIcons from 'react-icons/md';
-import * as BsIcons from 'react-icons/bs';
 
 export const SidebarData = [
     {
         title: 'home',
-        path: '/',
-        icon: <AiIcons.AiFillHome />,
+        path: '/home',
         cName: 'sidebar-text'
     },
     {
         title: 'dashboard',
-        path: '/dashboard',
-        icon: <MdIcons.MdSpaceDashboard />,
+        path: '/home/dashboard',
         cName: 'sidebar-text'
     },
     {
         title: 'clubs',
-        path: '/',
-        icon: <MdIcons.MdGroups />,
+        path: '/home/clubs',
         cName: 'sidebar-text'
     },
     {
         title: 'movies',
-        path: '/',
-        icon: <MdIcons.MdMovie />,
+        path: '/home/movies',
         cName: 'sidebar-text'
     },
     {
         title: 'what\'s on',
-        path: '/',
-        icon: <BsIcons.BsCollectionPlayFill />,
+        path: '/home/whats-on',
         cName: 'sidebar-text'
     },
     {
         title: 'profile',
-        path: '/',
-        icon: <FaIcons.FaUserEdit />,
+        path: '/home/profile',
         cName: 'sidebar-text'
     },
     {
         title: 'options',
-        path: '/',
-        icon: <IoIcons.IoMdSettings />,
+        path: '/home/options',
         cName: 'sidebar-text'
     },
 ]
