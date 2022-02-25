@@ -73,22 +73,17 @@ h6 {
 
 .login-grid {
   height: calc(100% - 90px);
-  justify-content: center;
-}
-.login-grid-right {
-  margin: 0;
-  align-self: center;
 }
 
 .form-stack {
-  max-width: 25em;
-}
-.link-form-button {
-  text-decoration: none;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
-.dual-button {
+.form-field {
   width: 100%;
+  max-width: 60%;
 }
 
 /*# sourceMappingURL=Login.css.map */

@@ -36,17 +36,6 @@ function NameHeader(props) {
           </Box>
         </Box>
       </div>
-    // <table className="name-header-table">
-    //   <tbody>
-    //     <td>
-    //       <Image className='profile-img' src="./logo512.png" alt="" />
-    //     </td>
-    //     <td>
-    //       <tr><div style={{ fontFamily: "Helvetica-Bold" }} className='name-td'>Emmanouil</div></tr>
-    //       <tr><div style={{ fontFamily: "Helvetica-Bold" }} className='name-td'>Demosthenous</div></tr>
-    //     </td>
-    //   </tbody>
-    // </table>
   )
 }
 

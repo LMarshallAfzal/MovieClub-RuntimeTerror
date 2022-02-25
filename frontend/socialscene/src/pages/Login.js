@@ -13,21 +13,26 @@ function login() {
                 <HeadingCircle title={"log in"}/>
             </Grid>
 
-            <Grid className={"login-grid-right"} item xs={6}>
-                <Stack className={"form-stack"} spacing={3}>
+            <Grid className={"login-grid-right"} item xs={6}
+                  alignItems="center"
+                  justifyContent="center">
+                <Stack className={"form-stack"} spacing={3}
+                height={"100%"}>
                     <TextField
+                        className={"form-field"}
                         id={"outlined-basic"}
                         label={"username"}
                         variant={"outlined"}
                     />
 
                     <TextField
+                        className={"form-field"}
                         id={"outlined-basic"}
                         label={"password"}
                         variant={"outlined"}
                     />
 
-                    <div className={"dual-button"}>
+                    <div className={"form-field"}>
                         <Box
                             sx={{
                                 display: 'grid',
@@ -36,7 +41,7 @@ function login() {
                             }}
                         >
                             <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                <Link className={"link-form-button"} to={"/home"}>
+                                <Link to={"/home"}>
                                     <FormButton
                                         text={"log in"}
                                     />
