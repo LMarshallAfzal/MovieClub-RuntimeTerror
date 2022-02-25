@@ -30,8 +30,8 @@ function NameHeader(props) {
 
           <Box sx={{ gridRow: '1', gridColumn: 'span 3'}}>
               <Stack>
-                  <h4>{props.firstName} {props.lastName}<h4--emphasise>.</h4--emphasise></h4>
-                  <h6>joined {props.joinDate}</h6>
+                  <h4 className={"name-header-text"}>{props.firstName} {props.lastName}<h4--emphasise>.</h4--emphasise></h4>
+                  <h6 className={"name-header-text-date"}>joined {props.joinDate}</h6>
               </Stack>
           </Box>
         </Box>

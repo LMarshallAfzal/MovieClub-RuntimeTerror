@@ -1,7 +1,7 @@
 @use "../base";
 
 .name-header {
-    background-color: base.$grey-2;
+    background-color: base.$grey-1;
     width: 100%;
     height: inherit;
     overflow: hidden;
@@ -10,6 +10,14 @@
 .name-header-image{
     padding: 20px;
     align-self: center;
+}
+
+.name-header-text {
+    color: base.$grey-4;
+}
+
+.name-header-text-date {
+    color: base.$grey-3;
 }
 
 //.profile-img {

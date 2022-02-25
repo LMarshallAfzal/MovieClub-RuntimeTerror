@@ -1,5 +1,5 @@
 import React from "react";
-import "../styling/pages/Home.css";
+import "../styling/pages/HomeRouter.css";
 import {Route, Routes} from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import NameHeader from "../components/NameHeader";
