@@ -9,6 +9,7 @@ function Dashboard() {
     const userLogin = (tok) => {
       setToken(tok);
     }
+
     
     if(!token) {
         return <Login userLogin={userLogin}/>

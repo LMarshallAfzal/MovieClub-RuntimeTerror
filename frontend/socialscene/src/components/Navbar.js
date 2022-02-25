@@ -39,7 +39,7 @@ function NavbarButton() {
             return (
                 <Link to={"/signup"} className={"navbar-enter-button"}>
                 <EnterButton
-                    text={"sign up"}/>
+                    text={"sign up"} />
                 </Link>
             )
 
