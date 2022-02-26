@@ -50,6 +50,7 @@ h2--emphasise {
 }
 
 .navbar {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100%;
@@ -92,6 +93,4 @@ h2--emphasise {
   padding-right: 10px;
   padding-top: 30px;
   text-decoration: none;
-}
-
-/*# sourceMappingURL=Navbar.css.map */
+}/*# sourceMappingURL=Navbar.css.map */

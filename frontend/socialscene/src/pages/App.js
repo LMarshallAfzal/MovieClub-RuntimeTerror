@@ -7,6 +7,7 @@ import NotFound404 from "./NotFound";
 import Dashboard from "../pages/Dashboard";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Signup from "./Signup";
+import Profile from "./Profile";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
                       <Route path={"/login"} element={(<LogIn />)}/>
                       <Route path={"/dashboard"} element={(<Dashboard />)}/>
                       <Route path={"/signup"} element={(<Signup />)}/>
+                      <Route path={"/profile"} element={(<Profile />)}/>
                       <Route path={"*"} element={<NotFound404 />}/>
                   </Routes>
           </Router>

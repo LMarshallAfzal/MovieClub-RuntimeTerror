@@ -47,16 +47,4 @@ h2 {
 }
 h2--emphasise {
   color: #FF0000;
-}
-
-.circle {
-  overflow: hidden;
-  width: calc((100% - 90px) / 2);
-  height: calc(100% - 90px);
-  position: absolute;
-  border-top-right-radius: calc(100% - 90px);
-  border-bottom-right-radius: calc(100% - 90px);
-  display: flex;
-  background-color: #D8D8D8;
-  align-items: center;
-}/*# sourceMappingURL=HeadingCircle.css.map */
+}/*# sourceMappingURL=base.css.map */

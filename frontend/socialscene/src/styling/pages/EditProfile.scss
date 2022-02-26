@@ -1,0 +1,26 @@
+@use "../base";
+
+.editProfile-grid {
+    height: base.$height;
+    justify-content: center;
+
+    &-left {
+        margin: 25;
+        align-self: center;
+    }
+
+    &-right {
+        margin: 0;
+        align-self: center;
+
+    }
+}
+
+.form-stack {
+    max-width: 25em;
+
+    &-child {
+
+    }
+
+}
