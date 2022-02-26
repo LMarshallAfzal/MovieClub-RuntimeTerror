@@ -13,7 +13,7 @@ import Options from "./Options";
 import Home from "./Home";
 import Login from "./Login";
 
-function homeRouter() {
+function HomeRouter() {
     const [token, setToken] = useState('');
 
     const userLogin = (tok) => {
@@ -50,4 +50,4 @@ function homeRouter() {
     );
 }
 
-export default homeRouter;
+export default HomeRouter;
