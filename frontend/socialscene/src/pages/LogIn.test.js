@@ -5,6 +5,17 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import LogIn from "./LogIn";
 
+// This is mocks the
+// useNavigate() function
+// Why mock must be appended?
+const mockNavigate = jest.fn();
+// This code snippet must
+// be placed outside of describe
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockNavigate,
+}));
+
 describe("Log in form", () => {
   let fetchMock;
 

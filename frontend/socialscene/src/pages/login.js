@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LogIn = () => {
   const [formInput, setFormInput] = useState({
@@ -7,6 +8,8 @@ const LogIn = () => {
   });
 
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
@@ -28,7 +31,9 @@ const LogIn = () => {
           setError(true);
           throw new Error("Something went wrong...");
         } else {
-          return response.json();
+          // This redirects to home page
+          // upon successful log in
+          navigate("/");
         }
       })
       .catch((err) => console.error(err));
