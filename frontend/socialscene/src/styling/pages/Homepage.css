@@ -81,7 +81,10 @@ h6 {
   text-align: center;
   text-shadow: 2px 2px 2px #000000;
   pointer-events: none;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   white-space: nowrap;
 }
 
@@ -96,12 +99,11 @@ h6 {
 .cover-image {
   width: 100%;
   height: calc(100% - 90px);
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   display: block;
   z-index: -1;
   filter: blur(8px);
   overflow: hidden;
   transform-origin: center;
-}
-
-/*# sourceMappingURL=Homepage.css.map */
+}/*# sourceMappingURL=Homepage.css.map */

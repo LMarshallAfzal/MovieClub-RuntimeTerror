@@ -20,7 +20,6 @@
     "react-router": "^6.0.0-beta.8",
     "react-router-dom": "^6.0.0-beta.8",
     "react-scripts": "5.0.0",
-    "sass": "^1.49.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -49,6 +48,7 @@
   },
   "devDependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "sass": "^1.47.0"
   }
 }
