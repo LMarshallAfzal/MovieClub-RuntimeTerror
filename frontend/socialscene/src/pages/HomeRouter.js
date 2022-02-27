@@ -13,17 +13,14 @@ import Options from "./Options";
 import Home from "./Home";
 import Login from "./Login";
 import ChangePassword from "./ChangePassword";
+import useToken from '../components/useToken';
 
 function HomeRouter() {
-    const [token, setToken] = useState('');
+    const { token, setToken } = useToken();
 
-    const userLogin = (tok) => {
-        setToken(tok);
-    }
-    localStorage.setItem('token',token);
-    if(!token) {
-        return <Login userLogin={userLogin}/>
-    }
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
 
     return (
         <>

@@ -18,7 +18,6 @@ function App() {
                       <Route path={"/login"} element={(<LogIn />)}/>
                       <Route path={"/home/*"} element={(<HomeRouter />)}/>
                       <Route path={"/signup"} element={(<Signup />)}/>
-                      
                       <Route path={"*"} element={<NotFound404 />}/>
                   </Routes>
           </Router>

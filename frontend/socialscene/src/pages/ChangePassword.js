@@ -19,21 +19,16 @@ class ChangePassword extends React.Component {
     }
 
     submitForm(){
-        console.log(this.state)
-        //const token = JSON.parse(localStorage.getItem('token'))
-        const token = localStorage.getItem('token')
-        console.log(token)
-        const tokenString = '"'+ token + '"'
-        const fuckOff = JSON.parse('{"token": '+ tokenString +'}')
-        console.log(fuckOff)
-        // const userData = (localStorage.getItem('user'))
-        // console.log(userData)
+        console.log(JSON.parse(localStorage.getItem('token')));
+        const token = JSON.parse(localStorage.getItem('token'));
+        // const token = localStorage.getItem('token')
+        console.log(token);
         fetch('http://127.0.0.1:8000/change_password/',{
             method:'PUT',
             body:JSON.stringify(this.state),
             headers:{
                 'Content-type': 'application/json; charset=UTF-8',
-                Authorization: fuckOff
+                Authorization: token
             },
         })
         .then(console.log("WORKS HERE TOO"))

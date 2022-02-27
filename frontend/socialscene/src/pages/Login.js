@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import HeadingCircle from "../components/HeadingCircle";
 import {Box, Grid, Stack, TextField} from "@mui/material";
 import FormButton from "../components/FormButton";
+import PropTypes from 'prop-types';
 
 class Login extends Component {
 
@@ -19,19 +20,19 @@ class Login extends Component {
             body: JSON.stringify(this.state.credentials)
         })
         .then(data => data.json())
-        .then(
-            data => {
-            this.props.userLogin(data.token)
-            }
-        )
+        // .then(
+        //     data => {
+        //     this.props.userLogin(data.token)
+        //     }
+        // )
         .catch(error => console.error(error))
         const response = await fetch('http://127.0.0.1:8000/user/' + this.state.credentials.username + '/', {
         
         })
         const data =  await response.json()
-        console.log(data)
-        console.log({first_name: data.first_name})
-        localStorage.setItem('user', JSON.stringify({username: data.username, first_name: data.first_name, last_name: data.last_name ,email: data.email, bio:data.bio, preferences:data.preferences}))
+        // console.log(data)
+        // console.log({first_name: data.first_name})
+        // localStorage.setItem('user', JSON.stringify({username: data.username, first_name: data.first_name, last_name: data.last_name ,email: data.email, bio:data.bio, preferences:data.preferences}))
         .catch(error => console.error(error))
         this.setState({
             username:'',
@@ -111,6 +112,11 @@ class Login extends Component {
             </Grid>
         );
     }
+   
 }
+
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
+};
 
 export default Login;
