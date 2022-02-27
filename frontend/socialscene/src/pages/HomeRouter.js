@@ -19,7 +19,7 @@ function HomeRouter() {
     const userLogin = (tok) => {
         setToken(tok);
     }
-
+    localStorage.setItem('token',token);
     if(!token) {
         return <Login userLogin={userLogin}/>
     }
