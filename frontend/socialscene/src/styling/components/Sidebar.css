@@ -137,3 +137,12 @@ z.sidebar {
           user-select: none;
   font-family: inherit;
 }/*# sourceMappingURL=Sidebar.css.map */
+sidebar-toggle{
+    background-color: brown;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+/*# sourceMappingURL=Sidebar.css.map */

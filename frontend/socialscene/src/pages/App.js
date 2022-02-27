@@ -9,6 +9,7 @@ import Profile from "./Profile";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Signup from "./Signup";
 import HomeRouter from "./HomeRouter";
+import Profile from "./Profile";
 
 function App() {
   return (
