@@ -8,7 +8,7 @@ import {Link, useLocation} from "react-router-dom";
 
 
 class Signup extends React.Component {
-    
+
     constructor(){
         super()
         this.state={
@@ -59,7 +59,7 @@ class Signup extends React.Component {
         })
         console.log(this.state)
     }
-    
+
     render() {
         return (
             <Grid className={"login-grid"} container spacing={2}>
@@ -151,25 +151,25 @@ class Signup extends React.Component {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                    <Link to={"/dashboard"} className={"navbar-enter-button"}>
+                                    <Link to={"/home"} className={"navbar-enter-button"}>
                                         <FormButton
                                             text={"sign up"}
                                             onClick={this.submitForm}
                                         />
-                                    </Link>    
+                                    </Link>
                                 </Box>
-                            </Box>    
+                            </Box>
                         </div>
                     </Stack>
 
-                </Grid>    
+                </Grid>
 
                 <Grid className={"login-grid-right"} item xs={6}>
                     <></>
                 </Grid>
             </Grid>
         )
-    }    
+    }
 }
 
 export default Signup;
