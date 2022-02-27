@@ -12,6 +12,7 @@ import Profile from "./Profile";
 import Options from "./Options";
 import Home from "./Home";
 import Login from "./Login";
+import ChangePassword from "./ChangePassword";
 
 function HomeRouter() {
     const [token, setToken] = useState('');
@@ -43,6 +44,7 @@ function HomeRouter() {
                         <Route path={"whats-on"} element={(<WhatsOn />)}/>
                         <Route path={"profile"} element={(<Profile />)}/>
                         <Route path={"options"} element={(<Options />)}/>
+                        <Route path={"change-password"} element={(<ChangePassword />)}/>
                     </Routes>
                 </Grid>
             </Grid>
