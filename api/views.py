@@ -1,9 +1,10 @@
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .models import *
 from django.contrib.auth import logout
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -72,7 +73,8 @@ def log_out(request):
 
 
 @api_view(["PUT"])
-# @permission_classes([IsAuthenticated])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
 def change_password(request):
     serializer = ChangePasswordSerializer(
         data=request.data, context={"request": request}
@@ -84,7 +86,7 @@ def change_password(request):
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+#@authentication_classes([TokenAuthentication])
 def get_users(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
