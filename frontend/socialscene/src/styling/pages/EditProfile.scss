@@ -5,7 +5,7 @@
     justify-content: center;
 
     &-left {
-        margin: 25;
+        // margin: 25;
         align-self: center;
     }
 
@@ -17,10 +17,18 @@
 }
 
 .form-stack {
-    max-width: 25em;
+    margin-top: 20px;
 
-    &-child {
+}
 
-    }
+.profile-text-box {
+    background-color: base.$grey-3;
+}
 
+.profile-text-box-bio{
+    background-color: base.$grey-3;
+}
+
+.profile-text-box-preference{
+    background-color: base.$grey-3;
 }

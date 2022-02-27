@@ -24,9 +24,16 @@
   font-family: Helvetica-BoldOblique;
   src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
 }
+a {
+  display: block;
+  text-decoration: none;
+  color: #000000;
+}
+
 body {
   font-family: Helvetica, serif;
   color: #000000;
+  margin: 0;
 }
 body--emphasise {
   color: #FF0000;
@@ -49,19 +56,45 @@ h2--emphasise {
   color: #FF0000;
 }
 
+h4 {
+  font-family: Helvetica, serif;
+  font-size: 2.5rem;
+  margin: 0;
+}
+h4--emphasise {
+  color: #FF0000;
+}
+
+h6 {
+  font-family: Helvetica-Light, serif;
+  margin: 0;
+  font-size: 1rem;
+}
+
 .editProfile-grid {
   height: calc(100% - 90px);
   justify-content: center;
 }
 .editProfile-grid-left {
-  margin: 25;
   align-self: center;
 }
 .editProfile-grid-right {
-  margin: 25;
+  margin: 0;
   align-self: center;
 }
 
 .form-stack {
-  max-width: 25em;
+  margin-top: 20px;
+}
+
+.profile-text-box {
+  background-color: #D8D8D8;
+}
+
+.profile-text-box-bio {
+  background-color: #D8D8D8;
+}
+
+.profile-text-box-preference {
+  background-color: #D8D8D8;
 }/*# sourceMappingURL=EditProfile.css.map */
