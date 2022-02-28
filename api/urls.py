@@ -9,8 +9,9 @@ urlpatterns = [
     path("change_password/", views.change_password, name="change_password"),
     path('edit_profile/<str:username>', views.editProfile, name = 'edit_profile'),
     path("users/", views.get_users, name = "users"),
-    path("user/<str:username>/",views.get_user, name = "user"),
-    path("clubs/",views.get_clubs, name = "clubs"),
-    path("create_club/",views.create_club, name = "create_club"),
-    path("add_rating/<int:movieID>/",views.addRating,name = "add_rating"),
+    path("user/<str:username>/", views.get_user, name = "user"),
+    path("clubs/", views.get_clubs, name = "clubs"),
+    path("create_club/", views.create_club, name = "create_club"),
+    path("join_club/<int:clubid>/", views.join_club, name = "join_club"),
+    path("add_rating/<int:movieID>/", views.addRating, name = "add_rating"),
 ]
