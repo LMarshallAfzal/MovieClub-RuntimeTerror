@@ -19,9 +19,7 @@ class ChangePassword extends React.Component {
     }
 
     submitForm(){
-        console.log(JSON.parse(localStorage.getItem('token')));
-        const token = JSON.parse(localStorage.getItem('token'));
-        // const token = localStorage.getItem('token')
+        const token = JSON.parse(localStorage.getItem('token'))
         console.log(token);
         fetch('http://127.0.0.1:8000/change_password/',{
             method:'PUT',

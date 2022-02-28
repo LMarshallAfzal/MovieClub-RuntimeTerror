@@ -1,10 +1,11 @@
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .models import *
 from django.contrib.auth import logout
-from rest_framework.permissions import IsAuthenticated
 
 
 @api_view(['GET'])
@@ -50,6 +51,7 @@ def signUp(request):
 
 
 @api_view(['POST', 'GET'])
+# @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def login(request):
     data = {}
     serializer = LoginSerializer(data=request.data)
@@ -71,8 +73,11 @@ def log_out(request):
         return Response(status=status.HTTP_403_FORBIDDEN)
 
 
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@api_view(["PUT"])
+# Using all authentication classes results in 403, using token only results in 401
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+# @permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
 def change_password(request):
     serializer = ChangePasswordSerializer(
         data=request.data, context={"request": request}
@@ -112,6 +117,7 @@ def editProfile(request, username):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
 def get_clubs(request):
     clubs = Club.objects.all()
     serializer = ClubSerializer(clubs, many=True)
