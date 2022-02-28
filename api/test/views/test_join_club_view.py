@@ -13,16 +13,15 @@ class JoinClubViewTestCase(APITestCase):
     def setUp(self):
         self.club = Club(club_name="Joinable Movie Club", mission_statement="We are a club you can join")
         self.club.save()
-        #self.club = Club.objects.all()[0]
         self.user = User.objects.all()[0]
 
     def url(self, clubid):
         return reverse("join_club", kwargs={"clubid": clubid})
 
     def test_unauthenticated_request_returns_forbidden(self):
-        before = Club.objects.count()
+        before = Membership.objects.filter(club=self.club).count()
         response = self.client.post(self.url(0))
-        after = Club.objects.count()
+        after = Membership.objects.filter(club=self.club).count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
     
