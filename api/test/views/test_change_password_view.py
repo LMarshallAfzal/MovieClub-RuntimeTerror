@@ -1,5 +1,7 @@
 from api.models import User
 from django.test import TestCase
+from django.urls import reverse
+
 
 
 class ChangePasswordViewTestCase(TestCase):
@@ -14,16 +16,17 @@ class ChangePasswordViewTestCase(TestCase):
             password="Password123",
             is_active=True,
         )
+        self.url = reverse('change_password')
 
     def test_post_to_change_password_endpoint_as_logged_in_user_is_200_ok(self):
         self.client.force_login(self.user)
-        url = "/change_password/"
+        # url = "/change_password/"
         input = {
             "old_password": "Password123",
             "new_password": "Foobar69",
-            "password_confirmation": "Foobar69",
+            "new_password_confirmation": "Foobar69",
         }
-        response = self.client.post(url, input)
+        response = self.client.put(self.url, input)
         self.assertEqual(response.status_code, 200)
 
     def test_post_to_change_password_endpoint_as_anonymous_user_is_403_forbidden(self):
@@ -31,9 +34,9 @@ class ChangePasswordViewTestCase(TestCase):
         input = {
             "old_password": "Password123",
             "new_password": "Foobar69",
-            "password_confirmation": "Foobar69",
+            "new_password_confirmation": "Foobar69",
         }
-        response = self.client.post(url, input)
+        response = self.client.put(url, input)
         self.assertEqual(response.status_code, 403)
 
     def test_post_to_password_endpoint_with_invalid_current_password_does_not_change_password(
@@ -43,7 +46,7 @@ class ChangePasswordViewTestCase(TestCase):
         input = {
             "old_password": "Foobar69",
             "new_password": "Password123",
-            "password_confirmation": "Password123",
+            "new_password_confirmation": "Password123",
         }
         response = self.client.post(url, input)
         self.assertFalse(self.user.check_password("Foobar69"))
@@ -57,5 +60,5 @@ class ChangePasswordViewTestCase(TestCase):
             "new_password": "Hello123",
             "password_confirmation": "World69",
         }
-        response = self.client.post(url, input)
+        response = self.client.put(url, input)
         self.assertTrue(self.user.check_password("Password123"))

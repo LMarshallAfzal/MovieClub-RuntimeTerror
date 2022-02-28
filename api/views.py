@@ -74,9 +74,7 @@ def log_out(request):
 
 
 @api_view(["PUT"])
-# Using all authentication classes results in 403, using token only results in 401
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-# @permission_classes([IsAuthenticated])
 @authentication_classes([TokenAuthentication])
 def change_password(request):
     serializer = ChangePasswordSerializer(
@@ -96,7 +94,6 @@ def get_users(request):
     return Response(serializer.data)
 
 @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
 def get_user(request, username):
     data = request.data
     user = User.objects.get(username=username)
@@ -104,7 +101,6 @@ def get_user(request, username):
     return Response(serializer.data) 
   
 @api_view(['PUT'])
-# @permission_classes([IsAuthenticated])
 def editProfile(request, username):
     # user = request.user
     user = User.objects.get(username=username)

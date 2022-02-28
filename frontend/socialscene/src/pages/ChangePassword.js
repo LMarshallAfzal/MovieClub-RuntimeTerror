@@ -20,7 +20,6 @@ class ChangePassword extends React.Component {
 
     submitForm(){
         const token = JSON.parse(localStorage.getItem('token'))
-        console.log(token);
         fetch('http://127.0.0.1:8000/change_password/',{
             method:'PUT',
             body:JSON.stringify(this.state),
@@ -29,7 +28,6 @@ class ChangePassword extends React.Component {
                 Authorization: token
             },
         })
-        .then(console.log("WORKS HERE TOO"))
         .then(response=>response.json())
         .then((response)=>console.log(response))
         localStorage.setItem('user', JSON.stringify(this.state))
@@ -38,7 +36,6 @@ class ChangePassword extends React.Component {
 
     fetchData(){
         const userData = JSON.parse(localStorage.getItem('user'))
-        console.log(userData)
             this.setState({
                 old_password: userData.old_password,
                 new_password: userData.new_password,
