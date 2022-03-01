@@ -1,4 +1,8 @@
-import React from "react"
+import React from "react";
+import {Box, Grid, Stack, TextField} from "@mui/material";
+
+import FormButton from "../components/FormButton";
+
 
 class ChangePassword extends React.Component {
     constructor(props) {
@@ -49,33 +53,68 @@ class ChangePassword extends React.Component {
 
     render() {
         return (
-            <table className="table table-bordered">
-                <tbody>
-                    <tr>
-                        <th>Old Password</th>
-                        <td>
-                            <input value={this.state.old_password} name="old_password" onChange={this.changeHandler} type="password" className="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>New Password</th>
-                        <td>
-                            <input value={this.state.new_password} name="new_password" onChange={this.changeHandler} type="password" className="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>New Password Confirmation</th>
-                        <td>
-                            <input value={this.state.new_password_confirmation} name="new_password_confirmation" onChange={this.changeHandler} type="password" className="form-control" />
-                        </td>
-                    </tr>                    
-                    <tr>
-                        <td colSpan="2">
-                            <input type="submit" onClick={this.submitForm} className="btn btn-dark" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <Grid>
+                <Grid className="profile-table" style= {{borderSpacing: 0}}>
+                <tr>
+                    <div className='edit-profile-info-text'>Change Password:</div>
+                </tr> 
+                </Grid>
+                <Grid className={"changePassword-grid-right"} item xs={6}
+                  alignItems="center"
+                  justifyContent="center">
+                    <Stack className={"form-stack"} spacing={2}
+                height={"100%"}>
+                        <TextField
+                            className={"form-field"}
+                            id={"outlined-basic"}
+                            label={"username"}
+                            name={"username"}
+                            type={"text"}
+                            variant={"outlined"}
+                            value={this.state.old_password}
+                            onChange={this.changeHandler}
+                        />
+
+                        <TextField
+                            className={"form-field"}
+                            id={"outlined-basic"}
+                            label={"new password"}
+                            name={"new_password"}
+                            type={"password"}
+                            variant={"outlined"}
+                            value={this.state.password_confirmation}
+                            onChange={this.changeHandler}
+                        />
+
+                        <TextField
+                            className={"form-field"}
+                            id={"outlined-basic"}
+                            label={"new password confirmation"}
+                            name={"new_password_confirmation"}
+                            type={"password"}
+                            variant={"outlined"}
+                            value={this.state.new_password_confirmation}
+                            onChange={this.changeHandler}
+                        />
+                        <div className={"form-field"}>
+                            <Box
+                                sx={{
+                                    display: 'grid',
+                                    gridAutoColumns: '1fr',
+                                    gap: 1,
+                                }}
+                            >
+                                <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
+                                        <FormButton
+                                            text={"submit"}
+                                            onClick={this.submitForm}
+                                        />
+                                </Box>
+                            </Box>
+                        </div>
+                    </Stack>
+                </Grid>
+            </Grid>
         );
     }
 }
