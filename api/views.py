@@ -100,6 +100,7 @@ def get_user(request, username):
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data) 
   
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 @api_view(['PUT'])
 def editProfile(request, username):
     # user = request.user
