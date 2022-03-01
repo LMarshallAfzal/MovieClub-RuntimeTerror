@@ -28,7 +28,7 @@ function HomeRouter() {
 
     return (
         <>
-            <Grid className={"home-grid"} container spacing={2}>
+            <Grid className={"home-grid"} container>
                 <Grid className={"home-grid-L-sidebar"} item xs={3}>
                     <NameHeader
                         firstName={"noah"}
