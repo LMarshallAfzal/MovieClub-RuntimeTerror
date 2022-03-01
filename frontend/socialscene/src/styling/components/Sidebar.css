@@ -86,6 +86,11 @@ z.sidebar {
   width: 100%;
 }
 
+.sidebar-list .sidebar-text {
+  background-color: #F8F7F7;
+  font-family: Helvetica, serif;
+}
+
 .sidebar-list .sidebar-list-item {
   background-color: #F8F7F7;
   box-sizing: border-box;
@@ -98,7 +103,7 @@ z.sidebar {
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease-out;
-  font-family: Helvetica-Light, serif;
+  font-family: Helvetica, serif;
 }
 
 .sidebar-list .sidebar-list-item:hover {
@@ -109,7 +114,7 @@ z.sidebar {
 
 .sidebar-list #active {
   font-family: Helvetica, serif;
-  background-color: #999999;
+  background-color: #D8D8D8;
   border-left: 10px solid #FF0000;
 }
 
@@ -126,8 +131,9 @@ z.sidebar {
   font-size: 1.5rem;
   display: flex;
   align-items: center;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   font-family: inherit;
-}
-
-/*# sourceMappingURL=Sidebar.css.map */
+}/*# sourceMappingURL=Sidebar.css.map */
