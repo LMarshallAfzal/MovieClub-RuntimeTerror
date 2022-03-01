@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models.fields.related import ForeignKey
 from django.db import models
+from collections import defaultdict
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -127,4 +128,7 @@ class Rating(models.Model):
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
         
     )
+
+class Preferences(models.Model):
+    pass
 
