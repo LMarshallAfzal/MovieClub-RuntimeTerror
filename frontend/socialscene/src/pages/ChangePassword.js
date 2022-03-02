@@ -67,9 +67,9 @@ class ChangePassword extends React.Component {
                         <TextField
                             className={"form-field"}
                             id={"outlined-basic"}
-                            label={"username"}
-                            name={"username"}
-                            type={"text"}
+                            label={"old password"}
+                            name={"old password"}
+                            type={"passsword"}
                             variant={"outlined"}
                             value={this.state.old_password}
                             onChange={this.changeHandler}
