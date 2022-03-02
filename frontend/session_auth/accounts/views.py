@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import permissions
 from django.contrib import auth
 from user_account.models import UserAccount
+from .serializers import UserSerializer
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from rest_framework.response import Response
 from django.utils.decorators import method_decorator
@@ -111,4 +112,13 @@ class DeleteAccountView(APIView):
             return Response({ 'success': 'User deleted successfully' })
         except:
             return Response({ 'error': 'Something went wrong when trying to delete user' })
+
+class GetUsersView(APIView):
+    permission_classes = (permissions.AllowAny, )
+
+    def get(self, request, format=None):
+        users = User.objects.all()
+
+        users = UserSerializer(users, many=True)
+        return Response(users.data)
 

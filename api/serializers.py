@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer 
+from rest_framework.serializers import ModelSerializer
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework import serializers
 from api.models import Club, User, Membership, Movie,Rating
@@ -59,13 +59,13 @@ class SignUpSerializer(serializers.Serializer):
     preferences = serializers.CharField(
         required = True
     )
-    
+
     password = serializers.CharField(
         style={"input_type": "password"},
         write_only=True,
         validators=[RegexValidator(regex=r"^.*(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$")],
     )
-    
+
     password_confirmation = serializers.CharField(write_only = True,required = True)
 
     class Meta:
@@ -76,7 +76,7 @@ class SignUpSerializer(serializers.Serializer):
         if data['password'] != data['password_confirmation']:
             raise serializers.ValidationError({"password": "Passwords don't match."})
         return data
-    
+
     def create(self,validated_data):
         user = User.objects.create(
             username = validated_data['username'],
@@ -98,7 +98,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name','email', 'bio', 'preferences')
-           
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(
@@ -110,7 +110,7 @@ class LoginSerializer(serializers.Serializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'password']
-    
+
     def validate(self,data):
         username = data['username']
         password = data['password']
@@ -171,7 +171,7 @@ class CreateClubSerializer(serializers.Serializer):
     def create(self, validated_data):
         club = Club.objects.create(**validated_data)
         return club
-    
+
     class Meta:
         model = Club
         fields = '__all__'
@@ -180,9 +180,8 @@ class addRatingSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=False,queryset=User.objects.all())
     movie = serializers.PrimaryKeyRelatedField(read_only=False,queryset=Movie.objects.all())
     rating = serializers.FloatField(required = True,write_only=True,validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    
+
     class Meta:
         model = Rating
         fields = ['user','movie','rating']
-   
-    
+
