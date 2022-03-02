@@ -3,7 +3,8 @@ import "../styling/pages/Signup.css"
 import HeadingCircle from "../components/HeadingCircle";
 import {Box, Grid, Stack, TextField} from "@mui/material";
 import FormButton from "../components/FormButton";
-import {Link, useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
+
 
 
 
@@ -31,7 +32,7 @@ class Signup extends React.Component {
         });
     }
 
-    submitForm() {
+    submitForm(path) {
         fetch('http://127.0.0.1:8000/sign_up/',{
             method:'POST',
             body:JSON.stringify(this.state),
@@ -153,7 +154,7 @@ class Signup extends React.Component {
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
                                     <Link to={"/home"} className={"navbar-enter-button"}>
                                         <FormButton
-                                            text={"sign up"}
+                                            text={"Sign Up"}
                                             onClick={this.submitForm}
                                         />
                                     </Link>

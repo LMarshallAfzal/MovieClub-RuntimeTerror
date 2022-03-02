@@ -93,7 +93,8 @@ class Login extends Component {
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
                                         <FormButton
-                                            text={"log in"}
+                                            text={"Log in"}
+                                            name={"submit"}  
                                             onClick={this.login}
                                         />
                                 </Box>

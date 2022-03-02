@@ -120,6 +120,7 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError(msg, code='authorisation')
 
         elif User.objects.filter(username=user.username).filter(password=user.password):
+            Token.objects.create(user=user)
             return user
 
         else:
