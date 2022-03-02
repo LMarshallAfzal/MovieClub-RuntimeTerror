@@ -14,15 +14,15 @@ import Home from "./Home";
 import Login from "./Login";
 
 function HomeRouter() {
-    const [token, setToken] = useState('');
-
-    const userLogin = (tok) => {
-        setToken(tok);
-    }
-
-    if(!token) {
-        return <Login userLogin={userLogin}/>
-    }
+    // const [token, setToken] = useState('');
+    //
+    // const userLogin = (tok) => {
+    //     setToken(tok);
+    // }
+    //
+    // if(!token) {
+    //     return <Login userLogin={userLogin}/>
+    // }
 
     return (
         <>

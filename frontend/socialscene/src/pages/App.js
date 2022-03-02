@@ -8,9 +8,12 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Signup from "./Signup";
 import HomeRouter from "./HomeRouter";
 
+import {Provider} from "react-redux";
+import store from "../API/store";
+
 function App() {
   return (
-      <>
+      <Provider store={store}>
           <Router>
               <Navbar />
                   <Routes>
@@ -21,7 +24,7 @@ function App() {
                       <Route path={"*"} element={<NotFound404 />}/>
                   </Routes>
           </Router>
-      </>
+      </Provider>
   );
 }
 
