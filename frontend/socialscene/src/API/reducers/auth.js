@@ -16,7 +16,8 @@ export default function(state = initialState, action) {
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                isAuthenticated: true
+                isAuthenticated: true,
+                username: payload
             }
         case LOGOUT_SUCCESS:
             return {
