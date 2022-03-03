@@ -2,17 +2,25 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
-    LOGOUT_FAIL
+    LOGOUT_FAIL,
+    AUTHENTICATED_SUCCESS,
+    AUTHENTICATED_FAIL
 } from '../actions/types';
 
 const initialState = {
     isAuthenticated: null
 };
 
-export default function(state = initialState, action) {
+export default function auth1(state = initialState, action) {
     const { type, payload } = action;
 
     switch(type) {
+        case AUTHENTICATED_SUCCESS:
+        case AUTHENTICATED_FAIL:
+            return {
+                ...state,
+                isAuthenticated: payload
+            }
         case LOGIN_SUCCESS:
             return {
                 ...state,
@@ -30,5 +38,5 @@ export default function(state = initialState, action) {
             return state
         default:
             return state
-    };
+    }
 };

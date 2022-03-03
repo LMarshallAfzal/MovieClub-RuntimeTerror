@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import "../styling/pages/HomeRouter.css";
 import {Route, Routes} from "react-router-dom";
 import Sidebar from "../components/Sidebar";
@@ -11,19 +11,8 @@ import WhatsOn from "./WhatsOn";
 import Profile from "./Profile";
 import Options from "./Options";
 import Home from "./Home";
-import Login from "./Login";
 
 function HomeRouter() {
-    // const [token, setToken] = useState('');
-    //
-    // const userLogin = (tok) => {
-    //     setToken(tok);
-    // }
-    //
-    // if(!token) {
-    //     return <Login userLogin={userLogin}/>
-    // }
-
     return (
         <>
             <Grid className={"home-grid"} container spacing={2}>

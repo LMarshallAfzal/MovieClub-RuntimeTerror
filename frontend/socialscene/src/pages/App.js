@@ -1,6 +1,5 @@
 import React from "react";
 import "../styling/pages/App.css";
-import Navbar from "../components/Navbar";
 import HomePage from "./Homepage";
 import LogIn from "./Login";
 import NotFound404 from "./NotFound";
@@ -10,12 +9,13 @@ import HomeRouter from "./HomeRouter";
 
 import {Provider} from "react-redux";
 import store from "../API/store";
+import Layout from "./Layout";
 
 function App() {
   return (
       <Provider store={store}>
           <Router>
-              <Navbar />
+              <Layout>
                   <Routes>
                       <Route path={"/"} element={(<HomePage />)}/>
                       <Route path={"/login"} element={(<LogIn />)}/>
@@ -23,6 +23,7 @@ function App() {
                       <Route path={"/signup"} element={(<Signup />)}/>
                       <Route path={"*"} element={<NotFound404 />}/>
                   </Routes>
+              </Layout>
           </Router>
       </Provider>
   );

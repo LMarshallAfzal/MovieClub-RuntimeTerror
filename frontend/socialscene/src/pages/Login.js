@@ -1,76 +1,53 @@
-import React, {Component} from "react";
-import "../styling/pages/Login.css";
-import {Link} from "react-router-dom"
+import React, {useState} from "react";
+import {Navigate} from "react-router-dom"
+import {connect} from "react-redux";
+import {login} from "../API/actions/auth";
 import HeadingCircle from "../components/HeadingCircle";
 import {Box, Grid, Stack, TextField} from "@mui/material";
 import FormButton from "../components/FormButton";
+import "../styling/pages/Login.css";
+import CSRFToken from "../API/CSRFToken";
 
-class Login extends Component {
-    //
-    // state = {
-    //     credentials: {username: '', password: ''}
-    // }
-    //
-    // login = async event => {
-    //     console.log(this.state.credentials)
-    //     fetch('http://127.0.0.1:8000/auth/', {
-    //         method: 'POST',
-    //         headers: {'Content-Type': 'application/json'},
-    //         body: JSON.stringify(this.state.credentials)
-    //     })
-    //     .then(data => data.json())
-    //     .then(
-    //         data => {
-    //         this.props.userLogin(data.token)
-    //         }
-    //     )
-    //     .catch(error => console.error(error))
-    //     const response = await fetch('http://127.0.0.1:8000/user/' + this.state.credentials.username + '/', {
-    //
-    //     })
-    //     const data =  await response.json()
-    //     console.log(data)
-    //     console.log({first_name: data.first_name})
-    //     localStorage.setItem('user', JSON.stringify({username: data.username, first_name: data.first_name, last_name: data.last_name ,email: data.email, bio:data.bio, preferences:data.preferences}))
-    //     .catch(error => console.error(error))
-    //     this.setState({
-    //         username:'',
-    //         first_name:'',
-    //         last_name:'',
-    //         email:'',
-    //         bio:'',
-    //         preferences:'',
-    //         password:'',
-    //         password_confirmation:''
-    //     })
-    // }
-    //
-    // inputChanged = event => {
-    //     const cred = this.state.credentials;
-    //     cred[event.target.name] = event.target.value;
-    //     this.setState({credentials: cred});
-    // }
-    //
-    render() {
-        return (
-            <Grid className={"login-grid"} container spacing={2}>
-                <Grid className={"login-grid-left"} item xs={6}>
-                    <HeadingCircle title={"log in"}/>
-                </Grid>
+const Login = ({login, isAuthenticated}) => {
+    const [formData, setFormData] = useState({
+        username: '',
+        password: ''
+    });
 
-                <Grid className={"login-grid-right"} item xs={6}
-                  alignItems="center"
-                  justifyContent="center">
-                    <Stack className={"form-stack"} spacing={3}
-                height={"100%"}>
+    const {username, password} = formData;
+
+    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const onSubmit = e => {
+        e.preventDefault();
+
+        login(username, password);
+    };
+
+    if (isAuthenticated)
+        return <Navigate replace to='/home' />;
+
+    return (
+        <Grid className={"login-grid"} container spacing={2}>
+            <Grid className={"login-grid-left"} item xs={6}>
+                <HeadingCircle title={"log in"}/>
+            </Grid>
+
+            <Grid className={"login-grid-right"} item xs={6}
+              alignItems="center"
+              justifyContent="center">
+                <Stack className={"form-stack"} spacing={3}
+            height={"100%"}>
+                    <form onSubmit={e => onSubmit(e)}>
+                        <CSRFToken />
                         <TextField
                             className={"form-field"}
                             id={"outlined-basic"}
                             label={"username"}
                             name={"username"}
                             variant={"outlined"}
-                            value={this.state.credentials.username}
-                            onChange={this.inputChanged}
+                            value={username}
+                            onChange={e => onChange(e)}
                         />
 
                         <TextField
@@ -80,8 +57,8 @@ class Login extends Component {
                             name={"password"}
                             type={"password"}
                             variant={"outlined"}
-                            value={this.state.credentials.password}
-                            onChange={this.inputChanged}
+                            value={password}
+                            onChange={e => onChange(e)}
                         />
 
                         <div className={"form-field"}>
@@ -93,10 +70,10 @@ class Login extends Component {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                        <FormButton
-                                            text={"log in"}
-                                            onClick={this.login}
-                                        />
+                                    <FormButton
+                                        text={"log in"}
+                                        type={"submit"}
+                                    />
                                 </Box>
 
                                 <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>
@@ -106,11 +83,15 @@ class Login extends Component {
                                 </Box>
                             </Box>
                         </div>
-                    </Stack>
-                </Grid>
+                    </form>
+                </Stack>
             </Grid>
-        );
-    }
+        </Grid>
+    );
 }
 
-export default Login;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, {login})(Login);
