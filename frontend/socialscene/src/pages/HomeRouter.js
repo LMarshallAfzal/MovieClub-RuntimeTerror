@@ -15,16 +15,16 @@ import Login from "./Login";
 import ChangePassword from "./ChangePassword";
 
 function HomeRouter() {
-    const [token, setToken] = useState('');
+    // const [token, setToken] = useState('');
 
-    const userLogin = (tok) => {
-        setToken(tok);
-    }
+    // const userLogin = (tok) => {
+    //     setToken(tok);
+    // }
     
-    localStorage.setItem('token', JSON.stringify("Token " + token))
-    if(!token) {
-        return <Login userLogin={userLogin}/>
-    }
+    // localStorage.setItem('token', JSON.stringify("Token " + token))
+    // if(!token) {
+    //     return <Login userLogin={userLogin}/>
+    // }
 
     return (
         <>

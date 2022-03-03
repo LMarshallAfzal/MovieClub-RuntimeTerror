@@ -9,6 +9,7 @@ import Profile from "./Profile";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Signup from "./Signup";
 import HomeRouter from "./HomeRouter";
+import LoginBridge from "./LoginBridge";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               <Navbar />
                   <Routes>
                       <Route path={"/"} element={(<HomePage />)}/>
+                      <Route path={"/log-in"} element={(<LoginBridge />)}/>
                       <Route path={"/login"} element={(<LogIn />)}/>
                       <Route path={"/home/*"} element={(<HomeRouter />)}/>
                       <Route path={"/signup"} element={(<Signup />)}/>
