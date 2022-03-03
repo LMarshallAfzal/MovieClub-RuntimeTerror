@@ -2,9 +2,54 @@ import React from "react";
 import {Link, useLocation} from "react-router-dom";
 import "../styling/components/Navbar.css";
 import EnterButton from "./EnterButton";
+import { connect } from 'react-redux';
+import { logout } from '../API/actions/auth';
 
 
-function Navbar() {
+const Navbar = ({isAuthenticated, logout}) => {
+
+    const authLinks = (
+        <Link
+            to={"/login"}
+            onClick={logout}
+            className={"navbar-enter-button"}>
+            <EnterButton
+                text={"log out"}
+            />
+        </Link>
+    );
+
+    const links = (
+        <></>
+    );
+
+    function NavbarButton({isAuthenticated}) {
+        const location = useLocation();
+        switch (location.pathname){
+            case "/":
+                return (
+                    <Link to={"/login"} className={"navbar-enter-button"}>
+                        <EnterButton
+                            text={"enter"}/>
+                    </Link>
+                )
+
+            case "/login":
+                return (
+                    <Link to={"/signup"} className={"navbar-enter-button"}>
+                        <EnterButton
+                            text={"sign up"} />
+                    </Link>
+                )
+
+            default:
+                return (
+                    <>{isAuthenticated ? authLinks : links}</>
+                )
+        }
+    }
+
+
     return (
         <>
             <div className={"navbar"}>
@@ -22,30 +67,9 @@ function Navbar() {
         </>
     );
 }
-export default Navbar;
 
-function NavbarButton() {
-    const location = useLocation();
-    switch (location.pathname){
-        case "/":
-            return (
-                <Link to={"/login"} className={"navbar-enter-button"}>
-                <EnterButton
-                    text={"enter"}/>
-                </Link>
-            )
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
 
-        case "/login":
-            return (
-                <Link to={"/signup"} className={"navbar-enter-button"}>
-                <EnterButton
-                    text={"sign up"} />
-                </Link>
-            )
-
-        default:
-            return (
-                <></>
-            )
-    }
-}
+export default connect(mapStateToProps,{logout})(Navbar);

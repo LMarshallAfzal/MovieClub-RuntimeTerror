@@ -1,6 +1,6 @@
 import React from "react";
 import "../styling/pages/HomeRouter.css";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, Navigate} from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import NameHeader from "../components/NameHeader";
 import {Grid} from "@mui/material";
@@ -12,7 +12,11 @@ import Profile from "./Profile";
 import Options from "./Options";
 import Home from "./Home";
 
-function HomeRouter() {
+const HomeRouter = ({isAuthenticated}) => {
+
+    if (isAuthenticated)
+        return <Navigate replace to={"/login"}/>;
+
     return (
         <>
             <Grid className={"home-grid"} container spacing={2}>

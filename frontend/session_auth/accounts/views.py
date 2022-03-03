@@ -8,7 +8,13 @@ from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 
-@method_decorator(csrf_protect, name='dispatch')
+@method_decorator(ensure_csrf_cookie, name='dispatch')
+class GetCSRFToken(APIView):
+    permission_classes = (permissions.AllowAny, )
+
+    def get(self, request, format=None):
+        return Response({'success':'CSRF Cookie set'})
+
 class CheckAuthenticatedView(APIView):
     def get(self, request, format=None):
         user = self.request.user
@@ -91,16 +97,9 @@ class LogoutView(APIView):
     def post(self, request, format=None):
         try:
             auth.logout(request)
-            return Response({ 'success': 'Loggout Out' })
+            return Response({ 'success': 'Logged Out' })
         except:
             return Response({ 'error': 'Something went wrong when logging out' })
-
-@method_decorator(ensure_csrf_cookie, name='dispatch')
-class GetCSRFToken(APIView):
-    permission_classes = (permissions.AllowAny, )
-
-    def get(self, request, format=None):
-        return Response({'success':'CSRF Cookie set'})
 
 class DeleteAccountView(APIView):
     def delete(self, request, format=None):
@@ -121,4 +120,3 @@ class GetUsersView(APIView):
 
         users = UserSerializer(users, many=True)
         return Response(users.data)
-

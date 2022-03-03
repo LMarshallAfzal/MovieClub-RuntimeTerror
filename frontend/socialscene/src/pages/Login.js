@@ -72,7 +72,7 @@ const Login = ({login, isAuthenticated}) => {
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
                                     <FormButton
                                         text={"log in"}
-                                        type={"submit"}
+                                        onClick={e => onSubmit(e)}
                                     />
                                 </Box>
 

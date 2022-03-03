@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import UserAccount
 from .serializers import UserAccountSerializer
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 
 class GetUserAccountView(APIView):
     def get(self, request, format=None):

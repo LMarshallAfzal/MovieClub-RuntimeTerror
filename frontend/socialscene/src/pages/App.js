@@ -10,6 +10,8 @@ import HomeRouter from "./HomeRouter";
 import {Provider} from "react-redux";
 import store from "../API/store";
 import Layout from "./Layout";
+import PrivateRoute from "./PrivateRouter.js";
+
 
 function App() {
   return (
