@@ -6,7 +6,7 @@ from .serializers import UserSerializer
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from rest_framework.response import Response
 from django.utils.decorators import method_decorator
-from ..user_account.models import UserAccount
+from user_account.models import UserAccount
 
 
 @method_decorator(ensure_csrf_cookie, name='dispatch')

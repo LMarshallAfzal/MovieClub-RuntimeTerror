@@ -141,5 +141,3 @@ export const register = (username, first_name, last_name, email, bio, preference
         });
     }
 };
-
-

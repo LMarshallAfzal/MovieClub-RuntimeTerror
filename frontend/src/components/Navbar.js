@@ -42,8 +42,16 @@ const Navbar = ({isAuthenticated, logout}) => {
                     </Link>
                 )
 
+            case "/home":
+                return (
+                    <Link to={"/login"} onClick={logout} className={"navbar-enter-button"}>
+                        <EnterButton text={"log out"} />
+                    </Link>
+                )
+
             default:
                 return (
+                    // <></>
                     <>{isAuthenticated ? authLinks : links}</>
                 )
         }

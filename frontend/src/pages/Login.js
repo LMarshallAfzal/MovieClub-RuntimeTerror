@@ -36,9 +36,9 @@ const Login = ({login, isAuthenticated}) => {
             <Grid className={"login-grid-right"} item xs={6}
               alignItems="center"
               justifyContent="center">
-                <Stack className={"form-stack"} spacing={3} onSubmit={e => onSubmit(e)}
+                <Stack className={"form-stack"} spacing={3}
             height={"100%"}>
-                    {/* <form onSubmit={e => onSubmit(e)}> */}
+                     <form onSubmit={e => onSubmit(e)}>
                         <CSRFToken />
                         <TextField
                             className={"form-field"}
@@ -83,7 +83,7 @@ const Login = ({login, isAuthenticated}) => {
                                 </Box>
                             </Box>
                         </div>
-                    {/* </form> */}
+                     </form>
                 </Stack>
             </Grid>
         </Grid>
