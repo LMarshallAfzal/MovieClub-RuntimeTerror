@@ -1,0 +1,19 @@
+@use "../base";
+
+.enter-button {
+  padding: 8px 18px;
+  outline: none;
+  border: none;
+  font-size: 18px;
+  color: base.$primary-black;
+  cursor: pointer;
+  background-color: base.$primary-white;
+  font-family: base.$helvetica-bold;
+  transition: all 0.3s ease-out;
+  border-radius: 99em;
+  }
+
+.enter-button:hover {
+  background-color: base.$primary-red;
+  color: base.$primary-white;
+}

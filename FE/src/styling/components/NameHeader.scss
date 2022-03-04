@@ -1,0 +1,44 @@
+@use "../base";
+
+.name-header {
+    background-color: base.$grey-1;
+    width: 100%;
+    height: inherit;
+    overflow: hidden;
+    user-select: none;
+}
+
+.name-header-image{
+    padding: 20px;
+    align-self: center;
+}
+
+.name-header-text {
+    color: base.$grey-4;
+}
+
+.name-header-text-date {
+    color: base.$grey-3;
+}
+
+//.profile-img {
+//    border-radius: 50%;
+//    width: 5em;
+//    height: 5em;
+//    background-color: base.$primary-white;
+//    margin: 6px;
+//}
+//
+//.name-header-table {
+//    table-layout: fixed;
+//    display: block;
+//    height: 6rem;
+//
+//
+//}
+//
+//.name-td {
+//    width: 9rem;
+//    padding-left: 5px;
+//    overflow: hidden;
+//}

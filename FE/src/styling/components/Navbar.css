@@ -1,0 +1,123 @@
+#root, html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+@font-face {
+  font-family: Helvetica;
+  src: url("../fonts/Helvetica.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Light;
+  src: url("../fonts/Helvetica-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Oblique;
+  src: url("../fonts/Helvetica-Oblique.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Bold;
+  src: url("../fonts/Helvetica-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-BoldOblique;
+  src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
+}
+a {
+  display: block;
+  text-decoration: none;
+  color: #000000;
+}
+
+body {
+  font-family: Helvetica, serif;
+  color: #000000;
+  margin: 0;
+}
+body--emphasise {
+  color: #FF0000;
+}
+
+h1 {
+  font-family: Helvetica-Bold, serif;
+  color: #000000;
+  font-size: 25em;
+}
+h1--emphasise {
+  color: #FF0000;
+}
+
+h2 {
+  font-family: Helvetica-Bold, serif;
+  font-size: 12rem;
+}
+h2--emphasise {
+  color: #FF0000;
+}
+
+h4 {
+  font-family: Helvetica, serif;
+  font-size: 2.5rem;
+  margin: 0;
+}
+h4--emphasise {
+  color: #FF0000;
+}
+
+h6 {
+  font-family: Helvetica-Light, serif;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+.navbar-black {
+  background: #000000;
+  height: 80px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  overflow: auto;
+  width: 100%;
+  user-select: none;
+}
+
+.navbar-red {
+  height: 10px;
+  display: flex;
+  background: #FF0000;
+  user-select: none;
+}
+
+.navbar-logo {
+  color: #FFFFFF;
+  font-family: Helvetica, serif;
+  float: left;
+  margin: auto;
+  width: auto;
+  padding-left: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 2rem;
+  padding-top: 20px;
+  user-select: none;
+}
+
+.navbar-enter-button {
+  user-select: none;
+  float: right;
+  margin: auto;
+  width: auto;
+  padding-right: 10px;
+  padding-top: 30px;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=Navbar.css.map */

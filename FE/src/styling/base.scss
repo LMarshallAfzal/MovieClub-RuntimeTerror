@@ -1,0 +1,121 @@
+
+#root, html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+$height: calc(100% - 90px);
+
+//COlOURS
+$primary-black: #000000;
+
+$grey-1: #5C5C5C;
+$grey-2: #999999;
+$grey-3: #D8D8D8;
+$grey-4: #F8F7F7;
+
+$primary-white: #FFFFFF;
+
+$primary-red: #FF0000;
+$light-red: #FF4747;
+$pale-red: #FF8585;
+
+$primary-blue: #091F5B;
+$light-blue: #123FBA;
+$pale-blue: #3364EB;
+
+
+//FONTS
+@font-face {
+  font-family: Helvetica;
+  src: url("../fonts/Helvetica.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Helvetica-Light;
+  src: url("../fonts/Helvetica-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Helvetica-Oblique;
+  src: url("../fonts/Helvetica-Oblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Helvetica-Bold;
+  src: url("../fonts/Helvetica-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Helvetica-BoldOblique;
+  src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
+}
+
+$helvetica: Helvetica, serif;
+$helvetica-light: Helvetica-Light, serif;
+$helvetica-oblique: Helvetica-Oblique, serif;
+$helvetica-bold: Helvetica-Bold, serif;
+$helvetica-bold-oblique: Helvetica-BoldOblique, serif;
+
+a{
+  display: block;
+  text-decoration: none;
+  color: $primary-black;
+}
+
+body{
+  font-family: $helvetica;
+  color: $primary-black;
+  margin: 0;
+
+  &--emphasise {
+    color: $primary-red;
+  }
+}
+
+h1{
+  font-family: $helvetica-bold;
+  color: $primary-black;
+  font-size: 25em;
+
+  &--emphasise {
+    color: $primary-red;
+  }
+}
+
+h2{
+  font-family: $helvetica-bold;
+  font-size: 12rem;
+
+  &--emphasise {
+    color: $primary-red;
+  }
+}
+
+h3{
+
+}
+
+h4{
+  font-family: $helvetica;
+  font-size: 2.5rem;
+  margin: 0;
+
+  &--emphasise {
+    color: $primary-red
+  }
+}
+
+h5{
+
+}
+
+h6{
+  font-family: $helvetica-light ;
+  margin: 0;
+  font-size: 1rem;
+
+}
+
+

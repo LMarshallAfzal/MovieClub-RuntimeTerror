@@ -1,0 +1,21 @@
+@use "../base";
+
+.form-button {
+  padding: 18px;
+  outline: none;
+  border: none;
+  display: block;
+  width: auto;
+  font-size: 18px;
+  color: base.$primary-white;
+  cursor: pointer;
+  background-color: base.$primary-black;
+  font-family: base.$helvetica-bold;
+  transition: all 0.3s ease-out;
+  user-select: none;
+}
+
+.form-button:hover {
+  background-color: base.$grey-3;
+  color: base.$primary-black;
+}
