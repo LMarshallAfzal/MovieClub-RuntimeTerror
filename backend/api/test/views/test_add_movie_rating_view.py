@@ -1,4 +1,4 @@
-from api.models import User, Movie, Rating
+from backend.api.models import User, Movie, Rating
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status

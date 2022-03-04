@@ -2,7 +2,7 @@
 
 from django.core.exceptions import ValidationError
 from rest_framework.test import APITestCase
-from api.models import Movie
+from backend.api.models import Movie
 
 class MovieModelTestCase(APITestCase):
     """Unit tests for the User model."""

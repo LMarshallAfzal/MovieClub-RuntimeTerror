@@ -1,4 +1,4 @@
-from api.models import User
+from backend.api.models import User
 from django.test import TestCase
 
 

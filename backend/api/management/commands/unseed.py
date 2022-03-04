@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from api.models import User,Club,Membership
+from backend.api.models import User,Club
+
 
 class Command(BaseCommand):
 

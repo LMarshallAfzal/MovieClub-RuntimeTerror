@@ -2,7 +2,7 @@
 
 from django.core.exceptions import ValidationError
 from rest_framework.test import APITestCase
-from api.models import Club
+from backend.api.models import Club
 
 class ClubModelTestCase(APITestCase):
     """Unit tests for the Club model."""

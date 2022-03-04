@@ -1,7 +1,6 @@
-from rest_framework.serializers import ModelSerializer 
-from rest_framework.exceptions import NotAuthenticated
+from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from api.models import Club, User, Membership, Movie,Rating
+from backend.api.models import Club, User, Membership, Movie,Rating
 from rest_framework.validators import UniqueValidator
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate

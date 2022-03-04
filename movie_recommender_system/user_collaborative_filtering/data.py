@@ -1,9 +1,7 @@
 import csv
-import sys
 from surprise import Dataset,Reader
 from collections import defaultdict
-import numpy as np
-from api.models import Movie
+from backend.api.models import Movie
 class Data:
     movieID_to_title = {}
     title_to_movieID = {}

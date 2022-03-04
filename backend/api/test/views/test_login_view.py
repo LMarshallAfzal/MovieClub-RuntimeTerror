@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from django.urls import reverse
-from api.models import User
+from backend.api.models import User
 
 class LoginViewTestcase(APITestCase):
 

@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from api.models import Movie
+from backend.api.models import Movie
 
 class Command(BaseCommand):
 

@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
-from api.models import Movie
-from django.db import IntegrityError
+from backend.api.models import Movie
 import pandas as pd
 
 

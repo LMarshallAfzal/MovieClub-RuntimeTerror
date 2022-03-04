@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from api.models import User, Club
+from backend.api.models import User, Club
 from django.db import IntegrityError
 from faker import Faker
 import random
