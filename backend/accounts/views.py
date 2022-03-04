@@ -2,38 +2,41 @@ from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework import permissions
 from django.contrib import auth
-from user_account.models import UserAccount
 from .serializers import UserSerializer
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from rest_framework.response import Response
 from django.utils.decorators import method_decorator
+from ..user_account.models import UserAccount
+
 
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class GetCSRFToken(APIView):
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.AllowAny,)
 
-    def get(self, request, format=None):
-        return Response({'success':'CSRF Cookie set'})
+    def get(self, request):
+        return Response({'success': 'CSRF Cookie set'})
+
 
 class CheckAuthenticatedView(APIView):
-    def get(self, request, format=None):
+    def get(self, request):
         user = self.request.user
 
         try:
             isAuthenticated = user.is_authenticated
 
             if isAuthenticated:
-                return Response({ 'isAuthenticated': 'success' })
+                return Response({'isAuthenticated': 'success'})
             else:
-                return Response({ 'isAuthenticated': 'error' })
+                return Response({'isAuthenticated': 'error'})
         except:
-            return Response({ 'error': 'Something went wrong when checking authentication status' })
+            return Response({'error': 'Something went wrong when checking authentication status'})
+
 
 @method_decorator(csrf_protect, name='dispatch')
 class SignupView(APIView):
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.AllowAny,)
 
-    def post(self, request, format=None):
+    def post(self, request):
         data = self.request.data
 
         username = data['username']
@@ -45,7 +48,6 @@ class SignupView(APIView):
         password = data['password']
         re_password = data['re_password']
 
-
         if password == re_password:
             if User.objects.filter(username=username).exists():
                 return Response({'error': 'Username already exists'})
@@ -54,28 +56,29 @@ class SignupView(APIView):
                     return Response({'error': 'Password must be at least 6 chars'})
                 else:
                     user = User.objects.create_user(
-                    username=username,
-                    password=password)
+                        username=username,
+                        password=password)
 
                     user = User.objects.get(id=user.id)
 
                     user_account = UserAccount.objects.create(
-                    user=user,
-                    first_name=first_name,
-                    last_name=last_name,
-                    email=email,
-                    bio=bio,
-                    preferences=preferences)
+                        user=user,
+                        first_name=first_name,
+                        last_name=last_name,
+                        email=email,
+                        bio=bio,
+                        preferences=preferences)
 
-                    return Response({'success':'User created successfully'})
+                    return Response({'success': 'User created successfully'})
         else:
             return Response({'error': 'Passwords do not match'})
 
+
 @method_decorator(csrf_protect, name='dispatch')
 class LoginView(APIView):
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.AllowAny,)
 
-    def post(self, request, format=None):
+    def post(self, request):
         data = self.request.data
 
         username = data['username']
@@ -86,36 +89,38 @@ class LoginView(APIView):
 
             if user is not None:
                 auth.login(request, user)
-                return Response({ 'success': 'User Logged In' })
+                return Response({'success': 'User Logged In'})
             else:
-                return Response({ 'error': 'Error Logging In' })
+                return Response({'error': 'Error Logging In'})
         except:
-            return Response({ 'error': 'Something went wrong when logging in' })
+            return Response({'error': 'Something went wrong when logging in'})
 
 
 class LogoutView(APIView):
-    def post(self, request, format=None):
+    def post(self, request):
         try:
             auth.logout(request)
-            return Response({ 'success': 'Logged Out' })
+            return Response({'success': 'Logged Out'})
         except:
-            return Response({ 'error': 'Something went wrong when logging out' })
+            return Response({'error': 'Something went wrong when logging out'})
+
 
 class DeleteAccountView(APIView):
-    def delete(self, request, format=None):
+    def delete(self, request):
         user = self.request.user
 
         try:
             User.objects.filter(id=user.id).delete()
 
-            return Response({ 'success': 'User deleted successfully' })
+            return Response({'success': 'User deleted successfully'})
         except:
-            return Response({ 'error': 'Something went wrong when trying to delete user' })
+            return Response({'error': 'Something went wrong when trying to delete user'})
+
 
 class GetUsersView(APIView):
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.AllowAny,)
 
-    def get(self, request, format=None):
+    def get(self, request):
         users = User.objects.all()
 
         users = UserSerializer(users, many=True)

@@ -1,5 +1,11 @@
 from django.urls import path
-from .views import CheckAuthenticatedView, SignupView, LoginView, LogoutView, GetCSRFToken, DeleteAccountView, GetUsersView
+from .views import CheckAuthenticatedView, \
+    SignupView, \
+    LoginView, \
+    LogoutView, \
+    GetCSRFToken, \
+    DeleteAccountView, \
+    GetUsersView
 
 urlpatterns = [
     path('authenticated', CheckAuthenticatedView.as_view()),
