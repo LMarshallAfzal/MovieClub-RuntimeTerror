@@ -1,13 +1,45 @@
-import React from "react";
+import React, {useState} from "react";
 import "../styling/pages/Signup.css"
 import HeadingCircle from "../components/HeadingCircle";
 import {Box, Grid, Stack, TextField} from "@mui/material";
 import FormButton from "../components/FormButton";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
+import { connect } from 'react-redux';
+import { register } from '../API/actions/auth';
+import CSRFToken from '../API/CSRFToken';
+
+const Register = ({ register, isAuthenticated }) => {
+    const [formData, setFormData] = useState({
+        username:'',
+        first_name:'',
+        last_name:'',
+        email:'',
+        bio:'',
+        preferences:'',
+        password:'',
+        password_confirmation:''
+    });
+    const [accountCreated, setAccountCreated] = useState(false);
+
+    const { username, first_name, last_name, email, bio, preferences, password, password_confirmation } = formData;
+
+    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const onSubmit = e => {
+        e.preventDefault();
+
+        if (password === password_confirmation) {
+            register(username, first_name, last_name, email, bio, preferences, password_confirmation);
+            setAccountCreated(true);
+        }
+    };
+
+    if (isAuthenticated)
+        return <Navigate to='/dashboard' />;
+    else if (accountCreated)
+        return <Navigate to='/login' />;
 
 
-
-function Signup () {
     return (
         <Grid className={"login-grid"} container spacing={2}>
             <Grid className={"login-grid-left"} item xs={6}>
@@ -22,8 +54,8 @@ function Signup () {
                         name={"username"}
                         type={"text"}
                         variant={"outlined"}
-                        value={this.state.username}
-                        onChange={this.changeHandler}
+                        onChange={e => onChange(e)}
+                        value={username}
                     />
                     <TextField
                         id={"outlined-basic"}
@@ -31,8 +63,8 @@ function Signup () {
                         name={"first_name"}
                         type={"text"}
                         variant={"outlined"}
-                        onChange={this.changeHandler}
-                        value={this.state.first_name}
+                        onChange={e => onChange(e)}
+                        value={first_name}
                     />
                     <TextField
                         id={"outlined-basic"}
@@ -40,8 +72,8 @@ function Signup () {
                         name={"last_name"}
                         type={"text"}
                         variant={"outlined"}
-                        onChange={this.changeHandler}
-                        value={this.state.last_name}
+                        onChange={e => onChange(e)}
+                        value={last_name}
                     />
                     <TextField
                         id={"outlined-basic"}
@@ -49,8 +81,8 @@ function Signup () {
                         name={"email"}
                         type={"email"}
                         variant={"outlined"}
-                        onChange={this.changeHandler}
-                        value={this.state.email}
+                        onChange={e => onChange(e)}
+                        value={email}
                     />
                     <TextField
                         id={"outlined-basic"}
@@ -58,8 +90,8 @@ function Signup () {
                         name={"bio"}
                         type={"text"}
                         variant={"outlined"}
-                        onChange={this.changeHandler}
-                        value={this.state.bio}
+                        onChange={e => onChange(e)}
+                        value={bio}
                     />
                     <TextField
                         id={"outlined-basic"}
@@ -67,8 +99,8 @@ function Signup () {
                         name={"preferences"}
                         type={"text"}
                         variant={"outlined"}
-                        onChange={this.changeHandler}
-                        value={this.state.preferences}
+                        oonChange={e => onChange(e)}
+                        value={preferences}
                     />
                     <TextField
                         id={"outlined-basic"}
@@ -76,8 +108,8 @@ function Signup () {
                         name={"password"}
                         type={"password"}
                         variant={"outlined"}
-                        onChange={this.changeHandler}
-                        value={this.state.password}
+                        onChange={e => onChange(e)}
+                        value={password}
                     />
                     <TextField
                         id={"outlined-basic"}
@@ -85,8 +117,8 @@ function Signup () {
                         name={"password_confirmation"}
                         type={"password"}
                         variant={"outlined"}
-                        onChange={this.changeHandler}
-                        value={this.state.password_confirmation}
+                        onChange={e => onChange(e)}
+                        value={password_confirmation}
                     />
 
                     <div className={"single-button"}>
@@ -101,7 +133,8 @@ function Signup () {
                                 <Link to={"/home"} className={"navbar-enter-button"}>
                                     <FormButton
                                         text={"sign up"}
-                                        onClick={this.submitForm}
+
+                                        onClick={e => onSubmit(e)}
                                     />
                                 </Link>
                             </Box>
@@ -113,4 +146,8 @@ function Signup () {
     );
 }
 
-export default Signup;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { register })(Register);
