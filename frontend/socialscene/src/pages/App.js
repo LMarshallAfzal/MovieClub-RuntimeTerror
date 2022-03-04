@@ -4,7 +4,7 @@ import HomePage from "./Homepage";
 import LogIn from "./Login";
 import NotFound404 from "./NotFound";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import Signup from "./Signup";
+import Register from "./Signup";
 import HomeRouter from "./HomeRouter";
 
 import {Provider} from "react-redux";
@@ -22,7 +22,7 @@ function App() {
                       <Route path={"/"} element={(<HomePage />)}/>
                       <Route path={"/login"} element={(<LogIn />)}/>
                       <Route path={"/home/*"} element={(<HomeRouter />)}/>
-                      <Route path={"/signup"} element={(<Signup />)}/>
+                      <Route path={"/signup"} element={(<Register />)}/>
                       <Route path={"*"} element={<NotFound404 />}/>
                   </Routes>
               </Layout>
