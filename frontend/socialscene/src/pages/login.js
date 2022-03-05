@@ -1,5 +1,9 @@
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import Cookies from "js-cookie";
+
+import CsrfToken from "../components/CsrfToken";
 
 const LogIn = () => {
   const [formInput, setFormInput] = useState({
@@ -21,8 +25,13 @@ const LogIn = () => {
     e.preventDefault();
     fetch("http://127.0.0.1:8000/log_in/", {
       method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "include",
       headers: {
-        "Content-Type": "application/json; charset=UTF-8",
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "X-CSRFToken": Cookies.get("csrftoken"),
       },
       body: JSON.stringify(formInput),
     })
@@ -63,6 +72,7 @@ const LogIn = () => {
             onChange={handleChange}
           />
         </label>
+        <CsrfToken />
         <input type="submit" value="Log in" />
       </form>
     </Fragment>
