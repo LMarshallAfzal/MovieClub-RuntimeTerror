@@ -1,14 +1,6 @@
 @use "../base";
 
-//COlOURS
-$primary-black: #000000;
-
-$grey-1: #5C5C5C;
-$grey-2: #999999;
-$grey-3: #D8D8D8;
-$grey-4: #F8F7F7;
-
 .watched-button {
-    color: $grey-1;
-    border-color: $grey-1;
+    color: base.$grey-1;
+    border-color: base.$grey-1;
 }
