@@ -6,6 +6,8 @@ from rest_framework import status
 from .serializers import *
 from .models import *
 from django.contrib.auth import logout
+from recommender.movie_CF_user import Recommender
+
 
 
 @api_view(['GET'])
@@ -151,3 +153,10 @@ def addRating(request, movieID):
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def rec(request):
+    user_id = '7'
+    recommender = Recommender(user_id)
+    recommendations = recommender.recommend()
+    print(recommendations)
+    return Response(status = status.HTTP_200_OK)
