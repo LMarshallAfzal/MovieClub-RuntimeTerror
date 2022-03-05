@@ -50,7 +50,9 @@ def signUp(request):
 @api_view(['POST'])
 def login(request):
     data = {}
-    serializer = LoginSerializer(data=request.data)
+    serializer = LoginSerializer(
+        data=request.data, context={"request": request}
+    )
     if serializer.is_valid():
         data['response'] = 'User login successful'
         return Response(serializer.data, status=status.HTTP_200_OK)
