@@ -28,7 +28,7 @@ function HomeRouter() {
 
     return (
         <>
-            <Grid className={"home-grid"} container spacing={2}>
+            <Grid className={"home-grid"} container>
                 <Grid className={"home-grid-L-sidebar"} item xs={3}>
                     <NameHeader
                         firstName={"noah"}
@@ -36,7 +36,7 @@ function HomeRouter() {
                         joinDate={"2022"}/>
                     <Sidebar />
                 </Grid>
-                <Grid className={"home-grid-R-content"} item xs={9}>
+                <Grid className={"home-grid-R-content"} item xs={9} padding={2} >
                     <Routes>
                         <Route path={"/"} element={(<Home />)}/>
                         <Route path={"dashboard"} element={(<Dashboard />)}/>
