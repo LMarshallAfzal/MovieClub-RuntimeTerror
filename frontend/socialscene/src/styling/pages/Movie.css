@@ -74,6 +74,10 @@ h6 {
 }
 
 .watched-button {
-  color: #5C5C5C;
+  color: #999999;
+  border-color: #999999;
+}
+
+.watched-button:hover {
   border-color: #5C5C5C;
 }/*# sourceMappingURL=Movie.css.map */
