@@ -131,6 +131,20 @@ AUTH_USER_MODEL = 'api.User'
 
 CORS_ALLOW_ORIGINS_ALL = True
 
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_HTTPONLY = False
+
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False

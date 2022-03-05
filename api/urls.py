@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.getRoutes),
+    path('csrf/', views.csrf_token, name = 'csrf_token'),
     path('sign_up/', views.signUp, name = 'sign_up'),
     path('log_in/', views.login, name = 'log_in'),
     path("log_out/", views.log_out, name="log_out"),

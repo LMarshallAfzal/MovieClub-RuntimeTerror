@@ -5,6 +5,7 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -29,6 +30,11 @@ def getRoutes(request):
     ]
     return Response(routes)
 
+@api_view(["GET"])
+@ensure_csrf_cookie
+def csrf_token(request):
+    return Response({ "result": "Success (CSRF cookie set.)" })
+
 @api_view(['POST'])
 def signUp(request):
     data = {}
@@ -48,6 +54,7 @@ def signUp(request):
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
+@csrf_protect
 def login(request):
     data = {}
     serializer = LoginSerializer(
