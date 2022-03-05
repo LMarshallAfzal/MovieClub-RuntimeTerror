@@ -1,6 +1,5 @@
 import React from 'react'
 import "../styling/pages/Profile.css";
-import "../styling/pages/EditProfile.css";
 import { Box, Stack, TextField } from "@mui/material";
 import FormButton from "../components/FormButton";
 
