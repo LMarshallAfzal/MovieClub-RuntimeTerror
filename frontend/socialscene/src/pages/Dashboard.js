@@ -2,7 +2,7 @@ import React from 'react';
 import "../styling/pages/Dashboard.css";
 import { List, Paper, ListSubheader, Grid, TextField, Stack, Box } from "@mui/material";
 import FormButton from "../components/FormButton";
-import { DummyDashboardClubsData } from './DummyDashboardClubsData';
+import { DummyDashboardClubsData, meetings, movies } from './DummyDashboardClubsData';
 import { useState } from 'react'
 
 function Dashboard() {
@@ -88,8 +88,8 @@ function Dashboard() {
                         <li style={{ listStyleType: 'none', padding: '0', margin: '0' }}>
 
                             <ListSubheader>Meetings</ListSubheader>
-                            {DummyDashboardClubsData.map((val, key) => {
-                                return <List> {val.name} </List>;
+                            {meetings.map((val, key) => {
+                                return <List> {val.name} | {val.time} </List>;
                             })}
                         </li>
                     </Paper>
@@ -97,10 +97,9 @@ function Dashboard() {
                 <Grid item xs={4}>
                     <Paper style={{ maxHeight: 350, overflow: 'auto' }}>
                         <li style={{ listStyleType: 'none', padding: '0', margin: '0' }}>
-
                             <ListSubheader>Watched Movies</ListSubheader>
-                            {DummyDashboardClubsData.map((val, key) => {
-                                return <List> {val.name} </List>;
+                            {movies.map((val, key) => {
+                                return <List> {val.name} | {val.rating} </List>;
                             })}
                         </li>
                     </Paper>
