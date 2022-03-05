@@ -103,7 +103,7 @@ class Profile extends React.Component {
                                 onChange={this.changeHandler}
                                 value={this.state.email}
                             />
-                            <TextField className='profile-text-box-bio'
+                            <TextField className='profile-text-box'
                                 spacing={6}
                                 id={"outlined-multiline-static"}
                                 label={"bio"}
@@ -134,7 +134,7 @@ class Profile extends React.Component {
                     </td>
                     <td className='text-field'>
                         <Stack spacing={2}>
-                            <TextField className='profile-text-box-preference'
+                            <TextField className='profile-text-box'
                                 spacing={6}
                                 id={"outlined-multiline-static"}
                                 label={"preferences"}

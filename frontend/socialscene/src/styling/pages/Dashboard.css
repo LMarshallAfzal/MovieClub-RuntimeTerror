@@ -1,0 +1,28 @@
+.dashboard-text {
+  padding-top: 20px;
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  font-family: Helvetica-Bold, serif;
+  width: 100%;
+  text-align: center;
+}
+
+.create-new-club-text {
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  font-family: Helvetica, serif;
+  width: 100%;
+  text-align: center;
+}/*# sourceMappingURL=Dashboard.css.map */
