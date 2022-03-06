@@ -73,33 +73,6 @@ h6 {
   font-size: 1rem;
 }
 
-.edit-profile-info-text {
-  padding-top: 20px;
-  height: 100%;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
-  font-family: Helvetica-Bold, serif;
-  width: 100%;
-  text-align: center;
-}
-
-.text-field {
-  text-align: left;
-  vertical-align: top;
-}
-
-.profile-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 20px;
-  width: 100%;
-}
-
 .editProfile-grid {
   height: calc(100% - 90px);
   justify-content: center;
@@ -117,5 +90,13 @@ h6 {
 }
 
 .profile-text-box {
-  background-color: #F8F7F7;
-}/*# sourceMappingURL=Profile.css.map */
+  background-color: #D8D8D8;
+}
+
+.profile-text-box-bio {
+  background-color: #D8D8D8;
+}
+
+.profile-text-box-preference {
+  background-color: #D8D8D8;
+}/*# sourceMappingURL=EditProfile.css.map */
