@@ -123,8 +123,6 @@ class Rating(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     rating = models.FloatField(
-
-        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
-        
+        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)] 
     )
 
