@@ -21,6 +21,7 @@ def csrf_token(request):
 
 
 @api_view(['POST'])
+@csrf_protect
 def sign_up(request):
     data = {}
     serializer = SignUpSerializer(data=request.data)
