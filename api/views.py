@@ -9,6 +9,15 @@ from .models import *
 from django.contrib.auth import logout
 from recommender.movie_CF_user import Recommender
 from .decorators import movie_exists,club_exists,has_watched,has_not_watched,is_member
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+
+
+
+
+@api_view(["GET"])
+@ensure_csrf_cookie
+def csrf_token(request):
+    return Response({"result": "Success (CSRF cookie set.)"})
 
 
 @api_view(['POST'])
