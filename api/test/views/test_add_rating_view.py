@@ -36,3 +36,10 @@ class CreateClubViewTestCase(APITestCase):
         after = Rating.objects.count()
         self.assertEqual(after, before+1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_unauthenticated_request_returns_forbidden(self):
+        before = Rating.objects.count()
+        response = self.client.post(self.url, self.rating_input)    
+        after = Rating.objects.count()
+        self.assertEqual(after, before)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
