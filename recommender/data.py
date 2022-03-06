@@ -1,9 +1,10 @@
 import csv
+from csv import writer
 import sys
 from surprise import Dataset,Reader
 from collections import defaultdict
 import numpy as np
-from api.models import Movie
+from api.models import Movie,Rating
 
 class Data:
     movieID_to_title = {}
@@ -11,17 +12,17 @@ class Data:
     ratings_path = 'recommender/dataset-latest/ratings.csv'
 
     def load_movie_data(self):
-        ratingsDataset = 0
+        ratings_dataset = 0
         self.movieID_to_title = {}
         self.title_to_movieID = {}
 
-        reader = Reader(line_format='user item rating timestamp', sep=',', skip_lines=1)
-        ratingsDataset = Dataset.load_from_file(self.ratings_path, reader = reader)
+        reader = Reader(line_format='user item rating', sep=',', skip_lines=1)
+        ratings_dataset = Dataset.load_from_file(self.ratings_path, reader = reader)
 
         for movie in Movie.objects.all():
             self.movieID_to_title[movie.movieID] = movie.title
             self.title_to_movieID[movie.title] = movie.movieID
-        return ratingsDataset
+        return ratings_dataset
 
     #Subject to change with ratings from the database
     def get_user_rating(self,user):
@@ -41,6 +42,13 @@ class Data:
                     break
         return ratings
 
+    def add_rating(self,rating):
+        input = [rating.user.id+610,rating.movie.movieID,rating.rating]
+        with open('recommender/dataset-latest/ratings.csv','a') as file_object:
+            write_object = writer(file_object)
+            write_object.writerow(input)
+            file_object.close()
+
     def popularity_ranking(self):
         ratings = defaultdict(float)
         rankings = defaultdict(int)
@@ -55,6 +63,7 @@ class Data:
             rankings[movie_id] = rank
             rank += 1
         return rankings
+        
 
     def get_movie_genres(self):
         genres = defaultdict(list)

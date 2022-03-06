@@ -5,18 +5,18 @@ from collections import defaultdict
 from operator import itemgetter
 
 class Recommender:
-    def __init__(self,user_id):
+    def __init__(self,user):
         self.number_of_recommendations = 10
-        self.user_id = user_id
+        self.user = user
         self.ml = Data()
         self.data = self.ml.load_movie_data()
-        self.trainSet = self.data.build_full_trainset()
 
     def recommend(self):
+        self.trainSet = self.data.build_full_trainset()
         model = KNNBasic(sim_options = {'name':'cosine','user_based':True})
         model.fit(self.trainSet)
         matrix = model.compute_similarities()
-        user_inner_id = self.trainSet.to_inner_uid(self.user_id)
+        user_inner_id = self.trainSet.to_inner_uid(str(self.user))
         similarity_row = matrix[user_inner_id]
 
         similar_users = []
