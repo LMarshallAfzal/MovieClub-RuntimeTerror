@@ -168,6 +168,10 @@ class CreateClubSerializer(serializers.Serializer):
         validators = [MaxLengthValidator(500)]
     )
 
+    themes = serializers.CharField(
+        required = False,
+        validators = [MaxLengthValidator(500)]
+    )
     def create(self, validated_data):
         club = Club.objects.create(**validated_data)
         return club
