@@ -41,6 +41,7 @@ def sign_up(request):
 
 
 @api_view(['POST', 'GET'])
+@csrf_protect
 def login(request):
     data = {}
     serializer = LoginSerializer(data=request.data)
