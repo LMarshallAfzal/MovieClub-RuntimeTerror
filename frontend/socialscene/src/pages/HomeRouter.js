@@ -36,7 +36,7 @@ function HomeRouter() {
                         joinDate={"2022"}/>
                     <Sidebar />
                 </Grid>
-                <Grid className={"home-grid-R-content"} item xs={9}>
+                <Grid className={"home-grid-R-content"} item xs={9} padding={2} >
                     <Routes>
                         <Route path={"/"} element={(<Home />)}/>
                         <Route path={"dashboard"} element={(<Dashboard />)}/>

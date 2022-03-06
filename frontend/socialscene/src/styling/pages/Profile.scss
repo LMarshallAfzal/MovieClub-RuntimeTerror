@@ -1,4 +1,7 @@
+@use "../base";
+
 .edit-profile-info-text{
+    padding-top: 20px;
     height: 100%;
     font-size: 1.5rem;
     display: flex;
@@ -19,4 +22,30 @@
     width: 100%;
     border-collapse: separate;
     border-spacing: 20px;
+    width: 100%
+}
+
+.editProfile-grid {
+    height: base.$height;
+    justify-content: center;
+
+    &-left {
+        // margin: 25;
+        align-self: center;
+    }
+
+    &-right {
+        margin: 0;
+        align-self: center;
+
+    }
+}
+
+.form-stack {
+    margin-top: 20px;
+
+}
+
+.profile-text-box {
+    background-color: base.$grey-4;
 }
