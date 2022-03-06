@@ -49,6 +49,21 @@ class Data:
             write_object.writerow(user_rating)
             file.close()
 
+    def change_rating(self, old_rating, new_rating):
+        old_user_rating = [old_rating.user.id+610,old_rating.movie.movieID,old_rating.rating]
+        new_user_rating = [new_rating.user.id+610,new_rating.movie.movieID,new_rating.rating]
+        with open(self.ratings_path,'r+') as file:
+            lines = file.readlines()
+            file.seek(0)
+            for line in lines:
+                if line != old_user_rating:
+                    file.write(line)
+            file.close()
+        with open(self.ratings_path,'a') as file:
+            write_object = writer(file)
+            write_object.writerow(new_user_rating)
+            file.close()
+
     def popularity_ranking(self):
         ratings = defaultdict(float)
         rankings = defaultdict(int)

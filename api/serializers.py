@@ -184,5 +184,10 @@ class addRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = ['user','movie','rating']
+
+class changeRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ('rating')
    
     
