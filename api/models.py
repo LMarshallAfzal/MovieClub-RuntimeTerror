@@ -113,6 +113,10 @@ class Movie(models.Model):
 
     ratings = models.ManyToManyField(User, through='Rating')
 
+    def get_movie_title(movieID):
+        return Movie.objects.get(movieID = movieID).title
+
+
     class Meta:
         ordering = ['title']
 

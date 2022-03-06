@@ -161,6 +161,6 @@ def rec(request):
     recommendations = recommender.recommend()
     for recommendation in recommendations:
         recommended_movies.append(Movie.objects.get(movieID = int(recommendation)))
-        recommended_movies.append(Movie.objects.get(movieID = int(recommendation)).title)
+        recommended_movies.append(Movie.get_movie_title(movieID = int(recommendation)))
     print(recommended_movies)
     return Response(status = status.HTTP_200_OK)
