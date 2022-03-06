@@ -43,11 +43,11 @@ class Data:
         return ratings
 
     def add_rating(self,rating):
-        input = [rating.user.id+610,rating.movie.movieID,rating.rating]
-        with open('recommender/dataset-latest/ratings.csv','a') as file_object:
-            write_object = writer(file_object)
-            write_object.writerow(input)
-            file_object.close()
+        user_rating = [rating.user.id+610,rating.movie.movieID,rating.rating]
+        with open(self.ratings_path,'a') as file:
+            write_object = writer(file)
+            write_object.writerow(user_rating)
+            file.close()
 
     def popularity_ranking(self):
         ratings = defaultdict(float)
@@ -67,24 +67,24 @@ class Data:
 
     def get_movie_genres(self):
         genres = defaultdict(list)
-        genreIDs = {}
-        maxGenreID = 0
+        genre_IDs = {}
+        max_genre_id = 0
         for movie in Movie.objects.all():
-            genreList = movie.genres.split('|')
-            genreIDList = []
-            for genre in genreList:
-                if genre in genreIDs:
-                    genreID=genreIDs[genre]
+            genre_list = movie.genres.split('|')
+            genre_id_list = []
+            for genre in genre_list:
+                if genre in genre_IDs:
+                    genre_id=genre_IDs[genre]
                 else:
-                    genreID = maxGenreID
-                    genreIDs[genre] = genreID
-                    maxGenreID+=1
-                genreIDList.append(genreID)
-            genres[movie.movie_id] = genreIDList
-        for(movieID,genreList) in genres.items():
-            bitfield = [0] * maxGenreID
-            for genreID in genreIDList:
-                bitfield[genreID] = 1
+                    genre_id = max_genre_id
+                    genre_IDs[genre] = genre_id
+                    max_genre_id+=1
+                genre_id_list.append(genre_id)
+            genres[movie.movieID] = genre_id_list
+        for(movieID,genre_list) in genres.items():
+            bitfield = [0] * max_genre_id
+            for genre_id in genre_id_list:
+                bitfield[genre_id] = 1
             genres[movieID] = bitfield
 
         return genres

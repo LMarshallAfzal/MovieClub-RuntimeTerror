@@ -155,8 +155,12 @@ def addRating(request, movieID):
 
 @api_view(['GET'])
 def rec(request):
+    recommended_movies = []
     user = User.objects.get(id=100)
     recommender = Recommender(610+user.id)
     recommendations = recommender.recommend()
-    print(recommendations)
+    for recommendation in recommendations:
+        recommended_movies.append(Movie.objects.get(movieID = int(recommendation)))
+        recommended_movies.append(Movie.objects.get(movieID = int(recommendation)).title)
+    print(recommended_movies)
     return Response(status = status.HTTP_200_OK)
