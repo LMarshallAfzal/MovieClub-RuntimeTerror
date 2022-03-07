@@ -14,27 +14,6 @@ function Dashboard() {
                 <Grid item xs={12}>
                     <div className='dashboard-text'>Dashboard</div>
                 </Grid>
-                {/* <Grid item xs={12}>
-                    <div className='search'>
-                        <TextField
-                            // id="filled-basic"
-                            label="🔎︎ Search Clubs"
-                            variant="filled"
-                            fullWidth
-                            onChange={event => {
-                                setSearchTerm(event.target.value);
-                            }} />
-                    </div>
-                    {DummyDashboardClubsData.filter((val) => {
-                        if (searchTerm == "") {
-                            return val
-                        } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                            return val
-                        }
-                    }).map((val, key) => {
-                        return <div> {val.name} </div>;
-                    })}
-                </Grid> */}
                 <Grid item xs={12}>
                     <Autocomplete
                         freeSolo
