@@ -19,7 +19,7 @@ class ClubAdmin(admin.ModelAdmin):
 class RatingAdmin(admin.ModelAdmin):
     '''Configuration of the administrative interface for ratings'''
     list_display = [
-        'id','user','movie','rating'
+        'id','user','movie','score'
     ]
 
 

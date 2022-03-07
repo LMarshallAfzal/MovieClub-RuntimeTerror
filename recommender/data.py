@@ -9,7 +9,7 @@ from api.models import Movie,Rating
 class Data:
     movieID_to_title = {}
     title_to_movieID = {}
-    ratings_path = 'recommender/dataset-latest/ratings.csv'
+    ratings_path = 'recommender/dataset-latest/api_ratings.csv'
 
     def load_movie_data(self):
         ratings_dataset = 0
@@ -43,7 +43,7 @@ class Data:
         return ratings
 
     def add_rating(self,rating):
-        user_rating = [rating.user.id+610,rating.movie.movieID,rating.rating]
+        user_rating = [rating.user.id+610,rating.movie.movieID,rating.score]
         with open(self.ratings_path,'a') as file:
             write_object = writer(file)
             write_object.writerow(user_rating)

@@ -16,10 +16,9 @@ class Command(BaseCommand):
         while i < 6:
             movie = Movie.objects.get(movieID = movie_id[i])
             score = 5.0
-            rating = Rating.objects.create(user = user,movie = movie, rating = score)
+            rating = Rating.objects.create(user = user,movie = movie,score = score)
             Data().add_rating(rating)
             
             i += 1
 
-        
         
