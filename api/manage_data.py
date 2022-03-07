@@ -66,12 +66,7 @@ def clean(constant):
     writer = csv.writer(local_ratings)
     writer.writerows(lines)
     local_ratings.close()
-
-
-
-
-
-         
+ 
 def get_last_row(file):
     df = pd.read_csv(file)
     try:

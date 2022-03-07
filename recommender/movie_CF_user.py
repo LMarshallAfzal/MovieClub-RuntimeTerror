@@ -4,13 +4,16 @@ import heapq as pq
 from collections import defaultdict
 from operator import itemgetter
 from api.models import Movie
+from api.manage_data import combine_data,clean
 
 class Recommender:
     def __init__(self,user):
+        self.last_id = combine_data()
         self.number_of_recommendations = 10
         self.user = user
         self.ml = Data()
         self.data = self.ml.load_movie_data()
+
 
     def recommend(self):
         self.trainSet = self.data.build_full_trainset()
@@ -50,4 +53,5 @@ class Recommender:
                 position += 1
                 if (position > self.number_of_recommendations):
                     break
+        clean(self.last_id)
         return recommendations
