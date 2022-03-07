@@ -192,18 +192,21 @@ def recommend_movie_user(request):
         pass
     return Response(status = status.HTTP_200_OK)
 
-@api_view(['PUT'])
+@api_view(['GET'])
 def edit_rating(request):
+    # user = User.objects.get(id=100)
+    # movie = Movie.objects.get(movieID=145)
+    # rating = Rating.objects.get(user=user,movie=movie)
+    # change_rating(rating, 4.0)
+    # print(rating)
+    # serializer = ChangeRatingSerializer(user, data=request.data)
+    # if serializer.is_valid():
+    #     serializer.save()
     user = User.objects.get(id=100)
     movie = Movie.objects.get(movieID=145)
     rating = Rating.objects.get(user=user,movie=movie)
-    rating.score = 4.0
-    rating.save()
-    change_rating(rating)
-    print(rating)
-    serializer = ChangeRatingSerializer(user, data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)    
-    else:
-        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+    new_score = 3.0
+    change_rating(rating, new_score)
+    return Response(status=status.HTTP_200_OK)    
+    # else:
+    #     return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
