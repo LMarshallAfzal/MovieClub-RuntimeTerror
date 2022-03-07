@@ -7,7 +7,7 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from recommender.movie_CF_user import Recommender
-from .manage_data import add_rating,combine_data,clean
+from .manage_data import add_rating, change_rating,combine_data,clean
 
 
 
@@ -102,6 +102,15 @@ def get_user(request, username):
     user = User.objects.get(username=username)
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data) 
+
+@api_view(["GET"])
+def get_score(request, username, movieID):
+    data = request.data
+    user = User.objects.get(username=username)
+    movie = Movie.objects.get(movieID=movieID)
+    score = Rating.objects.get(user = user, movie = movie)
+    serializer = RatingSerializer(score, many=False)
+    return Response(serializer.data) 
   
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 @api_view(['PUT'])
@@ -190,3 +199,19 @@ def recommend_movie_user(request):
     # else:
     #     pass
     return Response(status = status.HTTP_200_OK)
+
+@api_view(['PUT'])
+def edit_rating(request):
+    user = User.objects.get(id=100)
+    movie = Movie.objects.get(movieID=145)
+    rating = Rating.objects.get(user=user,movie=movie)
+    rating.score = 4.0
+    rating.save()
+    change_rating(rating)
+    print(rating)
+    serializer = ChangeRatingSerializer(user, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)    
+    else:
+        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)

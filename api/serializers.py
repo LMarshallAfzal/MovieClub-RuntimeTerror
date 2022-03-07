@@ -188,6 +188,6 @@ class AddRatingSerializer(serializers.ModelSerializer):
 class ChangeRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
-        fields = ('rating')
+        fields = ('score')
    
     

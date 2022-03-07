@@ -1,5 +1,8 @@
 import csv
 from csv import writer,reader
+from lib2to3.pgen2.grammar import opmap_raw
+from statistics import mode
+import tempfile
 import pandas as pd
 
 
@@ -11,6 +14,19 @@ def add_rating(rating):
         write_object = writer(file)
         write_object.writerow(rating_contents)
         file.close()
+        
+def change_rating(self, new_rating):
+        tempfile = tempfile.NamedTemporaryFile(mode = 'w', delete = False)
+        fields = ['userID','movieID','rating']
+        with open (file_path, 'r') as file, tempfile:
+            reader = csv.DictReader(file, fieldnames=fields)
+            writer = csv.DictWriter(file, fieldnames=fields)
+            for row in reader:
+                if row['userID'] == new_rating.user.userID and row['movieID'] == new_rating.movie.movieID:
+                    row['rating'] = new_rating.rating.score
+                row = {'userID' : row['userID'], 'movieID' : row['movieID'], 'rating' : row['rating']}
+                writer.writerow(row)
+            file.close()
 
 def combine_data():
     local_ratings = open(file_path,'a')
