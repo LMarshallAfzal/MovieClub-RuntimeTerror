@@ -79,7 +79,6 @@ class Data:
             rank += 1
         return rankings
         
-
     def get_movie_genres(self):
         genres = defaultdict(list)
         genre_IDs = {}

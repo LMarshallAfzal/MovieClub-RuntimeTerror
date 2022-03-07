@@ -175,18 +175,10 @@ def changeRating(request, movieID):
 
 @api_view(['GET'])
 def recommend_movie_user(request):
-    user = User.objects.get(id=100)
-    movie = Movie.objects.get(movieID=145)
-    #add_rating(Rating.objects.get(user=user,movie=movie))
-    r = combine_data()
-    recommender = Recommender(user.id)
-    recommendations = recommender.recommend()
-    print (recommendations)
-    clean(r)
-    # if request.user.get_user_ratings():
-    #     user = User.objects.get(id = 100)
-    #     recommender = Recommender(610+user.id)
-    #     recommendations = recommender.recommend()
-    # else:
-    #     pass
+    if request.user.get_user_ratings():
+        recommender = Recommender(request.user.id)
+        recommendations = recommender.recommend()
+        print(recommendations)
+    else:
+        pass
     return Response(status = status.HTTP_200_OK)
