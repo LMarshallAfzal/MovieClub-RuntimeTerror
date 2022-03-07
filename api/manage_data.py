@@ -1,6 +1,5 @@
 import csv
 from csv import writer,reader
-from .models import Rating
 import pandas as pd
 
 
