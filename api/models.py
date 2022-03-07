@@ -45,6 +45,15 @@ class User(AbstractUser):
         memberships = Membership.objects.filter(user=self)
         return [membership.club for membership in memberships]
 
+    def get_user_ratings(self):
+        ratings = Movie.objects.filter(ratings__username=self.username)
+        if not ratings:
+            return None
+        else:
+            return ratings
+        
+    def get_user_preferences(self):
+        return self.preferences
 
 class Club(models.Model):
 
@@ -113,8 +122,9 @@ class Movie(models.Model):
 
     ratings = models.ManyToManyField(User, through='Rating')
 
-    def get_movie_title(movieID):
-        return Movie.objects.get(movieID = movieID).title
+    def get_movie_title(movie_id):
+        return Movie.objects.get(movieID = movie_id).title
+
 
 
     class Meta:
@@ -131,4 +141,5 @@ class Rating(models.Model):
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
         
     )
+
 

@@ -176,7 +176,7 @@ class CreateClubSerializer(serializers.Serializer):
         model = Club
         fields = '__all__'
 
-class addRatingSerializer(serializers.ModelSerializer):
+class AddRatingSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=False,queryset=User.objects.all())
     movie = serializers.PrimaryKeyRelatedField(read_only=False,queryset=Movie.objects.all())
     rating = serializers.FloatField(required = True,write_only=True,validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
@@ -185,7 +185,7 @@ class addRatingSerializer(serializers.ModelSerializer):
         model = Rating
         fields = ['user','movie','rating']
 
-class changeRatingSerializer(serializers.ModelSerializer):
+class ChangeRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = ('rating')

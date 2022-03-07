@@ -145,7 +145,7 @@ def addRating(request, movieID):
     request.data._mutable = True
     request.data["user"] = user.id  
     request.data["movie"] = movie.id
-    serializer = addRatingSerializer(data=request.data,context={"request": request})
+    serializer = AddRatingSerializer(data=request.data,context={"request": request})
 
     if serializer.is_valid():
         serializer.save()
@@ -164,7 +164,7 @@ def changeRating(request, movieID):
     request.data._mutable = True
     request.data["user"] = user.id  
     request.data["movie"] = movie.id
-    serializer = changeRatingSerializer(data=request.data,context={"request": request})
+    serializer = ChangeRatingSerializer(data=request.data,context={"request": request})
 
     if serializer.is_valid():
         serializer.save()
@@ -173,13 +173,11 @@ def changeRating(request, movieID):
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def rec(request):
-    recommended_movies = []
-    user = User.objects.get(id=100)
-    recommender = Recommender(610+user.id)
-    recommendations = recommender.recommend()
-    for recommendation in recommendations:
-        recommended_movies.append(Movie.objects.get(movieID = int(recommendation)))
-        recommended_movies.append(Movie.get_movie_title(movieID = int(recommendation)))
-    print(recommended_movies)
+def recommend_movie_user(request):
+    if request.user.get_user_ratings():
+        user = User.objects.get(id = 100)
+        recommender = Recommender(610+user.id)
+        recommendations = recommender.recommend()
+    else:
+        pass
     return Response(status = status.HTTP_200_OK)
