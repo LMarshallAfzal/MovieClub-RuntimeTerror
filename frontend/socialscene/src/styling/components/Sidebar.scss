@@ -15,6 +15,10 @@ z.sidebar {
     width: 100%;
 }
 
+.sidebar-list .sidebar-text{
+    background-color: base.$grey-4;
+    font-family: base.$helvetica;
+}
 .sidebar-list .sidebar-list-item{
     background-color: base.$grey-4;
     box-sizing: border-box;
@@ -27,7 +31,7 @@ z.sidebar {
     justify-content: center;
     align-items: center;
     transition: all 0.3s ease-out;
-    font-family: base.$helvetica-light;
+    font-family: base.$helvetica;
 }
 
 .sidebar-list .sidebar-list-item:hover{
@@ -39,7 +43,7 @@ z.sidebar {
 
 .sidebar-list #active{
     font-family: base.$helvetica;
-    background-color: base.$grey-2;
+    background-color: base.$grey-3;
     border-left: 10px solid base.$primary-red;
 
 }

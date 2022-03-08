@@ -15,7 +15,7 @@ class AddMovieRatingViewTestCase(APITestCase):
         self.user = User.objects.get(username='johndoe')
         self.url = reverse('add_rating', kwargs={'movieID':self.movie.movieID})
         self.form_input = {
-            "rating": 5.0,
+            "score": 5.0,
         }
         
     def test_post_to_add_rating_endpoint_with_valid_data_creates_new_rating(self):
@@ -30,7 +30,7 @@ class AddMovieRatingViewTestCase(APITestCase):
         self.client.force_login(self.user)
         before = Rating.objects.count()
         input = self.form_input
-        input['rating'] = 6.0
+        input['score'] = 6.0
         response = self.client.post(self.url, input)
         after = Rating.objects.count()
         self.assertEqual(after, before)

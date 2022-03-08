@@ -2,6 +2,7 @@
   margin: 0;
   height: 100%;
   width: 100%;
+  padding: 0;
 }
 
 @font-face {
@@ -34,6 +35,7 @@ body {
   font-family: Helvetica, serif;
   color: #000000;
   margin: 0;
+  padding: 0;
 }
 body--emphasise {
   color: #FF0000;
@@ -72,6 +74,7 @@ h6 {
 }
 
 .navbar {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100%;
@@ -86,14 +89,20 @@ h6 {
   font-size: 1.2rem;
   overflow: auto;
   width: 100%;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .navbar-red {
   height: 10px;
   display: flex;
   background: #FF0000;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .navbar-logo {
@@ -107,17 +116,21 @@ h6 {
   text-decoration: none;
   font-size: 2rem;
   padding-top: 20px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .navbar-enter-button {
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   float: right;
   margin: auto;
   width: auto;
   padding-right: 10px;
   padding-top: 30px;
   text-decoration: none;
-}
-
-/*# sourceMappingURL=Navbar.css.map */
+}/*# sourceMappingURL=Navbar.css.map */

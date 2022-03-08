@@ -2,6 +2,7 @@
   margin: 0;
   height: 100%;
   width: 100%;
+  padding: 0;
 }
 
 @font-face {
@@ -34,6 +35,7 @@ body {
   font-family: Helvetica, serif;
   color: #000000;
   margin: 0;
+  padding: 0;
 }
 body--emphasise {
   color: #FF0000;
@@ -76,6 +78,4 @@ h6 {
   justify-content: center;
   align-items: center;
   height: calc(100% - 90px);
-}
-
-/*# sourceMappingURL=NotFound.css.map */
+}/*# sourceMappingURL=NotFound.css.map */

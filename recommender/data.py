@@ -1,33 +1,34 @@
 import csv
+from csv import writer
 import sys
 from surprise import Dataset,Reader
 from collections import defaultdict
 import numpy as np
-from api.models import Movie
+from api.models import Movie,Rating
+
 class Data:
     movieID_to_title = {}
     title_to_movieID = {}
-    ratingsPath = './dataset/ratings.csv'
-    #moviesPath = '../dataset/movies.csv'
+    ratings_path = 'recommender/dataset-latest/api_ratings.csv'
 
     def load_movie_data(self):
-        ratingsDataset = 0
+        ratings_dataset = 0
         self.movieID_to_title = {}
         self.title_to_movieID = {}
 
-        reader = Reader(line_format='user item rating timestamp', sep=',', skip_lines=1)
-        ratingsDataset = Dataset.load_from_file(self.ratingsPath, reader = reader)
+        reader = Reader(line_format='user item rating', sep=',', skip_lines=1)
+        ratings_dataset = Dataset.load_from_file(self.ratings_path, reader = reader)
 
         for movie in Movie.objects.all():
             self.movieID_to_title[movie.movieID] = movie.title
             self.title_to_movieID[movie.title] = movie.movieID
-        return ratingsDataset
+        return ratings_dataset
 
     #Subject to change with ratings from the database
     def get_user_rating(self,user):
         ratings = []
         user_hit = False
-        with open(self.ratingsPath,newlines='') as file:
+        with open(self.ratings_path,newlines='') as file:
             reader = csv.reader(file)
             next(reader)
             for row in reader:
@@ -41,10 +42,32 @@ class Data:
                     break
         return ratings
 
+    def add_rating(self,rating):
+        user_rating = [rating.user.id+610,rating.movie.movieID,rating.score]
+        with open(self.ratings_path,'a') as file:
+            write_object = writer(file)
+            write_object.writerow(user_rating)
+            file.close()
+
+    def change_rating(self, old_rating, new_rating):
+        old_user_rating = [old_rating.user.id+610,old_rating.movie.movieID,old_rating.rating]
+        new_user_rating = [new_rating.user.id+610,new_rating.movie.movieID,new_rating.rating]
+        with open(self.ratings_path,'r+') as file:
+            lines = file.readlines()
+            file.seek(0)
+            for line in lines:
+                if line != old_user_rating:
+                    file.write(line)
+            file.close()
+        with open(self.ratings_path,'a') as file:
+            write_object = writer(file)
+            write_object.writerow(new_user_rating)
+            file.close()
+
     def popularity_ranking(self):
         ratings = defaultdict(float)
         rankings = defaultdict(int)
-        with open(self.ratingsPath, newline='') as file:
+        with open(self.ratings_path, newline='') as file:
             reader = csv.reader(file)
             next(reader)
             for row in reader:
@@ -55,27 +78,27 @@ class Data:
             rankings[movie_id] = rank
             rank += 1
         return rankings
-
+        
     def get_movie_genres(self):
         genres = defaultdict(list)
-        genreIDs = {}
-        maxGenreID = 0
+        genre_IDs = {}
+        max_genre_id = 0
         for movie in Movie.objects.all():
-            genreList = movie.genres.split('|')
-            genreIDList = []
-            for genre in genreList:
-                if genre in genreIDs:
-                    genreID=genreIDs[genre]
+            genre_list = movie.genres.split('|')
+            genre_id_list = []
+            for genre in genre_list:
+                if genre in genre_IDs:
+                    genre_id=genre_IDs[genre]
                 else:
-                    genreID = maxGenreID
-                    genreIDs[genre] = genreID
-                    maxGenreID+=1
-                genreIDList.append(genreID)
-            genres[movie.movie_id] = genreIDList
-        for(movieID,genreList) in genres.items():
-            bitfield = [0] * maxGenreID
-            for genreID in genreIDList:
-                bitfield[genreID] = 1
+                    genre_id = max_genre_id
+                    genre_IDs[genre] = genre_id
+                    max_genre_id+=1
+                genre_id_list.append(genre_id)
+            genres[movie.movieID] = genre_id_list
+        for(movieID,genre_list) in genres.items():
+            bitfield = [0] * max_genre_id
+            for genre_id in genre_id_list:
+                bitfield[genre_id] = 1
             genres[movieID] = bitfield
 
         return genres
@@ -99,4 +122,3 @@ class Data:
             return self.title_to_movieID[title]
         else:
             return 0
-

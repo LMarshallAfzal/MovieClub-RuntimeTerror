@@ -4,8 +4,8 @@ import {Avatar, Box, Stack} from "@mui/material";
 import iconImage from "../styling/testIconPic.jpg";
 
 
-
 function NameHeader(props) {
+const userData = JSON.parse(localStorage.getItem('user'))
   return (
       <div className={"name-header"}>
         <Box

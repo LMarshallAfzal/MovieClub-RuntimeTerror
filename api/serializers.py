@@ -133,7 +133,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         write_only=True,
         validators=[RegexValidator(regex=r"^.*(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$")],
     )
-    password_confirmation = serializers.CharField(required=True, write_only=True)
+    new_password_confirmation = serializers.CharField(required=True, write_only=True)
 
     # @Override
     def validate(self, data):
@@ -144,7 +144,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         if not user.check_password(data["old_password"]):
             raise serializers.ValidationError("The old password entered was invalid.")
         # Validate new password
-        if data["new_password"] != data["password_confirmation"]:
+        if data["new_password"] != data["new_password_confirmation"]:
             raise serializers.ValidationError(
                 "Your password and confirmation password do not match."
             )
@@ -176,13 +176,19 @@ class CreateClubSerializer(serializers.Serializer):
         model = Club
         fields = '__all__'
 
-class addRatingSerializer(serializers.ModelSerializer):
+class AddRatingSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=False,queryset=User.objects.all())
     movie = serializers.PrimaryKeyRelatedField(read_only=False,queryset=Movie.objects.all())
-    rating = serializers.FloatField(required = True,write_only=True,validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    score = serializers.FloatField(required = True,write_only=True,validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
     
     class Meta:
         model = Rating
-        fields = ['user','movie','rating']
+        fields = ['user','movie','score']
+
+class ChangeRatingSerializer(serializers.ModelSerializer):
+    score = serializers.FloatField(required = True,write_only=True,validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    class Meta:
+        model = Rating
+        fields = ['score']
    
     

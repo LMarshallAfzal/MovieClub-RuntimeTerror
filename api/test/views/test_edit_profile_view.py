@@ -2,6 +2,7 @@ from api.models import User
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
+import json
 
 class EditUserViewTestCase(APITestCase):
     
@@ -22,13 +23,23 @@ class EditUserViewTestCase(APITestCase):
             "preferences": "Action, Drama, Horror, Comedy, Science fiction",
         }
 
-    # def test_post_to_edit_user_endpoint_with_valid_data_edits_current_user(self):
-    #     self.client.force_login(self.user)
-    #     before = User.objects.count()
-    #     response = self.client.put(self.url, self.form_input)
-    #     after = User.objects.count()
-    #     self.assertEqual(after, before)
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_post_to_edit_user_endpoint_with_valid_data_edits_current_user(self):
+        details = {'username' : 'johndoe', 'password':'Pa$$w0rd567'}
+        input = {
+            "username": "johndoe",
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "johndoe@example.org",
+            "bio": "The quick brown fox jumps over the lazy dog.",
+            "preferences": "Action, Drama, Horror, Comedy, Science fiction"
+        }
+        input = json.dumps(input)
+        self.client.login(username = details['username'],password = details['password'])
+        before = User.objects.count()
+        response = self.client.put(self.url, input, content_type="application/json")
+        after = User.objects.count()
+        self.assertEqual(after, before)
+        self.assertEqual(response.status_code, 200)
 
     def test_post_to_edit_user_endpoint_with_not_unique_email_does_not_edit_the_user(self):
         self.client.force_login(self.user)

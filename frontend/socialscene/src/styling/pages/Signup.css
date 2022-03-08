@@ -2,6 +2,7 @@
   margin: 0;
   height: 100%;
   width: 100%;
+  padding: 0;
 }
 
 @font-face {
@@ -34,6 +35,7 @@ body {
   font-family: Helvetica, serif;
   color: #000000;
   margin: 0;
+  padding: 0;
 }
 body--emphasise {
   color: #FF0000;
@@ -69,6 +71,4 @@ h6 {
   font-family: Helvetica-Light, serif;
   margin: 0;
   font-size: 1rem;
-}
-
-/*# sourceMappingURL=Signup.css.map */
+}/*# sourceMappingURL=Signup.css.map */

@@ -2,6 +2,7 @@
   margin: 0;
   height: 100%;
   width: 100%;
+  padding: 0;
 }
 
 @font-face {
@@ -34,6 +35,7 @@ body {
   font-family: Helvetica, serif;
   color: #000000;
   margin: 0;
+  padding: 0;
 }
 body--emphasise {
   color: #FF0000;
@@ -83,12 +85,13 @@ h6 {
   background-color: #000000;
   font-family: Helvetica-Bold, serif;
   transition: all 0.3s ease-out;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .form-button:hover {
   background-color: #D8D8D8;
   color: #000000;
-}
-
-/*# sourceMappingURL=FormButton.css.map */
+}/*# sourceMappingURL=FormButton.css.map */
