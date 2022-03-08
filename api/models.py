@@ -78,6 +78,7 @@ class Club(models.Model):
         return self.club_members.all()
 
 
+
 class Membership(models.Model):
     """
     Membership is an intermediate model that connects Users to Clubs.
@@ -130,7 +131,6 @@ class Movie(models.Model):
     class Meta:
         ordering = ['title']
 
-
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -139,6 +139,27 @@ class Rating(models.Model):
     score = models.FloatField(
 
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
+    )
+
+class Meeting(models.Model):
+    club = ForeignKey(Club, on_delete=models.CASCADE)
+
+    movie = ForeignKey(Movie, on_delete=models.CASCADE)
+    
+    organizer = ForeignKey(User, on_delete=models.CASCADE)
+
+    time = models.DateTimeField(null = False)
+
+    descrisption = models.CharField(
+        max_length=500,
+        blank=False,
+        unique=False
+    )
+
+    meeting_link = models.CharField(
+        max_length = 200,
+        blank = False,
+        unique = False
     )
 
 

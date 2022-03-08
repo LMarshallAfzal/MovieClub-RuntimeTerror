@@ -193,7 +193,7 @@ def change_rating(request, movieID):
         return Response(status=status.HTTP_404_NOT_FOUND)
     request.data._mutable = True
     #rating = Rating.objects.get(user=user,movie=movie)
-    serializer = ChangeRatingSerializer(rating,data=request.data)
+    serializer = ChangeRatingSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         #change_rating_data(rating,request.data["score"])
