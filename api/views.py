@@ -142,6 +142,27 @@ def create_club(request):
         errors = serializer.errors
         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def join_club(request, clubid):
+    # For now, just add the user to the club without applicant status
+    try:
+        club = Club.objects.get(id=clubid)
+        Membership.objects.create(user=request.user, club=club, role="M")
+        return Response(status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def leave_club(request, clubid):
+    try:
+        club = Club.objects.get(id=clubid)
+        Membership.objects.get(user=request.user, club=club).delete()
+        return Response(status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def add_rating(request, movieID):
