@@ -150,7 +150,7 @@ class Meeting(models.Model):
 
     time = models.DateTimeField(null = False)
 
-    descrisption = models.CharField(
+    description = models.CharField(
         max_length=500,
         blank=False,
         unique=False
