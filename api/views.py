@@ -123,7 +123,6 @@ def edit_profile(request, username):
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
 # @authentication_classes([SessionAuthentication, BasicAuthentication])
 def get_clubs(request):
     clubs = Club.objects.all()
@@ -131,7 +130,7 @@ def get_clubs(request):
     return Response(serializer.data)
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def create_club(request):
     serializer = CreateClubSerializer(data=request.data)
     if serializer.is_valid():
@@ -189,3 +188,10 @@ def recommend_movie_user(request):
     else:
         pass
     return Response(status = status.HTTP_200_OK)
+
+@api_view(["GET"])
+def get_memberships_of_user(request, username):
+    data = request.data
+    user = User.objects.get(username=username)
+    serializer = MembershipSerializer(user, many=False)
+    return Response(serializer.data) 
