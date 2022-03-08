@@ -139,7 +139,6 @@ class Rating(models.Model):
     score = models.FloatField(
 
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
-        
     )
 
 

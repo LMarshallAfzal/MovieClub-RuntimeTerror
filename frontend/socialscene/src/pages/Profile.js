@@ -1,6 +1,5 @@
 import React from 'react'
 import "../styling/pages/Profile.css";
-import "../styling/pages/EditProfile.css";
 import { Box, Stack, TextField } from "@mui/material";
 import FormButton from "../components/FormButton";
 
@@ -60,9 +59,9 @@ class Profile extends React.Component {
 
     render() {
         return (
-            <table className='profile-table' style={{ borderSpacing: 0 }}>
+            <table className='profile-table' >
                 <tr>
-                    <div className='edit-profile-info-text'>Edit profile info:</div>
+                    <div className='edit-profile-info-text'>Edit profile info</div>
                 </tr>
                 <tr>
                     <td className='text-field'>
@@ -103,7 +102,7 @@ class Profile extends React.Component {
                                 onChange={this.changeHandler}
                                 value={this.state.email}
                             />
-                            <TextField className='profile-text-box-bio'
+                            <TextField className='profile-text-box'
                                 spacing={6}
                                 id={"outlined-multiline-static"}
                                 label={"bio"}
@@ -134,7 +133,7 @@ class Profile extends React.Component {
                     </td>
                     <td className='text-field'>
                         <Stack spacing={2}>
-                            <TextField className='profile-text-box-preference'
+                            <TextField className='profile-text-box'
                                 spacing={6}
                                 id={"outlined-multiline-static"}
                                 label={"preferences"}

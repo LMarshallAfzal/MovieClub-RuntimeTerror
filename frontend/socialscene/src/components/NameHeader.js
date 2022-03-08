@@ -30,7 +30,7 @@ const userData = JSON.parse(localStorage.getItem('user'))
 
           <Box sx={{ gridRow: '1', gridColumn: 'span 3'}}>
               <Stack>
-                  <h4 className={"name-header-text"}>{userData.first_name} {userData.last_name}<h4--emphasise>.</h4--emphasise></h4>
+                  <h4 className={"name-header-text"}>{props.firstName} {props.lastName}<h4--emphasise>.</h4--emphasise></h4>
                   <h6 className={"name-header-text-date"}>joined {props.joinDate}</h6>
               </Stack>
           </Box>

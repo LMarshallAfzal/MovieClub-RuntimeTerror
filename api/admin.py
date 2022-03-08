@@ -22,7 +22,3 @@ class RatingAdmin(admin.ModelAdmin):
         'id','user','movie','score'
     ]
 
-
-
-
-

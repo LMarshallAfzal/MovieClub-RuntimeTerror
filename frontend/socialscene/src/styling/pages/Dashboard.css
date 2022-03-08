@@ -73,8 +73,7 @@ h6 {
   font-size: 1rem;
 }
 
-.edit-profile-info-text {
-  padding-top: 20px;
+.dashboard-text {
   height: 100%;
   font-size: 1.5rem;
   display: flex;
@@ -88,34 +87,28 @@ h6 {
   text-align: center;
 }
 
-.text-field {
-  text-align: left;
-  vertical-align: top;
-}
-
-.profile-table {
+.list-header-text {
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  font-family: Helvetica, serif;
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 20px;
-  width: 100%;
+  text-align: center;
 }
 
-.editProfile-grid {
-  height: calc(100% - 90px);
-  justify-content: center;
-}
-.editProfile-grid-left {
-  align-self: center;
-}
-.editProfile-grid-right {
-  margin: 0;
-  align-self: center;
-}
-
-.form-stack {
-  margin-top: 20px;
-}
-
-.profile-text-box {
+.dashboard-text-box {
   background-color: #F8F7F7;
-}/*# sourceMappingURL=Profile.css.map */
+}
+
+.table-header {
+  align-items: center;
+  font-family: Helvetica, serif;
+  width: 100%;
+  text-align: left;
+  color: black;
+}/*# sourceMappingURL=Dashboard.css.map */
