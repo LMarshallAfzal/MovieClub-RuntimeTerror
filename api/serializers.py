@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer 
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework import serializers
-from api.models import Club, User, Membership, Movie,Rating
+from api.models import Club, User, Membership, Movie, Rating
 from rest_framework.validators import UniqueValidator
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
@@ -170,6 +170,7 @@ class CreateClubSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         club = Club.objects.create(**validated_data)
+        membership = Membership.objects.create()
         return club
     
     class Meta:
@@ -185,10 +186,8 @@ class AddRatingSerializer(serializers.ModelSerializer):
         model = Rating
         fields = ['user','movie','score']
 
-class ChangeRatingSerializer(serializers.ModelSerializer):
+class ChangeRatingSerializer(serializers.Serializer):
     score = serializers.FloatField(required = True,write_only=True,validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
     class Meta:
         model = Rating
         fields = ['score']
-   
-    

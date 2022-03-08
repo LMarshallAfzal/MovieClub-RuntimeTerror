@@ -15,5 +15,5 @@ urlpatterns = [
     path("add_rating/<int:movieID>/",views.add_rating,name = "add_rating"),
     path("rec/",views.recommend_movie_user,name = "rec"),
     path("edit_rating/<int:movieID>/",views.change_rating,name = "edit_rating"),
-    path("memberships/<str:username>/", views.get_memberships_of_user, name = "user_memberships")
+    path("memberships/<str:username>/", views.get_memberships_of_user, name = "get_memberships_of_user")
 ]

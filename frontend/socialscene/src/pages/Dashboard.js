@@ -50,7 +50,7 @@ class Dashboard extends React.Component {
     }
 
     fetchMembershipData() {
-        const userData = localStorage.getItem('user')
+        const userData = JSON.parse(localStorage.getItem('user'))
         fetch('http://127.0.0.1:8000/memberships/' + userData.username + '/', {
             
         })
@@ -58,7 +58,7 @@ class Dashboard extends React.Component {
         .then(data => console.log(data))
         .catch(error => console.error(error))
     }
-    
+    myClubData = this.fetchMembershipData()
 
     render() {
         return (
@@ -110,9 +110,9 @@ class Dashboard extends React.Component {
                     <Grid item xs={4}>
                         <div style={{ paddingBottom: '20px' }} className='list-header-text'>My Clubs</div>
                         <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
-                            {DummyDashboardClubsData.map((val, key) => {
+                            {this.myClubData.map((val) => {
                                 return <ListItemButton>
-                                    <ListItemText primary={val.name} />
+                                    <ListItemText primary={val.club_name} />
                                 </ListItemButton>
                             })}
                         </Paper>
@@ -120,7 +120,7 @@ class Dashboard extends React.Component {
                     <Grid item xs={4}>
                         <div style={{ paddingBottom: '20px' }} className='list-header-text'>Clubs for You</div>
                         <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
-                            {DummyDashboardClubsData.map((val, key) => {
+                            {DummyDashboardClubsData.map((val) => {
                                 return <ListItemButton>
                                     <ListItemText primary={val.name} />
                                 </ListItemButton>
