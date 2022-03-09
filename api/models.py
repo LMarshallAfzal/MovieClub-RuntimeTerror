@@ -98,7 +98,6 @@ class Membership(models.Model):
     class Meta:
         unique_together = ('user', 'club')
 
-
 class Movie(models.Model):
 
     movieID = models.PositiveIntegerField(
@@ -124,12 +123,15 @@ class Movie(models.Model):
 
     def get_movie_title(movie_id):
         return Movie.objects.get(movieID = movie_id).title
-
-
-
     class Meta:
         ordering = ['title']
 
+    def get_rating_author(self,user):
+        author = Rating.objects.get(user=user.id,movie=self.id)
+        if not user:
+            return None
+        else:
+            return author
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
