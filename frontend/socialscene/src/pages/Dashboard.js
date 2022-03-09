@@ -16,6 +16,7 @@ class Dashboard extends React.Component {
             club_name:'',
             mission_statement:'',
             themes:'',
+            myClubData: [],
         }
         this.changeHandler=this.changeHandler.bind(this)
         this.submitForm=this.submitForm.bind(this)
@@ -56,9 +57,9 @@ class Dashboard extends React.Component {
         })
         .then(data => data.json())
         .then(data => console.log(data))
+        .then((data) => this.setState({ myClubData: data }))
         .catch(error => console.error(error))
     }
-    myClubData = this.fetchMembershipData()
 
     render() {
         return (
@@ -110,7 +111,7 @@ class Dashboard extends React.Component {
                     <Grid item xs={4}>
                         <div style={{ paddingBottom: '20px' }} className='list-header-text'>My Clubs</div>
                         <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
-                            {this.myClubData.map((val) => {
+                            {this.state.myClubData.map((val) => {
                                 return <ListItemButton>
                                     <ListItemText primary={val.club_name} />
                                 </ListItemButton>
