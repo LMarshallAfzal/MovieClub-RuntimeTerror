@@ -7,7 +7,6 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from recommender.movie_CF_user import Recommender
-from .manage_data import change_rating_data,add_rating_data
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -155,9 +154,9 @@ def join_club(request, clubid):
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def leave_club(request, clubid):
+def leave_club(request, club_id):
     try:
-        club = Club.objects.get(id=clubid)
+        club = Club.objects.get(id=club_id)
         Membership.objects.get(user=request.user, club=club).delete()
         return Response(status=status.HTTP_200_OK)
     except:
@@ -168,17 +167,15 @@ def leave_club(request, clubid):
 def add_rating(request, movieID):
     try:
         movie = Movie.objects.get(movieID=movieID)
-        user = User.objects.get(username=request.user.username)
+        user = User.objects.get(id=request.user.id)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
     request.data._mutable = True
     request.data["user"] = user.id  
     request.data["movie"] = movie.id
-    #rating = Rating.objects.get(user=user,movie=movie)
     serializer = AddRatingSerializer(data=request.data,context={"request": request})
     if serializer.is_valid():
         serializer.save()
-        #add_rating_data(rating)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
@@ -188,25 +185,22 @@ def add_rating(request, movieID):
 def change_rating(request, movieID):
     try:
         movie = Movie.objects.get(movieID=movieID)
-        user = User.objects.get(username=request.user.username)
+        user = User.objects.get(request.user)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    request.data._mutable = True
-    #rating = Rating.objects.get(user=user,movie=movie)
+    rating = movie.get_rating_author(user)
     serializer = ChangeRatingSerializer(rating,data=request.data)
     if serializer.is_valid():
         serializer.save()
-        #change_rating_data(rating,request.data["score"])
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def recommend_movie_user(request):
-    if request.user.get_user_ratings():
-        recommender = Recommender(request.user.id)
-        recommendations = recommender.recommend()
-        print(recommendations)
-    else:
-        pass
-    return Response(status = status.HTTP_200_OK)
+    recommender = Recommender(request.user.id)
+    recommendations = recommender.recommend()
+    print(recommendations)
+    serializer = MovieSerializer(recommendations,many = True)
+    return Response(serializer.data)
