@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer 
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework import serializers
-from api.models import Club, User, Membership, Movie,Rating
+from api.models import Club, User, Membership, Movie,Rating, Viewer
 from rest_framework.validators import UniqueValidator
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
@@ -191,4 +191,10 @@ class ChangeRatingSerializer(serializers.ModelSerializer):
         model = Rating
         fields = ['score']
    
-    
+class ViewerSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=False,queryset=User.objects.all())
+    movie = serializers.PrimaryKeyRelatedField(read_only=False,queryset=Movie.objects.all())
+
+    class Meta:
+        model = Viewer
+        fields = '__all__'

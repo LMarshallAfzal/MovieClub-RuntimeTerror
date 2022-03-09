@@ -121,6 +121,8 @@ class Movie(models.Model):
 
     ratings = models.ManyToManyField(User, through='Rating')
 
+    watched = models.ManyToManyField(User, through = 'Viewer',related_name = 'Watched')
+
     def get_movie_title(movie_id):
         return Movie.objects.get(movieID = movie_id).title
     class Meta:
@@ -142,5 +144,10 @@ class Rating(models.Model):
 
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
     )
+
+class Viewer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
 

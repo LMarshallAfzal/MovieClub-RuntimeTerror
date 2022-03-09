@@ -72,7 +72,6 @@ def log_out(request):
     else:
         return Response(status=status.HTTP_403_FORBIDDEN)
 
-
 @api_view(["PUT"])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 @authentication_classes([TokenAuthentication])
@@ -167,13 +166,29 @@ def leave_club(request, club_id):
 def add_rating(request, movieID):
     try:
         movie = Movie.objects.get(movieID=movieID)
-        user = User.objects.get(id=request.user.id)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
     request.data._mutable = True
-    request.data["user"] = user.id  
+    request.data["user"] = request.user.id  
     request.data["movie"] = movie.id
     serializer = AddRatingSerializer(data=request.data,context={"request": request})
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_watched_movie(request, movieID):
+    try:
+        movie = Movie.objects.get(id=movieID)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    request.data._mutable = True
+    request.data["user"] = request.user.id  
+    request.data["movie"] = movie.id
+    serializer = ViewerSerializer(data=request.data,context={"request": request})
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
