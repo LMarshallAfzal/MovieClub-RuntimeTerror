@@ -185,7 +185,7 @@ def add_rating(request, movieID):
 def change_rating(request, movieID):
     try:
         movie = Movie.objects.get(movieID=movieID)
-        user = User.objects.get(request.user)
+        user = User.objects.get(id = request.user.id)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
     rating = movie.get_rating_author(user)
