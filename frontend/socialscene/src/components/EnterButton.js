@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 function EnterButton(props) {
     return (
-        <enterButton className='enter-button'>{props.text}</enterButton>
+        <enterButton role="enter-button" className='enter-button'>{props.text}</enterButton>
     );
 }
 
