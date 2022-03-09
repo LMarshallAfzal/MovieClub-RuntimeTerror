@@ -22,6 +22,10 @@ class Dashboard extends React.Component {
         this.submitForm=this.submitForm.bind(this)
     }
 
+    componentDidMount() {
+        this.fetchMembershipData();
+    }
+
     //const [searchTerm, setSearchTerm] = useState('')
 
     changeHandler(event) {
@@ -52,20 +56,23 @@ class Dashboard extends React.Component {
 
     fetchMembershipData() {
         const userData = JSON.parse(localStorage.getItem('user'))
-        fetch('http://127.0.0.1:8000/memberships/' + userData.username + '/', {
-            
-        })
-        .then(data => data.json())
-        .then(data => console.log(data))
-        .then((data) => this.setState({ myClubData: data }))
-        .catch(error => console.error(error))
+        fetch('http://127.0.0.1:8000/memberships/' + userData.username + '/', {})
+            .then(data => data.json())
+            // .then(data => console.log(data))
+            .then((data) => this.setState({ myClubData: data }))
+            .catch(error => console.error(error))
     }
 
     render() {
         return (
             <Grid className='' style={{ borderSpacing: 0 }}>
-                <Grid container direction={"row"} justifyContent="space-evenly"
-                    alignItems="flex-start" spacing={2}>
+                <Grid 
+                    container 
+                    direction={"row"} 
+                    justifyContent="space-evenly"
+                    alignItems="flex-start" 
+                    spacing={2}
+                >
                     <Grid item xs={12}>
                         <div className='dashboard-text'>Dashboard</div>
                     </Grid>
@@ -109,12 +116,16 @@ class Dashboard extends React.Component {
                         /> */}
                     </Grid>
                     <Grid item xs={4}>
-                        <div style={{ paddingBottom: '20px' }} className='list-header-text'>My Clubs</div>
+                        <div style={{ paddingBottom: '20px' }} className='list-header-text'>
+                            My Clubs
+                        </div>
                         <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
                             {this.state.myClubData.map((val) => {
-                                return <ListItemButton>
-                                    <ListItemText primary={val.club_name} />
-                                </ListItemButton>
+                                return (
+                                    <ListItemButton>
+                                        <ListItemText primary={val.club_name} />
+                                    </ListItemButton>
+                                );
                             })}
                         </Paper>
                     </Grid>
