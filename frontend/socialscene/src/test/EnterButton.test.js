@@ -15,21 +15,18 @@ describe('EnterButton', () => {
         
     })
 
-    test("Enter button has text enter", () => {
+    test("Enter button has text enter on home page", () => {
         render(<App/>)
         const button = screen.getByRole('enter-button')
         expect(button).toHaveTextContent('enter')
     })
 
-    // test("Enter button has text sign up", () => {
-    //     render(<App />, '/home')    
-    //     const button = screen.getByRole('enter-button', {hidden: true })
-    //     expect(button).toHaveTextContent('sign up')
-    // })
+    test("Enter button has text sign up on login page", () => {
+        render(<App />)    
+        const enterButton = screen.getByRole('enter-button', {hidden: true })
+        enterButton.click()
+        expect(enterButton).toHaveTextContent('sign up')
+    })
 
-    // test("Enter button geg has text sign up", () => {
-    //     render(<App/>)
-    //     const button = screen.getByRole('enter-button')
-    //     expect(button).toHaveTextContent('enter')
-    // })
+    
 })
