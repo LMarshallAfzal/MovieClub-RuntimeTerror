@@ -17,7 +17,7 @@ class LeaveClubViewTestCase(APITestCase):
         Membership.objects.create(user=self.user, club=self.club)
 
     def url(self, clubid):
-        return reverse("leave_club", kwargs={"clubid": clubid})
+        return reverse("leave_club", kwargs={"club_id": clubid})
 
     def test_unauthenticated_request_returns_forbidden(self):
         members_before = Membership.objects.filter(club=self.club).count()
