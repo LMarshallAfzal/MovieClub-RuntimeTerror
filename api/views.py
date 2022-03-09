@@ -7,7 +7,6 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from recommender.movie_CF_user import Recommender
-from .manage_data import change_rating_data,add_rating_data
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -164,11 +163,11 @@ def leave_club(request, clubid):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def add_rating(request, movieID):
     try:
         movie = Movie.objects.get(movieID=movieID)
-        user = User.objects.get(username=request.user.username)
+        user = User.objects.get(id=5)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
     request.data._mutable = True
@@ -193,7 +192,7 @@ def change_rating(request, movieID):
         return Response(status=status.HTTP_404_NOT_FOUND)
     request.data._mutable = True
     #rating = Rating.objects.get(user=user,movie=movie)
-    serializer = ChangeRatingSerializer(rating,data=request.data)
+    serializer = ChangeRatingSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         #change_rating_data(rating,request.data["score"])
@@ -203,10 +202,10 @@ def change_rating(request, movieID):
 
 @api_view(['GET'])
 def recommend_movie_user(request):
-    if request.user.get_user_ratings():
-        recommender = Recommender(request.user.id)
+    user = User.objects.get(id = 5)
+    if user.get_user_ratings():
+        recommender = Recommender(user.id)
         recommendations = recommender.recommend()
-        print(recommendations)
     else:
         pass
     return Response(status = status.HTTP_200_OK)

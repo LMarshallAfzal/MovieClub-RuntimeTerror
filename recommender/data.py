@@ -1,21 +1,24 @@
 import csv
 from csv import writer
-import sys
 from surprise import Dataset,Reader
 from collections import defaultdict
 import numpy as np
+import pandas as pd
 from api.models import Movie,Rating
+
 
 class Data:
     movieID_to_title = {}
     title_to_movieID = {}
     ratings_path = 'recommender/dataset-latest/api_ratings.csv'
+    movie_lens_path = 'recommender/dataset-latest/ratings.csv'
 
     def load_movie_data(self):
         ratings_dataset = 0
         self.movieID_to_title = {}
         self.title_to_movieID = {}
-
+        self.get_ratings()
+        self.combine_data()
         reader = Reader(line_format='user item rating', sep=',', skip_lines=1)
         ratings_dataset = Dataset.load_from_file(self.ratings_path, reader = reader)
 
@@ -24,7 +27,51 @@ class Data:
             self.title_to_movieID[movie.title] = movie.movieID
         return ratings_dataset
 
-    #Subject to change with ratings from the database
+    def get_ratings(self):
+        api_ratings = open(self.ratings_path,'w')
+        writer = csv.writer(api_ratings)
+        writer.writerow(['userID','movieID','rating'])
+        ratings = Rating.objects.all()
+
+        for rating in ratings:
+            writer.writerow([rating.user.id,rating.movie.movieID,rating.score])
+        api_ratings.close()
+    
+    def combine_data(self):
+        local_ratings = open(self.ratings_path,'a')
+        ml_ratings = open(self.movie_lens_path,'r')
+        constant = self.get_last_row(self.ratings_path)
+        variable = constant
+        reader = csv.reader(ml_ratings)
+        next(reader)
+        for row in reader:
+            write_object = writer(local_ratings)
+            input = []
+            if int(row[0]) == variable:
+                calc = int(row[0]) + constant
+                input = [calc,row[1],row[2]]
+                write_object.writerow(input)
+            else:
+                variable = int(row[0])
+                calc = int(row[0]) + constant
+                input = [calc,row[1],row[2]]
+                write_object.writerow(input)
+        local_ratings.close()
+        ml_ratings.close()
+
+    def get_last_row(self,file):
+            df = pd.read_csv(file)
+            try:
+                last_line = df['userID'].values[-1]
+            except:
+                return 0
+            return int(last_line)
+    
+    def clean(self):
+        local_ratings = open(self.ratings_path,'w')
+        local_ratings.truncate()
+        local_ratings.close()
+
     def get_user_rating(self,user):
         ratings = []
         user_hit = False
@@ -41,28 +88,6 @@ class Data:
                 if (user_hit and (user!=user_id)):
                     break
         return ratings
-
-    def add_rating(self,rating):
-        user_rating = [rating.user.id+610,rating.movie.movieID,rating.score]
-        with open(self.ratings_path,'a') as file:
-            write_object = writer(file)
-            write_object.writerow(user_rating)
-            file.close()
-
-    def change_rating(self, old_rating, new_rating):
-        old_user_rating = [old_rating.user.id+610,old_rating.movie.movieID,old_rating.rating]
-        new_user_rating = [new_rating.user.id+610,new_rating.movie.movieID,new_rating.rating]
-        with open(self.ratings_path,'r+') as file:
-            lines = file.readlines()
-            file.seek(0)
-            for line in lines:
-                if line != old_user_rating:
-                    file.write(line)
-            file.close()
-        with open(self.ratings_path,'a') as file:
-            write_object = writer(file)
-            write_object.writerow(new_user_rating)
-            file.close()
 
     def popularity_ranking(self):
         ratings = defaultdict(float)
