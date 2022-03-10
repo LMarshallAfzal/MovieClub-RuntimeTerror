@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Stack, Button, touchRippleClasses } from "@mui/material";
+import { Grid, Stack, Button, touchRippleClasses, Typography, Rating } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -59,9 +59,16 @@ class Movies extends React.Component {
                                 />
                                 <CardHeader
                                     title={val.title}
-                                    subheader={`Rating: ${val.ratings} `}
                                 />
-                                <Button sx={{ height: 38, width: 340 }} className="watched-button" variant="outlined">Watched</Button>
+                                <Typography component="legend">Rate {val.title}</Typography>
+                                    <Rating
+                                    name="simple-controlled"
+                                    // value={value}
+                                    // onChange={(event, newValue) => {
+                                    //     setValue(newValue);
+                                    // }}
+                                    />
+                                <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched</Button>
                             </Card>
                         </Grid>
                     })}
