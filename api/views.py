@@ -1,3 +1,4 @@
+from django import views
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -183,10 +184,11 @@ def add_rating(request, movieID):
 def add_watched_movie(request, movieID):
     try:
         movie = Movie.objects.get(id=movieID)
+        if Viewer.objects.filter(user = request.user.id, movie = movie.id):
+            return Response(status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    request.data._mutable = True
-    request.data["user"] = request.user.id  
+    request.data["user"] = request.user.id
     request.data["movie"] = movie.id
     serializer = ViewerSerializer(data=request.data,context={"request": request})
     if serializer.is_valid():
