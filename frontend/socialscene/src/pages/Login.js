@@ -93,7 +93,8 @@ class Login extends Component {
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
                                         <FormButton
-                                            text={"log in"}
+                                            text={"Log in"}
+                                            name={"log in"}
                                             onClick={this.login}
                                         />
                                 </Box>
@@ -101,6 +102,7 @@ class Login extends Component {
                                 <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>
                                     <FormButton
                                         text={"forgot password"}
+                                        name={"forgot password"}
                                     />
                                 </Box>
                             </Box>
