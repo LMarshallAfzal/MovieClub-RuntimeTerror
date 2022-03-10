@@ -1,11 +1,10 @@
 import React from 'react';
 import {render, screen} from "@testing-library/react";
-import { MemoryRouter } from 'react-router-dom';
 import EnterButton from "../components/EnterButton";
 import '@testing-library/jest-dom/extend-expect';
 import App from "../pages/App"
-import Home from "../pages/Home"
-import Navbar from "../components/Navbar"
+
+
 
 describe('EnterButton', () => {
     test("Enter button has classname enter-button", () => {
