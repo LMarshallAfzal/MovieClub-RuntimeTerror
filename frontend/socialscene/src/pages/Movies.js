@@ -59,7 +59,7 @@ class Movies extends React.Component {
                                 />
                                 <CardHeader
                                     title={val.title}
-                                    // subheader={`Rating: ${movie.rating} `}
+                                    subheader={`Rating: ${val.ratings} `}
                                 />
                                 <Button sx={{ height: 38, width: 340 }} className="watched-button" variant="outlined">Watched</Button>
                             </Card>
