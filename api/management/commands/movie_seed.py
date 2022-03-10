@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from api.models import Movie
+from api.models import Movie, Topic
 from django.db import IntegrityError
 import pandas as pd
 
@@ -20,5 +20,27 @@ class Command(BaseCommand):
                 genres = row['genres'],
                 year = int(row['year'])
             )
+
+            for genre in row['genres'].split('|'):
+                try:
+                    Topic.objects.create(
+                        name = genre.lower()
+                    )
+                except IntegrityError:
+                    pass
+
             movie_count+=1
         print('Movie seeding complete')
+
+        file = pd.read_csv("dataset/tags.csv",encoding='latin-1')
+        tag_count = 0
+        for index,row in file.iterrows():
+            print(f'Seeding topic {tag_count}',  end='\r')
+            try:
+                Topic.objects.create(
+                    name = (row['tag']).lower(),
+                )
+                tag_count+=1
+            except IntegrityError:
+                pass
+        print('Topic seeding complete')

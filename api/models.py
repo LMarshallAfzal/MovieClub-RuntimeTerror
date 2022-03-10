@@ -129,6 +129,28 @@ class Rating(models.Model):
         
     )
 
-class Preferences(models.Model):
-    pass
+class Topic(models.Model):
+    """
+    Topics collect genres and tags associated with movies
+    """
+
+    name = models.CharField(
+        max_length=50,
+        blank=False,
+        unique=True
+    )
+
+    #is_genre = models.BooleanField()
+
+    interested_users = models.ManyToManyField(User, through='Preference')
+
+class Preference(models.Model):
+    """
+    Preference is an intermediate model connecting Users to Topics
+    """
+    user = ForeignKey(User, on_delete=models.CASCADE)
+    topic = ForeignKey(Topic, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'topic')
 
