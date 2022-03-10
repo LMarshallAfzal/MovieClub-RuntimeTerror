@@ -11,26 +11,30 @@ import { red } from "@mui/material/colors";
 
 
 class Movies extends React.Component {
-
     constructor(){
         super()
-        this.state={
+        this.state = {
             MovieID:'',
             title:'',
             genres:'',
             recommendedMovies: [],
         }
-        
     }
 
     componentDidMount() { 
         this.fetchRecommendedMovies()
     }
 
-    fetchRecommendedMovies() { 
-        fetch('http://127.0.0.1:8000/rec/', {})
+    fetchRecommendedMovies() {
+        const token = JSON.parse(localStorage.getItem('token')) 
+        fetch('http://127.0.0.1:8000/rec/', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: token
+            },
+        })
         .then(data => data.json())
-        .then(data => console.log(data))
         .then((data) => this.setState({ recommendedMovies: data }))
         .catch(error => console.error(error))
     }
@@ -44,17 +48,17 @@ class Movies extends React.Component {
                     </tr>
                 </Grid>
                 <Grid container direction={"row"} spacing={2}>
-                    {this.state.recommendedMovies.map((movie) => {
+                    {this.state.recommendedMovies.map((val) => {
                         return <Grid item>
-                            <Card sx={{ maxWidth: 345 }}>
+                            <Card sx={{ maxWidth: 330 }}>
                                 <CardMedia
                                     component="img"
                                     height="500"
                                     image={moviePoster}
-                                    alt={movie.title}
+                                    // alt={val.title}
                                 />
                                 <CardHeader
-                                    title={movie.title}
+                                    title={val.title}
                                     // subheader={`Rating: ${movie.rating} `}
                                 />
                                 <Button sx={{ height: 38, width: 340 }} className="watched-button" variant="outlined">Watched</Button>
