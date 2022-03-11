@@ -163,7 +163,7 @@ def leave_club(request, club_id):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def add_rating(request, movieID):
     try:
         movie = Movie.objects.get(movieID=movieID)

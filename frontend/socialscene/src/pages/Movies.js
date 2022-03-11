@@ -4,7 +4,6 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import "../styling/pages/Movie.css";
-import { moviesWithPoster } from './DummyMoviesData';
 import moviePoster from '../styling/empty_movie_poster.png'
 import { red } from "@mui/material/colors";
 
@@ -19,10 +18,22 @@ class Movies extends React.Component {
             genres:'',
             recommendedMovies: [],
         }
+        this.ratingState = {
+            user: JSON.parse(localStorage.getItem('user')),
+            movie: this.state.MovieID,
+            score: '',
+        }
+        this.changeHandler=this.changeHandler.bind(this)
     }
 
     componentDidMount() { 
         this.fetchRecommendedMovies()
+    }
+
+    changeHandler(event) {
+        this.setState({
+            [event.target.name]:event.target.value
+        });
     }
 
     fetchRecommendedMovies() {
@@ -36,6 +47,21 @@ class Movies extends React.Component {
         })
         .then(data => data.json())
         .then((data) => this.setState({ recommendedMovies: data }))
+        .catch(error => console.error(error))
+    }
+
+    fetchAddRating() {
+        const token = JSON.parse(localStorage.getItem('token'))
+        fetch('http://127.0.0.1:8000/', {
+            method: 'POST',
+            body: JSON.stringify(this.ratingState),
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: token
+            },
+        })
+        .then(data => data.json())
+        .then((data) => this.setState({score : data.score}))
         .catch(error => console.error(error))
     }
 
@@ -55,7 +81,7 @@ class Movies extends React.Component {
                                     component="img"
                                     height="500"
                                     image={moviePoster}
-                                    // alt={val.title}
+                                    alt={val.title}
                                 />
                                 <CardHeader
                                     title={val.title}
@@ -63,10 +89,8 @@ class Movies extends React.Component {
                                 <Typography component="legend">Rate {val.title}</Typography>
                                     <Rating
                                     name="simple-controlled"
-                                    // value={value}
-                                    // onChange={(event, newValue) => {
-                                    //     setValue(newValue);
-                                    // }}
+                                    value={this.ratingState.rating}
+                                    onChange={this.fetchAddRating()}
                                     />
                                 <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched</Button>
                             </Card>
