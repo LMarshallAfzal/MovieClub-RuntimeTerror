@@ -31,11 +31,13 @@ class Dashboard extends React.Component {
 
     submitForm() {
         const userData = JSON.parse(localStorage.getItem('user'))
+        const token = JSON.parse(localStorage.getItem('token'))
         fetch('http://127.0.0.1:8000/create_club/',{
             method:'POST',
             body:JSON.stringify(this.state),
             headers:{
                 'Content-type': 'application/json; charset=UTF-8',
+                Authorization: token    
             },
         })
         .then(response=>response.text())
