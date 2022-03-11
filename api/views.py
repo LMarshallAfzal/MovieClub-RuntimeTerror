@@ -170,7 +170,7 @@ def add_rating(request, movieID):
         user = User.objects.get(id=request.user.id)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    request.data._mutable = True
+    # request.data._mutable = True
     request.data["user"] = user.id  
     request.data["movie"] = movie.id
     serializer = AddRatingSerializer(data=request.data,context={"request": request})

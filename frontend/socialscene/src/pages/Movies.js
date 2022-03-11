@@ -13,15 +13,13 @@ class Movies extends React.Component {
     constructor(){
         super()
         this.state = {
-            MovieID:'',
+            movieID:'',
             title:'',
             genres:'',
             recommendedMovies: [],
-        }
-        this.ratingState = {
             user: JSON.parse(localStorage.getItem('user')),
-            movie: this.state.MovieID,
-            score: '',
+            movie: this.movieID,
+            score: 0.0,
         }
         this.changeHandler=this.changeHandler.bind(this)
     }
@@ -50,18 +48,20 @@ class Movies extends React.Component {
         .catch(error => console.error(error))
     }
 
-    fetchAddRating() {
+    fetchAddRating(movie) {
         const token = JSON.parse(localStorage.getItem('token'))
-        fetch('http://127.0.0.1:8000/', {
+        fetch('http://127.0.0.1:8000/add_rating/' + movie + '/', {
             method: 'POST',
-            body: JSON.stringify(this.ratingState),
+            body: JSON.stringify(this.state),
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 Authorization: token
             },
         })
         .then(data => data.json())
-        .then((data) => this.setState({score : data.score}))
+        .then((data) => this.setState({score : data}))
+        .then((score) => console.log(score))
+        .then((data) => console.log(data))
         .catch(error => console.error(error))
     }
 
@@ -88,9 +88,11 @@ class Movies extends React.Component {
                                 />
                                 <Typography component="legend">Rate {val.title}</Typography>
                                     <Rating
-                                    name="simple-controlled"
-                                    value={this.ratingState.rating}
-                                    onChange={this.fetchAddRating()}
+                                    name="simple-uncontrolled"
+                                    value={this.state.score}
+                                    precision={0.5}
+                                    max={5}
+                                    onChange={() => this.fetchAddRating(val.movieID)}
                                     />
                                 <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched</Button>
                             </Card>
