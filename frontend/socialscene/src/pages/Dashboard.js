@@ -16,6 +16,7 @@ class Dashboard extends React.Component {
             club_name:'',
             mission_statement:'',
             themes:'',
+            searchTerm:'',
         }
         this.changeHandler=this.changeHandler.bind(this)
         this.submitForm=this.submitForm.bind(this)
@@ -60,29 +61,8 @@ class Dashboard extends React.Component {
                     <Grid item xs={12}>
                         <div className='dashboard-text'>Dashboard</div>
                     </Grid>
-                    {/* <Grid item xs={12}>
-                        <div className='search'>
-                            <TextField
-                                // id="filled-basic"
-                                label="🔎︎ Search Clubs"
-                                variant="filled"
-                                fullWidth
-                                onChange={event => {
-                                    setSearchTerm(event.target.value);
-                                }} />
-                        </div>
-                        {DummyDashboardClubsData.filter((val) => {
-                            if (searchTerm == "") {
-                                return val
-                            } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                return val
-                            }
-                        }).map((val, key) => {
-                            return <div> {val.name} </div>;
-                        })}
-                    </Grid> */}
                     <Grid item xs={12}>
-                        {/* <Autocomplete
+                        <Autocomplete
                             freeSolo
                             id="search"
                             disableClearable
@@ -97,7 +77,7 @@ class Dashboard extends React.Component {
                                     }}
                                 />
                             )}
-                        /> */}
+                        />
                     </Grid>
                     <Grid item xs={4}>
                         <div style={{ paddingBottom: '20px' }} className='list-header-text'>My Clubs</div>
