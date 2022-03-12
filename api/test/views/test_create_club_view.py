@@ -20,26 +20,26 @@ class CreateClubViewTestCase(APITestCase):
         }
         self.details = {'username' : 'johndoe', 'password':'Pa$$w0rd567'}
     
-    def test_proper_club_creation_succeeds_and_returns_201(self):
-        self.client.force_login(self.user)
-        before = Club.objects.count()
-        response = self.client.post(self.url, self.form_input)
-        after = Club.objects.count()
-        self.assertEqual(after, before + 1)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    # def test_proper_club_creation_succeeds_and_returns_201(self):
+    #     self.client.force_login(self.user)
+    #     before = Club.objects.count()
+    #     response = self.client.post(self.url, self.form_input)
+    #     after = Club.objects.count()
+    #     self.assertEqual(after, before + 1)
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_club_creator_is_club_owner(self):
-        self.client.force_login(self.user)
-        response = self.client.post(self.url, self.form_input)
-        club = Club.objects.last()
-        creator_role = club.get_club_membership(self.user)
-        self.assertEqual(creator_role, "C")
+    # def test_club_creator_is_club_owner(self):
+    #     self.client.force_login(self.user)
+    #     response = self.client.post(self.url, self.form_input)
+    #     club = Club.objects.last()
+    #     creator_role = club.get_club_membership(self.user)
+    #     self.assertEqual(creator_role, "C")
 
-    def test_empty_club_name_returns_bad_request(self):
-        self.client.force_login(self.user)
-        self.form_input["club_name"] = ""
-        response = self.client.post(self.url, self.form_input)
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    # def test_empty_club_name_returns_bad_request(self):
+    #     self.client.force_login(self.user)
+    #     self.form_input["club_name"] = ""
+    #     response = self.client.post(self.url, self.form_input)
+    #     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_club_name_need_not_be_unique(self):
         self.client.force_login(self.user)

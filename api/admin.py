@@ -29,7 +29,6 @@ class MovieAdmin(admin.ModelAdmin):
         'id','movieID','title','genres','year'
     ]
 
-
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
     '''Configuration of the administrative interface for ratings'''
@@ -37,11 +36,5 @@ class RatingAdmin(admin.ModelAdmin):
         'id','user','movie','score'
     ]
 
-@admin.register(Membership)
-class MembershipAdmin(admin.ModelAdmin):
-    '''Configuration of the administrative interface for memberships'''
-    list_display = [
-        'id','user','club', 'role'
-    ]
 
 

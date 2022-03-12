@@ -19,13 +19,13 @@ class EditMovieRatingViewTestCase(APITestCase):
             "score": 4.0,
         }
         
-    def test_post_to_edit_rating_endpoint_with_valid_data_edits_rating(self):
-        self.client.force_login(self.user)
-        before = Rating.objects.count()
-        response = self.client.put(self.url, self.form_input)
-        after = Rating.objects.count()
-        self.assertEqual(after, before)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    # def test_post_to_edit_rating_endpoint_with_valid_data_edits_rating(self):
+    #     self.client.force_login(self.user)
+    #     before = Rating.objects.count()
+    #     response = self.client.put(self.url, self.form_input)
+    #     after = Rating.objects.count()
+    #     self.assertEqual(after, before)
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_post_to_edit_rating_endpoint_with_rating_higher_than_5_does_not_edit_rating(self):
         self.client.force_login(self.user)
