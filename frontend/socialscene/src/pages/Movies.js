@@ -7,8 +7,6 @@ import "../styling/pages/Movie.css";
 import moviePoster from '../styling/empty_movie_poster.png'
 import { red } from "@mui/material/colors";
 
-
-
 class Movies extends React.Component {
     constructor(){
         super()
@@ -46,7 +44,6 @@ class Movies extends React.Component {
         .then(data => data.json())
         .then(data => this.setState({ recommendedMovies: data }))
         .catch(error => alert.error(error))
-
     }
 
     fetchAddRating(movie) {
@@ -71,10 +68,8 @@ class Movies extends React.Component {
             .then(data => data.json())
             .then((data) => this.setState({score : data.score, movie: specifiedMovie}))
             .catch(error => console.error(error))
-        
         })
     }
-
 
     render() {
         return (
@@ -100,12 +95,12 @@ class Movies extends React.Component {
                                 <Typography component="legend">Rate {val.title}</Typography>
                                     <Rating
                                     name="simple-controlled"
-                                    value={this.state.score}
+                                    //value={this.state.score}
                                     precision={0.5}
                                     max={5}
                                     onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(val.movieID)}))}                                    
                                     />
-                                <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched</Button>
+                                <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched?</Button>
                             </Card>
                         </Grid>
                     })}
