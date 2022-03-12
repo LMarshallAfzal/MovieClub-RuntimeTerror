@@ -5,9 +5,6 @@ import FormButton from "../components/FormButton";
 import { DummyDashboardClubsData, meetings, movies } from './DummyDashboardClubsData';
 import { useState } from 'react'
 
-
-
-
 class Dashboard extends React.Component {
 
     constructor() {
@@ -51,7 +48,6 @@ class Dashboard extends React.Component {
         })
         console.log(this.state)
     }
-    
 
     render() {
         return (
@@ -174,3 +170,4 @@ class Dashboard extends React.Component {
 }
 
 export default Dashboard;
+

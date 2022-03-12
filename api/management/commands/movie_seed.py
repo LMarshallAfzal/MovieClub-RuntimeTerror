@@ -10,7 +10,7 @@ class Command(BaseCommand):
         super().__init__()
 
     def handle(self, *args, **options):
-        file = pd.read_csv("dataset/movies.csv",encoding='latin-1')
+        file = pd.read_csv("recommender/dataset-latest/movies.csv",encoding='latin-1')
         movie_count = 0
         for index,row in file.iterrows():
             print(f'Seeding movie {movie_count}',  end='\r')

@@ -73,49 +73,11 @@ h6 {
   font-size: 1rem;
 }
 
-.edit-profile-info-text {
-  padding-top: 20px;
-  height: 100%;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
-  font-family: Helvetica-Bold, serif;
-  width: 100%;
-  text-align: center;
+.watched-button {
+  color: #999999;
+  border-color: #999999;
 }
 
-.text-field {
-  text-align: left;
-  vertical-align: top;
-}
-
-.profile-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 20px;
-  width: 100%;
-}
-
-.editProfile-grid {
-  height: calc(100% - 90px);
-  justify-content: center;
-}
-.editProfile-grid-left {
-  align-self: center;
-}
-.editProfile-grid-right {
-  margin: 0;
-  align-self: center;
-}
-
-.form-stack {
-  margin-top: 20px;
-}
-
-.profile-text-box {
-  background-color: #F8F7F7;
-}/*# sourceMappingURL=Profile.css.map */
+.watched-button:hover {
+  border-color: #5C5C5C;
+}/*# sourceMappingURL=WhatsOn.css.map */

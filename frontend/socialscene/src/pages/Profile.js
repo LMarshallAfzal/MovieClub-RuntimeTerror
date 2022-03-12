@@ -59,9 +59,9 @@ class Profile extends React.Component {
 
     render() {
         return (
-            <table className='profile-table' style={{ borderSpacing: 0 }}>
+            <table className='profile-table' >
                 <tr>
-                    <div className='edit-profile-info-text'>Edit profile info:</div>
+                    <div className='edit-profile-info-text'>Edit profile info</div>
                 </tr>
                 <tr>
                     <td className='text-field'>

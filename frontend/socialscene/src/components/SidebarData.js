@@ -38,7 +38,7 @@ export const SidebarData = [
         cName: 'sidebar-text'
     },
     {
-        title: 'change password',
+        title: 'settings',
         path: '/home/change-password',
         cName: 'sidebar-text'
     },
