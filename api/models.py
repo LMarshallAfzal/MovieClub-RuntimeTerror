@@ -151,7 +151,7 @@ class Rating(models.Model):
 
     score = models.FloatField(
 
-        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
+        validators=[MinValueValidator(1.0), MaxValueValidator(5.0)]
     )
 
 class Watch(models.Model):

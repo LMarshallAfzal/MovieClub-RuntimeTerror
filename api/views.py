@@ -215,8 +215,7 @@ def change_rating(request, movieID):
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-@api_view(['GET'])
+@api_view(['GET']) 
 @permission_classes([IsAuthenticated])
 def recommend_movie_user(request):
     recommender = Recommender(request.user.id)
