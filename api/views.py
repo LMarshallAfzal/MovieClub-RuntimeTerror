@@ -8,7 +8,7 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from recommender.movie_CF_user import Recommender
-from .decorators import movie_exists
+from .decorators import movie_exists,club_exists
 
 
 @api_view(['POST'])
@@ -125,22 +125,20 @@ def create_club(request):
 
 
 @api_view(["POST"])
+@club_exists
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def join_club(request, club_id):
-    # For now, just add the user to the club without applicant status
-    try:
-        club = Club.objects.get(id=club_id)
-    except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+    club = Club.objects.get(id=club_id)
     club.club_members.add(request.user,through_defaults={'role' : 'M'})
     return Response(status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])
+@club_exists
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def leave_club(request, club_id):
+    club = Club.objects.get(id=club_id)
     try:
-        club = Club.objects.get(id=club_id)
         Membership.objects.get(user=request.user, club=club).delete()
         return Response(status=status.HTTP_200_OK)
     except:
