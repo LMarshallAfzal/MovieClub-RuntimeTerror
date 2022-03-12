@@ -173,6 +173,7 @@ def add_rating(request, movieID):
     # request.data._mutable = True
     request.data["user"] = user.id  
     request.data["movie"] = movie.id
+    
     serializer = AddRatingSerializer(data=request.data,context={"request": request})
     if serializer.is_valid():
         serializer.save()
@@ -204,3 +205,11 @@ def recommend_movie_user(request):
     print(recommendations)
     serializer = MovieSerializer(recommendations,many = True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+def get_movie(request, movieID):
+    movie = Movie.objects.get(movieID=movieID)
+    serializer = MovieSerializer(movie, many = False)
+    return Response(serializer.data, status=status.HTTP_200_OK)    
+    

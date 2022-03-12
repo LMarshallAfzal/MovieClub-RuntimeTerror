@@ -18,7 +18,7 @@ class Movies extends React.Component {
             genres:'',
             recommendedMovies: [],
             user: JSON.parse(localStorage.getItem('user')),
-            movie: this.movieID,
+            movie: '',
             score: 0.0,
         }
         this.changeHandler=this.changeHandler.bind(this)
@@ -44,26 +44,38 @@ class Movies extends React.Component {
             },
         })
         .then(data => data.json())
-        .then((data) => this.setState({ recommendedMovies: data }))
-        .catch(error => console.error(error))
+        .then(data => this.setState({ recommendedMovies: data }))
+        .catch(error => alert.error(error))
+
     }
 
     fetchAddRating(movie) {
         const token = JSON.parse(localStorage.getItem('token'))
-        fetch('http://127.0.0.1:8000/add_rating/' + movie + '/', {
-            method: 'POST',
-            body: JSON.stringify(this.state),
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
+        fetch("http://127.0.0.1:8000/get_movie/" + movie + "/", {
+            method: 'GET',
+            headers: { 
+                'Content-type': 'application/json; charset=UTF8',
                 Authorization: token
-            },
+            }
         })
-        .then(data => data.json())
-        .then((data) => this.setState({score : data}))
-        .then((score) => console.log(score))
-        .then((data) => console.log(data))
-        .catch(error => console.error(error))
+        .then(res => res.json())
+        .then(specifiedMovie => {
+            fetch('http://127.0.0.1:8000/add_rating/' + movie + '/', {
+                method: 'POST',
+                body: JSON.stringify(this.state),
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    Authorization: token
+                },
+            })
+            .then(data => data.json())
+            // .then(data => console.log(data))
+            .then((data) => this.setState({score : this.state.score, movie: specifiedMovie}))
+            .catch(error => console.error(error))
+        
+        })
     }
+
 
     render() {
         return (
@@ -88,7 +100,7 @@ class Movies extends React.Component {
                                 />
                                 <Typography component="legend">Rate {val.title}</Typography>
                                     <Rating
-                                    name="simple-uncontrolled"
+                                    name="simple-controlled"
                                     value={this.state.score}
                                     precision={0.5}
                                     max={5}

@@ -24,9 +24,7 @@ class Login extends Component {
             }
         )
         .catch(error => console.error(error))
-        const response = await fetch('http://127.0.0.1:8000/user/' + this.state.credentials.username + '/', {
-        
-        })
+        const response = await fetch('http://127.0.0.1:8000/user/' + this.state.credentials.username + '/', {})
         const data =  await response.json()
         console.log(data)
         console.log({first_name: data.first_name})
