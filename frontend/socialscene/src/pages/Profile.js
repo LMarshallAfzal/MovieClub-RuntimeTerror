@@ -166,7 +166,6 @@ class Profile extends React.Component {
                 </tr>
             </table >
         );
-
     }
 }
 export default Profile;

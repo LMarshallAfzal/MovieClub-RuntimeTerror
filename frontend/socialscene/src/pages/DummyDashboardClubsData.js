@@ -61,6 +61,41 @@ export const DummyDashboardClubsData = [
         description: 'bad club',
         themes: 'scary'
     },
+    {
+        name: 'horror',
+        description: 'bad club',
+        themes: 'scary'
+    },
+    {
+        name: 'horror',
+        description: 'bad club',
+        themes: 'scary'
+    },
+    {
+        name: 'horror',
+        description: 'bad club',
+        themes: 'scary'
+    },
+    {
+        name: 'horror',
+        description: 'bad club',
+        themes: 'scary'
+    },
+    {
+        name: 'horror',
+        description: 'bad club',
+        themes: 'scary'
+    },
+    {
+        name: 'horror',
+        description: 'bad club',
+        themes: 'scary'
+    },
+    {
+        name: 'horror',
+        description: 'bad club',
+        themes: 'scary'
+    },
 ]
 
 export const movies = [
