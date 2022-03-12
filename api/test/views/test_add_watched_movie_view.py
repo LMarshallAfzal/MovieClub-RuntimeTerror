@@ -11,12 +11,12 @@ class AddWatchedMovieViewTestCase(APITestCase):
     ]
 
     def setUp(self):
-        self.movie = Movie.objects.get(movieID=1000)
+        self.movie = Movie.objects.get(movie_id=1000)
         self.user = User.objects.get(username='johndoe')
-        self.url = reverse('add_watched_movie', kwargs={'movieID':self.movie.id})
+        self.url = reverse('add_watched_movie', kwargs={'movie_id':self.movie.movie_id})
         self.form_input = {
             "user": self.user.id,
-            "movie": self.movie.id
+            "movie": self.movie.movie_id
         }
         self.login_details = details = {'username' : self.user.username, 'password':'Pa$$w0rd567'}
     
@@ -31,7 +31,7 @@ class AddWatchedMovieViewTestCase(APITestCase):
     def test_post_to_add_watched_movie_endpoint_with_invalid_movie_does_not_add_to_watched(self):
         self.client.login(username = self.login_details['username'],password = self.login_details['password'])
         before = Watch.objects.count()
-        invalidMovieUrl = reverse('add_watched_movie', kwargs={'movieID':0})
+        invalidMovieUrl = reverse('add_watched_movie', kwargs={'movie_id':0})
         response = self.client.post(invalidMovieUrl)
         after = Watch.objects.count()
         self.assertEqual(after, before)

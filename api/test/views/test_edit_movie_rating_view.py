@@ -11,10 +11,10 @@ class EditMovieRatingViewTestCase(APITestCase):
     ]
 
     def setUp(self):
-        self.movie = Movie.objects.get(movieID=1000)
+        self.movie = Movie.objects.get(movie_id=1000)
         self.user = User.objects.get(username='johndoe')
         self.rating = Rating.objects.create(user = self.user, movie = self.movie, score = 5.0)
-        self.url = reverse('edit_rating', kwargs={'movieID':self.movie.movieID})
+        self.url = reverse('edit_rating', kwargs={'movie_id':self.movie.movie_id})
         self.form_input = {
             "score": 4.0,
         }
@@ -51,7 +51,7 @@ class EditMovieRatingViewTestCase(APITestCase):
     def test_post_to_edit_rating_endpoint_with_invalid_movie_does_not_edit_rating(self):
         self.client.login(username = self.login_details['username'],password = self.login_details['password'])
         before = Rating.objects.count()
-        invalidMovieUrl = reverse('edit_rating', kwargs={'movieID':0})
+        invalidMovieUrl = reverse('edit_rating', kwargs={'movie_id':0})
         response = self.client.put(invalidMovieUrl, self.form_input)
         after = Rating.objects.count()
         self.assertEqual(after, before)
@@ -60,7 +60,7 @@ class EditMovieRatingViewTestCase(APITestCase):
     def test_post_to_edit_rating_endpoint_with_movie_that_was_not_rated_does_not_edit_rating(self):
         self.client.login(username = self.login_details['username'],password = self.login_details['password'])
         before = Rating.objects.count()
-        notRatedMovieUrl = reverse('edit_rating', kwargs={'movieID':100})
+        notRatedMovieUrl = reverse('edit_rating', kwargs={'movie_id':100})
         response = self.client.put(notRatedMovieUrl, self.form_input)
         after = Rating.objects.count()
         self.assertEqual(after, before)

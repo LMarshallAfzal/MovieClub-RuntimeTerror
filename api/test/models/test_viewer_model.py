@@ -14,7 +14,7 @@ class WatchModelTestCase(APITestCase):
 
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
-        self.movie = Movie.objects.get(movieID=1000)
+        self.movie = Movie.objects.get(title='The Godfather')
         self.viewer = Watch(user = self.user, movie = self.movie)
 
     def test_valid_viewer(self):
