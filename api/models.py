@@ -77,6 +77,11 @@ class Club(models.Model):
         blank=True,
         unique=False
     )
+    themes = models.CharField(
+        max_length=500,
+        blank=True,
+        unique=False
+    )
 
     club_members = models.ManyToManyField(User, through='Membership')
 

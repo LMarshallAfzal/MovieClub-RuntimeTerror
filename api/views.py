@@ -115,7 +115,7 @@ def get_clubs(request):
 
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def create_club(request):
     serializer = CreateClubSerializer(data=request.data)
     if serializer.is_valid():
