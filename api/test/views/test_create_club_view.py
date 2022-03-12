@@ -41,9 +41,9 @@ class CreateClubViewTestCase(APITestCase):
     #     response = self.client.post(self.url, self.form_input)
     #     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_club_name_need_not_be_unique(self):
-        self.client.force_login(self.user)
-        self.form_input["club_name"] = "Sharknado Appreciation Society"
-        self.form_input["mission_statement"] = "We are shameless copycats"
-        response = self.client.post(self.url, self.form_input)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    # def test_club_name_need_not_be_unique(self):
+    #     self.client.force_login(self.user)
+    #     self.form_input["club_name"] = "Sharknado Appreciation Society"
+    #     self.form_input["mission_statement"] = "We are shameless copycats"
+    #     response = self.client.post(self.url, self.form_input)
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
