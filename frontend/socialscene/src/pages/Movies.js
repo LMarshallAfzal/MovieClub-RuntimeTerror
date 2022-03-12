@@ -21,17 +21,17 @@ class Movies extends React.Component {
             movie: '',
             score: 0.0,
         }
-        this.changeHandler=this.changeHandler.bind(this)
+        this.inputChanged=this.inputChanged.bind(this)
     }
 
     componentDidMount() { 
         this.fetchRecommendedMovies()
     }
 
-    changeHandler(event) {
-        this.setState({
-            [event.target.name]:event.target.value
-        });
+    inputChanged = event => {
+        const rating = this.state.score;
+        rating[event.target.name] = event.target.value;
+        this.setState({score: rating});
     }
 
     fetchRecommendedMovies() {
@@ -69,8 +69,7 @@ class Movies extends React.Component {
                 },
             })
             .then(data => data.json())
-            // .then(data => console.log(data))
-            .then((data) => this.setState({score : this.state.score, movie: specifiedMovie}))
+            .then((data) => this.setState({score : data.score, movie: specifiedMovie}))
             .catch(error => console.error(error))
         
         })
@@ -104,7 +103,7 @@ class Movies extends React.Component {
                                     value={this.state.score}
                                     precision={0.5}
                                     max={5}
-                                    onChange={() => this.fetchAddRating(val.movieID)}
+                                    onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(val.movieID)}))}                                    
                                     />
                                 <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched</Button>
                             </Card>

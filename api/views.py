@@ -167,14 +167,12 @@ def leave_club(request, club_id):
 def add_rating(request, movieID):
     try:
         movie = Movie.objects.get(movieID=movieID)
-        user = User.objects.get(id=request.user.id)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
     # request.data._mutable = True
-    request.data["user"] = user.id  
+    request.data["user"] = request.user.id
     request.data["movie"] = movie.id
-    
-    serializer = AddRatingSerializer(data=request.data,context={"request": request})
+    serializer = AddRatingSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
