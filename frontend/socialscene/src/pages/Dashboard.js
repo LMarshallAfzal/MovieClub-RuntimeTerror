@@ -6,8 +6,6 @@ import { DummyDashboardClubsData, meetings, movies } from './DummyDashboardClubs
 import { useState } from 'react'
 
 
-
-
 class Dashboard extends React.Component {
 
     constructor() {
@@ -17,6 +15,7 @@ class Dashboard extends React.Component {
             mission_statement:'',
             themes:'',
             myClubData: [],
+            searchTerm:'',
         }
         this.changeHandler=this.changeHandler.bind(this)
         this.submitForm=this.submitForm.bind(this)
@@ -26,8 +25,6 @@ class Dashboard extends React.Component {
         this.fetchMembershipData();
     }
 
-    //const [searchTerm, setSearchTerm] = useState('')
-
     changeHandler(event) {
         this.setState({
             [event.target.name]:event.target.value
@@ -36,11 +33,13 @@ class Dashboard extends React.Component {
 
     submitForm() {
         const userData = JSON.parse(localStorage.getItem('user'))
+        const token = JSON.parse(localStorage.getItem('token'))
         fetch('http://127.0.0.1:8000/create_club/',{
             method:'POST',
             body:JSON.stringify(this.state),
             headers:{
                 'Content-type': 'application/json; charset=UTF-8',
+                Authorization: token    
             },
         })
         .then(response=>response.text())
@@ -76,29 +75,8 @@ class Dashboard extends React.Component {
                     <Grid item xs={12}>
                         <div className='dashboard-text'>Dashboard</div>
                     </Grid>
-                    {/* <Grid item xs={12}>
-                        <div className='search'>
-                            <TextField
-                                // id="filled-basic"
-                                label="🔎︎ Search Clubs"
-                                variant="filled"
-                                fullWidth
-                                onChange={event => {
-                                    setSearchTerm(event.target.value);
-                                }} />
-                        </div>
-                        {DummyDashboardClubsData.filter((val) => {
-                            if (searchTerm == "") {
-                                return val
-                            } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                return val
-                            }
-                        }).map((val, key) => {
-                            return <div> {val.name} </div>;
-                        })}
-                    </Grid> */}
                     <Grid item xs={12}>
-                        {/* <Autocomplete
+                        <Autocomplete
                             freeSolo
                             id="search"
                             disableClearable
@@ -113,7 +91,7 @@ class Dashboard extends React.Component {
                                     }}
                                 />
                             )}
-                        /> */}
+                        />
                     </Grid>
                     <Grid item xs={4}>
                         <div style={{ paddingBottom: '20px' }} className='list-header-text'>

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User,Club,Rating, Membership
+from .models import User,Club,Movie,Rating, Membership
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
@@ -12,8 +12,23 @@ class UserAdmin(admin.ModelAdmin):
 class ClubAdmin(admin.ModelAdmin):
     '''Configuration of the administrative interface for clubs'''
     list_display = [
-        'id', 'club_name', 'mission_statement'
+        'id', 'club_name', 'mission_statement', 'themes',
     ]
+
+@admin.register(Membership)
+class MembershipAdmin(admin.ModelAdmin):
+    '''Configuration of the administrative interface for memberships'''
+    list_display = [
+        'id', 'user', 'club', 'role',
+    ]   
+    
+@admin.register(Movie)
+class MovieAdmin(admin.ModelAdmin):
+    '''Configuration of the administrative interface for movies'''
+    list_display = [
+        'id','movieID','title','genres','year'
+    ]
+
 
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
