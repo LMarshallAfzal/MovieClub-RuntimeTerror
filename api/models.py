@@ -56,6 +56,10 @@ class User(AbstractUser):
         else:
             return ratings
         
+    def get_user_memberships(self):
+        memberships = Club.objects.filter(club_members__username=self.username)
+        return memberships
+
     def get_user_preferences(self):
         return self.preferences
 
@@ -65,7 +69,7 @@ class User(AbstractUser):
         return
 
 class Club(models.Model):
-
+  
     club_name = models.CharField(
         max_length=50,
         blank=False,
@@ -85,9 +89,6 @@ class Club(models.Model):
 
     club_members = models.ManyToManyField(User, through='Membership')
 
-    def get_club_membership(self, user):
-        return Membership.objects.get(club=self, user=user).role
-
     def get_all_club_members(self):
         return self.club_members.all()
 
@@ -106,7 +107,11 @@ class Membership(models.Model):
     ]
     user = ForeignKey(User, on_delete=models.CASCADE)
     club = ForeignKey(Club, on_delete=models.CASCADE)
-    role = models.CharField(max_length=1, choices=STATUS_CHOICES, default="M")
+    role = models.CharField(
+        max_length=1,
+        choices=STATUS_CHOICES,
+        default="M"
+        )
 
     """We must ensure that only one relationship is created per User-Club pair."""
     class Meta:

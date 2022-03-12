@@ -106,7 +106,6 @@ def edit_profile(request, username):
 
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
 # @authentication_classes([SessionAuthentication, BasicAuthentication])
 def get_clubs(request):
     clubs = Club.objects.all()
@@ -207,8 +206,9 @@ def change_rating(request, movieID):
         user = User.objects.get(id=request.user.id)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    rating = movie.get_rating_author(user)
-    serializer = ChangeRatingSerializer(rating, data=request.data)
+    request.data._mutable = True
+    #rating = Rating.objects.get(user=user,movie=movie)
+    serializer = ChangeRatingSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -218,8 +218,17 @@ def change_rating(request, movieID):
 @api_view(['GET']) 
 @permission_classes([IsAuthenticated])
 def recommend_movie_user(request):
-    recommender = Recommender(request.user.id)
-    recommendations = recommender.recommend()
-    print(recommendations)
-    serializer = MovieSerializer(recommendations, many=True)
+    if request.user.get_user_ratings():
+        recommender = Recommender(request.user.id)
+        recommendations = recommender.recommend()
+        print(recommendations)
+    else:
+        pass
+    return Response(status = status.HTTP_200_OK)
+
+@api_view(["GET"])
+def get_memberships_of_user(request, username):
+    user = User.objects.get(username=username)
+    clubs = user.get_user_clubs()
+    serializer = ClubSerializer(clubs,many = True)
     return Response(serializer.data)

@@ -193,6 +193,7 @@ class CreateClubSerializer(serializers.Serializer):
     )
     def create(self, validated_data):
         club = Club.objects.create(**validated_data)
+        membership = Membership.objects.create()
         return club
 
     class Meta:
@@ -212,7 +213,7 @@ class AddRatingSerializer(serializers.ModelSerializer):
         model = Rating
         fields = ['user', 'movie', 'score']
 
-
+        
 class ChangeRatingSerializer(serializers.ModelSerializer):
     score = serializers.FloatField(required=True, write_only=True, validators=[
                                    MinValueValidator(1.0), MaxValueValidator(5.0)])
@@ -231,5 +232,4 @@ class WatchMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Watch
         fields = ['user', 'movie']
-
 
