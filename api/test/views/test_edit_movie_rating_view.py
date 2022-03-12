@@ -14,7 +14,7 @@ class EditMovieRatingViewTestCase(APITestCase):
         self.movie = Movie.objects.get(movie_id=1000)
         self.user = User.objects.get(username='johndoe')
         self.rating = Rating.objects.create(user = self.user, movie = self.movie, score = 5.0)
-        self.url = reverse('edit_rating', kwargs={'movie_id':self.movie.movie_id})
+        self.url = reverse('edit_rating', kwargs={'movie_id':self.movie.id})
         self.form_input = {
             "score": 4.0,
         }

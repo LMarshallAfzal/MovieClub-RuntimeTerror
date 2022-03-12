@@ -13,11 +13,10 @@ class RemoveWatchedMovieViewTestCase(APITestCase):
     def setUp(self):
         self.movie = Movie.objects.get(movie_id=1000)
         self.user = User.objects.get(username='johndoe')
-        self.url = reverse('remove_watched_movie', kwargs={'movie_id':self.movie.movie_id})
+        self.url = reverse('remove_watched_movie', kwargs={'movie_id':self.movie.id})
         self.user.add_watched_movie(self.movie)
-        self.login_details = details = {'username' : self.user.username, 'password':'Pa$$w0rd567'}
+        self.login_details = {'username' : self.user.username, 'password':'Pa$$w0rd567'}
         
-    
     def test_delete_to_unwatch_movie_endpoint_with_valid_data_removes_watched_movie(self):
         self.client.login(username = self.login_details['username'],password = self.login_details['password'])
         before = Watch.objects.count()

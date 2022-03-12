@@ -8,7 +8,7 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from recommender.movie_CF_user import Recommender
-from .decorators import movie_exists,club_exists
+from .decorators import movie_exists,club_exists,has_watched,is_member
 
 
 @api_view(['POST'])
@@ -40,7 +40,6 @@ def login(request):
     else:
         data['response'] = 'You have entered an invalid username or password'
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
@@ -135,20 +134,18 @@ def join_club(request, club_id):
 
 @api_view(["POST"])
 @club_exists
+@is_member
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def leave_club(request, club_id):
     club = Club.objects.get(id=club_id)
-    try:
-        Membership.objects.get(user=request.user, club=club).delete()
-        return Response(status=status.HTTP_200_OK)
-    except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+    Membership.objects.get(user=request.user, club=club).delete()
+    return Response(status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 @movie_exists
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def add_watched_movie(request, movie_id):
-    movie = Movie.objects.get(movie_id=movie_id)
+    movie = Movie.objects.get(id=movie_id)
     request.data._mutable = True
     request.data["user"] = request.user.id
     request.data["movie"] = movie.id
@@ -162,13 +159,11 @@ def add_watched_movie(request, movie_id):
 
 @api_view(['DELETE'])
 @movie_exists
+@has_watched
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def remove_watched_movie(request, movie_id):
-    movie = Movie.objects.get(movie_id=movie_id)
-    try:
-        watched_movie = Watch.objects.get(user=request.user,movie = movie)
-    except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    movie = Movie.objects.get(id=movie_id)
+    watched_movie = Watch.objects.get(user=request.user,movie = movie)
     watched_movie.delete()
     return Response(status=status.HTTP_200_OK)
  
@@ -176,7 +171,7 @@ def remove_watched_movie(request, movie_id):
 @movie_exists
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def add_rating(request, movie_id):
-    movie = Movie.objects.get(movie_id=movie_id)
+    movie = Movie.objects.get(id=movie_id)
     request.data._mutable = True
     request.data["user"] = request.user.id
     request.data["movie"] = movie.id
@@ -191,7 +186,7 @@ def add_rating(request, movie_id):
 @movie_exists
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def change_rating(request, movie_id):
-    movie = Movie.objects.get(movie_id=movie_id)
+    movie = Movie.objects.get(id=movie_id)
     rating = movie.get_rating_author(request.user)
     serializer = ChangeRatingSerializer(rating, data=request.data)
     if serializer.is_valid():
