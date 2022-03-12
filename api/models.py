@@ -92,6 +92,11 @@ class Club(models.Model):
     def get_all_club_members(self):
         return self.club_members.all()
 
+    def get_club_membership(self,user):
+        membership = Membership.objects.get(user=user,club=self).role
+        return membership
+
+
 
 class Membership(models.Model):
     """

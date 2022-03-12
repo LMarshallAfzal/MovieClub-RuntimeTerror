@@ -11,7 +11,7 @@ from recommender.movie_CF_user import Recommender
 
 
 @api_view(['POST'])
-def signUp(request):
+def sign_up(request):
     data = {}
     serializer = SignUpSerializer(data=request.data)
     if serializer.is_valid():
@@ -30,7 +30,6 @@ def signUp(request):
 
 
 @api_view(['POST', 'GET'])
-# @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def login(request):
     data = {}
     serializer = LoginSerializer(data=request.data)
@@ -43,7 +42,7 @@ def login(request):
 
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def log_out(request):
     if request.user.is_authenticated:
         logout(request)
@@ -54,7 +53,6 @@ def log_out(request):
 
 @api_view(["PUT"])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-@authentication_classes([TokenAuthentication])
 def change_password(request):
     serializer = ChangePasswordSerializer(
         data=request.data, context={"request": request}
@@ -67,7 +65,7 @@ def change_password(request):
 
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def get_users(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
@@ -75,6 +73,7 @@ def get_users(request):
 
 
 @api_view(["GET"])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def get_user(request, username):
     data = request.data
     user = User.objects.get(username=username)
@@ -83,6 +82,7 @@ def get_user(request, username):
 
 
 @api_view(["GET"])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def get_score(request, username, movieID):
     data = request.data
     user = User.objects.get(username=username)
@@ -92,8 +92,8 @@ def get_score(request, username, movieID):
     return Response(serializer.data)
 
 
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 @api_view(['PUT'])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def edit_profile(request, username):
     # user = request.user
     user = User.objects.get(username=username)
@@ -106,7 +106,7 @@ def edit_profile(request, username):
 
 
 @api_view(["GET"])
-# @authentication_classes([SessionAuthentication, BasicAuthentication])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def get_clubs(request):
     clubs = Club.objects.all()
     serializer = ClubSerializer(clubs, many=True)
@@ -116,6 +116,7 @@ def get_clubs(request):
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def create_club(request):
+    
     serializer = CreateClubSerializer(data=request.data)
     if serializer.is_valid():
         club = serializer.save()
@@ -127,19 +128,19 @@ def create_club(request):
 
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def join_club(request, clubid):
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+def join_club(request, club_id):
     # For now, just add the user to the club without applicant status
     try:
-        club = Club.objects.get(id=clubid)
-        Membership.objects.create(user=request.user, club=club, role="M")
-        return Response(status=status.HTTP_200_OK)
+        club = Club.objects.get(id=club_id)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    club.club_members.add(request.user,through_defaults={'role' : 'M'})
+    return Response(status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def leave_club(request, club_id):
     try:
         club = Club.objects.get(id=club_id)
@@ -148,9 +149,8 @@ def leave_club(request, club_id):
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def add_watched_movie(request, movieID):
     try:
         movie = Movie.objects.get(id=movieID)
@@ -168,7 +168,7 @@ def add_watched_movie(request, movieID):
 
 
 @api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def remove_watched_movie(request, movieID):
     try:
         movie = Movie.objects.get(id=movieID)
@@ -179,7 +179,7 @@ def remove_watched_movie(request, movieID):
     return Response(status=status.HTTP_200_OK)
  
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def add_rating(request, movieID):
     try:
         movie = Movie.objects.get(movieID=movieID)
@@ -188,35 +188,30 @@ def add_rating(request, movieID):
     request.data._mutable = True
     request.data["user"] = request.user.id
     request.data["movie"] = movie.id
-    serializer = AddRatingSerializer(
-        data=request.data, context={"request": request})
+    serializer = AddRatingSerializer(data=request.data, context={"request": request})
     if serializer.is_valid():
         serializer.save()
-        
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['PUT'])
-@permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def change_rating(request, movieID):
     try:
         movie = Movie.objects.get(movieID=movieID)
-        user = User.objects.get(id=request.user.id)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    request.data._mutable = True
-    #rating = Rating.objects.get(user=user,movie=movie)
-    serializer = ChangeRatingSerializer(data=request.data)
+    rating = movie.get_rating_author(request.user)
+    serializer = ChangeRatingSerializer(rating, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
-
+        
 @api_view(['GET']) 
-@permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def recommend_movie_user(request):
     if request.user.get_user_ratings():
         recommender = Recommender(request.user.id)
@@ -227,6 +222,7 @@ def recommend_movie_user(request):
     return Response(status = status.HTTP_200_OK)
 
 @api_view(["GET"])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def get_memberships_of_user(request, username):
     user = User.objects.get(username=username)
     clubs = user.get_user_clubs()

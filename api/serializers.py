@@ -188,34 +188,42 @@ class CreateClubSerializer(serializers.Serializer):
     )
 
     themes = serializers.CharField(
-        required = False,
-        validators = [MaxLengthValidator(500)]
+        required=False,
+        validators=[MaxLengthValidator(500)]
     )
-    def create(self, validated_data):
-        club = Club.objects.create(**validated_data)
-        membership = Membership.objects.create()
-        return club
 
     class Meta:
         model = Club
         fields = '__all__'
 
+    def create(self, validated_data):
+        club = Club.objects.create(
+            club_name=validated_data['club_name'],
+            mission_statement=validated_data['mission_statement'],
+            themes=validated_data['themes'],
+        )
+        club.save()
+
+        return club
+
 
 class AddRatingSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=User.objects.all())
+
     movie = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=Movie.objects.all())
-    score = serializers.FloatField(required=True, write_only=True, validators=[
+
+    score = serializers.FloatField(required=True, validators=[
                                    MinValueValidator(1.0), MaxValueValidator(5.0)])
 
     class Meta:
+        fields = '__all__'
         model = Rating
-        fields = ['user', 'movie', 'score']
 
-        
+
 class ChangeRatingSerializer(serializers.ModelSerializer):
-    score = serializers.FloatField(required=True, write_only=True, validators=[
+    score = serializers.FloatField(required=True, validators=[
                                    MinValueValidator(1.0), MaxValueValidator(5.0)])
 
     class Meta:
@@ -228,8 +236,7 @@ class WatchMovieSerializer(serializers.ModelSerializer):
         read_only=False, queryset=User.objects.all())
     movie = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=Movie.objects.all())
-    
+
     class Meta:
         model = Watch
         fields = ['user', 'movie']
-
