@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models.fields.related import ForeignKey
 from django.db import models
+from datetime import datetime    
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -41,6 +42,9 @@ class User(AbstractUser):
         unique=False
     )
 
+    watched_movies = models.ManyToManyField('Movie',through='Watch')
+
+
     def get_user_clubs(self):
         memberships = Membership.objects.filter(user=self)
         return [membership.club for membership in memberships]
@@ -54,6 +58,11 @@ class User(AbstractUser):
         
     def get_user_preferences(self):
         return self.preferences
+
+    def add_watched_movie(self,movie):
+        self.watched_movies.add(movie)
+        self.save()
+        return
 
 class Club(models.Model):
 
@@ -121,7 +130,7 @@ class Movie(models.Model):
 
     ratings = models.ManyToManyField(User, through='Rating')
 
-    watched = models.ManyToManyField(User, through = 'Viewer',related_name = 'Watched')
+    viewers = models.ManyToManyField(User, through='Watch',related_name = 'viewers')
 
     def get_movie_title(movie_id):
         return Movie.objects.get(movieID = movie_id).title
@@ -145,7 +154,11 @@ class Rating(models.Model):
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
     )
 
-class Viewer(models.Model):
+class Watch(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+    time_watched = models.DateTimeField(auto_now_add=True)
+
+

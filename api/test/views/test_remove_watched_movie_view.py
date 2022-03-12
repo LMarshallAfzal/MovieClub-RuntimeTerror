@@ -3,7 +3,7 @@ from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 
-class AddWatchedMovieViewTestCase(APITestCase):
+class RemoveWatchedMovieViewTestCase(APITestCase):
 
     fixtures = [
         'api/test/fixtures/default_user.json',
@@ -13,41 +13,39 @@ class AddWatchedMovieViewTestCase(APITestCase):
     def setUp(self):
         self.movie = Movie.objects.get(movieID=1000)
         self.user = User.objects.get(username='johndoe')
-        self.url = reverse('add_watched_movie', kwargs={'movieID':self.movie.id})
-        self.form_input = {
-            "user": self.user.id,
-            "movie": self.movie.id
-        }
+        self.url = reverse('remove_watched_movie', kwargs={'movieID':self.movie.id})
+        self.user.add_watched_movie(self.movie)
+        
     
-    def test_post_to_add_watched_movie_endpoint_with_valid_data_adds_to_watched(self):
+    def test_delete_to_unwatch_movie_endpoint_with_valid_data_removes_watched_movie(self):
         self.client.force_login(self.user)
         before = Watch.objects.count()
-        response = self.client.post(self.url,self.form_input)
+        response = self.client.delete(self.url)
         after = Watch.objects.count()
-        self.assertEqual(after, before + 1)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(after + 1, before)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_post_to_add_watched_movie_endpoint_with_invalid_movie_does_not_add_to_watched(self):
+    def test_delete_to_unwatch_movie_endpoint_with_invalid_movie_does_not_remove_watched_movie(self):
         self.client.force_login(self.user)
         before = Watch.objects.count()
-        invalidMovieUrl = reverse('add_watched_movie', kwargs={'movieID':0})
-        response = self.client.post(invalidMovieUrl)
+        invalidMovieUrl = reverse('remove_watched_movie', kwargs={'movieID':0})
+        response = self.client.delete(invalidMovieUrl)
         after = Watch.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    # def test_post_user_cannot_add_same_movie_twice_to_watched(self):
+    # def test_delete_user_cannot_unwatch_same_movie_twice(self):
     #     self.client.force_login(self.user)
     #     before = Watch.objects.count()
-    #     self.client.post(self.url,self.form_input)
-    #     response = self.client.post(self.url,self.form_input)
+    #     self.client.delete(self.url)
+    #     response = self.client.delete(self.url)
     #     after = Watch.objects.count()
-    #     self.assertEqual(after, before + 1)
+    #     self.assertEqual(after + 1, before)
     #     self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_post_to_add_watched_movie_endpoint_with_user_not_logged_in_does_not_add_to_watched(self):
+    def test_delete_to_unwatch_movie_endpoint_with_user_not_logged_in_does_not_remove_watched_movie(self):
         before = Watch.objects.count()
-        response = self.client.post(self.url)
+        response = self.client.delete(self.url)
         after = Watch.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
