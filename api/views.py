@@ -188,11 +188,11 @@ def change_rating(request, movie_id):
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
         
 @api_view(['GET']) 
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+#@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def recommend_movie_user(request):
-    recommender = Recommender(request.user.id)
-    recommendations = recommender.recommend()
-    print(recommendations)
+    user = User.objects.get(id= 100)
+    recommender = Recommender(user.id)
+    recommendations = recommender.recommend_movies_for_user()
     serializer = MovieSerializer(recommendations,many = True)
     return Response(serializer.data)
 
