@@ -165,14 +165,10 @@ def remove_watched_movie(request, movie_id):
     return Response(status=status.HTTP_200_OK)
  
 @api_view(['POST'])
-# @movie_exists
+@movie_exists
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def add_rating(request, movie_id):
-    try:
-        movie = Movie.objects.get(movie_id=movie_id)
-    except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer = AddRatingSerializer(data=request.data)
+    serializer = AddRatingSerializer(data=request.data, context={"request": request})
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -211,7 +207,7 @@ def get_memberships_of_user(request, username):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def get_movie(request, movie_id):
-    movie = Movie.objects.get(movie_id=movie_id)
+    movie = Movie.objects.get(id=movie_id)
     serializer = MovieSerializer(movie, many = False)
     return Response(serializer.data, status=status.HTTP_200_OK)    
     
