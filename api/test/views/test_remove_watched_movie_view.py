@@ -34,14 +34,14 @@ class RemoveWatchedMovieViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    # def test_delete_user_cannot_unwatch_same_movie_twice(self):
-    #     self.client.force_login(self.user)
-    #     before = Watch.objects.count()
-    #     self.client.delete(self.url)
-    #     response = self.client.delete(self.url)
-    #     after = Watch.objects.count()
-    #     self.assertEqual(after + 1, before)
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_delete_user_cannot_unwatch_same_movie_twice(self):
+        self.client.force_login(self.user)
+        before = Watch.objects.count()
+        self.client.delete(self.url)
+        response = self.client.delete(self.url)
+        after = Watch.objects.count()
+        self.assertEqual(after + 1, before)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     # def test_delete_to_unwatch_movie_endpoint_with_user_not_logged_in_does_not_remove_watched_movie(self):
     #     before = Watch.objects.count()

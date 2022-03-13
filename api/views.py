@@ -8,7 +8,7 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from recommender.movie_CF_user import Recommender
-from .decorators import movie_exists,club_exists,has_watched,is_member
+from .decorators import movie_exists,club_exists,has_watched,has_not_watched,is_member
 
 
 @api_view(['POST'])
@@ -143,6 +143,7 @@ def leave_club(request, club_id):
 
 @api_view(['POST'])
 @movie_exists
+@has_not_watched
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def add_watched_movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)

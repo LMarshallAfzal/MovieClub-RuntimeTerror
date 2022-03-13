@@ -5,7 +5,7 @@ from django.test import TestCase
 class LogOutViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username="@johndoe",
+            username="johndoe",
             first_name="John",
             last_name="Doe",
             email="johndoe@example.org",

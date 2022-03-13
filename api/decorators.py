@@ -32,13 +32,25 @@ def club_exists(view_function):
 def has_watched(view_function):
     @wraps(view_function)
     def modified_view_function(request,movie_id,*args,**kwargs):
+        movie = Movie.objects.get(id=movie_id)
         try:
-            movie = Movie.objects.get(id=movie_id)
             Watch.objects.get(user=request.user,movie=movie)
         except ObjectDoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         else:
             return view_function(request,movie_id,*args,**kwargs)
+    return modified_view_function
+
+def has_not_watched(view_function):
+    @wraps(view_function)
+    def modified_view_function(request,movie_id,*args,**kwargs):
+        movie = Movie.objects.get(id=movie_id)
+        try:
+            Watch.objects.get(user=request.user,movie=movie)
+        except ObjectDoesNotExist:
+            return view_function(request,movie_id,*args,**kwargs)
+        else:
+             return Response(status=status.HTTP_404_NOT_FOUND)
     return modified_view_function
 
 def is_member(view_function):

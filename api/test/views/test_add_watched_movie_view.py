@@ -37,14 +37,15 @@ class AddWatchedMovieViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    # def test_post_user_cannot_add_same_movie_twice_to_watched(self):
-    #     self.client.login(username = self.login_details['username'],password = self.login_details['password'])
-    #     before = Watch.objects.count()
-    #     self.client.post(self.url,self.form_input)
-    #     response = self.client.post(self.url,self.form_input)
-    #     after = Watch.objects.count()
-    #     self.assertEqual(after, before + 1)
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_post_user_cannot_add_same_movie_twice_to_watched(self):
+        self.client.login(username = self.login_details['username'],password = self.login_details['password'])
+        before = Watch.objects.count()
+        response1 = self.client.post(self.url,self.form_input)
+        self.assertEqual(response1.status_code, status.HTTP_201_CREATED)
+        response2 = self.client.post(self.url,self.form_input)
+        after = Watch.objects.count()
+        self.assertEqual(after, before + 1)
+        self.assertEqual(response2.status_code, status.HTTP_404_NOT_FOUND)
 
     # def test_post_to_add_watched_movie_endpoint_with_user_not_logged_in_does_not_add_to_watched(self):
     #     before = Watch.objects.count()
