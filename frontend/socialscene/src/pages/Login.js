@@ -24,13 +24,11 @@ class Login extends Component {
             }
         )
         .catch(error => console.error(error))
-        const response = await fetch('http://127.0.0.1:8000/user/' + this.state.credentials.username + '/', {
-        
-        })
+        const response = await fetch('http://127.0.0.1:8000/user/' + this.state.credentials.username + '/', {})
         const data =  await response.json()
         console.log(data)
         console.log({first_name: data.first_name})
-        localStorage.setItem('user', JSON.stringify({username: data.username, first_name: data.first_name, last_name: data.last_name ,email: data.email, bio:data.bio, preferences:data.preferences}))
+        localStorage.setItem('user', JSON.stringify({id: data.id, username: data.username, first_name: data.first_name, last_name: data.last_name ,email: data.email, bio:data.bio, preferences:data.preferences}))
         .catch(error => console.error(error))
         this.setState({
             username:'',

@@ -24,7 +24,7 @@ class ClubSerializer(ModelSerializer):
 class MovieSerializer(ModelSerializer):
     class Meta:
         model = Movie
-        fields = '__all__'
+        fields = ['id', 'movie_id', 'title', 'genres', 'year', 'ratings', 'viewers']
 
 
 class MembershipSerializer(ModelSerializer):
@@ -215,8 +215,7 @@ class AddRatingSerializer(serializers.ModelSerializer):
         read_only=False, queryset=Movie.objects.all())
 
     score = serializers.FloatField(required=True, validators=[
-                                   MinValueValidator(1.0), MaxValueValidator(5.0)])
-
+                                   MinValueValidator(0.0), MaxValueValidator(5.0)])
     class Meta:
         fields = '__all__'
         model = Rating

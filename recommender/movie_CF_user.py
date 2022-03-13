@@ -49,7 +49,7 @@ class Recommender:
         for item_id,rating_sum in sorted(candidates.items(),key=itemgetter(1),reverse=True):
             if not item_id in rated:
                 movie_id = self.trainSet.to_raw_iid(item_id)
-                recommendations.append(Movie.objects.get(movieID=movie_id))
+                recommendations.append(Movie.objects.get(movie_id=movie_id))
                 position += 1
                 if (position > self.number_of_recommendations):
                     break

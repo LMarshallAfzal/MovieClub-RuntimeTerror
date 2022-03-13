@@ -165,10 +165,14 @@ def remove_watched_movie(request, movie_id):
     return Response(status=status.HTTP_200_OK)
  
 @api_view(['POST'])
-@movie_exists
+# @movie_exists
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def add_rating(request, movie_id):
-    serializer = AddRatingSerializer(data=request.data, context={"request": request})
+    try:
+        movie = Movie.objects.get(movie_id=movie_id)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serializer = AddRatingSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -180,8 +184,7 @@ def add_rating(request, movie_id):
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def change_rating(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
-    rating = movie.get_rating_author(request.user)
-    serializer = ChangeRatingSerializer(rating, data=request.data)
+    serializer = ChangeRatingSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -191,13 +194,11 @@ def change_rating(request, movie_id):
 @api_view(['GET']) 
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def recommend_movie_user(request):
-    if request.user.get_user_ratings():
-        recommender = Recommender(request.user.id)
-        recommendations = recommender.recommend()
-        print(recommendations)
-    else:
-        pass
-    return Response(status = status.HTTP_200_OK)
+    recommender = Recommender(request.user.id)
+    recommendations = recommender.recommend()
+    print(recommendations)
+    serializer = MovieSerializer(recommendations,many = True)
+    return Response(serializer.data)
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
@@ -206,3 +207,11 @@ def get_memberships_of_user(request, username):
     clubs = user.get_user_clubs()
     serializer = ClubSerializer(clubs,many = True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+def get_movie(request, movie_id):
+    movie = Movie.objects.get(movie_id=movie_id)
+    serializer = MovieSerializer(movie, many = False)
+    return Response(serializer.data, status=status.HTTP_200_OK)    
+    
