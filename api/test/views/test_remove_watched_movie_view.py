@@ -11,7 +11,7 @@ class RemoveWatchedMovieViewTestCase(APITestCase):
     ]
 
     def setUp(self):
-        self.movie = Movie.objects.get(movie_id=1000)
+        self.movie = Movie.objects.get(ml_id=1000)
         self.user = User.objects.get(username='johndoe')
         self.url = reverse('remove_watched_movie', kwargs={'movie_id':self.movie.id})
         self.user.add_watched_movie(self.movie)

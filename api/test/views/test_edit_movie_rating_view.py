@@ -11,7 +11,7 @@ class EditMovieRatingViewTestCase(APITestCase):
     ]
 
     def setUp(self):
-        self.movie = Movie.objects.get(movie_id=1000)
+        self.movie = Movie.objects.get(ml_id=1000)
         self.user = User.objects.get(username='johndoe')
         self.rating = Rating.objects.create(user = self.user, movie = self.movie, score = 5.0)
         self.url = reverse('edit_rating', kwargs={'movie_id':self.movie.id})

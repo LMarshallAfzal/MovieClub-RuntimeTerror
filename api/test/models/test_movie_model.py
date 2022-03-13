@@ -13,14 +13,14 @@ class MovieModelTestCase(APITestCase):
     ]
 
     def setUp(self):
-        self.movie = Movie.objects.get(movie_id=1000)
-        self.second_movie = Movie.objects.get(movie_id=1001)
+        self.movie = Movie.objects.get(ml_id=1000)
+        self.second_movie = Movie.objects.get(ml_id=1001)
 
     def test_valid_movie(self):
         self._assert_movie_is_valid()
 
     def test_movie_id_must_be_unique(self):
-        self.movie.movie_id = self.second_movie.movie_id
+        self.movie.ml_id = self.second_movie.ml_id
         self._assert_movie_is_invalid()
 
     def test_title_must_not_be_blank(self):

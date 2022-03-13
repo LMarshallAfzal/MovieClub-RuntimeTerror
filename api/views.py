@@ -180,7 +180,7 @@ def add_rating(request, movie_id):
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def change_rating(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
-    serializer = ChangeRatingSerializer(data=request.data)
+    serializer = ChangeRatingSerializer(movie,data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
