@@ -14,7 +14,7 @@ class RatingModelTestCase(APITestCase):
 
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
-        self.movie = Movie.objects.get(movieID=1000)
+        self.movie = Movie.objects.get(title='The Godfather')
         self.rating = Rating(user = self.user, movie = self.movie, score = 5.0)
 
     def test_valid_rating(self):

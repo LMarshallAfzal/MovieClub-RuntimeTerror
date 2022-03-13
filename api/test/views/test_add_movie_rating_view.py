@@ -11,10 +11,12 @@ class AddMovieRatingViewTestCase(APITestCase):
     ]
 
     def setUp(self):
-        self.movie = Movie.objects.get(movieID=1000)
+        self.movie = Movie.objects.get(movie_id=1000)
         self.user = User.objects.get(username='johndoe')
-        self.url = reverse('add_rating', kwargs={'movieID':self.movie.movieID})
+        self.url = reverse('add_rating', kwargs={'movie_id':self.movie.id})
         self.form_input = {
+            "user": self.user.id,
+            "movie" : self.movie.id,
             "score": 5.0,
         }
         self.login_details = {'username' : self.user.username, 'password':'Pa$$w0rd567'}
@@ -40,7 +42,7 @@ class AddMovieRatingViewTestCase(APITestCase):
     def test_post_to_add_rating_endpoint_with_invalid_movie_does_not_create_new_rating(self):
         self.client.login(username = self.login_details['username'],password = self.login_details['password'])
         before = Rating.objects.count()
-        invalidMovieUrl = reverse('add_rating', kwargs={'movieID':0})
+        invalidMovieUrl = reverse('add_rating', kwargs={'movie_id':0})
         response = self.client.post(invalidMovieUrl, self.form_input)
         after = Rating.objects.count()
         self.assertEqual(after, before)

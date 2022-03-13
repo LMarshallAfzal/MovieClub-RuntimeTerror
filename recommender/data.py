@@ -28,7 +28,7 @@ class Data:
         writer.writerow(['userID','movieID','rating'])
         ratings = Rating.objects.all()
         for rating in ratings:
-            writer.writerow([rating.user.id,rating.movie.movieID,rating.score])
+            writer.writerow([rating.user.id,rating.movie.movie_id,rating.score])
         api_ratings.close()
     
     def combine_data(self):

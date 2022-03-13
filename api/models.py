@@ -124,9 +124,9 @@ class Membership(models.Model):
 
 class Movie(models.Model):
 
-    movieID = models.PositiveIntegerField(
-    unique=True,
-    default=0
+    movie_id = models.PositiveIntegerField(
+        unique=True,
+        default=0
     )
 
     title = models.CharField(
