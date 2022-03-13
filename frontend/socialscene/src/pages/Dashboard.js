@@ -159,6 +159,8 @@ class Dashboard extends React.Component {
                                         <FormButton
                                             text={"Create"}
                                             onClick={this.submitForm}
+                                            onChange={this.fetchMembershipData()}
+
                                         />
                                     </Box>
                                 </Box>
