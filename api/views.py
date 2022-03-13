@@ -146,10 +146,6 @@ def leave_club(request, club_id):
 @has_not_watched
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def add_watched_movie(request, movie_id):
-    movie = Movie.objects.get(id=movie_id)
-    request.data._mutable = True
-    request.data["user"] = request.user.id
-    request.data["movie"] = movie.id
     serializer = WatchMovieSerializer(data=request.data, context={"request": request})
     if serializer.is_valid():
         serializer.save()
@@ -172,10 +168,6 @@ def remove_watched_movie(request, movie_id):
 @movie_exists
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def add_rating(request, movie_id):
-    movie = Movie.objects.get(id=movie_id)
-    request.data._mutable = True
-    request.data["user"] = request.user.id
-    request.data["movie"] = movie.id
     serializer = AddRatingSerializer(data=request.data, context={"request": request})
     if serializer.is_valid():
         serializer.save()

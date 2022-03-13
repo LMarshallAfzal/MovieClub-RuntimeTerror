@@ -16,9 +16,9 @@ class AddWatchedMovieViewTestCase(APITestCase):
         self.url = reverse('add_watched_movie', kwargs={'movie_id':self.movie.id})
         self.form_input = {
             "user": self.user.id,
-            "movie": self.movie.movie_id
+            "movie": self.movie.id
         }
-        self.login_details = details = {'username' : self.user.username, 'password':'Pa$$w0rd567'}
+        self.login_details = {'username' : self.user.username, 'password':'Pa$$w0rd567'}
     
     def test_post_to_add_watched_movie_endpoint_with_valid_data_adds_to_watched(self):
         self.client.login(username = self.login_details['username'],password = self.login_details['password'])
