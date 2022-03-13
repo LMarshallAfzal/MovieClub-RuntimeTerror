@@ -24,7 +24,7 @@ class ClubSerializer(ModelSerializer):
 class MovieSerializer(ModelSerializer):
     class Meta:
         model = Movie
-        fields = ['id', 'movie_id', 'title', 'genres', 'year', 'ratings', 'viewers']
+        fields = ['id', 'ml_id', 'title', 'genres', 'year', 'ratings', 'viewers']
 
 
 class MembershipSerializer(ModelSerializer):
