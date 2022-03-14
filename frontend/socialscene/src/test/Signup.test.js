@@ -4,9 +4,7 @@ import "@testing-library/jest-dom";
 import Signup from "../pages/Signup";
 import {MemoryRouter} from 'react-router-dom'
 
-describe("signup", () => {
-  
-
+describe("Signup", () => {
   test("Username field should have label", () => {
     render(<Signup />, {wrapper: MemoryRouter})
     const usernameInputNode = screen.getByLabelText("username")
