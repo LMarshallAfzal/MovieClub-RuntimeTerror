@@ -18,6 +18,7 @@ class Recommender:
         model = KNNBasic(sim_options={'name': 'cosine', 'user_based': False})
         model.fit(self.trainSet)
         matrix = model.compute_similarities()
+        
         user_inner_id = self.trainSet.to_inner_uid(str(self.target.id))
 
         target_ratings = self.trainSet.ur[user_inner_id]
@@ -47,7 +48,6 @@ class Recommender:
                     break
         
         self.data.clean()
-        print(watched)
         return recommendations
 
     def recommend_clubs(self):
