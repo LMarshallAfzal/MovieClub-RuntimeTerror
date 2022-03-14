@@ -24,7 +24,6 @@ function homepage() {
                 alt="blurred movie poster"
                 />
             <div className={"welcome-poster"} />
-
         </>
     );
 }
