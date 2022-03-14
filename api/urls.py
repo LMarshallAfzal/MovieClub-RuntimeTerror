@@ -13,6 +13,7 @@ urlpatterns = [
     path("create_club/",views.create_club, name = "create_club"),
     path("add_rating/<int:movie_id>/",views.add_rating,name = "add_rating"),
     path("rec/",views.recommend_movie_user,name = "rec"),
+    path("rec/clubs",views.recommend_club,name = "rec_clubs"),
     path("edit_rating/<int:movie_id>/",views.change_rating,name = "edit_rating"),
     path("memberships/<str:username>/", views.get_memberships_of_user, name = "get_memberships_of_user"),
     path("join_club/<int:club_id>/", views.join_club, name = "join_club"),
