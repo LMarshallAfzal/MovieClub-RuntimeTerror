@@ -198,7 +198,8 @@ def change_rating(request, movie_id):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def recommend_movie_user(request):
-    recommender = Recommender(request.user)
+    user = User.objects.get(id = 4)
+    recommender = Recommender(user)
     recommendations = recommender.recommend_movies_for_user()
     serializer = MovieSerializer(recommendations, many=True)
     return Response(serializer.data)

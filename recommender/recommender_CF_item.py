@@ -39,11 +39,15 @@ class Recommender:
         for itemID, ratingSum in sorted(candidates.items(), key=itemgetter(1), reverse=True):
             if not itemID in watched:
                 ml_id = self.trainSet.to_raw_iid(itemID)
-                recommendations.append(Movie.objects.get(ml_id=ml_id))
+                movie = Movie.objects.get(ml_id=ml_id)
+                if not movie in self.target.watched_movies.all(): 
+                    recommendations.append(movie)
                 position += 1
-                if (position > 10):
+                if (position > 4):
                     break
+        
         self.data.clean()
+        print(watched)
         return recommendations
 
     def recommend_clubs(self):
