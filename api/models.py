@@ -148,7 +148,9 @@ class Meeting(models.Model):
     
     organizer = ForeignKey(User, on_delete=models.CASCADE)
 
-    time = models.DateTimeField(null = False)
+    start_time = models.DateTimeField(null = False)
+
+    end_time = models.DateTimeField(null = False)
 
     description = models.CharField(
         max_length=500,
