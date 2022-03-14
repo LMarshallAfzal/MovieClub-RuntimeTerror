@@ -1,21 +1,21 @@
 import React from "react";
 import "../styling/pages/Homepage.css";
 
-// window.addEventListener("DOMContentLoaded", () => {
-//     const spotlight = document.querySelector('.spotlight');
-//     let spotlightSize = 'transparent 160px, rgba(0, 0, 0, 0.60) 200px)';
+window.addEventListener("DOMContentLoaded", () => {
+    const spotlight = document.querySelector('.spotlight');
+    let spotlightSize = 'transparent 160px, rgba(0, 0, 0, 0.60) 200px)';
 
-//     window.addEventListener('mousemove', e => updateSpotlight(e));
-//     function updateSpotlight(e) {
-//         spotlight.style.backgroundImage = `radial-gradient(circle at ${e.pageX / window.innerWidth * 100}% ${(e.pageY - 90) / (window.innerHeight - 90) * 100}%, ${spotlightSize}`;
+    window.addEventListener('mousemove', e => updateSpotlight(e));
+    function updateSpotlight(e) {
+        spotlight.style.backgroundImage = `radial-gradient(circle at ${e.pageX / window.innerWidth * 100}% ${(e.pageY - 90) / (window.innerHeight - 90) * 100}%, ${spotlightSize}`;
 
-//     }
-// });
+    }
+});
 
 function homepage() {
     return (
         <>
-            {/* <div className={"spotlight"} /> */}
+            <div className={"spotlight"} />
             <div className={"welcome-text"}>
             <h2>welcome<h2--emphasise>.</h2--emphasise></h2>
             </div>
@@ -23,7 +23,7 @@ function homepage() {
                 src="https://m.media-amazon.com/images/M/MV5BNzQxNTIyODAxMV5BMl5BanBnXkFtZTgwNzQyMDA3OTE@._V1_.jpg"
                 alt="blurred movie poster"
                 />
-            {/*<div className={"welcome-poster"} />*/}
+            <div className={"welcome-poster"} />
 
         </>
     );
