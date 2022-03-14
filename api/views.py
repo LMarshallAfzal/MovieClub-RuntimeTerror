@@ -8,10 +8,20 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from recommender.recommender_CF_item import Recommender
-from .decorators import movie_exists, club_exists, has_watched, has_not_watched, is_member
+from .decorators import movie_exists,club_exists,has_watched,has_not_watched,is_member
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+
+
+
+
+@api_view(["GET"])
+@ensure_csrf_cookie
+def csrf_token(request):
+    return Response({"result": "Success (CSRF cookie set.)"})
 
 
 @api_view(['POST'])
+@csrf_protect
 def sign_up(request):
     data = {}
     serializer = SignUpSerializer(data=request.data)
@@ -31,6 +41,7 @@ def sign_up(request):
 
 
 @api_view(['POST', 'GET'])
+@csrf_protect
 def login(request):
     data = {}
     serializer = LoginSerializer(data=request.data)

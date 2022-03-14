@@ -1,17 +1,16 @@
 import React from "react";
-import { Grid, Stack, Button, touchRippleClasses, Typography, Rating } from "@mui/material";
+import { Grid, Button, Typography, Rating } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import "../styling/pages/Movie.css";
 import moviePoster from '../styling/empty_movie_poster.png'
-import { red } from "@mui/material/colors";
 
 class Movies extends React.Component {
     constructor(){
         super()
         this.state = {
-            movie_id:'',
+            movieId:'',
             title:'',
             genres:'',
             recommendedMovies: [],
@@ -19,18 +18,11 @@ class Movies extends React.Component {
             movie: '',
             score: 0.0,
         }
-        // this.inputChanged=this.inputChanged.bind(this)
     }
 
     componentDidMount() { 
         this.fetchRecommendedMovies()
     }
-
-    // inputChanged = event => {
-    //     const rating = this.state.score;
-    //     rating[event.target.name] = event.target.value;
-    //     this.setState({score: rating});
-    // }
 
     fetchRecommendedMovies() {
         const token = JSON.parse(localStorage.getItem('token')) 
@@ -81,7 +73,7 @@ class Movies extends React.Component {
                 </Grid>
                 <Grid container direction={"row"} spacing={2}>
                     {this.state.recommendedMovies.map((movie) => {
-                        return <Grid item key={this.state.score + movie.title}>
+                        return <Grid item>
                             <Card sx={{ maxWidth: 330 }}>
                                 <CardMedia
                                     component="img"
@@ -95,10 +87,9 @@ class Movies extends React.Component {
                                 <Typography component="legend">Rate {movie.title}</Typography>
                                     <Rating
                                     name="simple-controlled"
-                                    value={this.state.score}
                                     precision={0.5}
                                     max={5}
-                                    onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.movie_id)}))}                                    
+                                    onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}                                    
                                     />
                                 <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched?</Button>
                             </Card>
