@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer 
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework import serializers
-from api.models import Club, User, Membership, Movie,Rating
+from api.models import Club, User, Membership, Movie, Rating, Meeting
 from rest_framework.validators import UniqueValidator
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
@@ -175,6 +175,52 @@ class CreateClubSerializer(serializers.Serializer):
     class Meta:
         model = Club
         fields = '__all__'
+
+class CreateMeetingSerializer(serializers.Serializer):
+    # Based on the AddRatingSerializer below
+    club = serializers.PrimaryKeyRelatedField(
+        read_only=False,
+        queryset=Club.objects.all()
+    )
+    
+    movie = serializers.PrimaryKeyRelatedField(
+        read_only=False,
+        queryset=Movie.objects.all()
+    )
+
+    organizer = serializers.PrimaryKeyRelatedField(
+        read_only=False,
+        queryset=User.objects.all()
+    )
+
+    start_time = serializers.DateTimeField(
+        format="%Y-%m-%d %H:%M:%S",
+        required = True
+    )
+
+    end_time = serializers.DateTimeField(
+        format="%Y-%m-%d %H:%M:%S",
+        required = True
+    )
+
+    description = serializers.CharField(
+        required = True,
+        validators = [MaxLengthValidator(500)]
+    )
+
+    meeting_link = serializers.CharField(
+        required = False,
+        validators = [MaxLengthValidator(500)]
+    )
+
+    def create(self, validated_data):
+        meeting = Meeting.objects.create(**validated_data)
+        return meeting
+    
+    class Meta:
+        model = Meeting
+        fields = '__all__'
+
 
 class AddRatingSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=False,queryset=User.objects.all())

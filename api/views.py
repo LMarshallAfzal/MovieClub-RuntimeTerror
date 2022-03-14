@@ -144,6 +144,18 @@ def create_club(request):
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
+def create_meeting(request):
+
+    serializer = CreateMeetingSerializer(data=request.data)
+    if serializer.is_valid():
+        meeting = serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        errors = serializer.errors
+        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def join_club(request, clubid):
     # For now, just add the user to the club without applicant status
     try:
