@@ -4,8 +4,8 @@ import HeadingCircle from "../components/HeadingCircle";
 import {Box, Grid, Stack, TextField} from "@mui/material";
 import FormButton from "../components/FormButton";
 import {Link, useLocation} from "react-router-dom";
-
-
+import Cookies from "js-cookie";
+import CsrfToken from "../components/CsrfToken";
 
 class Signup extends React.Component {
 
@@ -32,37 +32,33 @@ class Signup extends React.Component {
     }
 
     submitForm() {
-        fetch('http://127.0.0.1:8000/sign_up/',{
-            method:'POST',
-            body:JSON.stringify(this.state),
-            headers:{
-                'Content-type': 'application/json; charset=UTF-8',
-            },
+      fetch("http://127.0.0.1:8000/sign_up/", {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "X-CSRFToken": Cookies.get("csrftoken"),
+        },
+        body: JSON.stringify(this.state),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Something went wrong...");
+          } else {
+            return response.json();
+          }
         })
-        .then(response=>response.json())
-        .then((data)=>console.log(data))
-        .then(
-            data => {
-            this.props.userLogin(data.token)
-            }
-        )
-        localStorage.setItem('user', JSON.stringify({username: this.state.username}))
-        this.setState({
-            username:'',
-            first_name:'',
-            last_name:'',
-            email:'',
-            bio:'',
-            preferences:'',
-            password:'',
-            password_confirmation:''
-        })
-        console.log(this.state)
+        .catch((err) => console.error(err));
     }
 
     render() {
         return (
             <Grid className={"login-grid"} container spacing={2}>
+                <CsrfToken />
+
                 <Grid className={"login-grid-left"} item xs={6}>
                     <HeadingCircle title={"sign up"}/>
                 </Grid>
