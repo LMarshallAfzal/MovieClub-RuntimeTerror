@@ -1,9 +1,8 @@
 import React from 'react';
 import "../styling/pages/Dashboard.css";
-import { List, Paper, ListSubheader, Grid, TextField, Stack, Box, ListItemButton, ListItemText, Autocomplete } from "@mui/material";
+import {Paper, Grid, TextField, Stack, Box, ListItemButton, ListItemText, Autocomplete} from "@mui/material";
 import FormButton from "../components/FormButton";
 import { DummyDashboardClubsData, meetings, movies } from './DummyDashboardClubsData';
-import { useState } from 'react'
 
 
 class Dashboard extends React.Component {
@@ -45,11 +44,6 @@ class Dashboard extends React.Component {
         .then(response=>response.text())
         .then((data)=>console.log(data))
         localStorage.setItem('clubs', JSON.stringify({club_name:this.state.club_name, mission_statement: this.state.mission_statement, themes: this.state.theme, club_owner: userData}))
-        this.setState({
-            club_name:'',
-            mission_statement:'',
-            themes:'',
-        })
         console.log(this.state)
     }
 
@@ -57,7 +51,6 @@ class Dashboard extends React.Component {
         const userData = JSON.parse(localStorage.getItem('user'))
         fetch('http://127.0.0.1:8000/memberships/' + userData.username + '/', {})
             .then(data => data.json())
-            // .then(data => console.log(data))
             .then((data) => this.setState({ myClubData: data }))
             .catch(error => console.error(error))
     }
@@ -80,7 +73,7 @@ class Dashboard extends React.Component {
                             freeSolo
                             id="search"
                             disableClearable
-                            options={DummyDashboardClubsData.map((movie) => movie.name)}
+                            options={this.state.myClubData.map((club) => club.club_name)}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -130,6 +123,7 @@ class Dashboard extends React.Component {
                                 value={this.state.club_name} 
                             />
                             <TextField 
+                                
                                 className='dashboard-text-box' 
                                 id="outlined-basic" 
                                 label="Description" 

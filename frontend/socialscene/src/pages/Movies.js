@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Button, Typography, Rating } from "@mui/material";
+import { Grid, Button, Typography, Rating} from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -34,7 +34,7 @@ class Movies extends React.Component {
             },
         })
         .then(data => data.json())
-        .then(data => this.setState({ recommendedMovies: data }))
+        .then(data => this.setState({ recommendedMovies: data}))
         .catch(error => console.error(error))
     }
 
