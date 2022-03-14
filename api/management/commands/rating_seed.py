@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from api.models import User,Rating,Movie
+from api.models import User,Club,Rating,Movie
 from django.db import IntegrityError
 from recommender.data import Data
 from csv import writer
@@ -10,15 +10,15 @@ class Command(BaseCommand):
         super().__init__()
 
     def handle(self, *args, **options):
-        i = 0
-        user = User.objects.get(id = 100)
-        movie_id=[52319, 131013, 5349, 6502, 73881, 145]
-        while i < 6:
-            movie = Movie.objects.get(movieID = movie_id[i])
-            score = 5.0
-            rating = Rating.objects.create(user = user,movie = movie,score = score)
-            Data().add_rating(rating)
-            
-            i += 1
+        movies = Movie.objects.all()
+        for club in Club.objects.all():
+            for member in club.club_members.all():
+                Rating.objects.create(user=member, movie = random.choice(movies),score = random.randint(1,5))
 
+
+
+
+    
+
+        
         
