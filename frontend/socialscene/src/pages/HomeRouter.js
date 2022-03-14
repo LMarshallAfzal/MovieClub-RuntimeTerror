@@ -11,22 +11,10 @@ import WhatsOn from "./WhatsOn";
 import Profile from "./Profile";
 import Options from "./Options";
 import Home from "./Home";
-import Login from "./Login";
 import OthersProfile from "./OthersProfile";
 import ChangePassword from "./ChangePassword";
 
 function HomeRouter() {
-    const [token, setToken] = useState('');
-
-    const userLogin = (tok) => {
-        setToken(tok);
-    }
-
-    localStorage.setItem('token', JSON.stringify("Token " + token))
-    if (!token) {
-        return <Login userLogin={userLogin} />
-    }
-
     return (
         <>
             <Grid className={"home-grid"} container>

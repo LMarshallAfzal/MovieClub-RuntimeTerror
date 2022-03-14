@@ -5,13 +5,16 @@ import {Box, Grid, Stack, TextField} from "@mui/material";
 import FormButton from "../components/FormButton";
 import Cookies from "js-cookie";
 import CsrfToken from "../components/CsrfToken";
-import {Link} from "react-router-dom";
+import {Navigate, useHistory} from "react-router-dom";
 
 class Login extends Component {
-
-    state = {
-        credentials: {username: '', password: ''}
-    }
+    constructor() {
+        super()
+        this.state = {
+            authenticated: false,
+            credentials: {username: '', password: ''}
+        }
+    }    
 
     login = async event => {
       fetch("http://127.0.0.1:8000/log_in/", {
@@ -30,6 +33,7 @@ class Login extends Component {
           if (!response.ok) {
             throw new Error("Something went wrong...");
           } else {
+            this.setState({authenticated: true});
             return response.json();
           }
         })
@@ -43,6 +47,17 @@ class Login extends Component {
     }
     
     render() {
+        if(this.state.authenticated) {
+        //    if(this.login.status === 200) { 
+            return ( 
+                 <Navigate
+                   exact  
+                   from="/login/*"
+                   to='/home' 
+                 />     
+            )
+        }
+
         return (
             <Grid className={"login-grid"} container spacing={2}>
                 <CsrfToken />
@@ -86,12 +101,11 @@ class Login extends Component {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                        <Link to={"/home"} className={"navbar-enter-button"}>
-                                            <FormButton
-                                                text={"log in"}
-                                                onClick={this.login}
-                                            />
-                                        </Link>
+                                    <FormButton
+                                        text={"log in"}
+                                        onClick={this.login}
+                                        
+                                    />
                                 </Box>
 
                                 <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>

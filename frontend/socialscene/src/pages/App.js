@@ -17,7 +17,7 @@ function App() {
               <Navbar />
                   <Routes>
                       <Route path={"/"} element={(<HomePage />)}/>
-                      <Route path={"/login"} element={(<LogIn />)}/>
+                      <Route path={"/login/*"} element={(<LogIn />)}/>
                       <Route path={"/home/*"} element={(<HomeRouter />)}/>
                       <Route path={"/signup"} element={(<Signup />)}/>
                       <Route path={"*"} element={<NotFound404 />}/>

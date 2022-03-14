@@ -3,7 +3,7 @@ import "../styling/pages/Signup.css"
 import HeadingCircle from "../components/HeadingCircle";
 import {Box, Grid, Stack, TextField} from "@mui/material";
 import FormButton from "../components/FormButton";
-import {Link, useLocation} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import Cookies from "js-cookie";
 import CsrfToken from "../components/CsrfToken";
 
@@ -12,14 +12,17 @@ class Signup extends React.Component {
     constructor(){
         super()
         this.state={
-            username:'',
-            first_name:'',
-            last_name:'',
-            email:'',
-            bio:'',
-            preferences:'',
-            password:'',
-            password_confirmation:''
+            authenticated: false,
+            // credentials: {
+                username:'',
+                first_name:'',
+                last_name:'',
+                email:'',
+                bio:'',
+                preferences:'',
+                password:'',
+                password_confirmation:'' 
+            // }       
         }
         this.changeHandler=this.changeHandler.bind(this)
         this.submitForm=this.submitForm.bind(this)
@@ -48,6 +51,7 @@ class Signup extends React.Component {
           if (!response.ok) {
             throw new Error("Something went wrong...");
           } else {
+            this.setState({authenticated: true});  
             return response.json();
           }
         })
@@ -55,6 +59,15 @@ class Signup extends React.Component {
     }
 
     render() {
+        if (this.state.authenticated) {
+            return (
+                <Navigate
+                    exact
+                    from="/login/*"
+                    to="/home"
+                />    
+            )
+        }
         return (
             <Grid className={"login-grid"} container spacing={2}>
                 <CsrfToken />
@@ -147,12 +160,10 @@ class Signup extends React.Component {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                    <Link to={"/home"} className={"navbar-enter-button"}>
                                         <FormButton
                                             text={"sign up"}
                                             onClick={this.submitForm}
                                         />
-                                    </Link>
                                 </Box>
                             </Box>
                         </div>
