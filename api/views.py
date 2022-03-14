@@ -77,7 +77,8 @@ def change_password(request):
 
 
 @api_view(["GET"])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+# @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@csrf_protect
 def get_users(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
@@ -86,9 +87,8 @@ def get_users(request):
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-def get_user(request, username):
-    user = User.objects.get(username=username)
-    serializer = UserSerializer(user, many=False)
+def get_user(request):
+    serializer = UserSerializer(request.user, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 

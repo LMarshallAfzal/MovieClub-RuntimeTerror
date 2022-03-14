@@ -12,7 +12,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator, MaxLeng
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'bio', 'preferences']
 
 
 class ClubSerializer(ModelSerializer):

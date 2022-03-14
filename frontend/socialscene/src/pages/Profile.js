@@ -7,6 +7,7 @@ class Profile extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            id: '',
             username:'',
             first_name:'',
             last_name:'',
@@ -25,9 +26,8 @@ class Profile extends React.Component {
     }
 
     submitForm(){
-        // const token = JSON.parse(localStorage.getItem('token'))
         const userData = JSON.parse(localStorage.getItem('user'))
-        fetch('http://127.0.0.1:8000/edit_profile/' + userData.username ,{
+        fetch('http://127.0.0.1:8000/edit_profile/' + userData.id ,{
             method:'PUT',
             body:JSON.stringify(this.state),
             headers:{
@@ -41,16 +41,40 @@ class Profile extends React.Component {
     
 
     fetchData(){
-        const userData = JSON.parse(localStorage.getItem('user'))
-        console.log(userData)
+        fetch("http://127.0.0.1:8000/user/", {
+            method: "GET",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "include",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+        })
+        // .then(data => data.json()).id
+        .then(userData => 
             this.setState({
+                id: userData.id,
                 username: userData.username,
                 first_name:userData.first_name,
                 last_name:userData.last_name,
                 email:userData.email,
                 bio:userData.bio,
                 preferences:userData.preferences,
-            });
+            })    
+        )
+        localStorage.setItem('userId', JSON.stringify(this.state.id))
+        
+            // const userData = JSON.parse(localStorage.getItem('user'))
+        // console.log(userData)
+        //     this.setState({
+        //         username: userData.username,
+        //         first_name:userData.first_name,
+        //         last_name:userData.last_name,
+        //         email:userData.email,
+        //         bio:userData.bio,
+        //         preferences:userData.preferences,
+        //     });
     }
 
     componentDidMount() {
