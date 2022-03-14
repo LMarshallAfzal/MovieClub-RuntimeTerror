@@ -86,9 +86,8 @@ def get_users(request):
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-def get_user(request, username):
-    user = User.objects.get(username=username)
-    serializer = UserSerializer(user, many=False)
+def get_user(request):
+    serializer = UserSerializer(request.user, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -240,3 +239,13 @@ def get_movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     serializer = MovieSerializer(movie, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+def get_watched_list(request):
+    if request.user.is_authenticated:
+        movies = request.user.get_watched_movies()
+        serializer = MovieSerializer(movies,many=True)
+    else:
+        return Response(status=status.HTTP_403_FORBIDDEN)
+    return Response(serializer.data,status=status.HTTP_200_OK)

@@ -22,4 +22,7 @@ urlpatterns = [
     path("add_watched_movie/<int:movie_id>/",views.add_watched_movie,name = "add_watched_movie"),
     path("remove_watched_movie/<int:movie_id>/",views.remove_watched_movie,name = "remove_watched_movie"),
     path("get_movie/<int:movie_id>/", views.get_movie, name = "get_movie"),
+    path("watched_list/", views.get_watched_list, name = "get_watched_movies"),
+
+    
 ]
