@@ -20,6 +20,7 @@ class CreateMeetingViewTestCase(APITestCase):
         self.club_form_input = {
             "club_name": "Sharknado Appreciation Society",
             "mission_statement": "We are a club dedicated to making the world a better place through the power of sharknado",
+            "themes": "Movies",
         }
         club_creation_response = self.client.post(self.club_creation_url, self.club_form_input)
         self.client.logout()
