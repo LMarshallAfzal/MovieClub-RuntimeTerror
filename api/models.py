@@ -68,12 +68,16 @@ class User(AbstractUser):
         self.save()
         return
 
+    def get_watched_movies(self):
+        movies = self.watched_movies.all()
+        return movies
+
 class Club(models.Model):
   
     club_name = models.CharField(
         max_length=50,
         blank=False,
-        unique=False
+        unique=True
     )
 
     mission_statement = models.CharField(
