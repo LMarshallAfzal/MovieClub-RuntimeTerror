@@ -77,7 +77,7 @@ class Club(models.Model):
     club_name = models.CharField(
         max_length=50,
         blank=False,
-        unique=False
+        unique=True
     )
 
     mission_statement = models.CharField(
