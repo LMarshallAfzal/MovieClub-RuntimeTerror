@@ -16,12 +16,12 @@ function Forum() {
             <Grid container>
                 <Grid xs={12} item>
                     <div className='others-profile-info-text'>
-                        <div style={{ paddingBottom: '20px' }}>Club 1 Forum</div>
+                        <div style={{ paddingBottom: '10px' }}>Club 1 Forum</div>
                     </div>
                 </Grid>
             </Grid>
             <Grid container>
-                <Grid xs={12} item style={{ paddingBottom: '20px' }}>
+                <Grid xs={12} item style={{ paddingBottom: '10px' }}>
                     <Box sx={{ width: '100%' }}>
                         <Collapse in={open}>
                             <Alert severity="info"
