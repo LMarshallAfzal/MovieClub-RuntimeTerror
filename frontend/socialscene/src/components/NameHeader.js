@@ -5,7 +5,7 @@ import iconImage from "../styling/testIconPic.jpg";
 
 
 function NameHeader(props) {
-const userData = JSON.parse(localStorage.getItem('user'))
+// const userData = JSON.parse(localStorage.getItem('user'))
   return (
       <div className={"name-header"}>
         <Box
@@ -30,7 +30,7 @@ const userData = JSON.parse(localStorage.getItem('user'))
 
           <Box sx={{ gridRow: '1', gridColumn: 'span 3'}}>
               <Stack>
-                  <h4 className={"name-header-text"}>{props.firstName} {props.lastName}<h4--emphasise>.</h4--emphasise></h4>
+                  <h4 className={"name-header-text"}>John Doe<h4--emphasise>.</h4--emphasise></h4>
                   <h6 className={"name-header-text-date"}>joined {props.joinDate}</h6>
               </Stack>
           </Box>
