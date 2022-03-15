@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import jack from "../styling/jack-giant.jpg";
 
 export const comments = [
     {
@@ -53,7 +54,8 @@ export const comments = [
 ]
 export const meeting = [
     {
-        name: '16 Minutes',
-        time: '15/12/2022 15:00'
+        name: 'Jack the Giant Slayer',
+        time: '15/12/2022 15:00',
+        poster: jack
     }
 ]

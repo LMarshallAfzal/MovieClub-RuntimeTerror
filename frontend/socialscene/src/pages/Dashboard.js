@@ -1,6 +1,6 @@
 import React from 'react';
 import "../styling/pages/Dashboard.css";
-import { List, Paper, ListSubheader, Grid, TextField, Stack, Box, ListItemButton, ListItemText, Autocomplete } from "@mui/material";
+import { Divider, List, Paper, ListSubheader, Grid, TextField, Stack, Box, ListItemButton, ListItemText, Autocomplete } from "@mui/material";
 import FormButton from "../components/FormButton";
 import { DummyDashboardClubsData, meetings, movies } from './DummyDashboardClubsData';
 import { useState } from 'react'
@@ -182,7 +182,7 @@ class Dashboard extends React.Component {
                         <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
                             {movies.map((val, key) => {
                                 return <ListItemButton>
-                                    <ListItemText primary={`${val.name} | ${val.ratings} `} />
+                                    <ListItemText primary={`${val.name} | ${val.rating} `} />
                                 </ListItemButton>
                             })}
                         </Paper>
