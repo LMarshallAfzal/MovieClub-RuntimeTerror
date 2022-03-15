@@ -12,7 +12,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator, MaxLeng
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'username', 'first_name', 'last_name', 'email',
+                  'bio', 'preferences']
 
 
 class ClubSerializer(ModelSerializer):
@@ -38,6 +39,17 @@ class RatingSerializer(ModelSerializer):
         model = Rating
         fields = '__all__'
 
+class WatchMovieSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=User.objects.all())
+    movie = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=Movie.objects.all())
+
+    class Meta:
+        model = Watch
+        fields = ['user', 'movie']
+
+
 
 class SignUpSerializer(serializers.Serializer):
     username = serializers.CharField(
@@ -59,8 +71,8 @@ class SignUpSerializer(serializers.Serializer):
     )
 
     bio = serializers.CharField(
-        required=False
-    )
+        required = False, allow_blank=True
+        )
 
     preferences = serializers.CharField(
         required=True
@@ -107,8 +119,8 @@ class SignUpSerializer(serializers.Serializer):
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name',
-                  'email', 'bio', 'preferences')
+        fields = ['username', 'first_name', 'last_name',
+                  'email', 'bio', 'preferences']
 
 
 class LoginSerializer(serializers.Serializer):
@@ -230,12 +242,3 @@ class ChangeRatingSerializer(serializers.ModelSerializer):
         fields = ['score']
 
 
-class WatchMovieSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(
-        read_only=False, queryset=User.objects.all())
-    movie = serializers.PrimaryKeyRelatedField(
-        read_only=False, queryset=Movie.objects.all())
-
-    class Meta:
-        model = Watch
-        fields = ['user', 'movie']

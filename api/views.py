@@ -77,19 +77,37 @@ def change_password(request):
 
 
 @api_view(["GET"])
+@club_exists
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-def get_users(request):
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
+def get_club_members(request,club_id):
+    club = Club.objects.get(id=club_id)
+    members = club.get_all_club_members()
+    serializer = UserSerializer(members, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+    
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+def get_other_user(request,user_id):
+    if request.user.is_authenticated:
+        try:
+            user = User.objects.get(id=user_id)
+            serializer = UserSerializer(user, many=False)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+    else:
+        return Response(status=status.HTTP_403_FORBIDDEN)
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-def get_user(request, username):
-    user = User.objects.get(username=username)
-    serializer = UserSerializer(user, many=False)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+def get_current_user(request):
+    if request.user.is_authenticated:
+        serializer = UserSerializer(request.user, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_403_FORBIDDEN)
 
 
 @api_view(["GET"])
@@ -240,3 +258,13 @@ def get_movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     serializer = MovieSerializer(movie, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+def get_watched_list(request):
+    if request.user.is_authenticated:
+        movies = request.user.get_watched_movies()
+        serializer = MovieSerializer(movies,many=True)
+    else:
+        return Response(status=status.HTTP_403_FORBIDDEN)
+    return Response(serializer.data,status=status.HTTP_200_OK)

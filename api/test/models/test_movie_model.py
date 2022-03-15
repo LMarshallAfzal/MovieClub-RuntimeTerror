@@ -9,12 +9,12 @@ class MovieModelTestCase(APITestCase):
 
     fixtures = [
         'api/test/fixtures/default_movie.json',
-        'api/test/fixtures/other_movie.json',
+        'api/test/fixtures/other_movies.json',
     ]
 
     def setUp(self):
-        self.movie = Movie.objects.get(ml_id=1000)
-        self.second_movie = Movie.objects.get(ml_id=1001)
+        self.movie = Movie.objects.get(ml_id=1)
+        self.second_movie = Movie.objects.get(ml_id=2)
 
     def test_valid_movie(self):
         self._assert_movie_is_valid()
