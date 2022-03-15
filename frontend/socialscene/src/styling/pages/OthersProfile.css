@@ -73,39 +73,52 @@ h6 {
   font-size: 1rem;
 }
 
-.welcome-text {
-  color: #FFFFFF;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  text-align: center;
-  text-shadow: 2px 2px 2px #000000;
-  pointer-events: none;
+.others-profile-info-text {
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  white-space: nowrap;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  font-family: Helvetica-Bold, serif;
+  width: 100%;
+  text-align: center;
 }
 
-/* .spotlight {
-  position: absolute;
-  height: calc(100% - 90px);
-  width: 100%;
-  z-index: 1;
-  background-image: radial-gradient(circle, transparent 160px, rgba(0, 0, 0, 0.6) 200px);
-} */
+.text-field {
+  text-align: left;
+  vertical-align: top;
+}
 
-.cover-image {
+.others-profile-table {
   width: 100%;
+  border-collapse: separate;
+  width: 100%;
+}
+
+.others-profile-grid {
   height: calc(100% - 90px);
-  -o-object-fit: cover;
-     object-fit: cover;
-  display: block;
-  z-index: -1;
-  filter: blur(8px);
-  overflow: hidden;
-  transform-origin: center;
-}/*# sourceMappingURL=Homepage.css.map */
+  justify-content: center;
+}
+.others-profile-grid-left {
+  align-self: center;
+}
+.others-profile-grid-right {
+  margin: 0;
+  align-self: center;
+}
+
+.form-stack {
+  margin-top: 20px;
+}
+
+.profile-text-box {
+  background-color: #F8F7F7;
+}
+
+.profile-image {
+  align-self: center;
+  width: 100px;
+}/*# sourceMappingURL=OthersProfile.css.map */

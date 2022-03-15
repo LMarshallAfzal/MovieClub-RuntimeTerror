@@ -3,7 +3,7 @@
       "model": "api.movie",
       "pk": 2,
       "fields": {
-        "movieID": 1001,
+        "ml_id": 1001,
         "title": "Pulp Fiction",
         "year": 1994,
         "genres": "Crime,Comedy"

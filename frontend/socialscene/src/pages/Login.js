@@ -3,6 +3,9 @@ import "../styling/pages/Login.css";
 import HeadingCircle from "../components/HeadingCircle";
 import {Box, Grid, Stack, TextField} from "@mui/material";
 import FormButton from "../components/FormButton";
+import Cookies from "js-cookie";
+import CsrfToken from "../components/CsrfToken";
+import {Link} from "react-router-dom";
 
 class Login extends Component {
 
@@ -11,37 +14,26 @@ class Login extends Component {
     }
 
     login = async event => {
-        console.log(this.state.credentials)
-        fetch('http://127.0.0.1:8000/auth/', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(this.state.credentials)
+      fetch("http://127.0.0.1:8000/log_in/", {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "X-CSRFToken": Cookies.get("csrftoken"),
+        },
+        body: JSON.stringify(this.state.credentials),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Something went wrong...");
+          } else {
+            return response.json();
+          }
         })
-        .then(data => data.json())
-        .then(
-            data => {
-            this.props.userLogin(data.token)
-            }
-        )
-        .catch(error => console.error(error))
-        const response = await fetch('http://127.0.0.1:8000/user/' + this.state.credentials.username + '/', {
-        
-        })
-        const data =  await response.json()
-        console.log(data)
-        console.log({first_name: data.first_name})
-        localStorage.setItem('user', JSON.stringify({username: data.username, first_name: data.first_name, last_name: data.last_name ,email: data.email, bio:data.bio, preferences:data.preferences}))
-        .catch(error => console.error(error))
-        this.setState({
-            username:'',
-            first_name:'',
-            last_name:'',
-            email:'',
-            bio:'',
-            preferences:'',
-            password:'',
-            password_confirmation:''
-        })
+        .catch((err) => console.error(err));
     }
     
     inputChanged = event => {
@@ -53,6 +45,8 @@ class Login extends Component {
     render() {
         return (
             <Grid className={"login-grid"} container spacing={2}>
+                <CsrfToken />
+
                 <Grid className={"login-grid-left"} item xs={6}>
                     <HeadingCircle title={"log in"}/>
                 </Grid>
@@ -92,10 +86,12 @@ class Login extends Component {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                        <FormButton
-                                            text={"log in"}
-                                            onClick={this.login}
-                                        />
+                                        <Link to={"/home"} className={"navbar-enter-button"}>
+                                            <FormButton
+                                                text={"log in"}
+                                                onClick={this.login}
+                                            />
+                                        </Link>
                                 </Box>
 
                                 <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>
