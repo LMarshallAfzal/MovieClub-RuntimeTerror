@@ -3,7 +3,7 @@ import "../styling/components/FormButton.css";
 
 function FormButton(props) {
     return (
-        <formButton className='form-button' onClick={props.onClick} >{props.text}  </formButton>
+        <FormButton className='form-button' onClick={props.onClick} >{props.text}  </FormButton>
     );
 }
 

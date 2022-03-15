@@ -48,7 +48,20 @@ class Login extends Component {
     
     render() {
         if(this.state.authenticated) {
-        //    if(this.login.status === 200) { 
+            fetch("http://127.0.0.1:8000/user/", {
+                method: "GET",
+                mode: "cors",
+                cache: "no-cache",
+                credentials: "include",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": Cookies.get("csrftoken"),
+                },
+            })
+            .then(response => console.log(response))
+            .then(response => localStorage.setItem('id', JSON.Stringify(response.id)))
+
             return ( 
                  <Navigate
                    exact  

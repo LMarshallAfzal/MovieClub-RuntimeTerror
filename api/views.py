@@ -86,7 +86,8 @@ def get_users(request):
 
 
 @api_view(["GET"])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@csrf_protect
+# @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def get_user(request):
     serializer = UserSerializer(request.user, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
