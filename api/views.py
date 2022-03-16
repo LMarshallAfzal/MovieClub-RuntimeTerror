@@ -6,12 +6,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .models import *
+from rest_framework.parsers import JSONParser
 from django.contrib.auth import logout
 from recommender.recommender_CF_item import Recommender
-from .decorators import movie_exists,club_exists,has_watched,has_not_watched,is_member,is_organiser
+from .decorators import movie_exists, club_exists, has_watched, has_not_watched, is_member, is_organiser
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
-
-
 
 
 @api_view(["GET"])
@@ -79,15 +78,16 @@ def change_password(request):
 @api_view(["GET"])
 @club_exists
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-def get_club_members(request,club_id):
+def get_club_members(request, club_id):
     club = Club.objects.get(id=club_id)
     members = club.get_all_club_members()
     serializer = UserSerializer(members, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-def get_other_user(request,user_id):
+def get_other_user(request, user_id):
     if request.user.is_authenticated:
         try:
             user = User.objects.get(id=user_id)
@@ -97,6 +97,7 @@ def get_other_user(request,user_id):
             return Response(status=status.HTTP_404_NOT_FOUND)
     else:
         return Response(status=status.HTTP_403_FORBIDDEN)
+
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
@@ -151,18 +152,21 @@ def create_club(request):
         errors = serializer.errors
         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(["POST"])
 @club_exists
 @is_organiser
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-def create_meeting(request,club_id):
-    serializer = CreateMeetingSerializer(data=request.data, context={"request": request})
+def create_meeting(request, club_id):
+    serializer = CreateMeetingSerializer(
+        data=request.data, context={"request": request})
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         errors = serializer.errors
         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(["POST"])
 @club_exists
@@ -269,12 +273,30 @@ def get_movie(request, movie_id):
     serializer = MovieSerializer(movie, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def get_watched_list(request):
     if request.user.is_authenticated:
         movies = request.user.get_watched_movies()
-        serializer = MovieSerializer(movies,many=True)
+        serializer = MovieSerializer(movies, many=True)
     else:
         return Response(status=status.HTTP_403_FORBIDDEN)
-    return Response(serializer.data,status=status.HTTP_200_OK)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def message_forum(request,club_id):
+    messages = Message.objects.filter(club=club_id)
+    serializer = MessageSerializer(messages, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@club_exists 
+def write_message(request,club_id):
+    serializer = WriteMessageSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

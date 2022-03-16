@@ -25,6 +25,12 @@ urlpatterns = [
     path("remove_watched_movie/<int:movie_id>/",views.remove_watched_movie,name = "remove_watched_movie"),
     path("get_movie/<int:movie_id>/", views.get_movie, name = "get_movie"),
     path("watched_list/", views.get_watched_list, name = "get_watched_movies"),
+    path("message_forum/<int:club_id>/", views.message_forum, name = "message_forum"),
+    path("write_message/<int:club_id>/", views.write_message, name = "write_message"),
+
+    
+
+    
 
     
 ]
