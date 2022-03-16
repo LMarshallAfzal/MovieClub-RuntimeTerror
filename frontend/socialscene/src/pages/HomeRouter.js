@@ -11,6 +11,7 @@ import WhatsOn from "./WhatsOn";
 import Profile from "./Profile";
 import Options from "./Options";
 import Home from "./Home";
+import ClubDetail from "../components/ClubDetail";
 import Login from "./Login";
 import ChangePassword from "./ChangePassword";
 
@@ -21,10 +22,10 @@ function HomeRouter() {
         setToken(tok);
     }
     
-    localStorage.setItem('token', JSON.stringify("Token " + token))
-    if(!token) {
-        return <Login userLogin={userLogin}/>
-    }
+    // localStorage.setItem('token', JSON.stringify("Token " + token))
+    // if(!token) {
+    //     return <Login userLogin={userLogin}/>
+    // }
 
     return (
         <>
@@ -36,11 +37,13 @@ function HomeRouter() {
                         joinDate={"2022"}/>
                     <Sidebar />
                 </Grid>
-                <Grid className={"home-grid-R-content"} item xs={9} padding={2} >
+                <Grid className={"home-grid-R-content"} item xs={9} padding={2}>
                     <Routes>
                         <Route path={"/"} element={(<Home />)}/>
                         <Route path={"dashboard"} element={(<Dashboard />)}/>
-                        <Route path={"clubs"} element={(<Clubs />)}/>
+                        <Route path={"clubs"} element={(<Clubs />)}>
+                            <Route path={":clubID"} element={(<ClubDetail />)}/>
+                        </Route>
                         <Route path={"movies"} element={(<Movies />)}/>
                         <Route path={"whats-on"} element={(<WhatsOn />)}/>
                         <Route path={"profile"} element={(<Profile />)}/>

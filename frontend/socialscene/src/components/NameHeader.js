@@ -17,6 +17,7 @@ const userData = JSON.parse(localStorage.getItem('user'))
                 alignItems: 'center',
             }}
         >
+
           <Box sx={{ gridRow: '1', gridColumn: 'span 2' }}>
               <div className={"name-header-image"}>
                   <Avatar
@@ -25,7 +26,6 @@ const userData = JSON.parse(localStorage.getItem('user'))
                       sx={{width: "100%", height: "100%"}}
                   />
               </div>
-
           </Box>
 
           <Box sx={{ gridRow: '1', gridColumn: 'span 3'}}>

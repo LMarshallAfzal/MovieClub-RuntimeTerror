@@ -60,10 +60,19 @@ h2--emphasise {
 
 h4 {
   font-family: Helvetica, serif;
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0;
 }
 h4--emphasise {
+  color: #FF0000;
+}
+
+h5 {
+  font-family: Helvetica, serif;
+  font-size: 1.8rem;
+  margin: 0;
+}
+h5--emphasise {
   color: #FF0000;
 }
 
@@ -73,8 +82,13 @@ h6 {
   font-size: 1rem;
 }
 
-.enter-button {
+.enter-button-wrapper {
   padding: 8px 18px;
+  user-select: none;
+}
+
+.enter-button {
+  padding: 8px 30px;
   outline: none;
   border: none;
   font-size: 18px;
@@ -89,4 +103,6 @@ h6 {
 .enter-button:hover {
   background-color: #FF0000;
   color: #FFFFFF;
-}/*# sourceMappingURL=EnterButton.css.map */
+}
+
+/*# sourceMappingURL=EnterButton.css.map */

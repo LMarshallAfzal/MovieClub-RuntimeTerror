@@ -82,27 +82,33 @@ h6 {
   font-size: 1rem;
 }
 
-.name-header {
-  background-color: #5C5C5C;
+.search-bar {
   width: 100%;
-  height: inherit;
-  overflow: hidden;
   user-select: none;
 }
 
-.name-header-image {
-  padding: 20px;
-  align-self: center;
+.create-button {
+  width: 100%;
 }
 
-.name-header-text {
+.club-card-background {
+  background-color: #D8D8D8;
+}
+
+.club-card-heading {
+  padding-top: 10px;
+  padding-left: 10px;
   color: #FFFFFF;
-  font-family: Helvetica, serif;
+  user-select: none;
 }
 
-.name-header-text-date {
-  color: #D8D8D8;
-  font-family: Helvetica, serif;
+.club-card-list-frame {
+  overflow: auto;
+  padding: 10px;
 }
 
-/*# sourceMappingURL=NameHeader.css.map */
+.club-card-list-item {
+  width: auto;
+}
+
+/*# sourceMappingURL=Clubs.css.map */

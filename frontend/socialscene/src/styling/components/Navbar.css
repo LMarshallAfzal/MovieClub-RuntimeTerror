@@ -60,10 +60,19 @@ h2--emphasise {
 
 h4 {
   font-family: Helvetica, serif;
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0;
 }
 h4--emphasise {
+  color: #FF0000;
+}
+
+h5 {
+  font-family: Helvetica, serif;
+  font-size: 1.8rem;
+  margin: 0;
+}
+h5--emphasise {
   color: #FF0000;
 }
 
@@ -74,7 +83,6 @@ h6 {
 }
 
 .navbar {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100%;
@@ -89,20 +97,14 @@ h6 {
   font-size: 1.2rem;
   overflow: auto;
   width: 100%;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar-red {
   height: 10px;
   display: flex;
   background: #FF0000;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar-logo {
@@ -116,21 +118,16 @@ h6 {
   text-decoration: none;
   font-size: 2rem;
   padding-top: 20px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar-enter-button {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
   float: right;
   margin: auto;
   width: auto;
-  padding-right: 10px;
-  padding-top: 30px;
+  padding-right: 20px;
+  padding-top: 20px;
   text-decoration: none;
-}/*# sourceMappingURL=Navbar.css.map */
+}
+
+/*# sourceMappingURL=Navbar.css.map */

@@ -60,10 +60,19 @@ h2--emphasise {
 
 h4 {
   font-family: Helvetica, serif;
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0;
 }
 h4--emphasise {
+  color: #FF0000;
+}
+
+h5 {
+  font-family: Helvetica, serif;
+  font-size: 1.8rem;
+  margin: 0;
+}
+h5--emphasise {
   color: #FF0000;
 }
 
@@ -81,14 +90,13 @@ h6 {
   border-top-right-radius: calc(100% - 90px);
   border-bottom-right-radius: calc(100% - 90px);
   display: flex;
-  background-color: #D8D8D8;
+  background-color: #C4C4C4;
   align-items: center;
 }
 
 .circle-text {
   pointer-events: none;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}/*# sourceMappingURL=HeadingCircle.css.map */
+  user-select: none;
+}
+
+/*# sourceMappingURL=HeadingCircle.css.map */

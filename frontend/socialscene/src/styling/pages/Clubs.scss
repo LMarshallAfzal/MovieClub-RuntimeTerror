@@ -1,0 +1,30 @@
+@use "../base";
+
+.search-bar {
+  width: 100%;
+  user-select: none;
+}
+
+.create-button {
+  width: 100%;
+}
+
+.club-card-background {
+  background-color: base.$grey-4;
+}
+
+.club-card-heading {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: base.$primary-white;
+  user-select: none;
+}
+
+.club-card-list-frame {
+  overflow: auto;
+  padding: 10px;
+}
+
+.club-card-list-item {
+  width: auto;
+}

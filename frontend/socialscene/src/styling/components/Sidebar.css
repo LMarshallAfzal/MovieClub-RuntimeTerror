@@ -60,10 +60,19 @@ h2--emphasise {
 
 h4 {
   font-family: Helvetica, serif;
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0;
 }
 h4--emphasise {
+  color: #FF0000;
+}
+
+h5 {
+  font-family: Helvetica, serif;
+  font-size: 1.8rem;
+  margin: 0;
+}
+h5--emphasise {
   color: #FF0000;
 }
 
@@ -74,7 +83,6 @@ h6 {
 }
 
 z.sidebar {
-  background-color: #F8F7F7;
   height: 100%;
   width: 100%;
   display: flex;
@@ -89,17 +97,16 @@ z.sidebar {
 }
 
 .sidebar-list .sidebar-text {
-  background-color: #F8F7F7;
   font-family: Helvetica, serif;
 }
 
 .sidebar-list .sidebar-list-item {
-  background-color: #F8F7F7;
+  background-color: #D8D8D8;
   box-sizing: border-box;
   width: 100%;
   height: 4em;
   list-style-type: none;
-  border-left: 10px solid #F8F7F7;
+  border-left: 10px solid #C4C4C4;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -111,12 +118,12 @@ z.sidebar {
 .sidebar-list .sidebar-list-item:hover {
   cursor: pointer;
   border-left: 10px solid #FF8585;
-  background-color: #D8D8D8;
+  background-color: #C4C4C4;
 }
 
 .sidebar-list #active {
   font-family: Helvetica, serif;
-  background-color: #D8D8D8;
+  background-color: #999999;
   border-left: 10px solid #FF0000;
 }
 
@@ -133,9 +140,8 @@ z.sidebar {
   font-size: 1.5rem;
   display: flex;
   align-items: center;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   font-family: inherit;
-}/*# sourceMappingURL=Sidebar.css.map */
+}
+
+/*# sourceMappingURL=Sidebar.css.map */

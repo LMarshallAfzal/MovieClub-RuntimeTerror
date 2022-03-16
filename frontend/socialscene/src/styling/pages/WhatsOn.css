@@ -60,10 +60,19 @@ h2--emphasise {
 
 h4 {
   font-family: Helvetica, serif;
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0;
 }
 h4--emphasise {
+  color: #FF0000;
+}
+
+h5 {
+  font-family: Helvetica, serif;
+  font-size: 1.8rem;
+  margin: 0;
+}
+h5--emphasise {
   color: #FF0000;
 }
 
@@ -80,4 +89,6 @@ h6 {
 
 .watched-button:hover {
   border-color: #5C5C5C;
-}/*# sourceMappingURL=WhatsOn.css.map */
+}
+
+/*# sourceMappingURL=WhatsOn.css.map */
