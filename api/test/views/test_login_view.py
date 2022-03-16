@@ -2,8 +2,9 @@ from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from django.urls import reverse
 from api.models import User
+from api.test.helpers import LogInTester
 
-class LoginViewTestcase(APITestCase):
+class LoginViewTestcase(APITestCase,LogInTester):
 
     fixtures = [
         'api/test/fixtures/default_user.json',
@@ -14,40 +15,56 @@ class LoginViewTestcase(APITestCase):
         self.client = APIClient()
         self.user = User.objects.get(username='johndoe')
         self.url = reverse('log_in')
+        self.details = {'username' : self.user.username, 'password':'Pa$$w0rd567'}
+
 
     def test_login_url(self):
         self.assertEqual(self.url, '/log_in/')
 
-    def test_user_logged_in_successfully(self):
-        details = {'username' : self.user.username, 'password':'Pa$$w0rd567'}
+    def test_post_log_in_endpoint_user_logs_in_successfully_returns_200_ok(self):
         response = self.client.login(
-            username = details['username'],password = details['password']
+            username = self.details['username'],password = self.details['password']
         )
         self.assertTrue(response)
-        response = self.client.post(self.url, details)
+        response = self.client.post(self.url, self.details)
+        self.assertTrue(self._is_logged_in())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    #status code cant be 200
-    def test_user_logged_in_unsuccessfully(self):
-        details = {'username' : "wrongusername", 'password':'Pa$$w0rd567'}
+    def test_post_log_in_endpoint_user_logs_in_un_with_unsuccessfully_with_wrong_username_returns_400_bad_request(self):
         response = self.client.login(
-            username = details['username'],password = details['password']
+            username = self.details['username'],password = self.details['password']
         )
         self.assertFalse(response)
-        response = self.client.post(self.url,details)
+        response = self.client.post(self.url,self.details)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_wrong_username_returns_400(self):
-        details = {'username' : "wrongusername", 'password':'Pa$$w0rd567'}
-        response = self.client.post(self.url,details)
+    def test_post_log_in_endpoint_user_logs_in_un_with_unsuccessfully_with_wrong_username_returns_400_bad_request(self):
+        self.details['username'] = 'wrongusername'
+        response = self.client.login(
+            username = self.details['username'],password = self.details['password']
+        )
+        self.assertFalse(response)
+        self.details['username'] = 'wrongusername'
+        response = self.client.post(self.url,self.details)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_username_password_may_not_be_blank(self):
-        details = {'username' : "", 'password':""}
-        response = self.client.post(self.url, details)
+    def test_post_log_in_endpoint_user_logs_in_un_with_unsuccessfully_with_wrong_password_returns_400_bad_request(self):
+        self.details['password'] = 'wrongpassword'
+        response = self.client.login(
+            username = self.details['username'],password = self.details['password']
+        )
+        self.assertFalse(response)
+        response = self.client.post(self.url,self.details)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_wrong_password_returns_400(self):
-        details = {'username' : self.user.username, 'password':'wrongpassword'}
-        response = self.client.post(self.url, details)
+    def test_post_log_in_endpoint_user_logs_in_un_with_unsuccessfully_with_blank_fields_returns_400_bad_request(self):
+        self.details['username'] = ''
+        self.details['password'] = ''
+        response = self.client.login(
+            username = self.details['username'],password = self.details['password']
+        )
+        self.assertFalse(response)
+        response = self.client.post(self.url, self.details)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    

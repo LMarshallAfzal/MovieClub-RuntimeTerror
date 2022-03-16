@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models.fields.related import ForeignKey
 from django.db import models
-from datetime import datetime    
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -68,12 +67,16 @@ class User(AbstractUser):
         self.save()
         return
 
+    def get_watched_movies(self):
+        movies = self.watched_movies.all()
+        return movies
+
 class Club(models.Model):
   
     club_name = models.CharField(
         max_length=50,
         blank=False,
-        unique=False
+        unique=True
     )
 
     mission_statement = models.CharField(
@@ -96,8 +99,6 @@ class Club(models.Model):
         membership = Membership.objects.get(user=user,club=self).role
         return membership
 
-
-
 class Membership(models.Model):
     """
     Membership is an intermediate model that connects Users to Clubs.
@@ -117,6 +118,8 @@ class Membership(models.Model):
         choices=STATUS_CHOICES,
         default="M"
         )
+    
+    meetings = models.ManyToManyField('Meeting')
 
     """We must ensure that only one relationship is created per User-Club pair."""
     class Meta:
@@ -147,6 +150,8 @@ class Movie(models.Model):
 
     viewers = models.ManyToManyField(User, through='Watch',related_name = 'viewers')
 
+    meetings = models.ManyToManyField('Meeting',related_name = 'meetings')
+
     def get_movie_title(movie_id):
         return Movie.objects.get(movie_id = movie_id).title
     class Meta:
@@ -169,11 +174,36 @@ class Rating(models.Model):
         validators=[MinValueValidator(1.0), MaxValueValidator(5.0)]
     )
 
+class Meeting(models.Model):
+    club = ForeignKey(Club, on_delete=models.CASCADE)
+
+    movie = ForeignKey(Movie, on_delete=models.CASCADE)
+    
+    organiser = ForeignKey(User, on_delete=models.CASCADE)
+
+    date = models.DateField(auto_now = False,blank = False)
+
+    start_time = models.TimeField(auto_now = False, blank = False)
+
+    end_time = models.TimeField(auto_now = False,blank = False)
+
+    attendees = models.ManyToManyField(Membership,related_name="attendees")
+
+    description = models.CharField(
+        max_length=500,
+        blank=False,
+        unique=False
+    )
+
+    meeting_link = models.CharField(
+        max_length = 200,
+        blank = False,
+        unique = True
+    )
+
 class Watch(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     time_watched = models.DateTimeField(auto_now_add=True)
-
-
