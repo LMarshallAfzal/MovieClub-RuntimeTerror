@@ -31,7 +31,7 @@ class GetClubMembersViewTestCase(APITestCase, LogInTester):
         self.assertTrue(self._is_logged_in())
         response = self.client.get(self.url)
         self._create_test_members(10)
-        users = User.objects.all()
+        users = self.club.club_members.all()
         serializer = UserSerializer(users, many=True)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -47,11 +47,9 @@ class GetClubMembersViewTestCase(APITestCase, LogInTester):
         self.client.login(
             username=self.details['username'], password=self.details['password'])
         self.assertTrue(self._is_logged_in())
-        invalid_url = reverse('club_members',kwargs={'club_id': 10})
+        invalid_url = reverse('club_members', kwargs={'club_id': 10})
         response = self.client.get(invalid_url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
-
 
     # def test_get_club_members_endpoint_cannot_get_club_members_when_logged_out_returns_403_forbidden(self):
     #     response = self.client.get(self.url)
@@ -69,6 +67,3 @@ class GetClubMembersViewTestCase(APITestCase, LogInTester):
                 preferences='Horror,Action',
             )
             self.club.club_members.add(user, through_defaults={'role': 'M'})
-    # def test_logged_out_user_cannot_view_users(self):
-    #     response = self.client.get(self.url)
-    #     self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
