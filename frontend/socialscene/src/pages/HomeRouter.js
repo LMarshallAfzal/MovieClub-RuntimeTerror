@@ -17,16 +17,16 @@ import ChangePassword from "./ChangePassword";
 import Forum from "./Forum";
 
 function HomeRouter() {
-    const [token, setToken] = useState('');
+    // const [token, setToken] = useState('');
 
-    const userLogin = (tok) => {
-        setToken(tok);
-    }
+    // const userLogin = (tok) => {
+    //     setToken(tok);
+    // }
 
-    localStorage.setItem('token', JSON.stringify("Token " + token))
-    if (!token) {
-        return <Login userLogin={userLogin} />
-    }
+    // localStorage.setItem('token', JSON.stringify("Token " + token))
+    // if (!token) {
+    //     return <Login userLogin={userLogin} />
+    // }
 
     return (
         <>

@@ -22,49 +22,51 @@ function Forum() {
             </Grid>
             <Grid container>
                 <Grid xs={12} item style={{ paddingBottom: '10px' }}>
-                    <Box sx={{ width: '100%' }}>
-                        <Collapse in={open}>
-                            <Alert severity="info"
-                                action={
-                                    <IconButton
-                                        aria-label="close"
-                                        color="inherit"
-                                        size="small"
-                                        onClick={() => {
-                                            setOpen(false);
-                                        }}
-                                    >
-                                        <CloseIcon fontSize="inherit" />
-                                    </IconButton>
-                                }
-                            >
-                                Reminder: Upcoming Meeting!
-                            </Alert>
-                            <Card sx={{ display: 'flex' }}>
-                                <CardMedia
-                                    component="img"
-                                    sx={{ width: 120 }}
-                                    image={poster}
-                                    alt="Jack the Giant Slayer"
-                                />
-                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                    <CardContent sx={{ flex: '1 0 auto' }}>
-                                        <Typography sx={{ fontSize: 30 }} component="div" variant="h5">
-                                            Jack the Giant Slayer
-                                        </Typography>
-                                        <Typography sx={{ fontSize: 25 }} component="div" variant="h5">
-                                            2014
-                                        </Typography>
-                                        <Typography sx={{ fontSize: 20 }} variant="h5" color="text.secondary" component="div">
-                                            Meeting time:
-                                        </Typography>
-                                        <Typography sx={{ fontSize: 20 }} variant="h5" color="text.secondary" component="div">
-                                            15:00, Wed 13th Jan 2020
-                                        </Typography>
-                                    </CardContent>
-                                </Box>
-                            </Card>
-                        </Collapse>
+                    <Box sx={{ width: '100%' }} className="meeting-card">
+                        <Paper elevation={'5'}>
+                            <Collapse in={open}>
+                                <Alert severity="info"
+                                    action={
+                                        <IconButton
+                                            aria-label="close"
+                                            color="inherit"
+                                            size="small"
+                                            onClick={() => {
+                                                setOpen(false);
+                                            }}
+                                        >
+                                            <CloseIcon fontSize="inherit" />
+                                        </IconButton>
+                                    }
+                                >
+                                    Reminder: Upcoming Meeting!
+                                </Alert>
+                                <Card sx={{ display: 'flex' }}>
+                                    <CardMedia
+                                        component="img"
+                                        sx={{ width: 120 }}
+                                        image={poster}
+                                        alt="Jack the Giant Slayer"
+                                    />
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }} className="meeting-card">
+                                        <CardContent sx={{ flex: '1 0 auto' }}>
+                                            <Typography sx={{ fontSize: 30 }} component="div" variant="h5">
+                                                Jack the Giant Slayer
+                                            </Typography>
+                                            <Typography sx={{ fontSize: 25 }} component="div" variant="h5">
+                                                2014
+                                            </Typography>
+                                            <Typography sx={{ fontSize: 20 }} variant="h5" color="text.secondary" component="div">
+                                                Meeting time:
+                                            </Typography>
+                                            <Typography sx={{ fontSize: 20 }} variant="h5" color="text.secondary" component="div">
+                                                15:00, Wed 13th Jan 2020
+                                            </Typography>
+                                        </CardContent>
+                                    </Box>
+                                </Card>
+                            </Collapse>
+                        </Paper>
                     </Box>
                 </Grid>
             </Grid>
@@ -75,7 +77,7 @@ function Forum() {
                 justifyContent={"center"}
             >
                 <Grid xs={12} item>
-                    <Paper style={{ maxHeight: 550, overflow: 'auto' }} elevation="3">
+                    <Paper style={{ maxHeight: 800, overflow: 'auto' }} elevation="3">
                         {comments.map((val) => {
                             return (
                                 <>
