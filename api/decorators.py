@@ -64,3 +64,15 @@ def is_member(view_function):
         else:
             return view_function(request,club_id,*args,**kwargs)
     return modified_view_function
+
+def is_organiser(view_function):
+    @wraps(view_function)
+    def modified_view_function(request,club_id,*args,**kwargs):
+        club = Club.objects.get(id=club_id)
+        try:
+            Membership.objects.get(user=request.user, club=club,role = "O")
+        except ObjectDoesNotExist:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        else:
+            return view_function(request,club_id,*args,**kwargs)
+    return modified_view_function

@@ -13,6 +13,7 @@ urlpatterns = [
     path("user/<int:user_id>/",views.get_other_user, name = "get_other_user"),
     path("clubs/",views.get_clubs, name = "get_clubs"),
     path("create_club/",views.create_club, name = "create_club"),
+    path("create_meeting/<int:club_id>/",views.create_meeting, name = "create_meeting"),
     path("add_rating/<int:movie_id>/",views.add_rating,name = "add_rating"),
     path("rec/",views.recommend_movie_user,name = "rec"),
     path("rec/clubs",views.recommend_club,name = "rec_clubs"),

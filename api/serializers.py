@@ -6,6 +6,8 @@ from rest_framework.validators import UniqueValidator
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
+import datetime
+from datetime import timedelta
 from django.core.validators import MaxValueValidator, MinValueValidator, MaxLengthValidator
 
 
@@ -25,7 +27,7 @@ class ClubSerializer(ModelSerializer):
 class MovieSerializer(ModelSerializer):
     class Meta:
         model = Movie
-        fields = ['id', 'ml_id', 'title', 'genres', 'year', 'ratings', 'viewers']
+        fields = '__all__'
 
 
 class MembershipSerializer(ModelSerializer):
@@ -48,6 +50,13 @@ class WatchMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Watch
         fields = ['user', 'movie']
+
+class MeetingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Meeting
+        fields = '__all__'
+
+
 
 
 
@@ -217,6 +226,96 @@ class CreateClubSerializer(serializers.Serializer):
         club.save()
 
         return club
+
+
+class CreateMeetingSerializer(serializers.Serializer):
+    # Based on the AddRatingSerializer below
+    club = serializers.PrimaryKeyRelatedField(
+        read_only=False,
+        queryset=Club.objects.all()
+    )
+    
+    movie = serializers.PrimaryKeyRelatedField(
+        read_only=False,
+        queryset=Movie.objects.all()
+    )
+
+    organiser = serializers.PrimaryKeyRelatedField(
+        read_only=False,
+        queryset=User.objects.all()
+    )
+
+    date = serializers.DateField(
+        format = "%d-%m-%Y",
+        input_formats = ['%d-%m-%Y', 'iso-8601']
+    )
+    start_time = serializers.TimeField(
+        format="%H:%M",
+        input_formats=["%H:%M", 'iso-8601'],
+        required = True
+    )
+
+    end_time = serializers.TimeField(
+        format="%H:%M",
+        input_formats=["%H:%M", 'iso-8601'],
+        required = True
+    )
+
+    description = serializers.CharField(
+        required = True,
+        validators = [MaxLengthValidator(500)]
+    )
+
+    meeting_link = serializers.CharField(
+        required = True,
+        validators = [MaxLengthValidator(500)]
+    )
+
+    def validate(self,data):
+        meeting_date = data['date']
+        start_time = data['start_time']
+        end_time = data['end_time']
+
+        if meeting_date < datetime.date.today():
+            raise serializers.ValidationError(
+                "No past date allowed.")
+
+        if meeting_date == datetime.date.today():
+            raise serializers.ValidationError(
+                "Date must be in the future.")
+
+        if (meeting_date - datetime.date.today()).days < 3:
+            raise serializers.ValidationError(
+                "Date must be minimum 3 days from now.")
+
+        start_time_delta = timedelta(hours=int(start_time.strftime("%H")), minutes=int(start_time.strftime("%M")))
+        end_time_delta = timedelta(hours=int(end_time.strftime("%H")), minutes=int(end_time.strftime("%M")))
+
+        if start_time > end_time:
+            raise serializers.ValidationError(
+                "Start time should be before end time."
+                )
+        
+        if (end_time_delta-start_time_delta).total_seconds() < 3600:
+            raise serializers.ValidationError(
+                "Meeting should be minimum 1 hour long.")
+
+        
+        if start_time == end_time:
+            raise serializers.ValidationError(
+                "Start and End times cannot be the same."
+            )
+
+        return data
+
+        
+    def create(self, validated_data):
+        meeting = Meeting.objects.create(**validated_data)
+        return meeting
+    
+    class Meta:
+        model = Meeting
+        fields = '__all__'
 
 
 class AddRatingSerializer(serializers.ModelSerializer):

@@ -8,7 +8,7 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from recommender.recommender_CF_item import Recommender
-from .decorators import movie_exists,club_exists,has_watched,has_not_watched,is_member
+from .decorators import movie_exists,club_exists,has_watched,has_not_watched,is_member,is_organiser
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 
 
@@ -85,8 +85,6 @@ def get_club_members(request,club_id):
     serializer = UserSerializer(members, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-    
-
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def get_other_user(request,user_id):
@@ -153,6 +151,18 @@ def create_club(request):
         errors = serializer.errors
         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(["POST"])
+@club_exists
+@is_organiser
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+def create_meeting(request,club_id):
+    serializer = CreateMeetingSerializer(data=request.data, context={"request": request})
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        errors = serializer.errors
+        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["POST"])
 @club_exists
