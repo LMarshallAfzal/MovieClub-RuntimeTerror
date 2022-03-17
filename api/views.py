@@ -1,4 +1,4 @@
-from ast import Is
+from ast import Is, IsNot
 from math import perm
 from re import S
 from django import views
@@ -11,7 +11,7 @@ from .serializers import *
 from .models import *
 from django.contrib.auth import logout
 from recommender.recommender_CF_item import Recommender
-from .decorators import movie_exists,club_exists,has_watched,has_not_watched,is_member,is_organiser
+from .decorators import movie_exists, club_exists, has_watched, has_not_watched, is_member, is_organiser
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie, csrf_exempt
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -27,13 +27,16 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         return token
 
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
 
 @api_view(["GET"])
 @ensure_csrf_cookie
 def csrf_token(request):
     return Response({"result": "Success (CSRF cookie set.)"})
+
 
 @api_view(['POST'])
 def sign_up(request):
@@ -61,7 +64,6 @@ def login(request):
     serializer = LoginSerializer(data=request.data)
     if serializer.is_valid():
         data['response'] = 'User login successful'
-        print(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         data['response'] = 'You have entered an invalid username or password'
@@ -71,12 +73,8 @@ def login(request):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def log_out(request):
-    if request.user.is_authenticated:
-        logout(request)
-        return Response(status=status.HTTP_200_OK)
-    else:
-        return Response(status=status.HTTP_403_FORBIDDEN)
-
+    logout(request)
+    return Response(status=status.HTTP_200_OK)
 
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
@@ -98,36 +96,32 @@ def get_users(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
 
+@api_view(['GET'])
 @club_exists
 @permission_classes([IsAuthenticated])
-def get_club_members(request,club_id):
+def get_club_members(request, club_id):
     club = Club.objects.get(id=club_id)
     members = club.get_all_club_members()
     serializer = UserSerializer(members, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_other_user(request,user_id):
-    if request.user.is_authenticated:
-        try:
-            user = User.objects.get(id=user_id)
-            serializer = UserSerializer(user, many=False)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-    else:
-        return Response(status=status.HTTP_403_FORBIDDEN)
+def get_other_user(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+        serializer = UserSerializer(user, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_current_user(request):
-    if request.user.is_authenticated:
-        serializer = UserSerializer(request.user, many=False)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    else:
-        return Response(status=status.HTTP_403_FORBIDDEN)
-
+    serializer = UserSerializer(request.user, many=False)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 @movie_exists
@@ -173,18 +167,21 @@ def create_club(request):
         errors = serializer.errors
         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(["POST"])
 @club_exists
 @is_organiser
 @permission_classes([IsAuthenticated])
-def create_meeting(request,club_id):
-    serializer = CreateMeetingSerializer(data=request.data, context={"request": request})
+def create_meeting(request, club_id):
+    serializer = CreateMeetingSerializer(
+        data=request.data, context={"request": request})
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         errors = serializer.errors
         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(["POST"])
 @club_exists
@@ -220,13 +217,12 @@ def add_watched_movie(request, movie_id):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 @movie_exists
 @has_watched
-@permission_classes([IsAuthenticated])
 def remove_watched_movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
-    watched_movie = Watch.objects.get(user=request.user, movie=movie)
-    watched_movie.delete()
+    Watch.objects.get(user=request.user, movie=movie).delete()
     return Response(status=status.HTTP_200_OK)
 
 
@@ -257,7 +253,6 @@ def change_rating(request, movie_id):
 
 
 @api_view(['GET'])
-
 def recommend_movie_user(request):
     recommendations = []
     recommender = Recommender(request.user)
@@ -291,12 +286,10 @@ def get_movie(request, movie_id):
     serializer = MovieSerializer(movie, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_watched_list(request):
-    if request.user.is_authenticated:
-        movies = request.user.get_watched_movies()
-        serializer = MovieSerializer(movies,many=True)
-    else:
-        return Response(status=status.HTTP_403_FORBIDDEN)
-    return Response(serializer.data,status=status.HTTP_200_OK)
+    movies = request.user.get_watched_movies()
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

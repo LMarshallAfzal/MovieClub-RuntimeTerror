@@ -2,9 +2,8 @@ from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from django.urls import reverse
 from api.models import User
-from api.test.helpers import LogInTester
 
-class LoginViewTestcase(APITestCase,LogInTester):
+class LoginViewTestcase(APITestCase):
 
     fixtures = [
         'api/test/fixtures/default_user.json',
@@ -15,8 +14,8 @@ class LoginViewTestcase(APITestCase,LogInTester):
         self.client = APIClient()
         self.user = User.objects.get(username='johndoe')
         self.url = reverse('log_in')
+        self.client = APIClient()
         self.details = {'username' : self.user.username, 'password':'Pa$$w0rd567'}
-
 
     def test_login_url(self):
         self.assertEqual(self.url, '/log_in/')
@@ -27,7 +26,6 @@ class LoginViewTestcase(APITestCase,LogInTester):
         )
         self.assertTrue(response)
         response = self.client.post(self.url, self.details)
-        self.assertTrue(self._is_logged_in())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_post_log_in_endpoint_user_logs_in_un_with_unsuccessfully_with_wrong_username_returns_400_bad_request(self):

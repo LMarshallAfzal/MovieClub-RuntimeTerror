@@ -3,6 +3,8 @@ from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 from api.test.helpers import LogInTester
+from rest_framework.test import force_authenticate,APIClient
+
 
 class CreateClubViewTestCase(APITestCase,LogInTester):
     
@@ -20,13 +22,10 @@ class CreateClubViewTestCase(APITestCase,LogInTester):
             "mission_statement": "We are a club dedicated to making the world a better place through the power of sharknado",
             "themes": "Movies",
         }
-        self.details = {'username' : 'johndoe', 'password':'Pa$$w0rd567'}
-
-        
-    
+        self.client = APIClient()
     def test_create_club_endpoint_with_valid_data_creates_club_returns_201_created(self):
-        self.client.login(username = self.details['username'],password = self.details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         before = Club.objects.count()
         response = self.client.post(self.url, self.form_input)
         after = Club.objects.count()
@@ -34,16 +33,16 @@ class CreateClubViewTestCase(APITestCase,LogInTester):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_create_club_endpoint_club_creator_is_club_owner(self):
-        self.client.login(username = self.details['username'],password = self.details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         self.client.post(self.url, self.form_input)
         club = Club.objects.last()
         owner = club.get_club_membership(self.user)
         self.assertEqual(owner, "C")
 
     def test_create_club_endpoint_with_empty_club_name_returns_400_bad_request(self):
-        self.client.login(username = self.details['username'],password = self.details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         self.form_input["club_name"] = ""
         response = self.client.post(self.url, self.form_input)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
