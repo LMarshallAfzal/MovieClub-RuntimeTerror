@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Link, useLocation} from "react-router-dom";
 import "../styling/components/Navbar.css";
 import EnterButton from "./EnterButton";
+
 
 
 function Navbar() {
@@ -25,7 +26,9 @@ function Navbar() {
 export default Navbar;
 
 function NavbarButton() {
+
     const location = useLocation();
+
     switch (location.pathname){
         case "/":
             return (

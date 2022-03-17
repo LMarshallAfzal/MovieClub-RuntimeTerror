@@ -1,94 +1,62 @@
-import React from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import "../styling/pages/Profile.css";
-import { Box, Stack, TextField } from "@mui/material";
+import { Box, Stack, TextField, Button, Grid } from "@mui/material";
 import FormButton from "../components/FormButton";
+import AuthContext from "../components/AuthContext";
 
-class Profile extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            id: '',
-            username:'',
-            first_name:'',
-            last_name:'',
-            email:'',
-            bio:'',
-            preferences:'',
-        }
-        this.changeHandler=this.changeHandler.bind(this)
-        this.submitForm=this.submitForm.bind(this)
-    }
 
-    changeHandler(event){
-        this.setState({
-            [event.target.name]:event.target.value
-        });
-    }
+const Profile = () => {
+    const [userData, setUserData] = useState('')
+    let {user, authTokens} = useContext(AuthContext)
 
-    submitForm(){
-        const userData = JSON.parse(localStorage.getItem('user'))
-        fetch('http://127.0.0.1:8000/edit_profile/' + userData.id ,{
+    const handleChange = (event) => {
+        setUserData( prevData => ({...prevData, [event.target.name]: event.target.value}))
+     }; 
+
+    let submitChangeProfileForm = async (e) => {
+        let response = await fetch('http://127.0.0.1:8000/edit_profile/' + user.user_id ,{
             method:'PUT',
-            body:JSON.stringify(this.state),
+            body:JSON.stringify({
+                "username": e.target.username.value, 
+                "first_name": e.target.first_name.value, 
+                "last_name": e.target.last_name.value,
+                "email": e.target.email.value,
+                "bio": e.target.bio.value, 
+                "preferences": e.target.preferences.value
+            }),
             headers:{
                 'Content-type': 'application/json; charset=UTF-8',
-            },
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
         })
-        .then(response=>response.json())
-        .then((data)=>console.log(data))
-        localStorage.setItem('user', JSON.stringify(this.state))
+        let data = await response.json()
+        setUserData(data)
     }
-    
 
-    fetchData(){
-        fetch("http://127.0.0.1:8000/user/", {
+    let getUserData = async (e) => {
+        let response = await fetch("http://127.0.0.1:8000/user/", {
             method: "GET",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "include",
             headers: {
-                Accept: "application/json",
                 "Content-Type": "application/json",
-            },
+                "Authorization": "Bearer " + String(authTokens.access)
+            }
         })
-        // .then(data => data.json()).id
-        .then(userData => 
-            this.setState({
-                id: userData.id,
-                username: userData.username,
-                first_name:userData.first_name,
-                last_name:userData.last_name,
-                email:userData.email,
-                bio:userData.bio,
-                preferences:userData.preferences,
-            })    
-        )
-        localStorage.setItem('userId', JSON.stringify(this.state.id))
-        
-            // const userData = JSON.parse(localStorage.getItem('user'))
-        // console.log(userData)
-        //     this.setState({
-        //         username: userData.username,
-        //         first_name:userData.first_name,
-        //         last_name:userData.last_name,
-        //         email:userData.email,
-        //         bio:userData.bio,
-        //         preferences:userData.preferences,
-        //     });
+        let data = await response.json()
+        setUserData(data)
     }
 
-    componentDidMount() {
-        this.fetchData();
-    }
+    useEffect((e) => {
+        // e.preventDefault()
+        getUserData();
+    },[])
 
-    render() {
-        return (
-            <table className='profile-table' >
-                <tr>
-                    <div className='edit-profile-info-text'>Edit profile info</div>
-                </tr>
-                <tr>
-                    <td className='text-field'>
+    return (
+        <table className='profile-table' >
+            <tr>
+                <div className='edit-profile-info-text'>Edit profile info</div>
+            </tr>
+                <Grid item>
+                    <Box component="form" onSubmit={submitChangeProfileForm}>
                         <Stack spacing={2}>
                             <TextField className='profile-text-box'
                                 id={"outlined-basic"}
@@ -96,8 +64,8 @@ class Profile extends React.Component {
                                 name={"username"}
                                 type={"text"}
                                 variant={"outlined"}
-                                value={this.state.username}
-                                onChange={this.changeHandler}
+                                value={userData.username}
+                                onChange={handleChange}
                             />
                             <TextField className='profile-text-box'
                                 id={"outlined-basic"}
@@ -105,8 +73,8 @@ class Profile extends React.Component {
                                 name={"first_name"}
                                 type={"text"}
                                 variant={"outlined"}
-                                onChange={this.changeHandler}
-                                value={this.state.first_name}
+                                value={userData.first_name}
+                                onChange={handleChange}
                             />
                             <TextField className='profile-text-box'
                                 id={"outlined-basic"}
@@ -114,8 +82,8 @@ class Profile extends React.Component {
                                 name={"last_name"}
                                 type={"text"}
                                 variant={"outlined"}
-                                onChange={this.changeHandler}
-                                value={this.state.last_name}
+                                value={userData.last_name}
+                                onChange={handleChange}
                             />
                             <TextField className='profile-text-box'
                                 id={"outlined-basic"}
@@ -123,8 +91,8 @@ class Profile extends React.Component {
                                 name={"email"}
                                 type={"email"}
                                 variant={"outlined"}
-                                onChange={this.changeHandler}
-                                value={this.state.email}
+                                value={userData.email}
+                                onChange={handleChange}
                             />
                             <TextField className='profile-text-box'
                                 spacing={6}
@@ -135,8 +103,8 @@ class Profile extends React.Component {
                                 variant={"outlined"}
                                 multiline
                                 rows={7.5}
-                                onChange={this.changeHandler}
-                                value={this.state.bio}
+                                value={userData.bio}
+                                onChange={handleChange}
                             />
                             <div className={"single-button"}>
                                 <Box
@@ -146,16 +114,16 @@ class Profile extends React.Component {
                                         gap: 1,
                                     }}
                                 >
-                                    <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
+                                    {/* <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
                                         <FormButton
                                             text={"cancel"}
                                         />
-                                    </Box>
+                                    </Box> */}
                                 </Box>
                             </div>
                         </Stack>
-                    </td>
-                    <td className='text-field'>
+                    {/* </td> */}
+                    {/* <td className='text-field'> */}
                         <Stack spacing={2}>
                             <TextField className='profile-text-box'
                                 spacing={6}
@@ -166,8 +134,8 @@ class Profile extends React.Component {
                                 variant={"outlined"}
                                 multiline
                                 rows={20}
-                                onChange={this.changeHandler}
-                                value={this.state.preferences}
+                                value={userData.preferences}
+                                onChange={handleChange}
                             />
                             <div className={"single-button"}>
                                 <Box
@@ -178,18 +146,22 @@ class Profile extends React.Component {
                                     }}
                                 >
                                     <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                        <FormButton
-                                            text={"save changes"}
-                                            onClick={this.submitForm}
-                                        />
+                                        <Button
+                                            // text={"save changes"}
+                                            // onClick={this.submitForm}
+                                            type="submit"
+                                        >
+                                            save changes
+                                        </Button>        
                                     </Box>
                                 </Box>
                             </div>
                         </Stack>
-                    </td>
-                </tr>
-            </table >
-        );
-    }
+                    {/* </td> */}
+                
+                </Box>
+            </Grid>    
+        </table >
+    );
 }
 export default Profile;

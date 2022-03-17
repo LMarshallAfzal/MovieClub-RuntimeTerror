@@ -1,3 +1,6 @@
+from ast import Is
+from math import perm
+from re import S
 from django import views
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
@@ -9,19 +12,31 @@ from .models import *
 from django.contrib.auth import logout
 from recommender.recommender_CF_item import Recommender
 from .decorators import movie_exists,club_exists,has_watched,has_not_watched,is_member
-from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie, csrf_exempt
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
 
+        # Add custom claims
+        token['username'] = user.username
+
+        return token
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
 @api_view(["GET"])
 @ensure_csrf_cookie
 def csrf_token(request):
     return Response({"result": "Success (CSRF cookie set.)"})
 
-
 @api_view(['POST'])
-@csrf_protect
+# @csrf_protect
 def sign_up(request):
     data = {}
     serializer = SignUpSerializer(data=request.data)
@@ -42,11 +57,13 @@ def sign_up(request):
 
 @api_view(['POST', 'GET'])
 @csrf_protect
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
 def login(request):
     data = {}
     serializer = LoginSerializer(data=request.data)
     if serializer.is_valid():
         data['response'] = 'User login successful'
+        print(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         data['response'] = 'You have entered an invalid username or password'
@@ -86,8 +103,10 @@ def get_users(request):
 
 
 @api_view(["GET"])
-@csrf_protect
-# @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+# @csrf_protect
+# @permission_classes([IsAuthenticated])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
 def get_user(request):
     serializer = UserSerializer(request.user, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -104,10 +123,11 @@ def get_score(request, movie_id):
 
 
 @api_view(['PUT'])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-def edit_profile(request, username):
+@permission_classes([IsAuthenticated])
+# @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+def edit_profile(request, user_id):
     # user = request.user
-    user = User.objects.get(username=username)
+    user = User.objects.get(id=user_id)
     serializer = UpdateUserSerializer(user, data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -125,7 +145,8 @@ def get_clubs(request):
 
 
 @api_view(["POST"])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+# @csrf_protect
+@permission_classes([IsAuthenticated])
 def create_club(request):
     serializer = CreateClubSerializer(data=request.data)
     if serializer.is_valid():
@@ -208,7 +229,8 @@ def change_rating(request, movie_id):
 
 
 @api_view(['GET'])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+# @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def recommend_movie_user(request):
     recommendations = []
     recommender = Recommender(request.user)
@@ -228,8 +250,8 @@ def recommend_club(request):
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-def get_memberships_of_user(request, username):
-    user = User.objects.get(username=username)
+def get_memberships_of_user(request, user_id):
+    user = User.objects.get(id=user_id)
     clubs = user.get_user_clubs()
     serializer = ClubSerializer(clubs, many=True)
     return Response(serializer.data)

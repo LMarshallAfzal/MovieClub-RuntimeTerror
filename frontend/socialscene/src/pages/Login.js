@@ -1,97 +1,35 @@
-import React, {Component} from "react";
+import React, {Component, Fragment, useContext} from "react";
 import "../styling/pages/Login.css";
 import HeadingCircle from "../components/HeadingCircle";
-import {Box, Grid, Stack, TextField} from "@mui/material";
+import {Box, Grid, Stack, TextField, Button} from "@mui/material";
 import FormButton from "../components/FormButton";
 import Cookies from "js-cookie";
 import CsrfToken from "../components/CsrfToken";
-import {Navigate, useHistory} from "react-router-dom";
+import AuthContext from "../components/AuthContext";
+import {Navigate} from "react-router-dom";
 
-class Login extends Component {
-    constructor() {
-        super()
-        this.state = {
-            authenticated: false,
-            credentials: {username: '', password: ''}
-        }
-    }    
+function Login() {
+    let {loginUser} = useContext(AuthContext)
+    return (
+        <Grid className={"login-grid"}  spacing={2}>
+            <CsrfToken />
 
-    login = async event => {
-      fetch("http://127.0.0.1:8000/log_in/", {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "X-CSRFToken": Cookies.get("csrftoken"),
-        },
-        body: JSON.stringify(this.state.credentials),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Something went wrong...");
-          } else {
-            this.setState({authenticated: true});
-            return response.json();
-          }
-        })
-        .catch((err) => console.error(err));
-    }
-    
-    inputChanged = event => {
-        const cred = this.state.credentials;
-        cred[event.target.name] = event.target.value;
-        this.setState({credentials: cred});
-    }
-    
-    render() {
-        if(this.state.authenticated) {
-            fetch("http://127.0.0.1:8000/user/", {
-                method: "GET",
-                mode: "cors",
-                cache: "no-cache",
-                credentials: "include",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": Cookies.get("csrftoken"),
-                },
-            })
-            .then(response => console.log(response))
-            .then(response => localStorage.setItem('id', JSON.Stringify(response.id)))
+            <Grid className={"login-grid-left"} item xs={6}>
+                <HeadingCircle title={"log in"}/>
+            </Grid>
 
-            return ( 
-                 <Navigate
-                   exact  
-                   from="/login/*"
-                   to='/home' 
-                 />     
-            )
-        }
-
-        return (
-            <Grid className={"login-grid"} container spacing={2}>
-                <CsrfToken />
-
-                <Grid className={"login-grid-left"} item xs={6}>
-                    <HeadingCircle title={"log in"}/>
-                </Grid>
-
-                <Grid className={"login-grid-right"} item xs={6}
-                  alignItems="center"
-                  justifyContent="center">
-                    <Stack className={"form-stack"} spacing={3}
-                height={"100%"}>
+            <Grid className={"login-grid-right"} item xs={6}
+                alignItems="center"
+                justifyContent="center">
+                
+                <Box component="form" onSubmit={loginUser}>
+                    <Stack className={"form-stack"} spacing={3} height={"100%"}> 
                         <TextField
                             className={"form-field"}
                             id={"outlined-basic"}
                             label={"username"}
                             name={"username"}
                             variant={"outlined"}
-                            value={this.state.credentials.username}
-                            onChange={this.inputChanged}
                         />
 
                         <TextField
@@ -101,8 +39,6 @@ class Login extends Component {
                             name={"password"}
                             type={"password"}
                             variant={"outlined"}
-                            value={this.state.credentials.password}
-                            onChange={this.inputChanged}
                         />
 
                         <div className={"form-field"}>
@@ -114,27 +50,25 @@ class Login extends Component {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                    <FormButton
-                                        text={"log in"}
-                                        onClick={this.login}
-                                        
-                                    />
+                                    <Button
+                                        type="submit"    
+                                    >
+                                        log in
+                                    </Button>
                                 </Box>
 
-                                <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>
+                                {/* <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>
                                     <FormButton
                                         text={"forgot password"}
                                     />
-                                </Box>
+                                </Box> */}
                             </Box>
                         </div>
                     </Stack>
-                </Grid>
+                </Box>
             </Grid>
-        );
-    }
-   
+        </Grid>                        
+    );
 }
-
-
+   
 export default Login
