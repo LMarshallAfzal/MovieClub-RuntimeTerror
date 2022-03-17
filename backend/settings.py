@@ -139,6 +139,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # User model for authentication purposes
 AUTH_USER_MODEL = 'api.User'
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    )
+}
+
 CORS_ALLOW_ORIGINS_ALL = True
 
 CORS_ALLOW_CREDENTIALS = True
