@@ -4,13 +4,12 @@ import { Route, Routes } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import NameHeader from "../components/NameHeader";
 import { Grid } from "@mui/material";
-import Dashboard from "./Dashboard";
+import Home from "./Home";
 import Clubs from "./Clubs";
 import Movies from "./Movies";
 import WhatsOn from "./WhatsOn";
 import Profile from "./Profile";
 import Options from "./Options";
-import Home from "./Home";
 import Login from "./Login";
 import OthersProfile from "./OthersProfile";
 import ChangePassword from "./ChangePassword";
@@ -41,7 +40,6 @@ function HomeRouter() {
                 <Grid className={"home-grid-R-content"} item xs={9} padding={2} >
                     <Routes>
                         <Route path={"/"} element={(<Home />)} />
-                        <Route path={"dashboard"} element={(<Dashboard />)} />
                         <Route path={"clubs"} element={(<Clubs />)} />
                         <Route path={"movies"} element={(<Movies />)} />
                         <Route path={"whats-on"} element={(<WhatsOn />)} />

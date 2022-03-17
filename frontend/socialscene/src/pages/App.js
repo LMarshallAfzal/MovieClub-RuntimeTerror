@@ -4,8 +4,6 @@ import Navbar from "../components/Navbar";
 import HomePage from "./Homepage";
 import LogIn from "./Login";
 import NotFound404 from "./NotFound";
-import Dashboard from "./Dashboard";
-import Profile from "./Profile";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Signup from "./Signup";
 import HomeRouter from "./HomeRouter";
