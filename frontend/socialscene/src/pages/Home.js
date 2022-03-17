@@ -1,6 +1,7 @@
 import React from 'react';
 import "../styling/pages/Home.css";
 import { Card, CardContent, Typography, CardActions, Button, Divider, List, Paper, ListSubheader, Grid, TextField, Stack, Box, ListItemButton, ListItemText, Autocomplete } from "@mui/material";
+import { Divider, List, Paper, ListSubheader, Grid, TextField, Stack, Box, ListItemButton, ListItemText, Autocomplete } from "@mui/material";
 import FormButton from "../components/FormButton";
 import { DummyDashboardClubsData, meetings, movies } from './DummyDashboardClubsData';
 import { useState } from 'react'
@@ -218,4 +219,4 @@ class Home extends React.Component {
     }
 }
 
-export default home;
+export default Home;

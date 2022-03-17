@@ -4,28 +4,28 @@ import { Route, Routes } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import NameHeader from "../components/NameHeader";
 import { Grid } from "@mui/material";
-import Dashboard from "./Dashboard";
+import Home from "./Home";
 import Clubs from "./Clubs";
 import Movies from "./Movies";
 import WhatsOn from "./WhatsOn";
 import Profile from "./Profile";
 import Options from "./Options";
-import Home from "./Home";
 import Login from "./Login";
 import OthersProfile from "./OthersProfile";
 import ChangePassword from "./ChangePassword";
+import Messages from "./Messages";
 
 function HomeRouter() {
-    const [token, setToken] = useState('');
+    // const [token, setToken] = useState('');
 
-    const userLogin = (tok) => {
-        setToken(tok);
-    }
+    // const userLogin = (tok) => {
+    //     setToken(tok);
+    // }
 
-    localStorage.setItem('token', JSON.stringify("Token " + token))
-    if (!token) {
-        return <Login userLogin={userLogin} />
-    }
+    // localStorage.setItem('token', JSON.stringify("Token " + token))
+    // if (!token) {
+    //     return <Login userLogin={userLogin} />
+    // }
 
     return (
         <>
@@ -40,14 +40,14 @@ function HomeRouter() {
                 <Grid className={"home-grid-R-content"} item xs={9} padding={2} >
                     <Routes>
                         <Route path={"/"} element={(<Home />)} />
-                        <Route path={"dashboard"} element={(<Dashboard />)} />
                         <Route path={"clubs"} element={(<Clubs />)} />
                         <Route path={"movies"} element={(<Movies />)} />
                         <Route path={"whats-on"} element={(<WhatsOn />)} />
                         <Route path={"profile"} element={(<Profile />)} />
                         <Route path={"options"} element={(<Options />)} />
                         <Route path={"change-password"} element={(<ChangePassword />)} />
-                        <Route path={"others-profile"} element={(<OthersProfile />)} />
+                        <Route path={"others-profile"} element={(<OthersProfile />)} /> //SUBJECT TO BE CHANGED
+                        <Route path={"messages"} element={(<Messages />)} /> //SUBJECT TO BE CHANGED
                     </Routes>
                 </Grid>
             </Grid>
