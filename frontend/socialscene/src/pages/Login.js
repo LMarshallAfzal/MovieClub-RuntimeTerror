@@ -1,69 +1,36 @@
-import React, {Component} from "react";
+import React, {useContext, useState} from "react";
 import "../styling/pages/Login.css";
 import HeadingCircle from "../components/HeadingCircle";
-import {Box, Grid, Stack, TextField} from "@mui/material";
+import {Box, Grid, Stack, TextField, Button} from "@mui/material";
 import FormButton from "../components/FormButton";
 import Cookies from "js-cookie";
 import CsrfToken from "../components/CsrfToken";
-import {Link} from "react-router-dom";
+import AuthContext from "../components/AuthContext";
 
-class Login extends Component {
+function Login() {
 
-    state = {
-        credentials: {username: '', password: ''}
-    }
-
-    login = async event => {
-      fetch("http://127.0.0.1:8000/log_in/", {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "X-CSRFToken": Cookies.get("csrftoken"),
-        },
-        body: JSON.stringify(this.state.credentials),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Something went wrong...");
-          } else {
-            return response.json();
-          }
-        })
-        .catch((err) => console.error(err));
-    }
+    let {loginUser} = useContext(AuthContext)
     
-    inputChanged = event => {
-        const cred = this.state.credentials;
-        cred[event.target.name] = event.target.value;
-        this.setState({credentials: cred});
-    }
-    
-    render() {
-        return (
-            <Grid className={"login-grid"} container spacing={2}>
-                <CsrfToken />
+    return (
+        <Grid container direction={"row"} className={"login-grid"}  spacing={2}>
+            {/* <CsrfToken /> */}
 
-                <Grid className={"login-grid-left"} item xs={6}>
-                    <HeadingCircle title={"log in"}/>
-                </Grid>
+            <Grid  className={"login-grid-left"} item xs={6}>
+                <HeadingCircle title={"log in"}/>
+            </Grid>
 
-                <Grid className={"login-grid-right"} item xs={6}
-                  alignItems="center"
-                  justifyContent="center">
-                    <Stack className={"form-stack"} spacing={3}
-                height={"100%"}>
+            <Grid  className={"login-grid-right"} item xs={6}
+                alignItems="center"
+                justifyContent="center">
+                
+                <Box component={"form"} onSubmit={loginUser} className={"login-grid-right"} spacing={3}>
+                    <Stack className={"form-stack"} spacing={3} height={"100%"}> 
                         <TextField
                             className={"form-field"}
                             id={"outlined-basic"}
                             label={"username"}
                             name={"username"}
                             variant={"outlined"}
-                            value={this.state.credentials.username}
-                            onChange={this.inputChanged}
                         />
 
                         <TextField
@@ -73,8 +40,6 @@ class Login extends Component {
                             name={"password"}
                             type={"password"}
                             variant={"outlined"}
-                            value={this.state.credentials.password}
-                            onChange={this.inputChanged}
                         />
 
                         <div className={"form-field"}>
@@ -86,28 +51,27 @@ class Login extends Component {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                        <Link to={"/home"} className={"navbar-enter-button"}>
-                                            <FormButton
-                                                text={"log in"}
-                                                onClick={this.login}
-                                            />
-                                        </Link>
+                                    <Button
+                                        type="submit"
+                                        text={"log in"}   
+                                    >
+                                        log in
+                                    </Button>    
                                 </Box>
 
                                 <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>
                                     <FormButton
+                                        type="submit"
                                         text={"forgot password"}
                                     />
                                 </Box>
                             </Box>
                         </div>
                     </Stack>
-                </Grid>
+                </Box>
             </Grid>
-        );
-    }
-   
+        </Grid>    
+    );
 }
-
-
+   
 export default Login

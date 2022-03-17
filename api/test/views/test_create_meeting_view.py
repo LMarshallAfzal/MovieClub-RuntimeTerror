@@ -2,11 +2,12 @@ from api.models import Club, Movie, User, Meeting
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-from api.test.helpers import LogInTester
 import datetime
+from rest_framework.test import force_authenticate,APIClient
 
 
-class CreateMeetingViewTestCase(APITestCase, LogInTester):
+
+class CreateMeetingViewTestCase(APITestCase):
 
     fixtures = [
         "api/test/fixtures/default_movie.json",
@@ -26,7 +27,7 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.club.club_members.add(self.user, through_defaults={'role': 'O'})
         self.club.club_members.add(self.member_user, through_defaults={'role': 'M'})
         self.club.club_members.add(self.owner_user, through_defaults={'role': 'C'})
-
+        self.client = APIClient()
         self.form_input = {
             "club": self.club.id,
             "movie": self.movie.id,
@@ -38,19 +39,10 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
             "meeting_link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
         }
 
-        self.login_details = {'username': 'johndoe', 'password': 'Pa$$w0rd567'}
-
-    # def test_unauthenticated_request_returns_forbidden(self):
-    #     before = Meeting.objects.count()
-    #     response = self.client.post(self.url, self.meeting_form_input)
-    #     after = Meeting.objects.count()
-    #     self.assertEqual(after, before)
-    #     self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_post_create_meeting_endpoint_with_valid_data_returns_201_created(self):
-        self.client.login(
-            username=self.login_details['username'], password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
         after = Meeting.objects.count()
@@ -58,9 +50,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_post_create_meeting_endpoint_with_blank_date_returns_400_bad_request(self):
-        self.client.login(
-            username=self.login_details['username'], password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         self.form_input['date'] = ''
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
@@ -69,9 +60,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_create_meeting_endpoint_with_blank_start_time_returns_400_bad_request(self):
-        self.client.login(
-            username=self.login_details['username'], password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         self.form_input['start_time'] = ''
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
@@ -80,9 +70,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_create_meeting_endpoint_with_blank_end_time_returns_400_bad_request(self):
-        self.client.login(
-            username=self.login_details['username'], password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         self.form_input['end_time'] = ''
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
@@ -91,9 +80,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_create_meeting_endpoint_with_blank_description_returns_400_bad_request(self):
-        self.client.login(
-            username=self.login_details['username'], password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         self.form_input['description'] = ''
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
@@ -102,9 +90,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_create_meeting_endpoint_with_blank_meeting_link_returns_400_bad_request(self):
-        self.client.login(
-            username=self.login_details['username'], password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         self.form_input['meeting_link'] = ''
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
@@ -113,9 +100,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_create_meeting_endpoint_with_start_time_after_end_time_returns_400_bad_request(self):
-        self.client.login(
-            username=self.login_details['username'], password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         self.form_input['end_time'] = '12:00'
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
@@ -124,9 +110,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_create_meeting_endpoint_with_duration_less_than_1_hour_returns_400_bad_request(self):
-        self.client.login(
-            username=self.login_details['username'], password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         self.form_input['end_time'] = '18:30'
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
@@ -135,9 +120,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_create_meeting_endpoint_with_date_same_as_current_day_returns_400_bad_request(self):
-        self.client.login(
-            username=self.login_details['username'], password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         self.form_input['date'] = datetime.date.today()
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
@@ -146,9 +130,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_create_meeting_endpoint_with_date_not_3_days_after_current_day_returns_400_bad_request(self):
-        self.client.login(
-            username=self.login_details['username'], password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         current_year = datetime.date.today().strftime("%Y")
         current_month = datetime.date.today().strftime("%m")
         current_day = datetime.date.today().strftime("%d")
@@ -161,9 +144,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_create_meeting_endpoint_with_user_member_role_in_club_returns_403_forbidden(self):
-        self.client.login(
-            username=self.member_user.username, password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.member_user)
+        self.assertTrue(self.member_user.is_authenticated)
         self.form_input['organiser'] = self.member_user.id
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
@@ -172,9 +154,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_post_create_meeting_endpoint_with_user_owner_role_in_club_returns_403_forbidden(self):
-        self.client.login(
-            username=self.owner_user.username, password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.owner_user)
+        self.assertTrue(self.owner_user.is_authenticated)
         self.form_input['organiser'] = self.owner_user.id
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
@@ -183,9 +164,8 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_post_create_meeting_endpoint_with_non_existing_club_returns_404_not_found(self):
-        self.client.login(
-            username=self.user.username, password=self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         invalid_url = reverse("create_meeting", kwargs={'club_id': 10})
         self.form_input['organiser'] = self.user.id
         before = Meeting.objects.count()
@@ -193,6 +173,13 @@ class CreateMeetingViewTestCase(APITestCase, LogInTester):
         after = Meeting.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_unauthenticated_request_returns_unauthorised(self):
+        before = Meeting.objects.count()
+        response = self.client.post(self.url, self.form_input)
+        after = Meeting.objects.count()
+        self.assertEqual(after, before)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 
