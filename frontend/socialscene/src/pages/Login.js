@@ -9,15 +9,7 @@ import AuthContext from "../components/AuthContext";
 
 function Login() {
 
-    // const handleChange = (e) => {
-    //     setUserData( prevData => ({...prevData, [event.target.name]: event.target.value}))
-    //  }; 
-
     let {loginUser} = useContext(AuthContext)
-   
-    // const onSubmit = e => {
-    //     loginUser(username, password);
-    // };
     
     return (
         <Grid container direction={"row"} className={"login-grid"}  spacing={2}>
