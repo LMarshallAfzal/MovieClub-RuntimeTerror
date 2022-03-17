@@ -1,4 +1,4 @@
-import React, {Component, Fragment, useContext} from "react";
+import React, {useContext, useState} from "react";
 import "../styling/pages/Login.css";
 import HeadingCircle from "../components/HeadingCircle";
 import {Box, Grid, Stack, TextField, Button} from "@mui/material";
@@ -6,23 +6,32 @@ import FormButton from "../components/FormButton";
 import Cookies from "js-cookie";
 import CsrfToken from "../components/CsrfToken";
 import AuthContext from "../components/AuthContext";
-import {Navigate} from "react-router-dom";
 
 function Login() {
-    let {loginUser} = useContext(AuthContext)
-    return (
-        <Grid className={"login-grid"}  spacing={2}>
-            <CsrfToken />
 
-            <Grid className={"login-grid-left"} item xs={6}>
+    // const handleChange = (e) => {
+    //     setUserData( prevData => ({...prevData, [event.target.name]: event.target.value}))
+    //  }; 
+
+    let {loginUser} = useContext(AuthContext)
+   
+    // const onSubmit = e => {
+    //     loginUser(username, password);
+    // };
+    
+    return (
+        <Grid container direction={"row"} className={"login-grid"}  spacing={2}>
+            {/* <CsrfToken /> */}
+
+            <Grid  className={"login-grid-left"} item xs={6}>
                 <HeadingCircle title={"log in"}/>
             </Grid>
 
-            <Grid className={"login-grid-right"} item xs={6}
+            <Grid  className={"login-grid-right"} item xs={6}
                 alignItems="center"
                 justifyContent="center">
                 
-                <Box component="form" onSubmit={loginUser}>
+                <Box component={"form"} onSubmit={loginUser} className={"login-grid-right"} spacing={3}>
                     <Stack className={"form-stack"} spacing={3} height={"100%"}> 
                         <TextField
                             className={"form-field"}
@@ -51,23 +60,25 @@ function Login() {
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
                                     <Button
-                                        type="submit"    
+                                        type="submit"
+                                        text={"log in"}   
                                     >
                                         log in
-                                    </Button>
+                                    </Button>    
                                 </Box>
 
-                                {/* <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>
+                                <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>
                                     <FormButton
+                                        type="submit"
                                         text={"forgot password"}
                                     />
-                                </Box> */}
+                                </Box>
                             </Box>
                         </div>
                     </Stack>
                 </Box>
             </Grid>
-        </Grid>                        
+        </Grid>    
     );
 }
    
