@@ -12,6 +12,7 @@ import Movies from "./Movies";
 import WhatsOn from "./WhatsOn";
 import Options from "./Options";
 import Home from "./Home";
+import Profile from "./Profile";
 import OthersProfile from "./OthersProfile";
 import ChangePassword from "./ChangePassword";
 import PrivateRoute from "../components/PrivateRoute";
@@ -30,7 +31,6 @@ function App() {
                       <Route path={"*"} element={<NotFound404 />}/>
                         <PrivateRoute path={"/home"}  element={(<HomeRouter />)}>
                             <Route index element={(<Home />)} />
-                            <Route path={"dashboard"} element={(<Dashboard />)} />
                             <Route path={"clubs"} element={(<Clubs />)} />
                             <Route path={"movies"} element={(<Movies />)} />
                             <Route path={"whats-on"} element={(<WhatsOn />)} />

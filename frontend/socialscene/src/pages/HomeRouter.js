@@ -25,9 +25,6 @@ import Messages from "./Messages";
     // if (!token) {
     //     return <Login userLogin={userLogin} />
     // }
-import Home from "./Home";
-import OthersProfile from "./OthersProfile";
-import ChangePassword from "./ChangePassword";
 import { AuthProvider } from "../components/AuthContext";
 
 import Cookies from "js-cookie";
