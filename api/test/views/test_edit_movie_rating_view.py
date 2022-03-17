@@ -3,6 +3,7 @@ from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 from api.test.helpers import LogInTester
+from rest_framework.test import force_authenticate,APIClient
 
 class EditMovieRatingViewTestCase(APITestCase,LogInTester):
 
@@ -21,11 +22,12 @@ class EditMovieRatingViewTestCase(APITestCase,LogInTester):
             "movie": self.movie.id,
             "score": 4.0,
         }
-        self.login_details = {'username' : 'johndoe', 'password':'Pa$$w0rd567'}
-        
+        self.client = APIClient()  
+
+
     def test_post_to_edit_rating_endpoint_with_valid_data_edits_rating_returns_200_ok(self):
-        self.client.login(username = self.login_details['username'],password = self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         before = Rating.objects.count()
         response = self.client.put(self.url, self.form_input)
         after = Rating.objects.count()
@@ -33,8 +35,8 @@ class EditMovieRatingViewTestCase(APITestCase,LogInTester):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_post_to_edit_rating_endpoint_with_rating_higher_than_5_does_not_edit_rating_returns_400_bad_request(self):
-        self.client.login(username = self.login_details['username'],password = self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         before = Rating.objects.count()
         input = self.form_input
         input['score'] = 6.0
@@ -44,8 +46,8 @@ class EditMovieRatingViewTestCase(APITestCase,LogInTester):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_to_edit_rating_endpoint_with_rating_less_than_1_does_not_edit_rating_returns_400_bad_request(self):
-        self.client.login(username = self.login_details['username'],password = self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         before = Rating.objects.count()
         input = self.form_input
         input['score'] = 0.0
@@ -55,8 +57,8 @@ class EditMovieRatingViewTestCase(APITestCase,LogInTester):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_to_edit_rating_endpoint_with_invalid_movie_does_not_edit_rating_returns_404_not_found(self):
-        self.client.login(username = self.login_details['username'],password = self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         before = Rating.objects.count()
         invalidMovieUrl = reverse('edit_rating', kwargs={'movie_id':0})
         response = self.client.put(invalidMovieUrl, self.form_input)
@@ -65,8 +67,8 @@ class EditMovieRatingViewTestCase(APITestCase,LogInTester):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_post_to_edit_rating_endpoint_with_movie_that_was_not_rated_does_not_edit_rating_returns_404_not_found(self):
-        self.client.login(username = self.login_details['username'],password = self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         before = Rating.objects.count()
         notRatedMovieUrl = reverse('edit_rating', kwargs={'movie_id':100})
         response = self.client.put(notRatedMovieUrl, self.form_input)
@@ -74,11 +76,11 @@ class EditMovieRatingViewTestCase(APITestCase,LogInTester):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    # def test_post_to_edit_rating_endpoint_with_user_not_logged_in_not_edit_rating(self):
-    #     before = Rating.objects.count()
-    #     response = self.client.put(self.url, self.form_input)
-    #     after = Rating.objects.count()
-    #     self.assertEqual(after, before)
-    #     self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+    def test_post_to_edit_rating_endpoint_with_user_not_logged_in_not_edit_rating(self):
+        before = Rating.objects.count()
+        response = self.client.put(self.url, self.form_input)
+        after = Rating.objects.count()
+        self.assertEqual(after, before)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     
