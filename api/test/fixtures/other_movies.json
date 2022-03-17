@@ -1,0 +1,33 @@
+[
+    {
+      "model": "api.movie",
+      "pk": 2,
+      "fields": {
+        "ml_id": 1,
+        "title": "Pulp Fiction",
+        "year": 1994,
+        "genres": "Crime,Comedy"
+      }
+    },
+    {
+      "model": "api.movie",
+      "pk": 3,
+      "fields": {
+        "ml_id": 2,
+        "title": "Shrek",
+        "year": 2001,
+        "genres": "Children,Comedy"
+      }
+    },
+    {
+      "model": "api.movie",
+      "pk": 4,
+      "fields": {
+        "ml_id": 3,
+        "title": "Django Unchained",
+        "year": 2012,
+        "genres": "Western,Drama"
+      }
+    }
+
+  ]
