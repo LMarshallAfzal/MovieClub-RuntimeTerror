@@ -36,7 +36,6 @@ def csrf_token(request):
     return Response({"result": "Success (CSRF cookie set.)"})
 
 @api_view(['POST'])
-# @csrf_protect
 def sign_up(request):
     data = {}
     serializer = SignUpSerializer(data=request.data)
@@ -57,7 +56,6 @@ def sign_up(request):
 
 @api_view(['POST', 'GET'])
 @csrf_protect
-# @authentication_classes([SessionAuthentication, BasicAuthentication])
 def login(request):
     data = {}
     serializer = LoginSerializer(data=request.data)
@@ -71,7 +69,7 @@ def login(request):
 
 
 @api_view(["GET"])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def log_out(request):
     if request.user.is_authenticated:
         logout(request)
@@ -81,7 +79,7 @@ def log_out(request):
 
 
 @api_view(["PUT"])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def change_password(request):
     serializer = ChangePasswordSerializer(
         data=request.data, context={"request": request}
@@ -94,14 +92,14 @@ def change_password(request):
 
 
 @api_view(["GET"])
-# @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 @csrf_protect
 def get_users(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
 
 @club_exists
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_club_members(request,club_id):
     club = Club.objects.get(id=club_id)
     members = club.get_all_club_members()
@@ -109,7 +107,7 @@ def get_club_members(request,club_id):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_other_user(request,user_id):
     if request.user.is_authenticated:
         try:
@@ -133,7 +131,7 @@ def get_current_user(request):
 
 @api_view(["GET"])
 @movie_exists
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_score(request, movie_id):
     movie = Movie.objects.get(movie_id=movie_id)
     score = Rating.objects.get(user=request.user, movie=movie)
@@ -143,7 +141,6 @@ def get_score(request, movie_id):
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-# @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 def edit_profile(request, user_id):
     # user = request.user
     user = User.objects.get(id=user_id)
@@ -156,7 +153,7 @@ def edit_profile(request, user_id):
 
 
 @api_view(["GET"])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_clubs(request):
     clubs = Club.objects.all()
     serializer = ClubSerializer(clubs, many=True)
@@ -179,7 +176,7 @@ def create_club(request):
 @api_view(["POST"])
 @club_exists
 @is_organiser
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def create_meeting(request,club_id):
     serializer = CreateMeetingSerializer(data=request.data, context={"request": request})
     if serializer.is_valid():
@@ -191,7 +188,7 @@ def create_meeting(request,club_id):
 
 @api_view(["POST"])
 @club_exists
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def join_club(request, club_id):
     club = Club.objects.get(id=club_id)
     club.club_members.add(request.user, through_defaults={'role': 'M'})
@@ -201,7 +198,7 @@ def join_club(request, club_id):
 @api_view(["POST"])
 @club_exists
 @is_member
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def leave_club(request, club_id):
     club = Club.objects.get(id=club_id)
     Membership.objects.get(user=request.user, club=club).delete()
@@ -211,7 +208,7 @@ def leave_club(request, club_id):
 @api_view(['POST'])
 @movie_exists
 @has_not_watched
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def add_watched_movie(request, movie_id):
     serializer = WatchMovieSerializer(
         data=request.data, context={"request": request})
@@ -225,7 +222,7 @@ def add_watched_movie(request, movie_id):
 @api_view(['DELETE'])
 @movie_exists
 @has_watched
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def remove_watched_movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     watched_movie = Watch.objects.get(user=request.user, movie=movie)
@@ -235,7 +232,7 @@ def remove_watched_movie(request, movie_id):
 
 @api_view(['POST'])
 @movie_exists
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def add_rating(request, movie_id):
     serializer = AddRatingSerializer(
         data=request.data, context={"request": request})
@@ -248,7 +245,7 @@ def add_rating(request, movie_id):
 
 @api_view(['PUT'])
 @movie_exists
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def change_rating(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     serializer = ChangeRatingSerializer(movie, data=request.data)
@@ -260,8 +257,7 @@ def change_rating(request, movie_id):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
-# @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+
 def recommend_movie_user(request):
     recommendations = []
     recommender = Recommender(request.user)
@@ -271,7 +267,7 @@ def recommend_movie_user(request):
 
 
 @api_view(['GET'])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def recommend_club(request):
     recommender = Recommender(request.user)
     recommendations = recommender.recommend_clubs()
@@ -280,7 +276,7 @@ def recommend_club(request):
 
 
 @api_view(["GET"])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_memberships_of_user(request, user_id):
     user = User.objects.get(id=user_id)
     clubs = user.get_user_clubs()
@@ -289,14 +285,14 @@ def get_memberships_of_user(request, user_id):
 
 
 @api_view(['GET'])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     serializer = MovieSerializer(movie, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_watched_list(request):
     if request.user.is_authenticated:
         movies = request.user.get_watched_movies()
