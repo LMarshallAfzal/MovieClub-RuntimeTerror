@@ -4,7 +4,7 @@ from rest_framework import serializers
 from api.models import *
 from rest_framework.validators import UniqueValidator
 from rest_framework.authtoken.models import Token
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.core.validators import RegexValidator
 import datetime
 from datetime import timedelta
@@ -155,6 +155,7 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError(msg, code='authorisation')
 
         elif User.objects.filter(username=user.username).filter(password=user.password):
+            login(request=self.context["request"], user=user)
             return user
 
         else:
