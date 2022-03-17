@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import "../styling/pages/HomeRouter.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import NameHeader from "../components/NameHeader";
 import { Grid } from "@mui/material";
@@ -15,7 +15,6 @@ import OthersProfile from "./OthersProfile";
 import ChangePassword from "./ChangePassword";
 import Messages from "./Messages";
 
-function HomeRouter() {
     // const [token, setToken] = useState('');
 
     // const userLogin = (tok) => {
@@ -26,9 +25,20 @@ function HomeRouter() {
     // if (!token) {
     //     return <Login userLogin={userLogin} />
     // }
+import Home from "./Home";
+import OthersProfile from "./OthersProfile";
+import ChangePassword from "./ChangePassword";
+import { AuthProvider } from "../components/AuthContext";
 
+import Cookies from "js-cookie";
+import CsrfToken from "../components/CsrfToken";
+// import { AuthProvider } from "../components/AuthContext";
+
+
+function HomeRouter() {
     return (
         <>
+        <CsrfToken/>
             <Grid className={"home-grid"} container>
                 <Grid className={"home-grid-L-sidebar"} item xs={3}>
                     <NameHeader
@@ -49,10 +59,11 @@ function HomeRouter() {
                         <Route path={"others-profile"} element={(<OthersProfile />)} /> //SUBJECT TO BE CHANGED
                         <Route path={"messages"} element={(<Messages />)} /> //SUBJECT TO BE CHANGED
                     </Routes>
+                 <Outlet/>
                 </Grid>
             </Grid>
         </>
     );
-}
+}    
 
 export default HomeRouter;

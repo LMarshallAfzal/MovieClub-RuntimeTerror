@@ -1,69 +1,53 @@
-import React from "react";
+import React, {useState, useContext} from "react";
 import "../styling/pages/Signup.css"
 import HeadingCircle from "../components/HeadingCircle";
-import {Box, Grid, Stack, TextField} from "@mui/material";
+import {Box, Grid, Stack, TextField, Button} from "@mui/material";
 import FormButton from "../components/FormButton";
-import {Link, useLocation} from "react-router-dom";
 import Cookies from "js-cookie";
+import AuthContext from "../components/AuthContext";
 import CsrfToken from "../components/CsrfToken";
+import { useNavigate } from "react-router-dom"
 
-class Signup extends React.Component {
+const Signup = () => {
+    let {loginUser} = useContext(AuthContext)
 
-    constructor(){
-        super()
-        this.state={
-            username:'',
-            first_name:'',
-            last_name:'',
-            email:'',
-            bio:'',
-            preferences:'',
-            password:'',
-            password_confirmation:''
-        }
-        this.changeHandler=this.changeHandler.bind(this)
-        this.submitForm=this.submitForm.bind(this)
-    }
-
-    changeHandler(event) {
-        this.setState({
-            [event.target.name]:event.target.value
-        });
-    }
-
-    submitForm() {
-      fetch("http://127.0.0.1:8000/sign_up/", {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "X-CSRFToken": Cookies.get("csrftoken"),
-        },
-        body: JSON.stringify(this.state),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Something went wrong...");
-          } else {
-            return response.json();
-          }
+    let submitSignupForm = async (e) => {
+        e.preventDefault()
+        let response = await fetch("http://127.0.0.1:8000/sign_up/", {
+            method: "POST",
+            body: JSON.stringify({
+                "username": e.target.username.value, 
+                "first_name": e.target.first_name.value, 
+                "last_name": e.target.last_name.value,
+                "email": e.target.email.value,
+                "bio": e.target.bio.value, 
+                "preferences": e.target.preferences.value,
+                "password": e.target.password.value, 
+                "password_confirmation": e.target.password_confirmation.value
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
         })
-        .catch((err) => console.error(err));
+        let data = await response.json()
+        if(response.status === 201) {
+            return (loginUser(e))
+        }
+        else {
+            alert("Invalid credentials")
+        }  
     }
+    
+    return (
+        <Grid className={"login-grid"} container spacing={2}>
+            <CsrfToken />
 
-    render() {
-        return (
-            <Grid className={"login-grid"} container spacing={2}>
-                <CsrfToken />
+            <Grid className={"login-grid-left"} item xs={6}>
+                <HeadingCircle title={"sign up"}/>
+            </Grid>
 
-                <Grid className={"login-grid-left"} item xs={6}>
-                    <HeadingCircle title={"sign up"}/>
-                </Grid>
-
-                <Grid className={"login-grid-right"} item xs={6}>
+            <Grid className={"login-grid-right"} item xs={6}>
+                <Box component="form" onSubmit={submitSignupForm}>
                     <Stack className={"form-stack"} spacing={3}>
                         <TextField
                             id={"outlined-basic"}
@@ -71,8 +55,6 @@ class Signup extends React.Component {
                             name={"username"}
                             type={"text"}
                             variant={"outlined"}
-                            value={this.state.username}
-                            onChange={this.changeHandler}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -80,8 +62,6 @@ class Signup extends React.Component {
                             name={"first_name"}
                             type={"text"}
                             variant={"outlined"}
-                            onChange={this.changeHandler}
-                            value={this.state.first_name}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -89,8 +69,6 @@ class Signup extends React.Component {
                             name={"last_name"}
                             type={"text"}
                             variant={"outlined"}
-                            onChange={this.changeHandler}
-                            value={this.state.last_name}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -98,8 +76,6 @@ class Signup extends React.Component {
                             name={"email"}
                             type={"email"}
                             variant={"outlined"}
-                            onChange={this.changeHandler}
-                            value={this.state.email}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -107,8 +83,6 @@ class Signup extends React.Component {
                             name={"bio"}
                             type={"text"}
                             variant={"outlined"}
-                            onChange={this.changeHandler}
-                            value={this.state.bio}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -116,8 +90,6 @@ class Signup extends React.Component {
                             name={"preferences"}
                             type={"text"}
                             variant={"outlined"}
-                            onChange={this.changeHandler}
-                            value={this.state.preferences}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -125,8 +97,6 @@ class Signup extends React.Component {
                             name={"password"}
                             type={"password"}
                             variant={"outlined"}
-                            onChange={this.changeHandler}
-                            value={this.state.password}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -134,8 +104,6 @@ class Signup extends React.Component {
                             name={"password_confirmation"}
                             type={"password"}
                             variant={"outlined"}
-                            onChange={this.changeHandler}
-                            value={this.state.password_confirmation}
                         />
 
                         <div className={"single-button"}>
@@ -147,25 +115,25 @@ class Signup extends React.Component {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                    <Link to={"/home"} className={"navbar-enter-button"}>
-                                        <FormButton
-                                            text={"sign up"}
-                                            onClick={this.submitForm}
-                                        />
-                                    </Link>
+                                        <Button
+                                            // text={"sign up"}
+                                            // onClick={this.submitForm}
+                                            type="submit"
+                                        >
+                                            sign up
+                                        </Button>                                                    
                                 </Box>
                             </Box>
                         </div>
                     </Stack>
-
-                </Grid>
-
-                <Grid className={"login-grid-right"} item xs={6}>
-                    <></>
-                </Grid>
+                </Box>    
             </Grid>
-        )
-    }
+
+            <Grid className={"login-grid-right"} item xs={6}>
+                <></>
+            </Grid>
+        </Grid>
+    )
 }
 
 export default Signup;
