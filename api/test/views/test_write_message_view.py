@@ -57,7 +57,7 @@ class WriteMessageViewTestCase(APITestCase,LogInTester):
         response = self.client.post(invalid_url, self.form_input)
         after = Message.objects.filter(club = self.non_member_club).count()
         self.assertEqual(before, after)
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_post_to_write_message_endpoint_with_invalid_club_does_not_create_new_message_returns_404_not_found(self):
         self.client.login(username = self.login_details['username'],password = self.login_details['password'])

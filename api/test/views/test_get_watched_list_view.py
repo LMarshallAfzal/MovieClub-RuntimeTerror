@@ -27,7 +27,6 @@ class WatchListTestCase(APITestCase, LogInTester):
     def test_get_to_retrieve_watched_movies_endpoint_retrieves_watched_movies_returns_200_ok(self):
         self.client.login(username = self.details['username'],password = self.details['password'])
         self.assertTrue(self._is_logged_in())
-        self.assertTrue(self._is_logged_in())
         self._create_test_watched_movies()
         response = self.client.get(self.url)
         watched_movies = self.user.get_watched_movies()
@@ -37,7 +36,6 @@ class WatchListTestCase(APITestCase, LogInTester):
 
     def test_get_to_retrieve_watched_movies_endpoint_with_no_watched_movies_returns_200_ok(self):
         self.client.login(username = self.details['username'],password = self.details['password'])
-        self.assertTrue(self._is_logged_in())
         self.assertTrue(self._is_logged_in())
         response = self.client.get(self.url)
         watched_movies = self.user.get_watched_movies()

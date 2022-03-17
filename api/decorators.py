@@ -60,7 +60,7 @@ def is_member(view_function):
         try: 
             Membership.objects.get(user = request.user, club=club)
         except ObjectDoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_403_FORBIDDEN)
         else:
             return view_function(request,club_id,*args,**kwargs)
     return modified_view_function

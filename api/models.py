@@ -92,12 +92,19 @@ class Club(models.Model):
 
     club_members = models.ManyToManyField(User, through='Membership')
 
+    club_messages = models.ManyToManyField('Message', related_name='club_messages')
+
+    club_meetings = models.ManyToManyField('Meeting', related_name='club_meetings')
+
     def get_all_club_members(self):
         return self.club_members.all()
 
     def get_club_membership(self, user):
         membership = Membership.objects.get(user=user, club=self).role
         return membership
+
+    def get_club_messages(self):
+        return self.club_messages.all()
 
     def __unicode__(self):
         return '%d: %s' % (self.club_name)
@@ -122,8 +129,6 @@ class Membership(models.Model):
         choices=STATUS_CHOICES,
         default="M"
         )
-
-    meetings = models.ManyToManyField('Meeting')
 
     """We must ensure that only one relationship is created per User-Club pair."""
     class Meta:
@@ -196,7 +201,7 @@ class Meeting(models.Model):
 
     end_time = models.TimeField(auto_now=False, blank=False)
 
-    attendees = models.ManyToManyField(Membership, related_name="attendees")
+    attendees = models.ManyToManyField(User, related_name="attendees")
 
     meeting_link = models.CharField(max_length=100,blank=False)
 
@@ -215,8 +220,6 @@ class Message(models.Model):
     message = models.CharField(max_length=1500)
 
     timestamp = models.DateTimeField(auto_now=True)
-
-    is_read = models.BooleanField(default=False)
 
     def __str__(self):
             return self.message
