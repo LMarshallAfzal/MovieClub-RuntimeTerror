@@ -19,11 +19,12 @@ const ChangePassword = () => {
     }; 
 
     let submitChangePasswordForm = async (e) => {
+        e.preventDefault()
         let response = await fetch('http://127.0.0.1:8000/change_password/', {
             method: 'PUT',
-            body: JSON.stringify({
-                "old_password": e.target.old_password.value,
-                "new_password": e.target.new_password.value,
+            body:JSON.stringify({
+                "old_password": e.target.old_password.value, 
+                "new_password": e.target.new_password.value, 
                 "new_password_confirmation": e.target.new_password_confirmation.value,
             }),
             headers: {
@@ -48,10 +49,10 @@ const ChangePassword = () => {
     // let data = await response.json()
 
 
-    useEffect((e) => { 
-        // e.preventDefault();
-        submitChangePasswordForm()
-    })
+    // useEffect((e) => { 
+    //     // e.preventDefault();
+    //     submitChangePasswordForm()
+    // })
     
     return (
         <table className="change-password-table style={{ borderSpacing: 0 }}">
@@ -60,7 +61,7 @@ const ChangePassword = () => {
             </tr>
             <tr>
                 <td className='text-field'>
-                    <Box component="form">
+                    <Box component="form" onSubmit={submitChangePasswordForm}>
                     <Stack className={"form-stack"} spacing={2}
                         height={"100%"}>
                         <div className='change-password-text'>Change Password:</div>
@@ -72,7 +73,6 @@ const ChangePassword = () => {
                             type={"password"}
                             variant={"outlined"}
                             // value={passwordData.old_password}
-                            // onChange={handleChange}
                         />
 
                         <TextField
@@ -93,7 +93,7 @@ const ChangePassword = () => {
                             name={"new_password_confirmation"}
                             type={"password"}
                             variant={"outlined"}
-                            // value={e.t}
+                            // value={passwordData.new_password_confirmation}
                             // onChange={handleChange}
                         />
                         <div className={"form-field"}>
