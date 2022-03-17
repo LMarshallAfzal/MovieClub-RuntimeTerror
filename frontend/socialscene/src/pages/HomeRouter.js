@@ -14,7 +14,7 @@ import Home from "./Home";
 import Login from "./Login";
 import OthersProfile from "./OthersProfile";
 import ChangePassword from "./ChangePassword";
-import Forum from "./Forum";
+import Messages from "./Messages";
 
 function HomeRouter() {
     // const [token, setToken] = useState('');
@@ -49,7 +49,7 @@ function HomeRouter() {
                         <Route path={"options"} element={(<Options />)} />
                         <Route path={"change-password"} element={(<ChangePassword />)} />
                         <Route path={"others-profile"} element={(<OthersProfile />)} /> //SUBJECT TO BE CHANGED
-                        <Route path={"forum"} element={(<Forum />)} /> //SUBJECT TO BE CHANGED
+                        <Route path={"messages"} element={(<Messages />)} /> //SUBJECT TO BE CHANGED
                     </Routes>
                 </Grid>
             </Grid>

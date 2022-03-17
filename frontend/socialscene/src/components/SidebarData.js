@@ -33,12 +33,12 @@ export const SidebarData = [
         cName: 'sidebar-text'
     },
     {
-        title: 'options',
-        path: '/home/options',
+        title: 'messages',
+        path: '/home/messages',
         cName: 'sidebar-text'
     },
     {
-        title: 'settings',
+        title: 'options',
         path: '/home/change-password',
         cName: 'sidebar-text'
     },

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import "../styling/pages/Forum.css";
+import "../styling/pages/Messages.css";
 import { Stack, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, CardMedia, Avatar, Box, Card, CardContent, TextField, Typography, Grid, Paper, Divider, FormControl, IconButton, Collapse, Alert, Button } from "@mui/material";
 import FormButton from "../components/FormButton";
 import iconImage from "../styling/testIconPic.jpg";
@@ -8,7 +8,7 @@ import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
 import poster from '../styling/jack-giant.jpg';
 
-function Forum() {
+function Messages() {
     const [openReminder, setOpenReminder] = React.useState(true);
 
     const [open, setOpen] = React.useState(false);
@@ -32,13 +32,13 @@ function Forum() {
                 container
                 direction={"row"}
                 paddingBottom={"10px"}>
-                <Grid xs={9} item>
+                <Grid xs={12} item>
                     <div className='others-profile-info-text'>
-                        <div style={{ paddingBottom: '10px' }}>Club 1 Forum</div>
+                        <div style={{ paddingBottom: '10px' }}>Club 1</div>
                     </div>
                 </Grid>
                 {/* IF NOT YOU ARE THE ORGANISER, HIDE THE BELOW GRID*/}
-                <Grid xs={3} item>
+                {/* <Grid xs={3} item>
                     <div>
                         <div>
                             <FormButton text={"Create new meeting +"} onClick={handleClickOpen}>
@@ -60,7 +60,7 @@ function Forum() {
                             </DialogActions>
                         </Dialog>
                     </div>
-                </Grid>
+                </Grid> */}
             </Grid>
             <Grid container>
                 <Grid xs={12} item style={{ paddingBottom: '10px' }}>
@@ -169,4 +169,4 @@ function Forum() {
 
 }
 
-export default Forum;
+export default Messages;
