@@ -15,7 +15,7 @@ class EditUserViewTestCase(APITestCase,LogInTester):
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
         self.second_user = User.objects.get(username='janedoe')
-        self.url = reverse('edit_profile', kwargs={'username':self.user.username})
+        self.url = reverse('edit_profile', kwargs={'user_id':self.user.id})
         self.form_input = {
             "username": "johndoe",
             "first_name": "John",
