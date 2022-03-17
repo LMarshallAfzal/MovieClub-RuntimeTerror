@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import "../styling/pages/Forum.css";
-import { CardMedia, Avatar, Box, Stack, Card, CardContent, TextField, Typography, Grid, Paper, ListItemText, ListItemButton, List, Divider, FormControl, IconButton, Collapse, Alert, Button } from "@mui/material";
+import { Stack, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, CardMedia, Avatar, Box, Card, CardContent, TextField, Typography, Grid, Paper, Divider, FormControl, IconButton, Collapse, Alert, Button } from "@mui/material";
 import FormButton from "../components/FormButton";
 import iconImage from "../styling/testIconPic.jpg";
 import { comments, meeting } from './DummyForumData';
@@ -9,14 +9,56 @@ import CloseIcon from '@mui/icons-material/Close';
 import poster from '../styling/jack-giant.jpg';
 
 function Forum() {
-    const [open, setOpen] = React.useState(true);
+    const [openReminder, setOpenReminder] = React.useState(true);
+
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
+
+    const handleChange = (newValue) => {
+        setValue(newValue);
+    };
 
     return (
         <>
-            <Grid container>
-                <Grid xs={12} item>
+            <Grid
+                container
+                direction={"row"}
+                paddingBottom={"10px"}>
+                <Grid xs={9} item>
                     <div className='others-profile-info-text'>
                         <div style={{ paddingBottom: '10px' }}>Club 1 Forum</div>
+                    </div>
+                </Grid>
+                {/* IF NOT YOU ARE THE ORGANISER, HIDE THE BELOW GRID*/}
+                <Grid xs={3} item>
+                    <div>
+                        <div>
+                            <FormButton text={"Create new meeting +"} onClick={handleClickOpen}>
+                            </FormButton>
+                        </div>
+                        <Dialog open={open} onClose={handleClose}>
+                            <DialogTitle>Create new meeting</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    You are currently the organiser of this club.
+                                    Select one of the recommended movies, and choose a date and the time for the meeting.
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <FormButton text={"Cancel"} onClick={handleClose}>
+                                </FormButton>
+                                <FormButton text={"Create Meeting"} onClick={handleClose}>
+                                </FormButton>
+                            </DialogActions>
+                        </Dialog>
                     </div>
                 </Grid>
             </Grid>
@@ -24,7 +66,7 @@ function Forum() {
                 <Grid xs={12} item style={{ paddingBottom: '10px' }}>
                     <Box sx={{ width: '100%' }} className="meeting-card">
                         <Paper elevation={'5'}>
-                            <Collapse in={open}>
+                            <Collapse in={openReminder}>
                                 <Alert severity="info"
                                     action={
                                         <IconButton
@@ -32,7 +74,7 @@ function Forum() {
                                             color="inherit"
                                             size="small"
                                             onClick={() => {
-                                                setOpen(false);
+                                                setOpenReminder(false);
                                             }}
                                         >
                                             <CloseIcon fontSize="inherit" />
