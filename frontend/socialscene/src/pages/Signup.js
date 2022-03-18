@@ -8,22 +8,38 @@ import AuthContext from "../components/AuthContext";
 import CsrfToken from "../components/CsrfToken";
 import { useNavigate } from "react-router-dom"
 
-const Signup = () => {
-    let {loginUser} = useContext(AuthContext)
+export const Signup = () => {
+    let {loginUser, setLoginCredentials} = useContext(AuthContext)
+    let [signupCredentials, setSignupCredentials] = useState({
+        username:'',
+        first_name:'',
+        last_name:'',
+        email:'',
+        bio:'',
+        preferences:'',
+        password:'',
+        password_confirmation:'',
+    })
+    const {username, first_name, last_name, email, bio, preferences, password, password_confirmation} = signupCredentials
+
+    const onChange = (e) => {
+        setSignupCredentials(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
+        
+    };
 
     let submitSignupForm = async (e) => {
         e.preventDefault()
         let response = await fetch("http://127.0.0.1:8000/sign_up/", {
             method: "POST",
             body: JSON.stringify({
-                "username": e.target.username.value, 
-                "first_name": e.target.first_name.value, 
-                "last_name": e.target.last_name.value,
-                "email": e.target.email.value,
-                "bio": e.target.bio.value, 
-                "preferences": e.target.preferences.value,
-                "password": e.target.password.value, 
-                "password_confirmation": e.target.password_confirmation.value
+                "username": signupCredentials.username, 
+                "first_name": signupCredentials.first_name, 
+                "last_name": signupCredentials.last_name,
+                "email": signupCredentials.email,
+                "bio": signupCredentials.bio, 
+                "preferences": signupCredentials.preferences,
+                "password": signupCredentials.password, 
+                "password_confirmation": signupCredentials.password_confirmation
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -31,10 +47,11 @@ const Signup = () => {
         })
         let data = await response.json()
         if(response.status === 201) {
+            setLoginCredentials(signupCredentials.username, signupCredentials.password)
             return (loginUser(e))
         }
         else {
-            alert("Invalid credentials")
+            alert(response.statusText)
         }  
     }
     
@@ -55,6 +72,8 @@ const Signup = () => {
                             name={"username"}
                             type={"text"}
                             variant={"outlined"}
+                            value={username}
+                            onChange={e => onChange(e)}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -62,6 +81,8 @@ const Signup = () => {
                             name={"first_name"}
                             type={"text"}
                             variant={"outlined"}
+                            value={first_name}
+                            onChange={e => onChange(e)}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -69,6 +90,8 @@ const Signup = () => {
                             name={"last_name"}
                             type={"text"}
                             variant={"outlined"}
+                            value={last_name}
+                            onChange={e => onChange(e)}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -76,6 +99,8 @@ const Signup = () => {
                             name={"email"}
                             type={"email"}
                             variant={"outlined"}
+                            value={email}
+                            onChange={e => onChange(e)}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -83,6 +108,8 @@ const Signup = () => {
                             name={"bio"}
                             type={"text"}
                             variant={"outlined"}
+                            value={bio}
+                            onChange={e => onChange(e)}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -90,6 +117,8 @@ const Signup = () => {
                             name={"preferences"}
                             type={"text"}
                             variant={"outlined"}
+                            value={preferences}
+                            onChange={e => onChange(e)}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -97,6 +126,8 @@ const Signup = () => {
                             name={"password"}
                             type={"password"}
                             variant={"outlined"}
+                            value={password}
+                            onChange={e => onChange(e)}
                         />
                         <TextField
                             id={"outlined-basic"}
@@ -104,6 +135,8 @@ const Signup = () => {
                             name={"password_confirmation"}
                             type={"password"}
                             variant={"outlined"}
+                            value={password_confirmation}
+                            onChange={e => onChange(e)}
                         />
 
                         <div className={"single-button"}>
@@ -115,13 +148,11 @@ const Signup = () => {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                        <Button
-                                            // text={"sign up"}
-                                            // onClick={this.submitForm}
-                                            type="submit"
-                                        >
-                                            sign up
-                                        </Button>                                                    
+                                    <FormButton
+                                        type="submit"
+                                        text={"log in"}   
+                                        onClick={submitSignupForm}
+                                    />                                                    
                                 </Box>
                             </Box>
                         </div>

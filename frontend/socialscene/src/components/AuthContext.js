@@ -1,6 +1,7 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState, useEffect, useContext } from "react"
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
+import Login from "../pages/Login";
 import { useNavigate } from "react-router-dom";
 
 
@@ -13,6 +14,11 @@ export const AuthProvider = ({children}) => {
     let [authTokens, setAuthTokens] = useState(localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null)
     let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
     let [loading, setLoading] = useState(true)
+    let [loginCredentials, setLoginCredentials] = useState({
+        username: '', 
+        password: '',
+
+    })
     const navigate = useNavigate()
 
 
@@ -25,7 +31,7 @@ export const AuthProvider = ({children}) => {
                 "Content-Type": "application/json",
                 // "X-CSRFToken": Cookies.get("csrftoken"),
             },
-            body: JSON.stringify({"username": e.target.username.value, "password": e.target.password.value})
+            body: JSON.stringify({'username': loginCredentials.username, 'password': loginCredentials.password})
         })
         let data = await response.json()
         if(response.status === 200) {
@@ -78,6 +84,8 @@ export const AuthProvider = ({children}) => {
     let contextData = {
         user: user,
         authTokens:authTokens,
+        loginCredentials:loginCredentials,
+        setLoginCredentials:setLoginCredentials,
         loginUser: loginUser,
         // logoutUser: logoutUser
     }    

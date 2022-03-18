@@ -7,13 +7,21 @@ import Cookies from "js-cookie";
 import CsrfToken from "../components/CsrfToken";
 import AuthContext from "../components/AuthContext";
 
-function Login() {
 
-    let {loginUser} = useContext(AuthContext)
+
+export function Login() {
+
+    let {loginUser, loginCredentials, setLoginCredentials} = useContext(AuthContext)
     
+    const {username, password} = loginCredentials;
+    
+    const onChange = (e) => {
+        setLoginCredentials(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
+    };
+
     return (
         <Grid container direction={"row"} className={"login-grid"}  spacing={2}>
-            {/* <CsrfToken /> */}
+            <CsrfToken />
 
             <Grid  className={"login-grid-left"} item xs={6}>
                 <HeadingCircle title={"log in"}/>
@@ -31,6 +39,8 @@ function Login() {
                             label={"username"}
                             name={"username"}
                             variant={"outlined"}
+                            value={username}
+                            onChange={e => onChange(e)}
                         />
 
                         <TextField
@@ -40,6 +50,8 @@ function Login() {
                             name={"password"}
                             type={"password"}
                             variant={"outlined"}
+                            value={password}
+                            onChange={e => onChange(e)}
                         />
 
                         <div className={"form-field"}>
@@ -51,12 +63,13 @@ function Login() {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                    <Button
+                                    <FormButton
                                         type="submit"
                                         text={"log in"}   
-                                    >
-                                        log in
-                                    </Button>    
+                                        onClick={loginUser}
+                                    />
+                                        {/* log in
+                                    </FormButton>     */}
                                 </Box>
 
                                 <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>
@@ -70,7 +83,7 @@ function Login() {
                     </Stack>
                 </Box>
             </Grid>
-        </Grid>    
+        </Grid> 
     );
 }
    
