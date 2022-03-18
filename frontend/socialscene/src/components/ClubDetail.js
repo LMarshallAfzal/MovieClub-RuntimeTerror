@@ -39,7 +39,7 @@ function ClubDetail() {
 
             <Grid item xs={6}>
                 <div className={"club-detail-background"}>
-                    <h4 className={"club-detail-heading"}>members:</h4>
+                    <h4 className={"club-member-heading"}>members:</h4>
 
                     <Box sx={{ flexDirection: 'row',
                         flexWrap: 'wrap',

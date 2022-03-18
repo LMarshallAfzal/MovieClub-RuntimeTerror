@@ -3,6 +3,13 @@
 .club-detail-heading {
   padding: 10px;
   color: base.$primary-white;
+  background-color: base.$grey-3;
+  user-select: none;
+}
+
+.club-member-heading {
+  padding: 10px;
+  color: base.$primary-white;
   background-color: base.$grey-4;
   user-select: none;
 }

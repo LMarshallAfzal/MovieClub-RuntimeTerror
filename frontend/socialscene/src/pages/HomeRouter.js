@@ -12,8 +12,8 @@ import Profile from "./Profile";
 import Options from "./Options";
 import Home from "./Home";
 import ClubDetail from "../components/ClubDetail";
-import Login from "./Login";
 import ChangePassword from "./ChangePassword";
+import NewClub from "./NewClubForm";
 
 function HomeRouter() {
     const [token, setToken] = useState('');
@@ -43,6 +43,7 @@ function HomeRouter() {
                         <Route path={"dashboard"} element={(<Dashboard />)}/>
                         <Route path={"clubs"} element={(<Clubs />)}>
                             <Route path={":clubID"} element={(<ClubDetail />)}/>
+                            <Route path={"clubs/new"} element={(<NewClub />)}/>
                         </Route>
                         <Route path={"movies"} element={(<Movies />)}/>
                         <Route path={"whats-on"} element={(<WhatsOn />)}/>

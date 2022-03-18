@@ -1,14 +1,19 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {Box, Grid, List, ListItem, Paper, Stack, TextField} from "@mui/material";
-import {Outlet} from "react-router-dom";
+import {Outlet, useHistory} from "react-router-dom";
 import "../styling/pages/Clubs.css";
 import FormButton from "../components/FormButton";
 import ClubListing from "../components/ClubListing";
 import {DummyClubData} from "./DummyClubsData";
+import {useNavigate} from "react-router";
 
 
 
-function clubs() {
+function Clubs() {
+
+    const navigate = useNavigate();
+    const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
+
 
 
     return (
@@ -37,6 +42,7 @@ function clubs() {
                 <FormButton
                     className={"create-button"}
                     text={"create"}
+                    onClick={createNewClub}
                 />
             </Grid>
 
@@ -117,4 +123,4 @@ function clubs() {
     );
 }
 
-export default clubs;
+export default Clubs;
