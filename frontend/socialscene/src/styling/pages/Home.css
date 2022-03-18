@@ -91,15 +91,19 @@ h6 {
   font-size: 1.1rem;
 }
 
+.home-page-title {
+  background-color: #C4C4C4;
+  padding: 10px;
+  user-select: none;
+}
+
 .dashboard-text {
   height: 100%;
   font-size: 1.5rem;
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   font-family: Helvetica-Bold, serif;
   width: 100%;
   text-align: center;
@@ -111,16 +115,14 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   font-family: Helvetica, serif;
   width: 100%;
   text-align: center;
 }
 
 .dashboard-text-box {
-  background-color: #F8F7F7;
+  background-color: #D8D8D8;
 }
 
 .table-header {
@@ -129,13 +131,6 @@ h6 {
   width: 100%;
   text-align: left;
   color: black;
-}/*# sourceMappingURL=Home.css.map */
-
-
-.home-page-title {
-  background-color: #C4C4C4;
-  padding: 10px;
-  user-select: none;
 }
 
 /*# sourceMappingURL=Home.css.map */

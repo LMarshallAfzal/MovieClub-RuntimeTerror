@@ -12,6 +12,7 @@ django-cors-headers==3.11.0
 django-filter==21.1
 django-rest-registration==0.7.0
 djangorestframework==3.13.1
+djangorestframework-simplejwt==5.1.0
 entrypoints==0.4
 executing==0.8.2
 Faker==9.3.1

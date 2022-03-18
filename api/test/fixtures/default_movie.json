@@ -3,7 +3,7 @@
       "model": "api.movie",
       "pk": 1,
       "fields": {
-        "movieID": 1000,
+        "ml_id": 0,
         "title": "The Godfather",
         "year": 1972,
         "genres": "Crime"

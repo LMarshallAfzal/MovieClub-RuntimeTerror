@@ -41,6 +41,8 @@ class User(AbstractUser):
         unique=False
     )
 
+    watched_movies = models.ManyToManyField('Movie', through='Watch')
+
     def get_user_clubs(self):
         memberships = Membership.objects.filter(user=self)
         return [membership.club for membership in memberships]
@@ -51,16 +53,30 @@ class User(AbstractUser):
             return None
         else:
             return ratings
-        
+
+    def get_user_memberships(self):
+        memberships = Club.objects.filter(club_members__username=self.username)
+        return memberships
+
     def get_user_preferences(self):
         return self.preferences
+
+    def add_watched_movie(self, movie):
+        self.watched_movies.add(movie)
+        self.save()
+        return
+
+    def get_watched_movies(self):
+        movies = self.watched_movies.all()
+        return movies
+
 
 class Club(models.Model):
 
     club_name = models.CharField(
         max_length=50,
         blank=False,
-        unique=False
+        unique=True
     )
 
     mission_statement = models.CharField(
@@ -68,14 +84,30 @@ class Club(models.Model):
         blank=True,
         unique=False
     )
+    themes = models.CharField(
+        max_length=500,
+        blank=True,
+        unique=False
+    )
 
     club_members = models.ManyToManyField(User, through='Membership')
 
-    def get_club_membership(self, user):
-        return Membership.objects.get(club=self, user=user).role
+    club_messages = models.ManyToManyField('Message', related_name='club_messages')
+
+    club_meetings = models.ManyToManyField('Meeting', related_name='club_meetings')
 
     def get_all_club_members(self):
         return self.club_members.all()
+
+    def get_club_membership(self, user):
+        membership = Membership.objects.get(user=user, club=self).role
+        return membership
+
+    def get_club_messages(self):
+        return self.club_messages.all()
+
+    def __unicode__(self):
+        return '%d: %s' % (self.club_name)
 
 
 class Membership(models.Model):
@@ -92,17 +124,22 @@ class Membership(models.Model):
     ]
     user = ForeignKey(User, on_delete=models.CASCADE)
     club = ForeignKey(Club, on_delete=models.CASCADE)
-    role = models.CharField(max_length=1, choices=STATUS_CHOICES, default="M")
+    role = models.CharField(
+        max_length=1,
+        choices=STATUS_CHOICES,
+        default="M"
+        )
 
     """We must ensure that only one relationship is created per User-Club pair."""
     class Meta:
         unique_together = ('user', 'club')
 
+
 class Movie(models.Model):
 
-    movieID = models.PositiveIntegerField(
-    unique=True,
-    default=0
+    ml_id = models.PositiveIntegerField(
+        unique=True,
+        default=0
     )
 
     title = models.CharField(
@@ -110,7 +147,7 @@ class Movie(models.Model):
         blank=False,
         unique=False
     )
-    
+
     genres = models.CharField(
         max_length=100,
         unique=False,
@@ -121,17 +158,24 @@ class Movie(models.Model):
 
     ratings = models.ManyToManyField(User, through='Rating')
 
+    viewers = models.ManyToManyField(
+        User, through='Watch', related_name='viewers')
+
+    meetings = models.ManyToManyField('Meeting', related_name='meetings')
+
     def get_movie_title(movie_id):
-        return Movie.objects.get(movieID = movie_id).title
+        return Movie.objects.get(movie_id=movie_id).title
+
     class Meta:
         ordering = ['title']
 
-    def get_rating_author(self,user):
-        author = Rating.objects.get(user=user.id,movie=self.id)
+    def get_rating_author(self, user):
+        author = Rating.objects.get(user=user.id, movie=self.id)
         if not user:
             return None
         else:
             return author
+
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -140,7 +184,53 @@ class Rating(models.Model):
 
     score = models.FloatField(
 
-        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
+        validators=[MinValueValidator(1.0), MaxValueValidator(5.0)]
     )
 
 
+class Meeting(models.Model):
+    club = ForeignKey(Club, on_delete=models.CASCADE)
+
+    movie = ForeignKey(Movie, on_delete=models.CASCADE)
+
+    organiser = ForeignKey(User, on_delete=models.CASCADE)
+
+    date = models.DateField(auto_now=False, blank=False)
+
+    start_time = models.TimeField(auto_now=False, blank=False)
+
+    end_time = models.TimeField(auto_now=False, blank=False)
+
+    attendees = models.ManyToManyField(User, related_name="attendees")
+
+    meeting_link = models.CharField(max_length=100,blank=False)
+
+    description = models.CharField(
+        max_length=500,
+        blank=False,
+        unique=False
+    )
+
+
+class Message(models.Model):
+    sender = models.ForeignKey(User,on_delete=models.CASCADE,unique=False)
+
+    club = models.ForeignKey(Club,on_delete=models.CASCADE,unique=False)
+
+    message = models.CharField(max_length=1500)
+
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+            return self.message
+
+    class Meta:
+        ordering = ('timestamp',)
+
+
+class Watch(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+    time_watched = models.DateTimeField(auto_now_add=True)

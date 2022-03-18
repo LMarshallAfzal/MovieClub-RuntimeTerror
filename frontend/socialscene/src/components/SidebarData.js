@@ -8,11 +8,6 @@ export const SidebarData = [
         cName: 'sidebar-text'
     },
     {
-        title: 'dashboard',
-        path: '/home/dashboard',
-        cName: 'sidebar-text'
-    },
-    {
         title: 'clubs',
         path: '/home/clubs',
         cName: 'sidebar-text'
@@ -30,6 +25,11 @@ export const SidebarData = [
     {
         title: 'profile',
         path: '/home/profile',
+        cName: 'sidebar-text'
+    },
+    {
+        title: 'messages',
+        path: '/home/messages',
         cName: 'sidebar-text'
     },
     {

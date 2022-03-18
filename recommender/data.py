@@ -1,3 +1,4 @@
+
 import csv
 from csv import writer
 from surprise import Dataset,Reader
@@ -9,14 +10,23 @@ from api.models import Movie,Rating
 
 class Data:
 
-    def __init__(self,is_club = False):
-        self.is_club = is_club
+    def __init__(self):
         self.ratings_path = 'recommender/dataset-latest/api_ratings.csv'
         self.movie_lens_path = 'recommender/dataset-latest/ratings.csv' 
 
-    def load_movie_data(self,is_club = False):
+    def load_movie_data_for_club_recommender(self):
         ratings_dataset = 0
-        self.get_ratings_user()
+        self.get_ratings_user() #stays for club
+        reader = Reader(line_format='user item rating', sep=',', skip_lines=1)
+        ratings_dataset = Dataset.load_from_file(self.ratings_path, reader = reader)
+        return ratings_dataset
+        
+    def load_movie_data_for_club_meeting(self):
+        pass
+
+    def load_movie_data_for_user(self):
+        ratings_dataset = 0
+        self.get_ratings_user() #stays for club
         self.combine_data()
         reader = Reader(line_format='user item rating', sep=',', skip_lines=1)
         ratings_dataset = Dataset.load_from_file(self.ratings_path, reader = reader)
@@ -28,7 +38,7 @@ class Data:
         writer.writerow(['userID','movieID','rating'])
         ratings = Rating.objects.all()
         for rating in ratings:
-            writer.writerow([rating.user.id,rating.movie.movieID,rating.score])
+            writer.writerow([rating.user.id,rating.movie.ml_id,rating.score])
         api_ratings.close()
     
     def combine_data(self):
