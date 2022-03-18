@@ -340,4 +340,32 @@ class ChangeRatingSerializer(serializers.ModelSerializer):
         model = Rating
         fields = ['score']
 
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ['sender','club','message','timestamp']
 
+
+
+class WriteMessageSerializer(serializers.ModelSerializer):
+    sender = serializers.SlugRelatedField(
+        many=False,
+        slug_field='id',
+        queryset=User.objects.all()
+     )
+    club = serializers.SlugRelatedField(
+        many=False,
+        queryset=Club.objects.all(),
+        slug_field='id'
+    )
+    message = serializers.CharField(
+        required = True, allow_blank=False
+        )
+    class Meta:
+        model = Message
+        fields = ['sender','club','message','timestamp']
+
+    # def create(self, validated_data):
+        
+    #     message = Message.objects.create(validated_data.get('sender'))
+    #     return message
