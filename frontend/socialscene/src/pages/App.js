@@ -18,6 +18,7 @@ import OthersProfile from "./OthersProfile";
 import ChangePassword from "./ChangePassword";
 import PrivateRoute from "../components/PrivateRoute";
 import { AuthProvider } from "../components/AuthContext";
+import Messages from "./Messages";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
                             <Route path={"options"} element={(<Options />)} />
                             <Route path={"change-password"} element={(<ChangePassword />)} />
                             <Route path={"others-profile"} element={(<OthersProfile />)} />
+                            <Route path={"messages"} element={(<Messages />)} />
                         </PrivateRoute>
                   </Routes>
               </AuthProvider>    
