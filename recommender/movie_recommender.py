@@ -54,28 +54,3 @@ def recommend_movies_for_user(target):
         
         data.clean()
         return recommendations
-
-    # def recommend_clubs(self):
-    #     dataset = self.data.load_movie_data_for_club_recommender()
-    #     self.trainSet = dataset.build_full_trainset()
-    #     model = KNNBasic(sim_options={'name': 'cosine', 'user_based': False})
-    #     model.fit(self.trainSet)
-    #     user_inner_id = self.trainSet.to_inner_uid(str(self.target.id))
-
-    #     target_ratings = self.trainSet.ur[user_inner_id]
-    #     k_neighbours = pq.nlargest(
-    #         self.number_of_recommendations, target_ratings, key=lambda t: t[1])
-
-    #     already_joined_clubs = []
-
-    #     for club in self.target.get_user_clubs():
-    #         already_joined_clubs.append(club)
-    #     recommendations = []
-    #     for key in k_neighbours:
-    #         neighbour = Rating.objects.get(id=key[0]).user
-    #         for club in neighbour.get_user_clubs():
-    #             if not club in already_joined_clubs:
-    #                 recommendations.append(club)
-
-    #     self.data.clean()
-    #     return recommendations
