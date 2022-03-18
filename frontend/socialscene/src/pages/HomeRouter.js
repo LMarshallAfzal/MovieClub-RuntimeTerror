@@ -4,7 +4,6 @@ import { Route, Routes, Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import NameHeader from "../components/NameHeader";
 import { Grid } from "@mui/material";
-import Dashboard from "./Dashboard";
 import Clubs from "./Clubs";
 import Movies from "./Movies";
 import WhatsOn from "./WhatsOn";

@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import HomePage from "./Homepage";
 import LogIn from "./Login";
 import NotFound404 from "./NotFound";
-import Dashboard from "./Dashboard";
+// import Dashboard from "./Dashboard";
 import Profile from "./Profile";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Signup from "./Signup";
@@ -32,7 +32,7 @@ function App() {
                       <Route path={"*"} element={<NotFound404 />}/>
                         <PrivateRoute path={"/home"}  element={(<HomeRouter />)}>
                             <Route index element={(<Home />)} />
-                            <Route path={"dashboard"} element={(<Dashboard />)} />
+                            {/* <Route path={"dashboard"} element={(<Dashboard />)} /> */}
                             <Route path={"clubs"} element={(<Clubs />)} />
                             <Route path={"movies"} element={(<Movies />)} />
                             <Route path={"whats-on"} element={(<WhatsOn />)} />
