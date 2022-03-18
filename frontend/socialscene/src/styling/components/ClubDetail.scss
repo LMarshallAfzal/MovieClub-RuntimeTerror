@@ -1,2 +1,12 @@
 @use "../base";
 
+.club-detail-heading {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: base.$primary-white;
+  user-select: none;
+}
+
+.club-detail-background {
+  background-color: base.$grey-4;
+}

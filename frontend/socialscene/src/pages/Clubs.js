@@ -14,18 +14,14 @@ import icon7 from "../styling/example icons/club7.png"
 
 
 function clubs() {
-
-    const DummyYourData = [
-        {ID: 1, clubName: "Movie Club", isMember: true, iconImage: icon1, description: "the main club"},
-        {ID: 2, clubName: "Horror Hoes", isMember: true, iconImage: icon2, description: "horror films"}
-    ]
-
     const DummyClubData = [
-        {ID: 1, clubName: "Some Club", isMember: false, iconImage: icon3, description: "some people in a club"},
-        {ID: 2, clubName: "Terminators", isMember: false, iconImage: icon4, description: "ARNOLD"},
-        {ID: 3, clubName: "runtimeTerror", isMember: false, iconImage: icon5, description: "the boys hangout"},
-        {ID: 4, clubName: "Another Club", isMember: false, iconImage: icon6, description: "horror and action"},
-        {ID: 5, clubName: "modern movies", isMember: false, iconImage: icon7, description: "classics with new films"}
+        {ID: 1, clubName: "Some Club", isMember: false, iconImage: icon3, description: "some people in a club", isOrganiser: false, clubTheme: "action", memberRole: ""},
+        {ID: 2, clubName: "Terminators", isMember: false, iconImage: icon4, description: "ARNOLD", isOrganiser: false, clubTheme: "adventure", memberRole: ""},
+        {ID: 3, clubName: "runtimeTerror", isMember: false, iconImage: icon5, description: "the boys hangout", isOrganiser: false, clubTheme: "X-Rated", memberRole: ""},
+        {ID: 4, clubName: "Another Club", isMember: false, iconImage: icon6, description: "horror and action", isOrganiser: false, clubTheme: "rom-com", memberRole: ""},
+        {ID: 5, clubName: "modern movies", isMember: false, iconImage: icon7, description: "classics with new films", isOrganiser: false, clubTheme: "black & white", memberRole: ""},
+        {ID: 6, clubName: "Movie Club", isMember: true, iconImage: icon1, description: "the main club", isOrganiser: false, clubTheme: "cartoon", memberRole: "MEMBER"},
+        {ID: 7, clubName: "Horror Hoes", isMember: true, iconImage: icon2, description: "horror films", isOrganiser: true, clubTheme: "horror", memberRole: "OWNER"}
     ]
 
     return (
@@ -36,6 +32,11 @@ function clubs() {
             alignItems={"flex-start"}
             spacing={2}
         >
+            <Grid item xs={12}>
+                <div className={"home-page-title"}>
+                    <h3>clubs<h3--emphasise>.</h3--emphasise></h3>
+                </div>
+            </Grid>
             <Grid item xs={10}>
                 <TextField
                     className={"search-bar"}
@@ -60,16 +61,28 @@ function clubs() {
                           spacing={0}
                           className={"club-card-list-frame"}
                     >
-                        {DummyYourData.map((club) =>
-                            <ListItem>
-                            <ClubListing
-                                clubName={club.clubName}
-                                isMember={club.isMember}
-                                iconImage={club.iconImage}
-                                description={club.description}
-                                ID={club.ID}
-                            />
-                        </ListItem>
+                        {DummyClubData.map((club) => {
+                            if (club.isMember === true) {
+                                return (
+                                    <ListItem>
+                                    <ClubListing
+                                        clubName={club.clubName}
+                                        isMember={club.isMember}
+                                        iconImage={club.iconImage}
+                                        description={club.description}
+                                        isOrganiser={club.isOrganiser}
+                                        memberRole={club.memberRole}
+                                        clubTheme={club.clubTheme}
+                                        ID={club.ID}
+                                    />
+                                    </ListItem>
+                                    )
+                            } else {
+                                return (
+                                    <></>
+                                )
+                            }
+                        }
                         )}
                     </Stack>
                 </div>
@@ -83,22 +96,36 @@ function clubs() {
                           spacing={0}
                           className={"club-card-list-frame"}
                     >
-                        {DummyClubData.map((club) =>
-                            <ListItem>
-                            <ClubListing
-                                clubName={club.clubName}
-                                isMember={club.isMember}
-                                iconImage={club.iconImage}
-                                description={club.description}
-                                ID={club.ID}
-                            />
-                        </ListItem>
+                        {DummyClubData.map((club) => {
+                            if (club.isMember === false) {
+                                return (
+                                    <ListItem>
+                                    <ClubListing
+                                        clubName={club.clubName}
+                                        isMember={club.isMember}
+                                        iconImage={club.iconImage}
+                                        description={club.description}
+                                        isOrganiser={club.isOrganiser}
+                                        memberRole={club.memberRole}
+                                        clubTheme={club.clubTheme}
+                                        ID={club.ID}
+                                    />
+                                    </ListItem>
+                                    )
+                            } else {
+                                return (
+                                    <></>
+                                )
+                            }
+                        }
                         )}
-
                     </Stack>
                 </div>
             </Grid>
-            <Outlet/>
+
+            <Grid item xs={12}>
+                    <Outlet/>
+            </Grid>
         </Grid>
     );
 }

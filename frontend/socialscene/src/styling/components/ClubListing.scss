@@ -2,6 +2,7 @@
 
 .club-listing {
     width: 26rem;
+    //height: 10rem;
     background-color: base.$grey-3;
     transition: all 0.3s ease-out;
     user-select: none;
@@ -36,14 +37,15 @@
 }
 
 .club-listing-text {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     flex-grow: 1;
 }
 
-.club-listing-club-name {
+.club-listing-club-chip {
+    margin-right: 10px;
+}
 
+.club-listing-club-name {
     color: base.$primary-black;
     font-family: base.$helvetica;
 }

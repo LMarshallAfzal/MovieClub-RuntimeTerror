@@ -1,6 +1,6 @@
 import React from "react";
 import {useParams} from "react-router";
-import {Avatar, AvatarGroup, Box, Grid, Stack} from "@mui/material";
+import {Avatar, AvatarGroup, Box, Chip, Grid, Stack} from "@mui/material";
 import icon5 from "../styling/example icons/icon5.jpeg"
 import icon2 from "../styling/example icons/icon2.jpeg"
 import icon3 from "../styling/example icons/icon3.jpeg"
@@ -28,6 +28,25 @@ function ClubListing(props) {
             }
         }
 
+    function ClubChip() {
+        if (props.isMember === true) {
+            if (props.isOrganiser === true) {
+                return (
+                    <EnterButton text={"create meeting"} linkTo={"/home"} />
+                )
+            } else {
+                return (
+                    <Chip label={props.memberRole} />
+                )
+            }
+        } else {
+            return (
+                    <Chip label={props.clubTheme} />
+            )
+        }
+    }
+
+
     return (
          <div className={"club-listing"}>
              <Grid container
@@ -52,11 +71,19 @@ function ClubListing(props) {
                  <Grid item
                        xs={7}>
                      <Stack className={"club-listing-right-stack"}>
-                         <div className={"club-listing-text"}>
+                         <Stack className={"club-listing-text"}
+                                spacing={2}
+                         >
                              <h4 className={"club-listing-club-name"}>{props.clubName}<h4--emphasise>.</h4--emphasise></h4>
                              <h6>{props.description}</h6>
-                         </div>
+                             <div className={"club-listing-club-chip"}>
+                                 <ClubChip  />
+                             </div>
+                         </Stack>
                          <AvatarGroup max={4} className={"club-listing-avatars"}>
+                             {/*for (users in club) map {*/}
+                             {/*   <Avatar alt="Club Name" src={club.icon}*/}
+                             {/*}*/}
                              <Avatar alt="Remy Sharp" src={icon5}  />
                              <Avatar alt="Travis Howard" src={icon2} />
                              <Avatar alt="Cindy Baker" src={icon3} />
