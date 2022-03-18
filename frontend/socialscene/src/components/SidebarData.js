@@ -7,7 +7,6 @@ export const SidebarData = [
         path: '/home',
         cName: 'sidebar-text'
     },
-    },
     {
         title: 'clubs',
         path: '/home/clubs',
