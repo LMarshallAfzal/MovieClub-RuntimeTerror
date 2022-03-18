@@ -213,7 +213,7 @@ class Meeting(models.Model):
 
 
 class Message(models.Model):
-    sender = models.ForeignKey(User,on_delete=models.CASCADE,unique=False)
+    sender = models.ForeignKey(User,to_field='username',on_delete=models.CASCADE,unique=False)
 
     club = models.ForeignKey(Club,on_delete=models.CASCADE,unique=False)
 

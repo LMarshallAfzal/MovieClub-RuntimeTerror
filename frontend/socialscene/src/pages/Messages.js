@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, {useState, useContext, useEffect, Fragment} from "react";
 import "../styling/pages/Messages.css";
 import { Stack, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, CardMedia, Avatar, Box, Card, CardContent, TextField, Typography, Grid, Paper, Divider, FormControl, IconButton, Collapse, Alert, Button } from "@mui/material";
 import FormButton from "../components/FormButton";
@@ -7,24 +7,66 @@ import { comments, meeting } from './DummyForumData';
 import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
 import poster from '../styling/jack-giant.jpg';
+import AuthContext from "../components/AuthContext"; 
 
-function Messages() {
-    const [openReminder, setOpenReminder] = React.useState(true);
 
-    const [open, setOpen] = React.useState(false);
+const Messages = () => {
+    let {authTokens} = useContext(AuthContext)
+    const [openReminder, setOpenReminder] = useState(true);
+    const [userData, setUserData] = useState([])
+
+    const [open, setOpen] = useState([]);
     const handleClickOpen = () => {
         setOpen(true);
     };
-
+    useEffect(() => {
+        getClubMessages()
+    },[])
     const handleClose = () => {
         setOpen(false);
     };
 
-    const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
+    const [value, setDateTime] = useState(new Date('2014-08-18T21:11:54'));
 
     const handleChange = (newValue) => {
-        setValue(newValue);
+        setDateTime(newValue);
     };
+
+
+    let getClubMessages = async (e) => {
+        const club = 2
+        let response = await fetch('http://127.0.0.1:8000/message_forum/' + club + '/', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer ' + String(authTokens.access),
+            },
+        })
+        let data = await response.json()
+        //console.log(data)
+        setOpen(data)
+        let sender_data = data.sender
+        console.log(sender_data)
+    }
+
+    // let getUserDetails = async(userId) => {
+    //     let response = await fetch('http://127.0.0.1:8000/user/' + userId + '/', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-type': 'application/json; charset=UTF-8',
+    //             'Authorization': 'Bearer ' + String(authTokens.access),
+    //         },
+    //     })
+    //     //console.log(response.json())
+    //     let data = await response.json()
+    //     //console.log(data)
+    //     setOpen(data)
+    //     let sender_data = data.sender
+    //     return sender_data
+
+    // }
+
+
 
     return (
         <>
@@ -120,7 +162,7 @@ function Messages() {
             >
                 <Grid xs={12} item>
                     <Paper style={{ maxHeight: 800, overflow: 'auto' }} elevation="3">
-                        {comments.map((val) => {
+                        {open.map((val) => {
                             return (
                                 <>
                                     <Divider variant="middle">{val.time}</Divider>
@@ -129,7 +171,7 @@ function Messages() {
                                             <Grid item>
                                                 <div style={{ alignSelf: "center", width: "40px", padding: "10px" }}>
                                                     <Avatar
-                                                        // alt={props.firstName + " " + props.lastName}
+                                                        alt={userData.first_name}
                                                         src={iconImage}
                                                         sx={{ width: "100%", height: "100%" }}
                                                     />
@@ -137,10 +179,14 @@ function Messages() {
                                             </Grid>
                                             <Grid item>
                                                 <Typography sx={{ fontSize: 15 }} color="text.secondary">
-                                                    {val.user}
+                                                    {val.sender}
                                                 </Typography>
                                                 <Typography sx={{ fontSize: 20 }} variant="body2">
                                                     {val.message}
+                                                </Typography>
+
+                                                <Typography sx={{ fontSize: 15 }} variant="body2">
+                                                    {val.timestamp}
                                                 </Typography>
                                             </Grid>
                                         </Grid>

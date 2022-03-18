@@ -303,8 +303,8 @@ def get_watched_list(request):
 
 @api_view(['GET'])
 @club_exists
-@is_member
-@permission_classes([IsAuthenticated])
+#@is_member
+#@permission_classes([IsAuthenticated])
 def message_forum(request,club_id):
     messages = Message.objects.filter(club=club_id)
     serializer = MessageSerializer(messages, many=True)
@@ -312,8 +312,8 @@ def message_forum(request,club_id):
 
 @api_view(['POST'])
 @club_exists
-@is_member
-@permission_classes([IsAuthenticated])
+#@is_member
+#@permission_classes([IsAuthenticated])
 def write_message(request,club_id):
     serializer = WriteMessageSerializer(data=request.data)
     if serializer.is_valid():
