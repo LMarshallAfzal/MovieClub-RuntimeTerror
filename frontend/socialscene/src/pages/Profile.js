@@ -9,20 +9,21 @@ const Profile = () => {
     const [userData, setUserData] = useState('')
     let {user, authTokens} = useContext(AuthContext)
 
-    const handleChange = (event) => {
-        setUserData( prevData => ({...prevData, [event.target.name]: event.target.value}))
+    const onChange = (e) => {
+        setUserData( prevData => ({...prevData, [e.target.name]: e.target.value}))
      }; 
 
     let submitChangeProfileForm = async (e) => {
+        e.preventDefault()
         let response = await fetch('http://127.0.0.1:8000/edit_profile/' + user.user_id ,{
             method:'PUT',
             body:JSON.stringify({
-                "username": e.target.username.value, 
-                "first_name": e.target.first_name.value, 
-                "last_name": e.target.last_name.value,
-                "email": e.target.email.value,
-                "bio": e.target.bio.value, 
-                "preferences": e.target.preferences.value
+                "username": userData.username, 
+                "first_name": userData.first_name, 
+                "last_name": userData.last_name,
+                "email": userData.email,
+                "bio": userData.bio, 
+                "preferences": userData.preferences
             }),
             headers:{
                 'Content-type': 'application/json; charset=UTF-8',
@@ -30,7 +31,10 @@ const Profile = () => {
             }
         })
         let data = await response.json()
-        setUserData(data)
+        if(response.status === 200) {
+            setUserData(data)
+        }
+        
     }
 
     let getUserData = async (e) => {
@@ -59,13 +63,13 @@ const Profile = () => {
                     <Box component="form" onSubmit={submitChangeProfileForm}>
                         <Stack spacing={2}>
                             <TextField className='profile-text-box'
-                                id={"outlined-basic"}
+                                id={"outlined"}
                                 label={"username"}
                                 name={"username"}
                                 type={"text"}
                                 variant={"outlined"}
                                 value={userData.username}
-                                onChange={handleChange}
+                                onChange={e => onChange(e)}
                             />
                             <TextField className='profile-text-box'
                                 id={"outlined-basic"}
@@ -74,7 +78,7 @@ const Profile = () => {
                                 type={"text"}
                                 variant={"outlined"}
                                 value={userData.first_name}
-                                onChange={handleChange}
+                                onChange={e => onChange(e)}
                             />
                             <TextField className='profile-text-box'
                                 id={"outlined-basic"}
@@ -83,7 +87,7 @@ const Profile = () => {
                                 type={"text"}
                                 variant={"outlined"}
                                 value={userData.last_name}
-                                onChange={handleChange}
+                                onChange={e => onChange(e)}
                             />
                             <TextField className='profile-text-box'
                                 id={"outlined-basic"}
@@ -92,7 +96,7 @@ const Profile = () => {
                                 type={"email"}
                                 variant={"outlined"}
                                 value={userData.email}
-                                onChange={handleChange}
+                                onChange={e => onChange(e)}
                             />
                             <TextField className='profile-text-box'
                                 spacing={6}
@@ -104,7 +108,7 @@ const Profile = () => {
                                 multiline
                                 rows={7.5}
                                 value={userData.bio}
-                                onChange={handleChange}
+                                onChange={e => onChange(e)}
                             />
                             <div className={"single-button"}>
                                 <Box
@@ -114,11 +118,11 @@ const Profile = () => {
                                         gap: 1,
                                     }}
                                 >
-                                    {/* <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
+                                    <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
                                         <FormButton
                                             text={"cancel"}
                                         />
-                                    </Box> */}
+                                    </Box>
                                 </Box>
                             </div>
                         </Stack>
@@ -135,7 +139,7 @@ const Profile = () => {
                                 multiline
                                 rows={20}
                                 value={userData.preferences}
-                                onChange={handleChange}
+                                onChange={e => onChange(e)}
                             />
                             <div className={"single-button"}>
                                 <Box
@@ -146,13 +150,11 @@ const Profile = () => {
                                     }}
                                 >
                                     <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                        <Button
-                                            // text={"save changes"}
-                                            // onClick={this.submitForm}
+                                        <FormButton
                                             type="submit"
-                                        >
-                                            save changes
-                                        </Button>        
+                                            text={"log in"}   
+                                            onClick={submitChangeProfileForm}
+                                        />        
                                     </Box>
                                 </Box>
                             </div>
