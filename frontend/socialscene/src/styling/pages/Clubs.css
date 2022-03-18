@@ -93,8 +93,7 @@ h6 {
 
 .home-page-title {
   background-color: #D8D8D8;
-  padding-top: 10px;
-  padding-left: 10px;
+  padding: 10px;
   user-select: none;
 }
 
@@ -120,7 +119,6 @@ h6 {
 
 .club-card-list-frame {
   overflow: auto;
-  padding: 10px;
 }
 
 .club-card-list-item {
