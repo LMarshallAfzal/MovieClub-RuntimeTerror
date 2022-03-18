@@ -16,7 +16,11 @@ function Navbar() {
                         <span style={{ color: "red", fontWeight: "bold" }}>.</span>
                     </Link>
 
-                    <NavbarButton />
+                    <div className={"navbar-enter-button"}>
+                        <NavbarButton />
+
+                    </div>
+
                 </div>
                 <div className={"navbar-red"} />
             </div>
@@ -32,18 +36,18 @@ function NavbarButton() {
     switch (location.pathname){
         case "/":
             return (
-                <Link to={"/login"} className={"navbar-enter-button"}>
                 <EnterButton
-                    text={"enter"}/>
-                </Link>
+                    text={"enter"}
+                    linkTo={"/login"}
+                />
             )
 
-        case "/login":
+        case "/home":
             return (
-                <Link to={"/signup"} className={"navbar-enter-button"}>
                 <EnterButton
-                    text={"sign up"} />
-                </Link>
+                    text={"sign up"}
+                    linkTo={"/signup"}
+                />
             )
 
         default:

@@ -97,17 +97,56 @@ h6 {
   user-select: none;
 }
 
-.home-grid {
-  height: calc(100% - 90px);
+.club-listing {
+  width: 26rem;
+  background-color: #C4C4C4;
+  transition: all 0.3s ease-out;
+  user-select: none;
+  cursor: pointer;
 }
 
-.home-grid-L-sidebar {
-  background-color: #F8F7F7;
-  padding: 0;
+.club-listing:hover {
+  background-color: #999999;
 }
 
-.home-grid-R-content {
-  padding: 0;
+.club-listing-left-stack {
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
-/*# sourceMappingURL=HomeRouter.css.map */
+.club-listing-image {
+  padding: 10px;
+  align-self: center;
+}
+
+.club-listing-button {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.club-listing-right-stack {
+  height: 100%;
+  justify-content: center;
+}
+
+.club-listing-text {
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.club-listing-club-chip {
+  margin-right: 10px;
+}
+
+.club-listing-club-name {
+  color: #000000;
+  font-family: Helvetica, serif;
+}
+
+.club-listing-avatars {
+  padding-bottom: 10px;
+  align-self: flex-start;
+}
+
+/*# sourceMappingURL=ClubListing.css.map */

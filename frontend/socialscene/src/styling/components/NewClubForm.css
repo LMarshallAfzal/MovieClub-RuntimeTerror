@@ -97,17 +97,12 @@ h6 {
   user-select: none;
 }
 
-.home-grid {
-  height: calc(100% - 90px);
+.new-club-heading {
+  padding: 10px;
+  color: #FFFFFF;
+  background-color: #C4C4C4;
+  user-select: none;
+  transition: all 0.3s ease-out;
 }
 
-.home-grid-L-sidebar {
-  background-color: #F8F7F7;
-  padding: 0;
-}
-
-.home-grid-R-content {
-  padding: 0;
-}
-
-/*# sourceMappingURL=HomeRouter.css.map */
+/*# sourceMappingURL=NewClubForm.css.map */

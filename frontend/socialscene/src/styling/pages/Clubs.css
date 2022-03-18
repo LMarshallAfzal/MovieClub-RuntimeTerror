@@ -97,17 +97,32 @@ h6 {
   user-select: none;
 }
 
-.home-grid {
-  height: calc(100% - 90px);
+.search-bar {
+  width: 100%;
+  user-select: none;
 }
 
-.home-grid-L-sidebar {
-  background-color: #F8F7F7;
-  padding: 0;
+.create-button {
+  width: 100%;
 }
 
-.home-grid-R-content {
-  padding: 0;
+.club-card-background {
+  background-color: #D8D8D8;
 }
 
-/*# sourceMappingURL=HomeRouter.css.map */
+.club-card-heading {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #FFFFFF;
+  user-select: none;
+}
+
+.club-card-list-frame {
+  overflow: auto;
+}
+
+.club-card-list-item {
+  width: auto;
+}
+
+/*# sourceMappingURL=Clubs.css.map */
