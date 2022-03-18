@@ -18,6 +18,7 @@ import OthersProfile from "./OthersProfile";
 import ChangePassword from "./ChangePassword";
 import PrivateRoute from "../components/PrivateRoute";
 import { AuthProvider } from "../components/AuthContext";
+import Messages from "./Messages";
 
 function App() {
   return (
