@@ -14,8 +14,8 @@ const ChangePassword = () => {
 
     let {authTokens} = useContext(AuthContext)
 
-    const handleChange = (event) => {
-        setPasswordData( prevData => ({...prevData, [event.target.name]: event.target.value}))
+    const onChange = (e) => {
+        setPasswordData( fieldData => ({...fieldData, [e.target.name]: e.target.value}))
     }; 
 
     let submitChangePasswordForm = async (e) => {
@@ -23,9 +23,9 @@ const ChangePassword = () => {
         let response = await fetch('http://127.0.0.1:8000/change_password/', {
             method: 'PUT',
             body:JSON.stringify({
-                "old_password": e.target.old_password.value, 
-                "new_password": e.target.new_password.value, 
-                "new_password_confirmation": e.target.new_password_confirmation.value,
+                "old_password": passwordData.old_password, 
+                "new_password": passwordData.new_password, 
+                "new_password_confirmation": passwordData.new_password_confirmation,
             }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -33,26 +33,14 @@ const ChangePassword = () => {
             },
         })
         let data = await response.json()
-        setPasswordData(data);
+        if(response.status === 200) {
+            setPasswordData(data);
+            alert("You have successfully changed you password")
+        }
+        else {
+            alert(response.statusText)
+        }  
     }
-
-
-    // let getPasswordData = async (e) => {
-    //     let response = await fetch("http://127.0.0.1:8000/user/", {
-    //         method: 'GET',
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": "Bearer " + String(authTokens.access)
-    //         }
-    //     })
-    // }
-    // let data = await response.json()
-
-
-    // useEffect((e) => { 
-    //     // e.preventDefault();
-    //     submitChangePasswordForm()
-    // })
     
     return (
         <table className="change-password-table style={{ borderSpacing: 0 }}">
@@ -72,7 +60,8 @@ const ChangePassword = () => {
                             name={"old_password"}
                             type={"password"}
                             variant={"outlined"}
-                            // value={passwordData.old_password}
+                            value={passwordData.old_password}
+                            onChange={e => onChange(e)}
                         />
 
                         <TextField
@@ -82,8 +71,8 @@ const ChangePassword = () => {
                             name={"new_password"}
                             type={"password"}
                             variant={"outlined"}
-                            // value={passwordData.password_confirmation}
-                            // onChange={handleChange}
+                            value={passwordData.password_confirmation}
+                            onChange={e => onChange(e)}
                         />
 
                         <TextField
@@ -93,8 +82,8 @@ const ChangePassword = () => {
                             name={"new_password_confirmation"}
                             type={"password"}
                             variant={"outlined"}
-                            // value={passwordData.new_password_confirmation}
-                            // onChange={handleChange}
+                            value={passwordData.new_password_confirmation}
+                            onChange={e => onChange(e)}
                         />
                         <div className={"form-field"}>
                             <Box
@@ -105,14 +94,11 @@ const ChangePassword = () => {
                                 }}
                             >
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                    {/* <FormButton */}
-                                    <Button
-                                        // text={"submit"}
-                                        // onClick={this.submitForm}
+                                    <FormButton
+                                        text={"submit"}
+                                        onClick={submitChangePasswordForm}
                                         type="submit"
-                                    >
-                                        submit
-                                    </Button>
+                                    />                                   
                                 </Box>
                             </Box>
                         </div>
