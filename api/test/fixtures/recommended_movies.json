@@ -1,0 +1,62 @@
+[   
+    {
+        "model": "api.movie",
+        "pk": 1,
+        "fields": {
+            "ml_id": 3,
+            "title": "Grumpier Old Men  ",
+            "genres": "Comedy|Romance",
+            "year": 1995
+        }
+    },
+    {
+        "model": "api.movie",
+        "pk": 2,
+        "fields": {
+            "ml_id": 50,
+            "title": "Usual Suspects, The  ",
+            "genres": "Crime|Mystery|Thriller",
+            "year": 1995
+        }
+    },
+    {
+        "model": "api.movie",
+        "pk": 3,
+        "fields": {
+            "ml_id": 101,
+            "title": "Bottle Rocket  ",
+            "genres": "Adventure|Comedy|Crime|Romance",
+            "year": 1996
+        }
+    },
+    {
+        "model": "api.movie",
+        "pk": 4,
+        "fields": {
+            "ml_id": 163,
+            "title": "Desperado  ",
+            "genres": "Action|Romance|Western",
+            "year": 1995
+        }
+    },
+    {
+        "model": "api.movie",
+        "pk": 5,
+        "fields": {
+            "ml_id": 6658,
+            "title": "10  ",
+            "genres": "Comedy|Romance",
+            "year": 1979
+        }
+    },
+    {
+        "model": "api.movie",
+        "pk": 6,
+        "fields": {
+            "ml_id": 216,
+            "title": "Billy Madison  ",
+            "genres": "Comedy",
+            "year": 1995
+        }
+    }
+]

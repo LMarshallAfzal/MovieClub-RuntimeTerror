@@ -253,6 +253,7 @@ def change_rating(request, movie_id):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def recommend_movie_user(request):
     recommendations = []
     recommender = Recommender(request.user)
@@ -267,6 +268,12 @@ def recommend_club(request):
     recommender = Recommender(request.user)
     recommendations = recommender.recommend_clubs()
     serializer = ClubSerializer(recommendations, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_all_movies(request):
+    movies = Movie.objects.all()
+    serializer = MovieSerializer(movies,many=True)
     return Response(serializer.data)
 
 

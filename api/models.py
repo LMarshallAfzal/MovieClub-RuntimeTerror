@@ -43,7 +43,6 @@ class User(AbstractUser):
 
     watched_movies = models.ManyToManyField('Movie',through='Watch')
 
-
     def get_user_clubs(self):
         memberships = Membership.objects.filter(user=self)
         return [membership.club for membership in memberships]
