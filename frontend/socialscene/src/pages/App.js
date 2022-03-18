@@ -40,6 +40,7 @@ function App() {
                             <Route path={"options"} element={(<Options />)} />
                             <Route path={"change-password"} element={(<ChangePassword />)} />
                             <Route path={"others-profile"} element={(<OthersProfile />)} />
+                            <Route path={"messages"} element={(<Messages />)} />
                         </PrivateRoute>
                   </Routes>
               </AuthProvider>    
