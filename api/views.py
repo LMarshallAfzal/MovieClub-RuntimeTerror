@@ -14,6 +14,23 @@ from django.contrib.auth import logout
 from recommender.recommender_CF_item import Recommender
 from .decorators import movie_exists, club_exists, has_watched, has_not_watched, is_member, is_organiser
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+
+        return token
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
 
 @api_view(["GET"])

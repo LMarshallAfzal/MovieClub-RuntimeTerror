@@ -2,10 +2,10 @@ from api.models import User, Club, Message
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-from api.test.helpers import LogInTester
+from rest_framework.test import force_authenticate,APIClient
 
 
-class WriteMessageViewTestCase(APITestCase,LogInTester):
+class WriteMessageViewTestCase(APITestCase):
 
     fixtures = [
         'api/test/fixtures/default_user.json',
@@ -26,11 +26,11 @@ class WriteMessageViewTestCase(APITestCase,LogInTester):
             "club" : self.club.id,
             "message": 'Hello, everyone!',
         }
-        self.login_details = {'username' : self.user.username, 'password':'Pa$$w0rd567'}
+        self.client = APIClient()
         
     def test_post_to_write_message_endpoint_with_valid_data_creates_new_message_returns_201_created(self):
-        self.client.login(username = self.login_details['username'],password = self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         before = Message.objects.filter(sender = self.user, club = self.club).count()
         response = self.client.post(self.url, self.form_input)
         after = Message.objects.filter(sender = self.user, club = self.club).count()
@@ -38,8 +38,8 @@ class WriteMessageViewTestCase(APITestCase,LogInTester):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_post_to_write_message_endpoint_with_same_message_in_another_club_returns_201_created(self):
-        self.client.login(username = self.login_details['username'],password = self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         response = self.client.post(self.url, self.form_input)
         self.form_input['club'] = self.other_club.id
         response = self.client.post(self.url, self.form_input)
@@ -49,8 +49,8 @@ class WriteMessageViewTestCase(APITestCase,LogInTester):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_post_to_write_message_endpoint_with_non_member_club_does_not_create_new_message_returns_404_not_found(self):
-        self.client.login(username = self.login_details['username'],password = self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         before = Message.objects.filter(club = self.non_member_club).count()
         self.form_input['club'] = self.non_member_club.id
         invalid_url = reverse('write_message', kwargs={'club_id':self.non_member_club.id})
@@ -60,8 +60,8 @@ class WriteMessageViewTestCase(APITestCase,LogInTester):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_post_to_write_message_endpoint_with_invalid_club_does_not_create_new_message_returns_404_not_found(self):
-        self.client.login(username = self.login_details['username'],password = self.login_details['password'])
-        self.assertTrue(self._is_logged_in())
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
         before = Message.objects.count()
         invalidClubUrl = reverse('write_message', kwargs={'club_id':0})
         response = self.client.post(invalidClubUrl, self.form_input)
