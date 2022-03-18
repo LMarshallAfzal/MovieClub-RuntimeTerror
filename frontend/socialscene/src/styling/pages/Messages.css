@@ -73,7 +73,7 @@ h6 {
   font-size: 1rem;
 }
 
-.dashboard-text {
+.others-profile-info-text {
   height: 100%;
   font-size: 1.5rem;
   display: flex;
@@ -87,28 +87,43 @@ h6 {
   text-align: center;
 }
 
-.list-header-text {
-  height: 100%;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
-  font-family: Helvetica, serif;
-  width: 100%;
-  text-align: center;
-}
-
-.dashboard-text-box {
+.text-field {
+  text-align: left;
+  vertical-align: top;
   background-color: #F8F7F7;
 }
 
-.table-header {
-  align-items: center;
-  font-family: Helvetica, serif;
+.others-profile-table {
   width: 100%;
-  text-align: left;
-  color: black;
-}/*# sourceMappingURL=Dashboard.css.map */
+  border-collapse: separate;
+  width: 100%;
+}
+
+.others-profile-grid {
+  height: calc(100% - 90px);
+  justify-content: center;
+}
+.others-profile-grid-left {
+  align-self: center;
+}
+.others-profile-grid-right {
+  margin: 0;
+  align-self: center;
+}
+
+.form-stack {
+  margin-top: 20px;
+}
+
+.profile-text-box {
+  background-color: #F8F7F7;
+}
+
+.profile-image {
+  align-self: center;
+  width: 100px;
+}
+
+.meeting-card {
+  background-color: #F8F7F7;
+}/*# sourceMappingURL=Messages.css.map */

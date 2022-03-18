@@ -90,14 +90,6 @@ h6 {
   white-space: nowrap;
 }
 
-/* .spotlight {
-  position: absolute;
-  height: calc(100% - 90px);
-  width: 100%;
-  z-index: 1;
-  background-image: radial-gradient(circle, transparent 160px, rgba(0, 0, 0, 0.6) 200px);
-} */
-
 .cover-image {
   width: 100%;
   height: calc(100% - 90px);
