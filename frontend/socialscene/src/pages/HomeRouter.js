@@ -1,56 +1,38 @@
-import React, {useState} from "react";
+import React, { Component } from "react";
 import "../styling/pages/HomeRouter.css";
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import NameHeader from "../components/NameHeader";
-import {Grid} from "@mui/material";
-import Dashboard from "./Dashboard";
+import { Grid } from "@mui/material";
 import Clubs from "./Clubs";
 import Movies from "./Movies";
 import WhatsOn from "./WhatsOn";
 import Profile from "./Profile";
 import Options from "./Options";
 import Home from "./Home";
-import ClubDetail from "../components/ClubDetail";
+import OthersProfile from "./OthersProfile";
 import ChangePassword from "./ChangePassword";
-import NewClub from "./NewClubForm";
+import { AuthProvider } from "../components/AuthContext";
+
+import Cookies from "js-cookie";
+import CsrfToken from "../components/CsrfToken";
+// import { AuthProvider } from "../components/AuthContext";
+
 
 function HomeRouter() {
-    const [token, setToken] = useState('');
-
-    const userLogin = (tok) => {
-        setToken(tok);
-    }
-    
-    // localStorage.setItem('token', JSON.stringify("Token " + token))
-    // if(!token) {
-    //     return <Login userLogin={userLogin}/>
-    // }
-
     return (
         <>
+        <CsrfToken/>
             <Grid className={"home-grid"} container>
                 <Grid className={"home-grid-L-sidebar"} item xs={3}>
                     <NameHeader
                         firstName={"noah"}
                         lastName={"cheeseman"}
-                        joinDate={"2022"}/>
+                        joinDate={"2022"} />
                     <Sidebar />
                 </Grid>
-                <Grid className={"home-grid-R-content"} item xs={9} padding={2}>
-                    <Routes>
-                        <Route path={"/"} element={(<Home />)}/>
-                        <Route path={"dashboard"} element={(<Dashboard />)}/>
-                        <Route path={"clubs"} element={(<Clubs />)}>
-                            <Route path={":clubID"} element={(<ClubDetail />)}/>
-                            <Route path={"clubs/new"} element={(<NewClub />)}/>
-                        </Route>
-                        <Route path={"movies"} element={(<Movies />)}/>
-                        <Route path={"whats-on"} element={(<WhatsOn />)}/>
-                        <Route path={"profile"} element={(<Profile />)}/>
-                        <Route path={"options"} element={(<Options />)}/>
-                        <Route path={"change-password"} element={(<ChangePassword />)}/>
-                    </Routes>
+                <Grid className={"home-grid-R-content"} item xs={9} padding={2} >
+                 <Outlet/>
                 </Grid>
             </Grid>
         </>
