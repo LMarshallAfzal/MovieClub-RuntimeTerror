@@ -101,7 +101,15 @@ h6 {
   height: calc(100% - 90px);
 }
 
-.form-stack {
+.login-grid-child {
+  height: 100%;
+}
+
+.login-form {
+  height: 100%;
+}
+
+.login-form-stack {
   height: 100%;
   align-items: center;
   justify-content: center;
