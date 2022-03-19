@@ -136,7 +136,6 @@ const Movies = () => {
                                         max={5}
                                     // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}                                    
                                     />
-                                    <Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>
                                 </div>
                                 <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched?</Button>
                             </Card>
