@@ -3,7 +3,6 @@ from math import perm
 from re import S
 from django import views
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -11,7 +10,9 @@ from .serializers import *
 from .models import *
 from rest_framework.parsers import JSONParser
 from django.contrib.auth import logout
-from recommender.recommender_CF_item import Recommender
+from recommender.user_movie_recommender import train_movie_data_for_user, recommend_movies_for_user
+from recommender.meeting_movie_recommender import train_movie_data_for_meeting, recommend_movies_for_meeting
+from recommender.club_recommender import recommend_clubs
 from .decorators import movie_exists, club_exists, has_watched, has_not_watched, is_member, is_organiser
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -77,6 +78,7 @@ def log_out(request):
     logout(request)
     return Response(status=status.HTTP_200_OK)
 
+
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
 def change_password(request):
@@ -96,6 +98,7 @@ def change_password(request):
 def get_users(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
+
 
 @api_view(['GET'])
 @club_exists
@@ -124,6 +127,7 @@ def get_other_user(request, user_id):
 def get_current_user(request):
     serializer = UserSerializer(request.user, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(["GET"])
 @movie_exists
@@ -258,19 +262,42 @@ def change_rating(request, movie_id):
 @permission_classes([IsAuthenticated])
 def recommend_movie_user(request):
     recommendations = []
-    recommender = Recommender(request.user)
-    recommendations = recommender.recommend_movies_for_user()
+    recommendations = recommend_movies_for_user(request.user)
     serializer = MovieSerializer(recommendations, many=True)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def train_movie_data(request):
+    train_movie_data_for_user()
+    return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@club_exists
+@is_organiser
+@permission_classes([IsAuthenticated])
+def recommend_movie_meeting(request, club_id):
+    club = Club.objects.get(id=club_id)
+    recommendations = []
+    recommendations = recommend_movies_for_meeting(club)
+    serializer = MovieSerializer(recommendations, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def train_meeting_data(request):
+    train_movie_data_for_meeting()
+    return Response(status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def recommend_club(request):
-    recommender = Recommender(request.user)
-    recommendations = recommender.recommend_clubs()
+    recommendations = recommend_clubs(request.user)
     serializer = ClubSerializer(recommendations, many=True)
     return Response(serializer.data)
+    pass
 
 
 @api_view(["GET"])

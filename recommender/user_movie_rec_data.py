@@ -3,37 +3,27 @@ import csv
 from csv import writer
 from surprise import Dataset,Reader
 from collections import defaultdict
-import numpy as np
 import pandas as pd
-from api.models import Movie,Rating
+from api.models import Rating
 
 
-class Data:
+class MoviesForUserRecommenderData:
 
     def __init__(self):
-        self.ratings_path = 'recommender/dataset-latest/api_ratings.csv'
+        self.movie_rec_data_path = 'recommender/dataset-latest/user_movie_recommender_data.csv'
         self.movie_lens_path = 'recommender/dataset-latest/ratings.csv' 
 
-    def load_movie_data_for_club_recommender(self):
-        ratings_dataset = 0
-        self.get_ratings_user() #stays for club
-        reader = Reader(line_format='user item rating', sep=',', skip_lines=1)
-        ratings_dataset = Dataset.load_from_file(self.ratings_path, reader = reader)
-        return ratings_dataset
-        
-    def load_movie_data_for_club_meeting(self):
-        pass
-
     def load_movie_data_for_user(self):
+        self.clean()
         ratings_dataset = 0
-        self.get_ratings_user() #stays for club
+        self.get_db_user_ratings() #stays for club
         self.combine_data()
         reader = Reader(line_format='user item rating', sep=',', skip_lines=1)
-        ratings_dataset = Dataset.load_from_file(self.ratings_path, reader = reader)
+        ratings_dataset = Dataset.load_from_file(self.movie_rec_data_path, reader = reader)
         return ratings_dataset
 
-    def get_ratings_user(self):
-        api_ratings = open(self.ratings_path,'w')
+    def get_db_user_ratings(self):
+        api_ratings = open(self.movie_rec_data_path,'w')
         writer = csv.writer(api_ratings)
         writer.writerow(['userID','movieID','rating'])
         ratings = Rating.objects.all()
@@ -42,9 +32,9 @@ class Data:
         api_ratings.close()
     
     def combine_data(self):
-        local_ratings = open(self.ratings_path,'a')
+        local_ratings = open(self.movie_rec_data_path,'a')
         ml_ratings = open(self.movie_lens_path,'r')
-        constant = self.get_last_row(self.ratings_path)
+        constant = self.get_last_row(self.movie_rec_data_path)
         variable = constant
         reader = csv.reader(ml_ratings)
         next(reader)
@@ -72,17 +62,14 @@ class Data:
             return int(last_line)
     
     def clean(self):
-        local_ratings = open(self.ratings_path,'w')
+        local_ratings = open(self.movie_rec_data_path,'w')
         local_ratings.truncate()
         local_ratings.close()
-
-    def get_ratings_club(self):
-        pass
 
     def popularity_ranking(self):
         ratings = defaultdict(float)
         rankings = defaultdict(int)
-        with open(self.ratings_path, newline='') as file:
+        with open(self.movie_rec_data_path, newline='') as file:
             reader = csv.reader(file)
             next(reader)
             for row in reader:
