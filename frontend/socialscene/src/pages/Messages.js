@@ -13,6 +13,7 @@ import AuthContext from "../components/AuthContext";
 const Messages = () => {
     let {user, authTokens} = useContext(AuthContext)
     let [message, setMessage] = useState('')
+    const [defaultMessage, setDefaultMessage] = useState('')
     const [openReminder, setOpenReminder] = useState(true);
     const [userData, setUserData] = useState([])
 
@@ -25,8 +26,10 @@ const Messages = () => {
     const [dateTime, setDateTime] = useState(new Date(Date.now()));
 
     const onChange = (e, newDateTime) => {
+        e.preventDefault();
         setMessage( fieldData => ({...fieldData, [e.target.name]: e.target.value}))
         setDateTime(newDateTime);
+        
      }; 
 
 
@@ -44,7 +47,7 @@ const Messages = () => {
         let sender_data = data.sender
     }
 
-    let sendClubMessages = async (e) => {
+    let sendClubMessages = async () => {
         const club = 2
         let response = await fetch('http://127.0.0.1:8000/write_message/' + club + '/', {
             method: 'POST',
@@ -59,10 +62,8 @@ const Messages = () => {
                 'Authorization': 'Bearer ' + String(authTokens.access),
             },
         })
-        let data = await response.json()
-        setMessages(data)
-        let sender_data = data.sender
-        console.log(sender_data)
+        await response.json()
+        getClubMessages()
     }
 
     return (
@@ -212,7 +213,6 @@ const Messages = () => {
                         />
                         < Button 
                             onClick={sendClubMessages} 
-                            onChange={getClubMessages}
                         >         
                             <SendIcon />
                         </Button>
