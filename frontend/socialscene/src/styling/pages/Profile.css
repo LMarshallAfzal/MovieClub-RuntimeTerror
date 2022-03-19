@@ -98,9 +98,7 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   font-family: Helvetica-Bold, serif;
   width: 100%;
   text-align: center;
@@ -112,9 +110,7 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   font-family: Helvetica, serif;
   width: 100%;
   text-align: center;
@@ -123,10 +119,7 @@ h6 {
 .home-page-title {
   background-color: #C4C4C4;
   padding: 10px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .edit-profile-info-text {
@@ -136,9 +129,7 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   font-family: Helvetica-Bold, serif;
   width: 100%;
   text-align: center;
@@ -174,4 +165,6 @@ h6 {
 
 .profile-text-box {
   background-color: #D8D8D8;
-}/*# sourceMappingURL=Profile.css.map */
+}
+
+/*# sourceMappingURL=Profile.css.map */
