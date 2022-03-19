@@ -68,7 +68,7 @@ export const Signup = () => {
             setPasswordError(true)
             setErrorText(data.password)
         }
-        if((Object.keys(data)).includes('password_cofirmation')) {
+        if((Object.keys(data)).includes('password_confirmation')) {
             setPasswordConfirmationError(true)
             setErrorText(data.password_cofirmation)
         }
@@ -99,10 +99,7 @@ export const Signup = () => {
             return (loginUser(e))
         }
         else {
-            errorHandler(e, data)
-            // setErrorText(data.first_name)
-            // alert(response.headers)
-        }  
+            errorHandler(e, data)        }  
     }
     
     return (
@@ -224,7 +221,7 @@ export const Signup = () => {
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
                                     <FormButton
                                         type="submit"
-                                        text={"log in"}   
+                                        text={"sign up"}   
                                         onClick={submitSignupForm}
                                         // onSubmit={setErrors}
                                     />                                                    
