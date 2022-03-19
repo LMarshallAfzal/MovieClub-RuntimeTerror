@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { TextField, Autocomplete, Grid, Button, Typography, Rating } from "@mui/material";
+import { InputAdornment, IconButton, CardContent, Box, Alert, Collapse, TextField, Autocomplete, Grid, Button, Typography, Rating } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -7,6 +7,9 @@ import "../styling/pages/Movie.css";
 import moviePoster from '../styling/empty_movie_poster.png'
 import AuthContext from "../components/AuthContext";
 import { moviesWithPoster } from "./DummyMoviesData";
+import SendIcon from '@mui/icons-material/Send';
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 const Movies = () => {
@@ -56,6 +59,19 @@ const Movies = () => {
     //         .catch(error => console.error(error))
     //     })
     // }
+
+    const [openSearch, setOpenSearch] = React.useState(false);
+
+    const clickSearch = () => {
+        setOpenSearch(true);
+    };
+
+    const closeSearch = () => {
+        setOpenSearch(false);
+    };
+
+    const [searchValue, setSearchValue] = React.useState('');
+
     return (
         <Grid>
             <Grid paddingBottom={"10px"} className="profile-table" style={{ borderSpacing: 0 }}>
@@ -63,87 +79,139 @@ const Movies = () => {
                     <div className='page-title'>Movies</div>
                 </tr>
             </Grid>
-            <Autocomplete
-                        freeSolo
-                        id="search"
-                        disableClearable
-                        options={moviesWithPoster.map((movie) => movie.title)}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="🔎︎ Search Movies"
-                                InputProps={{
-                                    ...params.InputProps,
-                                    type: 'search',
-                                }}
-                            />
-                        )}
-                        
-                    />
+            <Grid item xs={12}>
+                <TextField
+                    fullWidth
+                    value={searchValue} onChange={event => { setSearchValue(event.target.value) }}
+                    label="Search Movies"
+                    InputProps={{
+                        endAdornment:
+                            <>
+                                < IconButton
+                                    onClick={clickSearch}>
+                                    <SearchIcon />
+                                </IconButton>
+                            </>
+                    }}
+                />
+            </Grid>
+            < Collapse in={openSearch}>
+                <Grid paddingTop={"20px"} container direction={"row"} spacing={2}>
+                    <Grid item xs={11}>
+                        <div className='page-subtitle'>
+                            Search Result
+                        </div>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <div>
+                            <IconButton
+                                onClick={closeSearch}
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                        </div>
+                    </Grid>
+                    {/*SUBSTITUTE BELOW moviesWithPoster TO ALL MOVIES FROM DATABASE*/}
+                    {moviesWithPoster.filter((movie) => {
+                        if (movie.title.toLowerCase().includes(searchValue.toLowerCase())) {
+                            return movie
+                        }
+                    }).map((movie) => {
+                        return <Grid item>
+                            <Card sx={{ maxWidth: 330 }}>
+                                <CardMedia
+                                    component="img"
+                                    height="500"
+                                    image={moviePoster}
+                                    alt={movie.title}
+                                />
+                                <CardHeader
+                                    title={movie.title}
+                                />
+                                <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
+                                    <Typography component="legend">Rate {movie.title}</Typography>
+                                    <Rating
+                                        name="simple-controlled"
+                                        precision={0.5}
+                                        max={5}
+                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}                                    
+                                    />
+                                    <Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>
+                                </div>
+                                <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched?</Button>
+                            </Card>
+                        </Grid>
+                    })}
+                </Grid>
+            </Collapse >
             {/* MOVIES FROM CLUBS TO WATCH */}
-            <Grid paddingTop={"20px"} container direction={"row"} spacing={2}>
+            < Grid paddingTop={"20px"} container direction={"row"} spacing={2} >
                 <Grid item xs={12}><div className='page-subtitle'>Movies from clubs</div></Grid>
                 {/*SUBSTITUTE BELOW moviesWithPoster TO MOVIES FROM CLUBS TO WATCH*/}
-                {moviesWithPoster.map((movie) => {
-                    return <Grid item>
-                        <Card sx={{ maxWidth: 330 }}>
-                            <CardMedia
-                                component="img"
-                                height="500"
-                                image={moviePoster}
-                                alt={movie.title}
-                            />
-                            <CardHeader
-                                title={movie.title}
-                            />
-                            <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
-                                <Typography component="legend">Rate {movie.title}</Typography>
-                                <Rating
-                                    name="simple-controlled"
-                                    precision={0.5}
-                                    max={5}
-                                // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}                                    
+                {
+                    moviesWithPoster.map((movie) => {
+                        return <Grid item>
+                            <Card sx={{ maxWidth: 330 }}>
+                                <CardMedia
+                                    component="img"
+                                    height="500"
+                                    image={moviePoster}
+                                    alt={movie.title}
                                 />
-                                <Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>
-                            </div>
-                            <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched?</Button>
-                        </Card>
-                    </Grid>
-                })}
-            </Grid>
+                                <CardHeader
+                                    title={movie.title}
+                                />
+                                <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
+                                    <Typography component="legend">Rate {movie.title}</Typography>
+                                    <Rating
+                                        name="simple-controlled"
+                                        precision={0.5}
+                                        max={5}
+                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}                                    
+                                    />
+                                    <Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>
+                                </div>
+                                <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched?</Button>
+                            </Card>
+                        </Grid>
+                    })
+                }
+            </Grid >
             {/* MOVIES RECOMMENDED FROM AI TO USER*/}
-            <Grid paddingTop={"20px"} container direction={"row"} spacing={2}>
+            < Grid paddingTop={"20px"} container direction={"row"} spacing={2} >
                 <Grid item xs={12}><div className='page-subtitle'>Movies recommended for you</div></Grid>
                 {/* SUBSTITUTE BELOW moviesWithPoster TO MOVIES RECOMMENDED FROM AI*/}
-                {moviesWithPoster.map((movie) => {
-                    return <Grid item>
-                        <Card sx={{ maxWidth: 330 }}>
-                            <CardMedia
-                                component="img"
-                                height="500"
-                                image={moviePoster}
-                                alt={movie.title}
-                            />
-                            <CardHeader
-                                title={movie.title}
-                            />
-                            <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
-                                <Typography component="legend">Rate {movie.title}</Typography>
-                                <Rating
-                                    name="simple-controlled"
-                                    precision={0.5}
-                                    max={5}
-                                // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}                                    
+                {
+                    moviesWithPoster.map((movie) => {
+                        return <Grid item>
+                            <Card sx={{ maxWidth: 330 }}>
+                                <CardMedia
+                                    component="img"
+                                    height="500"
+                                    image={moviePoster}
+                                    alt={movie.title}
                                 />
-                            </div>
-                            <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched?</Button>
-                        </Card>
-                    </Grid>
-                })}
+                                <CardHeader
+                                    title={movie.title}
+                                />
+                                <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
+                                    <Typography component="legend">Rate {movie.title}</Typography>
+                                    <Rating
+                                        name="simple-controlled"
+                                        precision={0.5}
+                                        max={5}
+                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}                                    
+                                    />
+                                </div>
+                                <Button sx={{ height: 38, width: 330 }} className="watched-button" variant="outlined">Watched?</Button>
+                            </Card>
+                        </Grid>
+                    })
+                }
                 {/* SEARCH FOR MOVIES AND MARK AS WATCHED AND RATE IT */}
 
-            </Grid>
-        </Grid>
+            </Grid >
+        </Grid >
     );
 
 }
