@@ -37,6 +37,6 @@ function HomeRouter() {
             </Grid>
         </>
     );
-}    
+}
 
 export default HomeRouter;

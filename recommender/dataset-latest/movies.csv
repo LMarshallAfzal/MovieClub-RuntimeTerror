@@ -20,7 +20,7 @@ movieId,title,genres,year
 27266,2046,Drama|Fantasy|Romance|Sci-Fi,2004
 44943,09-Nov,Documentary,2002
 69757,  Days of Summer  ,Comedy|Drama|Romance,2009
-5560,ýý nous la libertýý    ,Comedy|Musical,1931
+5560,ýýýýýý nous la libertýýýýýý    ,Comedy|Musical,1931
 8169,*batteries not included  ,Children|Comedy|Fantasy|Sci-Fi,1987
 5706,...All the Marbles  ,Comedy|Drama,1981
 3420,...And Justice for All  ,Drama|Thriller,1979
@@ -133,7 +133,7 @@ movieId,title,genres,year
 138204,7 Days in Hell  ,Comedy,2015
 42556,7 Faces of Dr. Lao  ,Fantasy|Mystery|Western,1964
 3153,"7th Voyage of Sinbad, The  ",Action|Adventure|Fantasy,1958
-3626,8 ï¿½ï¿½ï¿½ï¿½ï¿,Comedy,1999
+3626,8 ï¿½ï¿½ï¿½ï¿½ï¿½,Comedy,1999
 1503,8 Heads in a Duffel Bag  ,Comedy,1997
 5810,8 Mile  ,Drama,2002
 408,8 Seconds  ,Drama,1994
@@ -541,7 +541,7 @@ movieId,title,genres,year
 122900,Ant-Man  ,Action|Adventure|Sci-Fi,2015
 188301,Ant-Man and the Wasp  ,Action|Adventure|Comedy|Fantasy|Sci-Fi,2018
 82,Antonia's Line    ,Comedy|Drama,1995
-90245,Antonio Gaudï¿½ï,Documentary,1985
+90245,Antonio Gaudï¿½ï¿½,Documentary,1985
 5955,Antwone Fisher  ,Drama,2002
 2294,Antz  ,Adventure|Animation|Children|Comedy|Fantasy,1998
 67665,Anvil! The Story of Anvil  ,Documentary|Musical,2008
@@ -669,7 +669,7 @@ movieId,title,genres,year
 1517,Austin Powers: International Man of Mystery  ,Action|Adventure|Comedy,1997
 2683,Austin Powers: The Spy Who Shagged Me  ,Action|Adventure|Comedy,1999
 63853,Australia  ,Adventure|Drama|War|Western,2008
-114847,Autï¿½ï¿½ï¿½ï,Sci-Fi|Thriller,2014
+114847,Autï¿½ï¿½ï¿½ï¿½,Sci-Fi|Thriller,2014
 5680,Auto Focus  ,Crime|Drama,2002
 3824,Autumn in New York  ,Drama|Romance,2000
 141810,Autumn Marathon  ,Comedy|Drama,1979
@@ -702,7 +702,7 @@ movieId,title,genres,year
 133217,B/W  ,Comedy|Crime|Sci-Fi,2015
 8364,Baadasssss!    ,Drama,2003
 67508,"Baader Meinhof Komplex, Der  ",Action|Crime|Drama|Thriller,2008
-78142,Baarï¿½ï¿,Comedy|Drama|War,2009
+78142,Baarï¿½ï¿½,Comedy|Drama|War,2009
 112515,"Babadook, The  ",Drama|Horror|Thriller,2014
 34,Babe  ,Children|Drama,1995
 6517,"Babe, The  ",Drama,1992
@@ -1111,7 +1111,7 @@ movieId,title,genres,year
 4899,Black Knight  ,Adventure|Comedy|Fantasy,2001
 2625,Black Mask    ,Action|Adventure|Crime|Sci-Fi|Thriller,1996
 136018,Black Mass  ,Crime|Drama,2015
-176601,Black Mirror,,2011
+176601,Black Mirror,Drama|Horror|Mystery|Sci-Fi|Thriller,2011
 174053,Black Mirror: White Christmas  ,Drama|Horror|Mystery|Sci-Fi|Thriller,2014
 8338,Black Narcissus  ,Drama,1947
 7088,Black Orpheus    ,Drama|Romance,1959
@@ -1389,7 +1389,7 @@ movieId,title,genres,year
 6212,Bringing Down the House  ,Comedy,2003
 2976,Bringing Out the Dead  ,Drama,1999
 955,Bringing Up Baby  ,Comedy|Romance,1938
-69784,Brï¿½ï¿½ï¿,Comedy,2009
+69784,Brï¿½ï¿½ï¿½,Comedy,2009
 2243,Broadcast News  ,Comedy|Drama|Romance,1987
 7983,Broadway Danny Rose  ,Comedy,1984
 1926,"Broadway Melody, The  ",Musical,1929
@@ -1968,7 +1968,7 @@ movieId,title,genres,year
 7137,"Cooler, The  ",Comedy|Drama|Romance,2003
 141799,Cooties  ,Comedy|Horror,2015
 4093,Cop  ,Thriller,1988
-33966,Cop and ï¿½ï,Comedy,1993
+33966,Cop and ï¿½ï¿½,Comedy,1993
 140725,Cop Car  ,Crime|Thriller,2015
 1589,Cop Land  ,Action|Crime|Drama|Thriller,1997
 74532,Cop Out  ,Action|Comedy|Crime,2010
@@ -2238,7 +2238,7 @@ movieId,title,genres,year
 50613,Dead Meat  ,Horror,2004
 2110,Dead Men Don't Wear Plaid  ,Comedy|Crime|Thriller,1982
 6967,Dead of Night  ,Horror|Mystery,1945
-27480,Dead or Alive 2: Tï¿½ï¿½ï¿½ï,Action|Crime|Thriller,2000
+27480,Dead or Alive 2: Tï¿½ï¿½ï¿½ï¿½,Action|Crime|Thriller,2000
 27549,Dead or Alive: Final  ,Comedy|Crime|Drama|Sci-Fi|Thriller,2002
 8142,Dead or Alive: Hanzaisha  ,Action|Crime,1999
 1246,Dead Poets Society  ,Drama,1989
@@ -2439,7 +2439,7 @@ movieId,title,genres,year
 33564,Divorce - Italian Style    ,Comedy,1961
 6596,"Divorce, Le  ",Comedy|Drama|Romance,2003
 8424,"Divorcee, The  ",Drama|Romance,1930
-2175,Dï¿½ï¿½ï¿½ï,Drama|Romance,1997
+2175,Dï¿½ï¿½ï¿½ï¿½,Drama|Romance,1997
 49278,Dï¿½ï¿½ï¿½ï¿½,Action|Sci-Fi|Thriller,2006
 99114,Django Unchained  ,Action|Drama|Western,2012
 3424,Do the Right Thing  ,Drama,1989
@@ -2776,7 +2776,7 @@ movieId,title,genres,year
 3676,Eraserhead  ,Drama|Horror,1977
 4591,Erik the Viking  ,Adventure|Comedy|Fantasy,1989
 3408,Erin Brockovich  ,Drama,2000
-108540,Ernest & Cï¿½ï¿½ï¿½ï¿½ï,Adventure|Animation|Children|Comedy|Drama|Romance,2012
+108540,Ernest & Cï¿½ï¿½ï¿½ï¿½ï¿½,Adventure|Animation|Children|Comedy|Drama|Romance,2012
 4104,Ernest Goes to Camp  ,Comedy,1987
 5584,Ernest Goes to Jail  ,Comedy,1990
 69227,Ernest Rides Again  ,Children|Comedy,1993
@@ -2865,7 +2865,7 @@ movieId,title,genres,year
 139511,Exte: Hair Extensions  ,Horror,2007
 8620,"Exterminating Angel, The    ",Comedy|Drama|Fantasy|Mystery,1962
 71248,Extract  ,Comedy,2009
-79895,"Extraordinary Adventures of Adï¿½ï¿½ï¿½ï¿½ï¿½ï¿½le ",Action|Adventure|Fantasy|Mystery,2010
+79895,Extraordinary Adventures of Adï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Action|Adventure|Fantasy|Mystery,2010
 145080,Extraordinary Tales  ,Animation|Horror|Mystery,2015
 4818,Extreme Days  ,Action|Adventure|Comedy|Drama,2001
 1003,Extreme Measures  ,Drama|Thriller,1996
@@ -3272,7 +3272,7 @@ movieId,title,genres,year
 95175,Front of the Class  ,Drama,2008
 7093,"Front Page, The  ",Comedy,1974
 8302,"Front Page, The  ",Comedy|Drama|Romance,1931
-66310,Frontiï¿½ï¿½ï,Drama|Horror|Thriller,2007
+66310,Frontiï¿½ï¿½ï¿½,Drama|Horror|Thriller,2007
 64620,Frost/Nixon  ,Drama,2008
 60365,Frosty the Snowman  ,Animation|Children|Comedy|Fantasy|Musical,1969
 75395,Frozen  ,Drama|Horror|Thriller,2010
@@ -3384,7 +3384,7 @@ movieId,title,genres,year
 55,Georgia  ,Drama,1995
 34359,Georgy Girl  ,Comedy,1966
 176935,Geostorm  ,Action,2017
-133780,Gï¿½ï¿½ï¿,Comedy|Drama,2014
+133780,Gï¿½ï¿½ï¿½,Comedy|Drama,2014
 95654,Geri's Game  ,Animation|Children,1997
 31973,Germany Year Zero      ,Drama|War,1948
 563,Germinal  ,Drama|Romance,1993
@@ -4011,7 +4011,7 @@ movieId,title,genres,year
 1824,Homegrown  ,Comedy|Thriller,1998
 609,Homeward Bound II: Lost in San Francisco  ,Adventure|Children,1996
 1015,Homeward Bound: The Incredible Journey  ,Adventure|Children|Drama,1993
-190221,Hommage ï¿½ï¿½ï¿½ï¿½ï¿,Documentary,2002
+190221,Hommage ï¿½ï¿½ï¿½ï¿½ï¿½,Documentary,2002
 110669,"Honest Liar, An  ",Comedy|Documentary,2014
 7142,Honey  ,Drama|Romance,2003
 112454,Honey    ,Drama,2013
@@ -4160,7 +4160,7 @@ movieId,title,genres,year
 1137,Hustler White  ,Romance,1996
 3468,"Hustler, The  ",Drama,1961
 98836,Hyde Park on Hudson  ,Comedy|Drama,2012
-143410,Hyena Road,2015,2015
+143410,Hyena Road,War|Drama,2015
 1310,Hype!  ,Documentary,1996
 165969,HyperNormalisation  ,Documentary,2016
 94150,Hysteria  ,Comedy|Romance,2011
@@ -4568,7 +4568,7 @@ movieId,title,genres,year
 4612,Jesus of Montreal    ,Drama,1989
 3747,Jesus' Son  ,Drama,1999
 46322,Jet Li's Fearless    ,Action|Drama,2006
-8477,"Jetï¿½ï¿½ï¿½",Romance|Sci-Fi,1962
+8477,Jetï¿½ï¿½ï¿½,Romance|Sci-Fi,1962
 116941,Jetsons: The Movie  ,Animation|Children|Comedy|Musical|Sci-Fi,1990
 2405,"Jewel of the Nile, The  ",Action|Adventure|Comedy|Romance,1985
 7078,Jezebel  ,Drama,1938
@@ -4635,7 +4635,7 @@ movieId,title,genres,year
 140928,Joy  ,Comedy|Drama,2015
 1678,"Joy Luck Club, The  ",Drama|Romance,1993
 4821,Joy Ride  ,Adventure|Thriller,2001
-40414,Joyeux Noï¿½ï¿½ï,Drama|War,2005
+40414,Joyeux Noï¿½ï¿½ï¿½,Drama|War,2005
 91873,Joyful Noise  ,Comedy|Musical,2012
 26694,Ju Dou  ,Drama,1990
 6465,Jubilee  ,Drama,1977
@@ -4871,7 +4871,7 @@ movieId,title,genres,year
 1406,La Cï¿½ï¿½ï¿½ï¿½,Crime|Drama|Mystery|Thriller,1995
 114335,La cravate  ,null ,1957
 164909,La La Land  ,Comedy|Drama|Romance,2016
-130498,La vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ritï,Comedy,1997
+130498,La vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Comedy,1997
 1967,Labyrinth  ,Adventure|Fantasy|Musical,1986
 8908,Ladder 49  ,Action|Drama|Thriller,2004
 3955,"Ladies Man, The  ",Comedy,2000
@@ -4981,7 +4981,7 @@ movieId,title,genres,year
 7450,Laws of Attraction  ,Comedy|Romance,2004
 27831,Layer Cake  ,Crime|Drama|Thriller,2004
 179813,LBJ  ,Drama,2017
-146986,Le Maï¿½ï¿½ï¿½ï¿½ï¿½ï,Comedy,1981
+146986,Le Maï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Comedy,1981
 6541,"League of Extraordinary Gentlemen, The    ",Action|Fantasy|Sci-Fi,2003
 32302,"League of Ordinary Gentlemen, A  ",Documentary,2004
 3255,"League of Their Own, A  ",Comedy|Drama,1992
@@ -5110,7 +5110,7 @@ movieId,title,genres,year
 1144,"Line King: The Al Hirschfeld Story, The  ",Documentary,1996
 165551,Lion  ,Drama,2016
 4427,"Lion in Winter, The  ",Drama,1968
-27619,"Lion King 1ï¿½ï¿½ï¿½",Adventure|Animation|Children|Comedy,2004
+27619,Lion King 1ï¿½ï¿½ï¿½,Adventure|Animation|Children|Comedy,2004
 26999,"Lion King II: Simba's Pride, The  ",Adventure|Animation|Children|Musical|Romance,1998
 364,"Lion King, The  ",Adventure|Animation|Children|Drama|Musical|IMAX,1994
 26696,Lionheart  ,Action,1990
@@ -5173,11 +5173,11 @@ movieId,title,genres,year
 174909,Logan Lucky  ,Comedy,2017
 2528,Logan's Run  ,Action|Adventure|Sci-Fi,1976
 96975,LOL  ,Comedy|Drama|Romance,2012
-8143,Lola Montï¿½ï¿,Drama,1955
+8143,Lola Montï¿½ï¿½,Drama,1955
 96726,Lola Versus  ,Comedy|Romance,2012
 2025,Lolita  ,Drama|Romance,1997
 2729,Lolita  ,Drama|Romance,1962
-293,Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½on: The Pr,Action|Crime|Drama|Thriller,1994
+293,Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï,Action|Crime|Drama|Thriller,1994
 43908,London  ,Drama,2005
 82093,London Boulevard  ,Crime|Romance,2010
 152079,London Has Fallen  ,Action|Crime|Thriller,2016
@@ -5351,7 +5351,7 @@ movieId,title,genres,year
 140038,Madly in Love  ,Comedy,1981
 272,"Madness of King George, The  ",Comedy|Drama,1994
 1191,Madonna: Truth or Dare  ,Documentary|Musical,1991
-5071,Maelstrï¿½ï¿,Drama|Romance,2000
+5071,Maelstrï¿½ï¿½,Drama|Romance,2000
 6591,"Magdalene Sisters, The  ",Drama,2002
 133782,Maggie  ,Drama|Horror|Thriller,2015
 151317,Maggie's Plan  ,Comedy,2015
@@ -5705,10 +5705,10 @@ movieId,title,genres,year
 3499,Misery  ,Drama|Horror|Thriller,1990
 4428,"Misfits, The  ",Comedy|Drama|Romance|Western,1961
 71867,"Misfortunates, The    ",Drama,2009
-73,"Misï¿½ï¿½ï¿½ï¿½ï¿½",Drama|War,1995
-1873,"Misï¿½ï¿½ï¿½ï¿½ï¿½",Crime|Drama|Romance|War,1998
-99149,"Misï¿½ï¿½ï¿½ï¿½ï¿½",Drama|Musical|Romance|IMAX,2012
-99532,"Misï¿½ï¿½ï¿½ï¿½ï¿½",Drama|Romance,2000
+73,Misï¿½ï¿½ï¿½ï¿½ï¿½,Drama|War,1995
+1873,Misï¿½ï¿½ï¿½ï¿½ï¿½,Crime|Drama|Romance|War,1998
+99149,Misï¿½ï¿½ï¿½ï¿½ï¿½,Drama|Musical|Romance|IMAX,2012
+99532,Misï¿½ï¿½ï¿½ï¿½ï¿½,Drama|Romance,2000
 4025,Miss Congeniality  ,Comedy|Crime,2000
 32296,Miss Congeniality 2: Armed and Fabulous  ,Adventure|Comedy|Crime,2005
 70641,Miss March  ,Comedy,2009
@@ -5737,7 +5737,7 @@ movieId,title,genres,year
 127130,Mistress America  ,Comedy,2015
 8290,Mitchell  ,Action|Crime,1975
 275,Mixed Nuts  ,Comedy,1994
-2742,Mï¿½ï¿½ï¿½ï,Comedy|Drama,1986
+2742,Mï¿½ï¿½ï¿½ï¿½,Comedy|Drama,1986
 3425,Mo' Better Blues  ,Drama|Musical,1990
 5454,Mo' Money  ,Comedy|Romance,1992
 166461,Moana  ,Adventure|Animation|Children|Comedy|Fantasy,2016
@@ -5946,7 +5946,7 @@ movieId,title,genres,year
 2302,My Cousin Vinny  ,Comedy,1992
 269,My Crazy Life    ,Drama,1993
 4138,My Demon Lover  ,Comedy|Horror,1987
-5772,My Dinner with Andrï¿½ï,Drama,1981
+5772,My Dinner with Andrï¿½ï¿½,Drama,1981
 3189,My Dog Skip  ,Children|Drama,1999
 914,My Fair Lady  ,Comedy|Drama|Musical|Romance,1964
 279,My Family  ,Drama,1995
@@ -6000,7 +6000,7 @@ movieId,title,genres,year
 2889,"Mystery, Alaska  ",Comedy|Drama,1999
 4062,Mystic Pizza  ,Comedy|Drama|Romance,1988
 6870,Mystic River  ,Crime|Drama|Mystery,2003
-171917,Mystï¿½ï¿½ï¿½ï¿½ï¿½ï¿½re ï¿½,Drama|Mystery|Thriller,2015
+171917,Mystï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Drama|Mystery|Thriller,2015
 45666,Nacho Libre  ,Comedy,2006
 3395,Nadine  ,Comedy,1987
 184,Nadja  ,Drama,1994
@@ -6034,7 +6034,7 @@ movieId,title,genres,year
 288,Natural Born Killers  ,Action|Crime|Thriller,1994
 3098,"Natural, The  ",Drama,1984
 98160,Nature Calls  ,Comedy,2012
-7099,Nausicaï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ of the Valley,Adventure|Animation|Drama|Fantasy|Sci-Fi,1984
+7099,Nausicaï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿,Adventure|Animation|Drama|Fantasy|Sci-Fi,1984
 7074,"Navigator, The  ",Comedy,1924
 4207,Navy Seals  ,Action|Adventure|War,1990
 168846,Neal Brennan: 3 Mics  ,Comedy,2017
@@ -6175,7 +6175,7 @@ movieId,title,genres,year
 171251,"Nobody Speak: Hulk Hogan, Gawker and Trials of a Free Press  ",Documentary,2017
 281,Nobody's Fool  ,Comedy|Drama|Romance,1994
 149334,Nocturnal Animals,Drama|Thriller,2016
-155589,Noin 7 veljestï¿½ï,null ,1968
+155589,Noin 7 veljestï¿½ï¿½,null ,1968
 7647,Noises Off...  ,Comedy,1992
 109578,Non-Stop  ,Action|Mystery|Thriller,2014
 50806,Norbit  ,Comedy|Romance,2007
@@ -6549,9 +6549,9 @@ movieId,title,genres,year
 2488,Peeping Tom  ,Drama|Horror|Thriller,1960
 3608,Pee-wee's Big Adventure  ,Adventure|Comedy,1985
 2469,Peggy Sue Got Married  ,Comedy|Drama,1986
-84553,Pekka ja Pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tkï¿½,Comedy,1957
-73501,Pekka ja Pï¿½ï¿½ï¿½ï¿½ï¿½ï¿,Comedy,1958
-159976,Pelï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: Bir,Drama,2016
+84553,Pekka ja Pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿,Comedy,1957
+73501,Pekka ja Pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Comedy,1958
+159976,Pelï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿,Drama,2016
 2803,"Pelican Brief, The  ",Crime|Drama|Mystery|Romance|Thriller,1993
 4297,Pelle the Conqueror    ,Drama,1987
 58347,Penelope  ,Comedy|Fantasy|Romance,2006
@@ -6711,10 +6711,10 @@ movieId,title,genres,year
 3064,Poison Ivy: New Seduction  ,Drama|Thriller,1997
 5672,Pokemon 4 Ever    ,Adventure|Animation|Children|Fantasy,2002
 131480,Poker Night  ,Action|Crime|Thriller,2014
-4241,Pokï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mo,Animation|Children,2001
-6371,Pokï¿½ï¿½ï¿½ï¿½ï¿,Animation|Children,2003
-3799,Pokï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mon ,Animation|Children,2000
-3054,Pokï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mon: T,Adventure|Animation|Children|Fantasy|Sci-Fi,1998
+4241,Pokï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿,Animation|Children,2001
+6371,Pokï¿½ï¿½ï¿½ï¿½ï¿½,Animation|Children,2003
+3799,Pokï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï,Animation|Children,2000
+3054,Pokï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Adventure|Animation|Children|Fantasy|Sci-Fi,1998
 8965,"Polar Express, The  ",Adventure|Animation|Children|Fantasy|IMAX,2004
 2378,Police Academy  ,Comedy|Crime,1984
 2379,Police Academy 2: Their First Assignment  ,Comedy|Crime,1985
@@ -7366,7 +7366,7 @@ movieId,title,genres,year
 4407,Salvador  ,Drama|Thriller|War,1986
 91688,Salvation Boulevard  ,Comedy|Thriller,2011
 115216,"Salvation, The  ",Drama|Western,2014
-7587,"Samouraï¿½ï¿½ï¿½ï",Crime|Drama|Thriller,1967
+7587,Samouraï¿½ï¿½ï¿½ï¿½,Crime|Drama|Thriller,1967
 96606,Samsara  ,Documentary,2011
 42559,Samurai Assassin    ,Action|Adventure|Drama,1965
 41627,Samurai Rebellion    ,Action|Drama,1967
@@ -8063,7 +8063,7 @@ movieId,title,genres,year
 1599,Steel  ,Action,1997
 3844,Steel Magnolias  ,Drama,1989
 172013,Stefan Zweig: Farewell to Europe  ,Drama,2016
-162982,Steins;Gate the Movie: The Burden of Dï¿½ï¿½ï¿½ï,Animation|Drama|Sci-Fi,2013
+162982,Steins;Gate the Movie: The Burden of Dï¿½ï¿½ï¿½ï¿½,Animation|Drama|Sci-Fi,2013
 8035,"Stendhal Syndrome, The    ",Crime|Horror|Thriller,1996
 60756,Step Brothers  ,Comedy,2008
 6598,Step Into Liquid  ,Documentary,2002
@@ -8373,7 +8373,7 @@ movieId,title,genres,year
 55020,"Ten, The  ",Comedy,2007
 49396,Tenacious D in The Pick of Destiny  ,Adventure|Comedy|Musical,2006
 6530,"Tenant, The    ",Drama|Horror|Mystery|Thriller,1976
-157775,Tenchi Muyï¿½ï¿½ï¿½ï¿½ï,Animation|Comedy,1996
+157775,Tenchi Muyï¿½ï¿½ï¿½ï¿½ï¿½,Animation|Comedy,1996
 2070,Tender Mercies  ,Drama|Romance|Western,1983
 6140,Tenebre  ,Horror|Mystery|Thriller,1982
 2802,Tequila Sunrise  ,Action|Drama|Romance|Thriller,1988
@@ -8391,7 +8391,7 @@ movieId,title,genres,year
 70708,Tetro  ,Drama|Mystery,2009
 4552,"Tetsuo, the Ironman    ",Action|Horror|Sci-Fi|Thriller,1988
 2104,Tex  ,Drama,1982
-157108,Texas - Doc Snyder hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lt di,Comedy|Western,1993
+157108,Texas - Doc Snyder hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿,Comedy|Western,1993
 99721,Texas Chainsaw 3D  ,Horror|Mystery|Thriller,2013
 2460,"Texas Chainsaw Massacre 2, The  ",Horror,1986
 2459,"Texas Chainsaw Massacre, The  ",Horror,1974
@@ -8727,7 +8727,7 @@ movieId,title,genres,year
 1624,"Thousand Acres, A  ",Drama,1997
 26147,"Thousand Clowns, A  ",Comedy|Drama|Romance,1965
 95067,"Thousand Words, A  ",Comedy|Drama,2012
-2478,ýýThree Amigos!  ,Comedy|Western,1986
+2478,ýýýýýýThree Amigos!  ,Comedy|Western,1986
 177593,"Three Billboards Outside Ebbing, Missouri  ",Crime|Drama,2017
 41863,"Three Burials of Melquiades Estrada, The  ",Adventure|Crime|Drama,2006
 1024,"Three Caballeros, The  ",Animation|Children|Musical,1945
@@ -9270,7 +9270,7 @@ movieId,title,genres,year
 336,"Walking Dead, The  ",Drama|War,1995
 7376,Walking Tall  ,Action,2004
 94735,Walking with Monsters  ,Documentary,2005
-60069,WALLï¿½ï¿,Adventure|Animation|Children|Romance|Sci-Fi,2008
+60069,WALLï¿½ï¿½,Adventure|Animation|Children|Romance|Sci-Fi,2008
 4007,Wall Street  ,Drama,1987
 80590,Wall Street: Money Never Sleeps  ,Drama,2010
 38038,Wallace & Gromit in The Curse of the Were-Rabbit  ,Adventure|Animation|Children|Comedy,2005
@@ -9709,7 +9709,7 @@ movieId,title,genres,year
 6153,Zapped!  ,Comedy|Sci-Fi,1982
 40851,Zathura  ,Action|Adventure|Children|Fantasy,2005
 107159,Zatoichi and the Chest of Gold      ,Action|Drama,1964
-8189,Zazie dans le mï¿½ï¿½ï,Comedy,1960
+8189,Zazie dans le mï¿½ï¿½ï¿½,Comedy,1960
 58870,Zebraman  ,Comedy,2004
 3223,"Zed & Two Noughts, A  ",Drama,1985
 65225,Zeitgeist: Addendum  ,Documentary,2008
