@@ -186,7 +186,8 @@ class Rating(models.Model):
 
         validators=[MinValueValidator(1.0), MaxValueValidator(5.0)]
     )
-
+    class Meta:
+        ordering = ['user']
 
 class Meeting(models.Model):
     club = ForeignKey(Club, on_delete=models.CASCADE)
