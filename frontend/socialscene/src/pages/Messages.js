@@ -16,16 +16,11 @@ const Messages = () => {
     const [openReminder, setOpenReminder] = useState(true);
     const [userData, setUserData] = useState([])
 
-    const [open, setOpen] = useState([]);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    const [messages, setMessages] = useState([]);
+   
     useEffect(() => {
         getClubMessages()
     },[])
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     const [dateTime, setDateTime] = useState(new Date(Date.now()));
 
@@ -45,7 +40,7 @@ const Messages = () => {
             },
         })
         let data = await response.json()
-        setOpen(data)
+        setMessages(data)
         let sender_data = data.sender
     }
 
@@ -65,7 +60,7 @@ const Messages = () => {
             },
         })
         let data = await response.json()
-        setOpen(data)
+        setMessages(data)
         let sender_data = data.sender
         console.log(sender_data)
     }
@@ -164,7 +159,7 @@ const Messages = () => {
             >
                 <Grid xs={12} item>
                     <Paper style={{ maxHeight: 800, overflow: 'auto' }} elevation="3">
-                        {open.map((val) => {
+                        {messages.map((val) => {
                             return (
                                 <>
                                     <Divider variant="middle">{val.time}</Divider>
