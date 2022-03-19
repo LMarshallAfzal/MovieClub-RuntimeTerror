@@ -3,7 +3,7 @@ import { InputAdornment, IconButton, CardContent, Box, Alert, Collapse, TextFiel
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
-import { moviesWithPoster } from "./DummyMoviesData";
+import { moviesWithPoster } from "../data/DummyMoviesData";
 import SendIcon from '@mui/icons-material/Send';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
