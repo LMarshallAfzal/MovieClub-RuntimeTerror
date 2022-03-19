@@ -6,9 +6,8 @@ from api.models import Rating
 
 
 class ClubRecommenderData:
-    def __init__(self,club):
+    def __init__(self):
         self.club_rec_data_path = 'recommender/dataset-latest/club_recommender_data.csv'
-        self.club = club
 
     def load_movie_data_for_club_recommender(self):
         ratings_dataset = 0

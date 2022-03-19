@@ -10,12 +10,13 @@ from api.models import Rating
 class MoviesForUserRecommenderData:
 
     def __init__(self):
-        self.movie_rec_data_path = 'recommender/dataset-latest/movie_recommender_data.csv'
+        self.movie_rec_data_path = 'recommender/dataset-latest/user_movie_recommender_data.csv'
         self.movie_lens_path = 'recommender/dataset-latest/ratings.csv' 
 
     def load_movie_data_for_user(self):
+        self.clean()
         ratings_dataset = 0
-        self.get_db_ratings() #stays for club
+        self.get_db_user_ratings() #stays for club
         self.combine_data()
         reader = Reader(line_format='user item rating', sep=',', skip_lines=1)
         ratings_dataset = Dataset.load_from_file(self.movie_rec_data_path, reader = reader)

@@ -1,13 +1,12 @@
 from surprise import KNNBasic
-from .user_movie_rec_data import Data
+from .club_rec_data import ClubRecommenderData as Data
 import heapq as pq
-from collections import defaultdict
-from operator import itemgetter
-from api.models import Movie, User, Rating
+from api.models import Rating
+
 
 data = Data()
-
 number_of_recommendations = 5
+
 
 def recommend_clubs(target):
     dataset = data.load_movie_data_for_club_recommender()
@@ -30,6 +29,5 @@ def recommend_clubs(target):
         for club in neighbour.get_user_clubs():
             if not club in already_joined_clubs:
                 recommendations.append(club)
-
     data.clean()
     return recommendations
