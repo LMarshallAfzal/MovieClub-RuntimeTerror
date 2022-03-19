@@ -1,5 +1,5 @@
 from surprise import KNNBasic
-from .data import Data
+from .user_movie_rec_data import Data
 import heapq as pq
 from collections import defaultdict
 from operator import itemgetter
@@ -7,7 +7,7 @@ from api.models import Movie, User, Rating
 
 data = Data()
 
-number_of_recommendations = 6
+number_of_recommendations = 5
 
 def recommend_clubs(target):
     dataset = data.load_movie_data_for_club_recommender()

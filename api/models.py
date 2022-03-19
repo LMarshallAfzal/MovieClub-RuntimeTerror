@@ -49,7 +49,7 @@ class User(AbstractUser):
         return [membership.club for membership in memberships]
 
     def get_user_ratings(self):
-        ratings = Movie.objects.filter(ratings__username=self.username)
+        ratings = Rating.objects.filter(user=self)
         if not ratings:
             return None
         else:

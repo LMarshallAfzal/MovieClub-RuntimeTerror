@@ -10,7 +10,8 @@ from rest_framework import status
 from .serializers import *
 from .models import *
 from django.contrib.auth import logout
-from recommender.recommender_CF_item import train_movie_data_for_user,recommend_movies_for_user
+#from recommender.movie_recommender import train_movie_data_for_user,recommend_movies_for_user
+from recommender.meeting_movie_rec_data import MeetingMovieRecommenderData
 from .decorators import movie_exists, club_exists, has_watched, has_not_watched, is_member, is_organiser
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie, csrf_exempt
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -254,11 +255,14 @@ def change_rating(request, movie_id):
 
 @api_view(['GET'])
 def recommend_movie_user(request):
-    recommendations = []
-    user = User.objects.get(id=356)
-    recommendations = recommend_movies_for_user(user)
-    serializer = MovieSerializer(recommendations, many=True)
-    return Response(serializer.data)
+    club = Club.objects.get(id=4)
+    data =  MeetingMovieRecommenderData(club)
+    data.get_db_member_ratings()
+    # recommendations = []
+    # user = User.objects.get(id=356)
+    # recommendations = recommend_movies_for_user(user)
+    # serializer = MovieSerializer(recommendations, many=True)
+    return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def train_data(request):
