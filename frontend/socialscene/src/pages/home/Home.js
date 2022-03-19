@@ -80,8 +80,10 @@ const Home = () =>  {
                 spacing={2}
             >
                 <Grid item xs={12}>
-                    <div className='dashboard-text'>Dashboard</div>
-                </Grid>
+                <div className={"home-page-title"}>
+                    <h3>home<h3--emphasise>.</h3--emphasise></h3>
+                </div>
+            </Grid>
                 <Grid item xs={12}>
                     <Autocomplete
                         freeSolo

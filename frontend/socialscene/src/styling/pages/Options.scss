@@ -59,3 +59,14 @@
     width: 100%;
     text-align: center;
 }
+
+.options-card-background {
+  background-color: base.$grey-4;
+}
+
+.options-card-heading {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: base.$primary-white;
+  user-select: none;
+}

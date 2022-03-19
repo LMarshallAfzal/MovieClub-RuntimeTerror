@@ -17,8 +17,7 @@ function Clubs() {
 
 
     return (
-        <Grid
-            container
+        <Grid container
             justifyContent={"center"}
             direction={"row"}
             alignItems={"flex-start"}

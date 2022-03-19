@@ -3,7 +3,7 @@ import { Grid, Button, Typography, Rating } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
-import "../../styling/pages/Movie.css";
+import "../../styling/pages/Movies.css";
 import moviePoster from '../../styling/images/empty_movie_poster.png'
 import AuthContext from "../../components/helper/AuthContext";
 
@@ -57,10 +57,10 @@ const Movies = () => {
     // }
     return (
         <Grid>
-            <Grid className="profile-table" style={{ borderSpacing: 0 }}>
-                <tr>
-                    <div className='edit-profile-info-text'>Movies</div>
-                </tr>
+            <Grid item xs={12}>
+                <div className={"home-page-title"}>
+                    <h3>movies<h3--emphasise>.</h3--emphasise></h3>
+                </div>
             </Grid>
             <Grid container direction={"row"} spacing={2}>
                 {recommendedMovies.map((movie) => {

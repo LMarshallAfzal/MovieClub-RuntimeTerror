@@ -32,11 +32,11 @@ function Messages() {
                 container
                 direction={"row"}
                 paddingBottom={"10px"}>
-                <Grid xs={12} item>
-                    <div className='others-profile-info-text'>
-                        <div style={{ paddingBottom: '10px' }}>Club 1</div>
-                    </div>
-                </Grid>
+                <Grid item xs={12}>
+                <div className={"home-page-title"}>
+                    <h3>messages<h3--emphasise>.</h3--emphasise></h3>
+                </div>
+            </Grid>
                 {/* IF NOT YOU ARE THE ORGANISER, HIDE THE BELOW GRID*/}
                 {/* <Grid xs={3} item>
                     <div>

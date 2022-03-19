@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Box, Grid, Stack, TextField, Button } from "@mui/material";
 import "../../styling/pages/Options.css";
 import AuthContext from "../../components/helper/AuthContext";
+import FormButton from "../../components/FormButton";
 
 const Options = () => {
     const [passwordData, setPasswordData] = useState({
@@ -53,16 +54,25 @@ const Options = () => {
     // })
 
     return (
-        <table className="change-password-table style={{ borderSpacing: 0 }}">
-            <tr>
-                <div className='settings-text'>Settings:</div>
-            </tr>
-            <tr>
-                <td className='text-field'>
-                    <Box component="form" onSubmit={submitChangePasswordForm}>
-                    <Stack className={"form-stack"} spacing={2}
-                        height={"100%"}>
-                        <div className='change-password-text'>Change Password:</div>
+        <Grid container
+              direction={"row"}
+              spacing={2}
+        >
+            <Grid item xs={12}>
+                <div className={"home-page-title"}>
+                    <h3>options<h3--emphasise>.</h3--emphasise></h3>
+                </div>
+            </Grid>
+
+            <Grid item xs={12}>
+
+                <form onSubmit={submitChangePasswordForm} className={"options-card-background"}>
+
+                    <Stack className={"form-stack"}
+                           spacing={2}
+                           height={"100%"}>
+
+                        <h4 className={"options-card-heading"}>change password:</h4>
                         <TextField
                             className={"form-field"}
                             id={"outlined-basic"}
@@ -70,7 +80,6 @@ const Options = () => {
                             name={"old_password"}
                             type={"password"}
                             variant={"outlined"}
-                            // value={passwordData.old_password}
                         />
 
                         <TextField
@@ -80,8 +89,6 @@ const Options = () => {
                             name={"new_password"}
                             type={"password"}
                             variant={"outlined"}
-                            // value={passwordData.password_confirmation}
-                            // onChange={handleChange}
                         />
 
                         <TextField
@@ -91,34 +98,13 @@ const Options = () => {
                             name={"new_password_confirmation"}
                             type={"password"}
                             variant={"outlined"}
-                            // value={passwordData.new_password_confirmation}
-                            // onChange={handleChange}
                         />
-                        <div className={"form-field"}>
-                            <Box
-                                sx={{
-                                    display: 'grid',
-                                    gridAutoColumns: '1fr',
-                                    gap: 1,
-                                }}
-                            >
-                                <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                    {/* <FormButton */}
-                                    <Button
-                                        // text={"submit"}
-                                        // onClick={this.submitForm}
-                                        type="submit"
-                                    >
-                                        submit
-                                    </Button>
-                                </Box>
-                            </Box>
-                        </div>
+
+                        <FormButton type={"submit"} text={"save"} />
                     </Stack>
-                    </Box>
-                </td>
-            </tr>
-        </table>
+                </form>
+            </Grid>
+        </Grid>
     );
 }
 
