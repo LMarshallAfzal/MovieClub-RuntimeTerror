@@ -1,7 +1,7 @@
 import React from 'react'
 import "../styling/components/NameHeader.css";
 import {Avatar, Box, Stack} from "@mui/material";
-import iconImage from "../styling/testIconPic.jpg";
+import iconImage from "../styling/images/testIconPic.jpg";
 
 
 function NameHeader(props) {
