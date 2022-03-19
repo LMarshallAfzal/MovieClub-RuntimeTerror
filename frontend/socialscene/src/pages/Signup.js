@@ -20,11 +20,58 @@ export const Signup = () => {
         password:'',
         password_confirmation:'',
     })
+
     const {username, first_name, last_name, email, bio, preferences, password, password_confirmation} = signupCredentials
+    const [usernameError, setUsernameError] = useState(false)
+    const [firstNameError, setFirstNameError] = useState(false)
+    const [lastNameError, setLastNameError] = useState(false)
+    const [emailError, setEmailError] = useState(false)
+    const [bioError, setBioError] = useState(false)
+    const [preferencesError, setPreferencesError] = useState(false)
+    const [passwordError, setPasswordError] = useState(false)
+    const [passwordConfirmationError, setPasswordConfirmationError] = useState(false)
+    // const [errors, setErrors] = useState(setUsernameError(false), setFirstNameError(false), setLastNameError(false), setEmailError(false), setBioError(false), setPreferencesError(false), setPasswordError(false), setPasswordConfirmationError(false))
+    const [errorText, setErrorText] = useState('')
 
     const onChange = (e) => {
         setSignupCredentials(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
         
+    };
+
+    const errorHandler = (e, data) => {
+        e.preventDefault()
+        if((Object.keys(data)).includes('username')) {
+            setUsernameError(true)
+            setErrorText(data.username)
+        }
+        if((Object.keys(data)).includes('first_name')) {
+            setFirstNameError(true)
+            setErrorText(data.first_name)
+        }
+        if((Object.keys(data)).includes('last_name')) {
+            setLastNameError(true)
+            setErrorText(data.last_name)
+        }
+        if((Object.keys(data)).includes('email')) {
+            setEmailError(true)
+            setErrorText(data.email)
+        }
+        if((Object.keys(data)).includes('bio')) {
+            setPreferencesError(true)
+            setErrorText(data.bio)
+        }
+        if((Object.keys(data)).includes('preferences')) {
+            setPreferencesError(true)
+            setErrorText(data.preferences)
+        }
+        if((Object.keys(data)).includes('password')) {
+            setPasswordError(true)
+            setErrorText(data.password)
+        }
+        if((Object.keys(data)).includes('password_cofirmation')) {
+            setPasswordConfirmationError(true)
+            setErrorText(data.password_cofirmation)
+        }
     };
 
     let submitSignupForm = async (e) => {
@@ -46,12 +93,15 @@ export const Signup = () => {
             },
         })
         let data = await response.json()
+        console.log(Object.keys(data))
         if(response.status === 201) {
             setLoginCredentials(signupCredentials.username, signupCredentials.password)
             return (loginUser(e))
         }
         else {
-            alert(response.statusText)
+            errorHandler(e, data)
+            // setErrorText(data.first_name)
+            // alert(response.headers)
         }  
     }
     
@@ -67,6 +117,9 @@ export const Signup = () => {
                 <Box component="form" onSubmit={submitSignupForm}>
                     <Stack className={"form-stack"} spacing={3}>
                         <TextField
+                            error={usernameError}
+                            helperText={errorText}
+                            required
                             id={"outlined-basic"}
                             label={"username"}
                             name={"username"}
@@ -76,6 +129,9 @@ export const Signup = () => {
                             onChange={e => onChange(e)}
                         />
                         <TextField
+                            error={firstNameError}
+                            helperText={errorText}
+                            required
                             id={"outlined-basic"}
                             label={"first name"}
                             name={"first_name"}
@@ -85,6 +141,9 @@ export const Signup = () => {
                             onChange={e => onChange(e)}
                         />
                         <TextField
+                            error={lastNameError}
+                            helperText={errorText}
+                            required
                             id={"outlined-basic"}
                             label={"last name"}
                             name={"last_name"}
@@ -94,6 +153,9 @@ export const Signup = () => {
                             onChange={e => onChange(e)}
                         />
                         <TextField
+                            error={emailError}
+                            helperText={errorText}
+                            required
                             id={"outlined-basic"}
                             label={"email"}
                             name={"email"}
@@ -103,15 +165,21 @@ export const Signup = () => {
                             onChange={e => onChange(e)}
                         />
                         <TextField
+                            error={bioError}
                             id={"outlined-basic"}
                             label={"bio"}
                             name={"bio"}
                             type={"text"}
                             variant={"outlined"}
+                            multiline
+                            rows={6}
                             value={bio}
                             onChange={e => onChange(e)}
                         />
                         <TextField
+                            error={preferencesError}
+                            helperText={errorText}
+                            required
                             id={"outlined-basic"}
                             label={"preferences"}
                             name={"preferences"}
@@ -121,6 +189,9 @@ export const Signup = () => {
                             onChange={e => onChange(e)}
                         />
                         <TextField
+                            error={passwordError}
+                            helperText={errorText}
+                            required
                             id={"outlined-basic"}
                             label={"password"}
                             name={"password"}
@@ -130,6 +201,9 @@ export const Signup = () => {
                             onChange={e => onChange(e)}
                         />
                         <TextField
+                            error={passwordConfirmationError}
+                            helperText={errorText}
+                            required
                             id={"outlined-basic"}
                             label={"password confirmation"}
                             name={"password_confirmation"}
@@ -152,6 +226,7 @@ export const Signup = () => {
                                         type="submit"
                                         text={"log in"}   
                                         onClick={submitSignupForm}
+                                        // onSubmit={setErrors}
                                     />                                                    
                                 </Box>
                             </Box>
