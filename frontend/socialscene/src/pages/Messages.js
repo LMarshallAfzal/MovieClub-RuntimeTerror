@@ -11,7 +11,8 @@ import AuthContext from "../components/AuthContext";
 
 
 const Messages = () => {
-    let {authTokens} = useContext(AuthContext)
+    let {user, authTokens} = useContext(AuthContext)
+    let [message, setMessage] = useState('')
     const [openReminder, setOpenReminder] = useState(true);
     const [userData, setUserData] = useState([])
 
@@ -26,11 +27,12 @@ const Messages = () => {
         setOpen(false);
     };
 
-    const [value, setDateTime] = useState(new Date('2014-08-18T21:11:54'));
+    const [dateTime, setDateTime] = useState(new Date(Date.now()));
 
-    const handleChange = (newValue) => {
-        setDateTime(newValue);
-    };
+    const onChange = (e, newDateTime) => {
+        setMessage( fieldData => ({...fieldData, [e.target.name]: e.target.value}))
+        setDateTime(newDateTime);
+     }; 
 
 
     let getClubMessages = async (e) => {
@@ -43,30 +45,30 @@ const Messages = () => {
             },
         })
         let data = await response.json()
-        //console.log(data)
+        setOpen(data)
+        let sender_data = data.sender
+    }
+
+    let sendClubMessages = async (e) => {
+        const club = 2
+        let response = await fetch('http://127.0.0.1:8000/write_message/' + club + '/', {
+            method: 'POST',
+            body:JSON.stringify({
+                "sender": user.username, 
+                "club": club, 
+                "message": message.message,
+                "timestamp": dateTime,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer ' + String(authTokens.access),
+            },
+        })
+        let data = await response.json()
         setOpen(data)
         let sender_data = data.sender
         console.log(sender_data)
     }
-
-    // let getUserDetails = async(userId) => {
-    //     let response = await fetch('http://127.0.0.1:8000/user/' + userId + '/', {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-type': 'application/json; charset=UTF-8',
-    //             'Authorization': 'Bearer ' + String(authTokens.access),
-    //         },
-    //     })
-    //     //console.log(response.json())
-    //     let data = await response.json()
-    //     //console.log(data)
-    //     setOpen(data)
-    //     let sender_data = data.sender
-    //     return sender_data
-
-    // }
-
-
 
     return (
         <>
@@ -184,7 +186,6 @@ const Messages = () => {
                                                 <Typography sx={{ fontSize: 20 }} variant="body2">
                                                     {val.message}
                                                 </Typography>
-
                                                 <Typography sx={{ fontSize: 15 }} variant="body2">
                                                     {val.timestamp}
                                                 </Typography>
@@ -201,12 +202,25 @@ const Messages = () => {
                         <TextField className="text-field"
                             label="Type your comment..."
                             variant="outlined"
-                            InputProps={{
-                                endAdornment:
-                                    < IconButton >
-                                        <SendIcon />
-                                    </IconButton>
-                            }} />
+                            name="message"
+                            value={message.message}
+                            onChange={(e, dateTime) => onChange(e, dateTime)}
+                            // InputProps={{
+                            //     endAdornment:
+                            //     <div >
+                            //         < Button onChange={(e, dateTime) => onChange(e, dateTime)} >
+                                            
+                            //             <SendIcon />
+                            //         </Button>
+                            //     </div>
+                            // }} 
+                        />
+                        < Button 
+                            onClick={sendClubMessages} 
+                            onChange={getClubMessages}
+                        >         
+                            <SendIcon />
+                        </Button>
                     </FormControl>
                 </Grid>
             </Grid>
