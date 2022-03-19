@@ -268,7 +268,7 @@ def recommend_movie_user(request):
 
 
 @api_view(['GET'])
-def train_data(request):
+def train_movie_data(request):
     train_movie_data_for_user()
     return Response(status=status.HTTP_200_OK)
 
@@ -286,7 +286,7 @@ def recommend_movie_meeting(request, club_id):
 
 
 @api_view(['GET'])
-def train_data_for_meetings(request):
+def train_meeting_data(request):
     train_movie_data_for_meeting()
     return Response(status=status.HTTP_200_OK)
 
