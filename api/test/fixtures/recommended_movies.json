@@ -51,6 +51,16 @@
     },
     {
         "model": "api.movie",
+        "pk": 7,
+        "fields": {
+            "ml_id": 7541,
+            "title": "100 Girls  ",
+            "genres": "Comedy|Romance",
+            "year": 2000
+        }
+    },
+    {
+        "model": "api.movie",
         "pk": 6,
         "fields": {
             "ml_id": 216,
