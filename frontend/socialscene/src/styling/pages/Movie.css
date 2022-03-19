@@ -91,12 +91,6 @@ h6 {
   font-size: 1.1rem;
 }
 
-.home-page-title {
-  background-color: #C4C4C4;
-  padding: 10px;
-  user-select: none;
-}
-
 .page-title {
   padding-top: 20px;
   height: 100%;
@@ -126,6 +120,15 @@ h6 {
   text-align: center;
 }
 
+.home-page-title {
+  background-color: #C4C4C4;
+  padding: 10px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
 .watched-button {
   color: #999999;
   border-color: #999999;
@@ -133,6 +136,4 @@ h6 {
 
 .watched-button:hover {
   border-color: #5C5C5C;
-}
-
-/*# sourceMappingURL=Movie.css.map */
+}/*# sourceMappingURL=Movie.css.map */

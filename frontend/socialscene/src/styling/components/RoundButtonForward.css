@@ -91,12 +91,6 @@ h6 {
   font-size: 1.1rem;
 }
 
-.home-page-title {
-  background-color: #C4C4C4;
-  padding: 10px;
-  user-select: none;
-}
-
 .page-title {
   padding-top: 20px;
   height: 100%;
@@ -110,6 +104,29 @@ h6 {
   font-family: Helvetica-Bold, serif;
   width: 100%;
   text-align: center;
+}
+
+.page-subtitle {
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  font-family: Helvetica, serif;
+  width: 100%;
+  text-align: center;
+}
+
+.home-page-title {
+  background-color: #C4C4C4;
+  padding: 10px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .round-forward {
@@ -131,6 +148,4 @@ h6 {
 .round-forward:hover {
   background-color: #FF0000;
   color: #000000;
-}
-
-/*# sourceMappingURL=RoundButtonForward.css.map */
+}/*# sourceMappingURL=RoundButtonForward.css.map */

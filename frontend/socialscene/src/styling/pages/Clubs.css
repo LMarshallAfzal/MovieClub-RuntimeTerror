@@ -91,15 +91,50 @@ h6 {
   font-size: 1.1rem;
 }
 
+.page-title {
+  padding-top: 20px;
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  font-family: Helvetica-Bold, serif;
+  width: 100%;
+  text-align: center;
+}
+
+.page-subtitle {
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  font-family: Helvetica, serif;
+  width: 100%;
+  text-align: center;
+}
+
 .home-page-title {
   background-color: #C4C4C4;
   padding: 10px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .search-bar {
   width: 100%;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .create-button {
@@ -114,7 +149,10 @@ h6 {
   padding-top: 10px;
   padding-left: 10px;
   color: #FFFFFF;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .club-card-list-frame {
@@ -123,6 +161,4 @@ h6 {
 
 .club-card-list-item {
   width: auto;
-}
-
-/*# sourceMappingURL=Clubs.css.map */
+}/*# sourceMappingURL=Clubs.css.map */
