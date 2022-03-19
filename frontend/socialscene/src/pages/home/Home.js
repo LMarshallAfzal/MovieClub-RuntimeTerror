@@ -24,7 +24,6 @@ const Home = () =>  {
 
     useEffect(() => { 
         getMembershipData()
-        // console.log(authTokens.access)
     },[])
 
 
