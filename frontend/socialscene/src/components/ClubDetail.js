@@ -3,9 +3,9 @@ import {useParams} from "react-router";
 import {Avatar, Box, Chip, Grid, ListItem, Stack, TextField} from "@mui/material";
 import "../styling/components/ClubDetail.css";
 import FormButton from "./FormButton";
-import {DummyClubData} from "../pages/DummyClubsData";
+import {DummyClubData} from "../pages/data/DummyClubsData";
 import ClubListing from "./ClubListing";
-import {DummyClubMemberData} from "../pages/DummyClubMemberData";
+import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
 
 
 function ClubDetail() {

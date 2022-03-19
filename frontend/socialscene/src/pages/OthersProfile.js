@@ -2,8 +2,8 @@ import React from "react";
 import "../styling/pages/OthersProfile.css";
 import { Avatar, Box, Stack, Card, CardContent, TextField, Typography, Grid, Paper, ListItemText, ListItemButton } from "@mui/material";
 import FormButton from "../components/FormButton";
-import iconImage from "../styling/testIconPic.jpg";
-import { DummyDashboardClubsData, meetings, movies } from './DummyDashboardClubsData';
+import iconImage from "../styling/images/testIconPic.jpg";
+import { DummyDashboardClubsData, meetings, movies } from './data/DummyDashboardClubsData';
 
 function OthersProfile() {
     return (
