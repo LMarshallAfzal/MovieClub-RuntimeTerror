@@ -56,11 +56,11 @@ def has_not_watched(view_function):
 def is_member(view_function):
     @wraps(view_function)
     def modified_view_function(request,club_id,*args,**kwargs):
-        try:
-            club = Club.objects.get(id=club_id)
+        club = Club.objects.get(id=club_id)
+        try: 
             Membership.objects.get(user = request.user, club=club)
         except ObjectDoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_403_FORBIDDEN)
         else:
             return view_function(request,club_id,*args,**kwargs)
     return modified_view_function

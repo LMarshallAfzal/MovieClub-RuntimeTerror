@@ -1,5 +1,5 @@
 import React from "react";
-import {moviesWithPoster} from './DummyMoviesData.js';
+import {moviesWithPoster} from './data/DummyMoviesData.js';
 import { Grid, Stack, Button } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';

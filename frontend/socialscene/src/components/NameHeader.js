@@ -1,7 +1,7 @@
 import React from 'react'
 import "../styling/components/NameHeader.css";
 import {Avatar, Box, Stack} from "@mui/material";
-import iconImage from "../styling/testIconPic.jpg";
+import iconImage from "../styling/images/testIconPic.jpg";
 
 
 function NameHeader(props) {
@@ -17,6 +17,7 @@ function NameHeader(props) {
                 alignItems: 'center',
             }}
         >
+
           <Box sx={{ gridRow: '1', gridColumn: 'span 2' }}>
               <div className={"name-header-image"}>
                   <Avatar
@@ -25,7 +26,6 @@ function NameHeader(props) {
                       sx={{width: "100%", height: "100%"}}
                   />
               </div>
-
           </Box>
 
           <Box sx={{ gridRow: '1', gridColumn: 'span 3'}}>

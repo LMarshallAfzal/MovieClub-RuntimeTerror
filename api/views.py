@@ -8,12 +8,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .models import *
+from rest_framework.parsers import JSONParser
 from django.contrib.auth import logout
 from recommender.user_movie_recommender import train_movie_data_for_user, recommend_movies_for_user
 from recommender.meeting_movie_recommender import train_movie_data_for_meeting, recommend_movies_for_meeting
 from recommender.club_recommender import recommend_clubs
 from .decorators import movie_exists, club_exists, has_watched, has_not_watched, is_member, is_organiser
-from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie, csrf_exempt
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -118,6 +119,7 @@ def get_other_user(request, user_id):
         return Response(serializer.data, status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 
 @api_view(["GET"])
@@ -318,6 +320,31 @@ def get_movie(request, movie_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_watched_list(request):
-    movies = request.user.get_watched_movies()
-    serializer = MovieSerializer(movies, many=True)
+    if request.user.is_authenticated:
+        movies = request.user.get_watched_movies()
+        serializer = MovieSerializer(movies, many=True)
+    else:
+        return Response(status=status.HTTP_403_FORBIDDEN)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@club_exists
+@is_member
+@permission_classes([IsAuthenticated])
+def message_forum(request,club_id):
+    messages = Message.objects.filter(club=club_id)
+    serializer = MessageSerializer(messages, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@club_exists
+@is_member
+@permission_classes([IsAuthenticated])
+def write_message(request,club_id):
+    serializer = WriteMessageSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
