@@ -102,7 +102,8 @@ h6 {
   outline: none;
   border: none;
   display: block;
-  width: auto;
+  width: 100%;
+  text-align: left;
   font-size: 18px;
   color: #FFFFFF;
   cursor: pointer;
