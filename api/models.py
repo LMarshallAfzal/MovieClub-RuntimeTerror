@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.db.models import Count, F, Value
 from django.db.models.fields.related import ForeignKey
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -84,8 +85,8 @@ class Club(models.Model):
         blank=True,
         unique=False
     )
-    themes = models.CharField(
-        max_length=500,
+    theme = models.CharField(
+        max_length=20,
         blank=True,
         unique=False
     )
@@ -98,6 +99,14 @@ class Club(models.Model):
 
     def get_all_club_members(self):
         return self.club_members.all()
+    
+    def get_clubs_by_theme(preferences):
+        clubs = []
+        for preference in preferences:
+            clubs.append(Club.objects.annotate(
+            string=Value(preference)
+                ).filter(string__icontains=F('theme')))
+        return clubs
 
     def get_club_membership(self, user):
         membership = Membership.objects.get(user=user, club=self).role
@@ -162,10 +171,6 @@ class Movie(models.Model):
         User, through='Watch', related_name='viewers')
 
     meetings = models.ManyToManyField('Meeting', related_name='meetings')
-
-    def get_movie_title(movie_id):
-        return Movie.objects.get(movie_id=movie_id).title
-
     class Meta:
         ordering = ['title']
 
@@ -176,6 +181,16 @@ class Movie(models.Model):
         else:
             return author
 
+    def get_movie_title(movie_id):
+        return Movie.objects.get(movie_id=movie_id).title
+
+    def get_movies_by_genre(genres):
+        movies = []
+        for genre in genres:
+            movies.append(Movie.objects.annotate(
+            string=Value(genre)
+                ).filter(string__icontains=F('genres')))
+        return movies
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
