@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './pages/App';
+import App from './pages/helper/App';
 import "./styling/fonts/Helvetica.ttf";
 import "./styling/fonts/Helvetica-Light.ttf";
 import "./styling/fonts/Helvetica-Oblique.ttf";
