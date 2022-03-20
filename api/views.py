@@ -89,7 +89,8 @@ def change_password(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
-        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+        errors = serializer.errors
+        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET"])

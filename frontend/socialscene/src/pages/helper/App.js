@@ -11,10 +11,9 @@ import Signup from "../root/Signup";
 import HomeRouter from "./HomeRouter";
 import Clubs from "../home/Clubs";
 import Movies from "../home/Movies";
-import WhatsOn from "../WhatsOn";
 import Options from "../home/Options";
 import Home from "../home/Home";
-import OthersProfile from "../OthersProfile";
+import OthersProfile from "../home/OthersProfile";
 import PrivateRoute from "../../components/helper/PrivateRoute";
 import { AuthProvider } from "../../components/helper/AuthContext";
 import Messages from "../home/Messages";
@@ -43,8 +42,6 @@ function App() {
                         <Route path={"events"} element={(<Events />)} />
                         <Route path={"messages"} element={(<Messages />)} />
                         <Route path={"options"} element={(<Options />)} />
-
-                        <Route path={"whats-on"} element={(<WhatsOn />)} />
                         <Route path={"others-profile"} element={(<OthersProfile />)} />
                     </PrivateRoute>
               </Routes>

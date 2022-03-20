@@ -12,6 +12,31 @@ from django.core.validators import MaxValueValidator, MinValueValidator, MaxLeng
 
 
 class UserSerializer(ModelSerializer):
+    username = serializers.CharField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+
+    first_name = serializers.CharField(
+        required=True
+    )
+
+    last_name = serializers.CharField(
+        required=True
+    )
+
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+
+    bio = serializers.CharField(
+        required = False, allow_blank=True
+        )
+
+    preferences = serializers.CharField(
+        required=True
+    )
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email',
@@ -57,9 +82,6 @@ class MeetingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
-
-
 class SignUpSerializer(serializers.Serializer):
     username = serializers.CharField(
         required=True,
@@ -74,7 +96,7 @@ class SignUpSerializer(serializers.Serializer):
         required=True
     )
 
-    email = serializers.CharField(
+    email = serializers.EmailField(
         required=True,
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
@@ -126,6 +148,32 @@ class SignUpSerializer(serializers.Serializer):
 
 
 class UpdateUserSerializer(serializers.ModelSerializer):
+
+    username = serializers.CharField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+
+    first_name = serializers.CharField(
+        required=True
+    )
+
+    last_name = serializers.CharField(
+        required=True
+    )
+
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+
+    bio = serializers.CharField(
+        required = False, allow_blank=True
+        )
+
+    preferences = serializers.CharField(
+        required=True
+    )
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name',
@@ -173,23 +221,17 @@ class ChangePasswordSerializer(serializers.Serializer):
     new_password_confirmation = serializers.CharField(
         required=True, write_only=True)
 
-    # @Override
     def validate(self, data):
         user = self.context["request"].user
-        # Why extracting into two separate
-        # methods mess up type(data)?
-        # Validate old password
         if not user.check_password(data["old_password"]):
             raise serializers.ValidationError(
                 "The old password entered was invalid.")
-        # Validate new password
         if data["new_password"] != data["new_password_confirmation"]:
             raise serializers.ValidationError(
                 "Your password and confirmation password do not match."
             )
         return data
 
-    # @Override
     def save(self, **kwargs):
         user = self.context["request"].user
         user.set_password(self.validated_data["new_password"])
