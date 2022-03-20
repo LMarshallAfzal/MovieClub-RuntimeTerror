@@ -1,28 +1,28 @@
 from api.models import User
 from django.test import TestCase
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import force_authenticate,APIClient
 
 
 class LogOutViewTestCase(TestCase):
+
+    fixtures = ["api/test/fixtures/default_user.json"]
+
+
     def setUp(self):
-        self.user = User.objects.create_user(
-            username="@johndoe",
-            first_name="John",
-            last_name="Doe",
-            email="johndoe@example.org",
-            bio="The quick brown fox jumps over the lazy dog.",
-            preferences="Action, Drama, Horror, Comedy, Science fiction",
-            password="Password123",
-            is_active=True,
-        )
+        self.user = User.objects.get(username='johndoe')
+        self.url = reverse('log_out')
+        self.client = APIClient()
+
 
     def test_get_of_log_out_endpoint_as_logged_in_user_is_200_ok(self):
-        self.client.force_login(self.user)
-        url = "/log_out/"
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertFalse("_auth_user_id" in self.client.session.keys())
 
     def test_get_of_log_out_endpoint_as_anonymous_user_is_403_forbidden(self):
-        url = "/log_out/"
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 403)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

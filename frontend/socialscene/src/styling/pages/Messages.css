@@ -1,0 +1,178 @@
+#root, html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+}
+
+@font-face {
+  font-family: Helvetica;
+  src: url("../fonts/Helvetica.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Light;
+  src: url("../fonts/Helvetica-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Oblique;
+  src: url("../fonts/Helvetica-Oblique.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Bold;
+  src: url("../fonts/Helvetica-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-BoldOblique;
+  src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
+}
+a {
+  display: block;
+  text-decoration: none;
+  color: #000000;
+}
+
+body {
+  font-family: Helvetica, serif;
+  color: #000000;
+  margin: 0;
+  padding: 0;
+}
+body--emphasise {
+  color: #FF0000;
+}
+
+h1 {
+  font-family: Helvetica-Bold, serif;
+  color: #000000;
+  font-size: 25em;
+}
+h1--emphasise {
+  color: #FF0000;
+}
+
+h2 {
+  font-family: Helvetica-Bold, serif;
+  font-size: 12rem;
+}
+h2--emphasise {
+  color: #FF0000;
+}
+
+h3 {
+  font-family: Helvetica, serif;
+  font-size: 2.5rem;
+  margin: 0;
+}
+h3--emphasise {
+  color: #FF0000;
+}
+
+h4 {
+  font-family: Helvetica, serif;
+  font-size: 2rem;
+  margin: 0;
+}
+h4--emphasise {
+  color: #FF0000;
+}
+
+h5 {
+  font-family: Helvetica, serif;
+  font-size: 1.8rem;
+  margin: 0;
+}
+h5--emphasise {
+  color: #FF0000;
+}
+
+h6 {
+  font-family: Helvetica-Light, serif;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.page-title {
+  padding-top: 20px;
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  user-select: none;
+  font-family: Helvetica-Bold, serif;
+  width: 100%;
+  text-align: center;
+}
+
+.page-subtitle {
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  user-select: none;
+  font-family: Helvetica, serif;
+  width: 100%;
+  text-align: center;
+}
+
+.home-page-title {
+  background-color: #C4C4C4;
+  padding: 10px;
+  user-select: none;
+}
+
+.others-profile-info-text {
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  user-select: none;
+  font-family: Helvetica-Bold, serif;
+  width: 100%;
+  text-align: center;
+}
+
+.text-field {
+  text-align: left;
+  vertical-align: top;
+  background-color: #D8D8D8;
+}
+
+.others-profile-table {
+  width: 100%;
+  border-collapse: separate;
+  width: 100%;
+}
+
+.others-profile-grid {
+  height: calc(100% - 90px);
+  justify-content: center;
+}
+.others-profile-grid-left {
+  align-self: center;
+}
+.others-profile-grid-right {
+  margin: 0;
+  align-self: center;
+}
+
+.form-stack {
+  margin-top: 20px;
+}
+
+.profile-text-box {
+  background-color: #D8D8D8;
+}
+
+.profile-image {
+  align-self: center;
+  width: 100px;
+}
+
+.meeting-card {
+  background-color: #D8D8D8;
+}
+
+/*# sourceMappingURL=Messages.css.map */

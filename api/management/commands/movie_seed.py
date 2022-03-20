@@ -15,9 +15,9 @@ class Command(BaseCommand):
         for index,row in file.iterrows():
             print(f'Seeding movie {movie_count}',  end='\r')
             Movie.objects.create(
-                movieID = int(row['movieId']),
+                ml_id = int(row['movieId']),
                 title = row['title'],
-                genres = row['genres'],
+                genres = row['genres'].replace('|',','),
                 year = int(row['year'])
             )
             movie_count+=1

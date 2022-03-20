@@ -31,9 +31,9 @@ class ClubModelTestCase(APITestCase):
         self.club.club_name = 'x' * 50
         self._assert_club_is_valid()
 
-    def test_club_name_may_not_be_unique(self):
+    def test_club_name_must_be_unique(self):
         self.club.club_name = self.second_club.club_name
-        self._assert_club_is_valid()
+        self._assert_club_is_invalid()
 
     def test_club_mission_statement_may_be_blank(self):
         self.club.mission_statement = ''
