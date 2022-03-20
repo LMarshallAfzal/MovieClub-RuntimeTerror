@@ -24,7 +24,7 @@ class Home extends React.Component {
     // componentDidMount() {
     //     this.fetchMembershipData();
     // }
-0
+    0
     // changeHandler(event) {
     //     this.setState({
     //         [event.target.name]:event.target.value
@@ -82,10 +82,13 @@ class Home extends React.Component {
                         alignItems="flex-start"
                     >
                         <Grid item xs={12}>
-                            <div className='dashboard-text'>Dashboard</div>
+                            <div className={"home-page-title"}>
+                                <h3>home<h3--emphasise>.</h3--emphasise></h3>
+                            </div>
                         </Grid>
-                        <Paper style={{ maxHeight: 300, width: '100%' }}>
-                            {/* UNCOMMENT BELOW AND SUBSTITUTE WITH THE NOTIFICATION DATA */}
+                        <Paper style={{ maxHeight: 300, width: '100%', paddingTop: '20px' }}>
+                            <Grid item xs={12}><div className='page-subtitle'>Notifications</div></Grid>
+                            {/* UNCOMMENT THE LINE BELOW, AND THE LINE WITH 'return', AND THE LINE WITH '})}'. THEN SUBSTITUTE WITH THE NOTIFICATION DATA */}
                             {/* { notifications to organiser that they need to create meeting.map((val) => { */}
                             {/* return */}
                             <Card sx={{ width: "100%" }}>

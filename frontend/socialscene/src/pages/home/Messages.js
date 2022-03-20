@@ -27,10 +27,10 @@ function Messages() {
                 direction={"row"}
                 paddingBottom={"10px"}>
                 <Grid item xs={12}>
-                <div className={"home-page-title"}>
-                    <h3>messages<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
+                    <div className={"home-page-title"}>
+                        <h3>messages<h3--emphasise>.</h3--emphasise></h3>
+                    </div>
+                </Grid>
                 {/* IF NOT YOU ARE THE ORGANISER, HIDE THE BELOW GRID*/}
                 {/* <Grid xs={3} item>
                     <div>
@@ -106,6 +106,7 @@ function Messages() {
                     </Box>
                 </Grid>
             </Grid>
+
             <Grid
                 container
                 spacing={4}

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { InputAdornment, IconButton, CardContent, Box, Alert, Collapse, TextField, Autocomplete, Grid, Button, Typography, Rating } from "@mui/material";
+import { Chip, Divider, InputAdornment, IconButton, CardContent, Box, Alert, Collapse, TextField, Autocomplete, Grid, Button, Typography, Rating } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -79,7 +79,7 @@ const Movies = () => {
                     <h3>movies<h3--emphasise>.</h3--emphasise></h3>
                 </div>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} paddingTop={'20px'}>
                 <TextField
                     fullWidth
                     value={searchValue} onChange={event => { setSearchValue(event.target.value) }}
@@ -141,6 +141,9 @@ const Movies = () => {
                             </Card>
                         </Grid>
                     })}
+                    <Grid item xs={12}>
+                        <Divider><Chip label="End of Search" /></Divider>
+                    </Grid>
                 </Grid>
             </Collapse >
             {/* MOVIES FROM CLUBS TO WATCH */}

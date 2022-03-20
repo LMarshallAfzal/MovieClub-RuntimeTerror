@@ -11,7 +11,7 @@ const Options = () => {
         new_password_confirmation: '',
     })
 
-    let {authTokens} = useContext(AuthContext)
+    let { authTokens } = useContext(AuthContext)
 
     const [oldPasswordError, setOldPasswordError] = useState(false)
     const [newPasswordError, setNewPasswordError] = useState(false)
@@ -21,8 +21,8 @@ const Options = () => {
     const [errorNewPasswordConfirmationText, setNewPasswordConfirmationErrorText] = useState('')
 
     const onChange = (e) => {
-        setPasswordData( fieldData => ({...fieldData, [e.target.name]: e.target.value}))
-    }; 
+        setPasswordData(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
+    };
 
     let resetErrorState = () => {
         setOldPasswordError(false);
@@ -36,19 +36,19 @@ const Options = () => {
 
     let errorHandler = (e, data) => {
         e.preventDefault()
-        if((Object.keys(data)).includes('old_password')) {
+        if ((Object.keys(data)).includes('old_password')) {
             setOldPasswordError(true)
             setOldPasswordErrorText(data.old_password)
         }
-        if((Object.keys(data)).includes('new_password')) {
+        if ((Object.keys(data)).includes('new_password')) {
             setNewPasswordError(true)
             setNewPasswordErrorText(data.new_password)
         }
-        if((Object.keys(data)).includes('new_password_confirmation')) {
+        if ((Object.keys(data)).includes('new_password_confirmation')) {
             setNewPasswordConfirmationError(true)
             setNewPasswordConfirmationErrorText(data.new_password_cofirmation)
         }
-        if((Object.keys(data)).includes('non_field_errors')) {
+        if ((Object.keys(data)).includes('non_field_errors')) {
             setNewPasswordError(true)
             setNewPasswordErrorText(data.non_field_errors)
             setNewPasswordConfirmationError(true)
@@ -61,9 +61,9 @@ const Options = () => {
         resetErrorState()
         let response = await fetch('http://127.0.0.1:8000/change_password/', {
             method: 'PUT',
-            body:JSON.stringify({
-                "old_password": passwordData.old_password, 
-                "new_password": passwordData.new_password, 
+            body: JSON.stringify({
+                "old_password": passwordData.old_password,
+                "new_password": passwordData.new_password,
                 "new_password_confirmation": passwordData.new_password_confirmation,
             }),
             headers: {
@@ -72,19 +72,19 @@ const Options = () => {
             },
         })
         let data = await response.json()
-        if(response.status === 200) {
+        if (response.status === 200) {
             setPasswordData(data);
             alert("You have successfully changed you password")
         }
         else {
             errorHandler(e, data)
-        }  
+        }
     }
-    
+
     return (
         <Grid container
-              direction={"row"}
-              spacing={2}
+            direction={"row"}
+            spacing={2}
         >
             <Grid item xs={12}>
                 <div className={"home-page-title"}>
@@ -94,14 +94,19 @@ const Options = () => {
 
             <Grid item xs={12}>
 
-                <form onSubmit={submitChangePasswordForm} className={"options-card-background"}>
+                <form onSubmit={submitChangePasswordForm}>
 
                     <Stack className={"form-stack"}
-                           spacing={2}
-                           height={"100%"}>
+                        spacing={2}
+                        height={"100%"}>
 
-                        <h4 className={"options-card-heading"}>change password:</h4>
+                        <Grid item xs={11}>
+                            <div className='page-subtitle'>
+                                Change password
+                            </div>
+                        </Grid>
                         <TextField
+                            fullWidth
                             error={oldPasswordError}
                             helperText={errorOldPasswordText}
                             required
@@ -155,7 +160,7 @@ const Options = () => {
                                         text={"submit"}
                                         onClick={submitChangePasswordForm}
                                         type="submit"
-                                    />                                   
+                                    />
                                 </Box>
                             </Box>
                         </div>
