@@ -74,7 +74,7 @@ class SignUpSerializer(serializers.Serializer):
         required=True
     )
 
-    email = serializers.CharField(
+    email = serializers.EmailField(
         required=True,
         validators=[UniqueValidator(queryset=User.objects.all())]
     )

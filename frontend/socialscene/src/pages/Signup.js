@@ -22,6 +22,7 @@ export const Signup = () => {
     })
 
     const {username, first_name, last_name, email, bio, preferences, password, password_confirmation} = signupCredentials
+
     const [usernameError, setUsernameError] = useState(false)
     const [firstNameError, setFirstNameError] = useState(false)
     const [lastNameError, setLastNameError] = useState(false)
@@ -30,52 +31,82 @@ export const Signup = () => {
     const [preferencesError, setPreferencesError] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
     const [passwordConfirmationError, setPasswordConfirmationError] = useState(false)
-    // const [errors, setErrors] = useState(setUsernameError(false), setFirstNameError(false), setLastNameError(false), setEmailError(false), setBioError(false), setPreferencesError(false), setPasswordError(false), setPasswordConfirmationError(false))
-    const [errorText, setErrorText] = useState('')
+    
+    
+    const [errorUsernameText, setUsernameErrorText] = useState('')
+    const [errorFirstNameText, setFirstNameErrorText] = useState('')
+    const [errorLastNameText, setLastNameErrorText] = useState('')
+    const [errorEmailText, setEmailErrorText] = useState('')
+    const [errorBioText, setBioErrorText] = useState('')
+    const [errorPreferencesText, setPreferencesErrorText] = useState('')
+    const [errorPasswordText, setPasswordErrorText] = useState('')
+    const [errorPasswordConfirmationText, setPasswordConfirmationErrorText] = useState('')
+
 
     const onChange = (e) => {
         setSignupCredentials(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
         
     };
 
-    const errorHandler = (e, data) => {
+    let resetErrorState = () => {
+        setUsernameError(false);
+        setFirstNameError(false);
+        setLastNameError(false);
+        setEmailError(false);
+        setBioError(false);
+        setPreferencesError(false);
+        setPasswordError(false);
+        setPasswordConfirmationError(false);
+
+        setUsernameErrorText('');
+        setFirstNameErrorText('');
+        setLastNameErrorText('');
+        setEmailErrorText('');
+        setBioErrorText('');
+        setPreferencesErrorText('');
+        setPasswordErrorText('');
+        setPasswordConfirmationErrorText('');
+    }
+
+    let errorHandler = (e, data) => {
         e.preventDefault()
         if((Object.keys(data)).includes('username')) {
             setUsernameError(true)
-            setErrorText(data.username)
+            setUsernameErrorText(data.username)
         }
         if((Object.keys(data)).includes('first_name')) {
             setFirstNameError(true)
-            setErrorText(data.first_name)
+            setFirstNameErrorText(data.first_name)
         }
         if((Object.keys(data)).includes('last_name')) {
             setLastNameError(true)
-            setErrorText(data.last_name)
+            setLastNameErrorText(data.last_name)
         }
         if((Object.keys(data)).includes('email')) {
             setEmailError(true)
-            setErrorText(data.email)
+            setEmailErrorText(data.email)
         }
         if((Object.keys(data)).includes('bio')) {
             setPreferencesError(true)
-            setErrorText(data.bio)
+            setBioErrorText(data.bio)
         }
         if((Object.keys(data)).includes('preferences')) {
             setPreferencesError(true)
-            setErrorText(data.preferences)
+            setPreferencesErrorText(data.preferences)
         }
         if((Object.keys(data)).includes('password')) {
             setPasswordError(true)
-            setErrorText(data.password)
+            setPasswordErrorText(data.password)
         }
         if((Object.keys(data)).includes('password_confirmation')) {
             setPasswordConfirmationError(true)
-            setErrorText(data.password_cofirmation)
+            setPasswordConfirmationErrorText(data.password_cofirmation)
         }
     };
 
     let submitSignupForm = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        resetErrorState();
         let response = await fetch("http://127.0.0.1:8000/sign_up/", {
             method: "POST",
             body: JSON.stringify({
@@ -91,7 +122,7 @@ export const Signup = () => {
             headers: {
                 "Content-Type": "application/json",
             },
-        })
+        });
         let data = await response.json()
         console.log(Object.keys(data))
         if(response.status === 201) {
@@ -115,7 +146,7 @@ export const Signup = () => {
                     <Stack className={"form-stack"} spacing={3}>
                         <TextField
                             error={usernameError}
-                            helperText={errorText}
+                            helperText={errorUsernameText}
                             required
                             id={"outlined-basic"}
                             label={"username"}
@@ -127,7 +158,7 @@ export const Signup = () => {
                         />
                         <TextField
                             error={firstNameError}
-                            helperText={errorText}
+                            helperText={errorFirstNameText}
                             required
                             id={"outlined-basic"}
                             label={"first name"}
@@ -139,7 +170,7 @@ export const Signup = () => {
                         />
                         <TextField
                             error={lastNameError}
-                            helperText={errorText}
+                            helperText={errorLastNameText}
                             required
                             id={"outlined-basic"}
                             label={"last name"}
@@ -151,7 +182,7 @@ export const Signup = () => {
                         />
                         <TextField
                             error={emailError}
-                            helperText={errorText}
+                            helperText={errorEmailText}
                             required
                             id={"outlined-basic"}
                             label={"email"}
@@ -163,6 +194,7 @@ export const Signup = () => {
                         />
                         <TextField
                             error={bioError}
+                            helperText={errorBioText}
                             id={"outlined-basic"}
                             label={"bio"}
                             name={"bio"}
@@ -175,7 +207,7 @@ export const Signup = () => {
                         />
                         <TextField
                             error={preferencesError}
-                            helperText={errorText}
+                            helperText={errorPreferencesText}
                             required
                             id={"outlined-basic"}
                             label={"preferences"}
@@ -187,7 +219,7 @@ export const Signup = () => {
                         />
                         <TextField
                             error={passwordError}
-                            helperText={errorText}
+                            helperText={errorPasswordText}
                             required
                             id={"outlined-basic"}
                             label={"password"}
@@ -199,7 +231,7 @@ export const Signup = () => {
                         />
                         <TextField
                             error={passwordConfirmationError}
-                            helperText={errorText}
+                            helperText={errorPasswordConfirmationText}
                             required
                             id={"outlined-basic"}
                             label={"password confirmation"}
