@@ -11,9 +11,11 @@ import AuthContext from "../components/AuthContext";
 
 export function Login() {
 
-    let {loginUser, loginCredentials, setLoginCredentials} = useContext(AuthContext)
+    let {loginUser, loginCredentials, setLoginCredentials, usernameError, passwordError, errorUsernameText, errorPasswordText} = useContext(AuthContext)
     
     const {username, password} = loginCredentials;
+
+    
     
     const onChange = (e) => {
         setLoginCredentials(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
@@ -34,6 +36,9 @@ export function Login() {
                 <Box component={"form"} onSubmit={loginUser} className={"login-grid-right"} spacing={3}>
                     <Stack className={"form-stack"} spacing={3} height={"100%"}> 
                         <TextField
+                            error={usernameError}
+                            helperText={errorUsernameText}
+                            required
                             className={"form-field"}
                             id={"outlined-basic"}
                             label={"username"}
@@ -44,6 +49,9 @@ export function Login() {
                         />
 
                         <TextField
+                            error={passwordError}
+                            helperText={errorPasswordText}
+                            required
                             className={"form-field"}
                             id={"outlined-basic"}
                             label={"password"}

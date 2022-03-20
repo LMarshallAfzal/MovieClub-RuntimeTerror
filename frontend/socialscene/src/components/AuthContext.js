@@ -16,14 +16,42 @@ export const AuthProvider = ({children}) => {
     let [loading, setLoading] = useState(true)
     let [loginCredentials, setLoginCredentials] = useState({
         username: '', 
-        password: '',
-
+        password: '',    
     })
     const navigate = useNavigate()
 
+    const [usernameError, setUsernameError] = useState(false)
+    const [passwordError, setPasswordError] = useState(false)
+    const [errorUsernameText, setUsernameErrorText] = useState('')
+    const [errorPasswordText, setPasswordErrorText] = useState('')
+    
+    let resetErrorState = () => {
+        setUsernameError(false);
+        setPasswordError(false);
+    }
+
+    let errorHandler = (e, data) => {
+        e.preventDefault();
+        if((Object.keys(data)).includes('username')) {
+            setUsernameError(true)
+            setUsernameErrorText(data.username)
+        }
+        if((Object.keys(data)).includes('password')) {
+            setPasswordError(true)
+            setPasswordErrorText(data.password)
+        }
+        if((Object.keys(data)).includes('detail')) {
+            setUsernameError(true)
+            setUsernameErrorText(data.detail)
+            setPasswordError(true)
+            setPasswordErrorText(data.detail)
+        }
+    }
+
 
     let loginUser = async (e ) => { 
-        e.preventDefault()
+        e.preventDefault();
+        resetErrorState();
         console.log("Form submitted", e)
         let response = await fetch("http://127.0.0.1:8000/token/", {
             method: "POST",
@@ -32,17 +60,16 @@ export const AuthProvider = ({children}) => {
                 // "X-CSRFToken": Cookies.get("csrftoken"),
             },
             body: JSON.stringify({'username': loginCredentials.username, 'password': loginCredentials.password})
-        })
+        });
         let data = await response.json()
         if(response.status === 200) {
-            setAuthTokens(data)
-            console.log(authTokens.refresh)
-            setUser(jwt_decode(data.access))
-            localStorage.setItem('authTokens', JSON.stringify(data))
-            navigate('/home/')
+            setAuthTokens(data);
+            setUser(jwt_decode(data.access));
+            localStorage.setItem('authTokens', JSON.stringify(data));
+            navigate('/home/');
         } 
         else {
-            alert("Something went wrong!")
+            errorHandler(e, data);
         }
     };
 
@@ -85,6 +112,10 @@ export const AuthProvider = ({children}) => {
         user: user,
         authTokens:authTokens,
         loginCredentials:loginCredentials,
+        usernameError: usernameError,
+        passwordError: passwordError,
+        errorUsernameText: errorUsernameText,
+        errorPasswordText: errorPasswordText,
         setLoginCredentials:setLoginCredentials,
         loginUser: loginUser,
         // logoutUser: logoutUser

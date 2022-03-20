@@ -9,12 +9,72 @@ const Profile = () => {
     const [userData, setUserData] = useState('')
     let {user, authTokens} = useContext(AuthContext)
 
+    const [usernameError, setUsernameError] = useState(false)
+    const [firstNameError, setFirstNameError] = useState(false)
+    const [lastNameError, setLastNameError] = useState(false)
+    const [emailError, setEmailError] = useState(false)
+    const [bioError, setBioError] = useState(false)
+    const [preferencesError, setPreferencesError] = useState(false)
+
+    const [errorUsernameText, setUsernameErrorText] = useState('')
+    const [errorFirstNameText, setFirstNameErrorText] = useState('')
+    const [errorLastNameText, setLastNameErrorText] = useState('')
+    const [errorEmailText, setEmailErrorText] = useState('')
+    const [errorBioText, setBioErrorText] = useState('')
+    const [errorPreferencesText, setPreferencesErrorText] = useState('')
+    const [errorPasswordText, setPasswordErrorText] = useState('')
+
     const onChange = (e) => {
         setUserData( prevData => ({...prevData, [e.target.name]: e.target.value}))
      }; 
 
-    let submitChangeProfileForm = async (e) => {
+     let resetErrorState = () => {
+        setUsernameError(false);
+        setFirstNameError(false);
+        setLastNameError(false);
+        setEmailError(false);
+        setBioError(false);
+        setPreferencesError(false);
+
+        setUsernameErrorText('');
+        setFirstNameErrorText('');
+        setLastNameErrorText('');
+        setEmailErrorText('');
+        setBioErrorText('');
+        setPreferencesErrorText('');
+    }
+
+    let errorHandler = (e, data) => {
         e.preventDefault()
+        if((Object.keys(data)).includes('username')) {
+            setUsernameError(true)
+            setUsernameErrorText(data.username)
+        }
+        if((Object.keys(data)).includes('first_name')) {
+            setFirstNameError(true)
+            setFirstNameErrorText(data.first_name)
+        }
+        if((Object.keys(data)).includes('last_name')) {
+            setLastNameError(true)
+            setLastNameErrorText(data.last_name)
+        }
+        if((Object.keys(data)).includes('email')) {
+            setEmailError(true)
+            setEmailErrorText(data.email)
+        }
+        if((Object.keys(data)).includes('bio')) {
+            setPreferencesError(true)
+            setBioErrorText(data.bio)
+        }
+        if((Object.keys(data)).includes('preferences')) {
+            setPreferencesError(true)
+            setPreferencesErrorText(data.preferences)
+        }
+    };
+
+    let submitChangeProfileForm = async (e) => {
+        e.preventDefault();
+        resetErrorState();
         let response = await fetch('http://127.0.0.1:8000/edit_profile/' + user.user_id ,{
             method:'PUT',
             body:JSON.stringify({
@@ -34,6 +94,9 @@ const Profile = () => {
         if(response.status === 200) {
             setUserData(data)
         }
+        else {
+            errorHandler(e, data)
+        }
         
     }
 
@@ -49,8 +112,7 @@ const Profile = () => {
         setUserData(data)
     }
 
-    useEffect((e) => {
-        // e.preventDefault()
+    useEffect(() => {
         getUserData();
     },[])
 
@@ -63,6 +125,9 @@ const Profile = () => {
                     <Box component="form" onSubmit={submitChangeProfileForm}>
                         <Stack spacing={2}>
                             <TextField className='profile-text-box'
+                                error={usernameError}
+                                helperText={errorUsernameText}
+                                required
                                 id={"outlined"}
                                 label={"username"}
                                 name={"username"}
@@ -72,6 +137,9 @@ const Profile = () => {
                                 onChange={e => onChange(e)}
                             />
                             <TextField className='profile-text-box'
+                                error={firstNameError}
+                                helperText={errorFirstNameText}
+                                required
                                 id={"outlined-basic"}
                                 label={"first name"}
                                 name={"first_name"}
@@ -81,6 +149,9 @@ const Profile = () => {
                                 onChange={e => onChange(e)}
                             />
                             <TextField className='profile-text-box'
+                                error={lastNameError}
+                                helperText={errorLastNameText}
+                                required
                                 id={"outlined-basic"}
                                 label={"last name"}
                                 name={"last_name"}
@@ -90,6 +161,9 @@ const Profile = () => {
                                 onChange={e => onChange(e)}
                             />
                             <TextField className='profile-text-box'
+                                error={emailError}
+                                helperText={errorEmailText}
+                                required
                                 id={"outlined-basic"}
                                 label={"email"}
                                 name={"email"}
@@ -99,6 +173,8 @@ const Profile = () => {
                                 onChange={e => onChange(e)}
                             />
                             <TextField className='profile-text-box'
+                                error={bioError}
+                                helperText={errorBioText}
                                 spacing={6}
                                 id={"outlined-multiline-static"}
                                 label={"bio"}
@@ -130,6 +206,9 @@ const Profile = () => {
                     {/* <td className='text-field'> */}
                         <Stack spacing={2}>
                             <TextField className='profile-text-box'
+                                error={preferencesError}
+                                helperText={errorPreferencesText}
+                                required
                                 spacing={6}
                                 id={"outlined-multiline-static"}
                                 label={"preferences"}
@@ -152,7 +231,7 @@ const Profile = () => {
                                     <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
                                         <FormButton
                                             type="submit"
-                                            text={"log in"}   
+                                            text={"submit"}   
                                             onClick={submitChangeProfileForm}
                                         />        
                                     </Box>

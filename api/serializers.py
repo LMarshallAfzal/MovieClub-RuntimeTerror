@@ -12,6 +12,31 @@ from django.core.validators import MaxValueValidator, MinValueValidator, MaxLeng
 
 
 class UserSerializer(ModelSerializer):
+    username = serializers.CharField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+
+    first_name = serializers.CharField(
+        required=True
+    )
+
+    last_name = serializers.CharField(
+        required=True
+    )
+
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+
+    bio = serializers.CharField(
+        required = False, allow_blank=True
+        )
+
+    preferences = serializers.CharField(
+        required=True
+    )
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email',
