@@ -204,8 +204,8 @@ class CreateClubSerializer(serializers.Serializer):
         validators=[MaxLengthValidator(500)]
     )
 
-    themes = serializers.CharField(
-        required=False,
+    theme = serializers.CharField(
+        required=True,
         validators=[MaxLengthValidator(500)]
     )
 
@@ -217,7 +217,7 @@ class CreateClubSerializer(serializers.Serializer):
         club = Club.objects.create(
             club_name=validated_data['club_name'],
             mission_statement=validated_data['mission_statement'],
-            themes=validated_data['themes'],
+            theme=validated_data['theme'],
         )
         club.save()
 
