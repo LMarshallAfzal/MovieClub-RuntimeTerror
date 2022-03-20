@@ -13,7 +13,7 @@ from django.contrib.auth import logout
 from recommender.user_movie_recommender import train_movie_data_for_user, recommend_movies_for_user
 from recommender.meeting_movie_recommender import train_movie_data_for_meeting, recommend_movies_for_meeting
 from recommender.club_recommender import recommend_clubs
-from .decorators import movie_exists, club_exists, has_watched, has_not_watched, is_member, is_organiser
+from .decorators import movie_exists, club_exists, has_watched, has_not_watched, is_member, is_organiser,has_ratings
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -259,6 +259,7 @@ def change_rating(request, movie_id):
 
 
 @api_view(['GET'])
+@has_ratings
 @permission_classes([IsAuthenticated])
 def recommend_movie_user(request):
     recommendations = []
@@ -292,6 +293,7 @@ def train_meeting_data(request):
 
 
 @api_view(['GET'])
+@has_ratings
 @permission_classes([IsAuthenticated])
 def recommend_club(request):
     recommendations = recommend_clubs(request.user)
