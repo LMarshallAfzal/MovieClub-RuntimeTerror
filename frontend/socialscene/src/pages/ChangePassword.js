@@ -14,12 +14,52 @@ const ChangePassword = () => {
 
     let {authTokens} = useContext(AuthContext)
 
+    const [oldPasswordError, setOldPasswordError] = useState(false)
+    const [newPasswordError, setNewPasswordError] = useState(false)
+    const [newPasswordConfirmationError, setNewPasswordConfirmationError] = useState(false)
+    const [errorOldPasswordText, setOldPasswordErrorText] = useState('')
+    const [errorNewPasswordText, setNewPasswordErrorText] = useState('')
+    const [errorNewPasswordConfirmationText, setNewPasswordConfirmationErrorText] = useState('')
+
     const onChange = (e) => {
         setPasswordData( fieldData => ({...fieldData, [e.target.name]: e.target.value}))
     }; 
 
+    let resetErrorState = () => {
+        setOldPasswordError(false);
+        setNewPasswordError(false);
+        setNewPasswordConfirmationError(false);
+
+        setOldPasswordErrorText('');
+        setNewPasswordErrorText('');
+        setNewPasswordConfirmationErrorText('');
+    }
+
+    let errorHandler = (e, data) => {
+        e.preventDefault()
+        if((Object.keys(data)).includes('old_password')) {
+            setOldPasswordError(true)
+            setOldPasswordErrorText(data.old_password)
+        }
+        if((Object.keys(data)).includes('new_password')) {
+            setNewPasswordError(true)
+            setNewPasswordErrorText(data.new_password)
+        }
+        if((Object.keys(data)).includes('new_password_confirmation')) {
+            setNewPasswordConfirmationError(true)
+            setNewPasswordConfirmationErrorText(data.new_password_cofirmation)
+        }
+        if((Object.keys(data)).includes('non_field_errors')) {
+            setNewPasswordError(true)
+            setNewPasswordErrorText(data.non_field_errors)
+            setNewPasswordConfirmationError(true)
+            setNewPasswordConfirmationErrorText(data.non_field_errors)
+        }
+    }
+
     let submitChangePasswordForm = async (e) => {
         e.preventDefault()
+        resetErrorState()
         let response = await fetch('http://127.0.0.1:8000/change_password/', {
             method: 'PUT',
             body:JSON.stringify({
@@ -38,7 +78,7 @@ const ChangePassword = () => {
             alert("You have successfully changed you password")
         }
         else {
-            alert(response.statusText)
+            errorHandler(e, data)
         }  
     }
     
@@ -54,6 +94,9 @@ const ChangePassword = () => {
                         height={"100%"}>
                         <div className='change-password-text'>Change Password:</div>
                         <TextField
+                            error={oldPasswordError}
+                            helperText={errorOldPasswordText}
+                            required
                             className={"form-field"}
                             id={"outlined-basic"}
                             label={"old password"}
@@ -65,6 +108,9 @@ const ChangePassword = () => {
                         />
 
                         <TextField
+                            error={newPasswordError}
+                            helperText={errorNewPasswordText}
+                            required
                             className={"form-field"}
                             id={"outlined-basic"}
                             label={"new password"}
@@ -76,6 +122,9 @@ const ChangePassword = () => {
                         />
 
                         <TextField
+                            error={newPasswordConfirmationError}
+                            helperText={errorNewPasswordConfirmationText}
+                            required
                             className={"form-field"}
                             id={"outlined-basic"}
                             label={"also new password"}
