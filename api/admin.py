@@ -12,7 +12,7 @@ class UserAdmin(admin.ModelAdmin):
 class ClubAdmin(admin.ModelAdmin):
     '''Configuration of the administrative interface for clubs'''
     list_display = [
-        'id', 'club_name', 'mission_statement', 'themes',
+        'id', 'club_name', 'mission_statement', 'theme',
     ]
 
 @admin.register(Membership)

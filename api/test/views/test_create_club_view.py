@@ -20,7 +20,7 @@ class CreateClubViewTestCase(APITestCase,LogInTester):
         self.form_input = {
             "club_name": "Sharknado Appreciation Society",
             "mission_statement": "We are a club dedicated to making the world a better place through the power of sharknado",
-            "themes": "Movies",
+            "theme": "Horror",
         }
         self.client = APIClient()
     def test_create_club_endpoint_with_valid_data_creates_club_returns_201_created(self):
