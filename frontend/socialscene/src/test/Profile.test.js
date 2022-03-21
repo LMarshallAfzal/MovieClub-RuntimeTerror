@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, fireEvent, screen} from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Profile from "../pages/Profile";
+import Profile from "../pages/home/Profile";
 import {MemoryRouter} from 'react-router-dom'
 
 describe("login", () => {

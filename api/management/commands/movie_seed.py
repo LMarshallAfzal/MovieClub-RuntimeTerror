@@ -17,7 +17,7 @@ class Command(BaseCommand):
             Movie.objects.create(
                 ml_id = int(row['movieId']),
                 title = row['title'],
-                genres = row['genres'],
+                genres = row['genres'].replace('|',','),
                 year = int(row['year'])
             )
             movie_count+=1
