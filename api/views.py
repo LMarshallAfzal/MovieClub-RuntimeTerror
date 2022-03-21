@@ -304,12 +304,19 @@ def recommend_club(request):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def get_memberships_of_user(request, user_id):
+def get_clubs_user_is_member_of(request, user_id):
     user = User.objects.get(id=user_id)
     clubs = user.get_user_clubs()
     serializer = ClubSerializer(clubs, many=True)
     return Response(serializer.data)
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_memberships_of_user(request, user_id):
+    user = User.objects.get(id=user_id)
+    memberships = user.get_user_memberships()
+    serializer = MembershipSerializer(memberships, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

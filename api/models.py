@@ -3,7 +3,7 @@ from django.db.models import Count, F, Value
 from django.db.models.fields.related import ForeignKey
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-
+from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
 
@@ -55,7 +55,7 @@ class User(AbstractUser):
         else:
             return ratings
 
-    def get_user_memberships(self):
+    def get_user_clubs(self):
         memberships = Club.objects.filter(club_members__username=self.username)
         return memberships
 
@@ -70,6 +70,10 @@ class User(AbstractUser):
     def get_watched_movies(self):
         movies = self.watched_movies.all()
         return movies
+
+    def get_user_memberships(self):
+        memberships = Membership.objects.filter(user=self)
+        return memberships    
 
 
 class Club(models.Model):
@@ -124,24 +128,28 @@ class Membership(models.Model):
     Membership is an intermediate model that connects Users to Clubs.
 
     Apart from the two foreign keys, it contains the nature of the relationship:
-        Club Owner | Organiser | Member
+        Club Owner | Organiser | Member | Banned
     """
-    STATUS_CHOICES = [
-        ("C", 'Club Owner'),
-        ("O", 'Organiser'),
-        ("M", 'Member')
-    ]
+    class MembershipStatus(models.TextChoices):
+        MEMBER = 'M', _('Member')
+        OWNER = 'C', _('Owner')
+        ORGANISER = 'O', _('Organiser')
+        BANNED = 'B',_('BannedMember')
+    
     user = ForeignKey(User, on_delete=models.CASCADE)
     club = ForeignKey(Club, on_delete=models.CASCADE)
     role = models.CharField(
         max_length=1,
-        choices=STATUS_CHOICES,
-        default="M"
+        choices=MembershipStatus.choices,
+        default=MembershipStatus.MEMBER
         )
 
     """We must ensure that only one relationship is created per User-Club pair."""
     class Meta:
         unique_together = ('user', 'club')
+
+    def get_role_name(self):
+        return self.MembershipStatus(self.role).name.title()
 
 
 class Movie(models.Model):

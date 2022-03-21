@@ -15,6 +15,7 @@ function Clubs() {
     const navigate = useNavigate();
     const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
     const [myClubData, setMyClubData] = useState([]);
+    const [memData, setMemData] = useState([]);
     const [recommendedClubData, setRecommendedClubData] = useState([]);
     let {user, authTokens} = useContext(AuthContext)
 
@@ -30,36 +31,41 @@ function Clubs() {
         let data = await response.json()
         console.log(data)
         setMyClubData(data)
-        console.log(myClubData[0].club_name)
     }
+
+    let getMemData = async (e) => {
+        // e.preventDefault()
+        let response = await fetch('http://127.0.0.1:8000/mem/' + user.user_id +'/', {
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        console.log(data)
+        setMemData(data)
+    }
+
     
 
     let getRecommendedClubs = async (e) => {
-        // let response1 = await fetch('http://127.0.0.1:8000/train/movie', {
-        //     method:'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': 'Bearer ' + String(authTokens.access)
-        //     }
-        // })   
-        // let data1 = await response1.json()
-        // console.log(data1)
-
-        let response2 = await fetch('http://127.0.0.1:8000/rec/clubs', {
+        let response = await fetch('http://127.0.0.1:8000/rec/clubs', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + String(authTokens.access)
             }
         })
-        let data2 = await response2.json()
-        console.log(data2)
-        setRecommendedClubData(data2)
+        let data = await response.json()
+        console.log(data)
+        setRecommendedClubData(data)
     }
 
 
     useEffect(() => { 
         getMembershipData()
+        getMemData()
         getRecommendedClubs()
     },[])
 
@@ -103,20 +109,18 @@ function Clubs() {
                            className={"club-card-list-frame"}
                     >
                         {myClubData.map((club) => {
-                            // if (club.isMember === true) {
+                            // if (memData.club === club) {
                                 return (
                                     <ListItem
                                     >
                                     <ClubListing
                                         clubName={club.club_name}
-                                        //club_name={club.club_name}
                                         // isMember={club.isMember}
-                                        //iconImage={club.iconImage}
-                                        //description={club.description}
+                                        iconImage={club.iconImage}
+                                        description={club.mission_statement}
                                         // isOrganiser={club.isOrganiser}
-                                        memberRole={club.role}
-                                        //clubTheme={club.clubTheme}
-                                        //ID={club.ID}
+                                        memberRole={memData.role}
+                                        clubTheme={club.theme}
                                     />
                                     </ListItem>)
                             // } else {

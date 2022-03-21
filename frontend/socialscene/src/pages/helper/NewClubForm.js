@@ -6,8 +6,6 @@ import "../../styling/pages/NewClubForm.css";
 import AuthContext from "../../components/helper/AuthContext";
 
 
-
-
 function NewClub() {
     let {authTokens} = useContext(AuthContext)
 
@@ -27,7 +25,7 @@ function NewClub() {
             body:JSON.stringify({
                 "club_name": club.club_name, 
                 "mission_statement": club.mission_statement, 
-                "themes": club.themes
+                "theme": club.theme
             }),
             headers:{
                 'Content-type': 'application/json; charset=UTF-8',
@@ -75,9 +73,9 @@ function NewClub() {
                         className='dashboard-text-box'
                         id="outlined-basic"
                         label="Themes"
-                        name="themes"
+                        name="theme"
                         variant="outlined"
-                        value = {club.themes}
+                        value = {club.theme}
                         onChange={e => onChange(e)}
                     />
                     <FormButton 
