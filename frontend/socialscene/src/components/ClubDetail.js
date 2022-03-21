@@ -38,15 +38,9 @@ function ClubDetail() {
             </Grid>
 
             <Grid item xs={6}>
-                <div className={"club-detail-background"}>
+                <div className={"club-detail-background"} >
                     <h4 className={"club-member-heading"}>members:</h4>
 
-                    <Box sx={{ flexDirection: 'row',
-                        flexWrap: 'wrap',
-                        padding:'10px'
-
-                    }}
-                    >
                         {DummyClubMemberData.map((user) => {
                             return (
                                 <Chip
@@ -58,17 +52,12 @@ function ClubDetail() {
                                 />}
                                 onDelete={handleDelete}
                                 onClick={handleUserClick}
-
+                                sx={ {mr: 1, mt: 1}}
                                 />
 
                             )
                         })}
-
-                    </Box>
-
                 </div>
-
-
             </Grid>
 
             <Grid item xs={3}>
@@ -91,22 +80,22 @@ function ClubDetail() {
                         defaultValue={club.clubTheme}
                     />
 
-                    <FormButton text={"save"}/>
-
+                    <FormButton
+                        text={"save"}
+                    />
                 </Stack>
-
             </Grid>
+
             <Grid item xs={3}>
+
                 <Stack spacing={2}>
+
                     <FormButton text={"create"}/>
                     <FormButton text={"join"}/>
                     <FormButton text={"leave"}/>
                     <FormButton text={"delete"}/>
-
                 </Stack>
-
             </Grid>
-
         </Grid>
     );
 }
