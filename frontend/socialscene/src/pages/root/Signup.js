@@ -138,7 +138,7 @@ export const Signup = () => {
             <CsrfToken />
 
             <Grid className={"login-grid-left"} item xs={6}>
-                <HeadingCircle title={"sign up"}/>
+                <HeadingCircle title={"sign up"} />
             </Grid>
 
             <Grid className={"login-grid-right"} item xs={6}>
@@ -253,9 +253,9 @@ export const Signup = () => {
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
                                     <FormButton
                                         type="submit"
+                                        hidden="true"
                                         text={"sign up"}   
                                         onClick={submitSignupForm}
-                                        // onSubmit={setErrors}
                                     />                                                    
                                 </Box>
                             </Box>
