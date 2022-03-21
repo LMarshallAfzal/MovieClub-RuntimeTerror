@@ -295,7 +295,7 @@ def train_meeting_data(request):
 
 @api_view(['GET'])
 @has_ratings_for_club_recommendations
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def recommend_club(request):
     recommendations = recommend_clubs(request.user)
     serializer = ClubSerializer(recommendations, many=True)
