@@ -87,7 +87,7 @@ def has_ratings_for_movie_recommendations(view_function):
     @wraps(view_function)
     def modified_view_function(request, *args, **kwargs):
         try:
-            Rating.objects.get(user=request.user.id)
+            Rating.objects.all().filter(user=request.user.id)
         except ObjectDoesNotExist:
             recommendations = get_initial_recommendations_for_movies(request.user,request.user.get_user_preferences().split(','))
             serializer = MovieSerializer(recommendations, many=True)
@@ -100,7 +100,7 @@ def has_ratings_for_club_recommendations(view_function):
     @wraps(view_function)
     def modified_view_function(request, *args, **kwargs):
         try:
-            Rating.objects.get(user=request.user.id)
+            Rating.objects.all().filter(user=request.user.id)
         except ObjectDoesNotExist:
             recommendations = get_initial_recommendations_for_clubs(request.user,request.user.get_user_preferences().split(','))
             serializer = ClubSerializer(recommendations, many=True)

@@ -18,6 +18,7 @@ class RecommendMovieUserTestCase(APITestCase):
         self.user = User.objects.get(username='johndoe')
         self.url = reverse('rec')
         self.movie = Movie.objects.get(ml_id=6658)
+        self.train_url = reverse('train')
 
     def test_movie_recommender_url(self):
         self.assertEqual(self.url, f'/rec/')
@@ -26,6 +27,8 @@ class RecommendMovieUserTestCase(APITestCase):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
         self._create_test_rated_movie()
+        train_response = self.client.get(self.train_url)
+        self.assertEqual(train_response.status_code,status.HTTP_200_OK)
         response = self.client.get(self.url)
         self.assertEqual(len(response.data), 5)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
