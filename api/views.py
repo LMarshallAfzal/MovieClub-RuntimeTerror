@@ -268,6 +268,7 @@ def recommend_movie_user(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def train_movie_data(request):
     train_movie_data_for_user()
     return Response(status=status.HTTP_200_OK)
@@ -297,7 +298,6 @@ def recommend_club(request):
     recommendations = recommend_clubs(request.user)
     serializer = ClubSerializer(recommendations, many=True)
     return Response(serializer.data)
-    pass
 
 
 @api_view(["GET"])

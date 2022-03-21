@@ -15,6 +15,7 @@ function Clubs() {
     const navigate = useNavigate();
     const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
     const [myClubData, setMyClubData] = useState([]);
+    const [recommendedClubData, setRecommendedClubData] = useState([]);
     let {user, authTokens} = useContext(AuthContext)
 
     let getMembershipData = async (e) => {
@@ -31,9 +32,35 @@ function Clubs() {
         setMyClubData(data)
         console.log(myClubData[0].club_name)
     }
+    
+
+    let getRecommendedClubs = async (e) => {
+        // let response1 = await fetch('http://127.0.0.1:8000/train/movie', {
+        //     method:'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': 'Bearer ' + String(authTokens.access)
+        //     }
+        // })   
+        // let data1 = await response1.json()
+        // console.log(data1)
+
+        let response2 = await fetch('http://127.0.0.1:8000/rec/clubs', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data2 = await response2.json()
+        console.log(data2)
+        setRecommendedClubData(data2)
+    }
+
 
     useEffect(() => { 
         getMembershipData()
+        getRecommendedClubs()
     },[])
 
 
@@ -111,29 +138,28 @@ function Clubs() {
                           spacing={0}
                           className={"club-card-list-frame"}
                     >
-                        {DummyClubData.map((club) => {
-                            if (club.isMember === false) {
+                        {recommendedClubData.map((club) => {
+                            // if (club.isMember === false) {
                                 return (
                                     <ListItem>
                                     <ClubListing
-                                        clubName={club.clubName}
-                                        isMember={club.isMember}
-                                        iconImage={club.iconImage}
-                                        description={club.description}
-                                        isOrganiser={club.isOrganiser}
-                                        memberRole={club.memberRole}
-                                        clubTheme={club.clubTheme}
-                                        ID={club.ID}
+                                        clubName={club.club_name}
+                                        // isMember={club.isMember}
+                                        // iconImage={club.iconImage}
+                                        // description={club.description}
+                                        // isOrganiser={club.isOrganiser}
+                                        // memberRole={club.memberRole}
+                                        // clubTheme={club.clubTheme}
+                                        // ID={club.ID}
                                     />
                                     </ListItem>
                                     )
-                            } else {
-                                return (
-                                    <></>
-                                )
-                            }
-                        }
-                        )}
+                            // } else {
+                            //     return (
+                            //         <></>
+                            //     )
+                            // }
+                        })}
                     </Stack>
                 </div>
             </Grid>
