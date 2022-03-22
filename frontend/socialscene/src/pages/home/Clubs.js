@@ -53,28 +53,21 @@ function Clubs() {
                            spacing={0}
                            className={"club-card-list-frame"}
                     >
-                        {DummyClubData.map((club) => {
-                            if (club.isMember === true) {
-                                return (
-                                    <ListItem
-                                    >
-                                    <ClubListing
-                                        clubName={club.clubName}
-                                        isMember={club.isMember}
-                                        iconImage={club.iconImage}
-                                        description={club.description}
-                                        isOrganiser={club.isOrganiser}
-                                        memberRole={club.memberRole}
-                                        clubTheme={club.clubTheme}
-                                        ID={club.ID}
-                                    />
-                                    </ListItem>)
-                            } else {
-                                return (
-                                    <></>
+                        {DummyClubData.map((club) =>
+                            club.isMember === true && (
+                                <ListItem sx={{width: 'auto'}}>
+                                <ClubListing
+                                    clubName={club.clubName}
+                                    isMember={club.isMember}
+                                    iconImage={club.iconImage}
+                                    description={club.description}
+                                    isOrganiser={club.isOrganiser}
+                                    memberRole={club.memberRole}
+                                    clubTheme={club.clubTheme}
+                                    ID={club.ID}
+                                />
+                                </ListItem>
                                 )
-                            }
-                        }
                         )}
                     </Stack>
                 </div>
@@ -91,7 +84,7 @@ function Clubs() {
                         {DummyClubData.map((club) => {
                             if (club.isMember === false) {
                                 return (
-                                    <ListItem>
+                                    <ListItem sx={{width: 'auto'}}>
                                     <ClubListing
                                         clubName={club.clubName}
                                         isMember={club.isMember}
