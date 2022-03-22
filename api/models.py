@@ -2,13 +2,14 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import Count, F, Value
 from django.db.models.fields.related import ForeignKey
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
-
+from django.core.validators import MaxValueValidator, MinValueValidator,MinLengthValidator
+from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
 
     username = models.CharField(
         max_length=15,
+        validators=[MinLengthValidator(4)],
         unique=True,
         blank=False
     )
@@ -44,9 +45,14 @@ class User(AbstractUser):
 
     watched_movies = models.ManyToManyField('Movie', through='Watch')
 
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
     def get_user_clubs(self):
-        memberships = Membership.objects.filter(user=self)
-        return [membership.club for membership in memberships]
+         return Club.objects.all().filter(
+            club_members__username=self.username,role__club_role='M')|Club.objects.all().filter(
+            club_members__username=self.username,role__club_role='O')|Club.objects.all().filter(
+            club_members__username=self.username,role__club_role='C')
 
     def get_user_ratings(self):
         ratings = Rating.objects.filter(user=self)
@@ -55,8 +61,12 @@ class User(AbstractUser):
         else:
             return ratings
 
+    def get_user_clubs(self):
+        clubs = Club.objects.filter(club_members__username=self.username)
+        return clubs
+
     def get_user_memberships(self):
-        memberships = Club.objects.filter(club_members__username=self.username)
+        memberships = Membership.objects.filter(user=self)
         return memberships
 
     def get_user_preferences(self):
@@ -97,8 +107,21 @@ class Club(models.Model):
 
     club_meetings = models.ManyToManyField('Meeting', related_name='club_meetings')
 
-    def get_all_club_members(self):
+    def get_all_users_in_club(self):
         return self.club_members.all()
+
+    def get_all_club_members(self):
+        return self.club_members.all().filter(
+            club = self, membership__role = 'M')
+
+    def remove_user_from_club(self, user):
+        Membership.objects.get(club=self, user=user).delete()
+    
+    def get_banned_members(self):
+        return self.club_members.filter(club = self, membership__role = 'B')
+
+    def get_organiser(self):
+        return self.club_members.filter(club = self,membership__role = 'O')
     
     def get_clubs_by_theme(preferences):
         clubs = []
@@ -112,6 +135,11 @@ class Club(models.Model):
         membership = Membership.objects.get(user=user, club=self).role
         return membership
 
+    def change_membership(self,user,role):
+        membership = Membership.objects.get(user=user, club=self)
+        membership.role = role
+        membership.save()
+
     def get_club_messages(self):
         return self.club_messages.all()
 
@@ -124,26 +152,28 @@ class Membership(models.Model):
     Membership is an intermediate model that connects Users to Clubs.
 
     Apart from the two foreign keys, it contains the nature of the relationship:
-        Club Owner | Organiser | Member
+        Club Owner | Organiser | Member | Banned
     """
-    STATUS_CHOICES = [
-        ("C", 'Club Owner'),
-        ("O", 'Organiser'),
-        ("M", 'Member')
-    ]
+    class MembershipStatus(models.TextChoices):
+        MEMBER = 'M', _('Member')
+        OWNER = 'C', _('Owner')
+        ORGANISER = 'O', _('Organiser')
+        BANNED = 'B',_('BannedMember')
+    
     user = ForeignKey(User, on_delete=models.CASCADE)
     club = ForeignKey(Club, on_delete=models.CASCADE)
     role = models.CharField(
         max_length=1,
-        choices=STATUS_CHOICES,
-        default="M"
+        choices=MembershipStatus.choices,
+        default=MembershipStatus.MEMBER
         )
 
     """We must ensure that only one relationship is created per User-Club pair."""
     class Meta:
         unique_together = ('user', 'club')
 
-
+    def get_role_name(self):
+        return self.MembershipStatus(self.role).name.title()
 class Movie(models.Model):
 
     ml_id = models.PositiveIntegerField(
@@ -209,6 +239,8 @@ class Meeting(models.Model):
 
     movie = ForeignKey(Movie, on_delete=models.CASCADE)
 
+    meeting_title = models.CharField(max_length=200,blank=False)
+
     organiser = ForeignKey(User, on_delete=models.CASCADE)
 
     date = models.DateField(auto_now=False, blank=False)
@@ -226,7 +258,6 @@ class Meeting(models.Model):
         blank=False,
         unique=False
     )
-
 
 class Message(models.Model):
     sender = models.ForeignKey(User,on_delete=models.CASCADE,unique=False)
