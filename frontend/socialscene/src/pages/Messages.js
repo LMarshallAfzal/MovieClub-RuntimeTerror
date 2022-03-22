@@ -64,6 +64,8 @@ const Messages = () => {
         })
         await response.json()
         getClubMessages()
+        message.message = ""
+        console.log(message)
     }
 
     return (
