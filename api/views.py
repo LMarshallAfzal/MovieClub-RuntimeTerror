@@ -260,8 +260,8 @@ def change_rating(request, movie_id):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 @has_ratings_for_movie_recommendations
-#@permission_classes([IsAuthenticated])
 def recommend_movie_user(request):
     recommendations = []
     recommendations = recommend_movies_for_user(request.user)
@@ -295,12 +295,19 @@ def train_meeting_data(request):
 
 @api_view(['GET'])
 @has_ratings_for_club_recommendations
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def recommend_club(request):
     recommendations = recommend_clubs(request.user)
     serializer = ClubSerializer(recommendations, many=True)
     return Response(serializer.data)
     pass
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_all_movies(request):
+    movies = Movie.objects.all()
+    serializer = MovieSerializer(movies,many=True)
+    return Response(serializer.data)
 
 
 @api_view(["GET"])
