@@ -20,7 +20,7 @@
 #         self.movie = Movie.objects.get(ml_id=6658)
 
 #     def test_movie_recommender_url(self):
-#         self.assertEqual(self.url, f'/rec/')
+#         self.assertEqual(self.url, f'/rec_movie/')
 
 #     def test_recommend_movies_to_user_endpoint_returns_5_recommended_movies_returns_200_ok(self):
 #         self.client.force_authenticate(user=self.user)

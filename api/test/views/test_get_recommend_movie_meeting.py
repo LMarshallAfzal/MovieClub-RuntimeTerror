@@ -26,7 +26,7 @@ class RecommendMovieMeetingTestCase(APITestCase):
         self.train_url = reverse('train_meeting_data')
 
     def test_meeting_movie_recommender_url(self):
-        self.assertEqual(self.url, f'/rec/{self.club.id}/')
+        self.assertEqual(self.url, f'/rec_meeting/{self.club.id}/')
 
     def test_recommend_movies_to_meeting_organiser_endpoint_returns_5_recommended_movies_returns_200_ok(self):
         self.client.force_authenticate(user=self.organiser)
