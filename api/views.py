@@ -353,12 +353,13 @@ def write_message(request, club_id):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 @club_exists
 @user_in_club
 @is_owner
-def ban_member(request,club_id,user_id):
+def ban_member(request, club_id, user_id):
     club = Club.objects.get(id=club_id)
     user = User.objects.get(id=user_id)
     club.change_membership(user, 'B')
@@ -369,9 +370,19 @@ def ban_member(request,club_id,user_id):
 @permission_classes([IsAuthenticated])
 @club_exists
 @is_owner
-@user_in_club
-def unban_member(request,club_id,user_id):
+@is_banned
+def unban_member(request, club_id, user_id):
     club = Club.objects.get(id=club_id)
     banned_user = User.objects.get(id=user_id)
-    club.club_member.filter(membership__user=banned_user).delete()
+    club.remove_user_from_club(banned_user)
     return Response(status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@club_exists
+@is_owner
+def banned_member_list(request, club_id):
+    club = Club.objects.get(id=club_id)
+    banned = club.get_banned_members()
+    serializer = UserSerializer(banned, many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)

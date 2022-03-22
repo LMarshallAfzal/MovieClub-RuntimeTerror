@@ -41,6 +41,8 @@ urlpatterns = [
     path("message_forum/<int:club_id>/", views.message_forum, name = "message_forum"),
     path("write_message/<int:club_id>/", views.write_message, name = "write_message"),
     path("ban_member/<int:club_id>/<int:user_id>/", views.ban_member,name = "ban_member"),
+    path("unban_member/<int:club_id>/<int:user_id>/", views.unban_member,name = "unban_member"),
+
 
     
 
