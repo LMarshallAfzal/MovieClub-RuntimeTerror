@@ -1,10 +1,9 @@
 import React from "react";
-import {useParams} from "react-router";
+import {useParams, Outlet} from "react-router";
 import {Avatar, Box, Chip, Grid, ListItem, Stack, TextField} from "@mui/material";
 import "../styling/components/ClubDetail.css";
 import FormButton from "./FormButton";
 import {DummyClubData} from "../pages/data/DummyClubsData";
-import ClubListing from "./ClubListing";
 import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
 
 
@@ -97,6 +96,10 @@ function ClubDetail() {
 
                     <FormButton text={"delete"} />
                 </Stack>
+            </Grid>
+
+            <Grid item xs={12}>
+                <Outlet />
             </Grid>
         </Grid>
     );

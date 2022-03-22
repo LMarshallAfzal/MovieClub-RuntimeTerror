@@ -45,13 +45,13 @@ function NavbarButton() {
                     linkTo={"/signup"}
                 />
             )
-    // } else if (matchPath(location.pathname, "/home/*")) {
-    //     return (
-    //             <EnterButton
-    //                 text={"log out"}
-    //                 linkTo={"/logout"}
-    //                 />
-    //         )
+    } else if (matchPath(location.pathname, "/home")) {
+        return (
+                <EnterButton
+                    text={"log out"}
+                    linkTo={"/logout"}
+                    />
+            )
     } else {
         return (
                 <></>
