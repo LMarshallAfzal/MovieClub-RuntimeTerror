@@ -30,14 +30,14 @@ function ClubDetail() {
         container
         justifyContent={"center"}
         direction={"row"}
-        alignItems={"flex-start"}
+        alignItems={"stretch"}
         spacing={2}
         >
             <Grid item xs={12}>
                 <h4 className={"club-detail-heading"}>{club.clubName}</h4>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
                 <div className={"club-detail-background"} >
                     <h4 className={"club-member-heading"}>members:</h4>
 
@@ -60,8 +60,8 @@ function ClubDetail() {
                 </div>
             </Grid>
 
-            <Grid item xs={3}>
-                <Stack spacing={2}>
+            <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" }}>
+                <Stack spacing={2} sx={{height: "100%"}}>
                     <TextField
                         id="outlined"
                         label="club name"
@@ -86,14 +86,16 @@ function ClubDetail() {
                 </Stack>
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" }}>
 
-                <Stack spacing={2}>
+                <Stack spacing={2} sx={{height: "100%"}}>
+                    <FormButton text={"create"} />
 
-                    <FormButton text={"create"}/>
-                    <FormButton text={"join"}/>
-                    <FormButton text={"leave"}/>
-                    <FormButton text={"delete"}/>
+                    <FormButton text={"join"} />
+
+                    <FormButton text={"leave"} />
+
+                    <FormButton text={"delete"} />
                 </Stack>
             </Grid>
         </Grid>
