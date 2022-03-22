@@ -22,7 +22,7 @@ class BanMemberViewTestCase(APITestCase):
         self.url = reverse('ban_member',kwargs={'club_id': self.club.id,'user_id':self.member.id})
         self.client = APIClient()  
 
-    def test_ban_member_url(self):
+    def test_ban_list_url(self):
         self.assertEqual(self.url,f'/ban_member/{self.club.id}/{self.member.id}/')
 
     def test_ban_member_endpoint_with_valid_data_returns_200_ok(self):

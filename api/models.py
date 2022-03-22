@@ -117,7 +117,7 @@ class Club(models.Model):
     def remove_user_from_club(self, user):
         Membership.objects.get(club=self, user=user).delete()
     
-    def get_all_banned_members(self):
+    def get_banned_members(self):
         return self.club_members.filter(club = self, membership__role = 'B')
 
     def get_organiser(self):
