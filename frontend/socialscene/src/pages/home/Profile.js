@@ -145,6 +145,9 @@ const Profile = () => {
                                    name={"username"}
                                    variant={"outlined"}
                                    value={userData.username}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
@@ -157,6 +160,9 @@ const Profile = () => {
                                    type={"text"}
                                    variant={"outlined"}
                                    value={userData.first_name}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
@@ -169,6 +175,9 @@ const Profile = () => {
                                    type={"text"}
                                    variant={"outlined"}
                                    value={userData.last_name}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
@@ -181,6 +190,9 @@ const Profile = () => {
                                    type={"email"}
                                    variant={"outlined"}
                                    value={userData.email}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
@@ -195,6 +207,9 @@ const Profile = () => {
                                    multiline
                                    rows={7.5}
                                    value={userData.bio}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
@@ -210,6 +225,9 @@ const Profile = () => {
                                    multiline
                                    rows={20}
                                    value={userData.preferences}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
