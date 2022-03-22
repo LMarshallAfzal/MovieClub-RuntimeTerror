@@ -1,31 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
-import {
-    InputAdornment,
-    IconButton,
-    CardContent,
-    Box,
-    Alert,
-    Collapse,
-    TextField,
-    Autocomplete,
-    Grid,
-    Button,
-    Typography,
-    Rating,
-    Stack, ListItem
-} from "@mui/material";
+import {IconButton, Box, Collapse, TextField, Grid, Typography, Rating} from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import { moviesWithPoster } from "../data/DummyMoviesData";
-import SendIcon from '@mui/icons-material/Send';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import "../../styling/pages/Movies.css";
 import moviePoster from '../../styling/images/empty_movie_poster.png'
 import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
-
 
 const Movies = () => {
     const [movie, setMovie] = useState('')
@@ -91,8 +75,8 @@ const Movies = () => {
         <Grid container
             justifyContent={"center"}
             alignItems={"flex-start"}
-            spacing={2}
-        >
+            spacing={2}>
+
             <Grid item xs={12}>
                 <div className={"home-page-title"}>
                     <h3>movies<h3--emphasise>.</h3--emphasise></h3>
@@ -105,11 +89,11 @@ const Movies = () => {
                     fullWidth
                     value={searchValue}
                     onChange={event => { setSearchValue(event.target.value) }}
-                           InputProps={{endAdornment:
-                                   <IconButton onClick={clickSearch}>
-                                       <SearchIcon />
-                                   </IconButton>
-                }}
+                    InputProps={{
+                        endAdornment: <IconButton onClick={clickSearch}>
+                            <SearchIcon />
+                        </IconButton>
+                    }}
                 />
             </Grid>
 
@@ -157,7 +141,9 @@ const Movies = () => {
                                                 {/*<Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>*/}
                                             </div>
 
-                                            <FormButton text={"watch"} />
+                                            <Box padding={1}>
+                                                <FormButton text={"watch"} />
+                                            </Box>
                                         </Card>
                                 </Grid>
                                 )})}
@@ -195,7 +181,10 @@ const Movies = () => {
                                             />
                                             <Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>
                                         </div>
-                                        <FormButton text={"watch"} />
+
+                                        <Box padding={1}>
+                                            <FormButton text={"watch"} />
+                                        </Box>
                                     </Card>
                             </Grid>
                             )})}
@@ -242,8 +231,6 @@ const Movies = () => {
             </Grid>
         </Grid >
     );
-
-
 }
 
 export default Movies;
