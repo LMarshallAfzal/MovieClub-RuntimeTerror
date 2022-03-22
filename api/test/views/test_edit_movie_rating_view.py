@@ -2,10 +2,9 @@ from api.models import User, Movie, Rating
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-from api.test.helpers import LogInTester
 from rest_framework.test import force_authenticate,APIClient
 
-class EditMovieRatingViewTestCase(APITestCase,LogInTester):
+class EditMovieRatingViewTestCase(APITestCase):
 
     fixtures = [
         'api/test/fixtures/default_user.json',
@@ -76,7 +75,7 @@ class EditMovieRatingViewTestCase(APITestCase,LogInTester):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_post_to_edit_rating_endpoint_with_user_not_logged_in_not_edit_rating(self):
+    def test_post_to_edit_rating_endpoint_with_user_not_logged_in_returns_401_unautorized(self):
         before = Rating.objects.count()
         response = self.client.put(self.url, self.form_input)
         after = Rating.objects.count()

@@ -46,6 +46,18 @@ class EditUserViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_put_to_edit_user_endpoint_with_wrong_email_format_does_not_edit_the_user_returns_400_bad_request(self):
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
+        before = User.objects.count()
+        self.form_input['email'] = 'wrong@format'
+        response = self.client.put(self.url, self.form_input)
+        after = User.objects.count()
+        self.assertEqual(after, before)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    
+
     def test_put_to_edit_user_endpoint_with_blank_preferences_does_not_edit_the_user_returns_400_bad_request(self):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
@@ -76,6 +88,17 @@ class EditUserViewTestCase(APITestCase):
         before = User.objects.count()
         input = self.form_input
         input['last_name'] = ''
+        response = self.client.put(self.url, input)
+        after = User.objects.count()
+        self.assertEqual(after, before)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_put_to_edit_user_endpoint_with_blank_preferences_does_not_edit_the_user_returns_400_bad_request(self):
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
+        before = User.objects.count()
+        input = self.form_input
+        input['preferences'] = ''
         response = self.client.put(self.url, input)
         after = User.objects.count()
         self.assertEqual(after, before)
