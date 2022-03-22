@@ -142,9 +142,8 @@ const Profile = () => {
                                    id={"outlined"}
                                    label={"username"}
                                    name={"username"}
-                                   type={"text"}
                                    variant={"outlined"}
-                                   value={userData.username}
+                                   defaultValue={userData.username}
                                    onChange={e => onChange(e)}
                         />
 
@@ -156,7 +155,7 @@ const Profile = () => {
                                    name={"first_name"}
                                    type={"text"}
                                    variant={"outlined"}
-                                   value={userData.first_name}
+                                   defaultValue={userData.first_name}
                                    onChange={e => onChange(e)}
                         />
 
@@ -168,7 +167,7 @@ const Profile = () => {
                                    name={"last_name"}
                                    type={"text"}
                                    variant={"outlined"}
-                                   value={userData.last_name}
+                                   defaultValue={userData.last_name}
                                    onChange={e => onChange(e)}
                         />
 
@@ -180,7 +179,7 @@ const Profile = () => {
                                    name={"email"}
                                    type={"email"}
                                    variant={"outlined"}
-                                   value={userData.email}
+                                   defaultValue={userData.email}
                                    onChange={e => onChange(e)}
                         />
 
@@ -194,7 +193,7 @@ const Profile = () => {
                                    variant={"outlined"}
                                    multiline
                                    rows={7.5}
-                                   value={userData.bio}
+                                   defaultValue={userData.bio}
                                    onChange={e => onChange(e)}
                         />
 
@@ -209,7 +208,7 @@ const Profile = () => {
                                    variant={"outlined"}
                                    multiline
                                    rows={20}
-                                   value={userData.preferences}
+                                   defaultValue={userData.preferences}
                                    onChange={e => onChange(e)}
                         />
 

@@ -129,13 +129,12 @@ h6 {
   user-select: none;
 }
 
-.watched-button {
-  color: #999999;
-  border-color: #999999;
+.home-page-card-background {
+  background-color: #D8D8D8;
 }
 
-.watched-button:hover {
-  border-color: #5C5C5C;
+.movie-card-background {
+  background-color: #D8D8D8;
 }
 
 /*# sourceMappingURL=Movies.css.map */

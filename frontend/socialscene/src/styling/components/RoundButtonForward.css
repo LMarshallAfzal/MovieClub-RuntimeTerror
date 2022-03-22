@@ -129,6 +129,10 @@ h6 {
   user-select: none;
 }
 
+.home-page-card-background {
+  background-color: #D8D8D8;
+}
+
 .round-forward {
   padding: 18px;
   outline: none;

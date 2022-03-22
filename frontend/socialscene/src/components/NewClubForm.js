@@ -21,11 +21,11 @@ function NewClub() {
 
             <Grid item xs={12}>
                 <Stack spacing={2}>
-                    <TextField className='dashboard-text-box' id="outlined-basic" label="Name" variant="outlined"/>
-                    <TextField className='dashboard-text-box' id="outlined-basic" label="Description"
+                    <TextField className='dashboard-text-box' id="outlined-basic" label="name" variant="outlined"/>
+                    <TextField className='dashboard-text-box' id="outlined-basic" label="description"
                                variant="outlined"/>
-                    <TextField className='dashboard-text-box' id="outlined-basic" label="Themes" variant="outlined"/>
-                    <FormButton text={"Create"}/>
+                    <TextField className='dashboard-text-box' id="outlined-basic" label="themes" variant="outlined"/>
+                    <FormButton text={"create"}/>
                 </Stack>
             </Grid>
         </Grid>

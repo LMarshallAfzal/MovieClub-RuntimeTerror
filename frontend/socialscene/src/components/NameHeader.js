@@ -29,9 +29,9 @@ function NameHeader(props) {
 
                   <Stack>
 
-                      <h4 className={"name-header-text"}>John Doe<h4--emphasise>.</h4--emphasise></h4>
+                      <h4 className={"name-header-text"}>{props.firstName} {props.lastName}<h4--emphasise>.</h4--emphasise></h4>
 
-                      <h6 className={"name-header-text-date"}>joined {props.joinDate}</h6>
+                      <h6 className={"name-header-text-date"}>joined: {props.joinDate}</h6>
                   </Stack>
               </Grid>
           </Grid>

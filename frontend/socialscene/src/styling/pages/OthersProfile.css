@@ -129,6 +129,10 @@ h6 {
   user-select: none;
 }
 
+.home-page-card-background {
+  background-color: #D8D8D8;
+}
+
 .others-profile-info-text {
   height: 100%;
   font-size: 1.5rem;

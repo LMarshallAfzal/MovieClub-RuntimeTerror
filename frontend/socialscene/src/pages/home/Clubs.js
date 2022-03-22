@@ -1,5 +1,5 @@
 import React, {useCallback} from "react";
-import {Box, Grid, List, ListItem, Paper, Stack, TextField} from "@mui/material";
+import {Grid, ListItem, Stack, TextField} from "@mui/material";
 import {Outlet} from "react-router-dom";
 import "../../styling/pages/Clubs.css";
 import FormButton from "../../components/FormButton";
@@ -12,14 +12,13 @@ function Clubs() {
     const navigate = useNavigate();
     const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
 
-
     return (
         <Grid container
             justifyContent={"center"}
             direction={"row"}
             alignItems={"flex-start"}
-            spacing={2}
-        >
+            spacing={2}>
+
             <Grid item xs={12}>
                 <div className={"home-page-title"}>
                     <h3>clubs<h3--emphasise>.</h3--emphasise></h3>
@@ -27,33 +26,31 @@ function Clubs() {
             </Grid>
 
             <Grid item xs={10}>
-                <TextField
-                    className={"search-bar"}
+                <TextField className={"search-bar"}
                     id={"outlined-basic"}
                     label={"search"}
-                    variant={"outlined"}
-                />
+                    variant={"outlined"}/>
             </Grid>
 
             <Grid item xs={2}>
-                <FormButton
-                    className={"create-button"}
+                <FormButton className={"create-button"}
                     text={"create"}
                     onClick={createNewClub}
                 />
             </Grid>
 
             <Grid item xs={12}>
-                <div className={"club-card-background"}>
+                <div className={"home-page-card-background"}>
                     <h4 className={"home-page-card-title"}>your clubs:</h4>
 
                     <Stack direction={"row"}
                            spacing={0}
-                           className={"club-card-list-frame"}
-                    >
+                           className={"club-card-list-frame"}>
+
                         {DummyClubData.map((club) =>
                             club.isMember === true && (
                                 <ListItem sx={{width: 'auto'}}>
+
                                 <ClubListing
                                     clubName={club.clubName}
                                     isMember={club.isMember}
@@ -65,49 +62,42 @@ function Clubs() {
                                     ID={club.ID}
                                 />
                                 </ListItem>
-                                )
-                        )}
+                                ))}
                     </Stack>
                 </div>
             </Grid>
 
             <Grid item xs={12}>
-                <div className={"club-card-background"}>
+                <div className={"home-page-card-background"}>
                     <h4 className={"home-page-card-title"}>recommended clubs:</h4>
 
                     <Stack direction={"row"}
                           spacing={0}
-                          className={"club-card-list-frame"}
-                    >
-                        {DummyClubData.map((club) => {
-                            if (club.isMember === false) {
-                                return (
-                                    <ListItem sx={{width: 'auto'}}>
-                                    <ClubListing
-                                        clubName={club.clubName}
-                                        isMember={club.isMember}
-                                        iconImage={club.iconImage}
-                                        description={club.description}
-                                        isOrganiser={club.isOrganiser}
-                                        memberRole={club.memberRole}
-                                        clubTheme={club.clubTheme}
-                                        ID={club.ID}
-                                    />
-                                    </ListItem>
-                                    )
-                            } else {
-                                return (
-                                    <></>
-                                )
-                            }
-                        }
-                        )}
+                          className={"club-card-list-frame"}>
+
+                        {DummyClubData.map((club) =>
+                            club.isMember === false && (
+                                <ListItem sx={{width: 'auto'}}>
+
+                                <ClubListing
+                                    clubName={club.clubName}
+                                    isMember={club.isMember}
+                                    iconImage={club.iconImage}
+                                    description={club.description}
+                                    isOrganiser={club.isOrganiser}
+                                    memberRole={club.memberRole}
+                                    clubTheme={club.clubTheme}
+                                    ID={club.ID}
+                                />
+                                </ListItem>
+                            ))}
                     </Stack>
                 </div>
             </Grid>
 
             <Grid item xs={12}>
-                    <Outlet/>
+
+                <Outlet/>
             </Grid>
         </Grid>
     );

@@ -37,7 +37,9 @@ function App() {
                         <Route path={"profile"} element={(<Profile />)} />
                         <Route path={"movies"} element={(<Movies />)} />
                         <Route path={"clubs"} element={(<Clubs />)} >
-                            <Route path={":clubID"} element={(<ClubDetail />)} />
+                            <Route path={":clubID"} element={(<ClubDetail />)}>
+                                <Route path={"others-profile"} element={(<OthersProfile />)} />
+                            </Route>
                             <Route path={"clubs/new"} element={(<NewClub />)} />
                         </Route>
                         <Route path={"events"} element={(<Events />)}>
