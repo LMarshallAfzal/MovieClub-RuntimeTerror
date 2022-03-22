@@ -36,9 +36,9 @@ urlpatterns = [
     path("get_movie/<int:movie_id>/", views.get_movie, name = "get_movie"),
     path("watched_list/", views.get_watched_list, name = "get_watched_movies"),
     path("get_all_movies/", views.get_all_movies, name = "all_movies"),
-    path("train/movie", views.train_movie_data, name = "train"),
-    path("train/meeting", views.train_meeting_data, name = "train_meeting_data"),
-    path("rec/meeting", views.recommend_movie_meeting, name = "recommend_movies_for_meetings"),
+    path("train/movie/", views.train_movie_data, name = "train"),
+    path("train/meeting/", views.train_meeting_data, name = "train_meeting_data"),
+    path("rec/<int:club_id>/", views.recommend_movie_meeting, name = "recommend_movie_meeting"),
     path("message_forum/<int:club_id>/", views.message_forum, name = "message_forum"),
     path("write_message/<int:club_id>/", views.write_message, name = "write_message"),
 
