@@ -13,8 +13,9 @@ $primary-black: #000000;
 
 $grey-1: #5C5C5C;
 $grey-2: #999999;
-$grey-3: #D8D8D8;
-$grey-4: #F8F7F7;
+$grey-3: #C4C4C4;
+$grey-4: #D8D8D8;
+$grey-5: #F8F7F7;
 
 $primary-white: #FFFFFF;
 
@@ -96,12 +97,18 @@ h2{
 }
 
 h3{
+  font-family: $helvetica;
+  font-size: 2.5rem;
+  margin: 0;
+  &--emphasise {
+    color: $primary-red
+  }
 
 }
 
 h4{
   font-family: $helvetica;
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0;
 
   &--emphasise {
@@ -110,14 +117,60 @@ h4{
 }
 
 h5{
+  font-family: $helvetica;
+  font-size: 1.8rem;
+  margin: 0;
 
+  &--emphasise {
+    color: $primary-red
+  }
 }
 
 h6{
   font-family: $helvetica-light ;
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
 
 }
 
+.page-title{
+  padding-top: 20px;
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  user-select: none;
+  font-family: Helvetica-Bold, serif;
+  width: 100%;
+  text-align: center;
+}
 
+.page-subtitle{
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  user-select: none;
+  font-family: Helvetica, serif;
+  width: 100%;
+  text-align: center;
+}
+
+.home-page-title {
+  background-color: $grey-3;
+  padding: 10px;
+  user-select: none;
+}
+
+.home-page-card-title {
+    padding-top: 10px;
+  padding-left: 10px;
+  color: $primary-white;
+  user-select: none;
+}
+
+.home-page-card-background {
+  background-color: $grey-4;
+}

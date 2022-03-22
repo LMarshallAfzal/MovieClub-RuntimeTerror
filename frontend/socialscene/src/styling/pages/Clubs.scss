@@ -1,0 +1,18 @@
+@use "../base";
+
+.search-bar {
+  width: 100%;
+  user-select: none;
+}
+
+.create-button {
+  width: 100%;
+}
+
+.club-card-list-frame {
+  overflow: auto;
+}
+
+.club-card-list-item {
+  width: auto;
+}

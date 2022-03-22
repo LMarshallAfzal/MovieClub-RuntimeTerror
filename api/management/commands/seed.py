@@ -64,12 +64,14 @@ class Command(BaseCommand):
         return username
 
     def _create_club(self):
+        themes = ["Action","Horror","Sci-fi"]
         club_name = self.faker.word().capitalize() + "Movie Club"
         mission_statement = 'Best movie club in town!'
-
+        theme = random.choice(themes)
         new_club = Club.objects.create(
             club_name=club_name,
             mission_statement=mission_statement,
+            theme = theme,
         )
 
         self._create_club_roles(new_club)

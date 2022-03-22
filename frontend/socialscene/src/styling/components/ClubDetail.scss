@@ -1,0 +1,24 @@
+@use "../base";
+
+.club-detail-heading {
+  padding: 10px;
+  color: base.$primary-white;
+  background-color: base.$grey-3;
+  user-select: none;
+}
+
+.club-member-heading {
+  color: base.$primary-white;
+  user-select: none;
+}
+
+.club-detail-background {
+  background-color: base.$grey-4;
+  padding: 10px;
+  height: 100%;
+}
+
+.club-detail-user-frame {
+
+}
+

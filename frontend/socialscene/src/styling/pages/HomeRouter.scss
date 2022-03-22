@@ -2,13 +2,17 @@
 
 .home-grid {
   height: base.$height;
+  overflow: hidden;
+
 }
 
 .home-grid-L-sidebar {
-  background-color: base.$grey-4;
+  background-color: base.$grey-5;
   padding: 0;
 }
 
 .home-grid-R-content {
   padding: 0;
+  height: 100%;
+  overflow: auto;
 }

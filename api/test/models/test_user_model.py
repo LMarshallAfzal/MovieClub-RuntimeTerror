@@ -126,13 +126,13 @@ class UserModelTestCase(APITestCase):
         self._assert_user_is_invalid()
     
     def test_get_user_clubs(self):
-        # Test that the user has no clubs
-        self.assertEqual(self.user.get_user_clubs(), [])
-        # Then join club:
+        clubs = self.user.get_user_clubs()
+        self.assertEqual(clubs.count(), 0)
         club = Club.objects.get(club_name='Beatles')
         Membership.objects.create(user=self.user, club=club)
-        # Test that the user has one club:
-        self.assertEqual(self.user.get_user_clubs(), [club])
+        clubs = self.user.get_user_clubs()
+
+        self.assertEqual(clubs.count(), 1)
 
     def _assert_user_is_valid(self):
         try:
