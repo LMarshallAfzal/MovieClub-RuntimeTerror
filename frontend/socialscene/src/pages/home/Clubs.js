@@ -28,8 +28,8 @@ function Clubs() {
             }
         })
         let data = await response.json()
-        // console.log(data)
         setMyClubData(data)
+        console.log(myClubData)
     }
 
     let getMemData = async (e) => {
@@ -41,7 +41,6 @@ function Clubs() {
             }
         })
         let data = await response.json()
-        // console.log(data)
         setUserMembershipData(data)
         console.log(userMembershipData)
     }
@@ -107,20 +106,22 @@ function Clubs() {
                            spacing={0}
                            className={"club-card-list-frame"}
                     >
-                        {myClubData.map((val) => {
-                            if (userMembershipData.club === val.id) {
+                        {console.log(myClubData)}
+                        {console.log(userMembershipData)}
+                        {myClubData.map((club) => {
+                            if (club.club_members.includes(userMembershipData[0].user)) {
                                 return (
                                     <ListItem
                                     >
                                     <ClubListing
-                                        clubName={val.club_name}
+                                        clubName={club.club_name}
                                         // isMember={club.isMember}
-                                        iconImage={val.iconImage}
-                                        description={val.mission_statement}
+                                        iconImage={club.iconImage}
+                                        description={club.mission_statement}
                                         // isOrganiser={club.isOrganiser}
                                         memberRole={userMembershipData.role}
-                                        clubTheme={val.theme}
-                                        clubID={val.id}
+                                        clubTheme={club.theme}
+                                        clubID={club.id}
                                     />
                                     </ListItem>)
                             } else {
