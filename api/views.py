@@ -301,6 +301,13 @@ def recommend_club(request):
     return Response(serializer.data)
     pass
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_all_movies(request):
+    movies = Movie.objects.all()
+    serializer = MovieSerializer(movies,many=True)
+    return Response(serializer.data)
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])

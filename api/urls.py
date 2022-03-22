@@ -26,7 +26,7 @@ urlpatterns = [
     path("create_meeting/<int:club_id>/",views.create_meeting, name = "create_meeting"),
     path("add_rating/<int:movie_id>/",views.add_rating,name = "add_rating"),
     path("rec/",views.recommend_movie_user,name = "rec"),
-    path("rec/clubs",views.recommend_club,name = "rec_clubs"),
+    path("rec/clubs/",views.recommend_club,name = "rec_clubs"),
     path("edit_rating/<int:movie_id>/",views.change_rating,name = "edit_rating"),
     path("memberships/<int:user_id>/", views.get_memberships_of_user, name = "get_memberships_of_user"),
     path("join_club/<int:club_id>/", views.join_club, name = "join_club"),
@@ -35,6 +35,7 @@ urlpatterns = [
     path("remove_watched_movie/<int:movie_id>/",views.remove_watched_movie,name = "remove_watched_movie"),
     path("get_movie/<int:movie_id>/", views.get_movie, name = "get_movie"),
     path("watched_list/", views.get_watched_list, name = "get_watched_movies"),
+    path("get_all_movies/", views.get_all_movies, name = "all_movies"),
     path("train/movie", views.train_movie_data, name = "train"),
     path("train/meeting", views.train_meeting_data, name = "train_meeting_data"),
     path("rec/meeting", views.recommend_movie_meeting, name = "recommend_movies_for_meetings"),
@@ -45,10 +46,6 @@ urlpatterns = [
     path("banned_member_list/<int:club_id>/", views.banned_member_list,name = "banned_member_list"),
 
 
-
-    
-
-    
 
     
 ]
