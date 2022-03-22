@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {useParams} from "react-router";
 import {Avatar, AvatarGroup, Box, Chip, Grid, Stack} from "@mui/material";
 import icon5 from "../styling/images/example icons/icon5.jpeg"
@@ -8,24 +8,48 @@ import icon4 from "../styling/images/example icons/icon4.jpeg"
 import "../styling/components/ClubListing.css";
 import EnterButton from "./EnterButton";
 import {Link} from "react-router-dom";
+import AuthContext from "../components/helper/AuthContext";
+
 
 function ClubListing(props) {
+    let {user, authTokens} = useContext(AuthContext);
+    const [myClubData, setMyClubData] = useState([]);
+
+
+
+    let getMembershipData = async (e) => {
+        let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        // console.log(data)
+        setMyClubData(data)
+    }
+
+    useEffect((e) => { 
+        getMembershipData()
+    },[])
+
     let { clubID } = useParams();
 
     function ClubButton() {
-        if (props.isMember === true) {
+        // if (props.isMember === true) {
             return (
                 <EnterButton
                     text={"info"}
-                    linkTo={`/home/clubs/${props.ID}`}/>
+                    linkTo={`/home/clubs/${props.clubID}`}/>
             )
-        } else {
-                return (
-                    <EnterButton
-                        text={"join"}
-                        linkTo={`/home/clubs/${props.ID}`}/>
-                )
-            }
+        // } else {
+        //         return (
+        //             <EnterButton
+        //                 text={"join"}
+        //                 linkTo={`/home/clubs/${props.clubID}`}/>
+        //         )
+        //     }
         }
 
     function ClubChip() {

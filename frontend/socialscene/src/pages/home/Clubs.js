@@ -15,12 +15,11 @@ function Clubs() {
     const navigate = useNavigate();
     const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
     const [myClubData, setMyClubData] = useState([]);
-    const [memData, setMemData] = useState([]);
+    const [userMembershipData, setUserMembershipData] = useState([]);
     const [recommendedClubData, setRecommendedClubData] = useState([]);
-    let {user, authTokens} = useContext(AuthContext)
+    let {user, authTokens} = useContext(AuthContext);
 
     let getMembershipData = async (e) => {
-        // e.preventDefault()
         let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
             method:'GET',
             headers: {
@@ -29,12 +28,11 @@ function Clubs() {
             }
         })
         let data = await response.json()
-        console.log(data)
+        // console.log(data)
         setMyClubData(data)
     }
 
     let getMemData = async (e) => {
-        // e.preventDefault()
         let response = await fetch('http://127.0.0.1:8000/mem/' + user.user_id +'/', {
             method:'GET',
             headers: {
@@ -43,8 +41,9 @@ function Clubs() {
             }
         })
         let data = await response.json()
-        console.log(data)
-        setMemData(data)
+        // console.log(data)
+        setUserMembershipData(data)
+        console.log(userMembershipData)
     }
 
     
@@ -58,12 +57,12 @@ function Clubs() {
             }
         })
         let data = await response.json()
-        console.log(data)
+        // console.log(data)
         setRecommendedClubData(data)
     }
 
 
-    useEffect(() => { 
+    useEffect((e) => { 
         getMembershipData()
         getMemData()
         getRecommendedClubs()
@@ -108,26 +107,32 @@ function Clubs() {
                            spacing={0}
                            className={"club-card-list-frame"}
                     >
-                        {myClubData.map((club) => {
-                            // if (memData.club === club) {
+                        {myClubData.map((val) => {
+                            if (userMembershipData.club === val.id) {
                                 return (
                                     <ListItem
                                     >
                                     <ClubListing
-                                        clubName={club.club_name}
+                                        clubName={val.club_name}
                                         // isMember={club.isMember}
-                                        iconImage={club.iconImage}
-                                        description={club.mission_statement}
+                                        iconImage={val.iconImage}
+                                        description={val.mission_statement}
                                         // isOrganiser={club.isOrganiser}
-                                        memberRole={memData.role}
-                                        clubTheme={club.theme}
+                                        memberRole={userMembershipData.role}
+                                        clubTheme={val.theme}
+                                        clubID={val.id}
                                     />
                                     </ListItem>)
-                            // } else {
-                            //     return (
-                            //         <></>
-                            //     )
-                            // }
+                            } else {
+                                return (
+                                    <>
+                                        Not a member of any clubs
+                                        {/* {console.log(val.id)}
+                                        {console.log(memData.club)} */}
+
+                                    </>
+                                )
+                            }
                         }
                         )}
                     </Stack>

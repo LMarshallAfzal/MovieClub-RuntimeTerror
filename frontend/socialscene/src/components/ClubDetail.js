@@ -24,6 +24,8 @@ function ClubDetail() {
         console.log("User Clicked");
     }
 
+    
+
 
     return (
         <Grid
