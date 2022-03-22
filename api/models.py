@@ -174,6 +174,8 @@ class Membership(models.Model):
 
     def get_role_name(self):
         return self.MembershipStatus(self.role).name.title()
+
+
 class Movie(models.Model):
 
     ml_id = models.PositiveIntegerField(
@@ -281,3 +283,10 @@ class Watch(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     time_watched = models.DateTimeField(auto_now_add=True)
+
+
+class Genre(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
