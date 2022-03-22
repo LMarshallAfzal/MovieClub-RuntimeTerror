@@ -122,6 +122,13 @@ h6 {
   user-select: none;
 }
 
+.home-page-card-title {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #FFFFFF;
+  user-select: none;
+}
+
 .search-bar {
   width: 100%;
   user-select: none;
@@ -133,13 +140,6 @@ h6 {
 
 .club-card-background {
   background-color: #D8D8D8;
-}
-
-.club-card-heading {
-  padding-top: 10px;
-  padding-left: 10px;
-  color: #FFFFFF;
-  user-select: none;
 }
 
 .club-card-list-frame {

@@ -129,27 +129,4 @@ h6 {
   user-select: none;
 }
 
-.login-grid {
-  height: calc(100% - 90px);
-}
-
-.login-grid-child {
-  height: 100%;
-}
-
-.login-form {
-  height: 100%;
-}
-
-.login-form-stack {
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-form-row {
-  width: 100%;
-  max-width: 60%;
-}
-
-/*# sourceMappingURL=Login.css.map */
+/*# sourceMappingURL=ClubEvent.css.map */

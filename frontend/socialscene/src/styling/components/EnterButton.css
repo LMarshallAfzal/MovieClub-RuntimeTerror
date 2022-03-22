@@ -122,6 +122,13 @@ h6 {
   user-select: none;
 }
 
+.home-page-card-title {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #FFFFFF;
+  user-select: none;
+}
+
 .enter-button-wrapper {
   padding: 8px 18px;
   user-select: none;

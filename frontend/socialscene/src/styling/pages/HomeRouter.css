@@ -122,8 +122,16 @@ h6 {
   user-select: none;
 }
 
+.home-page-card-title {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #FFFFFF;
+  user-select: none;
+}
+
 .home-grid {
   height: calc(100% - 90px);
+  overflow: hidden;
 }
 
 .home-grid-L-sidebar {
@@ -133,6 +141,8 @@ h6 {
 
 .home-grid-R-content {
   padding: 0;
+  height: 100%;
+  overflow: auto;
 }
 
 /*# sourceMappingURL=HomeRouter.css.map */

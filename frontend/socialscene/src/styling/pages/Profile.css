@@ -122,6 +122,13 @@ h6 {
   user-select: none;
 }
 
+.home-page-card-title {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #FFFFFF;
+  user-select: none;
+}
+
 .edit-profile-info-text {
   padding-top: 20px;
   height: 100%;
@@ -144,7 +151,6 @@ h6 {
   width: 100%;
   border-collapse: separate;
   border-spacing: 20px;
-  width: 100%;
 }
 
 .editProfile-grid {
@@ -161,10 +167,6 @@ h6 {
 
 .form-stack {
   margin-top: 20px;
-}
-
-.profile-text-box {
-  background-color: #D8D8D8;
 }
 
 /*# sourceMappingURL=Profile.css.map */

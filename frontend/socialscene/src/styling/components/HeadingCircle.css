@@ -122,6 +122,13 @@ h6 {
   user-select: none;
 }
 
+.home-page-card-title {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #FFFFFF;
+  user-select: none;
+}
+
 .circle {
   overflow: hidden;
   width: calc((100% - 90px) / 2);

@@ -122,12 +122,16 @@ h6 {
   user-select: none;
 }
 
-z.sidebar {
+.home-page-card-title {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #FFFFFF;
+  user-select: none;
+}
+
+.sidebar {
+  position: sticky;
   height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
 }
 
 .sidebar-list {

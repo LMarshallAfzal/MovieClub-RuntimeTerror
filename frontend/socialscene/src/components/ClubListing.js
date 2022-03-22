@@ -32,7 +32,7 @@ function ClubListing(props) {
         if (props.isMember === true) {
             if (props.isOrganiser === true) {
                 return (
-                    <EnterButton text={"create meeting"} linkTo={"/home"} />
+                    <EnterButton text={"create meeting"} linkTo={`/home/events/${props.ID}`} />
                 )
             } else {
                 return (

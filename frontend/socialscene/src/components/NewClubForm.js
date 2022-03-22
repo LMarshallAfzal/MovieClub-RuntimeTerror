@@ -1,8 +1,8 @@
 import React from "react";
 import {Box, Grid, Stack, TextField} from "@mui/material";
-import HeadingCircle from "../../components/HeadingCircle";
-import FormButton from "../../components/FormButton";
-import "../../styling/pages/NewClubForm.css";
+import HeadingCircle from "./HeadingCircle";
+import FormButton from "./FormButton";
+import "../styling/pages/NewClubForm.css";
 
 
 
@@ -16,7 +16,7 @@ function NewClub() {
             spacing={2}
         >
             <Grid item xs={12}>
-                <h4 className={"new-club-heading"}>new club:</h4>
+                <h4 className={"home-page-card-title"}>new club:</h4>
             </Grid>
 
             <Grid item xs={12}>

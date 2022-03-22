@@ -122,10 +122,16 @@ h6 {
   user-select: none;
 }
 
+.home-page-card-title {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #FFFFFF;
+  user-select: none;
+}
+
 .name-header {
   background-color: #5C5C5C;
   width: 100%;
-  height: inherit;
   overflow: hidden;
   user-select: none;
 }
