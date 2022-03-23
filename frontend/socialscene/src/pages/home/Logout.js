@@ -10,7 +10,6 @@ function Logout() {
 
     useEffect(() => {
         logoutUser()
-
     }, [])
 
     return (
