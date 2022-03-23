@@ -23,7 +23,7 @@ const Home = () =>  {
     
 
     useEffect(() => { 
-        getMembershipData()
+        // getMembershipData()
         // console.log(authTokens.access)
     },[])
 
@@ -56,19 +56,19 @@ const Home = () =>  {
         
     }
 
-    let getMembershipData = async (e) => {
-        // e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
-            method:'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + String(authTokens.access)
-            }
-        })
-        let data = await response.json()
-        console.log(data)
-        setMyClubData(data)
-    }
+    // let getMembershipData = async (e) => {
+    //     // e.preventDefault()
+    //     let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
+    //         method:'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': 'Bearer ' + String(authTokens.access)
+    //         }
+    //     })
+    //     let data = await response.json()
+    //     console.log(data)
+    //     setMyClubData(data)
+    // }
 
     return (
         <Grid className='' style={{ borderSpacing: 0 }}>
