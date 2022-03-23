@@ -98,7 +98,9 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
   font-family: Helvetica-Bold, serif;
   width: 100%;
   text-align: center;
@@ -110,7 +112,9 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
   font-family: Helvetica, serif;
   width: 100%;
   text-align: center;
@@ -119,14 +123,20 @@ h6 {
 .home-page-title {
   background-color: #C4C4C4;
   padding: 10px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .home-page-card-title {
   padding-top: 10px;
   padding-left: 10px;
   color: #FFFFFF;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .home-page-card-background {
@@ -134,6 +144,7 @@ h6 {
 }
 
 .navbar {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100%;
@@ -148,14 +159,20 @@ h6 {
   font-size: 1.2rem;
   overflow: auto;
   width: 100%;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .navbar-red {
   height: 10px;
   display: flex;
   background: #FF0000;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .navbar-logo {
@@ -169,7 +186,10 @@ h6 {
   text-decoration: none;
   font-size: 2rem;
   padding-top: 20px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .navbar-enter-button {
@@ -179,6 +199,4 @@ h6 {
   padding-right: 20px;
   padding-top: 20px;
   text-decoration: none;
-}
-
-/*# sourceMappingURL=Navbar.css.map */
+}/*# sourceMappingURL=Navbar.css.map */

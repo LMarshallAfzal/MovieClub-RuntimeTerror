@@ -9,7 +9,7 @@ import AuthContext from "../../components/helper/AuthContext";
 
 export function Login() {
 
-    let {loginUser, loginCredentials, setLoginCredentials, usernameError, passwordError, errorUsernameText, errorPasswordText} = useContext(AuthContext)
+    let {user, loginUser, loginCredentials, setLoginCredentials, usernameError, passwordError, errorUsernameText, errorPasswordText} = useContext(AuthContext)
     
     const {username, password} = loginCredentials;
 
@@ -83,6 +83,7 @@ export function Login() {
                                         type="submit"
                                         text={"log in"}   
                                         onClick={loginUser}
+                                       
                                     />
                                 </Grid>
 
@@ -91,6 +92,7 @@ export function Login() {
                                     <FormButton
                                         type="submit"
                                         text={"forgot password"}
+                                        
                                     />
                                 </Grid>
                             </Grid>
