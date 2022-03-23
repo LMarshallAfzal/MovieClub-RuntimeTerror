@@ -11,35 +11,40 @@ function ClubSelector() {
 
        <Grid item xs={12}>
                 <div className={"club-selector-background"}>
-                    <h4 className={"home-page-card-title"}>your clubs:</h4>
+                    <Grid container direction={"row"} padding={2}>
+                        <Grid item xs={12}>
+                            <h4 className={"home-page-card-title"}>your clubs:</h4>
+                        </Grid>
 
-                    <Stack direction={"row"}
+                        <Grid item xs={12}>
+                            <Stack direction={"row"}
                            className={"club-card-list-frame"}
                     >
                         {DummyClubData.map((club) =>
                             club.isMember === true && (
-                                <ListItem sx={{width: 'auto'}}>
-                                <div className={"club-selector-listing"}>
-                                    <Grid container
-                                          spacing={1}
-                                          padding={1}
-                                    >
-                                        <Grid item xs={8}>
-                                            <h4>{club.clubName}</h4>
-                                        </Grid>
+                                <ListItem sx={{width: 'auto',p: 1}}>
+                                    <div className={"club-selector-listing"}>
+                                        <Grid container
+                                              spacing={1}
+                                              padding={1}>
 
-                                        <Grid item xs={4}>
-                                            <EnterButton
-                                                text={"view"}
-                                                linkTo={`/home/discussion/${club.ID}`}
-                                            />
+                                            <Grid item xs={8}>
+                                                <h4>{club.clubName}</h4>
+                                            </Grid>
+
+                                            <Grid item xs={4}>
+                                                <EnterButton
+                                                    text={"view"}
+                                                    linkTo={`/home/discussion/${club.ID}`}
+                                                />
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                </div>
+                                    </div>
                                 </ListItem>
-                                )
-                        )}
-                    </Stack>
+                                ))}
+                            </Stack>
+                        </Grid>
+                    </Grid>
                 </div>
             </Grid>
     );
