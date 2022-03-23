@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import {IconButton, Box, Collapse, TextField, Grid, Typography, Rating} from "@mui/material";
+import { IconButton, Box, Collapse, TextField, Grid, Typography, Rating } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -111,15 +111,15 @@ const Movies = () => {
                                     <CloseIcon />
                                 </IconButton>
                             </Grid>
-
+{/* LIST OF ALL MOVIES */}
                             <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
-                                        {moviesWithPoster.filter((movie) => {
-                                if (movie.title.toLowerCase().includes(searchValue.toLowerCase())) {
-                                  return movie;
-                                }
-                            }).map((movie) => {
-                                return (<Grid item>
-                                        <Card sx={{width: 330}}>
+                                {moviesWithPoster.filter((movie) => {
+                                    if (movie.title.toLowerCase().includes(searchValue.toLowerCase())) {
+                                        return movie;
+                                    }
+                                }).map((movie) => {
+                                    return (<Grid item>
+                                        <Card sx={{ width: 330 }}>
                                             <CardMedia
                                                 component="img"
                                                 height="500"
@@ -127,16 +127,16 @@ const Movies = () => {
                                                 alt={movie.title}
                                             />
 
-                                            <CardHeader title={movie.title}/>
+                                            <CardHeader title={movie.title} />
 
-                                            <div style={{paddingLeft: "18px", paddingBottom: "10px"}}>
+                                            <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
 
                                                 <Typography component="legend">Rate {movie.title}</Typography>
                                                 <Rating
                                                     name="simple-controlled"
                                                     precision={0.5}
                                                     max={5}
-                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+                                                // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
                                                 />
                                                 {/*<Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>*/}
                                             </div>
@@ -145,8 +145,9 @@ const Movies = () => {
                                                 <FormButton text={"watch"} />
                                             </Box>
                                         </Card>
-                                </Grid>
-                                )})}
+                                    </Grid>
+                                    )
+                                })}
                             </Grid>
                         </Grid>
                     </div>
@@ -158,36 +159,38 @@ const Movies = () => {
                     <h4 className={"home-page-card-title"}>club movies:</h4>
 
                     <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
+                        {/* LIST OF MOVIES FROM CLUBS TO BE WATCHED */}
                         {moviesWithPoster.map((movie) => {
                             return (<Grid item>
-                                    <Card sx={{width: 330}}>
-                                        <CardMedia
-                                            component="img"
-                                            height="500"
-                                            image={moviePoster}
-                                            alt={movie.title}
+                                <Card sx={{ width: 330 }}>
+                                    <CardMedia
+                                        component="img"
+                                        height="500"
+                                        image={moviePoster}
+                                        alt={movie.title}
+                                    />
+
+                                    <CardHeader title={movie.title} />
+
+                                    <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
+
+                                        <Typography component="legend">Rate {movie.title}</Typography>
+                                        <Rating
+                                            name="simple-controlled"
+                                            precision={0.5}
+                                            max={5}
+                                        // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
                                         />
+                                        <Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>
+                                    </div>
 
-                                        <CardHeader title={movie.title}/>
-
-                                        <div style={{paddingLeft: "18px", paddingBottom: "10px"}}>
-
-                                            <Typography component="legend">Rate {movie.title}</Typography>
-                                            <Rating
-                                                name="simple-controlled"
-                                                precision={0.5}
-                                                max={5}
-                                                // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-                                            />
-                                            <Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>
-                                        </div>
-
-                                        <Box padding={1}>
-                                            <FormButton text={"watch"} />
-                                        </Box>
-                                    </Card>
+                                    <Box padding={1}>
+                                        <FormButton text={"watch"} />
+                                    </Box>
+                                </Card>
                             </Grid>
-                            )})}
+                            )
+                        })}
                     </Grid>
                 </div>
             </Grid>
@@ -197,35 +200,65 @@ const Movies = () => {
                     <h4 className={"home-page-card-title"}>recommended movies:</h4>
 
                     <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
+                        {/* MOVIES RECOMMENDED */}
                         {moviesWithPoster.map((movie) => {
                             return (<Grid item>
-                                    <Card sx={{width: 330}}>
-                                        <CardMedia
-                                            component="img"
-                                            height="500"
-                                            image={moviePoster}
-                                            alt={movie.title}
+                                <Card sx={{ width: 330 }}>
+                                    <CardMedia
+                                        component="img"
+                                        height="500"
+                                        image={moviePoster}
+                                        alt={movie.title}
+                                    />
+
+                                    <CardHeader title={movie.title} />
+
+                                    <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
+
+                                        <Typography component="legend">Rate {movie.title}</Typography>
+                                        <Rating
+                                            name="simple-controlled"
+                                            precision={0.5}
+                                            max={5}
+                                        // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
                                         />
+                                    </div>
 
-                                        <CardHeader title={movie.title}/>
-
-                                        <div style={{paddingLeft: "18px", paddingBottom: "10px"}}>
-
-                                            <Typography component="legend">Rate {movie.title}</Typography>
-                                            <Rating
-                                                name="simple-controlled"
-                                                precision={0.5}
-                                                max={5}
-                                                // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-                                            />
-                                        </div>
-
-                                        <Box padding={1}>
-                                            <FormButton text={"watch"} />
-                                        </Box>
-                                    </Card>
+                                    <Box padding={1}>
+                                        <FormButton text={"watch"} />
+                                    </Box>
+                                </Card>
                             </Grid>
-                            )})}
+                            )
+                        })}
+                    </Grid>
+                </div>
+            </Grid>
+
+            <Grid item xs={12}>
+                <div className={"home-page-card-background"}>
+                    <h4 className={"home-page-card-title"}>watched movies:</h4>
+
+                    <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
+                    {/* LIST OF MOVIES WATCHED BY THE USER */}
+                        {moviesWithPoster.map((movie) => {
+                            return (<Grid item>
+                                <Card sx={{ width: 330 }}>
+                                    <CardMedia
+                                        component="img"
+                                        height="500"
+                                        image={moviePoster}
+                                        alt={movie.title}
+                                    />
+
+                                    <CardHeader title={movie.title} />
+
+                                    <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
+                                    </div>
+                                </Card>
+                            </Grid>
+                            )
+                        })}
                     </Grid>
                 </div>
             </Grid>
