@@ -120,7 +120,6 @@ def is_banned(view_function):
             Membership.objects.get(user=user, club=club, role="B")
         except ObjectDoesNotExist:
             return Response(status=status.HTTP_403_FORBIDDEN)
-
         else:
             return view_function(request, club_id, user_id, *args, **kwargs)
 
@@ -189,10 +188,10 @@ def club_has_upcoming_meeting(view_function):
     @wraps(view_function)
     def modified_view_function(request, club_id, *args, **kwargs):
         club = Club.objects.get(id=club_id)
-        upcoming_meeting = club.get_upcoming_meeting()
-        if upcoming_meeting == None:
+        try:
+            upcoming_meeting = club.get_upcoming_meeting()
+        except ObjectDoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
         else:
             return view_function(request, club_id, *args, **kwargs)
     return modified_view_function
@@ -202,8 +201,10 @@ def club_has_no_upcoming_meeting(view_function):
     @wraps(view_function)
     def modified_view_function(request, club_id, *args, **kwargs):
         club = Club.objects.get(id=club_id)
-        upcoming_meeting = club.get_upcoming_meeting()
-        if upcoming_meeting == None:
+        try:
+            upcoming_meeting = club.get_upcoming_meeting()
+
+        except ObjectDoesNotExist:
             return view_function(request, club_id, *args, **kwargs)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

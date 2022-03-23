@@ -160,11 +160,7 @@ class Club(models.Model):
         return self.club_messages.all()
 
     def get_upcoming_meeting(self):
-        try:
             meeting = Meeting.objects.get(club=self, completed=False)
-        except:
-            return None
-        else:
             return meeting
             
     def __unicode__(self):

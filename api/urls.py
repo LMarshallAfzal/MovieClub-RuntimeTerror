@@ -49,6 +49,4 @@ urlpatterns = [
     path("leave_meeting/<int:club_id>/", views.leave_meeting,name = "leave_meeting"),
     path("get_club_upcoming_meeting/<int:club_id>/", views.get_club_upcoming_meeting, name = "get_club_upcoming_meeting"),
     path("get_user_attending_meetings/", views.get_user_upcoming_attending_meetings, name = "get_user_upcoming_attending_meetings"),
-    path("get_joined_club_meetings/", views.get_all_joined_clubs_upcoming_meetings, name = "get_all_joined_clubs_upcoming_meetings"),
-
 ]

@@ -402,12 +402,17 @@ def check_upcoming_meetings(request):
 
 @api_view(['GET'])
 @club_exists
-@club_has_upcoming_meeting
+@user_in_club
+@not_banned
 def get_club_upcoming_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
-    meeting = club.get_upcoming_meeting()
-    serializer = MeetingSerializer(meeting, many=False)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    try:
+        meeting = club.get_upcoming_meeting()
+    except ObjectDoesNotExist:
+        raise serializers.ValidationError(f'{club.club_name} currently has no upcoming meeting.')
+    else:
+        serializer = MeetingSerializer(meeting, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -416,20 +421,6 @@ def get_user_upcoming_attending_meetings(request):
     serializer = MeetingSerializer(meetings,many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_all_joined_clubs_upcoming_meetings(request):
-    clubs = request.user.get_user_clubs()
-    if clubs == None:
-        return Response(status=status.HTTP_200_OK)
-    meetings = []
-    for club in clubs:
-        meeting = club.get_upcoming_meeting()
-        if meeting != None:
-            if not request.user in meeting.attendees.all():
-                meetings.append(meeting)
-    serializer = MeetingSerializer(meetings, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

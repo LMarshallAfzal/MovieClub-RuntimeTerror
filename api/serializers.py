@@ -401,6 +401,7 @@ class UpdateMeetingSerializer(serializers.ModelSerializer):
     )
 
     def validate(self, data):
+        print(data)
         meeting_date = data['date']
         start_time = data['start_time']
         end_time = data['end_time']
