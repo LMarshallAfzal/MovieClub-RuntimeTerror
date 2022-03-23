@@ -120,6 +120,7 @@ h6 {
   background-color: #C4C4C4;
   padding: 10px;
   user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
@@ -162,12 +163,12 @@ h6 {
   width: 100%;
   height: 4em;
   list-style-type: none;
-  border-left: 10px solid #C4C4C4;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease-out;
+  border-left: 0 solid #000000;
   font-family: Helvetica, serif;
 }
 
@@ -181,6 +182,7 @@ h6 {
   font-family: Helvetica, serif;
   background-color: #999999;
   border-left: 10px solid #FF0000;
+  color: #FF0000 !important;
 }
 
 .sidebar-list-link-box {

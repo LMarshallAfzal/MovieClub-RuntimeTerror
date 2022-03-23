@@ -162,10 +162,11 @@ h6{
   background-color: $grey-3;
   padding: 10px;
   user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
-    padding-top: 10px;
+  padding-top: 10px;
   padding-left: 10px;
   color: $primary-white;
   user-select: none;
