@@ -184,7 +184,8 @@ const Messages = () => {
                                                     {val.message}
                                                 </Typography>
                                                 <Typography sx={{ fontSize: 15 }} variant="body2">
-                                                    {val.timestamp}
+                                                    {/* {val.timestamp.slice(11,16) + " " + val.timestamp.slice(0,10) } */}
+                                                    {val.timestamp.slice(11,16) + " | " + val.timestamp.slice(8,10) + "/" + val.timestamp.slice(5,7) + "/" + val.timestamp.slice(0,4)}
                                                 </Typography>
                                             </Grid>
                                         </Grid>
@@ -202,27 +203,20 @@ const Messages = () => {
                             name="message"
                             value={message.message}
                             onChange={(e, dateTime) => onChange(e, dateTime)}
-                            // InputProps={{
-                            //     endAdornment:
-                            //     <div >
-                            //         < Button onChange={(e, dateTime) => onChange(e, dateTime)} >
-                                            
-                            //             <SendIcon />
-                            //         </Button>
-                            //     </div>
-                            // }} 
+                            InputProps={{
+                                endAdornment:
+                                <div >
+                                    < Button onClick={sendClubMessages} >
+                                        <SendIcon />
+                                    </Button>
+                                </div>
+                            }} 
                         />
-                        < Button 
-                            onClick={sendClubMessages} 
-                        >         
-                            <SendIcon />
-                        </Button>
                     </FormControl>
                 </Grid>
             </Grid>
         </>
     );
-
 }
 
 export default Messages;
