@@ -83,7 +83,6 @@ function ClubDetail() {
                         <h4 className={"home-page-card-title"}>members:</h4>
                     </Grid>
 
-
                     <Dialog
                         open={showBanDialog}
                         onClose={closeBanDialog}
@@ -202,11 +201,11 @@ function ClubDetail() {
                         </DialogActions>
                     </Dialog>
 
-                    <FormButton text={"join"} style={"primary"} />
+                    <FormButton text={"join"} style={club.isMember ? "disabled" : "primary"} />
 
-                    <FormButton text={"leave"} style={"disabled"}/>
+                    <FormButton text={"leave"} style={club.isMember ? "primary" : "disabled"} />
 
-                    <FormButton text={"delete"} style={"normal"} onClick={openDeleteClubDialog} />
+                    <FormButton text={"delete"} style={club.isOrganiser ? "primary" : "disabled"} onClick={openDeleteClubDialog} />
 
                     <FormButton text={showBannedMembers ? "members" : "banned"} style={"normal"} onClick={toggleBannedView} />
                 </Stack>
