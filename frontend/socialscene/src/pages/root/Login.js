@@ -83,7 +83,7 @@ export function Login() {
                                         type="submit"
                                         text={"log in"}   
                                         onClick={loginUser}
-                                       
+                                        style={"primary"}
                                     />
                                 </Grid>
 
@@ -92,7 +92,6 @@ export function Login() {
                                     <FormButton
                                         type="submit"
                                         text={"forgot password"}
-                                        
                                     />
                                 </Grid>
                             </Grid>

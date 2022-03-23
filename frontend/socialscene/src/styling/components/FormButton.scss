@@ -9,14 +9,25 @@
   text-align: left;
   font-size: 18px;
   color: base.$primary-white;
-  cursor: pointer;
   background-color: base.$primary-black;
   font-family: base.$helvetica-bold;
-  transition: all 0.3s ease-out;
+  transition: all 0.3s ease-in-out;
   user-select: none;
-}
 
-.form-button:hover {
+}
+.form-button#normal:hover {
+  cursor: pointer;
   background-color: base.$grey-3;
   color: base.$primary-black;
+}
+
+.form-button#primary:hover {
+  cursor: pointer;
+  border-left: 10px solid base.$primary-red;
+  background-color: base.$grey-3;
+  color: base.$primary-red;
+}
+
+.form-button#disabled:hover {
+  cursor: not-allowed;
 }

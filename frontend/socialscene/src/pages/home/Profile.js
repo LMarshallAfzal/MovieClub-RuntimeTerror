@@ -233,6 +233,7 @@ const Profile = () => {
                         <FormButton
                             text={"save"}
                             type={"submit"}
+                            style={"primary"}
                         />
                     </Stack>
                 </form>

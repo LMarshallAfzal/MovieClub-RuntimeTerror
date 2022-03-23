@@ -98,7 +98,7 @@ function ClubDetail() {
                         </DialogContent>
 
                         <DialogActions>
-                            <FormButton onClick={handleBan} text={"ban"} />
+                            <FormButton onClick={handleBan} text={"ban"} style={"primary"}/>
                             <FormButton onClick={handleRemoveUser} text={"remove"} />
                         </DialogActions>
                     </Dialog>
@@ -181,18 +181,22 @@ function ClubDetail() {
                         </DialogContent>
 
                         <DialogActions>
-                            <FormButton onClick={handleClubDelete} text={"confirm"} />
+                            <FormButton
+                                onClick={handleClubDelete}
+                                text={"delete"}
+                                style={"primary"}
+                            />
                             <FormButton onClick={closeDeleteClubDialog} text={"cancel"} />
                         </DialogActions>
                     </Dialog>
 
-                    <FormButton text={"join"} />
+                    <FormButton text={"join"} style={"primary"} />
 
-                    <FormButton text={"leave"} />
+                    <FormButton text={"leave"} style={"disabled"}/>
 
-                    <FormButton text={"delete"} onClick={openDeleteClubDialog} />
+                    <FormButton text={"delete"} style={"normal"} onClick={openDeleteClubDialog} />
 
-                    <FormButton text={showBannedMembers ? "members" : "banned"} onClick={toggleBannedView} />
+                    <FormButton text={showBannedMembers ? "members" : "banned"} style={"normal"} onClick={toggleBannedView} />
                 </Stack>
             </Grid>
 
@@ -218,6 +222,7 @@ function ClubDetail() {
 
                     <FormButton
                         text={"save"}
+                        style={"primary"}
                     />
                 </Stack>
             </Grid>
