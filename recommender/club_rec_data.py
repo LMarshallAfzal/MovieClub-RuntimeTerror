@@ -30,17 +30,17 @@ class ClubRecommenderData:
         data.truncate()
         data.close()
 
-    def popularity_ranking(self):
-        ratings = defaultdict(float)
-        rankings = defaultdict(int)
-        with open(self.movie_rec_data_path, newline='') as file:
-            reader = csv.reader(file)
-            next(reader)
-            for row in reader:
-                movie_id = int(row[1])
-                ratings[movie_id] += 1
-        rank = 1
-        for movie_id in sorted(ratings.items(), key=lambda x: x[1], reverse=True):
-            rankings[movie_id] = rank
-            rank += 1
-        return rankings
+    # def popularity_ranking(self):
+    #     ratings = defaultdict(float)
+    #     rankings = defaultdict(int)
+    #     with open(self.movie_rec_data_path, newline='') as file:
+    #         reader = csv.reader(file)
+    #         next(reader)
+    #         for row in reader:
+    #             movie_id = int(row[1])
+    #             ratings[movie_id] += 1
+    #     rank = 1
+    #     for movie_id in sorted(ratings.items(), key=lambda x: x[1], reverse=True):
+    #         rankings[movie_id] = rank
+    #         rank += 1
+    #     return rankings
