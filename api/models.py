@@ -82,6 +82,13 @@ class User(AbstractUser):
         return movies
 
 
+class Genre(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Club(models.Model):
 
     club_name = models.CharField(
@@ -95,11 +102,7 @@ class Club(models.Model):
         blank=True,
         unique=False
     )
-    theme = models.CharField(
-        max_length=20,
-        blank=True,
-        unique=False
-    )
+    theme = models.ForeignKey(Genre, on_delete=models.CASCADE)
 
     club_members = models.ManyToManyField(User, through='Membership')
 
@@ -283,10 +286,3 @@ class Watch(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     time_watched = models.DateTimeField(auto_now_add=True)
-
-
-class Genre(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-
-    def __str__(self):
-        return self.name
