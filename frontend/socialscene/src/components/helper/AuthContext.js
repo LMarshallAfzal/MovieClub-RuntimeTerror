@@ -73,12 +73,12 @@ export const AuthProvider = ({children}) => {
         }
     };
 
-    // let logoutUser = () => {
-    //     setAuthTokens(null)
-    //     setUser(null)
-    //     localStorage.removieItem('authTokens')
-    //     navigate("/login")
-    // }let updateToken = async ()=> {
+    let logoutUser = () => {
+        setAuthTokens(null)
+        setUser(null)
+        localStorage.removeItem('authTokens')
+        navigate('/');
+    }
 
     let updateToken = async ()=> {
 
@@ -98,7 +98,7 @@ export const AuthProvider = ({children}) => {
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
         }else{
-            // logoutUser()
+            logoutUser()
         }
 
         if(loading){
@@ -118,7 +118,7 @@ export const AuthProvider = ({children}) => {
         errorPasswordText: errorPasswordText,
         setLoginCredentials:setLoginCredentials,
         loginUser: loginUser,
-        // logoutUser: logoutUser
+        logoutUser: logoutUser
     }    
 
     useEffect(()=> {

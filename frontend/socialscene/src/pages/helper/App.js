@@ -3,6 +3,7 @@ import "../../styling/pages/App.css";
 import Navbar from "../../components/root/Navbar";
 import HomePage from "../root/Homepage";
 import LogIn from "../root/Login";
+import Logout from "../home/Logout";
 import NotFound404 from "../root/NotFound";
 import Profile from "../home/Profile";
 import {useLocation, BrowserRouter as Router, Routes, Route} from "react-router-dom";
@@ -24,43 +25,11 @@ import ClubEvent from "../../components/ClubEvent";
 import AuthContext from "../../components/helper/AuthContext";
 
 function App() {
-    // let {user} = useContext(AuthContext)
-    // const location = useLocation()
 
   return (
-    //   <Router>
-    //       <Navbar />
-    //       <AuthProvider>
-    //           <Routes>
-    //               <Route path={"/"} element={(<HomePage />)} />
-    //               <Route path={"/login"} element={(<LogIn />)} />
-    //               <Route path={"/signup"} element={(<Signup />)} />
-    //               <Route path={"*"} element={<NotFound404 />} />
-    //                 <PrivateRoute path={"/home"}  element={(<HomeRouter />)}>
-    //                     <Route index element={(<Home />)} />
-    //                     <Route path={"profile"} element={(<Profile />)} />
-    //                     <Route path={"movies"} element={(<Movies />)} />
-    //                     <Route path={"clubs"} element={(<Clubs />)} >
-    //                         <Route path={":clubID"} element={(<ClubDetail />)}>
-    //                             <Route path={"others-profile"} element={(<OthersProfile />)} />
-    //                         </Route>
-    //                         <Route path={"clubs/new"} element={(<NewClub />)} />
-    //                     </Route>
-    //                     <Route path={"events"} element={(<Events />)}>
-    //                         <Route path={":clubID"} element={(<ClubEvent />)} />
-    //                         <Route path={"events/new"} element={(<NewEvent />)} />
-    //                     </Route>
-    //                     <Route path={"messages"} element={(<Messages />)} />
-    //                     <Route path={"options"} element={(<Options />)} />
-    //                     <Route path={"others-profile"} element={(<OthersProfile />)} />
-    //                 </PrivateRoute>
-    //           </Routes>
-    //       </AuthProvider>
-    //   </Router>
-
     <Router>
-          <Navbar />
           <AuthProvider>
+          <Navbar />
               <Routes>
                   <Route path={"/"} element={(<HomePage />)} />
                   <Route path={"/login"} element={(<LogIn />)} />
@@ -75,6 +44,7 @@ function App() {
                     }
                   >
                         <Route index element={(<Home />)} />
+                        <Route path={"logout"} element={(<Logout />)} />
                         <Route path={"profile"} element={(<Profile />)} />
                         <Route path={"movies"} element={(<Movies />)} />
                         <Route path={"clubs"} element={(<Clubs />)} >
