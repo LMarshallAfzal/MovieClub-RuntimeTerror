@@ -3,21 +3,21 @@
     "model": "api.Genre",
     "pk": 2,
     "fields": {
-      "genre":"War"
+      "name":"War"
     }
   },
   {
     "model": "api.Genre",
     "pk": 3,
     "fields": {
-      "genre":"Western"
+      "name":"Western"
     }
   },
   {
     "model": "api.Genre",
     "pk": 4,
     "fields": {
-      "genre":"Documentary"
+      "name":"Documentary"
     }
   }
 ]

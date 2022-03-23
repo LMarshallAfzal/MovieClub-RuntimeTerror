@@ -4,7 +4,8 @@
       "pk": 2,
       "fields": {
         "club_name":"ADCD",
-        "mission_statement":"Movie and discussion."
+        "mission_statement":"Movie and discussion.",
+        "theme":2
       }
     },
 
@@ -13,7 +14,8 @@
         "pk": 3,
         "fields": {
           "club_name":"KISS",
-          "mission_statement":"Movie experts!"
+          "mission_statement":"Movie experts!",
+          "theme":2
         }
       },
 
@@ -22,7 +24,8 @@
         "pk": 4,
         "fields": {
           "club_name":"Metallica",
-          "mission_statement":"Next level movie analysis."
+          "mission_statement":"Next level movie analysis.",
+          "theme":2
         }
       }
 

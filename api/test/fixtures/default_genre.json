@@ -3,7 +3,7 @@
     "model": "api.Genre",
     "pk": 1,
     "fields": {
-      "genre":"Comedy"
+      "name":"Comedy"
     }
   }
 ]
