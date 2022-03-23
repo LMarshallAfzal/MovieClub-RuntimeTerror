@@ -152,7 +152,7 @@ function ClubDetail() {
         spacing={2}
         >
             <Grid item xs={12}>
-                <h4 className={"club-detail-heading"}>{club.clubName}</h4>
+                <h4 className={"home-page-sub-section-heading"}>{club.clubName}:</h4>
             </Grid>
 
             <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>

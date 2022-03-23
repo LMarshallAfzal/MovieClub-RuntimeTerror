@@ -176,5 +176,9 @@ h6{
 }
 
 .home-page-sub-section-heading {
-
+  padding: 10px;
+  color: $primary-white;
+  background-color: $grey-3;
+  user-select: none;
+  transition: all 0.3s ease-out;
 }

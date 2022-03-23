@@ -2,7 +2,7 @@ import React from "react";
 import {Box, Grid, Stack, TextField} from "@mui/material";
 import HeadingCircle from "./HeadingCircle";
 import FormButton from "./FormButton";
-import "../styling/pages/NewClubForm.css";
+import "../styling/components/NewClubForm.css";
 
 
 
@@ -18,7 +18,7 @@ function NewClub() {
 
 
             <Grid item xs={12}>
-                <h4 className={"club-detail-heading"}>new club:</h4>
+                <h4 className={"home-page-sub-section-heading"}>new club:</h4>
             </Grid>
 
             <Grid item xs={12}>

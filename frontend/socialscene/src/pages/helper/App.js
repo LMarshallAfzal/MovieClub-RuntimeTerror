@@ -21,8 +21,8 @@ import ClubDetail from "../../components/ClubDetail";
 import NewClub from "../../components/NewClubForm";
 import Discussion from "../home/Discussion";
 import NewEvent from "../../components/NewEventForm";
-import ClubEvent from "../../components/ClubEvent";
 import AuthContext from "../../components/helper/AuthContext";
+import ClubDiscussion from "../../components/ClubDiscussion";
 
 function App() {
 
@@ -35,14 +35,11 @@ function App() {
                   <Route path={"/login"} element={(<LogIn />)} />
                   <Route path={"/signup"} element={(<Signup />)} />
                   <Route path={"*"} element={<NotFound404 />} />
-                  <Route
-                    path="/home"
-                    element={
-                        <PrivateRoute>
-                            <HomeRouter />
-                        </PrivateRoute>
-                    }
-                  >
+                  <Route path="/home" element={
+                      <PrivateRoute>
+                          <HomeRouter />
+                      </PrivateRoute>}>
+
                         <Route index element={(<Home />)} />
                         <Route path={"logout"} element={(<Logout />)} />
                         <Route path={"profile"} element={(<Profile />)} />
@@ -54,7 +51,7 @@ function App() {
                             <Route path={"clubs/new"} element={(<NewClub />)} />
                         </Route>
                         <Route path={"discussion"} element={(<Discussion />)}>
-                            <Route path={":clubID"} element={(<ClubEvent />)} />
+                            <Route path={":clubID"} element={(<ClubDiscussion />)} />
                             <Route path={"discussion/new"} element={(<NewEvent />)} />
                         </Route>
                         <Route path={"messages"} element={(<Messages />)} />
