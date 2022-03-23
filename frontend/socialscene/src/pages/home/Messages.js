@@ -1,6 +1,4 @@
 import React, {useState, useContext, useEffect, Fragment} from "react";
-import "../styling/pages/Messages.css";
-import React, { Fragment } from "react";
 import "../../styling/pages/Messages.css";
 import { Stack, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, CardMedia, Avatar, Box, Card, CardContent, TextField, Typography, Grid, Paper, Divider, FormControl, IconButton, Collapse, Alert, Button } from "@mui/material";
 import FormButton from "../../components/FormButton";
@@ -8,8 +6,7 @@ import iconImage from "../../styling/images/testIconPic.jpg";
 import { comments, meeting } from '../data/DummyForumData';
 import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
-import poster from '../styling/jack-giant.jpg';
-import AuthContext from "../components/AuthContext"; 
+import AuthContext from "../../components/helper/AuthContext"; 
 import poster from '../../styling/images/jack-giant.jpg';
 
 const Messages = () => {

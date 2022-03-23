@@ -4,7 +4,6 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import force_authenticate,APIClient
 
-
 class WriteMessageViewTestCase(APITestCase):
 
     fixtures = [
@@ -18,11 +17,12 @@ class WriteMessageViewTestCase(APITestCase):
         self.other_club = Club.objects.get(club_name = "KISS")
         self.non_member_club = Club.objects.get(club_name = "ADCD")
         self.user = User.objects.get(username='johndoe')
+        #self.url = reverse('/write_message/1/')
         self.url = reverse('write_message', kwargs={'club_id':self.club.id})
         self.club.club_members.add(self.user,through_defaults={'role': 'M'})
         self.other_club.club_members.add(self.user,through_defaults={'role': 'M'})
         self.form_input = {
-            "sender": self.user.id,
+            "sender": self.user.username,
             "club" : self.club.id,
             "message": 'Hello, everyone!',
         }
@@ -33,6 +33,8 @@ class WriteMessageViewTestCase(APITestCase):
         self.assertTrue(self.user.is_authenticated)
         before = Message.objects.filter(sender = self.user, club = self.club).count()
         response = self.client.post(self.url, self.form_input)
+        print(self.url)
+        print(self.form_input)
         after = Message.objects.filter(sender = self.user, club = self.club).count()
         self.assertEqual(after, before + 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
