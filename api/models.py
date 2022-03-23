@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.contrib.auth.models import AbstractUser
 from django.db.models import Count, F, Value
 from django.db.models.fields.related import ForeignKey
@@ -37,11 +38,7 @@ class User(AbstractUser):
         blank=True
     )
 
-    preferences = models.CharField(
-        max_length=100,
-        blank=False,
-        unique=False
-    )
+    preferences = models.ManyToManyField('Genre', related_name='preferences', blank=False)
 
     watched_movies = models.ManyToManyField('Movie', through='Watch')
 

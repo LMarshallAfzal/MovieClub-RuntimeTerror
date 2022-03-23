@@ -34,9 +34,8 @@ class UserSerializer(ModelSerializer):
         required = False, allow_blank=True
         )
 
-    preferences = serializers.CharField(
-        required=True
-    )
+    preferences = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True, required=True)
+
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email',
@@ -105,9 +104,7 @@ class SignUpSerializer(serializers.Serializer):
         required = False, allow_blank=True
         )
 
-    preferences = serializers.CharField(
-        required=True
-    )
+    preferences = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True, required=True)
 
     password = serializers.CharField(
         style={"input_type": "password"},
@@ -171,9 +168,8 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         required = False, allow_blank=True
         )
 
-    preferences = serializers.CharField(
-        required=True
-    )
+    preferences = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True, required=True)
+
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name',
