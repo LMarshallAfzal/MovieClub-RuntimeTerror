@@ -340,8 +340,8 @@ def get_watched_list(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 @club_exists
-#@user_in_club
-#@not_banned
+# @user_in_club
+# @not_banned
 def message_forum(request, club_id):
     messages = Message.objects.filter(club=club_id)
     serializer = MessageSerializer(messages, many=True)
