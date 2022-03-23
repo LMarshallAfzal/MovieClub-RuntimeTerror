@@ -5,6 +5,7 @@ import EnterButton from "../EnterButton";
 
 
 function Navbar() {
+
     return (
         <>
             <div className={"navbar"}>
@@ -31,6 +32,8 @@ export default Navbar;
 function NavbarButton() {
     const location = useLocation();
 
+    
+
     if (matchPath(location.pathname,"/")) {
         return (
             <EnterButton
@@ -45,11 +48,13 @@ function NavbarButton() {
                     linkTo={"/signup"}
                 />
             )
-    } else if (matchPath(location.pathname, "/home")) {
+    } else if (matchPath(location.pathname, "/home/")) {
+        // if(!user) return null
         return (
                 <EnterButton
+                
                     text={"log out"}
-                    linkTo={"/logout"}
+                    linkTo={"/home/logout"}
                     />
             )
     } else {

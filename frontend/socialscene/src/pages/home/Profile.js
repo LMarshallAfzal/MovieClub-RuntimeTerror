@@ -22,7 +22,6 @@ const Profile = () => {
     const [errorEmailText, setEmailErrorText] = useState('')
     const [errorBioText, setBioErrorText] = useState('')
     const [errorPreferencesText, setPreferencesErrorText] = useState('')
-    const [errorPasswordText, setPasswordErrorText] = useState('')
 
     const onChange = (e) => {
         setUserData( prevData => ({...prevData, [e.target.name]: e.target.value}))

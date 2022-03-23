@@ -12,7 +12,7 @@ export default AuthContext;
 export const AuthProvider = ({children}) => {
     
     let [authTokens, setAuthTokens] = useState(localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null)
-    let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
+    let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
     let [loading, setLoading] = useState(true)
     let [loginCredentials, setLoginCredentials] = useState({
         username: '', 
@@ -50,35 +50,41 @@ export const AuthProvider = ({children}) => {
 
 
     let loginUser = async (e ) => { 
-        e.preventDefault();
-        resetErrorState();
-        console.log("Form submitted", e)
-        let response = await fetch("http://127.0.0.1:8000/token/", {
-            method: "POST",
-            headers: { 
-                "Content-Type": "application/json",
-                // "X-CSRFToken": Cookies.get("csrftoken"),
-            },
-            body: JSON.stringify({'username': loginCredentials.username, 'password': loginCredentials.password})
-        });
-        let data = await response.json()
-        if(response.status === 200) {
-            setAuthTokens(data);
-            setUser(jwt_decode(data.access));
-            localStorage.setItem('authTokens', JSON.stringify(data));
-            navigate('/home/');
-        } 
-        else {
-            errorHandler(e, data);
+        // e.preventDefault();
+        if (user) {
+            navigate('/home/')
+            console.log("hell0")
         }
+        else {
+            resetErrorState();
+            console.log("Form submitted", e)
+            let response = await fetch("http://127.0.0.1:8000/token/", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    // "X-CSRFToken": Cookies.get("csrftoken"),
+                },
+                body: JSON.stringify({'username': loginCredentials.username, 'password': loginCredentials.password})
+            });
+            let data = await response.json()
+            if(response.status === 200) {
+                setAuthTokens(data);
+                setUser(jwt_decode(data.access));
+                localStorage.setItem('authTokens', JSON.stringify(data));
+                navigate('/home/');
+            } 
+            else {
+                errorHandler(e, data);
+            }
+        }    
     };
 
-    // let logoutUser = () => {
-    //     setAuthTokens(null)
-    //     setUser(null)
-    //     localStorage.removieItem('authTokens')
-    //     navigate("/login")
-    // }let updateToken = async ()=> {
+    let logoutUser = () => {
+        setAuthTokens(null)
+        setUser(null)
+        localStorage.removeItem('authTokens')
+        navigate('/');
+    }
 
     let updateToken = async ()=> {
 
@@ -98,7 +104,7 @@ export const AuthProvider = ({children}) => {
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
         }else{
-            // logoutUser()
+            logoutUser()
         }
 
         if(loading){
@@ -118,7 +124,7 @@ export const AuthProvider = ({children}) => {
         errorPasswordText: errorPasswordText,
         setLoginCredentials:setLoginCredentials,
         loginUser: loginUser,
-        // logoutUser: logoutUser
+        logoutUser: logoutUser
     }    
 
     useEffect(()=> {
