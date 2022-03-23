@@ -22,12 +22,12 @@ export const SidebarData = [
         cName: 'sidebar-text'
     },
     {
-        title: 'events',
-        path: '/home/events',
+        title: 'discussion',
+        path: '/home/discussion',
         cName: 'sidebar-text'
     },
     {
-        title: 'messages',
+        title: 'messages - remove',
         path: '/home/messages',
         cName: 'sidebar-text'
     },

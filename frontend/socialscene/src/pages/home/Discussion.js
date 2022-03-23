@@ -4,7 +4,7 @@ import "../../styling/pages/Events.css";
 import ClubSelector from "../../components/ClubSelector";
 import {Outlet} from "react-router-dom";
 
-function Events() {
+function Discussion() {
     return (
         <Grid container
               spacing={2}
@@ -12,7 +12,7 @@ function Events() {
 
             <Grid item xs={12}>
                 <div className={"home-page-title"}>
-                    <h3>events<h3--emphasise>.</h3--emphasise></h3>
+                    <h3>discussion<h3--emphasise>.</h3--emphasise></h3>
                 </div>
             </Grid>
 
@@ -28,4 +28,4 @@ function Events() {
     );
 }
 
-export default Events;
+export default Discussion;

@@ -19,7 +19,7 @@ import { AuthProvider } from "../../components/helper/AuthContext";
 import Messages from "../home/Messages";
 import ClubDetail from "../../components/ClubDetail";
 import NewClub from "../../components/NewClubForm";
-import Events from "../home/Events";
+import Discussion from "../home/Discussion";
 import NewEvent from "../../components/NewEventForm";
 import ClubEvent from "../../components/ClubEvent";
 import AuthContext from "../../components/helper/AuthContext";
@@ -53,9 +53,9 @@ function App() {
                             </Route>
                             <Route path={"clubs/new"} element={(<NewClub />)} />
                         </Route>
-                        <Route path={"events"} element={(<Events />)}>
+                        <Route path={"discussion"} element={(<Discussion />)}>
                             <Route path={":clubID"} element={(<ClubEvent />)} />
-                            <Route path={"events/new"} element={(<NewEvent />)} />
+                            <Route path={"discussion/new"} element={(<NewEvent />)} />
                         </Route>
                         <Route path={"messages"} element={(<Messages />)} />
                         <Route path={"options"} element={(<Options />)} />

@@ -31,7 +31,7 @@ function ClubSelector() {
                                         <Grid item xs={4}>
                                             <EnterButton
                                                 text={"view"}
-                                                linkTo={`/home/events/${club.ID}`}
+                                                linkTo={`/home/discussion/${club.ID}`}
                                             />
                                         </Grid>
                                     </Grid>
