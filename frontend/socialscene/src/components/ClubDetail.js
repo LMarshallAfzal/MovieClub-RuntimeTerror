@@ -78,8 +78,11 @@ function ClubDetail() {
     function UserDisplay() {
         if (showBannedMembers === false) {
             return (
-                <>
-                    <h4 className={"club-member-heading"}>members:</h4>
+                <Grid container direction={"row"} padding={2}>
+                    <Grid item xs={12}>
+                        <h4 className={"home-page-card-title"}>members:</h4>
+                    </Grid>
+
 
                     <Dialog
                         open={showBanDialog}
@@ -103,7 +106,8 @@ function ClubDetail() {
                         </DialogActions>
                     </Dialog>
 
-                    {DummyClubMemberData.map((user) => {
+                    <Grid item xs={12}>
+                        {DummyClubMemberData.map((user) => {
                             return (
                                 <Chip
                                 label={user.firstName + " " + user.lastName}
@@ -119,11 +123,18 @@ function ClubDetail() {
 
                             )
                         })}
-                </>)
+                    </Grid>
+
+                </Grid>)
         } else {
-            return (<>
-                    <h4 className={"club-member-heading"}>banned users:</h4>
-                    {DummyClubMemberData.map((user) => {
+            return (
+                <Grid container direction={"row"} padding={2}>
+                    <Grid item xs={12}>
+                        <h4 className={"home-page-card-title"}>banned users:</h4>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        {DummyClubMemberData.map((user) => {
                             return (
                                 <Chip
                                 label={user.firstName + " " + user.lastName}
@@ -139,7 +150,8 @@ function ClubDetail() {
 
                             )
                         })}
-                </>)
+                    </Grid>
+                </Grid>)
         }
     }
 
@@ -156,7 +168,7 @@ function ClubDetail() {
             </Grid>
 
             <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
-                <div className={"club-detail-background"} >
+                <div className={"home-page-card-background"} >
                     <UserDisplay />
                 </div>
             </Grid>

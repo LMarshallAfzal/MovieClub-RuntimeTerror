@@ -140,16 +140,24 @@ h6 {
   transition: all 0.3s ease-out;
 }
 
-.club-detail-heading {
-  padding: 10px;
-  color: #FFFFFF;
-  background-color: #C4C4C4;
-  user-select: none;
+.text-button {
+  width: auto;
+  height: 100%;
+  margin: 0;
+  transition: all 0.3s ease-out;
+  cursor: pointer;
+  outline: none;
+  display: block;
+  border: none;
+  font-size: 1.2rem;
+  text-align: center;
+  color: #000000;
+  font-family: Helvetica-Bold, serif;
+  background-color: transparent;
 }
 
-.club-member-heading {
-  color: #FFFFFF;
-  user-select: none;
+.text-button:hover {
+  color: #FF0000;
 }
 
-/*# sourceMappingURL=ClubDetail.css.map */
+/*# sourceMappingURL=TextButton.css.map */

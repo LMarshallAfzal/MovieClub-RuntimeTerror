@@ -23,7 +23,8 @@ function HomeRouter() {
                 <Grid className={"home-grid-L-sidebar"} item xs={3}>
 
                     <NameHeader
-                        username={user.username}
+                        firstName={user.first_name}
+                        lastName={user.last_name}
                         joinDate={"2022"} />
                     <Sidebar />
                 </Grid>
