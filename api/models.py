@@ -45,6 +45,7 @@ class User(AbstractUser):
 
     watched_movies = models.ManyToManyField('Movie', through='Watch')
 
+
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
 
@@ -60,6 +61,18 @@ class User(AbstractUser):
             return None
         else:
             return ratings
+
+    def attend_meeting(self,meeting):
+        meeting.attendees.add(self)
+        meeting.save()
+
+    def get_attending_meetings(self):
+        meetings = Meeting.objects.all().filter(attendees = self)
+        return meetings
+
+    def leave_meeting(self,meeting):
+        meeting.attendees.remove(self)
+        meeting.save()
 
     def get_user_clubs(self):
         clubs = Club.objects.filter(club_members__username=self.username)
@@ -143,6 +156,14 @@ class Club(models.Model):
     def get_club_messages(self):
         return self.club_messages.all()
 
+    def get_upcoming_meeting(self):
+        try:
+            meeting = Meeting.objects.get(club=self, completed=False)
+        except:
+            return None
+        else:
+            return meeting
+
     def __unicode__(self):
         return '%d: %s' % (self.club_name)
 
@@ -199,8 +220,6 @@ class Movie(models.Model):
 
     viewers = models.ManyToManyField(
         User, through='Watch', related_name='viewers')
-
-    meetings = models.ManyToManyField('Meeting', related_name='meetings')
     class Meta:
         ordering = ['title']
 
@@ -253,11 +272,20 @@ class Meeting(models.Model):
 
     meeting_link = models.CharField(max_length=100,blank=False)
 
+    completed = models.BooleanField(default=False)
+
     description = models.CharField(
         max_length=500,
         blank=False,
         unique=False
     )
+
+    def toggle_completed(self):
+        if self.completed == False:
+            self.completed = True
+        else:
+            self.completed = False
+        self.save()
 
 class Message(models.Model):
     sender = models.ForeignKey(User,on_delete=models.CASCADE,unique=False)

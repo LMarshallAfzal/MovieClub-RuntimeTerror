@@ -1,4 +1,4 @@
-from .models import Movie, Club, Rating, Watch, Membership
+from .models import Movie, Club, Rating, Watch, Membership, Meeting
 from .helpers import get_initial_recommendations_for_clubs, get_initial_recommendations_for_movies
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
@@ -122,7 +122,7 @@ def is_banned(view_function):
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         else:
-            return view_function(request, club_id,user_id, *args, **kwargs)
+            return view_function(request, club_id, user_id, *args, **kwargs)
 
     return modified_view_function
 
@@ -169,4 +169,42 @@ def has_ratings_for_club_recommendations(view_function):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return view_function(request, *args, **kwargs)
+    return modified_view_function
+
+
+def is_attendee(view_function):
+    @wraps(view_function)
+    def modified_view_function(request, club_id, *args, **kwargs):
+        club = Club.objects.get(id=club_id)
+        meeting = club.get_upcoming_meeting()
+        if request.user in meeting.attendees.all():
+            return view_function(request, club_id, *args, **kwargs)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    return modified_view_function
+
+
+def club_has_upcoming_meeting(view_function):
+    @wraps(view_function)
+    def modified_view_function(request, club_id, *args, **kwargs):
+        club = Club.objects.get(id=club_id)
+        upcoming_meeting = club.get_upcoming_meeting()
+        if upcoming_meeting == None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+            return view_function(request, club_id, *args, **kwargs)
+    return modified_view_function
+
+
+def club_has_no_upcoming_meeting(view_function):
+    @wraps(view_function)
+    def modified_view_function(request, club_id, *args, **kwargs):
+        club = Club.objects.get(id=club_id)
+        upcoming_meeting = club.get_upcoming_meeting()
+        if upcoming_meeting == None:
+            return view_function(request, club_id, *args, **kwargs)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
     return modified_view_function

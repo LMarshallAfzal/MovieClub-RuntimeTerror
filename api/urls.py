@@ -44,8 +44,12 @@ urlpatterns = [
     path("ban_member/<int:club_id>/<int:user_id>/", views.ban_member,name = "ban_member"),
     path("unban_member/<int:club_id>/<int:user_id>/", views.unban_member,name = "unban_member"),
     path("banned_member_list/<int:club_id>/", views.banned_member_list,name = "banned_member_list"),
+    path("edit_meeting/<int:club_id>/", views.edit_meeting,name = "edit_meeting"),
+    path("attend_meeting/<int:club_id>/", views.attend_meeting,name = "attend_meeting"),
+    path("leave_meeting/<int:club_id>/", views.leave_meeting,name = "leave_meeting"),
+    path("get_club_upcoming_meeting/<int:club_id>/", views.get_club_upcoming_meeting, name = "get_club_upcoming_meeting"),
+    path("get_user_attending_meetings/", views.get_user_upcoming_attending_meetings, name = "get_user_upcoming_attending_meetings"),
+    path("get_joined_club_meetings/", views.get_all_joined_clubs_upcoming_meetings, name = "get_all_joined_clubs_upcoming_meetings"),
 
 
-
-    
 ]
