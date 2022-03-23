@@ -1,4 +1,5 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styling/pages/Login.css";
 import HeadingCircle from "../../components/HeadingCircle";
 import {Grid, Stack, TextField} from "@mui/material";
@@ -9,16 +10,19 @@ import AuthContext from "../../components/helper/AuthContext";
 
 export function Login() {
 
-    let {user, loginUser, loginCredentials, setLoginCredentials, usernameError, passwordError, errorUsernameText, errorPasswordText} = useContext(AuthContext)
+    let {loginUser, loginCredentials, setLoginCredentials, usernameError, passwordError, errorUsernameText, errorPasswordText} = useContext(AuthContext)
     
     const {username, password} = loginCredentials;
-
     
+    useEffect(() => {
+        loginUser()
+    }, [])
     
     const onChange = (e) => {
         setLoginCredentials(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
     };
 
+    
     return (
         <Grid container
               direction={"row"}
