@@ -23,7 +23,7 @@ class CreateMeetingViewTestCase(APITestCase):
         self.url = reverse("create_meeting", kwargs={'club_id': self.club.id})
         self.user = User.objects.get(id=1)
         self.other_user = User.objects.get(id=2)
-        self.club.club_members.add(self.user, through_defaults={'role': 'O'})
+        self.club.club_members.add(self.user, through_defaults={'role': 'M','is_organiser' : True})
         
         self.client = APIClient()
         self.form_input = {

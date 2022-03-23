@@ -17,11 +17,11 @@ urlpatterns = [
     path("change_password/", views.change_password, name="change_password"),
     path('edit_profile/<int:user_id>', views.edit_profile, name = 'edit_profile'),
     path("users/", views.get_users, name = "users"),
-    path("clubs/",views.get_clubs, name = "clubs"),
+    path("clubs/",views.get_all_clubs, name = "all_clubs"),
     path("club_members/<int:club_id>/", views.get_club_members, name = "club_members"),
     path("user/",views.get_current_user, name = "get_current_user"),
     path("user/<int:user_id>/",views.get_other_user, name = "get_other_user"),
-    path("clubs/",views.get_clubs, name = "get_clubs"),
+    path("clubs/",views.get_all_clubs, name = "get_all_clubs"),
     path("create_club/",views.create_club, name = "create_club"),
     path("create_meeting/<int:club_id>/",views.create_meeting, name = "create_meeting"),
     path("add_rating/<int:movie_id>/",views.add_rating,name = "add_rating"),
@@ -50,6 +50,5 @@ urlpatterns = [
     path("get_club_upcoming_meeting/<int:club_id>/", views.get_club_upcoming_meeting, name = "get_club_upcoming_meeting"),
     path("get_user_attending_meetings/", views.get_user_upcoming_attending_meetings, name = "get_user_upcoming_attending_meetings"),
     path("get_joined_club_meetings/", views.get_all_joined_clubs_upcoming_meetings, name = "get_all_joined_clubs_upcoming_meetings"),
-
 
 ]

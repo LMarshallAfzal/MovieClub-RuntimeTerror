@@ -41,7 +41,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
 def csrf_token(request):
     return Response({"result": "Success (CSRF cookie set.)"})
 
-
 @api_view(['POST'])
 def sign_up(request):
     data = {}
@@ -112,6 +111,14 @@ def get_club_members(request, club_id):
     serializer = UserSerializer(members, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@club_exists
+def get_club_owner(request,club_id):
+    club = Club.objects.get(id=club_id)
+    owner = club.get_club_owner()
+    serializer = UserSerializer(owner,many = False)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -155,7 +162,7 @@ def edit_profile(request, user_id):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def get_clubs(request):
+def get_all_clubs(request):
     clubs = Club.objects.all()
     serializer = ClubSerializer(clubs, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -395,6 +402,7 @@ def check_upcoming_meetings(request):
 
 @api_view(['GET'])
 @club_exists
+@club_has_upcoming_meeting
 def get_club_upcoming_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
     meeting = club.get_upcoming_meeting()

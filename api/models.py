@@ -127,6 +127,9 @@ class Club(models.Model):
         return self.club_members.all().filter(
             club = self, membership__role = 'M')
 
+    def get_club_owner(self):
+        return self.club_members.all().filter(club = self, membership__role = 'O')
+
     def remove_user_from_club(self, user):
         Membership.objects.get(club=self, user=user).delete()
     
@@ -163,7 +166,7 @@ class Club(models.Model):
             return None
         else:
             return meeting
-
+            
     def __unicode__(self):
         return '%d: %s' % (self.club_name)
 
@@ -173,12 +176,11 @@ class Membership(models.Model):
     Membership is an intermediate model that connects Users to Clubs.
 
     Apart from the two foreign keys, it contains the nature of the relationship:
-        Club Owner | Organiser | Member | Banned
+        Club Owner | Member | Banned
     """
     class MembershipStatus(models.TextChoices):
         MEMBER = 'M', _('Member')
-        OWNER = 'C', _('Owner')
-        ORGANISER = 'O', _('Organiser')
+        OWNER = 'O', _('Owner')
         BANNED = 'B',_('BannedMember')
     
     user = ForeignKey(User, on_delete=models.CASCADE)
@@ -188,6 +190,7 @@ class Membership(models.Model):
         choices=MembershipStatus.choices,
         default=MembershipStatus.MEMBER
         )
+    is_organiser = models.BooleanField(default=False)
 
     """We must ensure that only one relationship is created per User-Club pair."""
     class Meta:

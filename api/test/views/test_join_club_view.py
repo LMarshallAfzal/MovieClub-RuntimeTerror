@@ -1,4 +1,4 @@
-from api.models import Club, User
+from api.models import Club, User,Membership
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
@@ -35,6 +35,12 @@ class JoinClubViewTestCase(APITestCase):
         response = self.client.post(invalid_url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_post_to_join_club_endpoint_with_as_banned_returns_403_forbidden(self):
+        Membership.objects.create(user = self.user,club=self.club,role='B')
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_post_to_join_club_endpoint_with_user_not_logged_in_does_not_join_club(self):
         before = self.club.club_members.count()
