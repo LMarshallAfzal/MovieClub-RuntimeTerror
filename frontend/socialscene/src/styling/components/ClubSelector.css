@@ -133,27 +133,23 @@ h6 {
   background-color: #D8D8D8;
 }
 
-.signup-grid {
-  height: calc(100% - 90px);
+.club-selector-background {
+  background-color: #D8D8D8;
 }
 
-.signup-grid-child {
-  height: 100%;
+.club-selector-heading {
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #FFFFFF;
+  user-select: none;
 }
 
-.signup-form {
-  height: 100%;
+.club-selector-listing {
+  width: 26rem;
+  background-color: #C4C4C4;
+  transition: all 0.3s ease-out;
+  user-select: none;
+  cursor: pointer;
 }
 
-.signup-form-stack {
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
-.signup-form-row {
-  width: 100%;
-  max-width: 60%;
-}
-
-/*# sourceMappingURL=Signup.css.map */
+/*# sourceMappingURL=ClubSelector.css.map */

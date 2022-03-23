@@ -109,6 +109,7 @@ const Profile = () => {
             }
         })
         let data = await response.json()
+        //console.log(data)
         setUserData(data)
     }
 
@@ -136,21 +137,21 @@ const Profile = () => {
 
                     <Stack spacing={2}>
 
-                        <TextField className={"profile-text-box"}
-                                   error={usernameError}
+                        <TextField error={usernameError}
                                    helperText={errorUsernameText}
                                    required
                                    id={"outlined"}
                                    label={"username"}
                                    name={"username"}
-                                   type={"text"}
                                    variant={"outlined"}
                                    value={userData.username}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
-                        <TextField className={"profile-text-box"}
-                                   error={firstNameError}
+                        <TextField error={firstNameError}
                                    helperText={errorFirstNameText}
                                    required
                                    id={"outlined-basic"}
@@ -159,11 +160,13 @@ const Profile = () => {
                                    type={"text"}
                                    variant={"outlined"}
                                    value={userData.first_name}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
-                        <TextField className={"profile-text-box"}
-                                   error={lastNameError}
+                        <TextField error={lastNameError}
                                    helperText={errorLastNameText}
                                    required
                                    id={"outlined-basic"}
@@ -172,11 +175,13 @@ const Profile = () => {
                                    type={"text"}
                                    variant={"outlined"}
                                    value={userData.last_name}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
-                        <TextField className={"profile-text-box"}
-                                   error={emailError}
+                        <TextField error={emailError}
                                    helperText={errorEmailText}
                                    required
                                    id={"outlined-basic"}
@@ -185,11 +190,13 @@ const Profile = () => {
                                    type={"email"}
                                    variant={"outlined"}
                                    value={userData.email}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
-                        <TextField className={"profile-text-box"}
-                                   error={bioError}
+                        <TextField error={bioError}
                                    helperText={errorBioText}
                                    spacing={6}
                                    id={"outlined-multiline-static"}
@@ -200,15 +207,13 @@ const Profile = () => {
                                    multiline
                                    rows={7.5}
                                    value={userData.bio}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
-                        <FormButton
-                            text={"cancel"}
-                        />
-
-                        <TextField className={"profile-text-box"}
-                                   error={preferencesError}
+                        <TextField error={preferencesError}
                                    helperText={errorPreferencesText}
                                    required
                                    spacing={6}
@@ -220,6 +225,9 @@ const Profile = () => {
                                    multiline
                                    rows={20}
                                    value={userData.preferences}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 

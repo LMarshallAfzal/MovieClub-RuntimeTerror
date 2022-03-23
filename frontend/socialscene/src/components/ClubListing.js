@@ -32,7 +32,7 @@ function ClubListing(props) {
         if (props.isMember === true) {
             if (props.isOrganiser === true) {
                 return (
-                    <EnterButton text={"create meeting"} linkTo={"/home"} />
+                    <EnterButton text={"create meeting"} linkTo={`/home/events/${props.ID}`} />
                 )
             } else {
                 return (
@@ -48,7 +48,7 @@ function ClubListing(props) {
 
 
     return (
-         <div className={"club-listing"}>
+         <Link className={"club-listing"} to={`/home/clubs/${props.ID}`}>
              <Grid container
                    spacing={2}>
 
@@ -93,7 +93,7 @@ function ClubListing(props) {
                      </Stack>
                  </Grid>
              </Grid>
-         </div>
+         </Link>
     );
 }
 

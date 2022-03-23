@@ -133,27 +133,4 @@ h6 {
   background-color: #D8D8D8;
 }
 
-.signup-grid {
-  height: calc(100% - 90px);
-}
-
-.signup-grid-child {
-  height: 100%;
-}
-
-.signup-form {
-  height: 100%;
-}
-
-.signup-form-stack {
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
-.signup-form-row {
-  width: 100%;
-  max-width: 60%;
-}
-
-/*# sourceMappingURL=Signup.css.map */
+/*# sourceMappingURL=NewEventForm.css.map */

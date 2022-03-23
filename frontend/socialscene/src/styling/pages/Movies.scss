@@ -1,11 +1,5 @@
 @use "../base";
 
-.watched-button {
-    color: base.$grey-2;
-    border-color: base.$grey-2;
-}
-
-.watched-button:hover {
-    border-color: base.$grey-1
-    // background-color: base.$grey-1
+.movie-card-background {
+  background-color: base.$grey-4;
 }
