@@ -270,7 +270,6 @@ class CreateClubSerializer(serializers.Serializer):
 
 
 class CreateMeetingSerializer(serializers.Serializer):
-    # Based on the AddRatingSerializer below
     club = serializers.PrimaryKeyRelatedField(
         read_only=False,
         queryset=Club.objects.all()
@@ -284,6 +283,11 @@ class CreateMeetingSerializer(serializers.Serializer):
     organiser = serializers.PrimaryKeyRelatedField(
         read_only=False,
         queryset=User.objects.all()
+    )
+
+    meeting_title = serializers.CharField(
+        required = True,
+        validators = [MaxLengthValidator(100)]
     )
 
     date = serializers.DateField(

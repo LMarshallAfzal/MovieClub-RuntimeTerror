@@ -28,6 +28,7 @@ class RecommendMovieUserTestCase(APITestCase):
         self.assertTrue(self.user.is_authenticated)
         self._create_test_rated_movie()
         train_response = self.client.get(self.train_url)
+        self.assertEqual(train_response.status_code,status.HTTP_200_OK)
         response = self.client.get(self.url)
         self.assertEqual(len(response.data), 5)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

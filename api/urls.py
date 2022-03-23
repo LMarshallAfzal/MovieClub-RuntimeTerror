@@ -41,4 +41,11 @@ urlpatterns = [
     path("rec_meeting/<int:club_id>/", views.recommend_movie_meeting, name = "recommend_movie_meeting"),
     path("message_forum/<int:club_id>/", views.message_forum, name = "message_forum"),
     path("write_message/<int:club_id>/", views.write_message, name = "write_message"),
+    path("ban_member/<int:club_id>/<int:user_id>/", views.ban_member,name = "ban_member"),
+    path("unban_member/<int:club_id>/<int:user_id>/", views.unban_member,name = "unban_member"),
+    path("banned_member_list/<int:club_id>/", views.banned_member_list,name = "banned_member_list"),
+
+
+
+    
 ]
