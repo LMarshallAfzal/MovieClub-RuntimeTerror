@@ -108,6 +108,7 @@ const Profile = () => {
             }
         })
         let data = await response.json()
+        //console.log(data)
         setUserData(data)
     }
 
@@ -142,7 +143,10 @@ const Profile = () => {
                                    label={"username"}
                                    name={"username"}
                                    variant={"outlined"}
-                                   defaultValue={userData.username}
+                                   value={userData.username}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
@@ -154,7 +158,10 @@ const Profile = () => {
                                    name={"first_name"}
                                    type={"text"}
                                    variant={"outlined"}
-                                   defaultValue={userData.first_name}
+                                   value={userData.first_name}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
@@ -166,7 +173,10 @@ const Profile = () => {
                                    name={"last_name"}
                                    type={"text"}
                                    variant={"outlined"}
-                                   defaultValue={userData.last_name}
+                                   value={userData.last_name}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
@@ -178,7 +188,10 @@ const Profile = () => {
                                    name={"email"}
                                    type={"email"}
                                    variant={"outlined"}
-                                   defaultValue={userData.email}
+                                   value={userData.email}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
@@ -192,7 +205,10 @@ const Profile = () => {
                                    variant={"outlined"}
                                    multiline
                                    rows={7.5}
-                                   defaultValue={userData.bio}
+                                   value={userData.bio}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
@@ -207,7 +223,10 @@ const Profile = () => {
                                    variant={"outlined"}
                                    multiline
                                    rows={20}
-                                   defaultValue={userData.preferences}
+                                   value={userData.preferences}
+                                   InputLabelProps={{
+                                    shrink: true,
+                                    }}
                                    onChange={e => onChange(e)}
                         />
 
