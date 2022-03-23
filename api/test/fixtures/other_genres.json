@@ -1,0 +1,23 @@
+[
+  {
+    "model": "api.Genre",
+    "pk": 2,
+    "fields": {
+      "genre":"War"
+    }
+  },
+  {
+    "model": "api.Genre",
+    "pk": 3,
+    "fields": {
+      "genre":"Western"
+    }
+  },
+  {
+    "model": "api.Genre",
+    "pk": 4,
+    "fields": {
+      "genre":"Documentary"
+    }
+  }
+]
