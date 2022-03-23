@@ -111,8 +111,9 @@ const Movies = () => {
                                     <CloseIcon />
                                 </IconButton>
                             </Grid>
-{/* LIST OF ALL MOVIES */}
+
                             <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
+                                {/* LIST OF ALL MOVIES */}
                                 {moviesWithPoster.filter((movie) => {
                                     if (movie.title.toLowerCase().includes(searchValue.toLowerCase())) {
                                         return movie;
@@ -127,11 +128,13 @@ const Movies = () => {
                                                 alt={movie.title}
                                             />
 
-                                            <CardHeader title={movie.title} />
+                                            <CardHeader title={
+                                                <Typography noWrap fontSize={"25px"}>{movie.title}</Typography>
+                                            } />
 
                                             <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
 
-                                                <Typography component="legend">Rate {movie.title}</Typography>
+                                                <Typography noWrap component="legend">Rate {movie.title}</Typography>
                                                 <Rating
                                                     name="simple-controlled"
                                                     precision={0.5}
@@ -170,11 +173,13 @@ const Movies = () => {
                                         alt={movie.title}
                                     />
 
-                                    <CardHeader title={movie.title} />
+                                    <CardHeader title={
+                                                <Typography noWrap fontSize={"25px"}>{movie.title}</Typography>
+                                            } />
 
                                     <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
 
-                                        <Typography component="legend">Rate {movie.title}</Typography>
+                                        <Typography noWrap component="legend">Rate {movie.title}</Typography>
                                         <Rating
                                             name="simple-controlled"
                                             precision={0.5}
@@ -211,11 +216,13 @@ const Movies = () => {
                                         alt={movie.title}
                                     />
 
-                                    <CardHeader title={movie.title} />
+                                    <CardHeader title={
+                                                <Typography noWrap fontSize={"25px"}>{movie.title}</Typography>
+                                            } />
 
                                     <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
 
-                                        <Typography component="legend">Rate {movie.title}</Typography>
+                                        <Typography noWrap component="legend">Rate {movie.title}</Typography>
                                         <Rating
                                             name="simple-controlled"
                                             precision={0.5}
@@ -240,7 +247,7 @@ const Movies = () => {
                     <h4 className={"home-page-card-title"}>watched movies:</h4>
 
                     <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
-                    {/* LIST OF MOVIES WATCHED BY THE USER */}
+                        {/* LIST OF MOVIES WATCHED BY THE USER */}
                         {moviesWithPoster.map((movie) => {
                             return (<Grid item>
                                 <Card sx={{ width: 330 }}>
@@ -251,7 +258,9 @@ const Movies = () => {
                                         alt={movie.title}
                                     />
 
-                                    <CardHeader title={movie.title} />
+                                    <CardHeader title={
+                                                <Typography noWrap fontSize={"25px"}>{movie.title}</Typography>
+                                            } />
 
                                     <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
                                     </div>
