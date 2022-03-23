@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useState} from "react";
 import "../styling/components/ClubDiscussion.css";
 import {useParams, useNavigate} from "react-router";
 import {DummyClubData} from "../pages/data/DummyClubsData";
@@ -6,16 +6,28 @@ import {Avatar, Divider, FormControl, Grid, IconButton, TextField, Typography} f
 import FormButton from "./FormButton";
 import {comments} from "../pages/data/DummyForumData";
 import iconImage from "../styling/images/testIconPic.jpg";
-import SendIcon from "@mui/icons-material/Send";
 import TextButton from "./TextButton";
+import ShowEvent from "./ShowEvent";
+import {Outlet, useLocation} from "react-router-dom";
 
 function ClubDiscussion() {
+    // const [showNewMeeting, setNewMeeting] = useState(false);
+    // const location = useLocation();
+
+    // const toggleNewMeeting = () => {
+    //     setNewMeeting(!showNewMeeting);
+    // }
 
     let { clubID } = useParams();
     let club = DummyClubData.find(obj => obj.ID === clubID);
 
     const navigate = useNavigate();
-    const createNewEvent = useCallback(() => navigate('discussion/new', {replace: false}), [navigate]);
+    const createNewEvent = useCallback(() => navigate('new', {replace: false}), [navigate]);
+
+    // function NewMeeting() {
+    //     console.log(location.pathname);
+    //     return location.pathname === `/home/discussion/${clubID}/new` ? (<Outlet/>) : (<ShowEvent/>)
+    // }
 
     return(
         <Grid container
@@ -34,11 +46,7 @@ function ClubDiscussion() {
 
             <Grid item xs={6}>
                 <div className={"home-page-card-background"}>
-                    <Grid container padding={1}>
-                        <Grid item xs={12}>
-                            <h4 className={"home-page-card-title"}>events:</h4>
-                        </Grid>
-                    </Grid>
+                    <Outlet />
                 </div>
             </Grid>
 

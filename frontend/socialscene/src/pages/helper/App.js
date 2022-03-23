@@ -23,6 +23,7 @@ import Discussion from "../home/Discussion";
 import NewEvent from "../../components/NewEventForm";
 import AuthContext from "../../components/helper/AuthContext";
 import ClubDiscussion from "../../components/ClubDiscussion";
+import ShowEvent from "../../components/ShowEvent";
 
 function App() {
 
@@ -51,8 +52,10 @@ function App() {
                             <Route path={"clubs/new"} element={(<NewClub />)} />
                         </Route>
                         <Route path={"discussion"} element={(<Discussion />)}>
-                            <Route path={":clubID"} element={(<ClubDiscussion />)} />
-                            <Route path={"discussion/new"} element={(<NewEvent />)} />
+                            <Route path={":clubID"} element={(<ClubDiscussion />)}>
+                                <Route index element={(<ShowEvent />)} />
+                                <Route path={"new"} element={(<NewEvent />)} />
+                            </Route>
                         </Route>
                         <Route path={"messages"} element={(<Messages />)} />
                         <Route path={"options"} element={(<Options />)} />

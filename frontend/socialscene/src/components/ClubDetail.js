@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {useParams, Outlet} from "react-router";
 import {
     Avatar,
@@ -20,9 +20,9 @@ import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
 
 
 function ClubDetail() {
-    const [showBannedMembers, setBannedMembers] = React.useState(false);
-    const [showBanDialog, setBanDialog] = React.useState(false);
-    const [showDeleteClubDialog, setDeleteClubDialog] = React.useState(false);
+    const [showBannedMembers, setBannedMembers] = useState(false);
+    const [showBanDialog, setBanDialog] = useState(false);
+    const [showDeleteClubDialog, setDeleteClubDialog] = useState(false);
 
     let { clubID } = useParams();
     let club = DummyClubData.find(obj => obj.ID === clubID);
