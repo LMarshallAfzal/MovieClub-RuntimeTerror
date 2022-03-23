@@ -140,4 +140,10 @@ h6 {
   transition: all 0.3s ease-out;
 }
 
+.new-event-movie-text {
+  font-size: 1em;
+  overflow: auto;
+  font-family: Helvetica, serif;
+}
+
 /*# sourceMappingURL=NewEventForm.css.map */

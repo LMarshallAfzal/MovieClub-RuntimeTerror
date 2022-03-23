@@ -44,13 +44,13 @@ function ClubDiscussion() {
                 />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={7}>
                 <div className={"home-page-card-background"}>
                     <Outlet />
                 </div>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={5}>
                 <div className={"home-page-card-background"}>
                     <Grid container padding={1}>
                         <Grid item xs={12}>
