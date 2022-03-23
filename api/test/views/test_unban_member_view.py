@@ -8,9 +8,13 @@ from api.models import User,Club,Membership
 class UnBanMemberViewTestCase(APITestCase):
     """Tests of the unban_member view."""
 
-    fixtures = ['api/test/fixtures/default_user.json',
-                'api/test/fixtures/default_club.json',
-                'api/test/fixtures/other_users.json']
+    fixtures = [
+        "api/test/fixtures/default_genre.json",
+        "api/test/fixtures/other_genres.json",
+        'api/test/fixtures/default_user.json',
+        'api/test/fixtures/default_club.json',
+        'api/test/fixtures/other_users.json'
+    ]
 
     def setUp(self):
         self.user = User.objects.get(username='johndoe')

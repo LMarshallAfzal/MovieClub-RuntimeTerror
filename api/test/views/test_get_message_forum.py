@@ -12,6 +12,8 @@ from rest_framework.test import force_authenticate,APIClient
 class MessageForumTestCase(APITestCase, LogInTester):
 
     fixtures = [
+        "api/test/fixtures/default_genre.json",
+        "api/test/fixtures/other_genres.json",
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/default_club.json',
         'api/test/fixtures/other_clubs.json',

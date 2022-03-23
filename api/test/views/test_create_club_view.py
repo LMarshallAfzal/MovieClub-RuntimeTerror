@@ -1,4 +1,4 @@
-from api.models import Club, User
+from api.models import Club, User, Genre
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
@@ -9,6 +9,8 @@ from rest_framework.test import force_authenticate,APIClient
 class CreateClubViewTestCase(APITestCase,LogInTester):
     
     fixtures = [
+        'api/test/fixtures/default_genre.json',
+        'api/test/fixtures/other_genres.json',
         "api/test/fixtures/default_user.json",
         'api/test/fixtures/default_club.json',
     ]
@@ -20,9 +22,10 @@ class CreateClubViewTestCase(APITestCase,LogInTester):
         self.form_input = {
             "club_name": "Sharknado Appreciation Society",
             "mission_statement": "We are a club dedicated to making the world a better place through the power of sharknado",
-            "theme": "Horror",
+            "theme": Genre.objects.all()[0].id,
         }
         self.client = APIClient()
+    
     def test_create_club_endpoint_with_valid_data_creates_club_returns_201_created(self):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
