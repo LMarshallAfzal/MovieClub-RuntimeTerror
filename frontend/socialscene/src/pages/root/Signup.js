@@ -104,34 +104,38 @@ export const Signup = () => {
         }
     };
 
-    let submitSignupForm = async (e) => {
-        e.preventDefault();
-        resetErrorState();
-        let response = await fetch("http://127.0.0.1:8000/sign_up/", {
-            method: "POST",
-            body: JSON.stringify({
-                "username": signupCredentials.username, 
-                "first_name": signupCredentials.first_name, 
-                "last_name": signupCredentials.last_name,
-                "email": signupCredentials.email,
-                "bio": signupCredentials.bio, 
-                "preferences": signupCredentials.preferences,
-                "password": signupCredentials.password, 
-                "password_confirmation": signupCredentials.password_confirmation
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        let data = await response.json()
-        console.log(Object.keys(data))
-        if(response.status === 201) {
-            setLoginCredentials(signupCredentials.username, signupCredentials.password)
-            return (loginUser(e))
-        }
-        else {
-            errorHandler(e, data)        }  
-    }
+    const submitSignupForm = async (e) => {
+      e.preventDefault();
+      resetErrorState();
+      fetch("http://127.0.0.1:8000/sign_up/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+        body: JSON.stringify({
+          username: signupCredentials.username,
+          first_name: signupCredentials.first_name,
+          last_name: signupCredentials.last_name,
+          email: signupCredentials.email,
+          bio: signupCredentials.bio,
+          preferences: signupCredentials.preferences,
+          password: signupCredentials.password,
+          password_confirmation: signupCredentials.password_confirmation,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            errorHandler(e, data);
+          } else {
+            setLoginCredentials(
+              signupCredentials.username,
+              signupCredentials.password
+            );
+            return loginUser(e);
+          }
+        })
+        .catch((err) => console.error(err));
+    };
     
     return (
         <Grid container
