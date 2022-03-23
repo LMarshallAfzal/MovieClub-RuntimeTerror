@@ -37,7 +37,7 @@ class RecommendClubUserTestCase(APITestCase):
         self.url = reverse('rec_clubs')
 
     def test_movie_recommender_url(self):
-        self.assertEqual(self.url, f'/rec/clubs/')
+        self.assertEqual(self.url, f'/rec_clubs/')
 
     def test_recommend_clubs_to_user_endpoint_returns_2_recommended_clubs_returns_200_ok(self):
         self.client.force_authenticate(user=self.user)
