@@ -21,7 +21,8 @@ import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
 
 function ClubDetail() {
     const [showBannedMembers, setBannedMembers] = React.useState(false);
-    const [showBanAlert, setBanAlert] = React.useState(false);
+    const [showBanDialog, setBanDialog] = React.useState(false);
+    const [showDeleteClubDialog, setDeleteClubDialog] = React.useState(false);
 
     let { clubID } = useParams();
     let club = DummyClubData.find(obj => obj.ID === clubID);
@@ -30,23 +31,35 @@ function ClubDetail() {
         setBannedMembers(!showBannedMembers);
     }
 
-    const closeBannedDialog = () => {
-        setBanAlert(false);
+    const openBanDialog = () => {
+         setBanDialog(true);
     }
 
-    const openBannedDialog = () => {
-         setBanAlert(true);
+    const closeBanDialog = () => {
+        setBanDialog(false);
     }
 
+    const openDeleteClubDialog = () => {
+         setDeleteClubDialog(true);
+    }
 
+    const closeDeleteClubDialog = () => {
+         setDeleteClubDialog(false);
+    }
 
-    const handleDelete = () => {
-        console.log("User Deleted");
+    const handleClubDelete = () => {
+         closeDeleteClubDialog()
+        console.log("Club Deleted");
+    }
+
+    const handleRemoveUser = () => {
+         closeBanDialog();
+         console.log("User Removed");
     }
 
     const handleBan = () => {
+         handleRemoveUser();
         console.log("User Banned");
-        closeBannedDialog();
     }
 
     const handleUnBan = () => {
@@ -69,24 +82,24 @@ function ClubDetail() {
                     <h4 className={"club-member-heading"}>members:</h4>
 
                     <Dialog
-                        open={showBanAlert}
-                        onClose={closeBannedDialog}
+                        open={showBanDialog}
+                        onClose={closeBanDialog}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description">
 
                         <DialogTitle id="alert-dialog-title">
-                            do you also want to block this user?
+                            <h4>also ban this user<h4--emphasise>?</h4--emphasise></h4>
                         </DialogTitle>
 
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                this user will be blocked from the group and will no longer have access
+                                <h6>decide whether this user will also be banned from the club or just removed</h6>
                             </DialogContentText>
                         </DialogContent>
 
                         <DialogActions>
-                            <FormButton onClick={handleBan} text={"confirm"} />
-                            <FormButton onClick={closeBannedDialog} text={"cancel"} />
+                            <FormButton onClick={handleBan} text={"ban"} />
+                            <FormButton onClick={handleRemoveUser} text={"remove"} />
                         </DialogActions>
                     </Dialog>
 
@@ -99,7 +112,7 @@ function ClubDetail() {
                                     src={user.iconImage}
                                     alt={user.firstName + " " + user.lastName}
                                 />}
-                                onDelete={openBannedDialog}
+                                onDelete={openBanDialog}
                                 onClick={handleUserClick}
                                 sx={ {mr: 1, mt: 1}}
                                 />
@@ -151,11 +164,33 @@ function ClubDetail() {
             <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" }}>
 
                 <Stack spacing={2} sx={{height: "100%"}}>
+                    <Dialog
+                        open={showDeleteClubDialog}
+                        onClose={closeDeleteClubDialog}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description">
+
+                        <DialogTitle id="alert-dialog-title">
+                            <h4>delete this club<h4--emphasise>?</h4--emphasise></h4>
+                        </DialogTitle>
+
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                <h6>this club will be deleted and all associated data</h6>
+                            </DialogContentText>
+                        </DialogContent>
+
+                        <DialogActions>
+                            <FormButton onClick={handleClubDelete} text={"confirm"} />
+                            <FormButton onClick={closeDeleteClubDialog} text={"cancel"} />
+                        </DialogActions>
+                    </Dialog>
+
                     <FormButton text={"join"} />
 
                     <FormButton text={"leave"} />
 
-                    <FormButton text={"delete"} />
+                    <FormButton text={"delete"} onClick={openDeleteClubDialog} />
 
                     <FormButton text={showBannedMembers ? "members" : "banned"} onClick={toggleBannedView} />
                 </Stack>
