@@ -4,7 +4,6 @@ import Navbar from "../../components/root/Navbar";
 import HomePage from "../root/Homepage";
 import LogIn from "../root/Login";
 import Logout from "../home/Logout";
-import AuthenticatedEnter from "../home/AuthenticatedEnter";
 import NotFound404 from "../root/NotFound";
 import Profile from "../home/Profile";
 import {useLocation, BrowserRouter as Router, Routes, Route} from "react-router-dom";
@@ -46,7 +45,6 @@ function App() {
                   >
                         <Route index element={(<Home />)} />
                         <Route path={"logout"} element={(<Logout />)} />
-                        <Route path={"auth-login"} element={(<AuthenticatedEnter />)} />
                         <Route path={"profile"} element={(<Profile />)} />
                         <Route path={"movies"} element={(<Movies />)} />
                         <Route path={"clubs"} element={(<Clubs />)} >
