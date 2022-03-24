@@ -187,6 +187,12 @@ h6 {
 .profile-image {
   align-self: center;
   width: 100px;
+  padding: 20px;
+}
+
+.card-content {
+  border: 20px;
+  background-color: #C4C4C4;
 }
 
 /*# sourceMappingURL=OthersProfile.css.map */

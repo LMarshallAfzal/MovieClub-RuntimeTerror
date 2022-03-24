@@ -258,6 +258,8 @@ const Movies = () => {
                             )
                         })}
                     </Grid>
+                        </Grid>
+                    </Grid>
                 </div>
             </Grid>
 
