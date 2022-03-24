@@ -37,7 +37,7 @@ class CancelMeetingViewTestCase(APITestCase):
 
         self.client = APIClient()
         
-    def test_cancel_meeting_endpoint_with_valid_data_cancels_meeting_returns_200_ok(self):
+    def test_delete_cancel_meeting_endpoint_with_valid_data_cancels_meeting_returns_200_ok(self):
         self.client.force_authenticate(user=self.meeting_organiser)
         self.assertTrue(self.meeting_organiser.is_authenticated)
         before = Meeting.objects.count()
@@ -46,7 +46,7 @@ class CancelMeetingViewTestCase(APITestCase):
         self.assertEqual(after + 1, before)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_cancel_meeting_endpoint_cancelling_meeting_by_non_organiser_returns_403_forbidden(self):
+    def test_delete_cancel_meeting_endpoint_cancelling_meeting_by_non_organiser_returns_403_forbidden(self):
         self.client.force_authenticate(user=self.non_organiser)
         self.assertTrue(self.non_organiser.is_authenticated)
         before = Meeting.objects.count()
@@ -55,7 +55,7 @@ class CancelMeetingViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_cancel_meeting_endpoint_with_invalid_club_does_not_cancel_meeting_404_not_found(self):
+    def test_delete_cancel_meeting_endpoint_with_invalid_club_does_not_cancel_meeting_404_not_found(self):
         self.client.force_authenticate(user=self.meeting_organiser)
         self.assertTrue(self.meeting_organiser.is_authenticated)
         before = Meeting.objects.count()
@@ -65,7 +65,7 @@ class CancelMeetingViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_cancel_meeting_endpoint_with_user_not_logged_in_does_not_cancel_meeting(self):
+    def test_delete_cancel_meeting_endpoint_with_user_not_logged_in_does_not_cancel_meeting(self):
         before = Meeting.objects.count()
         response = self.client.delete(self.url)
         after = Meeting.objects.count()
