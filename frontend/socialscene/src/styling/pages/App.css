@@ -127,6 +127,7 @@ h6 {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  width: 100%;
 }
 
 .home-page-card-title {
