@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Box, Grid, Stack, TextField, Button } from "@mui/material";
+import { FormControlLabel, Typography, Checkbox, Box, Grid, Stack, TextField, Button } from "@mui/material";
 import "../../styling/pages/Options.css";
 import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 const Options = () => {
     const [passwordData, setPasswordData] = useState({
@@ -11,7 +13,7 @@ const Options = () => {
         new_password_confirmation: '',
     })
 
-    let {authTokens} = useContext(AuthContext)
+    let { authTokens } = useContext(AuthContext)
 
     const [oldPasswordError, setOldPasswordError] = useState(false)
     const [newPasswordError, setNewPasswordError] = useState(false)
@@ -21,8 +23,8 @@ const Options = () => {
     const [errorNewPasswordConfirmationText, setNewPasswordConfirmationErrorText] = useState('')
 
     const onChange = (e) => {
-        setPasswordData( fieldData => ({...fieldData, [e.target.name]: e.target.value}))
-    }; 
+        setPasswordData(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
+    };
 
     let resetErrorState = () => {
         setOldPasswordError(false);
@@ -36,19 +38,19 @@ const Options = () => {
 
     let errorHandler = (e, data) => {
         e.preventDefault()
-        if((Object.keys(data)).includes('old_password')) {
+        if ((Object.keys(data)).includes('old_password')) {
             setOldPasswordError(true)
             setOldPasswordErrorText(data.old_password)
         }
-        if((Object.keys(data)).includes('new_password')) {
+        if ((Object.keys(data)).includes('new_password')) {
             setNewPasswordError(true)
             setNewPasswordErrorText(data.new_password)
         }
-        if((Object.keys(data)).includes('new_password_confirmation')) {
+        if ((Object.keys(data)).includes('new_password_confirmation')) {
             setNewPasswordConfirmationError(true)
             setNewPasswordConfirmationErrorText(data.new_password_cofirmation)
         }
-        if((Object.keys(data)).includes('non_field_errors')) {
+        if ((Object.keys(data)).includes('non_field_errors')) {
             setNewPasswordError(true)
             setNewPasswordErrorText(data.non_field_errors)
             setNewPasswordConfirmationError(true)
@@ -61,9 +63,9 @@ const Options = () => {
         resetErrorState()
         let response = await fetch('http://127.0.0.1:8000/change_password/', {
             method: 'PUT',
-            body:JSON.stringify({
-                "old_password": passwordData.old_password, 
-                "new_password": passwordData.new_password, 
+            body: JSON.stringify({
+                "old_password": passwordData.old_password,
+                "new_password": passwordData.new_password,
                 "new_password_confirmation": passwordData.new_password_confirmation,
             }),
             headers: {
@@ -72,19 +74,21 @@ const Options = () => {
             },
         })
         let data = await response.json()
-        if(response.status === 200) {
+        if (response.status === 200) {
             setPasswordData(data);
             alert("You have successfully changed you password")
         }
         else {
             errorHandler(e, data)
-        }  
+        }
     }
-    
+
+
+
     return (
         <Grid container
-              direction={"row"}
-              spacing={2}
+            direction={"row"}
+            spacing={2}
         >
             <Grid item xs={12}>
                 <div className={"home-page-title"}>
@@ -96,11 +100,12 @@ const Options = () => {
 
                 <form onSubmit={submitChangePasswordForm} className={"options-card-background"}>
 
-                    <Stack className={"form-stack"}
-                           spacing={2}
-                           height={"100%"}>
+                    <h4 className={"options-card-heading"}>change password:</h4>
 
-                        <h4 className={"options-card-heading"}>change password:</h4>
+                    <Stack style={{ padding: '10px' }} className={"form-stack"}
+                        spacing={2}
+                        height={"100%"}>
+
                         <TextField
                             error={oldPasswordError}
                             helperText={errorOldPasswordText}
@@ -155,12 +160,27 @@ const Options = () => {
                                         text={"submit"}
                                         onClick={submitChangePasswordForm}
                                         type="submit"
-                                    />                                   
+                                    />
                                 </Box>
                             </Box>
                         </div>
+
                     </Stack>
+
+                    <h4 className={"options-card-heading"}>notification:</h4>
+
+                    <FormControlLabel
+                        style={{ padding: '10px' }}
+                        value="end"
+                        control={<Checkbox icon={<NotificationsNoneIcon />} checkedIcon={<NotificationsActiveIcon />} color="default" />}
+                        label="Receive emails about new meetings."
+                        labelPlacement="end"
+                    />
+
                 </form>
+
+
+
             </Grid>
         </Grid>
     );
