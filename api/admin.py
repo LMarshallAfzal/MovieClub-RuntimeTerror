@@ -40,7 +40,7 @@ class RatingAdmin(admin.ModelAdmin):
 class MeetingAdmin(admin.ModelAdmin):
     '''Configuration of the administrative interface for meetings'''
     list_display = [
-        'id','organiser','movie','meeting_title','date','description','start_time','end_time','completed'
+        'id','organiser','movie','meeting_title','date','description','start_time','end_time','completed']
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
