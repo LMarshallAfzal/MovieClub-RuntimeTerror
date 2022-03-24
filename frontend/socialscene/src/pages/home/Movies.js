@@ -13,16 +13,18 @@ import FormButton from "../../components/FormButton";
 
 const Movies = () => {
     const [movie, setMovie] = useState('')
+    const [rating, setRating] = useState('')
     const [recommendedMovies, setRecommendedMovies] = useState([])
     let { user, authTokens } = useContext(AuthContext)
 
-    useEffect(() => {
+    useEffect((e) => {
+        // e.preventDefault()
         getRecommendedMovies()
     }, [])
 
 
     let getRecommendedMovies = async (e) => {
-        let response = await fetch('http://127.0.0.1:8000/rec/', {
+        let response = await fetch('http://127.0.0.1:8000/rec_movies/', {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -34,30 +36,34 @@ const Movies = () => {
         setRecommendedMovies(data)
     }
 
-    // let AddRating = async (e) => {
-    //     const token = JSON.parse(localStorage.getItem('token'))
-    //     fetch("http://127.0.0.1:8000/get_movie/" + movie + "/", {
-    //         method: 'GET',
-    //         headers: { 
-    //             'Content-type': 'application/json; charset=UTF8',
-    //             Authorization: token
-    //         }
-    //     })
-    //     .then(res => res.json())
-    //     .then(specifiedMovie => {
-    //         fetch('http://127.0.0.1:8000/add_rating/' + movie + '/', {
-    //             method: 'POST',
-    //             body: JSON.stringify(this.state),
-    //             headers: {
-    //                 'Content-Type': 'application/json; charset=UTF-8',
-    //                 Authorization: token
-    //             },
-    //         })
-    //         .then(data => data.json())
-    //         .then(data => this.setState({score : data.score, movie: specifiedMovie.id}))
-    //         .catch(error => console.error(error))
-    //     })
-    // }
+    let AddRating = async (e) => {
+        let response2 = await fetch('http://127.0.0.1:8000/add_rating/' + movie.id + '/', {
+            method: 'POST',
+            body: JSON.stringify(rating),
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer ' + String(authTokens.access),
+            }
+        })
+        let data2 = await response2.json();
+        setRating(data2);
+        let response3 = await fetch('http://127.0.0.1:8000/train/movie/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer ' + String(authTokens.access),
+            }
+        })
+        let data3 = await response3.json();
+        let response4 = await fetch('http://127.0.0.1:8000/train/movie/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer ' + String(authTokens.access),
+            }
+        })
+        let data4 = await response4.json();        
+    }
 
     const [openSearch, setOpenSearch] = React.useState(false);
 
@@ -136,7 +142,7 @@ const Movies = () => {
                                                     name="simple-controlled"
                                                     precision={0.5}
                                                     max={5}
-                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+                                                    // onChange={AddRating()}
                                                 />
                                                 {/*<Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>*/}
                                             </div>
@@ -154,7 +160,7 @@ const Movies = () => {
             </Grid>
 
             <Grid item xs={12}>
-                <div className={"home-page-card-background"}>
+                <div className={"ho(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))me-page-card-background"}>
                     <h4 className={"home-page-card-title"}>club movies:</h4>
 
                     <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
@@ -197,7 +203,7 @@ const Movies = () => {
                     <h4 className={"home-page-card-title"}>recommended movies:</h4>
 
                     <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
-                        {moviesWithPoster.map((movie) => {
+                        {recommendedMovies.map((movie) => {
                             return (<Grid item>
                                     <Card sx={{width: 330}}>
                                         <CardMedia
@@ -216,7 +222,7 @@ const Movies = () => {
                                                 name="simple-controlled"
                                                 precision={0.5}
                                                 max={5}
-                                                // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+                                                onChange={AddRating(movie.id)}
                                             />
                                         </div>
 
