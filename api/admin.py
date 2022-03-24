@@ -46,7 +46,7 @@ class MeetingAdmin(admin.ModelAdmin):
 class MessageAdmin(admin.ModelAdmin):
     '''Configuration of the administrative interface for messages'''
     list_display = [
-        'id','sender','message'
+        'id','sender','message']
 
 
 
