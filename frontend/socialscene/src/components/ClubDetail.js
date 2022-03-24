@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {useParams} from "react-router";
 import {Avatar, Box, Chip, Grid, ListItem, Stack, TextField} from "@mui/material";
 import "../styling/components/ClubDetail.css";
@@ -11,12 +11,11 @@ import AuthContext from "../components/helper/AuthContext";
 
 
 function ClubDetail(props) {
-    const [open, setOpen] = React.useState(false);
+    // const [open, setOpen] = React.useState(false);
 
     let { clubID } = useParams();
     let {authTokens} = useContext(AuthContext);
     let club = DummyClubData.find(obj => obj.ID === clubID);
-    const [myClubData, setMyClubData] = useState([]);
     const [clubMembers, setClubMembers] = useState([]);
 
     const handleDelete = () => {
@@ -64,6 +63,10 @@ function ClubDetail(props) {
         let data = await response.json()
     }
 
+    useEffect((e) => {
+        getClubMembers(7)
+    },[])
+
     return (
         <Grid
         container
@@ -86,20 +89,18 @@ function ClubDetail(props) {
 
                     }}
                     >
-                        {DummyClubMemberData.map((user) => {
+                        {clubMembers.map((user) => {
                             return (
                                 <Chip
-                                label={user.firstName + " " + user.lastName}
-                                avatar={
-                                <Avatar
-                                    src={user.iconImage}
-                                    alt={user.firstName + " " + user.lastName}
-                                />}
-                                onDelete={handleDelete}
-                                onClick={handleUserClick}
-
-                                />
-
+                                    label={user.username}
+                                    avatar={
+                                    <Avatar
+                                        src={user.iconImage}
+                                        alt={user.username}
+                                    />}
+                                    onDelete={handleDelete}
+                                    onClick={handleUserClick}
+                                 />
                             )
                         })}
 
@@ -148,7 +149,7 @@ function ClubDetail(props) {
                     />
                     <FormButton 
                         text={"delete"}
-                        // onClick={leaveClub(props.clubID)}
+                        // onClick={deleteClub(props.clubID)}
                     />
 
                 </Stack>

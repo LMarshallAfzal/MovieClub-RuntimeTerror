@@ -14,6 +14,7 @@ import AuthContext from "../components/helper/AuthContext";
 function ClubListing(props) {
     let {user, authTokens} = useContext(AuthContext);
     const [myClubData, setMyClubData] = useState([]);
+    const [clubMembers, setClubMembers] = useState([]);
 
 
 
@@ -26,8 +27,20 @@ function ClubListing(props) {
             }
         })
         let data = await response.json()
-        // console.log(data)
         setMyClubData(data)
+    }
+
+    let getClubMembers = async (clubId) => {
+        let response = await fetch('http://127.0.0.1:8000/club_members/' + clubId +'/', {
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        setClubMembers(data)
+        console.log(clubMembers)
     }
 
     // let joinClub = async (clubId) => {
@@ -44,6 +57,7 @@ function ClubListing(props) {
 
     useEffect((e) => { 
         getMembershipData()
+        getClubMembers(props.clubID)
     },[])
 
     let { clubID } = useParams();
@@ -120,14 +134,9 @@ function ClubListing(props) {
                              </div>
                          </Stack>
                          <AvatarGroup max={4} className={"club-listing-avatars"}>
-                             {/*for (users in club) map {*/}
-                             {/*   <Avatar alt="Club Name" src={club.icon}*/}
-                             {/*}*/}
-                             <Avatar alt="Remy Sharp" src={icon5}  />
-                             <Avatar alt="Travis Howard" src={icon2} />
-                             <Avatar alt="Cindy Baker" src={icon3} />
-                             <Avatar alt="Agnes Walker" src={icon4} />
-                             <Avatar alt="Trevor Henderson" src="" />
+                             {clubMembers.map((user) => {
+                                return <Avatar alt={user.username} src={icon5}/>
+                             })}
                          </AvatarGroup>
                      </Stack>
                  </Grid>

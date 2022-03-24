@@ -107,8 +107,8 @@ function Clubs() {
                            spacing={0}
                            className={"club-card-list-frame"}
                     >
-                        {console.log(myClubData)}
-                        {console.log(userMembershipData)}
+                        {/* {console.log(myClubData)}
+                        {console.log(userMembershipData)} */}
                         {myClubData.map((club) => {
                             if (club.club_members.includes(userMembershipData[0].user)) {
                                 return (
