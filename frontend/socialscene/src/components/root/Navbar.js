@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import {Link, useLocation,matchPath} from "react-router-dom";
 import "../../styling/components/Navbar.css";
 import EnterButton from "../EnterButton";
+import AuthContext from "../../components/helper/AuthContext"
 
 
 function Navbar() {
@@ -31,10 +32,18 @@ export default Navbar;
 
 function NavbarButton() {
     const location = useLocation();
-
+    let {user} = useContext(AuthContext);
     
 
     if (matchPath(location.pathname,"/")) {
+        if (user) {
+            return (
+                <EnterButton
+                    text={"enter"}
+                    linkTo={"/home/"}
+                />
+            )
+        }
         return (
             <EnterButton
                     text={"enter"}
@@ -49,7 +58,6 @@ function NavbarButton() {
                 />
             )
     } else if (matchPath(location.pathname, "/home/")) {
-        // if(!user) return null
         return (
                 <EnterButton
                 

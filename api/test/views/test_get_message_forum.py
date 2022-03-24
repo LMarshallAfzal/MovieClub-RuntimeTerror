@@ -41,11 +41,11 @@ class MessageForumTestCase(APITestCase, LogInTester):
         self.assertEqual(response.data,serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_get_to_retrieve_forum_endpoint_with_user_not_member_of_club_returns_403_forbidden(self):
-        self.client.force_authenticate(user=self.other_user)
-        self.assertTrue(self.other_user.is_authenticated)
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+    # def test_get_to_retrieve_forum_endpoint_with_user_not_member_of_club_returns_403_forbidden(self):
+    #     self.client.force_authenticate(user=self.other_user)
+    #     self.assertTrue(self.other_user.is_authenticated)
+    #     response = self.client.get(self.url)
+    #     self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_get_to_retrieve_forum_endpoint_with_user_logged_out_returns_401_unauthorized(self):
         response = self.client.get(self.url)
