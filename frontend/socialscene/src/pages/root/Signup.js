@@ -1,27 +1,28 @@
-import React, {useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import "../../styling/pages/Signup.css"
 import HeadingCircle from "../../components/HeadingCircle";
-import {Box, Grid, Stack, TextField, Button} from "@mui/material";
+import { Autocomplete, Box, Grid, Stack, TextField, Button } from "@mui/material";
 import FormButton from "../../components/FormButton";
 import Cookies from "js-cookie";
 import AuthContext from "../../components/helper/AuthContext";
 import CsrfToken from "../../components/helper/CsrfToken";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { themes } from "../data/MovieThemes"
 
 export const Signup = () => {
-    let {loginUser, setLoginCredentials} = useContext(AuthContext)
+    let { loginUser, setLoginCredentials } = useContext(AuthContext)
     let [signupCredentials, setSignupCredentials] = useState({
-        username:'',
-        first_name:'',
-        last_name:'',
-        email:'',
-        bio:'',
-        preferences:'',
-        password:'',
-        password_confirmation:'',
+        username: '',
+        first_name: '',
+        last_name: '',
+        email: '',
+        bio: '',
+        preferences: '',
+        password: '',
+        password_confirmation: '',
     })
 
-    const {username, first_name, last_name, email, bio, preferences, password, password_confirmation} = signupCredentials
+    const { username, first_name, last_name, email, bio, preferences, password, password_confirmation } = signupCredentials
 
     const [usernameError, setUsernameError] = useState(false)
     const [firstNameError, setFirstNameError] = useState(false)
@@ -31,8 +32,8 @@ export const Signup = () => {
     const [preferencesError, setPreferencesError] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
     const [passwordConfirmationError, setPasswordConfirmationError] = useState(false)
-    
-    
+
+
     const [errorUsernameText, setUsernameErrorText] = useState('')
     const [errorFirstNameText, setFirstNameErrorText] = useState('')
     const [errorLastNameText, setLastNameErrorText] = useState('')
@@ -45,7 +46,7 @@ export const Signup = () => {
 
     const onChange = (e) => {
         setSignupCredentials(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
-        
+
     };
 
     let resetErrorState = () => {
@@ -70,35 +71,35 @@ export const Signup = () => {
 
     let errorHandler = (e, data) => {
         e.preventDefault()
-        if((Object.keys(data)).includes('username')) {
+        if ((Object.keys(data)).includes('username')) {
             setUsernameError(true)
             setUsernameErrorText(data.username)
         }
-        if((Object.keys(data)).includes('first_name')) {
+        if ((Object.keys(data)).includes('first_name')) {
             setFirstNameError(true)
             setFirstNameErrorText(data.first_name)
         }
-        if((Object.keys(data)).includes('last_name')) {
+        if ((Object.keys(data)).includes('last_name')) {
             setLastNameError(true)
             setLastNameErrorText(data.last_name)
         }
-        if((Object.keys(data)).includes('email')) {
+        if ((Object.keys(data)).includes('email')) {
             setEmailError(true)
             setEmailErrorText(data.email)
         }
-        if((Object.keys(data)).includes('bio')) {
+        if ((Object.keys(data)).includes('bio')) {
             setPreferencesError(true)
             setBioErrorText(data.bio)
         }
-        if((Object.keys(data)).includes('preferences')) {
+        if ((Object.keys(data)).includes('preferences')) {
             setPreferencesError(true)
             setPreferencesErrorText(data.preferences)
         }
-        if((Object.keys(data)).includes('password')) {
+        if ((Object.keys(data)).includes('password')) {
             setPasswordError(true)
             setPasswordErrorText(data.password)
         }
-        if((Object.keys(data)).includes('password_confirmation')) {
+        if ((Object.keys(data)).includes('password_confirmation')) {
             setPasswordConfirmationError(true)
             setPasswordConfirmationErrorText(data.password_cofirmation)
         }
@@ -110,13 +111,13 @@ export const Signup = () => {
         let response = await fetch("http://127.0.0.1:8000/sign_up/", {
             method: "POST",
             body: JSON.stringify({
-                "username": signupCredentials.username, 
-                "first_name": signupCredentials.first_name, 
+                "username": signupCredentials.username,
+                "first_name": signupCredentials.first_name,
                 "last_name": signupCredentials.last_name,
                 "email": signupCredentials.email,
-                "bio": signupCredentials.bio, 
+                "bio": signupCredentials.bio,
                 "preferences": signupCredentials.preferences,
-                "password": signupCredentials.password, 
+                "password": signupCredentials.password,
                 "password_confirmation": signupCredentials.password_confirmation
             }),
             headers: {
@@ -125,39 +126,40 @@ export const Signup = () => {
         });
         let data = await response.json()
         console.log(Object.keys(data))
-        if(response.status === 201) {
+        if (response.status === 201) {
             setLoginCredentials(signupCredentials.username, signupCredentials.password)
             return (loginUser(e))
         }
         else {
-            errorHandler(e, data)        }  
+            errorHandler(e, data)
+        }
     }
-    
+
     return (
         <Grid container
-              direction={"row"}
-              className={"signup-grid"}
-              spacing={2}>
+            direction={"row"}
+            className={"signup-grid"}
+            spacing={2}>
             <CsrfToken />
 
             <Grid item
-                  xs={6}
-                  className={"signup-grid-child"}>
+                xs={6}
+                className={"signup-grid-child"}>
 
-                <HeadingCircle title={"sign up"}/>
+                <HeadingCircle title={"sign up"} />
             </Grid>
 
             <Grid item
-                  xs={6}
-                  className={"signup-grid-child"}
+                xs={6}
+                className={"signup-grid-child"}
             >
 
                 <form onSubmit={submitSignupForm} className={"signup-form"}>
 
                     <Stack className={"signup-form-stack"}
-                           spacing={3}
-                           alignItems={"center"}
-                           // sx={{width: "60%", mx: "auto"}}
+                        spacing={3}
+                        alignItems={"center"}
+                    // sx={{width: "60%", mx: "auto"}}
                     >
 
                         <TextField
@@ -231,7 +233,7 @@ export const Signup = () => {
                             onChange={e => onChange(e)}
                         />
 
-                        <TextField
+                        {/* <TextField
                             error={preferencesError}
                             className={"signup-form-row"}
                             helperText={errorPreferencesText}
@@ -243,6 +245,31 @@ export const Signup = () => {
                             variant={"outlined"}
                             value={preferences}
                             onChange={e => onChange(e)}
+                        /> */}
+
+                        <Autocomplete
+                            multiple
+                            id="tags-standard"
+                            options={themes}
+                            getOptionLabel={(option) => option.theme}
+                            defaultValue={[themes[0]]}
+                            filterSelectedOptions
+                            className={"signup-form-row"}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    error={preferencesError}
+                                    helperText={errorPreferencesText}
+                                    required
+                                    id={"outlined-basic"}
+                                    label={"preferences"}
+                                    name={"preferences"}
+                                    type={"text"}
+                                    variant={"outlined"}
+                                    value={preferences}
+                                    onChange={e => onChange(e)}
+                                />
+                            )}
                         />
 
                         <TextField
@@ -276,8 +303,8 @@ export const Signup = () => {
                         <div className={"signup-form-row"}>
                             <FormButton
 
-                             type="submit"
-                             text={"sign up"}
+                                type="submit"
+                                text={"sign up"}
                             />
                         </div>
                     </Stack>

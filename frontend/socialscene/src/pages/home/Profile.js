@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react'
 import "../../styling/pages/Profile.css";
-import { Box, Stack, TextField, Button, Grid } from "@mui/material";
+import { Autocomplete, Box, Stack, TextField, Button, Grid } from "@mui/material";
 import FormButton from "../../components/FormButton";
 import AuthContext from "../../components/helper/AuthContext";
+import { themes } from "../data/MovieThemes"
 
 
 const Profile = () => {
@@ -25,8 +26,8 @@ const Profile = () => {
     const [errorPasswordText, setPasswordErrorText] = useState('')
 
     const onChange = (e) => {
-        setUserData( prevData => ({...prevData, [e.target.name]: e.target.value}))
-     };
+        setUserData(prevData => ({ ...prevData, [e.target.name]: e.target.value }))
+    };
 
     let resetErrorState = () => {
         setUsernameError(false);
@@ -193,7 +194,7 @@ const Profile = () => {
                             value={userData.bio}
                             onChange={e => onChange(e)}
                         />
-                        <TextField className='profile-text-box'
+                        {/* <TextField className='profile-text-box'
                             error={preferencesError}
                             helperText={errorPreferencesText}
                             required
@@ -207,6 +208,32 @@ const Profile = () => {
                             rows={20}
                             value={userData.preferences}
                             onChange={e => onChange(e)}
+                        /> */}
+                        <Autocomplete
+                            multiple
+                            id="tags-standard"
+                            options={themes}
+                            getOptionLabel={(option) => option.theme}
+                            defaultValue={[themes[0]]}
+                            filterSelectedOptions
+                            className='profile-text-box'
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    error={preferencesError}
+                                    helperText={errorPreferencesText}
+                                    required
+                                    spacing={6}
+                                    id={"outlined-multiline-static"}
+                                    label={"preferences"}
+                                    name={"preferences"}
+                                    type={"text"}
+                                    variant={"outlined"}
+                                    multiline
+                                    value={userData.preferences}
+                                    onChange={e => onChange(e)}
+                                />
+                            )}
                         />
                         <div className={"single-button"}>
                             <Box
