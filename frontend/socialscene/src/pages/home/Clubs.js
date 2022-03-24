@@ -41,57 +41,65 @@ function Clubs() {
 
             <Grid item xs={12}>
                 <div className={"home-page-card-background"}>
-                    <h4 className={"home-page-card-title"}>your clubs:</h4>
+                    <Grid container direction={"row"} padding={2}>
 
-                    <Stack direction={"row"}
-                           spacing={0}
-                           className={"club-card-list-frame"}>
+                        <Grid item xs={12}>
+                            <h4 className={"home-page-card-title"}>your clubs:</h4>
+                        </Grid>
 
-                        {DummyClubData.map((club) =>
-                            club.isMember === true && (
-                                <ListItem sx={{width: 'auto'}}>
+                        <Grid item xs={12}>
+                            <Stack direction={"row"}
+                                   className={"club-card-list-frame"}>
+                                {DummyClubData.map((club) => club.isMember === true && (
+                                    <ListItem sx={{width: 'auto',p:1}}>
 
-                                <ClubListing
-                                    clubName={club.clubName}
-                                    isMember={club.isMember}
-                                    iconImage={club.iconImage}
-                                    description={club.description}
-                                    isOrganiser={club.isOrganiser}
-                                    memberRole={club.memberRole}
-                                    clubTheme={club.clubTheme}
-                                    ID={club.ID}
-                                />
-                                </ListItem>
+                                        <ClubListing
+                                            clubName={club.clubName}
+                                            isMember={club.isMember}
+                                            iconImage={club.iconImage}
+                                            description={club.description}
+                                            isOrganiser={club.isOrganiser}
+                                            memberRole={club.memberRole}
+                                            clubTheme={club.clubTheme}
+                                            ID={club.ID}
+                                        />
+                                    </ListItem>
                                 ))}
-                    </Stack>
+                            </Stack>
+                        </Grid>
+                    </Grid>
                 </div>
             </Grid>
 
             <Grid item xs={12}>
                 <div className={"home-page-card-background"}>
-                    <h4 className={"home-page-card-title"}>recommended clubs:</h4>
+                    <Grid container direction={"row"} padding={2}>
 
-                    <Stack direction={"row"}
-                          spacing={0}
-                          className={"club-card-list-frame"}>
+                        <Grid item xs={12}>
+                            <h4 className={"home-page-card-title"}>recommended clubs:</h4>
+                        </Grid>
 
-                        {DummyClubData.map((club) =>
-                            club.isMember === false && (
-                                <ListItem sx={{width: 'auto'}}>
+                        <Grid item xs={12}>
+                            <Stack direction={"row"}
+                                   className={"club-card-list-frame"}>
+                                {DummyClubData.map((club) => club.isMember === false && (
+                                    <ListItem sx={{width: 'auto',p: 1}}>
 
-                                <ClubListing
-                                    clubName={club.clubName}
-                                    isMember={club.isMember}
-                                    iconImage={club.iconImage}
-                                    description={club.description}
-                                    isOrganiser={club.isOrganiser}
-                                    memberRole={club.memberRole}
-                                    clubTheme={club.clubTheme}
-                                    ID={club.ID}
-                                />
-                                </ListItem>
-                            ))}
-                    </Stack>
+                                        <ClubListing
+                                            clubName={club.clubName}
+                                            isMember={club.isMember}
+                                            iconImage={club.iconImage}
+                                            description={club.description}
+                                            isOrganiser={club.isOrganiser}
+                                            memberRole={club.memberRole}
+                                            clubTheme={club.clubTheme}
+                                            ID={club.ID}
+                                        />
+                                    </ListItem>
+                                ))}
+                            </Stack>
+                        </Grid>
+                    </Grid>
                 </div>
             </Grid>
 

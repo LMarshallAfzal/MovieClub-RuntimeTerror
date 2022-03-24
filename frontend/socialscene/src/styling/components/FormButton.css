@@ -98,9 +98,7 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   font-family: Helvetica-Bold, serif;
   width: 100%;
   text-align: center;
@@ -112,9 +110,7 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   font-family: Helvetica, serif;
   width: 100%;
   text-align: center;
@@ -123,47 +119,61 @@ h6 {
 .home-page-title {
   background-color: #C4C4C4;
   padding: 10px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  width: 100%;
+  user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
-  padding-top: 10px;
-  padding-left: 10px;
   color: #FFFFFF;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .home-page-card-background {
   background-color: #D8D8D8;
+  overflow: hidden;
+}
+
+.home-page-sub-section-heading {
+  padding: 10px;
+  color: #FFFFFF;
+  background-color: #C4C4C4;
+  user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .form-button {
+  margin: 0;
   padding: 18px;
   outline: none;
   border: none;
   display: block;
   width: 100%;
+  height: 100%;
   text-align: left;
   font-size: 18px;
   color: #FFFFFF;
-  cursor: pointer;
   background-color: #000000;
   font-family: Helvetica-Bold, serif;
-  transition: all 0.3s ease-out;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  transition: all 0.3s ease-in-out;
+  border-left: 0 solid #000000;
+  user-select: none;
 }
 
-.form-button:hover {
+.form-button#normal:hover {
+  cursor: pointer;
   background-color: #C4C4C4;
   color: #000000;
-}/*# sourceMappingURL=FormButton.css.map */
+}
+
+.form-button#primary:hover {
+  cursor: pointer;
+  border-left: 10px solid #FF0000;
+  background-color: #C4C4C4;
+  color: #FF0000;
+}
+
+.form-button#disabled:hover {
+  cursor: not-allowed;
+}
+
+/*# sourceMappingURL=FormButton.css.map */

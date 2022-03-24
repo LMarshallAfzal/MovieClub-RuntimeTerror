@@ -12,7 +12,7 @@ function HomeRouter() {
    
     let {user} = useContext(AuthContext)
 
-    if(!user) return null
+    // if(!user) return null
     
     return (
         <>
@@ -23,8 +23,9 @@ function HomeRouter() {
                 <Grid className={"home-grid-L-sidebar"} item xs={3}>
 
                     <NameHeader
-                        username={user.username}
-                        joinDate={"2022"} />
+                        firstName={user.first_name || "error"}
+                        lastName={user.last_name || "error"}
+                        username={user.username || "error"} />
                     <Sidebar />
                 </Grid>
 

@@ -98,9 +98,7 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   font-family: Helvetica-Bold, serif;
   width: 100%;
   text-align: center;
@@ -112,9 +110,7 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   font-family: Helvetica, serif;
   width: 100%;
   text-align: center;
@@ -123,29 +119,29 @@ h6 {
 .home-page-title {
   background-color: #C4C4C4;
   padding: 10px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  width: 100%;
+  user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
-  padding-top: 10px;
-  padding-left: 10px;
   color: #FFFFFF;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .home-page-card-background {
   background-color: #D8D8D8;
+  overflow: hidden;
+}
+
+.home-page-sub-section-heading {
+  padding: 10px;
+  color: #FFFFFF;
+  background-color: #C4C4C4;
+  user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .navbar {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100%;
@@ -160,20 +156,14 @@ h6 {
   font-size: 1.2rem;
   overflow: auto;
   width: 100%;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar-red {
   height: 10px;
   display: flex;
   background: #FF0000;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar-logo {
@@ -187,10 +177,7 @@ h6 {
   text-decoration: none;
   font-size: 2rem;
   padding-top: 20px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar-enter-button {
@@ -200,4 +187,6 @@ h6 {
   padding-right: 20px;
   padding-top: 20px;
   text-decoration: none;
-}/*# sourceMappingURL=Navbar.css.map */
+}
+
+/*# sourceMappingURL=Navbar.css.map */

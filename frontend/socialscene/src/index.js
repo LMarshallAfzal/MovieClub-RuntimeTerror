@@ -36,6 +36,15 @@ const theme = createTheme({
                   },
               },
       },
+        MuiRating: {
+          styleOverrides:{
+              root:{
+                  color: "#FF0000",
+              }
+          }
+
+        },
+
       MuiInputLabel: {
           styleOverrides: {
               root:{
