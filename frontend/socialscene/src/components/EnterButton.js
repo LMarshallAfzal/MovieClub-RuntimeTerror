@@ -1,6 +1,5 @@
 import React, {useCallback} from "react";
 import "../styling/components/EnterButton.css";
-import {Link} from "react-router-dom";
 import {useNavigate} from "react-router";
 
 function EnterButton(props) {
