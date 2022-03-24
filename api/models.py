@@ -4,6 +4,7 @@ from django.db.models import Count, F, Value
 from django.db.models.fields.related import ForeignKey
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator,MinLengthValidator
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
@@ -77,6 +78,11 @@ class User(AbstractUser):
     def get_watched_movies(self):
         movies = self.watched_movies.all()
         return movies
+    
+    def clean(self):
+        if self.preferences.count() == 0:
+            raise ValidationError(_('You must have at least one preference'))
+        return super().clean()
 
 
 class Genre(models.Model):
