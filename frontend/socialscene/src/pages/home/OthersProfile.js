@@ -1,19 +1,17 @@
-import React from "react";
+import React, {useCallback} from "react";
+import {useNavigate} from "react-router";
 import "../../styling/pages/OthersProfile.css";
 import { Tooltip, Rating, CardHeader, CardMedia, Chip, Avatar, Box, Stack, Card, CardContent, TextField, Typography, Grid, Paper, ListItemText, ListItemButton } from "@mui/material";
 import FormButton from "../../components/FormButton";
 import iconImage from "../../styling/images/testIconPic.jpg";
 import { DummyDashboardClubsData, meetings, movies } from './../data/DummyDashboardClubsData';
 import { moviesWithPoster } from '../data/DummyMoviesData';
-import moviePoster from '../../styling/images/empty_movie_poster.png'
-
+import moviePoster from '../../styling/images/empty_movie_poster.png';
 
 function OthersProfile() {
     return (
         <>
             <Grid container
-                // justifyContent={"center"}
-                // alignItems={"flex-start"}
                 spacing={2}
                 direction={"row"}
             >
@@ -28,11 +26,10 @@ function OthersProfile() {
 
             <Grid item xs={12} style={{ paddingTop: '20px' }}>
                 <div className={"home-page-card-background"} style={{ padding: '20px' }}>
+                    {/* SUBSTITUTE WITH FIRST NAME AND LAST NAME */}
                     <h4 className={"home-page-card-title"}>John Doe</h4>
 
                     <Grid container
-                        // justifyContent={"center"}
-                        // alignItems={"flex-start"}
                         spacing={2}
                         direction={"row"}
                     >
@@ -48,23 +45,46 @@ function OthersProfile() {
                                         />
                                     </div>
                                 </Box>
+
+                                {/* SUBSTITUTE WITH USERNAME */}
                                 <div style={{ paddingRight: '20px' }}>@johndoe</div>
-                                <div className={"single-button"}>
-                                    <Box
-                                        sx={{
-                                            display: 'grid',
-                                            gridAutoColumns: '1fr',
-                                            gap: 1,
-                                        }}
-                                    >
-                                        <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                            <FormButton
-                                                text={"follow"}
-                                            // onClick={this.submitForm}
-                                            />
+
+                                {/* IF LOGGED IN USER IS THE *SAME* AS THE USER VIEWED, THEN SHOW THE EDIT BUTTON  */}
+                                    <div className={"single-button"}>
+                                        <Box
+                                            sx={{
+                                                display: 'grid',
+                                                gridAutoColumns: '1fr',
+                                                gap: 1,
+                                            }}
+                                        >
+                                            <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
+                                                <FormButton
+                                                    text={"edit"}
+                                                // onClick={editProfile}
+                                                />
+                                            </Box>
                                         </Box>
-                                    </Box>
-                                </div>
+                                    </div>
+
+                                {/* IF LOGGED IN USER IS *NOT* THE SAME AS THE USER VIEWED, THEN SHOW THE FOLLOW BUTTON  */}
+                                    <div className={"single-button"}>
+                                        <Box
+                                            sx={{
+                                                display: 'grid',
+                                                gridAutoColumns: '1fr',
+                                                gap: 1,
+                                            }}
+                                        >
+                                            <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
+                                                <FormButton
+                                                    text={"follow"}
+                                                // onClick={this.submitForm}
+                                                />
+                                            </Box>
+                                        </Box>
+                                    </div>
+
                             </div>
                         </Grid>
 
@@ -76,9 +96,9 @@ function OthersProfile() {
                                         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
                                             Preferences:
                                         </Typography>
+                                        {/* UNCOMMENT AND SUBSTITUTE WITH USER PREFERENCES */}
                                         {/* {USERPREFERENCES.map((preference) =>
                                     return <Chip style={{margin:'5px'}} label={preference} />
-                                    
                                     )} */}
                                         <Chip style={{ margin: '5px' }} label="Horror" />
                                         <Chip style={{ margin: '5px' }} label="Fantasy" />
@@ -91,26 +111,28 @@ function OthersProfile() {
                                             Bio:
                                         </Typography>
                                         <Typography sx={{ fontSize: 25 }} variant="body2">
+                                            {/* SUBSTITUTE WITH USER BIO */}
                                             The crazy dog jumps over a lazy fox. My bio Lorem Ipsum
                                         </Typography>
                                     </CardContent>
                                 </Card>
-
-                                <div>
-                                    <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
-                                        Mutual Clubs:
-                                    </Typography>
-                                </div>
-                                <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
-                                    {/* SUBSTITUTE WITH MUTUAL CLUBS DATA */}
-                                    {DummyDashboardClubsData.map((val) => {
-                                        return (
-                                            <ListItemButton>
-                                                <ListItemText primary={val.name} />
-                                            </ListItemButton>
-                                        );
-                                    })}
-                                </Paper>
+                                
+                                {/* IF LOGGED IN USER IS *NOT* THE SAME AS THE USER VIEWED, THEN SHOW THE MUTUAL CLUBS LIST  */}
+                                    <div>
+                                        <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
+                                            Mutual Clubs:
+                                        </Typography>
+                                    </div>
+                                    <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
+                                        {/* SUBSTITUTE WITH MUTUAL CLUBS DATA */}
+                                        {DummyDashboardClubsData.map((val) => {
+                                            return (
+                                                <ListItemButton>
+                                                    <ListItemText primary={val.name} />
+                                                </ListItemButton>
+                                            );
+                                        })}
+                                    </Paper>
 
                                 <div>
                                     <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
@@ -150,42 +172,6 @@ function OthersProfile() {
                         </Grid>
 
                         <Grid item xs={6}>
-                            {/* <Stack spacing={2}> */}
-                            {/* <Grid container style={{width:"100%"}}direction={"row"} spacing={1} alignItems={"center"} padding={1}>
-                                    <Card>
-                                        <CardContent>
-                                            <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                                                Their recently watched movies:
-                                            </Typography>
-                                            {moviesWithPoster.map((movie) => {
-                                                return (<Grid item>
-                                                    <Card sx={{ width: 200 }}>
-                                                        <CardMedia
-                                                            component="img"
-                                                            height="100%"
-                                                            image={moviePoster}
-                                                            alt={movie.title}
-                                                        />
-
-                                                        <CardHeader title={movie.title} />
-
-                                                        <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
-                                                            <Typography component="legend">Rate {movie.title}</Typography>
-                                                        </div>
-                                                    </Card>
-                                                </Grid>
-                                                )
-                                            })}
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                                <Card>
-                                    <CardContent>
-                                        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                                            Their favourite movies:
-                                        </Typography>
-                                    </CardContent>
-                                </Card> */}
                             <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
 
                                 <Grid item xs={12}>
@@ -193,6 +179,7 @@ function OthersProfile() {
                                         Recently watched movies:
                                     </Typography>
                                 </Grid>
+                                {/* SUBSTITUTE WITH RECENTLY WATCHED MOVIES */}
                                 {moviesWithPoster.slice(0, 5).map((movie) => {
                                     return (<Grid item>
                                         <Card sx={{ width: 150 }}>
@@ -218,6 +205,7 @@ function OthersProfile() {
                                         Favourite movies:
                                     </Typography>
                                 </Grid>
+                                {/* SUBSTITUTE WITH FAVOURITE MOVIES */}
                                 {moviesWithPoster.slice(0, 5).map((movie) => {
                                     return (<Grid item>
                                         <Card sx={{ width: 150 }}>
@@ -238,7 +226,6 @@ function OthersProfile() {
                                     )
                                 })}
                             </Grid>
-                            {/* </Stack> */}
                         </Grid>
 
                     </Grid>
