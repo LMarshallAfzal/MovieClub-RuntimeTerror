@@ -122,6 +122,9 @@ class SignUpSerializer(serializers.Serializer):
                   'bio', 'preferences', 'password', 'password_confirmation']
 
     def validate(self, data):
+        if len(data['preferences']) == 0:
+            raise serializers.ValidationError(
+                {"preferences": "At least one genre must be selected"})
         if data['password'] != data['password_confirmation']:
             raise serializers.ValidationError(
                 {"password": "Passwords don't match."})
@@ -134,8 +137,9 @@ class SignUpSerializer(serializers.Serializer):
             last_name=validated_data['last_name'],
             email=validated_data['email'],
             bio=validated_data['bio'],
-            preferences=validated_data['preferences']
+            #preferences=validated_data['preferences']
         )
+        user.preferences.set(validated_data['preferences'])
         Token.objects.create(user=user)
 
         user.set_password(validated_data['password'])
