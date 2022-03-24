@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {useParams, Outlet} from "react-router";
+import React, {useCallback, useState} from "react";
+import {useParams, Outlet, useNavigate} from "react-router";
 import {
     Avatar,
     Box,
@@ -66,8 +66,9 @@ function ClubDetail() {
         console.log("User Un-Banned");
     }
 
-    const handleUserClick = () => {
-        console.log("User Clicked");
+    function HandleUserClick(props) {
+         const navigate = useNavigate();
+         return useCallback(() => navigate(`${props}`, {replace: false}), [navigate]);
     }
 
     const handleBannedUserClick = () => {
@@ -105,7 +106,7 @@ function ClubDetail() {
                         </DialogActions>
                     </Dialog>
 
-                    <Grid item xs={12}>
+                    <Grid item xs={12} >
                         {DummyClubMemberData.map((user) => {
                             return (
                                 <Chip
@@ -116,14 +117,13 @@ function ClubDetail() {
                                     alt={user.firstName + " " + user.lastName}
                                 />}
                                 onDelete={openBanDialog}
-                                onClick={handleUserClick}
+                                onClick={HandleUserClick(user.ID)}
                                 sx={ {mr: 1, mt: 1}}
                                 />
 
                             )
                         })}
                     </Grid>
-
                 </Grid>)
         } else {
             return (
@@ -160,14 +160,14 @@ function ClubDetail() {
         justifyContent={"center"}
         direction={"row"}
         alignItems={"stretch"}
-        spacing={2}
-        >
+        spacing={2}>
+
             <Grid item xs={12}>
                 <h4 className={"home-page-sub-section-heading"}>{club.clubName}:</h4>
             </Grid>
 
-            <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
-                <div className={"home-page-card-background"} >
+            <Grid item xs={6} overflow={"auto"} sx={{ display: "flex", flexDirection: "column"}}>
+                <div className={"home-page-card-background"} style={{overflow: "auto"}} >
                     <UserDisplay />
                 </div>
             </Grid>

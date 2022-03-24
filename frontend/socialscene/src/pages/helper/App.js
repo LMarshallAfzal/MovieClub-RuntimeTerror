@@ -36,10 +36,7 @@ function App() {
                   <Route path={"/signup"} element={(<Signup />)} />
                   <Route path={"/logout"} element={(<Logout />)} />
                   <Route path={"*"} element={<NotFound404 />} />
-                  <Route path={"/home"} element={
-                      <PrivateRoute>
-                          <HomeRouter />
-                      </PrivateRoute>}>
+                  <Route path={"/home"} element={<PrivateRoute><HomeRouter /></PrivateRoute>}>
 
                         <Route index element={(<Home />)} />
                         <Route path={"logout"} element={(<Logout />)} />
@@ -47,7 +44,7 @@ function App() {
                         <Route path={"movies"} element={(<Movies />)} />
                         <Route path={"clubs"} element={(<Clubs />)} >
                             <Route path={":clubID"} element={(<ClubDetail />)}>
-                                <Route path={"others-profile"} element={(<OthersProfile />)} />
+                                <Route path={":userID"} element={(<OthersProfile />)} />
                             </Route>
                             <Route path={"clubs/new"} element={(<NewClub />)} />
                         </Route>
@@ -58,7 +55,6 @@ function App() {
                             </Route>
                         </Route>
                         <Route path={"options"} element={(<Options />)} />
-                        <Route path={"others-profile"} element={(<OthersProfile />)} />
                   </Route>  
               </Routes>
           </AuthProvider>

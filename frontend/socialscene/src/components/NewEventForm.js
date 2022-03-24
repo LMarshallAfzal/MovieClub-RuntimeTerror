@@ -1,13 +1,28 @@
-import React from "react";
-import {Card, CardActionArea, CardMedia, Grid, Rating, Stack, TextField} from "@mui/material";
+import React, {useState} from "react";
+import {
+    Card,
+    CardActionArea,
+    CardHeader,
+    CardMedia,
+    Grid,
+    Rating,
+    Stack,
+    TextField,
+    Tooltip,
+    Typography
+} from "@mui/material";
 import "../styling/components/NewEventForm.css";
 import {dummyRecommendedMovies} from "../pages/data/DummyRecommendedMovies";
 import FormButton from "./FormButton";
+import moviePoster from "../styling/images/empty_movie_poster.png";
 
 function NewEvent() {
     let day = new Date();
     let nextDay = new Date(day);
     let tomorrow = nextDay.setDate(day.getDate()+2);
+
+    const [selectedMovie, setSelectedMovie] = useState("");
+
 
     return (
         <div className={"home-page-card-background"}>
@@ -26,8 +41,22 @@ function NewEvent() {
                         {dummyRecommendedMovies.map((movie) => {
                             return (
                                 <Grid item xs={2}>
+                                    {/*<Card>*/}
+                                        {/*    <CardMedia*/}
+                                        {/*        component="img"*/}
+                                        {/*        height="100%"*/}
+                                        {/*        image={movie.poster}*/}
+                                        {/*        alt={movie.title}*/}
+                                        {/*    />*/}
+
+                                        {/*    <CardHeader title={*/}
+                                        {/*        <Tooltip title={movie.title} placement="top-start">*/}
+                                        {/*            <Typography noWrap maxWidth={"125px"} fontSize="13px" >{movie.title}</Typography>*/}
+                                        {/*        </Tooltip>*/}
+                                        {/*    } />*/}
+                                        {/*</Card>*/}
                                     <Card sx={{flexDirection: "column", height: "100%"}} >
-                                        <CardActionArea>
+                                        <CardActionArea sx={{flexDirection: "column", height: "100%"}} onClick={() => setSelectedMovie(movie.title)}>
                                         <CardMedia component={"img"}
                                                    alt={movie.title}
                                                    image={movie.poster}/>
@@ -42,12 +71,15 @@ function NewEvent() {
                                                     name={"read-only"}
                                                     value={movie.rating}/>
 
-                                            <h6 className={"new-event-movie-text"}>{movie.title}</h6>
+                                            <Tooltip title={movie.title} placement="top-start">
+                                                <h6 className={"new-event-movie-text"}>{movie.title}</h6>
+                                            </Tooltip>
 
                                         </Grid>
                                             </CardActionArea>
                                     </Card>
                                 </Grid>
+
                             )})}
                     </Grid>
                 </Grid>
@@ -58,13 +90,14 @@ function NewEvent() {
                                    label={"title:"}
                                    placeholder={"event title"}
                         />
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label={"description:"}
-                            placeholder={"short event description"}
-                            rows={4}
-                            multiline
-                            maxRows={4}
+                        <TextField id={"outlined"}
+                                   label={"description:"}
+                                   placeholder={"short event description"}
+                        />
+                        <TextField disabled
+                                   id="outlined-disabled"
+                                   label="movie:"
+                                   value={selectedMovie}
                         />
                     </Stack>
                 </Grid>
