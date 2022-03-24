@@ -50,7 +50,7 @@ class AttendMeetingTestCase(APITestCase):
         meeting = Meeting.objects.get(id=1)
         meeting.attendees.add(self.member)
         response = self.client.put(self.url)
-        self.assertEqual(response.data[0],'You are already attending this meeting!')
+        self.assertEqual(response.data[0],'You are already attending this meeting.')
 
     def test_attend_meeting_endpoint_user_not_a_member_returns_403_forbidden(self):
         self.client.force_authenticate(user=self.other_user)

@@ -492,8 +492,3 @@ class WriteMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ['sender', 'club', 'message', 'timestamp']
-
-    # def create(self, validated_data):
-
-    #     message = Message.objects.create(validated_data.get('sender'))
-    #     return message

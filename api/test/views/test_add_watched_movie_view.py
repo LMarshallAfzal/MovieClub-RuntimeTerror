@@ -52,6 +52,16 @@ class AddWatchedMovieViewTestCase(APITestCase):
         self.assertEqual(after, before + 1)
         self.assertEqual(response2.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_post_to_add_watched_movie_endpoint_invalid_input_returns_400_bad_request(self):
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
+        input = {"user" : self.user.id}
+        before = Watch.objects.count()
+        response = self.client.post(self.url,input)
+        after = Watch.objects.count()
+        self.assertEqual(after, before)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
     def test_post_to_add_watched_movie_endpoint_with_user_not_logged_in_does_not_add_to_watched(self):
         before = Watch.objects.count()
         response = self.client.post(self.url)

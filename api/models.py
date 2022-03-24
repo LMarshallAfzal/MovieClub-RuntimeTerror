@@ -133,15 +133,13 @@ class Club(models.Model):
 
     def get_club_owner(self):
         return self.club_members.all().filter(club = self, membership__role = 'O')
-
+        
     def remove_user_from_club(self, user):
         Membership.objects.get(club=self, user=user).delete()
     
     def get_banned_members(self):
         return self.club_members.filter(club = self, membership__role = 'B')
            
-    
-
     def get_organiser(self):
         return self.club_members.filter(club = self,membership__is_organiser = True)
     
@@ -200,6 +198,13 @@ class Membership(models.Model):
 
     def get_role_name(self):
         return self.MembershipStatus(self.role).name.title()
+
+    def toggle_organiser(self):
+        if self.is_organiser == True:
+            self.is_organiser = False
+        else:
+            self.is_organiser = True
+        self.save()
 class Movie(models.Model):
 
     ml_id = models.PositiveIntegerField(
