@@ -32,42 +32,39 @@ export default Navbar;
 
 function NavbarButton() {
     const location = useLocation();
-    let {user} = useContext(AuthContext);
-    
+    let {user,logoutUser} = useContext(AuthContext);
 
-    if (matchPath(location.pathname,"/")) {
-        if (user) {
-            return (
-                <EnterButton
-                    text={"enter"}
-                    linkTo={"/home/"}
-                />
-            )
-        }
-        return (
+    switch (location.pathname){
+        case "/": if (user) {return (
+
             <EnterButton
-                    text={"enter"}
-                    linkTo={"/login"}
-                />
+                text={"enter"}
+                linkTo={"/home"}
+            />
+        )} else {return (
+
+            <EnterButton
+                text={"enter"}
+                linkTo={"/login"}
+            />
+        )}
+
+        case "/login": return (
+
+            <EnterButton
+                text={"sign up"}
+                linkTo={"/signup"}
+            />
         )
-    } else if (matchPath(location.pathname,"/login")) {
-        return (
-                <EnterButton
-                    text={"sign up"}
-                    linkTo={"/signup"}
-                />
-            )
-    } else if (matchPath(location.pathname, "/home/")) {
-        return (
-                <EnterButton
-                
-                    text={"log out"}
-                    linkTo={"/home/logout"}
-                    />
-            )
-    } else {
-        return (
-                <></>
-            )
+
+        default: if(user) {return (
+
+            <EnterButton
+                text={"log out"}
+                onClick={logoutUser}
+            />
+        )} else {return (
+            <></>
+        )}
     }
 }

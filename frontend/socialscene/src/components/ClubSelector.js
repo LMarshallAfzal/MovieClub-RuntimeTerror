@@ -10,7 +10,7 @@ function ClubSelector() {
     return (
 
        <Grid item xs={12}>
-                <div className={"club-selector-background"}>
+                <div className={"home-page-card-background"}>
                     <Grid container direction={"row"} padding={2}>
                         <Grid item xs={12}>
                             <h4 className={"home-page-card-title"}>your clubs:</h4>
@@ -25,8 +25,8 @@ function ClubSelector() {
                                 <ListItem sx={{width: 'auto',p: 1}}>
                                     <div className={"club-selector-listing"}>
                                         <Grid container
-                                              spacing={1}
-                                              padding={1}>
+                                              padding={2}
+                                              alignItems={"center"}>
 
                                             <Grid item xs={8}>
                                                 <h4>{club.clubName}</h4>

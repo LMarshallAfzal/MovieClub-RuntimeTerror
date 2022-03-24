@@ -130,6 +130,7 @@ h6 {
 
 .home-page-card-background {
   background-color: #D8D8D8;
+  overflow: hidden;
 }
 
 .home-page-sub-section-heading {
@@ -138,10 +139,6 @@ h6 {
   background-color: #C4C4C4;
   user-select: none;
   transition: all 0.3s ease-out;
-}
-
-.club-selector-background {
-  background-color: #D8D8D8;
 }
 
 .club-selector-heading {

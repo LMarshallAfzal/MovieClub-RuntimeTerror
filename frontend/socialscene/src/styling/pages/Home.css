@@ -130,6 +130,7 @@ h6 {
 
 .home-page-card-background {
   background-color: #D8D8D8;
+  overflow: hidden;
 }
 
 .home-page-sub-section-heading {

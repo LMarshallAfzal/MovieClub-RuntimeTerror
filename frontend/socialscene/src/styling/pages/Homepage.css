@@ -130,6 +130,7 @@ h6 {
 
 .home-page-card-background {
   background-color: #D8D8D8;
+  overflow: hidden;
 }
 
 .home-page-sub-section-heading {
@@ -152,6 +153,14 @@ h6 {
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
+}
+
+.spotlight {
+  position: absolute;
+  height: calc(100% - 90px);
+  width: 100%;
+  z-index: 1;
+  background-image: radial-gradient(circle, transparent 160px, rgba(0, 0, 0, 0.6) 200px);
 }
 
 .cover-image {

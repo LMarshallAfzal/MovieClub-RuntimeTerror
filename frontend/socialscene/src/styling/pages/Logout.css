@@ -141,21 +141,23 @@ h6 {
   transition: all 0.3s ease-out;
 }
 
-.search-bar {
+.logout-grid {
+  height: calc(100% - 90px);
+}
+
+.logout-grid-child {
+  height: 100%;
+}
+
+.logout-form-stack {
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-row {
   width: 100%;
-  user-select: none;
+  max-width: 60%;
 }
 
-.create-button {
-  width: 100%;
-}
-
-.club-card-list-frame {
-  overflow: auto;
-}
-
-.club-card-list-item {
-  width: auto;
-}
-
-/*# sourceMappingURL=Clubs.css.map */
+/*# sourceMappingURL=Logout.css.map */

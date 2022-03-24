@@ -215,19 +215,19 @@ function ClubDetail() {
                 <Stack spacing={2} sx={{height: "100%"}}>
                     <TextField
                         id="outlined"
-                        label="club name"
+                        label="club name:"
                         defaultValue={club.clubName}
                     />
 
                     <TextField
                         id="outlined"
-                        label="club description"
+                        label="club description:"
                         defaultValue={club.description}
                     />
 
                     <TextField
                         id="outlined"
-                        label="club theme"
+                        label="theme:"
                         defaultValue={club.clubTheme}
                     />
 

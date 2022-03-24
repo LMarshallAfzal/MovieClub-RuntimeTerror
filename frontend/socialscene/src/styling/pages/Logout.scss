@@ -1,25 +1,20 @@
 @use "../base";
 
-.login-grid {
+.logout-grid {
   height: base.$height;
 }
 
-.login-grid-child {
+.logout-grid-child {
   height: 100%;
 }
 
-.login-form {
-  height: 100%;
-}
-
-.login-form-stack {
+.logout-form-stack {
   height: 100%;
   align-items: center;
   justify-content: center;
 }
 
-.login-form-row {
+.logout-row {
   width: 100%;
   max-width: 60%;
 }
-

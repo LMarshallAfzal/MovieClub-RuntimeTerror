@@ -34,7 +34,7 @@ export function Login() {
                   xs={6}
                   className={"login-grid-child"}>
 
-                <HeadingCircle title={"log in"}/>
+                <HeadingCircle title={"log in"} />
             </Grid>
 
             <Grid item

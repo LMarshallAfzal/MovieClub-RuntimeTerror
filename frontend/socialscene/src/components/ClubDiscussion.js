@@ -76,8 +76,7 @@ function ClubDiscussion() {
     }
 
     return(
-        <Grid container
-              spacing={2}>
+        <Grid container spacing={2}>
 
             <Grid item xs={10}>
                 <h4 className={"home-page-sub-section-heading"}>{club.clubName}:</h4>
@@ -91,14 +90,13 @@ function ClubDiscussion() {
             </Grid>
 
             <Grid item xs={7}>
-                <div className={"home-page-card-background"}>
-                    <Outlet />
-                </div>
+                <Outlet />
             </Grid>
 
             <Grid item xs={5}>
                 <div className={"home-page-card-background"}>
-                    <Grid container padding={1}>
+                    <Grid container padding={2} spacing={2}>
+
                         <Grid item xs={12}>
                             <h4 className={"home-page-card-title"}>messages:</h4>
                         </Grid>
@@ -145,6 +143,7 @@ function ClubDiscussion() {
                                     label="message"
                                     name="message"
                                     value={message.message}
+                                    placeholder={"say something"}
                                     variant="outlined"
                                     onChange={(e, dateTime) => onChange(e, dateTime)}
                                     InputProps={{

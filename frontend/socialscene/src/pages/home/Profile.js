@@ -197,12 +197,9 @@ const Profile = () => {
 
                         <TextField error={bioError}
                                    helperText={errorBioText}
-                                   spacing={6}
                                    id={"outlined-multiline-static"}
                                    label={"bio"}
                                    name={"bio"}
-                                   type={"text"}
-                                   variant={"outlined"}
                                    multiline
                                    rows={7.5}
                                    value={userData.bio}
@@ -215,12 +212,9 @@ const Profile = () => {
                         <TextField error={preferencesError}
                                    helperText={errorPreferencesText}
                                    required
-                                   spacing={6}
                                    id={"outlined-multiline-static"}
                                    label={"preferences"}
                                    name={"preferences"}
-                                   type={"text"}
-                                   variant={"outlined"}
                                    multiline
                                    rows={20}
                                    value={userData.preferences}
