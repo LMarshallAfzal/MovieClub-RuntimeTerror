@@ -27,11 +27,6 @@ export const SidebarData = [
         cName: 'sidebar-text'
     },
     {
-        title: 'messages - remove',
-        path: '/home/messages',
-        cName: 'sidebar-text'
-    },
-    {
         title: 'options',
         path: '/home/options',
         cName: 'sidebar-text'

@@ -3,7 +3,7 @@ import "../styling/components/TextButton.css";
 
 function TextButton(props) {
     return (
-        <button className={"text-button"}>{props.text}</button>
+        <button className={"text-button"} onClick={props.onClick}>{props.text}</button>
     );
 }
 
