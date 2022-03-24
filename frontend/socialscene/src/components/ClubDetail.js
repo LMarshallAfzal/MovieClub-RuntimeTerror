@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import {useParams} from "react-router";
 import {Avatar, Box, Chip, Grid, ListItem, Stack, TextField} from "@mui/material";
 import "../styling/components/ClubDetail.css";
@@ -6,13 +6,18 @@ import FormButton from "./FormButton";
 import {DummyClubData} from "../pages/data/DummyClubsData";
 import ClubListing from "./ClubListing";
 import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
+import AuthContext from "../components/helper/AuthContext";
 
 
-function ClubDetail() {
+
+function ClubDetail(props) {
     const [open, setOpen] = React.useState(false);
 
     let { clubID } = useParams();
+    let {authTokens} = useContext(AuthContext);
     let club = DummyClubData.find(obj => obj.ID === clubID);
+    const [myClubData, setMyClubData] = useState([]);
+    const [clubMembers, setClubMembers] = useState([]);
 
     const handleDelete = () => {
         console.log("User Deleted");
@@ -24,8 +29,40 @@ function ClubDetail() {
         console.log("User Clicked");
     }
 
-    
+    let getClubMembers = async (clubId) => {
+        let response = await fetch('http://127.0.0.1:8000/club_members/' + clubId +'/', {
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        setClubMembers(data)
+        console.log(clubMembers)
+    }
 
+    let joinClub = async (clubId) => {
+        let response = await fetch('http://127.0.0.1:8000/join_club/' + clubId +'/', {
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+    }
+
+    let leaveClub = async (clubId) => {
+        let response = await fetch('http://127.0.0.1:8000/leave_club/' + clubId +'/', {
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+    }
 
     return (
         <Grid
@@ -101,9 +138,18 @@ function ClubDetail() {
             <Grid item xs={3}>
                 <Stack spacing={2}>
                     <FormButton text={"create"}/>
-                    <FormButton text={"join"}/>
-                    <FormButton text={"leave"}/>
-                    <FormButton text={"delete"}/>
+                    <FormButton 
+                        text={"join"}
+                        // onClick={joinClub(props.clubID)}
+                    />
+                    <FormButton 
+                        text={"leave"}
+                        // onClick={leaveClub(props.clubID)}
+                    />
+                    <FormButton 
+                        text={"delete"}
+                        // onClick={leaveClub(props.clubID)}
+                    />
 
                 </Stack>
 

@@ -30,6 +30,18 @@ function ClubListing(props) {
         setMyClubData(data)
     }
 
+    // let joinClub = async (clubId) => {
+    //     let response = await fetch('http://127.0.0.1:8000/join_club/' + clubId +'/', {
+    //         method:'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': 'Bearer ' + String(authTokens.access)
+    //         }
+    //     })
+    //     let data = await response.json()
+    // }
+
+
     useEffect((e) => { 
         getMembershipData()
     },[])
@@ -37,19 +49,22 @@ function ClubListing(props) {
     let { clubID } = useParams();
 
     function ClubButton() {
-        // if (props.isMember === true) {
+        if (props.isMember === "M") {
             return (
                 <EnterButton
                     text={"info"}
-                    linkTo={`/home/clubs/${props.clubID}`}/>
+                    linkTo={`/home/clubs/${props.clubID}`}
+                />
             )
-        // } else {
-        //         return (
-        //             <EnterButton
-        //                 text={"join"}
-        //                 linkTo={`/home/clubs/${props.clubID}`}/>
-        //         )
-        //     }
+        } else {
+                return (
+                    <EnterButton
+                        text={"join"}
+                        // onClick={joinClub(props.clubID)}
+                        linkTo={`/home/clubs/${props.clubID}`}
+                    />
+                )
+            }
         }
 
     function ClubChip() {

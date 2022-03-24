@@ -20,6 +20,7 @@ function Clubs() {
     let {user, authTokens} = useContext(AuthContext);
 
     let getMembershipData = async (e) => {
+        // e.preventDefault()
         let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
             method:'GET',
             headers: {
@@ -33,6 +34,7 @@ function Clubs() {
     }
 
     let getMemData = async (e) => {
+        // e.preventDefault()
         let response = await fetch('http://127.0.0.1:8000/mem/' + user.user_id +'/', {
             method:'GET',
             headers: {
@@ -56,7 +58,6 @@ function Clubs() {
             }
         })
         let data = await response.json()
-        // console.log(data)
         setRecommendedClubData(data)
     }
 
@@ -115,7 +116,7 @@ function Clubs() {
                                     >
                                     <ClubListing
                                         clubName={club.club_name}
-                                        // isMember={club.isMember}
+                                        isMember={"M"}
                                         iconImage={club.iconImage}
                                         description={club.mission_statement}
                                         // isOrganiser={club.isOrganiser}
@@ -149,26 +150,26 @@ function Clubs() {
                           className={"club-card-list-frame"}
                     >
                         {recommendedClubData.map((club) => {
-                            // if (club.isMember === false) {
+                            if (!club.club_members.includes(userMembershipData[0].user)) {
                                 return (
                                     <ListItem>
                                     <ClubListing
                                         clubName={club.club_name}
-                                        // isMember={club.isMember}
-                                        // iconImage={club.iconImage}
-                                        // description={club.description}
-                                        // isOrganiser={club.isOrganiser}
-                                        // memberRole={club.memberRole}
-                                        // clubTheme={club.clubTheme}
-                                        // ID={club.ID}
+                                        isMember={"N"}
+                                        iconImage={club.iconImage}
+                                        description={club.mission_statement}
+                                        isOrganiser={"O"}
+                                        memberRole={club.memberRole}
+                                        clubTheme={club.theme}
+                                        clubID={club.id}
                                     />
                                     </ListItem>
                                     )
-                            // } else {
-                            //     return (
-                            //         <></>
-                            //     )
-                            // }
+                            } else {
+                                return (
+                                    <></>
+                                )
+                            }
                         })}
                     </Stack>
                 </div>
