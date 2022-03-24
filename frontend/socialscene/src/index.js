@@ -36,6 +36,15 @@ const theme = createTheme({
                   },
               },
       },
+        MuiRating: {
+          styleOverrides:{
+              root:{
+                  color: "#FF0000",
+              }
+          }
+
+        },
+
       MuiInputLabel: {
           styleOverrides: {
               root:{
@@ -64,7 +73,7 @@ const theme = createTheme({
 });
 
 ReactDOM.render(
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>  
       <App/>
     </ThemeProvider>,
   document.getElementById('root')

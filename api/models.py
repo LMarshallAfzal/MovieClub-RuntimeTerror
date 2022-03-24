@@ -4,6 +4,9 @@ from django.db.models.fields.related import ForeignKey
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator,MinLengthValidator
 from django.utils.translation import gettext_lazy as _
+import datetime
+from datetime import datetime
+
 
 class User(AbstractUser):
 
@@ -305,13 +308,13 @@ class Meeting(models.Model):
         self.save()
 
 class Message(models.Model):
-    sender = models.ForeignKey(User,on_delete=models.CASCADE,unique=False)
+    sender = models.ForeignKey(User,to_field='username',on_delete=models.CASCADE,unique=False)
 
     club = models.ForeignKey(Club,on_delete=models.CASCADE,unique=False)
 
     message = models.CharField(max_length=1500)
 
-    timestamp = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
             return self.message

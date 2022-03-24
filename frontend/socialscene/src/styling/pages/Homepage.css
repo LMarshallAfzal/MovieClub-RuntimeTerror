@@ -120,17 +120,25 @@ h6 {
   background-color: #C4C4C4;
   padding: 10px;
   user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
-  padding-top: 10px;
-  padding-left: 10px;
   color: #FFFFFF;
   user-select: none;
 }
 
 .home-page-card-background {
   background-color: #D8D8D8;
+  overflow: hidden;
+}
+
+.home-page-sub-section-heading {
+  padding: 10px;
+  color: #FFFFFF;
+  background-color: #C4C4C4;
+  user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .welcome-text {
@@ -145,6 +153,14 @@ h6 {
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
+}
+
+.spotlight {
+  position: absolute;
+  height: calc(100% - 90px);
+  width: 100%;
+  z-index: 1;
+  background-image: radial-gradient(circle, transparent 160px, rgba(0, 0, 0, 0.6) 200px);
 }
 
 .cover-image {

@@ -275,7 +275,7 @@ export const Signup = () => {
 
                         <div className={"signup-form-row"}>
                             <FormButton
-
+                                style={"primary"}
                              type="submit"
                              text={"sign up"}
                             />

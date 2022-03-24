@@ -41,7 +41,13 @@ class MeetingAdmin(admin.ModelAdmin):
     '''Configuration of the administrative interface for meetings'''
     list_display = [
         'id','organiser','movie','meeting_title','date','description','start_time','end_time','completed'
-    ]
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    '''Configuration of the administrative interface for messages'''
+    list_display = [
+        'id','sender','message'
+
 
 
 

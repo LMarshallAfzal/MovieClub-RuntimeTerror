@@ -120,17 +120,25 @@ h6 {
   background-color: #C4C4C4;
   padding: 10px;
   user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
-  padding-top: 10px;
-  padding-left: 10px;
   color: #FFFFFF;
   user-select: none;
 }
 
 .home-page-card-background {
   background-color: #D8D8D8;
+  overflow: hidden;
+}
+
+.home-page-sub-section-heading {
+  padding: 10px;
+  color: #FFFFFF;
+  background-color: #C4C4C4;
+  user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .home-grid {
