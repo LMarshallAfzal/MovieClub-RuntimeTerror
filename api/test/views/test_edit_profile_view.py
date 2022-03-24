@@ -8,6 +8,8 @@ from rest_framework.test import force_authenticate,APIClient
 class EditUserViewTestCase(APITestCase):
     
     fixtures = [
+        'api/test/fixtures/default_genre.json',
+        'api/test/fixtures/other_genres.json',
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/other_users.json',
     ]
@@ -22,7 +24,7 @@ class EditUserViewTestCase(APITestCase):
             "last_name": "Doe",
             "email": "johndoe@example.org",
             "bio": "The quick brown fox jumps over the lazy dog.",
-            "preferences": "Action, Drama, Horror, Comedy, Science fiction"
+            "preferences": [1,2,3,4]
         }
 
 

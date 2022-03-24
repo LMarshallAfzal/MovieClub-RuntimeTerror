@@ -111,22 +111,14 @@ class UserModelTestCase(APITestCase):
         self._assert_user_is_invalid()
 
     def test_preferences_must_not_be_blank(self):
-        self.user.preferences = ''
+        self.user.preferences.remove(*self.user.preferences.all())
         self._assert_user_is_invalid()
     
     def test_preferences_need_not_be_unique(self):
-        self.user.preferences = self.second_user.preferences
+        self.user.preferences.remove(*self.user.preferences.all())
+        self.user.preferences.set(self.second_user.preferences.all())
         self._assert_user_is_valid()
 
-    
-    def test_preferences_may_contain_up_to_100_characters(self):
-        self.user.preferences = 'x' * 10
-        self._assert_user_is_valid()
-
-    def test_preferences_must_not_contain_more_than_100_characters(self):
-        self.user.preferences = 'x' * 101
-        self._assert_user_is_invalid()
-    
     def test_get_user_clubs(self):
         clubs = self.user.get_user_clubs()
         self.assertEqual(clubs.count(), 0)
