@@ -10,13 +10,63 @@ import AuthContext from "../components/helper/AuthContext";
 
 
 
-function ClubDetail(props) {
+function ClubDetail() {
     // const [open, setOpen] = React.useState(false);
 
     let { clubID } = useParams();
-    let {authTokens} = useContext(AuthContext);
-    let club = DummyClubData.find(obj => obj.ID === clubID);
+    let {user, authTokens} = useContext(AuthContext);
     const [clubMembers, setClubMembers] = useState([]);
+    let [recommendedClubData, setRecommendedClubData] = useState([]);
+    let [myClubData, setMyClubData] = useState([]);
+    const [wantedClub, setWantedClub] = useState([]);
+
+
+    let getMembershipData = async (e) => {
+        // e.preventDefault()
+        let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        setMyClubData(data)
+    }
+
+    let getRecommendedClubs = async (e) => {
+        let response = await fetch('http://127.0.0.1:8000/rec/clubs', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        setRecommendedClubData(data)
+    }
+
+    // let club = (myClubData.find(obj => obj.ID === clubID)) || (recommendedClubData.find(obj => obj.ID === clubID));
+    let getSpecifiedClub = async () => {
+        for(let i=0; recommendedClubData.length > i; i++) {
+            if(recommendedClubData[i].id === clubID) {
+                setWantedClub(recommendedClubData[i].id)
+                // console.log("passed")
+            }
+            else { 
+                console.log("failed")
+            }
+        }    
+        for(let i=0; myClubData.length > i; i++) {
+            if(myClubData[i].id === clubID) {
+                setWantedClub(myClubData[i].id)
+                // console.log("passed")                
+            } 
+            else { 
+                console.log("failed")
+            } 
+        }
+    }    
 
     const handleDelete = () => {
         console.log("User Deleted");
@@ -28,8 +78,9 @@ function ClubDetail(props) {
         console.log("User Clicked");
     }
 
-    let getClubMembers = async (clubId) => {
-        let response = await fetch('http://127.0.0.1:8000/club_members/' + clubId +'/', {
+    let getClubMembers = async () => {
+        // getSpecifiedClub()
+        let response = await fetch('http://127.0.0.1:8000/club_members/' + clubID +'/', {
             method:'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,8 +92,8 @@ function ClubDetail(props) {
         console.log(clubMembers)
     }
 
-    let joinClub = async (clubId) => {
-        let response = await fetch('http://127.0.0.1:8000/join_club/' + clubId +'/', {
+    let joinClub = async () => {
+        let response = await fetch('http://127.0.0.1:8000/join_club/' + clubID +'/', {
             method:'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -52,8 +103,8 @@ function ClubDetail(props) {
         let data = await response.json()
     }
 
-    let leaveClub = async (clubId) => {
-        let response = await fetch('http://127.0.0.1:8000/leave_club/' + clubId +'/', {
+    let leaveClub = async () => {
+        let response = await fetch('http://127.0.0.1:8000/leave_club/' + clubID +'/', {
             method:'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -63,8 +114,12 @@ function ClubDetail(props) {
         let data = await response.json()
     }
 
-    useEffect((e) => {
-        getClubMembers(7)
+    useEffect(() => {
+        getSpecifiedClub()
+        getMembershipData()
+        getRecommendedClubs()
+        getClubMembers(wantedClub.id)
+
     },[])
 
     return (
@@ -76,7 +131,7 @@ function ClubDetail(props) {
         spacing={2}
         >
             <Grid item xs={12}>
-                <h4 className={"club-detail-heading"}>{club.clubName}</h4>
+                <h4 className={"club-detail-heading"}>{wantedClub.clubName}</h4>
             </Grid>
 
             <Grid item xs={6}>
@@ -103,38 +158,28 @@ function ClubDetail(props) {
                                  />
                             )
                         })}
-
                     </Box>
-
                 </div>
-
-
             </Grid>
-
             <Grid item xs={3}>
                 <Stack spacing={2}>
                     <TextField
                         id="outlined"
                         label="club name"
-                        defaultValue={club.clubName}
+                        defaultValue={wantedClub.club_name}
                     />
-
                     <TextField
                         id="outlined"
                         label="club description"
-                        defaultValue={club.description}
+                        defaultValue={wantedClub.mission_statement}
                     />
-
                     <TextField
                         id="outlined"
                         label="club theme"
-                        defaultValue={club.clubTheme}
+                        defaultValue={wantedClub.theme}
                     />
-
                     <FormButton text={"save"}/>
-
                 </Stack>
-
             </Grid>
             <Grid item xs={3}>
                 <Stack spacing={2}>
@@ -157,7 +202,7 @@ function ClubDetail(props) {
             </Grid>
 
         </Grid>
-    );
+    )
 }
 
 export default ClubDetail;

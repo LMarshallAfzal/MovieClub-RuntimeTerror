@@ -30,7 +30,6 @@ function Clubs() {
         })
         let data = await response.json()
         setMyClubData(data)
-        console.log(myClubData)
     }
 
     let getMemData = async (e) => {

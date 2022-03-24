@@ -67,7 +67,7 @@ function ClubListing(props) {
             return (
                 <EnterButton
                     text={"info"}
-                    linkTo={`/home/clubs/${props.clubID}`}
+                    linkTo={`/home/clubs/${clubID}`}
                 />
             )
         } else {
@@ -75,7 +75,7 @@ function ClubListing(props) {
                     <EnterButton
                         text={"join"}
                         // onClick={joinClub(props.clubID)}
-                        linkTo={`/home/clubs/${props.clubID}`}
+                        linkTo={`/home/clubs/${clubID}`}
                     />
                 )
             }
