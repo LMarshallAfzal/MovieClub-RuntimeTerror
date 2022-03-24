@@ -14,10 +14,6 @@ export function Login() {
     
     const {username, password} = loginCredentials;
     
-    // useEffect(() => {
-    //     loginUser()
-    // }, [])
-    
     const onChange = (e) => {
         setLoginCredentials(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
     };

@@ -7,12 +7,11 @@ import { Grid } from "@mui/material";
 import CsrfToken from "../../components/helper/CsrfToken";
 import AuthContext from "../../components/helper/AuthContext";
 
-
 function HomeRouter() {
    
     let {user} = useContext(AuthContext)
 
-    if(!user) return null
+    // if(!user) return null
     
     return (
         <>

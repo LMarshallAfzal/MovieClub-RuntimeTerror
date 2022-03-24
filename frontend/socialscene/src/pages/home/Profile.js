@@ -1,13 +1,16 @@
-import React, {useContext, useState, useEffect} from 'react'
+import React, {useContext, useState, useEffect} from 'react';
 import "../../styling/pages/Profile.css";
 import { Box, Stack, TextField, Button, Grid } from "@mui/material";
 import FormButton from "../../components/FormButton";
 import AuthContext from "../../components/helper/AuthContext";
+// import FetchInstance from "../../components/helper/FetchInstance";
+import useFetch from "../../components/helper/useFetch";
 
 
 const Profile = () => {
     const [userData, setUserData] = useState('')
     let {user, authTokens} = useContext(AuthContext)
+    let api = useFetch()
 
     const [usernameError, setUsernameError] = useState(false)
     const [firstNameError, setFirstNameError] = useState(false)
@@ -74,6 +77,18 @@ const Profile = () => {
     let submitChangeProfileForm = async (e) => {
         e.preventDefault();
         resetErrorState();
+        // let {response, data} = await api(`/edit_profile/${user.user_id}/`),{
+        //     method:'PUT',
+        //     body:JSON.stringify({
+        //         "username": userData.username, 
+        //         "first_name": userData.first_name, 
+        //         "last_name": userData.last_name,
+        //         "email": userData.email,
+        //         "bio": userData.bio, 
+        //         "preferences": userData.preferences
+        //     }),
+        // }
+            
         let response = await fetch('http://127.0.0.1:8000/edit_profile/' + user.user_id ,{
             method:'PUT',
             body:JSON.stringify({
@@ -99,17 +114,13 @@ const Profile = () => {
         
     }
 
-    let getUserData = async (e) => {
-        let response = await fetch("http://127.0.0.1:8000/user/", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + String(authTokens.access)
-            }
-        })
-        let data = await response.json()
-        //console.log(data)
-        setUserData(data)
+    let getUserData = async () => {
+        let {response, data} = await api('/user/')
+        
+        if(response.status === 200) {
+            setUserData(data)
+
+        }
     }
 
     useEffect(() => {

@@ -18,7 +18,7 @@ function NameHeader(props) {
                   <div className={"name-header-image"}>
 
                       <Avatar
-                          alt={props.firstName + " " + props.lastName}
+                          alt={props.username}
                           src={iconImage}
                           sx={{width: "100%", height: "100%"}}
                       />
