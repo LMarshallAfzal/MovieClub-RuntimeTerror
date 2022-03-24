@@ -141,30 +141,26 @@ def user_in_club(view_function):
 def has_ratings_for_movie_recommendations(view_function):
     @wraps(view_function)
     def modified_view_function(request, *args, **kwargs):
-        try:
-            Rating.objects.get(user=request.user.id)
-        except ObjectDoesNotExist:
+        if Rating.objects.filter(user=request.user.id):
+            return view_function(request, *args, **kwargs)
+        else:
             recommendations = get_initial_recommendations_for_movies(
-                request.user, request.user.get_user_preferences().split(','))
+            request.user, request.user.get_user_preferences())
             serializer = MovieSerializer(recommendations, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return view_function(request, *args, **kwargs)
     return modified_view_function
 
 
 def has_ratings_for_club_recommendations(view_function):
     @wraps(view_function)
     def modified_view_function(request, *args, **kwargs):
-        try:
-            Rating.objects.get(user=request.user.id)
-        except ObjectDoesNotExist:
+        if Rating.objects.filter(user=request.user.id):
+            return view_function(request, *args, **kwargs)
+        else:
             recommendations = get_initial_recommendations_for_clubs(
-                request.user, request.user.get_user_preferences().split(','))
+            request.user, request.user.get_user_preferences().split(','))
             serializer = ClubSerializer(recommendations, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return view_function(request, *args, **kwargs)
     return modified_view_function
 
 

@@ -245,11 +245,18 @@ class Movie(models.Model):
 
     def get_movies_by_genre(genres):
         movies = []
+        filtered_movies = Movie.objects.filter(genres=genres)
+        for movie in filtered_movies:
+            movies.append(movie)
+        genres = genres.split(',')
         for genre in genres:
-            movies.append(Movie.objects.annotate(
+            filtered_queryset = Movie.objects.annotate(
             string=Value(genre)
-                ).filter(string__icontains=F('genres')))
+                ).filter(string__icontains=F('genres'))
+            for movie in filtered_queryset:
+                movies.append(movie)
         return movies
+
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

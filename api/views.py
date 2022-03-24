@@ -272,7 +272,7 @@ def change_rating(request, movie_id):
 
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 @has_ratings_for_movie_recommendations
 def recommend_movie_user(request):
     recommendations = []
@@ -371,9 +371,9 @@ def message_forum(request, club_id):
 @club_exists
 @is_organiser
 @club_has_upcoming_meeting
-def edit_meeting(request, club_id, meeting_id):
+def edit_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
-    meeting = Meeting.objects.get(id=meeting_id, club=club)
+    meeting = club.get_upcoming_meeting()
     serializer = UpdateMeetingSerializer(meeting, data=request.data)
     if serializer.is_valid():
         serializer.save()

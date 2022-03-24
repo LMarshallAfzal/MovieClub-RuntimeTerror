@@ -5,14 +5,12 @@ from datetime import datetime
 
 
 def get_initial_recommendations_for_movies(user, user_preferences):
-    querysets = []
-    querysets = Movie.get_movies_by_genre(user_preferences)
+    query = Movie.get_movies_by_genre(user_preferences)
     watched_movies = user.get_watched_movies()
     movies = set()
-    for queryset in querysets:
-        for movie in queryset:
-            if not movie in watched_movies:
-                movies.add(movie)
+    for movie in query:
+        if not movie in watched_movies:
+            movies.add(movie)
             continue
     number_of_recomendations = 5
     if len(movies) < 5:
