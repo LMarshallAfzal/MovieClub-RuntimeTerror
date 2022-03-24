@@ -69,4 +69,17 @@ class WriteMessageViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_post_to_write_message_endpoint_with_invalid_data_returns_400_bad_request(self):
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
+        before = Message.objects.count()
+        input = {
+            "sender": self.user.id,
+            "message": 'Hello, everyone!',
+        }
+        response = self.client.post(self.url, input)
+        after = Message.objects.count()
+        self.assertEqual(after, before)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
     

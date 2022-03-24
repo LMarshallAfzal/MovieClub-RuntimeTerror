@@ -48,5 +48,5 @@ urlpatterns = [
     path("attend_meeting/<int:club_id>/", views.attend_meeting,name = "attend_meeting"),
     path("leave_meeting/<int:club_id>/", views.leave_meeting,name = "leave_meeting"),
     path("get_club_upcoming_meeting/<int:club_id>/", views.get_club_upcoming_meeting, name = "get_club_upcoming_meeting"),
-    path("get_user_attending_meetings/", views.get_user_upcoming_attending_meetings, name = "get_user_upcoming_attending_meetings"),
+    path("get_user_attending_meetings/", views.get_user_upcoming_attending_meetings, name = "get_user_attending_meetings"),
 ]

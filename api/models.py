@@ -67,6 +67,7 @@ class User(AbstractUser):
         meeting.save()
 
     def get_attending_meetings(self):
+        meetings = []
         meetings = Meeting.objects.all().filter(attendees = self)
         return meetings
 
@@ -75,11 +76,14 @@ class User(AbstractUser):
         meeting.save()
 
     def get_user_clubs(self):
-        clubs = Club.objects.filter(club_members__username=self.username)
+        clubs = []
+        for club in Club.objects.filter(club_members__username=self.username):
+            if Membership.objects.get(user=self,club=club).role != 'B':
+                clubs.append(club)
         return clubs
 
     def get_user_memberships(self):
-        memberships = Membership.objects.filter(user=self)
+        memberships = Membership.objects.filter(user=self).exclude(role = 'B')
         return memberships
 
     def get_user_preferences(self):
@@ -121,7 +125,7 @@ class Club(models.Model):
     club_meetings = models.ManyToManyField('Meeting', related_name='club_meetings')
 
     def get_all_users_in_club(self):
-        return self.club_members.all()
+        return self.club_members.all().exclude(membership__role = 'B')
 
     def get_all_club_members(self):
         return self.club_members.all().filter(
@@ -135,9 +139,11 @@ class Club(models.Model):
     
     def get_banned_members(self):
         return self.club_members.filter(club = self, membership__role = 'B')
+           
+    
 
     def get_organiser(self):
-        return self.club_members.filter(club = self,membership__role = 'O')
+        return self.club_members.filter(club = self,membership__is_organiser = True)
     
     def get_clubs_by_theme(preferences):
         clubs = []

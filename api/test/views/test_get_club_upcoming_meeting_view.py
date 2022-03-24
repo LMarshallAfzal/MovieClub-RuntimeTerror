@@ -44,7 +44,7 @@ class ClubUpcomingMeetingTestCase(APITestCase):
         meeting = self.club.get_upcoming_meeting()
         meeting.toggle_completed()
         response = self.client.get(self.url)
-        self.assertEqual(response.data[0],'Beatles currently has no upcoming meeting.')
+        self.assertEqual(response.data[0],'Beatles currently have no upcoming meeting.')
 
     def test_get_club_upcoming_meeting_endpoint_user_not_a_member_returns_403_forbidden(self):
         self.client.force_authenticate(user=self.other_user)
