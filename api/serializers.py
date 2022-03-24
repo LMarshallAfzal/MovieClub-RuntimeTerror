@@ -395,7 +395,7 @@ class MessageSerializer(serializers.ModelSerializer):
 class WriteMessageSerializer(serializers.ModelSerializer):
     sender = serializers.SlugRelatedField(
         many=False,
-        slug_field='id',
+        slug_field='username',
         queryset=User.objects.all()
      )
     club = serializers.SlugRelatedField(
