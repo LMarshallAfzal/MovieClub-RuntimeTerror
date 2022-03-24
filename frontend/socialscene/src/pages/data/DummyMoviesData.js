@@ -12,6 +12,13 @@ export const moviesWithPoster = [
         deadline: '12/12/2022',
     },
     {
+        title: 'Borat: Cultural Learnings of America for Make Benefit Glorious Nation of Kazakhstan',
+        poster: avengerImage,
+        rating: 4.0,
+        club: 'clubOne',
+        deadline: '12/12/2022',
+    },
+    {
         title: 'Django Unchained',
         poster: djangoImage,
         rating: 4.5,
@@ -76,6 +83,20 @@ export const moviesWithPoster = [
     },
     {
         title: 'So Bad',
+        poster: avengerImage,
+        rating: 4.0,
+        club: 'clubOne',
+        deadline: '12/12/2022',
+    },
+    {
+        title: 'The Chronicles of Narnia: The Lion, the Witch and the Wardrobe',
+        poster: avengerImage,
+        rating: 4.0,
+        club: 'clubOne',
+        deadline: '12/12/2022',
+    },
+    {
+        title: 'Borat: Cultural Learnings of America for Make Benefit Glorious Nation of Kazakhstan',
         poster: avengerImage,
         rating: 4.0,
         club: 'clubOne',

@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styling/pages/OthersProfile.css";
-import { Rating, CardHeader, CardMedia, Chip, Avatar, Box, Stack, Card, CardContent, TextField, Typography, Grid, Paper, ListItemText, ListItemButton } from "@mui/material";
+import { Tooltip, Rating, CardHeader, CardMedia, Chip, Avatar, Box, Stack, Card, CardContent, TextField, Typography, Grid, Paper, ListItemText, ListItemButton } from "@mui/material";
 import FormButton from "../../components/FormButton";
 import iconImage from "../../styling/images/testIconPic.jpg";
 import { DummyDashboardClubsData, meetings, movies } from './../data/DummyDashboardClubsData';
@@ -70,6 +70,7 @@ function OthersProfile() {
 
                         <Grid item xs={6}>
                             <Stack spacing={2}>
+
                                 <Card>
                                     <CardContent>
                                         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
@@ -83,6 +84,7 @@ function OthersProfile() {
                                         <Chip style={{ margin: '5px' }} label="Fantasy" />
                                     </CardContent>
                                 </Card>
+
                                 <Card>
                                     <CardContent>
                                         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
@@ -93,12 +95,14 @@ function OthersProfile() {
                                         </Typography>
                                     </CardContent>
                                 </Card>
+
                                 <div>
                                     <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
                                         Mutual Clubs:
                                     </Typography>
                                 </div>
-                                <Paper style={{ maxHeight: 350, overflow: 'auto' }}>
+                                <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
+                                    {/* SUBSTITUTE WITH MUTUAL CLUBS DATA */}
                                     {DummyDashboardClubsData.map((val) => {
                                         return (
                                             <ListItemButton>
@@ -107,6 +111,41 @@ function OthersProfile() {
                                         );
                                     })}
                                 </Paper>
+
+                                <div>
+                                    <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
+                                        {/* SUBSTITUTE 30 WITH NUMBER OF FOLLOWING */}
+                                        Following 30
+                                    </Typography>
+                                </div>
+                                <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
+                                    {/* SUBSTITUTE WITH LIST OF PPL THE USER FOLLOWS */}
+                                    {DummyDashboardClubsData.map((val) => {
+                                        return (
+                                            <ListItemButton>
+                                                <ListItemText primary={val.name} />
+                                            </ListItemButton>
+                                        );
+                                    })}
+                                </Paper>
+
+                                <div>
+                                    <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
+                                        {/* SUBSTITUTE 30 WITH NUMBER OF FOLLOWERS */}
+                                        Followers 30
+                                    </Typography>
+                                </div>
+                                <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
+                                    {/* SUBSTITUTE WITH LIST OF PPL WHO FOLLOWS THE USER*/}
+                                    {DummyDashboardClubsData.map((val) => {
+                                        return (
+                                            <ListItemButton>
+                                                <ListItemText primary={val.name} />
+                                            </ListItemButton>
+                                        );
+                                    })}
+                                </Paper>
+
                             </Stack>
                         </Grid>
 
@@ -151,7 +190,7 @@ function OthersProfile() {
 
                                 <Grid item xs={12}>
                                     <Typography sx={{ fontSize: 20 }} color="text.secondary" >
-                                        Their recently watched movies:
+                                        Recently watched movies:
                                     </Typography>
                                 </Grid>
                                 {moviesWithPoster.slice(0, 5).map((movie) => {
@@ -165,7 +204,9 @@ function OthersProfile() {
                                             />
 
                                             <CardHeader title={
-                                                <Typography noWrap fontSize="13px" >{movie.title}</Typography>
+                                                <Tooltip title={movie.title} placement="top-start">
+                                                    <Typography noWrap maxWidth={"125px"} fontSize="13px" >{movie.title}</Typography>
+                                                </Tooltip>
                                             } />
                                         </Card>
                                     </Grid>
@@ -174,7 +215,7 @@ function OthersProfile() {
 
                                 <Grid item xs={12}>
                                     <Typography sx={{ fontSize: 20 }} color="text.secondary" >
-                                        Their favourite movies:
+                                        Favourite movies:
                                     </Typography>
                                 </Grid>
                                 {moviesWithPoster.slice(0, 5).map((movie) => {
@@ -188,7 +229,9 @@ function OthersProfile() {
                                             />
 
                                             <CardHeader title={
-                                                <Typography noWrap fontSize="13px" >{movie.title}</Typography>
+                                                <Tooltip title={movie.title} placement="top-start">
+                                                    <Typography noWrap maxWidth={"125px"} fontSize="13px" >{movie.title}</Typography>
+                                                </Tooltip>
                                             } />
                                         </Card>
                                     </Grid>

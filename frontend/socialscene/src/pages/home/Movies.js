@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { IconButton, Box, Collapse, TextField, Grid, Typography, Rating } from "@mui/material";
+import { Tooltip, IconButton, Box, Collapse, TextField, Grid, Typography, Rating } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -129,12 +129,16 @@ const Movies = () => {
                                             />
 
                                             <CardHeader title={
-                                                <Typography noWrap fontSize={"25px"}>{movie.title}</Typography>
+                                                <Tooltip title={movie.title} placement="top-start">
+                                                    <Typography noWrap maxWidth={'300px'} fontSize={"25px"}>{movie.title}</Typography>
+                                                </Tooltip>
                                             } />
 
                                             <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
 
-                                                <Typography noWrap component="legend">Rate {movie.title}</Typography>
+                                                <Tooltip title={`Rate ${movie.title}`} placement="top-start">
+                                                    <Typography noWrap fontSize={"15px"}>Rate {movie.title}</Typography>
+                                                </Tooltip>
                                                 <Rating
                                                     name="simple-controlled"
                                                     precision={0.5}
@@ -174,12 +178,16 @@ const Movies = () => {
                                     />
 
                                     <CardHeader title={
-                                                <Typography noWrap fontSize={"25px"}>{movie.title}</Typography>
-                                            } />
+                                        <Tooltip title={movie.title} placement="top-start">
+                                            <Typography noWrap maxWidth={'300px'} fontSize={"25px"}>{movie.title}</Typography>
+                                        </Tooltip>
+                                    } />
 
                                     <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
 
-                                        <Typography noWrap component="legend">Rate {movie.title}</Typography>
+                                        <Tooltip title={`Rate ${movie.title}`} placement="top-start">
+                                            <Typography noWrap fontSize={"15px"}>Rate {movie.title}</Typography>
+                                        </Tooltip>
                                         <Rating
                                             name="simple-controlled"
                                             precision={0.5}
@@ -217,12 +225,16 @@ const Movies = () => {
                                     />
 
                                     <CardHeader title={
-                                                <Typography noWrap fontSize={"25px"}>{movie.title}</Typography>
-                                            } />
+                                        <Tooltip title={movie.title} placement="top-start">
+                                            <Typography noWrap maxWidth={'300px'} fontSize={"25px"}>{movie.title}</Typography>
+                                        </Tooltip>
+                                    } />
 
                                     <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
 
-                                        <Typography noWrap component="legend">Rate {movie.title}</Typography>
+                                        <Tooltip title={`Rate ${movie.title}`} placement="top-start">
+                                            <Typography noWrap fontSize={"15px"}>Rate {movie.title}</Typography>
+                                        </Tooltip>
                                         <Rating
                                             name="simple-controlled"
                                             precision={0.5}
@@ -259,8 +271,10 @@ const Movies = () => {
                                     />
 
                                     <CardHeader title={
-                                                <Typography noWrap fontSize={"25px"}>{movie.title}</Typography>
-                                            } />
+                                        <Tooltip title={movie.title} placement="top-start">
+                                            <Typography noWrap maxWidth={'300px'} fontSize={"25px"}>{movie.title}</Typography>
+                                        </Tooltip>
+                                    } />
 
                                     <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
                                     </div>
