@@ -179,6 +179,12 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         fields = ['username', 'first_name', 'last_name',
                   'email', 'bio', 'preferences']
 
+    def validate(self, data):
+        if len(data['preferences']) == 0:
+            raise serializers.ValidationError(
+                {"preferences": "At least one genre must be selected"})
+        return data
+
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
