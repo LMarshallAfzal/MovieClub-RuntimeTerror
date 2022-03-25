@@ -55,20 +55,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Meeting',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('meeting_title', models.CharField(max_length=200)),
-                ('date', models.DateField()),
-                ('start_time', models.TimeField()),
-                ('end_time', models.TimeField()),
-                ('meeting_link', models.CharField(max_length=100)),
-                ('description', models.CharField(max_length=500)),
-                ('attendees', models.ManyToManyField(related_name='attendees', to=settings.AUTH_USER_MODEL)),
-                ('club', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.club')),
-            ],
-        ),
-        migrations.CreateModel(
             name='Movie',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -76,7 +62,6 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=100)),
                 ('genres', models.CharField(max_length=100)),
                 ('year', models.PositiveIntegerField(default=0)),
-                ('meetings', models.ManyToManyField(related_name='meetings', to='api.Meeting')),
             ],
             options={
                 'ordering': ['title'],
@@ -130,7 +115,8 @@ class Migration(migrations.Migration):
             name='Membership',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('role', models.CharField(choices=[('M', 'Member'), ('C', 'Owner'), ('O', 'Organiser'), ('B', 'BannedMember')], default='M', max_length=1)),
+                ('role', models.CharField(choices=[('M', 'Member'), ('O', 'Owner'), ('B', 'BannedMember')], default='M', max_length=1)),
+                ('is_organiser', models.BooleanField(default=False)),
                 ('club', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.club')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
@@ -138,15 +124,22 @@ class Migration(migrations.Migration):
                 'unique_together': {('user', 'club')},
             },
         ),
-        migrations.AddField(
-            model_name='meeting',
-            name='movie',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.movie'),
-        ),
-        migrations.AddField(
-            model_name='meeting',
-            name='organiser',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+        migrations.CreateModel(
+            name='Meeting',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('meeting_title', models.CharField(max_length=200)),
+                ('date', models.DateField()),
+                ('start_time', models.TimeField()),
+                ('end_time', models.TimeField()),
+                ('meeting_link', models.CharField(max_length=100)),
+                ('completed', models.BooleanField(default=False)),
+                ('description', models.CharField(max_length=500)),
+                ('attendees', models.ManyToManyField(related_name='attendees', to=settings.AUTH_USER_MODEL)),
+                ('club', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.club')),
+                ('movie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.movie')),
+                ('organiser', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+            ],
         ),
         migrations.AddField(
             model_name='club',

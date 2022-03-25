@@ -100,7 +100,7 @@ const Movies = () => {
             <Grid item xs={12}>
                 <Collapse in={openSearch} >
                     <div className={"home-page-card-background"}>
-                        <Grid container direction={"row"}>
+                        <Grid container direction={"row"} padding={2}>
 
                             <Grid item xs={11}>
                                 <h4 className={"home-page-card-title"}>search result:</h4>
@@ -163,10 +163,13 @@ const Movies = () => {
 
             <Grid item xs={12}>
                 <div className={"home-page-card-background"}>
-                    <h4 className={"home-page-card-title"}>club movies:</h4>
+                    <Grid container direction={"row"} padding={2}>
+                        <Grid item xs={12}>
+                            <h4 className={"home-page-card-title"}>club movies:</h4>
+                        </Grid>
 
-                    <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
-                        {/* LIST OF MOVIES FROM CLUBS TO BE WATCHED */}
+                        <Grid item xs={12}>
+                            <Grid container direction={"row"} spacing={1} alignItems={"center"}>
                         {moviesWithPoster.map((movie) => {
                             return (<Grid item>
                                 <Card sx={{ width: 330 }}>
@@ -202,18 +205,22 @@ const Movies = () => {
                                     </Box>
                                 </Card>
                             </Grid>
-                            )
-                        })}
+                            )})}
+                    </Grid>
+                        </Grid>
                     </Grid>
                 </div>
             </Grid>
 
             <Grid item xs={12}>
                 <div className={"home-page-card-background"}>
-                    <h4 className={"home-page-card-title"}>recommended movies:</h4>
+                    <Grid container direction={"row"} padding={2}>
+                        <Grid item xs={12}>
+                            <h4 className={"home-page-card-title"}>recommended movies:</h4>
+                        </Grid>
 
-                    <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
-                        {/* MOVIES RECOMMENDED */}
+                        <Grid item xs={12}>
+                            <Grid container direction={"row"} spacing={1} alignItems={"center"}>
                         {moviesWithPoster.map((movie) => {
                             return (<Grid item>
                                 <Card sx={{ width: 330 }}>
@@ -250,6 +257,8 @@ const Movies = () => {
                             </Grid>
                             )
                         })}
+                    </Grid>
+                        </Grid>
                     </Grid>
                 </div>
             </Grid>

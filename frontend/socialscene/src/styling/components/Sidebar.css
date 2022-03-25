@@ -98,9 +98,7 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   font-family: Helvetica-Bold, serif;
   width: 100%;
   text-align: center;
@@ -112,9 +110,7 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   font-family: Helvetica, serif;
   width: 100%;
   text-align: center;
@@ -123,29 +119,29 @@ h6 {
 .home-page-title {
   background-color: #C4C4C4;
   padding: 10px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  width: 100%;
+  user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
-  padding-top: 10px;
-  padding-left: 10px;
   color: #FFFFFF;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .home-page-card-background {
   background-color: #D8D8D8;
+  overflow: hidden;
+}
+
+.home-page-sub-section-heading {
+  padding: 10px;
+  color: #FFFFFF;
+  background-color: #C4C4C4;
+  user-select: none;
+  transition: all 0.3s ease-out;
 }
 
 .sidebar {
-  position: -webkit-sticky;
   position: sticky;
   height: 100%;
 }
@@ -166,12 +162,12 @@ h6 {
   width: 100%;
   height: 4em;
   list-style-type: none;
-  border-left: 10px solid #C4C4C4;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease-out;
+  border-left: 0 solid #000000;
   font-family: Helvetica, serif;
 }
 
@@ -185,6 +181,7 @@ h6 {
   font-family: Helvetica, serif;
   background-color: #999999;
   border-left: 10px solid #FF0000;
+  color: #FF0000 !important;
 }
 
 .sidebar-list-link-box {
@@ -194,15 +191,14 @@ h6 {
 }
 
 .sidebar-list-link-text {
-  padding-left: 10px;
+  padding-left: 20px;
   height: 100%;
-  width: calc(100% - 10px);
+  width: calc(100% - 20px);
   font-size: 1.5rem;
   display: flex;
   align-items: center;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   font-family: inherit;
-}/*# sourceMappingURL=Sidebar.css.map */
+}
+
+/*# sourceMappingURL=Sidebar.css.map */

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User,Club,Movie,Rating, Membership,Message
+from .models import *
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
@@ -36,12 +36,18 @@ class RatingAdmin(admin.ModelAdmin):
         'id','user','movie','score'
     ]
 
+@admin.register(Meeting)
+class MeetingAdmin(admin.ModelAdmin):
+    '''Configuration of the administrative interface for meetings'''
+    list_display = [
+        'id','organiser','movie','meeting_title','date','description','start_time','end_time','completed']
+
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     '''Configuration of the administrative interface for messages'''
     list_display = [
-        'id','sender','message'
-    ]
+        'id','sender','message']
+
 
 
 

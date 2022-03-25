@@ -118,34 +118,40 @@ const Profile = () => {
     }, [])
 
     return (
-        <Grid container>
-            <Grid item xs={12} style={{ paddingBottom: '20px' }}>
+        <Grid container
+            direction={"row"}
+            spacing={2}
+        >
+
+            <Grid item xs={12}>
+
                 <div className={"home-page-title"}>
+
                     <h3>profile<h3--emphasise>.</h3--emphasise></h3>
                 </div>
             </Grid>
+
             <Grid item xs={12}>
-                <Box component="form" onSubmit={submitChangeProfileForm}>
+
+                <form onSubmit={submitChangeProfileForm}>
+
                     <Stack spacing={2}>
-                        <Grid item xs={11}>
-                            <div className='page-subtitle'>
-                                Edit profile
-                            </div>
-                        </Grid>
-                        <TextField className='profile-text-box'
-                            error={usernameError}
+
+                        <TextField error={usernameError}
                             helperText={errorUsernameText}
                             required
                             id={"outlined"}
                             label={"username"}
                             name={"username"}
-                            type={"text"}
                             variant={"outlined"}
                             value={userData.username}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
                             onChange={e => onChange(e)}
                         />
-                        <TextField className='profile-text-box'
-                            error={firstNameError}
+
+                        <TextField error={firstNameError}
                             helperText={errorFirstNameText}
                             required
                             id={"outlined-basic"}
@@ -154,10 +160,13 @@ const Profile = () => {
                             type={"text"}
                             variant={"outlined"}
                             value={userData.first_name}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
                             onChange={e => onChange(e)}
                         />
-                        <TextField className='profile-text-box'
-                            error={lastNameError}
+
+                        <TextField error={lastNameError}
                             helperText={errorLastNameText}
                             required
                             id={"outlined-basic"}
@@ -166,10 +175,13 @@ const Profile = () => {
                             type={"text"}
                             variant={"outlined"}
                             value={userData.last_name}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
                             onChange={e => onChange(e)}
                         />
-                        <TextField className='profile-text-box'
-                            error={emailError}
+
+                        <TextField error={emailError}
                             helperText={errorEmailText}
                             required
                             id={"outlined-basic"}
@@ -178,20 +190,38 @@ const Profile = () => {
                             type={"email"}
                             variant={"outlined"}
                             value={userData.email}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
                             onChange={e => onChange(e)}
                         />
-                        <TextField className='profile-text-box'
-                            error={bioError}
+
+                        <TextField error={bioError}
                             helperText={errorBioText}
-                            spacing={6}
                             id={"outlined-multiline-static"}
                             label={"bio"}
                             name={"bio"}
-                            type={"text"}
-                            variant={"outlined"}
                             multiline
                             rows={7.5}
                             value={userData.bio}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            onChange={e => onChange(e)}
+                        />
+
+                        <TextField error={preferencesError}
+                            helperText={errorPreferencesText}
+                            required
+                            id={"outlined-multiline-static"}
+                            label={"preferences"}
+                            name={"preferences"}
+                            multiline
+                            rows={20}
+                            value={userData.preferences}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
                             onChange={e => onChange(e)}
                         />
                         {/* <TextField className='profile-text-box'
@@ -235,29 +265,16 @@ const Profile = () => {
                                 />
                             )}
                         />
-                        <div className={"single-button"}>
-                            <Box
-                                sx={{
-                                    display: 'grid',
-                                    gridAutoColumns: '1fr',
-                                    gap: 1,
-                                }}
-                            >
-                                <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                    <FormButton
-                                        type="submit"
-                                        text={"submit"}
-                                        onClick={submitChangeProfileForm}
-                                    />
-                                </Box>
-                            </Box>
-                        </div>
+                        <FormButton
+                            text={"save"}
+                            type={"submit"}
+                            style={"primary"}
+                        />
                     </Stack>
-                    {/* </td> */}
-
-                </Box>
+                </form>
             </Grid>
         </Grid>
     );
 }
+
 export default Profile;
