@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, number } from "react";
 import {IconButton, Box, Collapse, TextField, Grid, Typography, Rating} from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -12,10 +12,11 @@ import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
 
 const Movies = () => {
+    let { user, authTokens } = useContext(AuthContext);
     const [movie, setMovie] = useState('')
-    const [rating, setRating] = useState('')
-    const [recommendedMovies, setRecommendedMovies] = useState([])
-    let { user, authTokens } = useContext(AuthContext)
+    // const [value, set] = React.useState<'' | null>(2);
+    const [rating, setRating] = useState({'user': user.user_id, 'movie': 0, 'score': 0.0});
+    const [recommendedMovies, setRecommendedMovies] = useState([]);
 
     useEffect((e) => {
         // e.preventDefault()
@@ -23,7 +24,7 @@ const Movies = () => {
     }, [])
 
 
-    let getRecommendedMovies = async (e) => {
+    let getRecommendedMovies = async () => {
         let response = await fetch('http://127.0.0.1:8000/rec_movies/', {
             method: 'GET',
             headers: {
@@ -36,33 +37,37 @@ const Movies = () => {
         setRecommendedMovies(data)
     }
 
-    let AddRating = async (e) => {
-        let response2 = await fetch('http://127.0.0.1:8000/add_rating/' + movie.id + '/', {
+    let AddRating = async (id, ratingScore) => {
+        let response1 = await fetch('http://127.0.0.1:8000/add_rating/' + id + '/', {
             method: 'POST',
-            body: JSON.stringify(rating),
+            body: JSON.stringify({
+                "user": user.user_id,
+                "movie": id,
+                "score": ratingScore
+            }),
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Authorization': 'Bearer ' + String(authTokens.access),
             }
         })
-        let data2 = await response2.json();
-        setRating(data2);
-        let response3 = await fetch('http://127.0.0.1:8000/train/movie/', {
+        let data1 = await response1.json();
+        setRating(data1);
+        let response2 = await fetch('http://127.0.0.1:8000/train/movie/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Authorization': 'Bearer ' + String(authTokens.access),
             }
         })
-        let data3 = await response3.json();
-        let response4 = await fetch('http://127.0.0.1:8000/train/movie/', {
+        await response2.json();
+        let response3 = await fetch('http://127.0.0.1:8000/train/meeting/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Authorization': 'Bearer ' + String(authTokens.access),
             }
         })
-        let data4 = await response4.json();        
+        await response3.json();        
     }
 
     const [openSearch, setOpenSearch] = React.useState(false);
@@ -75,7 +80,7 @@ const Movies = () => {
         setOpenSearch(false);
     };
 
-    const [searchValue, setSearchValue] = React.useState('');
+    const [searchValue, setSearchValue] = useState('');
 
     return (
         <Grid container
@@ -142,7 +147,7 @@ const Movies = () => {
                                                     name="simple-controlled"
                                                     precision={0.5}
                                                     max={5}
-                                                    // onChange={AddRating()}
+                                                    // onChange={AddRating(movie.id)}
                                                 />
                                                 {/*<Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>*/}
                                             </div>
@@ -222,7 +227,8 @@ const Movies = () => {
                                                 name="simple-controlled"
                                                 precision={0.5}
                                                 max={5}
-                                                onChange={AddRating(movie.id)}
+                                                // value={movie.score}
+                                                onChange={(event, newValue) => (setRating({score: newValue, onChange: AddRating(movie.id, newValue)}))}
                                             />
                                         </div>
 
