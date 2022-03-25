@@ -6,7 +6,7 @@
         "ml_id": 1,
         "title": "Pulp Fiction",
         "year": 1994,
-        "genres": "Crime,Comedy"
+        "genres": [6,1]
       }
     },
     {
@@ -16,7 +16,7 @@
         "ml_id": 2,
         "title": "Shrek",
         "year": 2001,
-        "genres": "Children,Comedy"
+        "genres": [14,1]
       }
     },
     {
@@ -26,7 +26,7 @@
         "ml_id": 3,
         "title": "Django Unchained",
         "year": 2012,
-        "genres": "Western,Drama"
+        "genres": [3]
       }
     }
 

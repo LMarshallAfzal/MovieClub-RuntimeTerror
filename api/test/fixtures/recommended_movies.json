@@ -5,7 +5,7 @@
         "fields": {
             "ml_id": 3,
             "title": "Grumpier Old Men  ",
-            "genres": "Comedy|Romance",
+            "genres": [1,2,3],
             "year": 1995
         }
     },
@@ -15,7 +15,7 @@
         "fields": {
             "ml_id": 50,
             "title": "Usual Suspects, The  ",
-            "genres": "Crime|Mystery|Thriller",
+            "genres": [1,2,3],
             "year": 1995
         }
     },
@@ -25,7 +25,7 @@
         "fields": {
             "ml_id": 101,
             "title": "Bottle Rocket  ",
-            "genres": "Adventure|Comedy|Crime|Romance",
+            "genres": [1,2,3],
             "year": 1996
         }
     },
@@ -35,7 +35,7 @@
         "fields": {
             "ml_id": 163,
             "title": "Desperado  ",
-            "genres": "Action|Romance|Western",
+            "genres": [1,2,3],
             "year": 1995
         }
     },
@@ -45,7 +45,7 @@
         "fields": {
             "ml_id": 6658,
             "title": "10  ",
-            "genres": "Comedy|Romance",
+            "genres": [1,2,3],
             "year": 1979
         }
     },
@@ -55,7 +55,7 @@
         "fields": {
             "ml_id": 7541,
             "title": "100 Girls  ",
-            "genres": "Comedy|Romance",
+            "genres": [1,2,3],
             "year": 2000
         }
     },
@@ -65,7 +65,7 @@
         "fields": {
             "ml_id": 216,
             "title": "Billy Madison  ",
-            "genres": "Comedy",
+            "genres": [1,2,3],
             "year": 1995
         }
     }
