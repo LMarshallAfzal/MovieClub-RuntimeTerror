@@ -8,8 +8,7 @@ from rest_framework.test import force_authenticate,APIClient
 class EditUserViewTestCase(APITestCase):
     
     fixtures = [
-        'api/test/fixtures/default_genre.json',
-        'api/test/fixtures/other_genres.json',
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/other_users.json',
     ]
@@ -26,7 +25,6 @@ class EditUserViewTestCase(APITestCase):
             "bio": "The quick brown fox jumps over the lazy dog.",
             "preferences": [1,2,3,4]
         }
-
 
     def test_put_to_edit_user_endpoint_with_valid_data_edits_current_user_returns_200_ok(self):
         self.client.force_authenticate(user=self.user)
@@ -58,9 +56,7 @@ class EditUserViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    
-
-    def test_put_to_edit_user_endpoint_with_blank_preferences_does_not_edit_the_user_returns_400_bad_request(self):
+    def test_put_to_edit_user_endpoint_with_blank_email_does_not_edit_the_user_returns_400_bad_request(self):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
         before = User.objects.count()
@@ -70,7 +66,6 @@ class EditUserViewTestCase(APITestCase):
         after = User.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
     
     def test_put_to_edit_user_endpoint_with_blank_first_name_does_not_edit_the_user_returns_bad_request(self):
         self.client.force_authenticate(user=self.user)
@@ -82,7 +77,6 @@ class EditUserViewTestCase(APITestCase):
         after = User.objects.count()
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
     
     def test_put_to_edit_user_endpoint_with_blank_last_name_does_not_edit_the_user_returns_400_bad_request(self):
         self.client.force_authenticate(user=self.user)
@@ -100,7 +94,7 @@ class EditUserViewTestCase(APITestCase):
         self.assertTrue(self.user.is_authenticated)
         before = User.objects.count()
         input = self.form_input
-        input['preferences'] = ''
+        input['preferences'] = []
         response = self.client.put(self.url, input)
         after = User.objects.count()
         self.assertEqual(after, before)

@@ -10,8 +10,7 @@ from rest_framework.test import force_authenticate,APIClient
 class WatchListTestCase(APITestCase):
 
     fixtures = [
-        'api/test/fixtures/default_genre.json',
-        'api/test/fixtures/other_genres.json',
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_user.json',
     ]
 
@@ -40,9 +39,10 @@ class WatchListTestCase(APITestCase):
 
     def _create_test_movies(self, movie_count=10):
         for id in range(movie_count):
-            Movie.objects.create(
+            movie = Movie.objects.create(
                 ml_id= 10000 + id,
                 title="Best movie",
-                genres="Action",
+                #genres=[1,2],
                 year=2000 + id,
             )
+            movie.genres.set([1,2])

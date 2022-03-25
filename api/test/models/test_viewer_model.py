@@ -8,8 +8,7 @@ class WatchModelTestCase(APITestCase):
     """Unit tests for the Viewer model."""
 
     fixtures = [
-        'api/test/fixtures/default_genre.json',
-        'api/test/fixtures/other_genres.json',
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/default_movie.json',
     ]

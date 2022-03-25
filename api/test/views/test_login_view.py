@@ -6,8 +6,7 @@ from api.models import User
 class LoginViewTestcase(APITestCase):
 
     fixtures = [
-        'api/test/fixtures/default_genre.json',
-        'api/test/fixtures/other_genres.json',
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/other_users.json',
     ]
