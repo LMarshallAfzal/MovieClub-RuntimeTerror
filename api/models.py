@@ -94,6 +94,16 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+    def get_genre_id(self, genre_name):
+        try:
+            return Genre.objects.get(name=genre_name).id
+        except Genre.DoesNotExist:
+            new_genre = Genre.objects.create(name=genre_name)
+            return new_genre.id
+
+    def get_genre_ids(self, genre_names):
+        return [self.get_genre_id(genre_name) for genre_name in genre_names]
+
 
 class Club(models.Model):
 
@@ -198,11 +208,7 @@ class Movie(models.Model):
         unique=False
     )
 
-    genres = models.CharField(
-        max_length=100,
-        unique=False,
-        blank=False
-    )
+    genres = models.ManyToManyField(Genre, related_name='genres')
 
     year = models.PositiveIntegerField(default=0)
 
@@ -214,6 +220,11 @@ class Movie(models.Model):
     meetings = models.ManyToManyField('Meeting', related_name='meetings')
     class Meta:
         ordering = ['title']
+
+    def clean(self):
+        if self.genres.count() == 0:
+            raise ValidationError(_('The movie must have at least one genre'))
+        return super().clean()
 
     def get_rating_author(self, user):
         author = Rating.objects.get(user=user.id, movie=self.id)

@@ -26,7 +26,7 @@ class MembershipAdmin(admin.ModelAdmin):
 class MovieAdmin(admin.ModelAdmin):
     '''Configuration of the administrative interface for movies'''
     list_display = [
-        'id','ml_id','title','genres','year'
+        'id','ml_id','title','year'
     ]
 
 @admin.register(Rating)
