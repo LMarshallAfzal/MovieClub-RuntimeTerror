@@ -210,7 +210,7 @@ const Profile = () => {
                             onChange={e => onChange(e)}
                         />
 
-                        <TextField error={preferencesError}
+                        {/* <TextField error={preferencesError}
                             helperText={errorPreferencesText}
                             required
                             id={"outlined-multiline-static"}
@@ -223,7 +223,7 @@ const Profile = () => {
                                 shrink: true,
                             }}
                             onChange={e => onChange(e)}
-                        />
+                        /> */}
                         {/* <TextField className='profile-text-box'
                             error={preferencesError}
                             helperText={errorPreferencesText}
@@ -246,7 +246,6 @@ const Profile = () => {
                             getOptionLabel={(option) => option.theme}
                             defaultValue={[themes[0]]}
                             filterSelectedOptions
-                            className='profile-text-box'
                             renderInput={(params) => (
                                 <TextField
                                     {...params}

@@ -11,7 +11,7 @@ import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import moviePoster from '../../styling/images/empty_movie_poster.png';
 import { moviesWithPoster } from "../data/DummyMoviesData";
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 
 
 
@@ -73,7 +73,7 @@ const Home = () => {
     // }
 
     const navigate = useNavigate();
-    const moreMovies = useCallback(() => navigate('movies', {replace: false}), [navigate]);
+    const moreMovies = useCallback(() => navigate('movies', { replace: false }), [navigate]);
 
     return (
         <Grid className='' style={{ borderSpacing: 0 }}>
@@ -92,20 +92,20 @@ const Home = () => {
 
                 <Grid item xs={12}>
                     <div className={"home-page-card-background"}>
-                        <Grid container direction={'row'}>
+                        <Grid container direction={'row'} padding={2}>
 
                             <Grid item xs={10}>
                                 <h4 className={"home-page-card-title"}>recommended movies:</h4>
                             </Grid>
 
-                            <Grid item xs={2} style={{ padding: '10px' }}>
-                                <FormButton 
+                            <Grid item xs={2} style={{ paddingBottom: '20px' }}>
+                                <FormButton
                                     text={"more movies"}
-                                onClick={moreMovies}
+                                    onClick={moreMovies}
                                 />
                             </Grid>
 
-                            <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
+                            <Grid container direction={"row"} spacing={1} alignItems={"center"}>
                                 {/* MOVIES RECOMMENDED */}
                                 {moviesWithPoster.map((movie) => {
                                     return (<Grid item>

@@ -98,7 +98,9 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
   font-family: Helvetica-Bold, serif;
   width: 100%;
   text-align: center;
@@ -110,7 +112,9 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
   font-family: Helvetica, serif;
   width: 100%;
   text-align: center;
@@ -119,13 +123,19 @@ h6 {
 .home-page-title {
   background-color: #C4C4C4;
   padding: 10px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
   color: #FFFFFF;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .home-page-card-background {
@@ -137,7 +147,10 @@ h6 {
   padding: 10px;
   color: #FFFFFF;
   background-color: #C4C4C4;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
 }
 
@@ -145,7 +158,10 @@ h6 {
   width: 26rem;
   background-color: #C4C4C4;
   transition: all 0.3s ease-out;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   cursor: pointer;
 }
 
@@ -191,6 +207,4 @@ h6 {
 .club-listing-avatars {
   padding-bottom: 10px;
   align-self: flex-start;
-}
-
-/*# sourceMappingURL=ClubListing.css.map */
+}/*# sourceMappingURL=ClubListing.css.map */
