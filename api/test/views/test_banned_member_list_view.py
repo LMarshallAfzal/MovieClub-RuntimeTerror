@@ -18,27 +18,27 @@ class BannedMembersViewTestCase(APITestCase):
         self.club = Club.objects.get(club_name='Beatles')
         self.url = reverse("banned_member_list", kwargs={'club_id': self.club.id})
         self.user = User.objects.get(username='johndoe')
-        self.club.club_members.add(self.user, through_defaults={'role': 'C'})
+        self.club.club_members.add(self.user, through_defaults={'role': 'O'})
         self.other_user = User.objects.get(username='janedoe')
         self.client = APIClient()
 
     def test_get_banned_users_url(self):
         self.assertEqual(self.url, f'/banned_member_list/{self.club.id}/')
 
-    def test_get_banned_members_endpoint_gets_banned_members_returns_200_ok(self):
+    def test_get_banned_members_endpoint_with_no_banned_members_returns_validation_error(self):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
         response = self.client.get(self.url)
-        self._create_test_members(10)
-        users = self.club.get_banned_members.all()
-        serializer = UserSerializer(users, many=True)
-        self.assertEqual(response.data, serializer.data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data[0], "There are no banned members.")
 
     def test_get_banned_members_endpoint_gets_banned_members_returns_200_ok(self):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
+        self._create_test_banned_members(10)
         response = self.client.get(self.url)
+        users = self.club.get_banned_members()
+        serializer = UserSerializer(users, many=True)
+        self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_banned_members_endpoint_doesnt_get_banned_members_for_non_existent_club_returns_404_not_found(self):
@@ -48,6 +48,7 @@ class BannedMembersViewTestCase(APITestCase):
         response = self.client.get(invalid_url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    
     def test_get_banned_members_endpoint_cannot_get_banned_members_when_logged_out_returns_403_forbidden(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -61,13 +62,6 @@ class BannedMembersViewTestCase(APITestCase):
 
     def test_get_banned_members_endpoint_as_banned_returns_403_forbidden(self):
         self.club.club_members.add(self.other_user,through_defaults={'role':'B'})
-        self.client.force_authenticate(user=self.other_user)
-        self.assertTrue(self.other_user.is_authenticated)
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_get_banned_members_endpoint_as_organiser_returns_403_forbidden(self):
-        self.club.club_members.add(self.other_user,through_defaults={'role':'O'})
         self.client.force_authenticate(user=self.other_user)
         self.assertTrue(self.other_user.is_authenticated)
         response = self.client.get(self.url)
