@@ -170,10 +170,10 @@ const Options = () => {
                     <h4 className={"options-card-heading"}>notification:</h4>
 
                     <FormControlLabel
-                        style={{ padding: '10px' }}
+                        style={{ padding: '20px' }}
                         value="end"
                         control={<Checkbox icon={<NotificationsNoneIcon />} checkedIcon={<NotificationsActiveIcon />} color="default" />}
-                        label="Receive emails about new meetings."
+                        label="Turn on to receive emails about new meetings."
                         labelPlacement="end"
                     />
 
