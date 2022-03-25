@@ -82,15 +82,18 @@ const Options = () => {
     }
     
     return (
-        <Grid container
-              direction={"row"}
-              spacing={2}
-        >
-            <Grid item xs={12}>
-                <div className={"home-page-title"}>
+        <>
+        <Grid item xs={12} sx={{position: "sticky", top: 0, zIndex: "9000"}}>
+                <div className={"home-page-title"} >
                     <h3>options<h3--emphasise>.</h3--emphasise></h3>
                 </div>
             </Grid>
+        <Grid container
+              direction={"row"}
+              spacing={2}
+              padding={2}
+        >
+
 
             <Grid item xs={12}>
 
@@ -163,6 +166,7 @@ const Options = () => {
                 </form>
             </Grid>
         </Grid>
+            </>
     );
 }
 

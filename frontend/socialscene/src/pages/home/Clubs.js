@@ -13,17 +13,21 @@ function Clubs() {
     const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
 
     return (
-        <Grid container
-            justifyContent={"center"}
-            direction={"row"}
-            alignItems={"flex-start"}
-            spacing={2}>
-
-            <Grid item xs={12}>
-                <div className={"home-page-title"}>
+        <>
+            <Grid item xs={12} sx={{ boxShadow: 3, position: "sticky", top: "0px", zIndex: 90000}}>
+                <div className={"home-page-title"} >
                     <h3>clubs<h3--emphasise>.</h3--emphasise></h3>
                 </div>
             </Grid>
+
+
+
+            <Grid container
+            justifyContent={"center"}
+            direction={"row"}
+            alignItems={"flex-start"}
+              padding={2}
+            spacing={2}>
 
             <Grid item xs={10}>
                 <TextField className={"search-bar"}
@@ -108,6 +112,7 @@ function Clubs() {
                 <Outlet/>
             </Grid>
         </Grid>
+        </>
     );
 }
 

@@ -6,15 +6,16 @@ import {Outlet} from "react-router-dom";
 
 function Discussion() {
     return (
-        <Grid container spacing={2}>
-
-            <Grid item xs={12}>
+        <>
+         <Grid item xs={12} sx={{position: "sticky", top: 0, zIndex: "9000"}}>
 
                 <div className={"home-page-title"}>
 
                     <h3>discussion<h3--emphasise>.</h3--emphasise></h3>
                 </div>
             </Grid>
+
+        <Grid container spacing={2} padding={2}>
 
             <Grid item xs={12}>
 
@@ -27,6 +28,7 @@ function Discussion() {
             </Grid>
 
         </Grid>
+            </>
     );
 }
 

@@ -71,6 +71,13 @@ const Home = () =>  {
     // }
 
     return (
+        <>
+        <Grid item xs={12} sx={{position: "sticky", top: 0, zIndex: "9000"}}>
+                <div className={"home-page-title"}>
+                    <h3>home<h3--emphasise>.</h3--emphasise></h3>
+                </div>
+            </Grid>
+
         <Grid className='' style={{ borderSpacing: 0 }}>
             <Grid 
                 container 
@@ -78,12 +85,9 @@ const Home = () =>  {
                 justifyContent="space-evenly"
                 alignItems="flex-start" 
                 spacing={2}
+                padding={2}
             >
-                <Grid item xs={12}>
-                <div className={"home-page-title"}>
-                    <h3>home<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
+
                 <Grid item xs={12}>
                     <Autocomplete
                         freeSolo
@@ -203,6 +207,7 @@ const Home = () =>  {
                 </Grid>
             </Grid>
         </Grid>
+            </>
     );
 }
 

@@ -79,7 +79,7 @@ function ClubDiscussion() {
         <Grid container spacing={2}>
 
             <Grid item xs={10}>
-                <h4 className={"home-page-sub-section-heading"}>{club.clubName}:</h4>
+                <h4 className={"home-page-sub-section-heading"}>{club.clubName}</h4>
             </Grid>
 
             <Grid item xs={2}>
