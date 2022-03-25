@@ -1,33 +1,29 @@
 import React, {useCallback} from "react";
-import {useNavigate} from "react-router";
-import "../../styling/pages/OthersProfile.css";
+import {useNavigate, useParams} from "react-router";
+import "../styling/pages/OthersProfile.css";
 import { Tooltip, Rating, CardHeader, CardMedia, Chip, Avatar, Box, Stack, Card, CardContent, TextField, Typography, Grid, Paper, ListItemText, ListItemButton } from "@mui/material";
-import FormButton from "../../components/FormButton";
-import iconImage from "../../styling/images/testIconPic.jpg";
-import { DummyDashboardClubsData, meetings, movies } from './../data/DummyDashboardClubsData';
-import { moviesWithPoster } from '../data/DummyMoviesData';
-import moviePoster from '../../styling/images/empty_movie_poster.png';
+import FormButton from "./FormButton";
+import iconImage from "../styling/images/testIconPic.jpg";
+import { DummyDashboardClubsData, meetings, movies } from '../pages/data/DummyDashboardClubsData';
+import { moviesWithPoster } from '../pages/data/DummyMoviesData';
+import moviePoster from '../styling/images/empty_movie_poster.png';
+import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
 
 function OthersProfile() {
+
+    let { userID } = useParams();
+    let user = DummyClubMemberData.find(obj => obj.ID === userID);
+
     return (
-        <>
             <Grid container
                 spacing={2}
                 direction={"row"}
             >
 
-                <Grid item xs={12}>
-                    <div className={"home-page-title"}>
-                        <h3>profile<h3--emphasise>.</h3--emphasise></h3>
-                    </div>
-                </Grid>
-
-            </Grid>
-
             <Grid item xs={12} style={{ paddingTop: '20px' }}>
                 <div className={"home-page-card-background"} style={{ padding: '20px' }}>
                     {/* SUBSTITUTE WITH FIRST NAME AND LAST NAME */}
-                    <h4 className={"home-page-card-title"}>John Doe</h4>
+                    <h4 className={"home-page-card-title"}>{user.firstName || "error"} {user.lastName || "error"}<h4--emphasise>.</h4--emphasise></h4>
 
                     <Grid container
                         spacing={2}
@@ -39,15 +35,15 @@ function OthersProfile() {
                                 <Box sx={{ gridRow: '1', gridColumn: 'span 2' }}>
                                     <div className={"profile-image"}>
                                         <Avatar
-                                            // alt={props.firstName + " " + props.lastName}
-                                            src={iconImage}
+                                            alt={user.firstName + " " + user.lastName}
+                                            src={user.iconImage}
                                             sx={{ width: "100%", height: "100%" }}
                                         />
                                     </div>
                                 </Box>
 
                                 {/* SUBSTITUTE WITH USERNAME */}
-                                <div style={{ paddingRight: '20px' }}>@johndoe</div>
+                                <div style={{ paddingRight: '20px' }}>{user.username}</div>
 
                                 {/* IF LOGGED IN USER IS THE *SAME* AS THE USER VIEWED, THEN SHOW THE EDIT BUTTON  */}
                                     <div className={"single-button"}>
@@ -111,8 +107,7 @@ function OthersProfile() {
                                             Bio:
                                         </Typography>
                                         <Typography sx={{ fontSize: 25 }} variant="body2">
-                                            {/* SUBSTITUTE WITH USER BIO */}
-                                            The crazy dog jumps over a lazy fox. My bio Lorem Ipsum
+                                            {user.bio}
                                         </Typography>
                                     </CardContent>
                                 </Card>
@@ -230,8 +225,8 @@ function OthersProfile() {
 
                     </Grid>
                 </div>
+            </Grid>
             </Grid >
-        </>
     );
 }
 

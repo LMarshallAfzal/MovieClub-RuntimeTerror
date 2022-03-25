@@ -20,14 +20,14 @@
 }
 .form-button#normal:hover {
   cursor: pointer;
-  background-color: base.$grey-3;
+  background-color: base.$grey-4;
   color: base.$primary-black;
 }
 
 .form-button#primary:hover {
   cursor: pointer;
   border-left: 10px solid base.$primary-red;
-  background-color: base.$grey-3;
+  background-color: base.$grey-4;
   color: base.$primary-red;
 }
 
