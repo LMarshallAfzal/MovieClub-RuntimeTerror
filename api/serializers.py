@@ -31,8 +31,8 @@ class UserSerializer(ModelSerializer):
     )
 
     bio = serializers.CharField(
-        required = False, allow_blank=True
-        )
+        required=False, allow_blank=True
+    )
 
     preferences = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True, required=True)
 
@@ -65,6 +65,7 @@ class RatingSerializer(ModelSerializer):
         model = Rating
         fields = '__all__'
 
+
 class WatchMovieSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=User.objects.all())
@@ -74,6 +75,7 @@ class WatchMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Watch
         fields = ['user', 'movie']
+
 
 class MeetingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -101,8 +103,8 @@ class SignUpSerializer(serializers.Serializer):
     )
 
     bio = serializers.CharField(
-        required = False, allow_blank=True
-        )
+        required=False, allow_blank=True
+    )
 
     preferences = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True, required=True)
 
@@ -169,8 +171,8 @@ class UpdateUserSerializer(serializers.ModelSerializer):
     )
 
     bio = serializers.CharField(
-        required = False, allow_blank=True
-        )
+        required=False, allow_blank=True
+    )
 
     preferences = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True, required=True)
 
@@ -244,6 +246,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         user.save()
         return user
 
+
 class CreateClubSerializer(serializers.Serializer):
     club_name = serializers.CharField(
         required=True,
@@ -280,7 +283,7 @@ class CreateMeetingSerializer(serializers.Serializer):
         read_only=False,
         queryset=Club.objects.all()
     )
-    
+
     movie = serializers.PrimaryKeyRelatedField(
         read_only=False,
         queryset=Movie.objects.all()
@@ -292,37 +295,37 @@ class CreateMeetingSerializer(serializers.Serializer):
     )
 
     meeting_title = serializers.CharField(
-        required = True,
-        validators = [MaxLengthValidator(100)]
+        required=True,
+        validators=[MaxLengthValidator(100)]
     )
 
     date = serializers.DateField(
-        format = "%d-%m-%Y",
-        input_formats = ['%d-%m-%Y', 'iso-8601']
+        format="%d-%m-%Y",
+        input_formats=['%d-%m-%Y', 'iso-8601']
     )
     start_time = serializers.TimeField(
         format="%H:%M",
         input_formats=["%H:%M", 'iso-8601'],
-        required = True
+        required=True
     )
 
     end_time = serializers.TimeField(
         format="%H:%M",
         input_formats=["%H:%M", 'iso-8601'],
-        required = True
+        required=True
     )
 
     description = serializers.CharField(
-        required = True,
-        validators = [MaxLengthValidator(500)]
+        required=True,
+        validators=[MaxLengthValidator(500)]
     )
 
     meeting_link = serializers.CharField(
-        required = True,
-        validators = [MaxLengthValidator(500)]
+        required=True,
+        validators=[MaxLengthValidator(500)]
     )
 
-    def validate(self,data):
+    def validate(self, data):
         meeting_date = data['date']
         start_time = data['start_time']
         end_time = data['end_time']
@@ -339,19 +342,20 @@ class CreateMeetingSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 "Date must be minimum 3 days from now.")
 
-        start_time_delta = timedelta(hours=int(start_time.strftime("%H")), minutes=int(start_time.strftime("%M")))
-        end_time_delta = timedelta(hours=int(end_time.strftime("%H")), minutes=int(end_time.strftime("%M")))
+        start_time_delta = timedelta(hours=int(start_time.strftime(
+            "%H")), minutes=int(start_time.strftime("%M")))
+        end_time_delta = timedelta(hours=int(end_time.strftime(
+            "%H")), minutes=int(end_time.strftime("%M")))
 
         if start_time > end_time:
             raise serializers.ValidationError(
                 "Start time should be before end time."
-                )
-        
+            )
+
         if (end_time_delta-start_time_delta).total_seconds() < 3600:
             raise serializers.ValidationError(
                 "Meeting should be minimum 1 hour long.")
 
-        
         if start_time == end_time:
             raise serializers.ValidationError(
                 "Start and End times cannot be the same."
@@ -359,14 +363,88 @@ class CreateMeetingSerializer(serializers.Serializer):
 
         return data
 
-        
     def create(self, validated_data):
         meeting = Meeting.objects.create(**validated_data)
         return meeting
-    
+
     class Meta:
         model = Meeting
         fields = '__all__'
+
+
+class UpdateMeetingSerializer(serializers.ModelSerializer):
+    meeting_title = serializers.CharField(
+            required=True,
+            validators=[MaxLengthValidator(100)]
+        )
+
+    date = serializers.DateField(
+            format="%d-%m-%Y",
+            input_formats=['%d-%m-%Y', 'iso-8601']
+        )
+    start_time = serializers.TimeField(
+            format="%H:%M",
+            input_formats=["%H:%M", 'iso-8601'],
+            required=True
+        )
+
+    end_time = serializers.TimeField(
+            format="%H:%M",
+            input_formats=["%H:%M", 'iso-8601'],
+            required=True
+        )
+
+    description = serializers.CharField(
+        required=True,
+        validators=[MaxLengthValidator(500)]
+    )
+
+    meeting_link = serializers.CharField(
+        required=True,
+        validators=[MaxLengthValidator(500)]
+    )
+
+    def validate(self, data):
+        meeting_date = data['date']
+        start_time = data['start_time']
+        end_time = data['end_time']
+
+        if meeting_date < datetime.date.today():
+            raise serializers.ValidationError(
+                "No past date allowed.")
+
+        if meeting_date == datetime.date.today():
+            raise serializers.ValidationError(
+                "Date must be in the future.")
+
+        if (meeting_date - datetime.date.today()).days < 3:
+            raise serializers.ValidationError(
+                "Date must be minimum 3 days from now.")
+
+        start_time_delta = timedelta(hours=int(start_time.strftime(
+            "%H")), minutes=int(start_time.strftime("%M")))
+        end_time_delta = timedelta(hours=int(end_time.strftime(
+            "%H")), minutes=int(end_time.strftime("%M")))
+
+        if start_time > end_time:
+            raise serializers.ValidationError(
+                "Start time should be before end time."
+            )
+
+        if (end_time_delta-start_time_delta).total_seconds() < 3600:
+            raise serializers.ValidationError(
+                "Meeting should be minimum 1 hour long.")
+
+        if start_time == end_time:
+            raise serializers.ValidationError(
+                "Start and End times cannot be the same."
+            )
+
+        return data
+
+    class Meta:
+        model = Meeting
+        fields = ['meeting_title', 'start_time', 'end_time','meeting_link','date','description']
 
 
 class AddRatingSerializer(serializers.ModelSerializer):
@@ -378,6 +456,7 @@ class AddRatingSerializer(serializers.ModelSerializer):
 
     score = serializers.FloatField(required=True, validators=[
                                    MinValueValidator(0.0), MaxValueValidator(5.0)])
+
     class Meta:
         fields = '__all__'
         model = Rating
@@ -391,11 +470,11 @@ class ChangeRatingSerializer(serializers.ModelSerializer):
         model = Rating
         fields = ['score']
 
+
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ['sender','club','message','timestamp']
-
+        fields = ['sender', 'club', 'message', 'timestamp']
 
 
 class WriteMessageSerializer(serializers.ModelSerializer):
@@ -403,20 +482,16 @@ class WriteMessageSerializer(serializers.ModelSerializer):
         many=False,
         slug_field='username',
         queryset=User.objects.all()
-     )
+    )
     club = serializers.SlugRelatedField(
         many=False,
         queryset=Club.objects.all(),
         slug_field='id'
     )
     message = serializers.CharField(
-        required = True, allow_blank=False
-        )
+        required=True, allow_blank=False
+    )
+
     class Meta:
         model = Message
-        fields = ['sender','club','message','timestamp']
-
-    # def create(self, validated_data):
-        
-    #     message = Message.objects.create(validated_data.get('sender'))
-    #     return message
+        fields = ['sender', 'club', 'message', 'timestamp']

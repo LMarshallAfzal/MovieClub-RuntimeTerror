@@ -7,7 +7,7 @@ from rest_framework.test import force_authenticate,APIClient
 
 
 
-class GetAllUserMembershipsViewTestCase(APITestCase):
+class GetUserMembershipsViewTestCase(APITestCase):
 
     fixtures = [
         "api/test/fixtures/genres.json",
@@ -42,10 +42,8 @@ class GetAllUserMembershipsViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
         response = self.client.get(self.url)
-        memberships = self.user.get_user_clubs()
-        serializer = ClubSerializer(memberships,many=True)
-        self.assertEqual(response.data,serializer.data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data[0],"You are currently not part of any club.")
+
 
     def test_get_to_retrieve_memberships_of_user_endpoint_cannot_get_memberships_of_user_while_logged_out_returns_403_forbidden(self):
         response = self.client.get(self.url)

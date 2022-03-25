@@ -23,10 +23,20 @@
       "model": "api.movie",
       "pk": 4,
       "fields": {
-        "ml_id": 3,
+        "ml_id": 7,
         "title": "Django Unchained",
         "year": 2012,
-        "genres": [3]
+        "genres": [3,2]
+      }
+    },
+    {
+      "model": "api.movie",
+      "pk": 5,
+      "fields": {
+        "ml_id": 8,
+        "title": "The Shining",
+        "year": 2012,
+        "genres": [3,2]
       }
     }
 

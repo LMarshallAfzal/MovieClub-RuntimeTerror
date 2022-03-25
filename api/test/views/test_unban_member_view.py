@@ -20,7 +20,7 @@ class UnBanMemberViewTestCase(APITestCase):
         self.other_user = User.objects.get(username='daviddoe')
         self.banned = User.objects.get(username='janedoe')
         self.club = Club.objects.get(club_name='Beatles')
-        self.club.club_members.add(self.user,through_defaults={'role':'C'})
+        self.club.club_members.add(self.user,through_defaults={'role':'O'})
         self.club.club_members.add(self.banned,through_defaults={'role':'B'})
         self.url = reverse('unban_member',kwargs={'club_id': self.club.id,'user_id':self.banned.id})
         self.client = APIClient()  
@@ -64,14 +64,6 @@ class UnBanMemberViewTestCase(APITestCase):
 
     def test_unban_member_endpoint_as_member_returns_403_forbidden(self):
         self.club.club_members.add(self.other_user,through_defaults={'role':'M'})
-        self.client.force_authenticate(user=self.other_user)
-        self.assertTrue(self.other_user.is_authenticated)
-        response = self.client.put(self.url)
-        self.assertEqual(response.status_code,status.HTTP_403_FORBIDDEN)
-
-
-    def test_unban_member_endpoint_as_organiser_returns_403_forbidden(self):
-        self.club.club_members.add(self.other_user,through_defaults={'role':'O'})
         self.client.force_authenticate(user=self.other_user)
         self.assertTrue(self.other_user.is_authenticated)
         response = self.client.put(self.url)

@@ -1,0 +1,21 @@
+@use "../base";
+
+.text-button {
+  width: auto;
+  height: 100%;
+  margin: 0;
+  transition: all 0.3s ease-out;
+  cursor: pointer;
+  outline: none;
+  display: block;
+  border: none;
+  font-size: 1.2rem;
+  text-align: center;
+  color: base.$primary-black;
+  font-family: base.$helvetica-bold;
+  background-color: transparent;
+}
+
+.text-button:hover{
+  color: base.$primary-red;
+}

@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from rest_framework.test import APITestCase
 from api.models import User, Membership, Club
 
+
 class UserModelTestCase(APITestCase):
     """Unit tests for the User model."""
 
@@ -112,7 +113,7 @@ class UserModelTestCase(APITestCase):
     def test_preferences_must_not_be_blank(self):
         self.user.preferences.remove(*self.user.preferences.all())
         self._assert_user_is_invalid()
-    
+
     def test_preferences_need_not_be_unique(self):
         self.user.preferences.remove(*self.user.preferences.all())
         self.user.preferences.set(self.second_user.preferences.all())
@@ -120,12 +121,12 @@ class UserModelTestCase(APITestCase):
 
     def test_get_user_clubs(self):
         clubs = self.user.get_user_clubs()
-        self.assertEqual(clubs.count(), 0)
+        self.assertEqual(len(clubs), 0)
         club = Club.objects.get(club_name='Beatles')
         Membership.objects.create(user=self.user, club=club)
         clubs = self.user.get_user_clubs()
 
-        self.assertEqual(clubs.count(), 1)
+        self.assertEqual(len(clubs), 1)
 
     def _assert_user_is_valid(self):
         try:

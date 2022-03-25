@@ -20,8 +20,8 @@ class RecommendMovieMeetingTestCase(APITestCase):
         self.organiser = User.objects.get(username='johndoe')
         self.member = User.objects.get(username='janedoe')
         self.club = Club.objects.get(club_name="Beatles")
-        Membership.objects.create(user = self.organiser, club = self.club, role = 'O')
-        Membership.objects.create(user = self.member, club = self.club, role = 'M')
+        Membership.objects.create(user = self.organiser, club = self.club, role = 'M',is_organiser = True)
+        Membership.objects.create(user = self.member, club = self.club, role = 'M',is_organiser = False)
         self.movie = Movie.objects.get(ml_id=6658)
         self.url = reverse('recommend_movie_meeting', kwargs={'club_id':self.club.id})
         self.train_url = reverse('train_meeting_data')
@@ -46,7 +46,6 @@ class RecommendMovieMeetingTestCase(APITestCase):
         train_response = self.client.get(self.train_url)
         self.assertEqual(train_response.status_code, status.HTTP_200_OK)
         response = self.client.get(self.url)
-        self.assertIsNone(response.data)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
     
     def test_logged_out_user_cannot_get_recommended_meeting_movies_returns_401_unauthorized(self):
