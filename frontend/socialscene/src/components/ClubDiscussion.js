@@ -79,7 +79,7 @@ function ClubDiscussion() {
         <Grid container spacing={2}>
 
             <Grid item xs={10}>
-                <h4 className={"home-page-sub-section-heading"}>{club.clubName}:</h4>
+                <h4 className={"home-page-sub-section-heading"}>{club.clubName}</h4>
             </Grid>
 
             <Grid item xs={2}>
@@ -98,7 +98,7 @@ function ClubDiscussion() {
                     <Grid container padding={2} spacing={2}>
 
                         <Grid item xs={12}>
-                            <h4 className={"home-page-card-title"}>messages:</h4>
+                            <h5 className={"home-page-card-title"}>messages:</h5>
                         </Grid>
 
                         <Grid item xs={12}>

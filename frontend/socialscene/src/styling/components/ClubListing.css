@@ -91,96 +91,45 @@ h6 {
   font-size: 1.1rem;
 }
 
-.page-title {
-  padding-top: 20px;
-  height: 100%;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  -webkit-user-select: none;
-  user-select: none;
-  font-family: Helvetica-Bold, serif;
-  width: 100%;
-  text-align: center;
-}
-
-.page-subtitle {
-  height: 100%;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  -webkit-user-select: none;
-  user-select: none;
-  font-family: Helvetica, serif;
-  width: 100%;
-  text-align: center;
-}
-
 .home-page-title {
-  background-color: #C4C4C4;
+  background-color: #5C5C5C;
+  font-family: Helvetica-Bold, serif;
   padding: 10px;
+  user-select: none;
+  transition: all 0.3s ease-out;
+  color: #FFFFFF;
+}
+
+.home-page-sub-section-heading {
+  background-color: #999999;
+  padding: 10px;
+  color: #FFFFFF;
   user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
-  color: #FFFFFF;
+  color: #000000;
+  font-family: Helvetica, serif;
   user-select: none;
 }
 
 .home-page-card-background {
-  background-color: #D8D8D8;
-  overflow: hidden;
-}
-
-.home-page-sub-section-heading {
-  padding: 10px;
-  color: #FFFFFF;
   background-color: #C4C4C4;
+  overflow: hidden;
   user-select: none;
-  transition: all 0.3s ease-out;
 }
 
 .club-listing {
   width: 26rem;
-  background-color: #C4C4C4;
+  background-color: #D8D8D8;
   transition: all 0.3s ease-out;
   user-select: none;
   cursor: pointer;
 }
 
 .club-listing:hover {
-  background-color: #999999;
-}
-
-.club-listing-left-stack {
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
-.club-listing-image {
-  padding: 10px;
-  align-self: center;
-}
-
-.club-listing-button {
-  text-align: center;
-  padding-bottom: 10px;
-}
-
-.club-listing-right-stack {
-  height: 100%;
-  justify-content: center;
-}
-
-.club-listing-text {
-  justify-content: center;
-  flex-grow: 1;
-}
-
-.club-listing-club-chip {
-  margin-right: 10px;
+  background-color: #EBEBEBEB;
 }
 
 .club-listing-club-name {
@@ -189,7 +138,6 @@ h6 {
 }
 
 .club-listing-avatars {
-  padding-bottom: 10px;
   align-self: flex-start;
 }
 
