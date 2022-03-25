@@ -92,76 +92,82 @@ const Options = () => {
               padding={2}
         >
 
+            <Grid item xs={6}>
 
-            <Grid item xs={12}>
+                <form onSubmit={submitChangePasswordForm} className={"home-page-card-background"}>
+                    <Grid container padding={2} spacing={2}>
 
-                <form onSubmit={submitChangePasswordForm} className={"options-card-background"}>
+                        <Grid item xs={12}>
+                            <h5 className={"home-page-card-title"}>change password:</h5>
+                        </Grid>
 
-                    <Stack className={"form-stack"}
-                           spacing={2}
-                           height={"100%"}>
+                        <Grid item xs={12}>
+                             <Stack spacing={2} height={"100%"}>
 
-                        <h4 className={"options-card-heading"}>change password:</h4>
-                        <TextField
-                            error={oldPasswordError}
-                            helperText={errorOldPasswordText}
-                            required
-                            className={"form-field"}
-                            id={"outlined-basic"}
-                            label={"old password"}
-                            name={"old_password"}
-                            type={"password"}
-                            variant={"outlined"}
-                            value={passwordData.old_password}
-                            onChange={e => onChange(e)}
-                        />
+                                 <TextField
+                                     error={oldPasswordError}
+                                     helperText={errorOldPasswordText}
+                                     required
+                                     fullWidth
+                                     id={"outlined-basic"}
+                                     label={"current"}
+                                     name={"old_password"}
+                                     type={"password"}
+                                     variant={"outlined"}
+                                     value={passwordData.old_password}
+                                     onChange={e => onChange(e)}
+                                 />
 
-                        <TextField
-                            error={newPasswordError}
-                            helperText={errorNewPasswordText}
-                            required
-                            className={"form-field"}
-                            id={"outlined-basic"}
-                            label={"new password"}
-                            name={"new_password"}
-                            type={"password"}
-                            variant={"outlined"}
-                            value={passwordData.password_confirmation}
-                            onChange={e => onChange(e)}
-                        />
+                                 <TextField
+                                     error={newPasswordError}
+                                     helperText={errorNewPasswordText}
+                                     required
+                                     fullWidth
+                                     id={"outlined-basic"}
+                                     label={"new"}
+                                     name={"new_password"}
+                                     type={"password"}
+                                     variant={"outlined"}
+                                     value={passwordData.password_confirmation}
+                                     onChange={e => onChange(e)}
+                                 />
 
-                        <TextField
-                            error={newPasswordConfirmationError}
-                            helperText={errorNewPasswordConfirmationText}
-                            required
-                            className={"form-field"}
-                            id={"outlined-basic"}
-                            label={"also new password"}
-                            name={"new_password_confirmation"}
-                            type={"password"}
-                            variant={"outlined"}
-                            value={passwordData.new_password_confirmation}
-                            onChange={e => onChange(e)}
-                        />
-                        <div className={"form-field"}>
-                            <Box
-                                sx={{
-                                    display: 'grid',
-                                    gridAutoColumns: '1fr',
-                                    gap: 1,
-                                }}
-                            >
-                                <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                    <FormButton
-                                        text={"submit"}
-                                        onClick={submitChangePasswordForm}
-                                        type="submit"
-                                    />                                   
-                                </Box>
-                            </Box>
-                        </div>
-                    </Stack>
+                                 <TextField
+                                     error={newPasswordConfirmationError}
+                                     helperText={errorNewPasswordConfirmationText}
+                                     required
+                                     fullWidth
+                                     id={"outlined-basic"}
+                                     label={"confirm"}
+                                     name={"new_password_confirmation"}
+                                     type={"password"}
+                                     variant={"outlined"}
+                                     value={passwordData.new_password_confirmation}
+                                     onChange={e => onChange(e)}
+                                 />
+
+                                 <FormButton
+                                     text={"submit"}
+                                     onClick={submitChangePasswordForm}
+                                     type="submit"
+                                     style={"primary"}
+                                    />
+                             </Stack>
+                        </Grid>
+                    </Grid>
                 </form>
+            </Grid>
+
+            <Grid item xs={6}>
+                <div className={"home-page-card-background"}>
+
+                    <Grid container direction={"row"} padding={2}>
+
+                        <Grid item xs={11}>
+                            <h5 className={"home-page-card-title"}>notifications</h5>
+                        </Grid>
+                    </Grid>
+                </div>
             </Grid>
         </Grid>
             </>

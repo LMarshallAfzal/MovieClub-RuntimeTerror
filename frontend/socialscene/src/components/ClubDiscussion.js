@@ -98,7 +98,7 @@ function ClubDiscussion() {
                     <Grid container padding={2} spacing={2}>
 
                         <Grid item xs={12}>
-                            <h4 className={"home-page-card-title"}>messages:</h4>
+                            <h5 className={"home-page-card-title"}>messages:</h5>
                         </Grid>
 
                         <Grid item xs={12}>

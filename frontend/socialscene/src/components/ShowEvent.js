@@ -1,5 +1,18 @@
 import React, {useState} from "react";
-import {Autocomplete, Avatar, Box, Card, CardMedia, Chip, Divider, Grid, Rating, Stack, TextField} from "@mui/material";
+import {
+    Autocomplete,
+    Avatar,
+    Box,
+    Card,
+    CardMedia,
+    Chip,
+    Divider,
+    Grid,
+    Rating,
+    Stack,
+    TextField,
+    Tooltip
+} from "@mui/material";
 import "../styling/components/ShowEvent.css";
 import {useParams} from "react-router";
 import {DummyClubData} from "../pages/data/DummyClubsData";
@@ -31,7 +44,7 @@ function ShowEvent() {
             <Grid container padding={2} spacing={2}>
 
                 <Grid item xs={10}>
-                    <h4 className={"show-event-title"}>coming up: <span className={"show-event-title-movie"}>{event.title}</span></h4>
+                    <h5 className={"show-event-title"}>coming up: <span className={"show-event-title-movie"}>{event.title}</span></h5>
                 </Grid>
 
                 <Grid item xs={2}>
@@ -54,19 +67,18 @@ function ShowEvent() {
                                                    alt={movie.title}
                                                    image={movie.poster}/>
 
-                                        <Grid container
-                                              direction={"column"}
-                                              alignItems={"center"}
-                                              textAlign={"center"}>
-
+                                        <Stack spacing={1} padding={1} alignItems={"center"}>
                                             <Rating readOnly
                                                     sx={{fontSize: "1.2em"}}
+                                                    precision={0.5}
                                                     name={"read-only"}
                                                     value={movie.rating}/>
 
-                                            <h6 className={"new-event-movie-text"}>{movie.title}</h6>
+                                            <Tooltip title={movie.title} placement="top-start">
+                                                <h4 className={"new-event-movie-text"}>{movie.title}</h4>
+                                            </Tooltip>
 
-                                        </Grid>
+                                        </Stack>
                                     </Card>
                                 </Grid>
                             </Grid>

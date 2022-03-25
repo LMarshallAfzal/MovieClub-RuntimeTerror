@@ -29,7 +29,7 @@ function NewEvent() {
             <Grid container padding={2} spacing={2}>
 
                 <Grid item xs={12}>
-                    <h4 className={"home-page-card-title"}>new event:</h4>
+                    <h5 className={"home-page-card-title"}>new event:</h5>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -41,20 +41,6 @@ function NewEvent() {
                         {dummyRecommendedMovies.map((movie) => {
                             return (
                                 <Grid item xs={2}>
-                                    {/*<Card>*/}
-                                        {/*    <CardMedia*/}
-                                        {/*        component="img"*/}
-                                        {/*        height="100%"*/}
-                                        {/*        image={movie.poster}*/}
-                                        {/*        alt={movie.title}*/}
-                                        {/*    />*/}
-
-                                        {/*    <CardHeader title={*/}
-                                        {/*        <Tooltip title={movie.title} placement="top-start">*/}
-                                        {/*            <Typography noWrap maxWidth={"125px"} fontSize="13px" >{movie.title}</Typography>*/}
-                                        {/*        </Tooltip>*/}
-                                        {/*    } />*/}
-                                        {/*</Card>*/}
                                     <Card sx={{flexDirection: "column", height: "100%"}} >
                                         <CardActionArea sx={{flexDirection: "column", height: "100%"}} onClick={() => setSelectedMovie(movie.title)}>
                                         <CardMedia component={"img"}

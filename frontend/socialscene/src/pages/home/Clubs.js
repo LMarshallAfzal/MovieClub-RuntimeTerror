@@ -48,7 +48,7 @@ function Clubs() {
 
                         <Grid item xs={12}>
                             <Stack direction={"row"}
-                                   className={"club-card-list-frame"}>
+                                   overflow={"auto"}>
                                 {DummyClubData.map((club) => club.isMember === true && (
                                     <ListItem sx={{width: 'auto',p:1}}>
 
@@ -75,12 +75,12 @@ function Clubs() {
                     <Grid container direction={"row"} padding={2}>
 
                         <Grid item xs={12}>
-                            <h5 className={"home-page-card-title"}>recommended clubs</h5>
+                            <h5 className={"home-page-card-title"}>recommended</h5>
                         </Grid>
 
                         <Grid item xs={12}>
                             <Stack direction={"row"}
-                                   className={"club-card-list-frame"}>
+                                   overflow={"auto"}>
                                 {DummyClubData.map((club) => club.isMember === false && (
                                     <ListItem sx={{width: 'auto',p: 1}}>
 

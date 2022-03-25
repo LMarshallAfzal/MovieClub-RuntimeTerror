@@ -26,9 +26,11 @@ function ClubSelector() {
 
        <Grid item xs={12}>
                 <div className={"home-page-card-background"}>
+
                     <Grid container direction={"row"} padding={2}>
+
                         <Grid item xs={11}>
-                            <h5 className={"home-page-card-title"}>your clubs{showClubs ? ":" : ""}</h5>
+                            <h5 className={"home-page-card-title"}>your clubs</h5>
                         </Grid>
 
                         <Grid item xs={1} justifyItems={"flex-end"}>

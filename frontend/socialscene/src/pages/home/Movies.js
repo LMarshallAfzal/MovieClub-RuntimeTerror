@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Tooltip, IconButton, Box, Collapse, TextField, Grid, Typography, Rating } from "@mui/material";
+import {Tooltip, IconButton, Box, Collapse, TextField, Grid, Typography, Rating, Stack, ListItem} from "@mui/material";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -11,6 +11,7 @@ import moviePoster from '../../styling/images/empty_movie_poster.png'
 import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
 import HomePageTitle from "../../components/HomePageTitle";
+import TextButton from "../../components/TextButton";
 
 const Movies = () => {
     const [movie, setMovie] = useState('')
@@ -62,13 +63,13 @@ const Movies = () => {
 
     const [openSearch, setOpenSearch] = React.useState(false);
 
-    const clickSearch = () => {
-        setOpenSearch(true);
+    const toggleSearch = () => {
+        setOpenSearch(!openSearch);
     };
 
-    const closeSearch = () => {
-        setOpenSearch(false);
-    };
+    const openSearchCollapse = () => {
+        setOpenSearch(true);
+    }
 
     const [searchValue, setSearchValue] = React.useState('');
 
@@ -76,232 +77,230 @@ const Movies = () => {
         <>
          <HomePageTitle title={"movies"}/>
 
-        <Grid container
-            justifyContent={"center"}
-            alignItems={"flex-start"}
-            spacing={2}
-              padding={2}
-        >
+            <Grid container
+                  justifyContent={"center"}
+                  alignItems={"flex-start"}
+                  spacing={2}
+                  padding={2}>
 
-            {/*<Grid item xs={12}>*/}
-            {/*    <div className={"home-page-title"}>*/}
-            {/*        <h3>movies<h3--emphasise>.</h3--emphasise></h3>*/}
-            {/*    </div>*/}
-            {/*</Grid>*/}
+                <Grid item xs={12}>
 
-            <Grid item xs={12}>
-                <TextField
-                    label={"search"}
-                    fullWidth
-                    value={searchValue}
-                    onChange={event => { setSearchValue(event.target.value) }}
-                    InputProps={{
-                        endAdornment: <IconButton onClick={clickSearch}>
-                            <SearchIcon />
-                        </IconButton>
-                    }}
-                />
-            </Grid>
+                    <TextField label={"search"}
+                               fullWidth
+                               value={searchValue}
+                               placeholder={"search for a movie"}
+                               onChange={event => { setSearchValue(event.target.value)}}
+                               InputProps={{endAdornment:
+                                       <TextButton
+                                           text={openSearch ? "close" : "open"}
+                                           onClick={toggleSearch}/>}}
+                    />
+                </Grid>
 
-            <Grid item xs={12}>
-                <Collapse in={openSearch} >
-                    <div className={"home-page-card-background"}>
-                        <Grid container direction={"row"} padding={2}>
+                <Grid item xs={12}>
 
-                            <Grid item xs={11}>
-                                <h4 className={"home-page-card-title"}>search result:</h4>
-                            </Grid>
+                    <Collapse in={openSearch} >
 
-                            <Grid item xs={1}>
-                                <IconButton onClick={closeSearch}>
-                                    <CloseIcon />
-                                </IconButton>
-                            </Grid>
+                        <div className={"home-page-card-background"}>
 
-                            <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
-                                {/* LIST OF ALL MOVIES */}
-                                {moviesWithPoster.filter((movie) => {
-                                    if (movie.title.toLowerCase().includes(searchValue.toLowerCase())) {
-                                        return movie;
-                                    }
-                                }).map((movie) => {
-                                    return (<Grid item>
-                                        <Card sx={{ width: 330 }}>
-                                            <CardMedia
-                                                component="img"
-                                                height="500"
-                                                image={moviePoster}
-                                                alt={movie.title}
-                                            />
+                            <Grid container direction={"row"} padding={2} spacing={2}>
 
-                                            <CardHeader title={
-                                                <Tooltip title={movie.title} placement="top-start">
-                                                    <Typography noWrap maxWidth={'300px'} fontSize={"25px"}>{movie.title}</Typography>
-                                                </Tooltip>
-                                            } />
+                                <Grid item xs={12}>
+                                    <h5 className={"home-page-card-title"}>search result</h5>
+                                </Grid>
 
-                                            <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
-
-                                                <Tooltip title={`Rate ${movie.title}`} placement="top-start">
-                                                    <Typography noWrap fontSize={"15px"}>Rate {movie.title}</Typography>
-                                                </Tooltip>
-                                                <Rating
-                                                    name="simple-controlled"
-                                                    precision={0.5}
-                                                    max={5}
-                                                // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+                                <Grid item xs={12}>
+                                    <Grid container direction={"row"} spacing={2} alignItems={"center"}>
+                                    {/* LIST OF ALL MOVIES */}
+                                    {moviesWithPoster.filter((movie) => {
+                                        if (movie.title.toLowerCase().includes(searchValue.toLowerCase())) {
+                                            return movie;
+                                        }
+                                    }).map((movie) => {
+                                        return (<Grid item>
+                                            <Card sx={{width: 180}}>
+                                                <CardMedia
+                                                    component="img"
+                                                    image={moviePoster}
+                                                    alt={movie.title}
                                                 />
-                                                {/*<Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>*/}
-                                            </div>
 
-                                            <Box padding={1}>
-                                                <FormButton text={"watch"} />
-                                            </Box>
-                                        </Card>
+                                                <Stack spacing={1} padding={1} alignItems={"center"}>
+                                                    <Rating
+                                                        name="simple-controlled"
+                                                        sx={{fontSize: "1.2em"}}
+                                                        precision={0.5}
+                                                        max={5}
+                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+                                                    />
+
+                                                    <Tooltip title={movie.title} placement="top-start">
+                                                        <Typography noWrap>{movie.title}</Typography>
+                                                    </Tooltip>
+
+                                                    <FormButton text={"watch"} />
+                                                </Stack>
+                                            </Card>
+                                        </Grid>
+                                        )})}
                                     </Grid>
-                                    )
-                                })}
+                                </Grid>
                             </Grid>
-                        </Grid>
+                        </div>
+                    </Collapse >
+                </Grid>
+
+                <Grid item xs={12}>
+
+                    <div className={"home-page-card-background"}>
+
+                            <Grid container direction={"row"} padding={2} spacing={2}>
+
+                                <Grid item xs={12}>
+                                    <h5 className={"home-page-card-title"}>club movies</h5>
+                                </Grid>
+
+                                <Grid item xs={12}>
+
+                                    <Stack direction={"row"} overflow={"auto"}>
+                                        {moviesWithPoster.map((movie) => {
+                                            return (<ListItem sx={{p:1}}>
+                                                <Card sx={{width: 150}}>
+                                                    <CardMedia
+                                                        component="img"
+                                                        sx={{height: "100%"}}
+                                                        image={moviePoster}
+                                                        alt={movie.title}
+                                                    />
+
+                                                    <Stack
+                                                        spacing={1}
+                                                        padding={1}
+                                                        alignItems={"center"}>
+
+                                                        <Rating
+                                                            name="simple-controlled"
+                                                            sx={{fontSize: "1.2em"}}
+                                                            precision={0.5}
+                                                            max={5}
+                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+                                                        />
+
+                                                        <Tooltip title={movie.title} placement="top-start">
+                                                            <Typography noWrap>{movie.title}</Typography>
+                                                        </Tooltip>
+
+                                                        <FormButton text={"watch"} />
+                                                    </Stack>
+                                                </Card>
+                                            </ListItem>)})}
+                                    </Stack>
+                                </Grid>
+                            </Grid>
                     </div>
-                </Collapse >
-            </Grid>
+                </Grid>
 
-            <Grid item xs={12}>
-                <div className={"home-page-card-background"}>
-                    <Grid container direction={"row"} padding={2}>
-                        <Grid item xs={12}>
-                            <h4 className={"home-page-card-title"}>club movies:</h4>
-                        </Grid>
+                <Grid item xs={12}>
 
-                        <Grid item xs={12}>
-                            <Grid container direction={"row"} spacing={1} alignItems={"center"}>
-                        {moviesWithPoster.map((movie) => {
-                            return (<Grid item>
-                                <Card sx={{ width: 330 }}>
-                                    <CardMedia
-                                        component="img"
-                                        height="500"
-                                        image={moviePoster}
-                                        alt={movie.title}
-                                    />
+                    <div className={"home-page-card-background"}>
 
-                                    <CardHeader title={
-                                        <Tooltip title={movie.title} placement="top-start">
-                                            <Typography noWrap maxWidth={'300px'} fontSize={"25px"}>{movie.title}</Typography>
-                                        </Tooltip>
-                                    } />
+                            <Grid container direction={"row"} padding={2} spacing={2}>
 
-                                    <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
+                                <Grid item xs={12}>
+                                    <h5 className={"home-page-card-title"}>recommended</h5>
+                                </Grid>
 
-                                        <Tooltip title={`Rate ${movie.title}`} placement="top-start">
-                                            <Typography noWrap fontSize={"15px"}>Rate {movie.title}</Typography>
-                                        </Tooltip>
-                                        <Rating
-                                            name="simple-controlled"
-                                            precision={0.5}
-                                            max={5}
-                                        // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-                                        />
-                                        <Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>
-                                    </div>
+                                <Grid item xs={12}>
 
-                                    <Box padding={1}>
-                                        <FormButton text={"watch"} />
-                                    </Box>
-                                </Card>
+                                    <Stack direction={"row"} overflow={"auto"}>
+                                        {moviesWithPoster.map((movie) => {
+                                            return (<ListItem sx={{p:1}}>
+                                                <Card sx={{width: 150}}>
+                                                    <CardMedia
+                                                        component="img"
+                                                        sx={{height: "100%"}}
+                                                        image={moviePoster}
+                                                        alt={movie.title}
+                                                    />
+
+                                                    <Stack
+                                                        spacing={1}
+                                                        padding={1}
+                                                        alignItems={"center"}>
+
+                                                        <Rating
+                                                            name="simple-controlled"
+                                                            sx={{fontSize: "1.2em"}}
+                                                            precision={0.5}
+                                                            max={5}
+                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+                                                        />
+
+                                                        <Tooltip title={movie.title} placement="top-start">
+                                                            <Typography noWrap>{movie.title}</Typography>
+                                                        </Tooltip>
+
+                                                        <FormButton text={"watch"} />
+                                                    </Stack>
+                                                </Card>
+                                            </ListItem>)})}
+                                    </Stack>
+                                </Grid>
                             </Grid>
-                            )})}
-                    </Grid>
-                        </Grid>
-                    </Grid>
-                </div>
-            </Grid>
+                    </div>
+                </Grid>
 
-            <Grid item xs={12}>
-                <div className={"home-page-card-background"}>
-                    <Grid container direction={"row"} padding={2}>
-                        <Grid item xs={12}>
-                            <h4 className={"home-page-card-title"}>recommended movies:</h4>
-                        </Grid>
+                <Grid item xs={12}>
 
-                        <Grid item xs={12}>
-                            <Grid container direction={"row"} spacing={1} alignItems={"center"}>
-                        {moviesWithPoster.map((movie) => {
-                            return (<Grid item>
-                                <Card sx={{ width: 330 }}>
-                                    <CardMedia
-                                        component="img"
-                                        height="500"
-                                        image={moviePoster}
-                                        alt={movie.title}
-                                    />
+                    <div className={"home-page-card-background"}>
 
-                                    <CardHeader title={
-                                        <Tooltip title={movie.title} placement="top-start">
-                                            <Typography noWrap maxWidth={'300px'} fontSize={"25px"}>{movie.title}</Typography>
-                                        </Tooltip>
-                                    } />
+                            <Grid container direction={"row"} padding={2} spacing={2}>
 
-                                    <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
+                                <Grid item xs={12}>
+                                    <h5 className={"home-page-card-title"}>watched</h5>
+                                </Grid>
 
-                                        <Tooltip title={`Rate ${movie.title}`} placement="top-start">
-                                            <Typography noWrap fontSize={"15px"}>Rate {movie.title}</Typography>
-                                        </Tooltip>
-                                        <Rating
-                                            name="simple-controlled"
-                                            precision={0.5}
-                                            max={5}
-                                        // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-                                        />
-                                    </div>
+                                <Grid item xs={12}>
 
-                                    <Box padding={1}>
-                                        <FormButton text={"watch"} />
-                                    </Box>
-                                </Card>
+                                    <Stack direction={"row"} overflow={"auto"}>
+                                        {moviesWithPoster.map((movie) => {
+                                            return (<ListItem sx={{p:1}}>
+                                                <Card sx={{width: 150}}>
+                                                    <CardMedia
+                                                        component="img"
+                                                        sx={{height: "100%"}}
+                                                        image={moviePoster}
+                                                        alt={movie.title}
+                                                    />
+
+                                                    <Stack
+                                                        spacing={1}
+                                                        padding={1}
+                                                        alignItems={"center"}>
+
+                                                        <Rating
+                                                            name="simple-controlled"
+                                                            sx={{fontSize: "1.2em"}}
+                                                            precision={0.5}
+                                                            max={5}
+                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+                                                        />
+
+                                                        <Tooltip title={movie.title} placement="top-start">
+                                                            <Typography noWrap>{movie.title}</Typography>
+                                                        </Tooltip>
+
+                                                        <FormButton text={"watch"} />
+                                                    </Stack>
+                                                </Card>
+                                            </ListItem>)})}
+                                    </Stack>
+                                </Grid>
                             </Grid>
-                            )
-                        })}
-                    </Grid>
-                        </Grid>
-                    </Grid>
-                </div>
+                    </div>
+                </Grid>
             </Grid>
-
-            <Grid item xs={12}>
-                <div className={"home-page-card-background"}>
-                    <h4 className={"home-page-card-title"}>watched movies:</h4>
-
-                    <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
-                        {/* LIST OF MOVIES WATCHED BY THE USER */}
-                        {moviesWithPoster.map((movie) => {
-                            return (<Grid item>
-                                <Card sx={{ width: 330 }}>
-                                    <CardMedia
-                                        component="img"
-                                        height="500"
-                                        image={moviePoster}
-                                        alt={movie.title}
-                                    />
-
-                                    <CardHeader title={
-                                        <Tooltip title={movie.title} placement="top-start">
-                                            <Typography noWrap maxWidth={'300px'} fontSize={"25px"}>{movie.title}</Typography>
-                                        </Tooltip>
-                                    } />
-
-                                    <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
-                                    </div>
-                                </Card>
-                            </Grid>
-                            )
-                        })}
-                    </Grid>
-                </div>
-            </Grid>
-        </Grid >
-            </>
+        </>
     );
 }
 
