@@ -47,6 +47,7 @@ class User(AbstractUser):
     )
 
     watched_movies = models.ManyToManyField('Movie', through='Watch')
+    
 
 
     def full_name(self):
@@ -233,6 +234,9 @@ class Movie(models.Model):
 
     viewers = models.ManyToManyField(
         User, through='Watch', related_name='viewers')
+
+    cover_link = models.CharField(max_length=500,blank=True)
+    
     class Meta:
         ordering = ['title']
 
@@ -259,7 +263,6 @@ class Movie(models.Model):
             for movie in filtered_queryset:
                 movies.append(movie)
         return movies
-
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
