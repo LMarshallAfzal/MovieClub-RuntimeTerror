@@ -20,7 +20,6 @@ function Clubs() {
     let {user, authTokens} = useContext(AuthContext);
 
     let getMembershipData = async (e) => {
-        // e.preventDefault()
         let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
             method:'GET',
             headers: {
@@ -29,6 +28,7 @@ function Clubs() {
             }
         })
         let data = await response.json()
+        console.log(data)
         setMyClubData(data)
     }
 
@@ -119,8 +119,9 @@ function Clubs() {
                                         iconImage={club.iconImage}
                                         description={club.mission_statement}
                                         // isOrganiser={club.isOrganiser}
-                                        memberRole={userMembershipData.role}
+                                        // memberRole={userMembershipData.role}
                                         clubTheme={club.theme}
+                                        //console.log("request", )
                                         clubID={club.id}
                                     />
                                     </ListItem>)

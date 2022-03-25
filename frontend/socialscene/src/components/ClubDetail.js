@@ -79,6 +79,7 @@ function ClubDetail() {
     }
 
     let getClubMembers = async () => {
+        console.log(clubID)
         // getSpecifiedClub()
         let response = await fetch('http://127.0.0.1:8000/club_members/' + clubID +'/', {
             method:'GET',
@@ -89,7 +90,7 @@ function ClubDetail() {
         })
         let data = await response.json()
         setClubMembers(data)
-        console.log(clubMembers)
+        // console.log(clubMembers)
     }
 
     let joinClub = async () => {
@@ -118,7 +119,7 @@ function ClubDetail() {
         getSpecifiedClub()
         getMembershipData()
         getRecommendedClubs()
-        getClubMembers(wantedClub.id)
+        getClubMembers()
 
     },[])
 
@@ -186,7 +187,7 @@ function ClubDetail() {
                     <FormButton text={"create"}/>
                     <FormButton 
                         text={"join"}
-                        // onClick={joinClub(props.clubID)}
+                        onClick={joinClub(clubID)}
                     />
                     <FormButton 
                         text={"leave"}

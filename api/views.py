@@ -17,6 +17,7 @@ from .decorators import movie_exists, club_exists, has_watched, has_not_watched,
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -190,12 +191,20 @@ def create_meeting(request, club_id):
 
 
 @api_view(["POST"])
-@club_exists
 @permission_classes([IsAuthenticated])
+@club_exists
 def join_club(request, club_id):
     club = Club.objects.get(id=club_id)
-    club.club_members.add(request.user, through_defaults={'role': 'M'})
-    return Response(status=status.HTTP_200_OK)
+    try:
+        Membership.objects.get(club=club, user=request.user)
+    except ObjectDoesNotExist:
+        club.club_members.add(request.user, through_defaults={'role': 'M'})
+        membership = Membership.objects.get(club=club, user=request.user)
+        serializer = MembershipSerializer(membership, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        raise serializers.ValidationError(
+            "You are already a member of this club!")
 
 
 @api_view(["POST"])
