@@ -1,13 +1,13 @@
 import React, {useCallback} from "react";
 import {useNavigate, useParams} from "react-router";
-import "../../styling/pages/OthersProfile.css";
+import "../styling/pages/OthersProfile.css";
 import { Tooltip, Rating, CardHeader, CardMedia, Chip, Avatar, Box, Stack, Card, CardContent, TextField, Typography, Grid, Paper, ListItemText, ListItemButton } from "@mui/material";
-import FormButton from "../../components/FormButton";
-import iconImage from "../../styling/images/testIconPic.jpg";
-import { DummyDashboardClubsData, meetings, movies } from '../data/DummyDashboardClubsData';
-import { moviesWithPoster } from '../data/DummyMoviesData';
-import moviePoster from '../../styling/images/empty_movie_poster.png';
-import {DummyClubMemberData} from "../data/DummyClubMemberData";
+import FormButton from "./FormButton";
+import iconImage from "../styling/images/testIconPic.jpg";
+import { DummyDashboardClubsData, meetings, movies } from '../pages/data/DummyDashboardClubsData';
+import { moviesWithPoster } from '../pages/data/DummyMoviesData';
+import moviePoster from '../styling/images/empty_movie_poster.png';
+import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
 
 function OthersProfile() {
 

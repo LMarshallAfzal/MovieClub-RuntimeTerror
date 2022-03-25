@@ -10,6 +10,7 @@ import "../../styling/pages/Movies.css";
 import moviePoster from '../../styling/images/empty_movie_poster.png'
 import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
+import HomePageTitle from "../../components/HomePageTitle";
 
 const Movies = () => {
     const [movie, setMovie] = useState('')
@@ -73,11 +74,7 @@ const Movies = () => {
 
     return (
         <>
-         <Grid item xs={12} sx={{position: "sticky", top: 0, zIndex: "9000"}}>
-                <div className={"home-page-title"} >
-                    <h3>movies<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
+         <HomePageTitle title={"movies"}/>
 
         <Grid container
             justifyContent={"center"}

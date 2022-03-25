@@ -3,6 +3,7 @@ import { Box, Grid, Stack, TextField, Button } from "@mui/material";
 import "../../styling/pages/Options.css";
 import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
+import HomePageTitle from "../../components/HomePageTitle";
 
 const Options = () => {
     const [passwordData, setPasswordData] = useState({
@@ -83,11 +84,8 @@ const Options = () => {
     
     return (
         <>
-        <Grid item xs={12} sx={{position: "sticky", top: 0, zIndex: "9000"}}>
-                <div className={"home-page-title"} >
-                    <h3>options<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
+            <HomePageTitle title={"options"}/>
+
         <Grid container
               direction={"row"}
               spacing={2}

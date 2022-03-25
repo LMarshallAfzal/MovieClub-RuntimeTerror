@@ -6,6 +6,7 @@ import FormButton from "../../components/FormButton";
 import ClubListing from "../../components/ClubListing";
 import {DummyClubData} from "../data/DummyClubsData";
 import {useNavigate} from "react-router";
+import HomePageTitle from "../../components/HomePageTitle";
 
 function Clubs() {
 
@@ -14,13 +15,7 @@ function Clubs() {
 
     return (
         <>
-            <Grid item xs={12} sx={{ boxShadow: 3, position: "sticky", top: "0px", zIndex: 90000}}>
-                <div className={"home-page-title"} >
-                    <h3>clubs<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
-
-
+            <HomePageTitle title={"clubs"}/>
 
             <Grid container
             justifyContent={"center"}
@@ -48,7 +43,7 @@ function Clubs() {
                     <Grid container direction={"row"} padding={2}>
 
                         <Grid item xs={12}>
-                            <h4 className={"home-page-card-title"}>your clubs:</h4>
+                            <h5 className={"home-page-card-title"}>your clubs</h5>
                         </Grid>
 
                         <Grid item xs={12}>
@@ -80,7 +75,7 @@ function Clubs() {
                     <Grid container direction={"row"} padding={2}>
 
                         <Grid item xs={12}>
-                            <h4 className={"home-page-card-title"}>recommended clubs:</h4>
+                            <h5 className={"home-page-card-title"}>recommended clubs</h5>
                         </Grid>
 
                         <Grid item xs={12}>

@@ -13,7 +13,7 @@ import Clubs from "../home/Clubs";
 import Movies from "../home/Movies";
 import Options from "../home/Options";
 import Home from "../home/Home";
-import OthersProfile from "../home/OthersProfile";
+import OthersProfile from "../../components/OthersProfile";
 import PrivateRoute from "../../components/helper/PrivateRoute";
 import { AuthProvider } from "../../components/helper/AuthContext";
 import ClubDetail from "../../components/ClubDetail";
