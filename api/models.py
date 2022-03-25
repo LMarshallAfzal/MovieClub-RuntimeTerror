@@ -88,7 +88,7 @@ class User(AbstractUser):
         return memberships
 
     def get_user_preferences(self):
-        return self.preferences
+        return [genre.id for genre in self.preferences.all()]
 
     def add_watched_movie(self, movie):
         self.watched_movies.add(movie)
