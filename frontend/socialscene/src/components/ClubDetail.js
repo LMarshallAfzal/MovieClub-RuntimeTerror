@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {useParams, Outlet} from "react-router";
+import React, { useState } from "react";
+import { useParams, Outlet } from "react-router";
 import {
     Avatar,
     Box,
@@ -11,12 +11,14 @@ import {
     Grid,
     ListItem,
     Stack,
-    TextField
+    TextField,
+    Autocomplete
 } from "@mui/material";
 import "../styling/components/ClubDetail.css";
 import FormButton from "./FormButton";
-import {DummyClubData} from "../pages/data/DummyClubsData";
-import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
+import { DummyClubData } from "../pages/data/DummyClubsData";
+import { DummyClubMemberData } from "../pages/data/DummyClubMemberData";
+import { themes } from "../pages/data/MovieThemes"
 
 
 function ClubDetail() {
@@ -27,12 +29,12 @@ function ClubDetail() {
     let { clubID } = useParams();
     let club = DummyClubData.find(obj => obj.ID === clubID);
 
-     const toggleBannedView = () => {
+    const toggleBannedView = () => {
         setBannedMembers(!showBannedMembers);
     }
 
     const openBanDialog = () => {
-         setBanDialog(true);
+        setBanDialog(true);
     }
 
     const closeBanDialog = () => {
@@ -40,25 +42,25 @@ function ClubDetail() {
     }
 
     const openDeleteClubDialog = () => {
-         setDeleteClubDialog(true);
+        setDeleteClubDialog(true);
     }
 
     const closeDeleteClubDialog = () => {
-         setDeleteClubDialog(false);
+        setDeleteClubDialog(false);
     }
 
     const handleClubDelete = () => {
-         closeDeleteClubDialog()
+        closeDeleteClubDialog()
         console.log("Club Deleted");
     }
 
     const handleRemoveUser = () => {
-         closeBanDialog();
-         console.log("User Removed");
+        closeBanDialog();
+        console.log("User Removed");
     }
 
     const handleBan = () => {
-         handleRemoveUser();
+        handleRemoveUser();
         console.log("User Banned");
     }
 
@@ -100,7 +102,7 @@ function ClubDetail() {
                         </DialogContent>
 
                         <DialogActions>
-                            <FormButton onClick={handleBan} text={"ban"} style={"primary"}/>
+                            <FormButton onClick={handleBan} text={"ban"} style={"primary"} />
                             <FormButton onClick={handleRemoveUser} text={"remove"} />
                         </DialogActions>
                     </Dialog>
@@ -109,15 +111,15 @@ function ClubDetail() {
                         {DummyClubMemberData.map((user) => {
                             return (
                                 <Chip
-                                label={user.firstName + " " + user.lastName}
-                                avatar={
-                                <Avatar
-                                    src={user.iconImage}
-                                    alt={user.firstName + " " + user.lastName}
-                                />}
-                                onDelete={openBanDialog}
-                                onClick={handleUserClick}
-                                sx={ {mr: 1, mt: 1}}
+                                    label={user.firstName + " " + user.lastName}
+                                    avatar={
+                                        <Avatar
+                                            src={user.iconImage}
+                                            alt={user.firstName + " " + user.lastName}
+                                        />}
+                                    onDelete={openBanDialog}
+                                    onClick={handleUserClick}
+                                    sx={{ mr: 1, mt: 1 }}
                                 />
 
                             )
@@ -136,15 +138,15 @@ function ClubDetail() {
                         {DummyClubMemberData.map((user) => {
                             return (
                                 <Chip
-                                label={user.firstName + " " + user.lastName}
-                                avatar={
-                                <Avatar
-                                    src={user.iconImage}
-                                    alt={user.firstName + " " + user.lastName}
-                                />}
-                                onDelete={handleUnBan}
-                                onClick={handleBannedUserClick}
-                                sx={ {mr: 1, mt: 1}}
+                                    label={user.firstName + " " + user.lastName}
+                                    avatar={
+                                        <Avatar
+                                            src={user.iconImage}
+                                            alt={user.firstName + " " + user.lastName}
+                                        />}
+                                    onDelete={handleUnBan}
+                                    onClick={handleBannedUserClick}
+                                    sx={{ mr: 1, mt: 1 }}
                                 />
 
                             )
@@ -156,11 +158,11 @@ function ClubDetail() {
 
     return (
         <Grid
-        container
-        justifyContent={"center"}
-        direction={"row"}
-        alignItems={"stretch"}
-        spacing={2}
+            container
+            justifyContent={"center"}
+            direction={"row"}
+            alignItems={"stretch"}
+            spacing={2}
         >
             <Grid item xs={12}>
                 <h4 className={"home-page-sub-section-heading"}>{club.clubName}:</h4>
@@ -174,7 +176,7 @@ function ClubDetail() {
 
             <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" }}>
 
-                <Stack spacing={2} sx={{height: "100%"}}>
+                <Stack spacing={2} sx={{ height: "100%" }}>
                     <Dialog
                         open={showDeleteClubDialog}
                         onClose={closeDeleteClubDialog}
@@ -212,7 +214,7 @@ function ClubDetail() {
             </Grid>
 
             <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" }}>
-                <Stack spacing={2} sx={{height: "100%"}}>
+                <Stack spacing={2} sx={{ height: "100%" }}>
                     <TextField
                         id="outlined"
                         label="club name:"
@@ -225,10 +227,35 @@ function ClubDetail() {
                         defaultValue={club.description}
                     />
 
-                    <TextField
+                    {/* <TextField
                         id="outlined"
                         label="theme:"
                         defaultValue={club.clubTheme}
+                    /> */}
+                    <Autocomplete
+                        // multiple
+                        id="tags-standard"
+                        options={themes}
+                        getOptionLabel={(option) => option.theme}
+                        // defaultValue={club.clubTheme}
+                        disableCloseOnSelect
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                // error={preferencesError}
+                                // helperText={errorPreferencesText}
+                                // required
+                                spacing={6}
+                                id={"outlined-basic"}
+                                label={"theme:"}
+                                name={"preferences"}
+                                type={"text"}
+                                variant={"outlined"}
+                                multiline
+                            // value={userData.preferences}
+                            // onChange={e => onChange(e)}
+                            />
+                        )}
                     />
 
                     <FormButton

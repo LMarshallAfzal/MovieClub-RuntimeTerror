@@ -112,7 +112,7 @@ const Movies = () => {
                                 </IconButton>
                             </Grid>
 
-                            <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
+                            <Grid container direction={"row"} spacing={1} alignItems={"center"}>
                                 {/* LIST OF ALL MOVIES */}
                                 {moviesWithPoster.filter((movie) => {
                                     if (movie.title.toLowerCase().includes(searchValue.toLowerCase())) {
