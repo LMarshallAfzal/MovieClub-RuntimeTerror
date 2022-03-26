@@ -511,7 +511,6 @@ def banned_member_list(request, club_id):
 @permission_classes([IsAuthenticated])
 @user_exists
 def toggle_follow(request, user_id):
-    #user = User.objects.get(id=7)
     followee = User.objects.get(id=user_id)
     request.user.toggle_follow(followee)
     followers = request.user.followers.all()
@@ -521,8 +520,16 @@ def toggle_follow(request, user_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_followers(request):
-    user = User.objects.get(id=69)
-    followers = user.followers.all()
+    followers = request.user.followers.all()
     print(followers)
     serializer = UserSerializer(followers, many=True) 
     return Response(serializer.data, status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_following(request):
+    following = request.user.following.all()
+    serializer = UserSerializer(following, many=True) 
+    return Response(serializer.data, status = status.HTTP_200_OK)
+
+
