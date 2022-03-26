@@ -150,7 +150,18 @@ def has_ratings_for_movie_recommendations(view_function):
             return Response(serializer.data, status=status.HTTP_200_OK)
     return modified_view_function
 
-
+def user_has_rated_movie(view_function):
+    @wraps(view_function)
+    def modified_view_function(request,movie_id,*args,**kwargs):
+        movie = Movie.objects.get(id = movie_id)
+        try:
+            Rating.objects.get(user=request.user,movie=movie)
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError("User has not rated this movie")
+        else:
+            return view_function(request,movie_id,*args,**kwargs)
+    return modified_view_function
+            
 def has_ratings_for_club_recommendations(view_function):
     @wraps(view_function)
     def modified_view_function(request, *args, **kwargs):

@@ -114,6 +114,7 @@ const Profile = () => {
 
     useEffect(() => {
         getUserData();
+        // console.log(user)
     }, [])
 
     return (

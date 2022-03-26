@@ -14,15 +14,30 @@ import FormButton from "../../components/FormButton";
 const Movies = () => {
     let { user, authTokens } = useContext(AuthContext);
     const [movie, setMovie] = useState('')
-    // const [value, set] = React.useState<'' | null>(2);
     const [rating, setRating] = useState({'user': user.user_id, 'movie': 0, 'score': 0.0});
     const [recommendedMovies, setRecommendedMovies] = useState([]);
 
-    useEffect((e) => {
-        // e.preventDefault()
+    useEffect(() => {
         getRecommendedMovies()
     }, [])
 
+    let getRating = async (id) => {
+        let response = await fetch('http://127.0.0.1:8000/get_rating/' + id + '/', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer ' + String(authTokens.access),
+            },
+        })
+        let data = await response.json()
+        if(response.status === 200) {
+            setRating(data)
+        }
+        else {
+            setRating({'user': user.user_id, 'movie': id, 'score': 0.0})
+            console.log(rating.score)
+        }
+    }
 
     let getRecommendedMovies = async () => {
         let response = await fetch('http://127.0.0.1:8000/rec_movies/', {
@@ -34,7 +49,17 @@ const Movies = () => {
         })
         let data = await response.json()
         console.log(data)
-        setRecommendedMovies(data)
+        if(response.status === 200) {
+            setRecommendedMovies(data)
+            recommendedMovies.map(movie => {
+                console.log("I got this far")
+                getRating(movie.id)
+            })
+        }
+        else {
+            alert("Something went wrong")
+        }
+        
     }
 
     let AddRating = async (id, ratingScore) => {
@@ -233,6 +258,7 @@ const Movies = () => {
                         <Grid item xs={12}>
                             <Grid container direction={"row"} spacing={1} alignItems={"center"}>
                             {recommendedMovies.map((movie) => {
+                                // getRating(movie.id);
                             return (<Grid item>
                                 <Card sx={{ width: 330 }}>
                                     <CardMedia
@@ -257,7 +283,7 @@ const Movies = () => {
                                             name="simple-controlled"
                                             precision={0.5}
                                             max={5}
-                                            // value={movie.score}
+                                            // value={rating}
                                             onChange={(event, newValue) => (setRating({score: newValue, onChange: AddRating(movie.id, newValue)}))}
                                         />
                                     </div>
