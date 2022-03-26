@@ -27,6 +27,10 @@ import AuthContext from "./helper/AuthContext";
 function ShowEvent() {
     let {user, authTokens} = useContext(AuthContext);
     const [myClubData, setMyClubData] = useState([]);
+    const [myMeetingData, setMyMeetingData] = useState([]);
+    const[recommendedMovies, setRecommendedMovies] = useState([]);
+    let { clubID } = useParams();
+
 
     let getMembershipData = async () => {
         let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
@@ -41,15 +45,47 @@ function ShowEvent() {
         setMyClubData(data)
     }
 
+    let getMeetingData = async (id) => {
+        let response = await fetch('http://127.0.0.1:8000/get_club_upcoming_meeting/' + id +'/', {
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        console.log(data)
+        setMyMeetingData(data)
+    }
+
+    let getRecommendedMovies = async () => {
+        let response = await fetch('http://127.0.0.1:8000/rec_meeting/' + clubID + '/', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer ' + String(authTokens.access),
+            },
+        })
+        let data = await response.json()
+        console.log(data)
+        setRecommendedMovies(data)
+    }
+
+
     useEffect(() => {
         getMembershipData()
+        getMeetingData(clubID)
+        getRecommendedMovies()
     }, [])
 
-    let { clubID } = useParams();
+    getMembershipData()
+    getMeetingData(clubID)
+    getRecommendedMovies()
     let club = myClubData.find(obj => obj.id === clubID);
-    let event = DummyClubEventData.find(obj => obj.clubID === club.ID);
-    let movie = dummyRecommendedMovies.find(obj => obj.ID === event.movieID);
-    let organiser = DummyClubMemberData.find(obj => obj.ID === event.organiserID);
+    //let event = DummyClubEventData.find(obj => obj.clubID === club.ID);
+    let event = myMeetingData.find(obj => obj.id === club.id);
+    let movie = recommendedMovies.find(obj => obj.id === event.movie);
+    // let organiser = DummyClubMemberData.find(obj => obj.ID === event.organiserID);
 
     const [edit, setEdit] = useState(false);
 
@@ -63,11 +99,11 @@ function ShowEvent() {
             <Grid container padding={2} spacing={2}>
 
                 <Grid item xs={10}>
-                    <h5 className={"show-event-title"}>coming up: <span className={"show-event-title-movie"}>{event.title}</span></h5>
+                    <h5 className={"show-event-title"}>coming up: <span className={"show-event-title-movie"}>{'event.meeting_title'}</span></h5>
                 </Grid>
 
                 <Grid item xs={2}>
-                    <EnterButton text={event.hasStarted ? "attend" : "join"} linkTo={"/https://zoom.us"}/>
+                    {/* <EnterButton text={event.hasStarted ? "attend" : "join"} linkTo={"/https://zoom.us"}/> */}
                 </Grid>
 
                 <Grid item xs={12}>
@@ -114,10 +150,10 @@ function ShowEvent() {
                                         <Divider>
 
                                             <Chip
-                                                label={organiser.firstName + " " + organiser.lastName}
+                                                label={'organiser.firstName + " " + organiser.lastName'}
                                                 avatar={<Avatar
-                                                src={organiser.iconImage}
-                                                alt={organiser.firstName + " " + organiser.lastName}/>}
+                                                src={'organiser.iconImage'}
+                                                alt={'organiser.firstName + " " + organiser.lastName'}/>}
                                                 sx={ {mr: 1, mt: 1}}
                                             />
                                         </Divider>
@@ -127,15 +163,15 @@ function ShowEvent() {
 
                                         <Avatar
                                             sx={{ width: 1, height: 1}}
-                                            src={organiser.iconImage}/>
+                                            src={'organiser.iconImage'}/>
 
                                     </Grid>
 
                                     <Grid item xs={8}>
 
                                         <h6 className={"show-event-organiser-title"}>organiser:</h6>
-                                        <h5>{organiser.firstName}</h5>
-                                        <h5>{organiser.lastName}</h5>
+                                        <h5>{'organiser.firstName'}</h5>
+                                        <h5>{'organiser.lastName'}</h5>
                                     </Grid>
 
                                     <Grid item xs={12}>

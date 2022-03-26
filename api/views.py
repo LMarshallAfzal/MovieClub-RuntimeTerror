@@ -293,7 +293,7 @@ def train_movie_data(request):
 @permission_classes([IsAuthenticated])
 @club_exists
 @is_in_club
-@is_organiser
+# @is_organiser
 def recommend_movie_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
     recommendations = []
