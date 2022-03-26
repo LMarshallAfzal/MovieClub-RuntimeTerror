@@ -36,6 +36,7 @@ def get_initial_recommendations_for_clubs(user, user_preferences):
     recommendations = random.sample(clubs, number_of_recomendations)
     return recommendations
 
+
 def update_upcoming_meetings():
     meetings = Club.objects.all().filter(club_meetings__completed=False)
     for meeting in meetings:
@@ -43,19 +44,36 @@ def update_upcoming_meetings():
             meeting.completed = True
             meeting.save()
 
+
 def send_notifications(club):
-    emails = []
+    recipients = []
+    meeting = club.get_upcoming_meeting()
+    html = f"""
+<html>
+  <head>
+    You are invited to join {meeting.meeting_title}.
+  </head>
+  <body>
+  Meeting details:
+  <ul>
+  <li>Movie: {meeting.movie.title}</li>
+  <li>Date: {meeting.date}</li>
+  <li>Start time: {meeting.start_time}</li>
+  <li>End time: {meeting.end_time}</li>
+  <li>Organiser: {meeting.organiser.get_full_name()}</li>
+  </ul>
+    <img src="{meeting.movie.cover_link}"
+         width=200" height="300">
+  </body>
+</html>
+"""
     for member in club.club_members.all():
-        emails.append(member.email)
+        recipients.append(member.email)
 
     send_mail(
-        'New Meeting',
-        'You have a new meeting!', 
+        f"{club.club_name} meeting details.",
+        f'A new meeting got added called: {meeting.meeting_title}.\n It will happen at {meeting.date} and the start time is {meeting.start_time}.',
         EMAIL_HOST_USER,
-        emails
+        recipients,
+        html_message=html
     )
-
-    
-            
-    
-            
