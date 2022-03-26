@@ -28,7 +28,7 @@ class Command(BaseCommand):
             movie = Movie.objects.create(
                 ml_id = int(row['movieId']),
                 title = row['title'],
-                year = int(row['year'])
+                year = int(row['year']),
                 cover_link = self.get_db_movie_cover_links(int(row['movieId']))
             )
             movie.genres.set(genres)
