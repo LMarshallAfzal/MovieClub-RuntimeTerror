@@ -8,12 +8,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .models import *
+from .helpers import *
 from rest_framework.parsers import JSONParser
 from django.contrib.auth import logout
 from recommender.user_movie_recommender import train_movie_data_for_user, recommend_movies_for_user
 from recommender.meeting_movie_recommender import train_movie_data_for_meeting, recommend_movies_for_meeting
 from recommender.club_recommender import recommend_clubs
-from .decorators import movie_exists, club_exists, has_watched, has_not_watched, is_member, is_organiser,has_ratings_for_movie_recommendations,has_ratings_for_club_recommendations
+from .decorators import *
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -26,6 +27,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add custom claims
         token['username'] = user.username
+        token['first_name'] = user.first_name
+        token['last_name'] = user.last_name
 
         return token
 
@@ -102,12 +105,22 @@ def get_users(request):
 
 
 @api_view(['GET'])
-@club_exists
 @permission_classes([IsAuthenticated])
+@club_exists
 def get_club_members(request, club_id):
     club = Club.objects.get(id=club_id)
     members = club.get_all_club_members()
     serializer = UserSerializer(members, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@club_exists
+def get_club_owner(request, club_id):
+    club = Club.objects.get(id=club_id)
+    owner = club.get_club_owner()
+    serializer = UserSerializer(owner, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -122,7 +135,6 @@ def get_other_user(request, user_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_current_user(request):
@@ -130,20 +142,9 @@ def get_current_user(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-@api_view(["GET"])
-@movie_exists
-@permission_classes([IsAuthenticated])
-def get_score(request, movie_id):
-    movie = Movie.objects.get(movie_id=movie_id)
-    score = Rating.objects.get(user=request.user, movie=movie)
-    serializer = RatingSerializer(score, many=False)
-    return Response(serializer.data, status=status.HTTP_200_OK)
-
-
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def edit_profile(request, user_id):
-    # user = request.user
     user = User.objects.get(id=user_id)
     serializer = UpdateUserSerializer(user, data=request.data)
     if serializer.is_valid():
@@ -155,15 +156,15 @@ def edit_profile(request, user_id):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def get_clubs(request):
+def get_all_clubs(request):
     clubs = Club.objects.all()
     serializer = ClubSerializer(clubs, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])
-# @csrf_protect
 @permission_classes([IsAuthenticated])
+# @csrf_protect
 def create_club(request):
     serializer = CreateClubSerializer(data=request.data)
     if serializer.is_valid():
@@ -176,14 +177,18 @@ def create_club(request):
 
 
 @api_view(["POST"])
-@club_exists
-@is_organiser
 @permission_classes([IsAuthenticated])
+@club_exists
+@is_in_club
+@not_banned
+@club_has_no_upcoming_meeting
 def create_meeting(request, club_id):
+    club = Club.objects.get(id=club_id)
     serializer = CreateMeetingSerializer(
         data=request.data, context={"request": request})
     if serializer.is_valid():
         serializer.save()
+        Membership.objects.get(user=request.user, club=club).toggle_organiser()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         errors = serializer.errors
@@ -191,18 +196,27 @@ def create_meeting(request, club_id):
 
 
 @api_view(["POST"])
-@club_exists
 @permission_classes([IsAuthenticated])
+@club_exists
 def join_club(request, club_id):
     club = Club.objects.get(id=club_id)
-    club.club_members.add(request.user, through_defaults={'role': 'M'})
-    return Response(status=status.HTTP_200_OK)
+    try:
+        Membership.objects.get(club=club, user=request.user)
+    except ObjectDoesNotExist:
+        club.club_members.add(request.user, through_defaults={'role': 'M'})
+        membership = Membership.objects.get(club=club, user=request.user)
+        serializer = MembershipSerializer(membership, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        raise serializers.ValidationError(
+            "You are already a member of this club!")
 
 
 @api_view(["POST"])
-@club_exists
-@is_member
 @permission_classes([IsAuthenticated])
+@club_exists
+@is_in_club
+@not_banned
 def leave_club(request, club_id):
     club = Club.objects.get(id=club_id)
     Membership.objects.get(user=request.user, club=club).delete()
@@ -210,9 +224,9 @@ def leave_club(request, club_id):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 @movie_exists
 @has_not_watched
-@permission_classes([IsAuthenticated])
 def add_watched_movie(request, movie_id):
     serializer = WatchMovieSerializer(
         data=request.data, context={"request": request})
@@ -234,8 +248,8 @@ def remove_watched_movie(request, movie_id):
 
 
 @api_view(['POST'])
-@movie_exists
 @permission_classes([IsAuthenticated])
+@movie_exists
 def add_rating(request, movie_id):
     serializer = AddRatingSerializer(
         data=request.data, context={"request": request})
@@ -247,8 +261,8 @@ def add_rating(request, movie_id):
 
 
 @api_view(['PUT'])
-@movie_exists
 @permission_classes([IsAuthenticated])
+@movie_exists
 def change_rating(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     serializer = ChangeRatingSerializer(movie, data=request.data)
@@ -260,8 +274,8 @@ def change_rating(request, movie_id):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 @has_ratings_for_movie_recommendations
-#@permission_classes([IsAuthenticated])
 def recommend_movie_user(request):
     recommendations = []
     recommendations = recommend_movies_for_user(request.user)
@@ -276,9 +290,10 @@ def train_movie_data(request):
 
 
 @api_view(['GET'])
-@club_exists
-@is_organiser
 @permission_classes([IsAuthenticated])
+@club_exists
+@is_in_club
+@is_organiser
 def recommend_movie_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
     recommendations = []
@@ -294,8 +309,8 @@ def train_meeting_data(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 @has_ratings_for_club_recommendations
-#@permission_classes([IsAuthenticated])
 def recommend_club(request):
     recommendations = recommend_clubs(request.user)
     serializer = ClubSerializer(recommendations, many=True)
@@ -303,11 +318,22 @@ def recommend_club(request):
     pass
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_all_movies(request):
+    movies = Movie.objects.all()
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)
+
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_memberships_of_user(request, user_id):
     user = User.objects.get(id=user_id)
     clubs = user.get_user_clubs()
+    if not clubs:
+        raise serializers.ValidationError(
+            "You are currently not part of any club.")
     serializer = ClubSerializer(clubs, many=True)
     return Response(serializer.data)
 
@@ -332,22 +358,177 @@ def get_watched_list(request):
 
 
 @api_view(['GET'])
-@club_exists
-@is_member
 @permission_classes([IsAuthenticated])
-def message_forum(request,club_id):
+@club_exists
+@is_in_club
+@not_banned
+def message_forum(request, club_id):
     messages = Message.objects.filter(club=club_id)
     serializer = MessageSerializer(messages, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-@api_view(['POST'])
-@club_exists
-@is_member
+
+@api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def write_message(request,club_id):
+@club_exists
+@is_organiser
+@club_has_upcoming_meeting
+def edit_meeting(request, club_id):
+    club = Club.objects.get(id=club_id)
+    meeting = club.get_upcoming_meeting()
+    serializer = UpdateMeetingSerializer(meeting, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+@club_exists
+@club_has_upcoming_meeting
+@is_in_club
+@not_banned
+@not_attendee
+def attend_meeting(request, club_id):
+    club = Club.objects.get(id=club_id)
+    meeting = club.get_upcoming_meeting()
+    request.user.attend_meeting(meeting)
+    serializer = MeetingSerializer(meeting, many=False)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+@club_exists
+@is_in_club
+@not_banned
+@club_has_upcoming_meeting
+@is_attendee
+def leave_meeting(request, club_id):
+    club = Club.objects.get(id=club_id)
+    meeting = club.get_upcoming_meeting()
+    request.user.leave_meeting(meeting)
+    serializer = MeetingSerializer(meeting, many=False)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def check_upcoming_meetings(request):
+    update_upcoming_meetings()
+    return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['DELETE'])
+@club_exists
+@is_in_club
+@is_organiser
+@permission_classes([IsAuthenticated])
+def cancel_meeting(request, club_id):
+    club = Club.objects.get(id=club_id)
+    meeting = club.get_upcoming_meeting()
+    meeting.delete()
+    return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@club_exists
+@is_in_club
+@club_has_upcoming_meeting
+@not_banned
+def get_club_upcoming_meeting(request, club_id):
+    club = Club.objects.get(id=club_id)
+    meeting = club.get_upcoming_meeting()
+    serializer = MeetingSerializer(meeting, many=False)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_upcoming_attending_meetings(request):
+    meetings = request.user.get_attending_meetings()
+    if not meetings:
+        raise serializers.ValidationError(
+            "You are currently not attending any meetings.")
+    serializer = MeetingSerializer(meetings, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+@club_exists
+@is_in_club
+@not_banned
+def write_message(request, club_id):
     serializer = WriteMessageSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+@club_exists
+@is_in_club
+@user_in_club
+@is_owner
+def ban_member(request, club_id, user_id):
+    club = Club.objects.get(id=club_id)
+    user = User.objects.get(id=user_id)
+    club.change_membership(user, 'B')
+    return Response(status.HTTP_200_OK)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+@club_exists
+@is_in_club
+@user_in_club
+@is_owner
+@user_is_banned
+def unban_member(request, club_id, user_id):
+    club = Club.objects.get(id=club_id)
+    banned_user = User.objects.get(id=user_id)
+    club.remove_user_from_club(banned_user)
+    return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@club_exists
+@is_in_club
+@is_owner
+def banned_member_list(request, club_id):
+    club = Club.objects.get(id=club_id)
+    banned = club.get_banned_members()
+    if len(banned) == 0:
+        raise serializers.ValidationError("There are no banned members.")
+    else:
+        serializer = UserSerializer(banned, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+@user_exists
+def toggle_follow(request, user_id):
+    followee = User.objects.get(id=user_id)
+    request.user.toggle_follow(followee)
+    followers = request.user.followers.all()
+    serializer = UserSerializer(followee, many=False) 
+    return Response(serializer.data, status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_followers(request):
+    followers = request.user.followers.all()
+    serializer = UserSerializer(followers, many=True) 
+    return Response(serializer.data, status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_following(request):
+    following = request.user.followees.all()
+    serializer = UserSerializer(following, many=True) 
+    return Response(serializer.data, status = status.HTTP_200_OK)
+
 

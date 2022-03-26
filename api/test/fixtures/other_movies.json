@@ -6,7 +6,7 @@
         "ml_id": 1,
         "title": "Pulp Fiction",
         "year": 1994,
-        "genres": "Crime,Comedy"
+        "genres": "Horror"
       }
     },
     {
@@ -16,17 +16,27 @@
         "ml_id": 2,
         "title": "Shrek",
         "year": 2001,
-        "genres": "Children,Comedy"
+        "genres": "Action"
       }
     },
     {
       "model": "api.movie",
       "pk": 4,
       "fields": {
-        "ml_id": 3,
+        "ml_id": 7,
         "title": "Django Unchained",
         "year": 2012,
-        "genres": "Western,Drama"
+        "genres": "Horror,Action"
+      }
+    },
+    {
+      "model": "api.movie",
+      "pk": 5,
+      "fields": {
+        "ml_id": 8,
+        "title": "The Shining",
+        "year": 2012,
+        "genres": "Horror,Action"
       }
     }
 

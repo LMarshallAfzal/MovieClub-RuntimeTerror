@@ -1,9 +1,9 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styling/pages/Login.css";
 import HeadingCircle from "../../components/HeadingCircle";
-import {Grid, Stack, TextField, Box} from "@mui/material";
+import {Grid, Stack, TextField} from "@mui/material";
 import FormButton from "../../components/FormButton";
-import Cookies from "js-cookie";
 import CsrfToken from "../../components/helper/CsrfToken";
 import AuthContext from "../../components/helper/AuthContext";
 
@@ -13,32 +13,46 @@ export function Login() {
     let {loginUser, loginCredentials, setLoginCredentials, usernameError, passwordError, errorUsernameText, errorPasswordText} = useContext(AuthContext)
     
     const {username, password} = loginCredentials;
-
     
+    // useEffect(() => {
+    //     loginUser()
+    // }, [])
     
     const onChange = (e) => {
         setLoginCredentials(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
     };
 
+    
     return (
-        <Grid container direction={"row"} className={"login-grid"}  spacing={2}>
+        <Grid container
+              direction={"row"}
+              className={"login-grid"}
+              spacing={2}>
             <CsrfToken />
 
-            <Grid  className={"login-grid-left"} item xs={6}>
-                <HeadingCircle title={"log in"}/>
+            <Grid item
+                  xs={6}
+                  className={"login-grid-child"}>
+
+                <HeadingCircle title={"log in"} />
             </Grid>
 
-            <Grid  className={"login-grid-right"} item xs={6}
-                alignItems="center"
-                justifyContent="center">
-                
-                <Box component={"form"} onSubmit={loginUser} className={"login-grid-right"} spacing={3}>
-                    <Stack className={"form-stack"} spacing={3} height={"100%"}> 
+            <Grid item
+                  xs={6}
+                  className={"login-grid-child"}>
+
+                <form onSubmit={loginUser} className={"login-form"}>
+
+                    <Stack className={"login-form-stack"}
+                           spacing={3}
+                           alignItems={"center"}
+                    >
+
                         <TextField
                             error={usernameError}
                             helperText={errorUsernameText}
                             required
-                            className={"form-field"}
+                            className={"login-form-row"}
                             id={"outlined-basic"}
                             label={"username"}
                             name={"username"}
@@ -51,7 +65,7 @@ export function Login() {
                             error={passwordError}
                             helperText={errorPasswordText}
                             required
-                            className={"form-field"}
+                            className={"login-form-row"}
                             id={"outlined-basic"}
                             label={"password"}
                             name={"password"}
@@ -61,36 +75,35 @@ export function Login() {
                             onChange={e => onChange(e)}
                         />
 
-                        <div className={"form-field"}>
-                            <Box
-                                sx={{
-                                    display: 'grid',
-                                    gridAutoColumns: '1fr',
-                                    gap: 1,
-                                }}
+                        <div className={"login-form-row"}>
+                            <Grid container
+                                  direction={"row"}
+                                  spacing={2}
                             >
-                                <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
+
+                                <Grid item xs={4}>
+
                                     <FormButton
                                         type="submit"
                                         text={"log in"}   
                                         onClick={loginUser}
+                                        style={"primary"}
                                     />
-                                        {/* log in
-                                    </FormButton>     */}
-                                </Box>
+                                </Grid>
 
-                                <Box sx={{ gridRow: '1', gridColumn: '2 / 5'}}>
+                                <Grid item xs={8}>
+
                                     <FormButton
                                         type="submit"
                                         text={"forgot password"}
                                     />
-                                </Box>
-                            </Box>
+                                </Grid>
+                            </Grid>
                         </div>
                     </Stack>
-                </Box>
+                </form>
             </Grid>
-        </Grid> 
+        </Grid>
     );
 }
    

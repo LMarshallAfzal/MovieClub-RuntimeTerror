@@ -1,7 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react"
-import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
-import Login from "../../pages/root/Login";
 import { useNavigate } from "react-router-dom";
 
 
@@ -12,7 +10,7 @@ export default AuthContext;
 export const AuthProvider = ({children}) => {
     
     let [authTokens, setAuthTokens] = useState(localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null)
-    let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
+    let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
     let [loading, setLoading] = useState(true)
     let [loginCredentials, setLoginCredentials] = useState({
         username: '', 
@@ -73,12 +71,12 @@ export const AuthProvider = ({children}) => {
         }
     };
 
-    // let logoutUser = () => {
-    //     setAuthTokens(null)
-    //     setUser(null)
-    //     localStorage.removieItem('authTokens')
-    //     navigate("/login")
-    // }let updateToken = async ()=> {
+    let logoutUser = () => {
+        setAuthTokens(null)
+        setUser(null)
+        localStorage.removeItem('authTokens')
+        navigate('/logout');
+    }
 
     let updateToken = async ()=> {
 
@@ -98,7 +96,7 @@ export const AuthProvider = ({children}) => {
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
         }else{
-            // logoutUser()
+            logoutUser()
         }
 
         if(loading){
@@ -118,7 +116,7 @@ export const AuthProvider = ({children}) => {
         errorPasswordText: errorPasswordText,
         setLoginCredentials:setLoginCredentials,
         loginUser: loginUser,
-        // logoutUser: logoutUser
+        logoutUser: logoutUser
     }    
 
     useEffect(()=> {

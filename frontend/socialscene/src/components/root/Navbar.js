@@ -2,9 +2,11 @@ import React, {useContext} from "react";
 import {Link, useLocation,matchPath} from "react-router-dom";
 import "../../styling/components/Navbar.css";
 import EnterButton from "../EnterButton";
+import AuthContext from "../../components/helper/AuthContext"
 
 
 function Navbar() {
+
     return (
         <>
             <div className={"navbar"}>
@@ -30,31 +32,39 @@ export default Navbar;
 
 function NavbarButton() {
     const location = useLocation();
+    let {user,logoutUser} = useContext(AuthContext);
 
-    if (matchPath(location.pathname,"/")) {
-        return (
+    switch (location.pathname){
+        case "/": if (user) {return (
+
             <EnterButton
-                    text={"enter"}
-                    linkTo={"/login"}
-                />
+                text={"enter"}
+                linkTo={"/home"}
+            />
+        )} else {return (
+
+            <EnterButton
+                text={"enter"}
+                linkTo={"/login"}
+            />
+        )}
+
+        case "/login": return (
+
+            <EnterButton
+                text={"sign up"}
+                linkTo={"/signup"}
+            />
         )
-    } else if (matchPath(location.pathname,"/login")) {
-        return (
-                <EnterButton
-                    text={"sign up"}
-                    linkTo={"/signup"}
-                />
-            )
-    // } else if (matchPath(location.pathname, "/home/*")) {
-    //     return (
-    //             <EnterButton
-    //                 text={"log out"}
-    //                 linkTo={"/logout"}
-    //                 />
-    //         )
-    } else {
-        return (
-                <></>
-            )
+
+        default: if(user) {return (
+
+            <EnterButton
+                text={"log out"}
+                onClick={logoutUser}
+            />
+        )} else {return (
+            <></>
+        )}
     }
 }
