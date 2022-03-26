@@ -95,7 +95,10 @@ h6 {
   background-color: #5C5C5C;
   font-family: Helvetica-Bold, serif;
   padding: 10px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
   color: #FFFFFF;
 }
@@ -135,7 +138,10 @@ h6 {
   font-family: Helvetica-Bold, serif;
   transition: all 0.3s ease-in-out;
   border-left: 0 solid #000000;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .form-button#normal:hover {
@@ -153,6 +159,4 @@ h6 {
 
 .form-button#disabled:hover {
   cursor: not-allowed;
-}
-
-/*# sourceMappingURL=FormButton.css.map */
+}/*# sourceMappingURL=FormButton.css.map */

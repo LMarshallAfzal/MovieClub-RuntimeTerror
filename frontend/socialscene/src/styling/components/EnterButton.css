@@ -95,7 +95,10 @@ h6 {
   background-color: #5C5C5C;
   font-family: Helvetica-Bold, serif;
   padding: 10px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
   color: #FFFFFF;
 }
@@ -122,7 +125,10 @@ h6 {
 
 .enter-button-wrapper {
   padding: 8px 18px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .enter-button {
@@ -141,6 +147,4 @@ h6 {
 .enter-button:hover {
   background-color: #FF0000;
   color: #FFFFFF;
-}
-
-/*# sourceMappingURL=EnterButton.css.map */
+}/*# sourceMappingURL=EnterButton.css.map */

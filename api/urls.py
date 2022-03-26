@@ -24,6 +24,7 @@ urlpatterns = [
     path("create_club/",views.create_club, name = "create_club"),
     path("create_meeting/<int:club_id>/",views.create_meeting, name = "create_meeting"),
     path("add_rating/<int:movie_id>/",views.add_rating,name = "add_rating"),
+    path("get_rating/<int:movie_id>/",views.get_rating,name = "get_rating"),
     path("rec_movies/",views.recommend_movie_user,name = "rec"),
     path("rec_clubs/",views.recommend_club,name = "rec_clubs"),
     path("edit_rating/<int:movie_id>/",views.change_rating,name = "edit_rating"),

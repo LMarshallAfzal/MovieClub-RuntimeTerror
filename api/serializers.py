@@ -55,7 +55,6 @@ class MovieSerializer(ModelSerializer):
         model = Movie
         fields = '__all__'
 
-
 class MembershipSerializer(ModelSerializer):
     class Meta:
         model = Membership
@@ -66,8 +65,6 @@ class RatingSerializer(ModelSerializer):
     class Meta:
         model = Rating
         fields = '__all__'
-
-
 class WatchMovieSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=User.objects.all())

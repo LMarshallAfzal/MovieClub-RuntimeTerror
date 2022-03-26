@@ -91,11 +91,43 @@ h6 {
   font-size: 1.1rem;
 }
 
+.page-title {
+  padding-top: 20px;
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  font-family: Helvetica-Bold, serif;
+  width: 100%;
+  text-align: center;
+}
+
+.page-subtitle {
+  height: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  font-family: Helvetica, serif;
+  width: 100%;
+  text-align: center;
+}
+
 .home-page-title {
   background-color: #5C5C5C;
   font-family: Helvetica-Bold, serif;
   padding: 10px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
   color: #FFFFFF;
 }
@@ -124,7 +156,10 @@ h6 {
   width: 26rem;
   background-color: #D8D8D8;
   transition: all 0.3s ease-out;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   cursor: pointer;
 }
 
@@ -139,6 +174,4 @@ h6 {
 
 .club-listing-avatars {
   align-self: flex-start;
-}
-
-/*# sourceMappingURL=ClubListing.css.map */
+}/*# sourceMappingURL=ClubListing.css.map */

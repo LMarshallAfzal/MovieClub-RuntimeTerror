@@ -27,7 +27,6 @@ class RecommendMovieMeetingTestCase(APITestCase):
         self.train_url = reverse('train_meeting_data')
         self.data = Data()
 
-
     def test_meeting_movie_recommender_url(self):
         self.assertEqual(self.url, f'/rec_meeting/{self.club.id}/')
 
@@ -51,7 +50,7 @@ class RecommendMovieMeetingTestCase(APITestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.data.clean()
-
+    
     def test_logged_out_user_cannot_get_recommended_meeting_movies_returns_401_unauthorized(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
