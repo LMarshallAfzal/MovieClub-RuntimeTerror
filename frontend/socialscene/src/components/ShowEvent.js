@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import {
     Autocomplete,
     Avatar,
@@ -21,16 +21,35 @@ import {dummyRecommendedMovies} from "../pages/data/DummyRecommendedMovies";
 import EnterButton from "./EnterButton";
 import FormButton from "./FormButton";
 import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
+import AuthContext from "./helper/AuthContext";
 
 
 function ShowEvent() {
+    let {user, authTokens} = useContext(AuthContext);
+    const [myClubData, setMyClubData] = useState([]);
+
+    let getMembershipData = async () => {
+        let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        console.log(data)
+        setMyClubData(data)
+    }
+
+    useEffect(() => {
+        getMembershipData()
+    }, [])
 
     let { clubID } = useParams();
-    let club = DummyClubData.find(obj => obj.ID === clubID);
+    let club = myClubData.find(obj => obj.id === clubID);
     let event = DummyClubEventData.find(obj => obj.clubID === club.ID);
     let movie = dummyRecommendedMovies.find(obj => obj.ID === event.movieID);
     let organiser = DummyClubMemberData.find(obj => obj.ID === event.organiserID);
-    console.log(movie.title);
 
     const [edit, setEdit] = useState(false);
 

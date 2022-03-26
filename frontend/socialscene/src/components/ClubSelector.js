@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useState, useEffect, useContext} from "react";
 import {Collapse, Grid, ListItem, Stack} from "@mui/material";
 import EnterButton from "./EnterButton";
 import "../styling/components/ClubSelector.css";
@@ -6,11 +6,13 @@ import {DummyClubData} from "../pages/data/DummyClubsData";
 import FormButton from "./FormButton";
 import TextButton from "./TextButton";
 import {useNavigate} from "react-router-dom";
-
+import AuthContext from "../components/helper/AuthContext";
 
 function ClubSelector() {
+    let {user, authTokens} = useContext(AuthContext);
     const navigate = useNavigate();
     const [showClubs, setShowClubs] = useState(true);
+    const [myClubData, setMyClubData] = useState([]);
 
     const toggleShowClubs = () => {
         setShowClubs(!showClubs);
@@ -21,6 +23,22 @@ function ClubSelector() {
         navigate(props)
     }
 
+    let getMembershipData = async () => {
+        let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        console.log(data)
+        setMyClubData(data)
+    }
+
+    useEffect(() => {
+        getMembershipData()
+    }, [])
 
     return (
 
@@ -42,19 +60,19 @@ function ClubSelector() {
                             <Collapse in={showClubs}>
 
                                 <Stack direction={"row"} className={"club-card-list-frame"}>
-                                    {DummyClubData.map((club) => club.isMember === true && (
+                                    {myClubData.map((club) =>  (
                                         <ListItem sx={{width: 'auto',p: 1}}>
                                             <div className={"club-selector-listing"}>
                                                 <Grid container padding={2} alignItems={"center"}>
 
                                                     <Grid item xs={8}>
-                                                        <h4>{club.clubName}</h4>
+                                                        <h4>{club.club_name}</h4>
                                                     </Grid>
 
                                                     <Grid item xs={4}>
                                                         <EnterButton
                                                             text={"view"}
-                                                            onClick={() => navigateAndToggle(`/home/discussion/${club.ID}`)}
+                                                            onClick={() => navigateAndToggle(`/home/discussion/${club.id}`)}
                                                         />
                                                     </Grid>
                                                 </Grid>
