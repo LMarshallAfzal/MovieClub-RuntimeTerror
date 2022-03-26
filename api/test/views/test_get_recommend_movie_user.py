@@ -3,6 +3,8 @@ from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import force_authenticate,APIClient
+from recommender.user_movie_rec_data import MoviesForUserRecommenderData as Data
+
 
 
 
@@ -20,6 +22,7 @@ class RecommendMovieUserTestCase(APITestCase):
         self.url = reverse('rec')
         self.movie = Movie.objects.get(ml_id=6658)
         self.train_url = reverse('train')
+        self.data = Data()
 
     def test_movie_recommender_url(self):
         self.assertEqual(self.url, f'/rec_movies/')
@@ -40,6 +43,7 @@ class RecommendMovieUserTestCase(APITestCase):
         response = self.client.get(self.url)
         self.assertEqual(len(response.data), 5)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.data.clean()
     
     def test_logged_out_user_cannot_get_recommended_movies_returns_401_unauthorized(self):
         response = self.client.get(self.url)
