@@ -121,35 +121,35 @@ h6 {
 }
 
 .home-page-title {
-  background-color: #C4C4C4;
+  background-color: #5C5C5C;
+  font-family: Helvetica-Bold, serif;
   padding: 10px;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  transition: all 0.3s ease-out;
+  color: #FFFFFF;
+}
+
+.home-page-sub-section-heading {
+  background-color: #999999;
+  padding: 10px;
+  color: #FFFFFF;
+  user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
-  color: #FFFFFF;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  color: #000000;
+  font-family: Helvetica, serif;
+  user-select: none;
 }
 
 .home-page-card-background {
-  background-color: #D8D8D8;
+  background-color: #C4C4C4;
   overflow: hidden;
+  user-select: none;
 }
 
-.home-page-sub-section-heading {
-  padding: 10px;
-  color: #FFFFFF;
-  background-color: #C4C4C4;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  transition: all 0.3s ease-out;
-}/*# sourceMappingURL=ClubDiscussion.css.map */
+/*# sourceMappingURL=ClubDiscussion.css.map */

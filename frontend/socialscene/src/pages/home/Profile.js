@@ -3,6 +3,7 @@ import "../../styling/pages/Profile.css";
 import { Box, Stack, TextField, Button, Grid } from "@mui/material";
 import FormButton from "../../components/FormButton";
 import AuthContext from "../../components/helper/AuthContext";
+import HomePageTitle from "../../components/HomePageTitle";
 
 
 const Profile = () => {
@@ -118,18 +119,16 @@ const Profile = () => {
     }, [])
 
     return (
+        <>
+            <HomePageTitle title={"profile"}/>
+
        <Grid container
               direction={"row"}
               spacing={2}
+             padding={2}
         >
 
-            <Grid item xs={12}>
 
-                <div className={"home-page-title"}>
-
-                    <h3>profile<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
 
             <Grid item xs={12}>
 
@@ -234,6 +233,7 @@ const Profile = () => {
                 </form>
             </Grid>
        </Grid>
+            </>
     );
 }
 
