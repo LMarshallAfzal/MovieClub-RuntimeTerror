@@ -276,7 +276,7 @@ def change_rating(request, movie_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 @movie_exists
-# @user_has_rated_movie
+@user_has_rated_movie
 def get_rating(request,movie_id):
     movie = Movie.objects.get(id=movie_id)
     rating = Rating.objects.get(user=request.user,movie=movie)

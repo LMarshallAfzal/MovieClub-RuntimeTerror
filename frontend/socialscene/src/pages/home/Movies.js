@@ -14,16 +14,46 @@ import FormButton from "../../components/FormButton";
 const Movies = () => {
     let { user, authTokens } = useContext(AuthContext);
     const [movie, setMovie] = useState('')
-    const [rating, setRating] = useState({'user': user.user_id, 'movie': 0, 'score': 0.0});
+    const [rating, setRating] = useState({'user': user.user_id, 'movie': 0, 'score': null});
     const [recommendedMovies, setRecommendedMovies] = useState([]);
+    const [watchedMovies, setWatchedMovies] = useState([]);
 
     useEffect(() => {
         getRecommendedMovies()
+        getWatchedMovies()
     }, [])
 
-    let getRating = async (id) => {
-        let response = await fetch('http://127.0.0.1:8000/get_rating/' + id + '/', {
+    let getWatchedMovies = async () => {
+        let response = await fetch('http://127.0.0.1:8000/watched_list/', {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + authTokens.access,
+            },
+        })
+        let data = await response.json()
+        setWatchedMovies(data)
+    }
+
+    let addToWatchedList = async (id) => {
+        let response = await fetch('http://127.0.0.1:8000/add_watched_movie/' + id + '/', {
+            method: 'POST',
+            body: JSON.stringify({'movie': id, 'user': user.user_id}),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + authTokens.access,
+            },
+        })
+    }
+
+    let editRating = async (id) => {
+        let response = await fetch('http://127.0.0.1:8000/edit_rating/' + id + '/', {
+            method: 'PUT',
+            body: JSON.stringify({
+                'user': user.user_id,
+                'movie': id,
+                'score': rating.score
+            }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
                 'Authorization': 'Bearer ' + String(authTokens.access),
@@ -39,6 +69,28 @@ const Movies = () => {
         }
     }
 
+    let getRating = async (id) => {
+        let response = await fetch('http://127.0.0.1:8000/get_rating/' + id + '/', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer ' + String(authTokens.access),
+            },
+        })
+        let data = await response.json()
+        if(response.status === 200) {
+            setRating(data)
+        }
+        else if(response.status === 400){
+            setRating({'user': user.user_id, 'movie': id, 'score': 0.0})
+            console.log(rating.score)
+        }
+        else {
+            setRating({'user': user.user_id, 'movie': id, 'score': 0.0})
+            console.log(rating.score)
+        }
+    }
+
     let getRecommendedMovies = async () => {
         let response = await fetch('http://127.0.0.1:8000/rec_movies/', {
             method: 'GET',
@@ -47,19 +99,16 @@ const Movies = () => {
                 'Authorization': 'Bearer ' + String(authTokens.access),
             },
         })
+        // .catch(err => console.log(err))
         let data = await response.json()
         console.log(data)
         if(response.status === 200) {
             setRecommendedMovies(data)
-            recommendedMovies.map(movie => {
-                console.log("I got this far")
-                getRating(movie.id)
-            })
         }
+
         else {
             alert("Something went wrong")
         }
-        
     }
 
     let AddRating = async (id, ratingScore) => {
@@ -283,13 +332,16 @@ const Movies = () => {
                                             name="simple-controlled"
                                             precision={0.5}
                                             max={5}
-                                            // value={rating}
                                             onChange={(event, newValue) => (setRating({score: newValue, onChange: AddRating(movie.id, newValue)}))}
                                         />
                                     </div>
 
                                     <Box padding={1}>
-                                        <FormButton text={"watch"} />
+                                        <FormButton 
+                                            text={"watch"}
+                                            onClick={() => {addToWatchedList(movie.id)}} 
+                                            onChange={() => {getRecommendedMovies()}}
+                                        />
                                     </Box>
                                 </Card>
                             </Grid>
@@ -307,7 +359,7 @@ const Movies = () => {
 
                     <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
                         {/* LIST OF MOVIES WATCHED BY THE USER */}
-                        {moviesWithPoster.map((movie) => {
+                        {watchedMovies.map((movie) => {
                             return (<Grid item>
                                 <Card sx={{ width: 330 }}>
                                     <CardMedia
