@@ -521,14 +521,13 @@ def toggle_follow(request, user_id):
 @permission_classes([IsAuthenticated])
 def get_followers(request):
     followers = request.user.followers.all()
-    print(followers)
     serializer = UserSerializer(followers, many=True) 
     return Response(serializer.data, status = status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_following(request):
-    following = request.user.following.all()
+    following = request.user.followees.all()
     serializer = UserSerializer(following, many=True) 
     return Response(serializer.data, status = status.HTTP_200_OK)
 

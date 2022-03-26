@@ -61,7 +61,6 @@ class User(AbstractUser):
         else:
             self._follow(followee)
 
-            
     def _follow(self, user):
         user.followers.add(self)
 
