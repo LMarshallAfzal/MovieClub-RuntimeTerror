@@ -2,7 +2,7 @@ from .models import Movie, Club
 import random
 import datetime
 from datetime import datetime
-from django.core.mail import send_mass_mail
+from django.core.mail import send_mass_mail, send_mail
 from backend.settings import EMAIL_HOST_USER
 
 
@@ -46,15 +46,14 @@ def update_upcoming_meetings():
 def send_notifications(club):
     emails = []
     for member in club.club_members.all():
-        emails.append(f'{member.user.email}')
+        emails.append(member.email)
 
-    message = (
+    send_mail(
         'New Meeting',
         'You have a new meeting!', 
         EMAIL_HOST_USER,
-        [emails]
+        emails
     )
-    send_mass_mail(message, fail_silently=False)
 
     
             

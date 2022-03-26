@@ -142,7 +142,6 @@ def get_current_user(request):
     # serializer = UserSerializer(request.user, many=False)
     return Response(status=status.HTTP_200_OK)
 
-
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def edit_profile(request, user_id):
