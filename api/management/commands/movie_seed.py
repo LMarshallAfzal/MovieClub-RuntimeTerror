@@ -37,8 +37,8 @@ class Command(BaseCommand):
     def get_cover_url(self,imdb_id):
         access = imdb.IMDb()
         imdb_id = imdb_id.lstrip('0')
-        movie = access.get_movie(imdb_id)
         try:
+            movie = access.get_movie(imdb_id)
             url = movie['cover url']
         except Exception as e:
             return 'No image'
