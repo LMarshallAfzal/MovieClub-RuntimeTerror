@@ -66,7 +66,11 @@ class Migration(migrations.Migration):
                 ('ml_id', models.PositiveIntegerField(default=0, unique=True)),
                 ('title', models.CharField(max_length=100)),
                 ('year', models.PositiveIntegerField(default=0)),
+<<<<<<< HEAD
                 ('genres', models.ManyToManyField(related_name='genres', to='api.Genre')),
+=======
+                ('cover_link', models.CharField(blank=True, max_length=500)),
+>>>>>>> main
             ],
             options={
                 'ordering': ['title'],

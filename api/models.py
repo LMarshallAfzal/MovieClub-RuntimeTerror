@@ -45,6 +45,7 @@ class User(AbstractUser):
     preferences = models.ManyToManyField('Genre', related_name='preferences', blank=False)
 
     watched_movies = models.ManyToManyField('Movie', through='Watch')
+    
 
     followers = models.ManyToManyField(
         'self', symmetrical=False, related_name='followees'
@@ -279,6 +280,9 @@ class Movie(models.Model):
 
     viewers = models.ManyToManyField(
         User, through='Watch', related_name='viewers')
+
+    cover_link = models.CharField(max_length=500,blank=True)
+    
     class Meta:
         ordering = ['title']
 
@@ -299,7 +303,6 @@ class Movie(models.Model):
 
     def get_movies_by_genre(genres):
         return Movie.objects.filter(genres__id__in=genres)
-
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
