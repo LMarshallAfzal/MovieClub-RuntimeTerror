@@ -61,7 +61,6 @@ class User(AbstractUser):
         else:
             self._follow(followee)
 
-            
     def _follow(self, user):
         user.followers.add(self)
 
@@ -79,6 +78,7 @@ class User(AbstractUser):
     def followee_count(self):
 
         return self.followees.count()
+    
 
 
     def full_name(self):
@@ -300,7 +300,7 @@ class Rating(models.Model):
 
     score = models.FloatField(
 
-        validators=[MinValueValidator(1.0), MaxValueValidator(5.0)]
+        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
     )
     class Meta:
         ordering = ['user']
