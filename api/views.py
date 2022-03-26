@@ -506,3 +506,29 @@ def banned_member_list(request, club_id):
     else:
         serializer = UserSerializer(banned, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+@user_exists
+def toggle_follow(request, user_id):
+    followee = User.objects.get(id=user_id)
+    request.user.toggle_follow(followee)
+    followers = request.user.followers.all()
+    serializer = UserSerializer(followee, many=False) 
+    return Response(serializer.data, status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_followers(request):
+    followers = request.user.followers.all()
+    serializer = UserSerializer(followers, many=True) 
+    return Response(serializer.data, status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_following(request):
+    following = request.user.followees.all()
+    serializer = UserSerializer(following, many=True) 
+    return Response(serializer.data, status = status.HTTP_200_OK)
+
+

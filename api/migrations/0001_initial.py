@@ -33,6 +33,7 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(max_length=254, unique=True)),
                 ('bio', models.CharField(blank=True, max_length=520)),
                 ('preferences', models.CharField(max_length=100)),
+                ('followers', models.ManyToManyField(related_name='followees', to=settings.AUTH_USER_MODEL)),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
             ],
@@ -81,7 +82,7 @@ class Migration(migrations.Migration):
             name='Rating',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score', models.FloatField(validators=[django.core.validators.MinValueValidator(1.0), django.core.validators.MaxValueValidator(5.0)])),
+                ('score', models.FloatField(validators=[django.core.validators.MinValueValidator(0.0), django.core.validators.MaxValueValidator(5.0)])),
                 ('movie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.movie')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],

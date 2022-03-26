@@ -25,14 +25,12 @@ function HomeRouter() {
                     <NameHeader
                         firstName={user.first_name || "error"}
                         lastName={user.last_name || "error"}
-                        username={user.username || "error"} />
+                        username={user.username || "error"}
+                    />
                     <Sidebar />
                 </Grid>
 
-                <Grid className={"home-grid-R-content"} item
-                    xs={9}
-                    padding={2}>
-
+                <Grid className={"home-grid-R-content"} item xs={9}>
                     <Outlet/>
                 </Grid>
             </Grid>

@@ -49,6 +49,38 @@ class User(AbstractUser):
     watched_movies = models.ManyToManyField('Movie', through='Watch')
     
 
+    followers = models.ManyToManyField(
+        'self', symmetrical=False, related_name='followees'
+    )
+
+    def toggle_follow(self, followee):
+
+        if followee==self:
+            return
+        if self.is_following(followee):
+            self._unfollow(followee)
+        else:
+            self._follow(followee)
+
+    def _follow(self, user):
+        user.followers.add(self)
+
+    def _unfollow(self, user):
+        user.followers.remove(self)
+
+    def is_following(self, user):
+
+        return user in self.followees.all()
+
+    def follower_count(self):
+
+        return self.followers.count()
+
+    def followee_count(self):
+
+        return self.followees.count()
+    
+
 
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
@@ -271,7 +303,7 @@ class Rating(models.Model):
 
     score = models.FloatField(
 
-        validators=[MinValueValidator(1.0), MaxValueValidator(5.0)]
+        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
     )
     class Meta:
         ordering = ['user']

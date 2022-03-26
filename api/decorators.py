@@ -8,6 +8,17 @@ from .serializers import *
 import random
 
 
+def user_exists(view_function):
+    @wraps(view_function)
+    def modified_view_function(request, user_id, *args, **kwargs):
+        try:
+            User.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return view_function(request, user_id, *args, **kwargs)
+    return modified_view_function
+
 def movie_exists(view_function):
     @wraps(view_function)
     def modified_view_function(request, movie_id, *args, **kwargs):

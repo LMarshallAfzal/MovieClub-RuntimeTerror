@@ -36,8 +36,8 @@ class RatingModelTestCase(APITestCase):
         self.rating.score = 6.0
         self._assert_rating_is_invalid()
 
-    def test_score_may_not_be_lower_than_1(self):
-        self.rating.score = 0.0
+    def test_score_may_not_be_lower_than_0(self):
+        self.rating.score = -1.0
         self._assert_rating_is_invalid()
 
     def _assert_rating_is_valid(self):

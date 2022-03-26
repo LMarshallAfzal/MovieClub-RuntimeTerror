@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {useParams, Outlet} from "react-router";
+import React, {useCallback, useState} from "react";
+import {useParams, Outlet, useNavigate} from "react-router";
 import {
     Avatar,
     Box,
@@ -23,9 +23,14 @@ function ClubDetail() {
     const [showBannedMembers, setBannedMembers] = useState(false);
     const [showBanDialog, setBanDialog] = useState(false);
     const [showDeleteClubDialog, setDeleteClubDialog] = useState(false);
+    const [edit, setEdit] = useState(true);
 
     let { clubID } = useParams();
     let club = DummyClubData.find(obj => obj.ID === clubID);
+
+    const toggleEdit = () => {
+        setEdit(!edit);
+    }
 
      const toggleBannedView = () => {
         setBannedMembers(!showBannedMembers);
@@ -66,46 +71,19 @@ function ClubDetail() {
         console.log("User Un-Banned");
     }
 
-    const handleUserClick = () => {
-        console.log("User Clicked");
+    function HandleUserClick(props) {
+         const navigate = useNavigate();
+         return useCallback(() => navigate(`${props}`, {replace: false}), [navigate]);
     }
 
     const handleBannedUserClick = () => {
         console.log("User Clicked");
     }
 
-
     function UserDisplay() {
         if (showBannedMembers === false) {
             return (
-                <Grid container direction={"row"} padding={2}>
-                    <Grid item xs={12}>
-                        <h4 className={"home-page-card-title"}>members:</h4>
-                    </Grid>
-
-                    <Dialog
-                        open={showBanDialog}
-                        onClose={closeBanDialog}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description">
-
-                        <DialogTitle id="alert-dialog-title">
-                            <h4>also ban this user<h4--emphasise>?</h4--emphasise></h4>
-                        </DialogTitle>
-
-                        <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
-                                <h6>decide whether this user will also be banned from the club or just removed</h6>
-                            </DialogContentText>
-                        </DialogContent>
-
-                        <DialogActions>
-                            <FormButton onClick={handleBan} text={"ban"} style={"primary"}/>
-                            <FormButton onClick={handleRemoveUser} text={"remove"} />
-                        </DialogActions>
-                    </Dialog>
-
-                    <Grid item xs={12}>
+                    <>
                         {DummyClubMemberData.map((user) => {
                             return (
                                 <Chip
@@ -116,23 +94,16 @@ function ClubDetail() {
                                     alt={user.firstName + " " + user.lastName}
                                 />}
                                 onDelete={openBanDialog}
-                                onClick={handleUserClick}
+                                onClick={HandleUserClick(user.ID)}
                                 sx={ {mr: 1, mt: 1}}
                                 />
 
                             )
                         })}
-                    </Grid>
-
-                </Grid>)
+                </>)
         } else {
             return (
-                <Grid container direction={"row"} padding={2}>
-                    <Grid item xs={12}>
-                        <h4 className={"home-page-card-title"}>banned users:</h4>
-                    </Grid>
-
-                    <Grid item xs={12}>
+                    <>
                         {DummyClubMemberData.map((user) => {
                             return (
                                 <Chip
@@ -149,27 +120,39 @@ function ClubDetail() {
 
                             )
                         })}
-                    </Grid>
-                </Grid>)
+
+                </>)
         }
     }
 
+
     return (
-        <Grid
-        container
-        justifyContent={"center"}
-        direction={"row"}
-        alignItems={"stretch"}
-        spacing={2}
+        <Grid container
+              justifyContent={"center"}
+              direction={"row"}
+              alignItems={"stretch"}
+              spacing={2}
+              maxHeight={290}
         >
+
             <Grid item xs={12}>
-                <h4 className={"home-page-sub-section-heading"}>{club.clubName}:</h4>
+                <h4 className={"home-page-sub-section-heading"}>{club.clubName}</h4>
             </Grid>
 
-            <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
-                <div className={"home-page-card-background"} >
-                    <UserDisplay />
-                </div>
+            <Grid item xs={6} maxHeight={"inherit"} sx={{ display: "flex", flexDirection: "column" }}>
+
+                    <div className={"home-page-card-background"}>
+                        <Grid container spacing={2} padding={2}>
+
+                            <Grid item xs={12}>
+                                <h5 className={"home-page-card-title"}>{showBannedMembers ? "banned users" : "members"}</h5>
+                            </Grid>
+
+                            <Grid item xs={12} overflow={"auto"}>
+                                    <UserDisplay style={{overflow: "auto"}}/>
+                            </Grid>
+                        </Grid>
+                    </div>
             </Grid>
 
             <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" }}>
@@ -198,6 +181,28 @@ function ClubDetail() {
                                 style={"primary"}
                             />
                             <FormButton onClick={closeDeleteClubDialog} text={"cancel"} />
+                        </DialogActions>
+                    </Dialog>
+
+                    <Dialog
+                        open={showBanDialog}
+                        onClose={closeBanDialog}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description">
+
+                        <DialogTitle id="alert-dialog-title">
+                            <h4>also ban this user<h4--emphasise>?</h4--emphasise></h4>
+                        </DialogTitle>
+
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                <h6>decide whether this user will also be banned from the club or just removed</h6>
+                            </DialogContentText>
+                        </DialogContent>
+
+                        <DialogActions>
+                            <FormButton onClick={handleBan} text={"ban"} style={"primary"}/>
+                            <FormButton onClick={handleRemoveUser} text={"remove"} />
                         </DialogActions>
                     </Dialog>
 
@@ -231,10 +236,7 @@ function ClubDetail() {
                         defaultValue={club.clubTheme}
                     />
 
-                    <FormButton
-                        text={"save"}
-                        style={"primary"}
-                    />
+                    <FormButton text={edit ? "edit" : "save"} style={edit ? "normal" : "primary"} onClick={toggleEdit}/>
                 </Stack>
             </Grid>
 
