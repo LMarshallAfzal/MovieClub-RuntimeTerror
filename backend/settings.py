@@ -1,3 +1,4 @@
+
 """
 Django settings for backend project.
 
@@ -28,7 +29,6 @@ SECRET_KEY = 'django-insecure-ldz)f7ru7_8m)7l&qy8g5id$k^9ss37lx(dxkd%5urf)_&$#67
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -193,3 +193,12 @@ CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
 
 # CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+
+
+#SMTPD settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'social.scene.noreply@gmail.com'
+EMAIL_HOST_PASSWORD = 'Pa$word123'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

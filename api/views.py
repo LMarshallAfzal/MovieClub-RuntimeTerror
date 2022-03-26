@@ -136,10 +136,11 @@ def get_other_user(request, user_id):
 
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def get_current_user(request):
-    serializer = UserSerializer(request.user, many=False)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    send_notifications(Club.objects.get(id=5))
+    # serializer = UserSerializer(request.user, many=False)
+    return Response(status=status.HTTP_200_OK)
 
 
 @api_view(['PUT'])
@@ -177,18 +178,19 @@ def create_club(request):
 
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
-@club_exists
-@is_in_club
-@not_banned
-@club_has_no_upcoming_meeting
+# @permission_classes([IsAuthenticated])
+# @club_exists
+# @is_in_club
+# @not_banned
+# @club_has_no_upcoming_meeting
 def create_meeting(request, club_id):
-    club = Club.objects.get(id=club_id)
+    club = Club.objects.get(id=1)
+    user = User.objects.get(id=10)
     serializer = CreateMeetingSerializer(
         data=request.data, context={"request": request})
     if serializer.is_valid():
         serializer.save()
-        Membership.objects.get(user=request.user, club=club).toggle_organiser()
+        #Membership.objects.get(user=user, club=club).toggle_organiser()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         errors = serializer.errors
@@ -431,12 +433,12 @@ def cancel_meeting(request, club_id):
 
 
 @api_view(['GET'])
-@club_exists
-@is_in_club
-@club_has_upcoming_meeting
-@not_banned
+# @club_exists
+# @is_in_club
+# @club_has_upcoming_meeting
+# @not_banned
 def get_club_upcoming_meeting(request, club_id):
-    club = Club.objects.get(id=club_id)
+    club = Club.objects.get(id=1)
     meeting = club.get_upcoming_meeting()
     serializer = MeetingSerializer(meeting, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)

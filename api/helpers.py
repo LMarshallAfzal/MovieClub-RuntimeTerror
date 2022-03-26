@@ -2,6 +2,8 @@ from .models import Movie, Club
 import random
 import datetime
 from datetime import datetime
+from django.core.mail import send_mass_mail
+from backend.settings import EMAIL_HOST_USER
 
 
 def get_initial_recommendations_for_movies(user, user_preferences):
@@ -40,3 +42,21 @@ def update_upcoming_meetings():
         if meeting.date <= datetime.date.today() and meeting.end_time <= datetime.now().time():
             meeting.completed = True
             meeting.save()
+
+def send_notifications(club):
+    emails = []
+    for member in club.club_members.all():
+        emails.append(f'{member.user.email}')
+
+    message = (
+        'New Meeting',
+        'You have a new meeting!', 
+        EMAIL_HOST_USER,
+        [emails]
+    )
+    send_mass_mail(message, fail_silently=False)
+
+    
+            
+    
+            
