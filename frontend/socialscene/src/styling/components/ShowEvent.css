@@ -132,20 +132,17 @@ h6 {
           user-select: none;
 }
 
-.club-detail-heading {
-  padding: 10px;
+.show-event-title {
+  font-family: Helvetica-Light, serif;
   color: #FFFFFF;
-  background-color: #C4C4C4;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
 }
 
-.club-member-heading {
+.show-event-title-movie {
+  font-family: Helvetica, serif;
+  color: #000000;
+}
+
+.show-event-organiser-title {
+  font-family: Helvetica-Light, serif;
   color: #FFFFFF;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}/*# sourceMappingURL=ClubDetail.css.map */
+}/*# sourceMappingURL=ShowEvent.css.map */

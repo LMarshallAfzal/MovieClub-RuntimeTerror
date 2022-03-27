@@ -5,6 +5,7 @@ import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import HomePageTitle from "../../components/HomePageTitle";
 
 const Options = () => {
     const [passwordData, setPasswordData] = useState({
@@ -86,103 +87,105 @@ const Options = () => {
 
 
     return (
-        <Grid container
-            direction={"row"}
-            spacing={2}
-        >
-            <Grid item xs={12}>
-                <div className={"home-page-title"}>
-                    <h3>options<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
+        <>
+            <HomePageTitle title={"options"} />
 
-            <Grid item xs={12}>
+            <Grid container
+                direction={"row"}
+                spacing={2}
+                padding={2}
+            >
 
-                <form onSubmit={submitChangePasswordForm} className={"options-card-background"}>
+                <Grid item xs={6}>
 
-                    <h4 className={"options-card-heading"}>change password:</h4>
+                    <form onSubmit={submitChangePasswordForm} className={"home-page-card-background"}>
+                        <Grid container padding={2} spacing={2}>
 
-                    <Stack style={{ padding: '10px' }} className={"form-stack"}
-                        spacing={2}
-                        height={"100%"}>
+                            <Grid item xs={12}>
+                                <h5 className={"home-page-card-title"}>change password:</h5>
+                            </Grid>
 
-                        <TextField
-                            error={oldPasswordError}
-                            helperText={errorOldPasswordText}
-                            required
-                            className={"form-field"}
-                            id={"outlined-basic"}
-                            label={"old password"}
-                            name={"old_password"}
-                            type={"password"}
-                            variant={"outlined"}
-                            value={passwordData.old_password}
-                            onChange={e => onChange(e)}
-                        />
+                            <Grid item xs={12}>
+                                <Stack spacing={2} height={"100%"}>
 
-                        <TextField
-                            error={newPasswordError}
-                            helperText={errorNewPasswordText}
-                            required
-                            className={"form-field"}
-                            id={"outlined-basic"}
-                            label={"new password"}
-                            name={"new_password"}
-                            type={"password"}
-                            variant={"outlined"}
-                            value={passwordData.password_confirmation}
-                            onChange={e => onChange(e)}
-                        />
+                                    <TextField
+                                        error={oldPasswordError}
+                                        helperText={errorOldPasswordText}
+                                        required
+                                        fullWidth
+                                        id={"outlined-basic"}
+                                        label={"current"}
+                                        name={"old_password"}
+                                        type={"password"}
+                                        variant={"outlined"}
+                                        value={passwordData.old_password}
+                                        onChange={e => onChange(e)}
+                                    />
 
-                        <TextField
-                            error={newPasswordConfirmationError}
-                            helperText={errorNewPasswordConfirmationText}
-                            required
-                            className={"form-field"}
-                            id={"outlined-basic"}
-                            label={"also new password"}
-                            name={"new_password_confirmation"}
-                            type={"password"}
-                            variant={"outlined"}
-                            value={passwordData.new_password_confirmation}
-                            onChange={e => onChange(e)}
-                        />
-                        <div className={"form-field"}>
-                            <Box
-                                sx={{
-                                    display: 'grid',
-                                    gridAutoColumns: '1fr',
-                                    gap: 1,
-                                }}
-                            >
-                                <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
+                                    <TextField
+                                        error={newPasswordError}
+                                        helperText={errorNewPasswordText}
+                                        required
+                                        fullWidth
+                                        id={"outlined-basic"}
+                                        label={"new"}
+                                        name={"new_password"}
+                                        type={"password"}
+                                        variant={"outlined"}
+                                        value={passwordData.password_confirmation}
+                                        onChange={e => onChange(e)}
+                                    />
+
+                                    <TextField
+                                        error={newPasswordConfirmationError}
+                                        helperText={errorNewPasswordConfirmationText}
+                                        required
+                                        fullWidth
+                                        id={"outlined-basic"}
+                                        label={"confirm"}
+                                        name={"new_password_confirmation"}
+                                        type={"password"}
+                                        variant={"outlined"}
+                                        value={passwordData.new_password_confirmation}
+                                        onChange={e => onChange(e)}
+                                    />
+
                                     <FormButton
                                         text={"submit"}
                                         onClick={submitChangePasswordForm}
                                         type="submit"
+                                        style={"primary"}
                                     />
-                                </Box>
-                            </Box>
-                        </div>
-
-                    </Stack>
-
-                    <h4 className={"options-card-heading"}>notification:</h4>
-
-                    <FormControlLabel
-                        style={{ padding: '20px' }}
-                        value="end"
-                        control={<Checkbox icon={<NotificationsNoneIcon />} checkedIcon={<NotificationsActiveIcon />} color="default" />}
-                        label="Turn on to receive emails about new meetings."
-                        labelPlacement="end"
-                    />
-
-                </form>
+                                </Stack>
+                            </Grid>
+                        </Grid>
+                    </form>
 
 
 
+                </Grid>
+
+                <Grid item xs={6}>
+                    <div className={"home-page-card-background"}>
+
+                        <Grid container direction={"row"} padding={2}>
+
+                            <Grid item xs={11}>
+                                <h5 className={"home-page-card-title"}>notifications:</h5>
+                                <FormControlLabel
+                                    value="end"
+                                    control={<Checkbox icon={<NotificationsNoneIcon />} checkedIcon={<NotificationsActiveIcon />} color="default" />}
+                                    label={
+                                        <Typography noWrap fontSize={"20px"}>Turn on to receive emails about new meetings.</Typography>
+                                    }
+                                    labelPlacement="end"
+                                />
+                            </Grid>
+                        </Grid>
+                    </div>
+                </Grid>
             </Grid>
-        </Grid>
+        </>
     );
 }
 

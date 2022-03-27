@@ -12,6 +12,8 @@ import Cookies from "js-cookie";
 import moviePoster from '../../styling/images/empty_movie_poster.png';
 import { moviesWithPoster } from "../data/DummyMoviesData";
 import { useNavigate } from "react-router";
+import HomePageTitle from "../../components/HomePageTitle";
+
 
 
 
@@ -23,18 +25,8 @@ const Home = () => {
     const [myClubData, setMyClubData] = useState([]);
     let { user, authTokens } = useContext(AuthContext)
 
-
     useEffect(() => {
-        // getMembershipData()
-        // console.log(authTokens.access)
     }, [])
-
-
-    // const changeHandler = (e) => {
-    //     setClubName(e.target.club_name.value);
-    //     setTheme(e.target.themes.value);
-    //     setMissionStatement(e.target.mission_statement.value);
-    // }
 
     let submitCreateClubForm = async (e) => {
         e.preventDefault()
@@ -58,231 +50,108 @@ const Home = () => {
 
     }
 
-    // let getMembershipData = async (e) => {
-    //     // e.preventDefault()
-    //     let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
-    //         method:'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': 'Bearer ' + String(authTokens.access)
-    //         }
-    //     })
-    //     let data = await response.json()
-    //     console.log(data)
-    //     setMyClubData(data)
-    // }
-
     const navigate = useNavigate();
     const moreMovies = useCallback(() => navigate('movies', { replace: false }), [navigate]);
-
     return (
-        <Grid className='' style={{ borderSpacing: 0 }}>
-            <Grid
-                container
-                direction={"row"}
-                justifyContent="space-evenly"
-                alignItems="flex-start"
-                spacing={2}
-            >
-                <Grid item xs={12}>
-                    <div className={"home-page-title"}>
-                        <h3>home<h3--emphasise>.</h3--emphasise></h3>
-                    </div>
-                </Grid>
+        <>
 
-                <Grid item xs={12}>
-                    <div className={"home-page-card-background"}>
-                        <Grid container direction={'row'} padding={2}>
+            <HomePageTitle title={"home"} />
 
-                            <Grid item xs={10}>
-                                <h4 className={"home-page-card-title"}>recommended movies:</h4>
-                            </Grid>
+            <Grid style={{ borderSpacing: 0 }}>
 
-                            <Grid item xs={2} style={{ paddingBottom: '20px' }}>
-                                <FormButton
-                                    text={"more movies"}
-                                    onClick={moreMovies}
+                <Grid container
+                    direction={"row"}
+                    justifyContent="space-evenly"
+                    alignItems="flex-start"
+                    spacing={2}
+                    padding={2}>
+
+                    <Grid item xs={12}>
+
+                        <Autocomplete
+                            freeSolo
+                            id="search"
+                            disableClearable
+                            options={DummyDashboardClubsData.map((movie) => movie.name)}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="🔎︎ Search Clubs"
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        type: 'search',
+                                    }}
                                 />
-                            </Grid>
+                            )}
+                        />
+                    </Grid>
 
-                            <Grid container direction={"row"} spacing={1} alignItems={"center"}>
-                                {/* MOVIES RECOMMENDED */}
-                                {moviesWithPoster.map((movie) => {
-                                    return (<Grid item>
-                                        <Card sx={{ width: 330 }}>
-                                            <CardMedia
-                                                component="img"
-                                                height="500"
-                                                image={moviePoster}
-                                                alt={movie.title}
-                                            />
+                    {/* <Grid item xs={4}>
+                        <div style={{ paddingBottom: '20px' }} className='list-header-text'>
+                            My Clubs
+                        </div>
+                    </Grid> */}
 
-                                            <CardHeader title={
-                                                <Tooltip title={movie.title} placement="top-start">
-                                                    <Typography noWrap maxWidth={'300px'} fontSize={"25px"}>{movie.title}</Typography>
-                                                </Tooltip>
-                                            } />
+                    <Grid item xs={12}>
+                        <div className={"home-page-card-background"}>
+                            <Grid container direction={'row'} padding={2}>
 
-                                            <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
+                                <Grid item xs={10}>
+                                    <h4 className={"home-page-card-title"}>recommended movies:</h4>
+                                </Grid>
 
-                                                <Tooltip title={`Rate ${movie.title}`} placement="top-start">
-                                                    <Typography noWrap fontSize={"15px"}>Rate {movie.title}</Typography>
-                                                </Tooltip>
-                                                <Rating
-                                                    name="simple-controlled"
-                                                    precision={0.5}
-                                                    max={5}
-                                                // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+                                <Grid item xs={2} style={{ paddingBottom: '20px' }}>
+                                    <FormButton
+                                        text={"more movies"}
+                                        onClick={moreMovies}
+                                    />
+                                </Grid>
+
+                                <Grid container direction={"row"} spacing={1} alignItems={"center"}>
+                                    {/* MOVIES RECOMMENDED */}
+                                    {moviesWithPoster.map((movie) => {
+                                        return (<Grid item>
+                                            <Card sx={{ width: 330 }}>
+                                                <CardMedia
+                                                    component="img"
+                                                    height="500"
+                                                    image={moviePoster}
+                                                    alt={movie.title}
                                                 />
-                                            </div>
 
-                                            <Box padding={1}>
-                                                <FormButton text={"watch"} />
-                                            </Box>
-                                        </Card>
-                                    </Grid>
-                                    )
-                                })}
+                                                <CardHeader title={
+                                                    <Tooltip title={movie.title} placement="top-start">
+                                                        <Typography noWrap maxWidth={'300px'} fontSize={"25px"}>{movie.title}</Typography>
+                                                    </Tooltip>
+                                                } />
+
+                                                <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
+
+                                                    <Tooltip title={`Rate ${movie.title}`} placement="top-start">
+                                                        <Typography noWrap fontSize={"15px"}>Rate {movie.title}</Typography>
+                                                    </Tooltip>
+                                                    <Rating
+                                                        name="simple-controlled"
+                                                        precision={0.5}
+                                                        max={5}
+                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+                                                    />
+                                                </div>
+
+                                                <Box padding={1}>
+                                                    <FormButton text={"watch"} />
+                                                </Box>
+                                            </Card>
+                                        </Grid>
+                                        )
+                                    })}
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </div>
+                        </div>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-
-
-        // <Grid className='' style={{ borderSpacing: 0 }}>
-        //     <Grid 
-        //         container 
-        //         direction={"row"} 
-        //         justifyContent="space-evenly"
-        //         alignItems="flex-start" 
-        //         spacing={2}
-        //     >
-        //         <Grid item xs={12}>
-        //         <div className={"home-page-title"}>
-        //             <h3>home<h3--emphasise>.</h3--emphasise></h3>
-        //         </div>
-        //     </Grid>
-        //         <Grid item xs={12}>
-        //             <Autocomplete
-        //                 freeSolo
-        //                 id="search"
-        //                 disableClearable
-        //                 options={DummyDashboardClubsData.map((movie) => movie.name)}
-        //                 renderInput={(params) => (
-        //                     <TextField
-        //                         {...params}
-        //                         label="🔎︎ Search Clubs"
-        //                         InputProps={{
-        //                             ...params.InputProps,
-        //                             type: 'search',
-        //                         }}
-        //                     />
-        //                 )}
-        //             />
-        //         </Grid>
-        //         <Grid item xs={4}>
-        //             <div style={{ paddingBottom: '20px' }} className='list-header-text'>
-        //                 My Clubs
-        //             </div>
-        //             <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
-        //                 {myClubData.map((val) => {
-        //                     return (
-        //                         <ListItemButton>
-        //                             <ListItemText primary={val.club_name} />
-        //                         </ListItemButton>
-        //                     );
-        //                 })}
-        //             </Paper>
-        //         </Grid>
-        //         <Grid item xs={4}>
-        //             <div style={{ paddingBottom: '20px' }} className='list-header-text'>Clubs for You</div>
-        //             <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
-        //                 {DummyDashboardClubsData.map((val) => {
-        //                     return <ListItemButton>
-        //                         <ListItemText primary={val.name} />
-        //                     </ListItemButton>
-        //                 })}
-        //             </Paper>
-        //         </Grid>
-        //         <Grid item xs={4}>
-        //             <Box container component="form" onSubmit={submitCreateClubForm}>
-        //             <Stack spacing={3}>
-        //                 <div className='list-header-text'>Create new club:</div>
-        //                 <TextField 
-        //                     className='dashboard-text-box' 
-        //                     id="outlined-basic" 
-        //                     label="Name" 
-        //                     name="club_name"
-        //                     variant="outlined"
-        //                     // onChange={changeHandler()}
-        //                     // value={club_name} 
-        //                 />
-        //                 <TextField 
-        //                     className='dashboard-text-box' 
-        //                     id="outlined-basic" 
-        //                     label="Description" 
-        //                     name="mission_statement"
-        //                     variant="outlined" 
-        //                     // onChange={changeHandler()}
-        //                     // value={mission_statement} 
-        //                 />
-        //                 <TextField 
-        //                     className='dashboard-text-box' 
-        //                     id="outlined-basic" 
-        //                     label="Themes" 
-        //                     name="themes"
-        //                     variant="outlined"
-        //                     // onChange={this.changeHandler}
-        //                     // value={themes} 
-        //                 />
-        //                 {/* <div className={"single-button"}> */}
-        //                     {/* <Box component="form" onSubmit={submitCreateClubForm}
-        //                         sx={{
-        //                             display: 'grid',
-        //                             gridAutoColumns: '1fr',
-        //                             gap: 1,
-        //                         }}
-        //                     > */}
-        //                         {/* <Box component="form" onSubmit={submitCreateClubForm} sx={{ gridRow: '1', gridColumn: 'span 1' }}> */}
-        //                             <Button className="Button"
-        //                                 // text={"Create"}
-        //                                 type="submit"
-        //                                 // onClick={submitCreateClubForm()}
-        //                                 // onChange={getMembershipData()}
-
-        //                             >
-        //                                 Create
-        //                             </Button>    
-        //                         {/* </Box> */}
-        //                     {/* </Box> */}
-        //                 {/* </div> */}
-        //             </Stack>
-        //             </Box>
-        //         </Grid>
-        //         <Grid item xs={8}>
-        //             <div style={{ paddingBottom: '20px' }} className='list-header-text'>Meetings</div>
-        //             <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
-        //                 {meetings.map((val, key) => {
-        //                     return <ListItemButton>
-        //                         <ListItemText primary={`${val.name} | ${val.time} `} />
-        //                     </ListItemButton>
-        //                 })}
-        //             </Paper>
-        //         </Grid>
-        //         <Grid item xs={4}>
-        //             <div style={{ paddingBottom: '20px' }} className='list-header-text'>Watched Movies</div>
-        //             <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
-        //                 {movies.map((val, key) => {
-        //                     return <ListItemButton>
-        //                         <ListItemText primary={`${val.name} | ${val.ratings} `} />
-        //                     </ListItemButton>
-        //                 })}
-        //             </Paper>
-        //         </Grid>
-        //     </Grid>
-        // </Grid>
+        </>
     );
 }
 

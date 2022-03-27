@@ -130,22 +130,4 @@ h6 {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-}
-
-.club-detail-heading {
-  padding: 10px;
-  color: #FFFFFF;
-  background-color: #C4C4C4;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-
-.club-member-heading {
-  color: #FFFFFF;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}/*# sourceMappingURL=ClubDetail.css.map */
+}/*# sourceMappingURL=HomePageTitle.css.map */

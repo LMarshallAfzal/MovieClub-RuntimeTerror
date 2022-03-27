@@ -4,6 +4,7 @@ import { Autocomplete, Box, Stack, TextField, Button, Grid } from "@mui/material
 import FormButton from "../../components/FormButton";
 import AuthContext from "../../components/helper/AuthContext";
 import { themes } from "../data/MovieThemes"
+import HomePageTitle from "../../components/HomePageTitle";
 
 
 const Profile = () => {
@@ -118,99 +119,97 @@ const Profile = () => {
     }, [])
 
     return (
-        <Grid container
-            direction={"row"}
-            spacing={2}
-        >
+        <>
+            <HomePageTitle title={"profile"} />
 
-            <Grid item xs={12}>
+            <Grid container
+                direction={"row"}
+                spacing={2}
+                padding={2}
+            >
 
-                <div className={"home-page-title"}>
 
-                    <h3>profile<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
 
-            <Grid item xs={12}>
+                <Grid item xs={12}>
 
-                <form onSubmit={submitChangeProfileForm}>
+                    <form onSubmit={submitChangeProfileForm}>
 
-                    <Stack spacing={2}>
+                        <Stack spacing={2}>
 
-                        <TextField error={usernameError}
-                            helperText={errorUsernameText}
-                            required
-                            id={"outlined"}
-                            label={"username"}
-                            name={"username"}
-                            variant={"outlined"}
-                            value={userData.username}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            onChange={e => onChange(e)}
-                        />
+                            <TextField error={usernameError}
+                                helperText={errorUsernameText}
+                                required
+                                id={"outlined"}
+                                label={"username"}
+                                name={"username"}
+                                variant={"outlined"}
+                                value={userData.username}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                onChange={e => onChange(e)}
+                            />
 
-                        <TextField error={firstNameError}
-                            helperText={errorFirstNameText}
-                            required
-                            id={"outlined-basic"}
-                            label={"first name"}
-                            name={"first_name"}
-                            type={"text"}
-                            variant={"outlined"}
-                            value={userData.first_name}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            onChange={e => onChange(e)}
-                        />
+                            <TextField error={firstNameError}
+                                helperText={errorFirstNameText}
+                                required
+                                id={"outlined-basic"}
+                                label={"first name"}
+                                name={"first_name"}
+                                type={"text"}
+                                variant={"outlined"}
+                                value={userData.first_name}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                onChange={e => onChange(e)}
+                            />
 
-                        <TextField error={lastNameError}
-                            helperText={errorLastNameText}
-                            required
-                            id={"outlined-basic"}
-                            label={"last name"}
-                            name={"last_name"}
-                            type={"text"}
-                            variant={"outlined"}
-                            value={userData.last_name}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            onChange={e => onChange(e)}
-                        />
+                            <TextField error={lastNameError}
+                                helperText={errorLastNameText}
+                                required
+                                id={"outlined-basic"}
+                                label={"last name"}
+                                name={"last_name"}
+                                type={"text"}
+                                variant={"outlined"}
+                                value={userData.last_name}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                onChange={e => onChange(e)}
+                            />
 
-                        <TextField error={emailError}
-                            helperText={errorEmailText}
-                            required
-                            id={"outlined-basic"}
-                            label={"email"}
-                            name={"email"}
-                            type={"email"}
-                            variant={"outlined"}
-                            value={userData.email}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            onChange={e => onChange(e)}
-                        />
+                            <TextField error={emailError}
+                                helperText={errorEmailText}
+                                required
+                                id={"outlined-basic"}
+                                label={"email"}
+                                name={"email"}
+                                type={"email"}
+                                variant={"outlined"}
+                                value={userData.email}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                onChange={e => onChange(e)}
+                            />
 
-                        <TextField error={bioError}
-                            helperText={errorBioText}
-                            id={"outlined-multiline-static"}
-                            label={"bio"}
-                            name={"bio"}
-                            multiline
-                            rows={7.5}
-                            value={userData.bio}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            onChange={e => onChange(e)}
-                        />
+                            <TextField error={bioError}
+                                helperText={errorBioText}
+                                id={"outlined-multiline-static"}
+                                label={"bio"}
+                                name={"bio"}
+                                multiline
+                                rows={7.5}
+                                value={userData.bio}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                onChange={e => onChange(e)}
+                            />
 
-                        {/* <TextField error={preferencesError}
+                            {/* <TextField error={preferencesError}
                             helperText={errorPreferencesText}
                             required
                             id={"outlined-multiline-static"}
@@ -224,7 +223,7 @@ const Profile = () => {
                             }}
                             onChange={e => onChange(e)}
                         /> */}
-                        {/* <TextField className='profile-text-box'
+                            {/* <TextField className='profile-text-box'
                             error={preferencesError}
                             helperText={errorPreferencesText}
                             required
@@ -239,40 +238,41 @@ const Profile = () => {
                             value={userData.preferences}
                             onChange={e => onChange(e)}
                         /> */}
-                        <Autocomplete
-                            multiple
-                            id="tags-standard"
-                            options={themes}
-                            getOptionLabel={(option) => option.theme}
-                            defaultValue={[themes[0]]}
-                            filterSelectedOptions
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    error={preferencesError}
-                                    helperText={errorPreferencesText}
-                                    required
-                                    spacing={6}
-                                    id={"outlined-multiline-static"}
-                                    label={"preferences"}
-                                    name={"preferences"}
-                                    type={"text"}
-                                    variant={"outlined"}
-                                    multiline
-                                    value={userData.preferences}
-                                    onChange={e => onChange(e)}
-                                />
-                            )}
-                        />
-                        <FormButton
-                            text={"save"}
-                            type={"submit"}
-                            style={"primary"}
-                        />
-                    </Stack>
-                </form>
+                            <Autocomplete
+                                multiple
+                                id="tags-standard"
+                                options={themes}
+                                getOptionLabel={(option) => option.theme}
+                                defaultValue={[themes[0]]}
+                                filterSelectedOptions
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        error={preferencesError}
+                                        helperText={errorPreferencesText}
+                                        required
+                                        spacing={6}
+                                        id={"outlined-multiline-static"}
+                                        label={"preferences"}
+                                        name={"preferences"}
+                                        type={"text"}
+                                        variant={"outlined"}
+                                        multiline
+                                        value={userData.preferences}
+                                        onChange={e => onChange(e)}
+                                    />
+                                )}
+                            />
+                            <FormButton
+                                text={"save"}
+                                type={"submit"}
+                                style={"primary"}
+                            />
+                        </Stack>
+                    </form>
+                </Grid>
             </Grid>
-        </Grid>
+        </>
     );
 }
 

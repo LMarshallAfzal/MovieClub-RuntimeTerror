@@ -3,30 +3,26 @@ import {Grid} from "@mui/material";
 import "../../styling/pages/Discussion.css";
 import ClubSelector from "../../components/ClubSelector";
 import {Outlet} from "react-router-dom";
+import HomePageTitle from "../../components/HomePageTitle";
 
 function Discussion() {
     return (
-        <Grid container spacing={2}>
+        <>
+            <HomePageTitle title={"discussion"}/>
 
-            <Grid item xs={12}>
+            <Grid container spacing={2} padding={2}>
 
-                <div className={"home-page-title"}>
+                <Grid item xs={12}>
 
-                    <h3>discussion<h3--emphasise>.</h3--emphasise></h3>
-                </div>
+                    <ClubSelector />
+                </Grid>
+
+                <Grid item xs={12}>
+
+                    <Outlet />
+                </Grid>
             </Grid>
-
-            <Grid item xs={12}>
-
-                <ClubSelector />
-            </Grid>
-
-            <Grid item xs={12}>
-
-                <Outlet />
-            </Grid>
-
-        </Grid>
+        </>
     );
 }
 
