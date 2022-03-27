@@ -29,7 +29,7 @@ function ClubDiscussion() {
     const createNewEvent = useCallback(() => navigate('new', {replace: false}), [navigate]);
 
     useEffect(() => {
-        getClubMessages()
+        getClubMessages(clubID);
     },[])
 
     const onChange = (e, newDateTime) => {
@@ -39,10 +39,8 @@ function ClubDiscussion() {
 
      }; 
 
-    let getClubMessages = async (e) => {
-        //USE PARAMS WHEN READY
-        const club = 2
-        let response = await fetch('http://127.0.0.1:8000/message_forum/' + club + '/', {
+    let getClubMessages = async (id) => {
+        let response = await fetch('http://127.0.0.1:8000/message_forum/' + id + '/', {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -54,9 +52,8 @@ function ClubDiscussion() {
         let sender_data = data.sender
     }
 
-    let sendClubMessages = async () => {
-        const club = 2
-        let response = await fetch('http://127.0.0.1:8000/write_message/' + club + '/', {
+    let sendClubMessages = async (id) => {
+        let response = await fetch('http://127.0.0.1:8000/write_message/' + id + '/', {
             method: 'POST',
             body:JSON.stringify({
                 "sender": user.username,
@@ -70,7 +67,7 @@ function ClubDiscussion() {
             },
         })
         await response.json()
-        getClubMessages()
+        getClubMessages(clubID)
         message.message = ""
         console.log(message)
     }
@@ -149,7 +146,7 @@ function ClubDiscussion() {
                                     InputProps={{
                                         endAdornment:
                                             <TextButton
-                                                onClick={sendClubMessages}
+                                                onClick={sendClubMessages(club.ID)}
                                                 text={"send"}/>
                                 }}
                                 />
