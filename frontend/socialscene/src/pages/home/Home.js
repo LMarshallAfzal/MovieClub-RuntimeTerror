@@ -1,7 +1,7 @@
 import React, { useContext, useCallback } from 'react';
 
 import "../../styling/pages/Home.css";
-import { Rating, Typography, Tooltip, CardHeader, CardMedia, Card, List, Paper, ListSubheader, Grid, TextField, Stack, Box, ListItemButton, ListItemText, Autocomplete, Button } from "@mui/material";
+import { ListItem, Rating, Typography, Tooltip, CardHeader, CardMedia, Card, List, Paper, ListSubheader, Grid, TextField, Stack, Box, ListItemButton, ListItemText, Autocomplete, Button } from "@mui/material";
 import FormButton from "../../components/FormButton";
 import { DummyDashboardClubsData, meetings, movies } from '../data/DummyDashboardClubsData';
 import { useState, useEffect } from 'react'
@@ -94,9 +94,9 @@ const Home = () => {
 
                     <Grid item xs={12}>
                         <div className={"home-page-card-background"}>
-                            <Grid container direction={'row'} padding={2}>
+                            <Grid container direction={'row'} >
 
-                                <Grid item xs={10}>
+                                {/* <Grid item xs={10}>
                                     <h4 className={"home-page-card-title"}>recommended movies:</h4>
                                 </Grid>
 
@@ -105,10 +105,9 @@ const Home = () => {
                                         text={"more movies"}
                                         onClick={moreMovies}
                                     />
-                                </Grid>
+                                </Grid> */}
 
-                                <Grid container direction={"row"} spacing={1} alignItems={"center"}>
-                                    {/* MOVIES RECOMMENDED */}
+                                {/* <Grid container direction={"row"} spacing={1} alignItems={"center"}>
                                     {moviesWithPoster.map((movie) => {
                                         return (<Grid item>
                                             <Card sx={{ width: 330 }}>
@@ -145,6 +144,63 @@ const Home = () => {
                                         </Grid>
                                         )
                                     })}
+                                </Grid> */}
+                                <Grid item xs={12}>
+
+                                    <div className={"home-page-card-background"}>
+
+                                        <Grid container direction={"row"} padding={2} spacing={2}>
+
+                                            <Grid item xs={10}>
+                                                <h5 className={"home-page-card-title"}>recommended</h5>
+                                            </Grid>
+
+                                            <Grid item xs={2} style={{ paddingBottom: '20px' }}>
+                                                <FormButton
+                                                    text={"more movies"}
+                                                    onClick={moreMovies}
+                                                />
+                                            </Grid>
+
+                                            <Grid item xs={12}>
+
+                                                <Stack direction={"row"} overflow={"auto"}>
+                                                    {moviesWithPoster.map((movie) => {
+                                                        return (<ListItem sx={{ p: 1 }}>
+                                                            <Card sx={{ width: 150 }}>
+                                                                <CardMedia
+                                                                    component="img"
+                                                                    sx={{ height: "100%" }}
+                                                                    image={moviePoster}
+                                                                    alt={movie.title}
+                                                                />
+
+                                                                <Stack
+                                                                    spacing={1}
+                                                                    padding={1}
+                                                                    alignItems={"left"}>
+
+                                                                    <Rating
+                                                                        name="simple-controlled"
+                                                                        sx={{ fontSize: "1.2em" }}
+                                                                        precision={0.5}
+                                                                        max={5}
+                                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+                                                                    />
+
+                                                                    <Tooltip title={movie.title} placement="top-start">
+                                                                        <Typography noWrap>{movie.title}</Typography>
+                                                                    </Tooltip>
+
+                                                                    <FormButton text={"watch"} />
+                                                                </Stack>
+                                                            </Card>
+                                                        </ListItem>)
+                                                    })}
+                                                </Stack>
+                                            </Grid>
+                                        </Grid>
+                                    </div>
                                 </Grid>
                             </Grid>
                         </div>
