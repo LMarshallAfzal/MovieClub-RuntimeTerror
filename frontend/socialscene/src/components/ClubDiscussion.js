@@ -19,10 +19,10 @@ function ClubDiscussion() {
     const [defaultMessage, setDefaultMessage] = useState('');
     const [userData, setUserData] = useState([]);
     const [dateTime, setDateTime] = useState(new Date(Date.now()));
+	const [myClubData, setMyClubData] = useState([]);
     const [messages, setMessages] = useState([]);
 
     let { clubID } = useParams();
-    let club = DummyClubData.find(obj => obj.ID === clubID);
 
 
     const navigate = useNavigate();
@@ -30,7 +30,11 @@ function ClubDiscussion() {
 
     useEffect(() => {
         getClubMessages()
+        getMembershipData()
+        
     },[])
+
+    console.log(myClubData)
 
     const onChange = (e, newDateTime) => {
         e.preventDefault();
@@ -38,6 +42,25 @@ function ClubDiscussion() {
         setDateTime(newDateTime);
 
      }; 
+
+     let getMembershipData = async () => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+        console.log(data)
+		setMyClubData(data);
+	};
+
+    let club = myClubData.find(obj => obj.id === clubID);
+
 
     let getClubMessages = async (e) => {
         //USE PARAMS WHEN READY
@@ -78,7 +101,7 @@ function ClubDiscussion() {
         <Grid container spacing={2}>
 
             <Grid item xs={10}>
-                <h4 className={"home-page-sub-section-heading"}>{club.clubName}</h4>
+                <h4 className={"home-page-sub-section-heading"}>{'club.club_name'}</h4>
             </Grid>
 
             <Grid item xs={2}>
