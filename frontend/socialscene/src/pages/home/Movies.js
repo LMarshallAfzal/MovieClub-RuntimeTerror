@@ -190,6 +190,14 @@ const Movies = () => {
                                                             <Typography noWrap>{movie.title}</Typography>
                                                         </Tooltip>
 
+                                                        <Tooltip title={`From ${movie.club}`} placement="top-start">
+                                                            <Typography fontSize="10px" noWrap>{`From ${movie.club}`}</Typography>
+                                                        </Tooltip>
+
+                                                        <Tooltip title={`Due ${movie.deadline}`} placement="top-start">
+                                                            <Typography fontSize="10px" noWrap>{`Due ${movie.deadline}`}</Typography>
+                                                        </Tooltip>
+
                                                         <FormButton text={"watch"} />
                                                     </Stack>
                                                 </Card>
