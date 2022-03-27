@@ -12,6 +12,7 @@ import AuthContext from "../components/helper/AuthContext";
 
 
 function ClubListing(props) {
+    let { clubID } = useParams();
     let {user, authTokens} = useContext(AuthContext);
     const [myClubData, setMyClubData] = useState([]);
     const [clubMembers, setClubMembers] = useState([]);
@@ -30,8 +31,9 @@ function ClubListing(props) {
         setMyClubData(data)
     }
 
-    let getClubMembers = async (clubId) => {
-        let response = await fetch('http://127.0.0.1:8000/club_members/' + clubId +'/', {
+    let getClubMembers = async (e) => {
+        e.preventDefault()
+        let response = await fetch('http://127.0.0.1:8000/club_members/' + clubID +'/', {
             method:'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,39 +45,37 @@ function ClubListing(props) {
         console.log(clubMembers)
     }
 
-    // let joinClub = async (clubId) => {
-    //     let response = await fetch('http://127.0.0.1:8000/join_club/' + clubId +'/', {
-    //         method:'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': 'Bearer ' + String(authTokens.access)
-    //         }
-    //     })
-    //     let data = await response.json()
-    // }
+    let joinClub = async (clubId) => {
+        let response = await fetch('http://127.0.0.1:8000/join_club/' + clubId +'/', {
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+    }
 
 
     useEffect((e) => { 
         getMembershipData()
-        getClubMembers(props.clubID)
+        getClubMembers()
     },[])
 
-    let { clubID } = useParams();
 
     function ClubButton() {
         if (props.isMember === "M") {
             return (
                 <EnterButton
                     text={"info"}
-                    linkTo={`/home/clubs/${clubID}`}
+                    linkTo={`/home/clubs/${props.clubID}`}
                 />
             )
         } else {
                 return (
                     <EnterButton
                         text={"join"}
-                        // onClick={joinClub(props.clubID)}
-                        linkTo={`/home/clubs/${clubID}`}
+                        linkTo={`/home/clubs/${props.clubID}`}
                     />
                 )
             }

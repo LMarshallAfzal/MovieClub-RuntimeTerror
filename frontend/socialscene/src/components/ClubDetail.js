@@ -118,7 +118,7 @@ function ClubDetail() {
         getSpecifiedClub()
         getMembershipData()
         getRecommendedClubs()
-        getClubMembers(wantedClub.id)
+        getClubMembers()
 
     },[])
 
@@ -183,7 +183,9 @@ function ClubDetail() {
             </Grid>
             <Grid item xs={3}>
                 <Stack spacing={2}>
-                    <FormButton text={"create"}/>
+                    <FormButton 
+                        text={"create"}
+                    />
                     <FormButton 
                         text={"join"}
                         // onClick={joinClub(props.clubID)}
