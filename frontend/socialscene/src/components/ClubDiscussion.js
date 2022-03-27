@@ -41,8 +41,7 @@ function ClubDiscussion() {
 
     let getClubMessages = async (e) => {
         //USE PARAMS WHEN READY
-        const club = 2
-        let response = await fetch('http://127.0.0.1:8000/message_forum/' + club + '/', {
+        let response = await fetch('http://127.0.0.1:8000/message_forum/' + clubID + '/', {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
