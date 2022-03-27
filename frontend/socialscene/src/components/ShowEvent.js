@@ -30,7 +30,6 @@ function ShowEvent() {
 	const [myMeetingData, setMyMeetingData] = useState("");
 	const [specificMovie, setSpecificMovie] = useState("");
     const [organiser, setOrganiser] = useState("");
-	// const [recommendedMovies, setRecommendedMovies] = useState([]);
 	let { clubID } = useParams();
 
 	let getMembershipData = async () => {
@@ -93,18 +92,7 @@ function ShowEvent() {
 		setSpecificMovie(data);
 	};
 
-	// let getRecommendedMovies = async () => {
-	//     let response = await fetch('http://127.0.0.1:8000/rec_meeting/' + clubID + '/', {
-	//         method: 'GET',
-	//         headers: {
-	//             'Content-type': 'application/json; charset=UTF-8',
-	//             'Authorization': 'Bearer ' + String(authTokens.access),
-	//         },
-	//     })
-	//     let data = await response.json()
-	//     setRecommendedMovies(data)
-	// }
-
+	
 	useEffect(() => {
 		getMembershipData();
 		getMeetingData(clubID);
