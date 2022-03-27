@@ -144,7 +144,7 @@ export const Signup = () => {
                   xs={6}
                   className={"signup-grid-child"}>
 
-                <HeadingCircle title={"signup"}/>
+                <HeadingCircle title={"sign up"} data-testid="signup-circle"/>
             </Grid>
 
             <Grid item
@@ -161,6 +161,7 @@ export const Signup = () => {
                     >
 
                         <TextField
+                            data-testid="username-field"
                             error={usernameError}
                             className={"signup-form-row"}
                             helperText={errorUsernameText}
@@ -175,6 +176,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            data-testid="first-name-field"
                             error={firstNameError}
                             className={"signup-form-row"}
                             helperText={errorFirstNameText}
@@ -189,6 +191,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            data-testid="last-name-field"
                             error={lastNameError}
                             className={"signup-form-row"}
                             helperText={errorLastNameText}
@@ -203,6 +206,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            data-testid="email-field"
                             error={emailError}
                             className={"signup-form-row"}
                             helperText={errorEmailText}
@@ -217,6 +221,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            data-testid="bio-field"
                             error={bioError}
                             className={"signup-form-row"}
                             helperText={errorBioText}
@@ -232,6 +237,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            data-testid="preferences-field"
                             error={preferencesError}
                             className={"signup-form-row"}
                             helperText={errorPreferencesText}
@@ -246,6 +252,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            data-testid="password-field"
                             error={passwordError}
                             className={"signup-form-row"}
                             helperText={errorPasswordText}
@@ -260,6 +267,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            data-testid="password-confirmation-field"
                             error={passwordConfirmationError}
                             className={"signup-form-row"}
                             helperText={errorPasswordConfirmationText}
@@ -274,10 +282,10 @@ export const Signup = () => {
                         />
 
                         <div className={"signup-form-row"}>
-                            <FormButton
+                            <FormButton data-testid="signup-button"
                                 style={"primary"}
-                             type="submit"
-                             text={"sign up"}
+                                type="submit"
+                                ext={"sign up"}
                             />
                         </div>
                     </Stack>

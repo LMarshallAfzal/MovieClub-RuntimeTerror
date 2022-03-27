@@ -9,9 +9,9 @@ function Navbar() {
 
     return (
         <>
-            <div className={"navbar"}>
+            <div data-testid="navbar" className={"navbar"}>
                 <div className={"navbar-black"}>
-                    <Link to={"/"} className={"navbar-logo"}>
+                    <Link to={"/"} className={"navbar-logo"} data-testid="logo">
                         <span style={{fontFamily: "Helvetica-Light"}}>social</span>
                         <span style={{fontFamily: "Helvetica-Bold"}}>scene</span>
                         <span style={{ color: "red", fontWeight: "bold" }}>.</span>

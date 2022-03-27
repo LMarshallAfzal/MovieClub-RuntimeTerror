@@ -34,7 +34,7 @@ export function Login() {
                   xs={6}
                   className={"login-grid-child"}>
 
-                <HeadingCircle title={"log in"} />
+                <HeadingCircle title={"log in"} data-testid="login-circle"/>
             </Grid>
 
             <Grid item
@@ -49,6 +49,7 @@ export function Login() {
                     >
 
                         <TextField
+                            data-testid="username-field"
                             error={usernameError}
                             helperText={errorUsernameText}
                             required
@@ -62,6 +63,7 @@ export function Login() {
                         />
 
                         <TextField
+                            data-testid="password-field"
                             error={passwordError}
                             helperText={errorPasswordText}
                             required

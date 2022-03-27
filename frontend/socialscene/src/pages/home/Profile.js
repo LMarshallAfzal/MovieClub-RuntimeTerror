@@ -23,7 +23,6 @@ const Profile = () => {
     const [errorEmailText, setEmailErrorText] = useState('')
     const [errorBioText, setBioErrorText] = useState('')
     const [errorPreferencesText, setPreferencesErrorText] = useState('')
-    const [errorPasswordText, setPasswordErrorText] = useState('')
 
     const onChange = (e) => {
         setUserData( prevData => ({...prevData, [e.target.name]: e.target.value}))
@@ -135,92 +134,104 @@ const Profile = () => {
 
                     <Stack spacing={2}>
 
-                        <TextField error={usernameError}
-                                   helperText={errorUsernameText}
-                                   required
-                                   id={"outlined"}
-                                   label={"username"}
-                                   name={"username"}
-                                   variant={"outlined"}
-                                   value={userData.username}
-                                   InputLabelProps={{
-                                    shrink: true,
-                                    }}
-                                   onChange={e => onChange(e)}
+                        <TextField 
+                            data-testid="username-field"
+                            error={usernameError}
+                            helperText={errorUsernameText}
+                            required
+                            id={"outlined"}
+                            label={"username"}
+                            name={"username"}
+                            variant={"outlined"}
+                            value={userData.username}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            onChange={e => onChange(e)}
                         />
 
-                        <TextField error={firstNameError}
-                                   helperText={errorFirstNameText}
-                                   required
-                                   id={"outlined-basic"}
-                                   label={"first name"}
-                                   name={"first_name"}
-                                   type={"text"}
-                                   variant={"outlined"}
-                                   value={userData.first_name}
-                                   InputLabelProps={{
-                                    shrink: true,
-                                    }}
-                                   onChange={e => onChange(e)}
+                        <TextField 
+                            data-testid="first-name-field"
+                            error={firstNameError}
+                            helperText={errorFirstNameText}
+                            required
+                            id={"outlined-basic"}
+                            label={"first name"}
+                            name={"first_name"}
+                            type={"text"}
+                            variant={"outlined"}
+                            value={userData.first_name}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            onChange={e => onChange(e)}
                         />
 
-                        <TextField error={lastNameError}
-                                   helperText={errorLastNameText}
-                                   required
-                                   id={"outlined-basic"}
-                                   label={"last name"}
-                                   name={"last_name"}
-                                   type={"text"}
-                                   variant={"outlined"}
-                                   value={userData.last_name}
-                                   InputLabelProps={{
-                                    shrink: true,
-                                    }}
-                                   onChange={e => onChange(e)}
+                        <TextField 
+                            data-testid="last-name-field"
+                            error={lastNameError}
+                            helperText={errorLastNameText}
+                            required
+                            id={"outlined-basic"}
+                            label={"last name"}
+                            name={"last_name"}
+                            type={"text"}
+                            variant={"outlined"}
+                            value={userData.last_name}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            onChange={e => onChange(e)}
                         />
 
-                        <TextField error={emailError}
-                                   helperText={errorEmailText}
-                                   required
-                                   id={"outlined-basic"}
-                                   label={"email"}
-                                   name={"email"}
-                                   type={"email"}
-                                   variant={"outlined"}
-                                   value={userData.email}
-                                   InputLabelProps={{
-                                    shrink: true,
-                                    }}
-                                   onChange={e => onChange(e)}
+                        <TextField 
+                            data-testid="email-field"
+                            error={emailError}
+                            helperText={errorEmailText}
+                            required
+                            id={"outlined-basic"}
+                            label={"email"}
+                            name={"email"}
+                            type={"email"}
+                            variant={"outlined"}
+                            value={userData.email}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            onChange={e => onChange(e)}
                         />
 
-                        <TextField error={bioError}
-                                   helperText={errorBioText}
-                                   id={"outlined-multiline-static"}
-                                   label={"bio"}
-                                   name={"bio"}
-                                   multiline
-                                   rows={7.5}
-                                   value={userData.bio}
-                                   InputLabelProps={{
-                                    shrink: true,
-                                    }}
-                                   onChange={e => onChange(e)}
+                        <TextField 
+                            data-testid="bio-field"
+                            error={bioError}
+                            helperText={errorBioText}
+                            id={"outlined-multiline-static"}
+                            label={"bio"}
+                            name={"bio"}
+                            multiline
+                            rows={7.5}
+                            value={userData.bio}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            onChange={e => onChange(e)}
                         />
 
-                        <TextField error={preferencesError}
-                                   helperText={errorPreferencesText}
-                                   required
-                                   id={"outlined-multiline-static"}
-                                   label={"preferences"}
-                                   name={"preferences"}
-                                   multiline
-                                   rows={20}
-                                   value={userData.preferences}
-                                   InputLabelProps={{
-                                    shrink: true,
-                                    }}
-                                   onChange={e => onChange(e)}
+                        <TextField  
+                            data-testid="preferences-field"
+                            error={preferencesError}
+                            helperText={errorPreferencesText}
+                            required
+                            id={"outlined-multiline-static"}
+                            label={"preferences"}
+                            name={"preferences"}
+                            multiline
+                            rows={20}
+                            value={userData.preferences}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            onChange={e => onChange(e)}
                         />
 
                         <FormButton
