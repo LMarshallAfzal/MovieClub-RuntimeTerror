@@ -4,6 +4,8 @@ import datetime
 from datetime import datetime
 from django.core.mail import send_mass_mail, send_mail
 from backend.settings import EMAIL_HOST_USER
+from django.template.loader import render_to_string
+
 
 
 def get_initial_recommendations_for_movies(user, user_preferences):
@@ -45,35 +47,16 @@ def update_upcoming_meetings():
             meeting.save()
 
 
-def send_notifications(club):
+def send_new_meeting_notification(club):
     recipients = []
     meeting = club.get_upcoming_meeting()
-    html = f"""
-<html>
-  <head>
-    You are invited to join {meeting.meeting_title}.
-  </head>
-  <body>
-  Meeting details:
-  <ul>
-  <li>Movie: {meeting.movie.title}</li>
-  <li>Date: {meeting.date}</li>
-  <li>Start time: {meeting.start_time}</li>
-  <li>End time: {meeting.end_time}</li>
-  <li>Organiser: {meeting.organiser.get_full_name()}</li>
-  </ul>
-    <img src="{meeting.movie.cover_link}"
-         width=200" height="300">
-  </body>
-</html>
-"""
+    html = render_to_string('new_meeting_email.html',{'cover_url':meeting.movie.cover_link,'meeting_title':meeting.meeting_title,'meeting_description':meeting.description,'meeting_date':meeting.date,'meeting_start_time':meeting.start_time})
     for member in club.club_members.all():
         recipients.append(member.email)
-
     send_mail(
-        f"{club.club_name} meeting details.",
+        f"{meeting.club}'s upcoming meeting",
         f'A new meeting got added called: {meeting.meeting_title}.\n It will happen at {meeting.date} and the start time is {meeting.start_time}.',
         EMAIL_HOST_USER,
-        recipients,
+        ['jfrancisco.mail@gmail.com'],
         html_message=html
     )
