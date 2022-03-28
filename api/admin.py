@@ -19,7 +19,7 @@ class ClubAdmin(admin.ModelAdmin):
 class MembershipAdmin(admin.ModelAdmin):
     '''Configuration of the administrative interface for memberships'''
     list_display = [
-        'id', 'user', 'club', 'role',
+        'id', 'user', 'club', 'role','notifications',
     ]   
     
 @admin.register(Movie)

@@ -54,4 +54,5 @@ urlpatterns = [
     path("toggle_follow/<int:user_id>/", views.toggle_follow, name = "toggle_follow"),
     path("followers/", views.get_followers, name = "get_followers"),
     path("following/",views.get_following, name="get_following"),
+    path("toggle_notifications/<int:club_id>/", views.toggle_notifications, name = "toggle_notifications"),
 ]
