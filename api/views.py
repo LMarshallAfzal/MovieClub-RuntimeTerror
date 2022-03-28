@@ -139,8 +139,7 @@ def get_other_user(request, user_id):
 @permission_classes([IsAuthenticated])
 def get_current_user(request):
     serializer = UserSerializer(request.user, many=False)
-    return Response(serializer.data, status=status.HTTP_200_OK)
-
+    return Response(serializer.data,status=status.HTTP_200_OK)
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
@@ -189,6 +188,7 @@ def create_meeting(request, club_id):
     if serializer.is_valid():
         serializer.save()
         Membership.objects.get(user=request.user, club=club).toggle_organiser()
+        send_new_meeting_notification(club)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         errors = serializer.errors
@@ -263,6 +263,7 @@ def add_rating(request, movie_id):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 @movie_exists
+@user_has_rated_movie
 def change_rating(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     serializer = ChangeRatingSerializer(movie, data=request.data)
@@ -271,6 +272,16 @@ def change_rating(request, movie_id):
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@movie_exists
+@user_has_rated_movie
+def get_rating(request,movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    rating = Rating.objects.get(user=request.user,movie=movie)
+    serializer = RatingSerializer(rating,many = False)
+    return Response(serializer.data,status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -294,6 +305,7 @@ def train_movie_data(request):
 @club_exists
 @is_in_club
 @is_organiser
+@members_have_ratings_for_meeting_movie_recommendations
 def recommend_movie_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
     recommendations = []
@@ -436,7 +448,7 @@ def cancel_meeting(request, club_id):
 @club_has_upcoming_meeting
 @not_banned
 def get_club_upcoming_meeting(request, club_id):
-    club = Club.objects.get(id=club_id)
+    club = Club.objects.get(id=1)
     meeting = club.get_upcoming_meeting()
     serializer = MeetingSerializer(meeting, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)

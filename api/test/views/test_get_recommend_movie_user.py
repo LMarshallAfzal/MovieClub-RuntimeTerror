@@ -5,8 +5,6 @@ from rest_framework import status
 from rest_framework.test import force_authenticate,APIClient
 from recommender.user_movie_rec_data import MoviesForUserRecommenderData as Data
 
-
-
 class RecommendMovieUserTestCase(APITestCase):
 
     fixtures = [
@@ -27,7 +25,7 @@ class RecommendMovieUserTestCase(APITestCase):
     def test_movie_recommender_url(self):
         self.assertEqual(self.url, f'/rec_movies/')
 
-    def test_recommend_movies_to_user_endpoint_returns_5_recommended_movies_returns_200_ok(self):
+    def test_recommend_movies_to_user__endpoint_user_with_no_ratings_returns_5_recommended_movies_returns_200_ok(self):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
         response = self.client.get(self.url)
