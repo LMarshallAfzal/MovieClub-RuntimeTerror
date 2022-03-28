@@ -43,6 +43,7 @@ jupyter-core==4.9.1
 keras==2.8.0
 Keras-Preprocessing==1.1.2
 libclang==13.0.0
+libgravatar==1.0.0
 lxml==4.8.0
 Markdown==3.3.6
 matplotlib-inline==0.1.3
