@@ -1,15 +1,28 @@
 import React, { useState, useContext } from "react";
 import "../../styling/pages/Signup.css"
 import HeadingCircle from "../../components/HeadingCircle";
-import { Autocomplete, Box, Grid, Stack, TextField, Button } from "@mui/material";
+import {
+    Autocomplete,
+    Box,
+    Grid,
+    Stack,
+    TextField,
+    Button,
+    InputAdornment,
+    OutlinedInput,
+    FormControl, InputLabel
+} from "@mui/material";
 import FormButton from "../../components/FormButton";
 import Cookies from "js-cookie";
 import AuthContext from "../../components/helper/AuthContext";
 import CsrfToken from "../../components/helper/CsrfToken";
 import { useNavigate } from "react-router-dom";
 import { themes } from "../data/MovieThemes"
+import TextButton from "../../components/TextButton";
 
 export const Signup = () => {
+    const [passwordVisibility, togglePasswordVisibility] = useState(false);
+
     let { loginUser, setLoginCredentials } = useContext(AuthContext)
     let [signupCredentials, setSignupCredentials] = useState({
         username: '',
@@ -142,91 +155,78 @@ export const Signup = () => {
             spacing={2}>
             <CsrfToken />
 
-            <Grid item
-                xs={6}
-                className={"signup-grid-child"}>
+            <Grid item xs={6} width={1}>
 
-                <HeadingCircle title={"signup"}/>
+                <HeadingCircle title={"sign up"}/>
             </Grid>
 
-            <Grid item
-                xs={6}
-                className={"signup-grid-child"}
-            >
+            <Grid item xs={6}>
 
                 <form onSubmit={submitSignupForm} className={"signup-form"}>
 
-                    <Stack className={"signup-form-stack"}
-                        spacing={3}
-                        alignItems={"center"}
-                    // sx={{width: "60%", mx: "auto"}}
-                    >
+                    <Stack sx={{width: '60%'}} className={"signup-form-stack"} spacing={2}>
 
                         <TextField
                             error={usernameError}
-                            className={"signup-form-row"}
-                            helperText={errorUsernameText}
+                            fullWidth
                             required
-                            id={"outlined-basic"}
+                            helperText={errorUsernameText}
+                            id={"outlined-required"}
                             label={"username"}
                             name={"username"}
                             type={"text"}
-                            variant={"outlined"}
                             value={username}
                             onChange={e => onChange(e)}
                         />
 
                         <TextField
                             error={firstNameError}
-                            className={"signup-form-row"}
-                            helperText={errorFirstNameText}
+                            fullWidth
                             required
-                            id={"outlined-basic"}
+                            helperText={errorFirstNameText}
+                            id={"outlined-required"}
                             label={"first name"}
                             name={"first_name"}
                             type={"text"}
-                            variant={"outlined"}
                             value={first_name}
                             onChange={e => onChange(e)}
                         />
 
                         <TextField
                             error={lastNameError}
-                            className={"signup-form-row"}
-                            helperText={errorLastNameText}
+                            fullWidth
                             required
-                            id={"outlined-basic"}
+                            helperText={errorLastNameText}
+                            id={"outlined-required"}
                             label={"last name"}
                             name={"last_name"}
                             type={"text"}
-                            variant={"outlined"}
                             value={last_name}
                             onChange={e => onChange(e)}
                         />
 
                         <TextField
                             error={emailError}
-                            className={"signup-form-row"}
-                            helperText={errorEmailText}
+                            fullWidth
                             required
-                            id={"outlined-basic"}
+                            helperText={errorEmailText}
+                            id={"outlined-required"}
                             label={"email"}
                             name={"email"}
                             type={"email"}
-                            variant={"outlined"}
                             value={email}
                             onChange={e => onChange(e)}
                         />
 
                         <TextField
                             error={bioError}
-                            className={"signup-form-row"}
+                            fullWidth
                             helperText={errorBioText}
                             id={"outlined-basic"}
+                            placeholder={"short personal description"}
                             label={"bio"}
                             name={"bio"}
                             type={"text"}
-                            variant={"outlined"}
                             multiline
                             rows={6}
                             value={bio}
@@ -253,54 +253,78 @@ export const Signup = () => {
                             options={themes}
                             getOptionLabel={(option) => option.theme}
                             defaultValue={[themes[0]]}
+                            fullWidth
                             filterSelectedOptions
-                            className={"signup-form-row"}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
                                     error={preferencesError}
-                                    helperText={errorPreferencesText}
+                                    fullWidth
                                     required
-                                    id={"outlined-basic"}
+                                    helperText={errorPreferencesText}
+                                    id={"outlined-required"}
                                     label={"preferences"}
                                     name={"preferences"}
                                     type={"text"}
-                                    variant={"outlined"}
                                     value={preferences}
                                     onChange={e => onChange(e)}
                                 />
                             )}
                         />
 
-                        <TextField
+                        <FormControl fullWidth variant={"outlined"}>
+                            <InputLabel htmlFor={"outlined-adornment-password"}>password</InputLabel>
+                            <OutlinedInput
                             error={passwordError}
-                            className={"signup-form-row"}
+                            fullWidth
                             helperText={errorPasswordText}
                             required
-                            id={"outlined-basic"}
+                            autoComplete="new-password"
+                            id={"outlined-adornment-password"}
                             label={"password"}
                             name={"password"}
-                            type={"password"}
-                            variant={"outlined"}
+                            type={passwordVisibility ? "text" : "password"}
                             value={password}
                             onChange={e => onChange(e)}
-                        />
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <TextButton
+                                        onClick={() => togglePasswordVisibility(!passwordVisibility)}
+                                        text={passwordVisibility ? "hide" : "show"}
+                                        style={{marginTop: "-20px"}}
+                                    />
+                                    </InputAdornment>
 
-                        <TextField
+                            }/>
+                        </FormControl>
+
+                         <FormControl fullWidth variant={"outlined"}>
+                            <InputLabel htmlFor={"outlined-adornment-password"}>confirm</InputLabel>
+                             <OutlinedInput
                             error={passwordConfirmationError}
-                            className={"signup-form-row"}
+                            fullWidth
                             helperText={errorPasswordConfirmationText}
                             required
-                            id={"outlined-basic"}
-                            label={"password confirmation"}
+                            autoComplete="new-password"
+                            id={"outlined-adornment-password"}
+                            label={"confirm"}
                             name={"password_confirmation"}
-                            type={"password"}
-                            variant={"outlined"}
+                            type={passwordVisibility ? "text" : "password"}
                             value={password_confirmation}
                             onChange={e => onChange(e)}
-                        />
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <TextButton
+                                        onClick={() => togglePasswordVisibility(!passwordVisibility)}
+                                        text={passwordVisibility ? "hide" : "show"}
+                                        style={{marginTop: "-20px"}}
+                                    />
+                                    </InputAdornment>
 
-                        <div className={"signup-form-row"}>
+                            }/>
+                        </FormControl>
+
+                        <div style={{width: '100%'}}>
                             <FormButton
                                 style={"primary"}
                                 type="submit"
