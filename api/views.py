@@ -543,4 +543,13 @@ def get_following(request):
     serializer = UserSerializer(following, many=True) 
     return Response(serializer.data, status = status.HTTP_200_OK)
 
-
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+@club_exists
+@is_in_club
+def toggle_notifications(request, club_id):
+    club = Club.objects.get(id=club_id)
+    membership = Membership.objects.get(user = request.user, club = club)
+    membership.toggle_notifications()
+    serializer = MembershipSerializer(membership, many=False) 
+    return Response(serializer.data, status = status.HTTP_200_OK)
