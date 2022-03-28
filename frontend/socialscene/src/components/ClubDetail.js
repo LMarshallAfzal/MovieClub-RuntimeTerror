@@ -63,7 +63,45 @@ function ClubDetail() {
         setRecommendedClubData(data)
     }
 
-    // let club = (myClubData.find(obj => obj.ID === clubID)) || (recommendedClubData.find(obj => obj.ID === clubID));
+    let banMember = async (e) => {
+        e.preventDefault()
+        let response = await fetch('http://127.0.0.1:8000/ban_member/' + clubID + '/' + user.user_id + '/', {
+            method:'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        console.log(data)
+    }
+
+    let unbanMember = async (e) => {
+        e.preventDefault()
+        let response = await fetch('http://127.0.0.1:8000/unban_member/' + clubID + '/' + user.user_id + '/', {
+            method:'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        console.log(data)
+    }
+
+    let getBannedMembers = async (e) => {
+        e.preventDefault()
+        let response = await fetch('http://127.0.0.1:8000/banned_member_list/' + clubID + '/', {
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            }
+        })
+        let data = await response.json()
+        console.log(data)
+    }
+
     let getSpecifiedClub = async () => {
         for(let i=0; recommendedClubData.length > i; i++) {
             if(recommendedClubData[i].id === clubID) {
@@ -122,6 +160,7 @@ function ClubDetail() {
     const handleBan = () => {
          handleRemoveUser();
         console.log("User Banned");
+        // onClick={(e) => banMember(e)}
     }
 
     const handleUnBan = () => {
@@ -138,6 +177,8 @@ function ClubDetail() {
     const handleBannedUserClick = () => {
         console.log("User Clicked");
     }
+
+    
 
     let getClubMembers = async () => {
         // getSpecifiedClub()

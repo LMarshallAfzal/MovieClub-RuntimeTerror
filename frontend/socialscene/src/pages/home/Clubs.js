@@ -56,7 +56,7 @@ function Clubs() {
 		);
 		let data = await response.json();
 		setUserMembershipData(data);
-		console.log(userMembershipData);
+		
 	};
 
 	let getRecommendedClubs = async (e) => {
@@ -77,10 +77,12 @@ function Clubs() {
 		getRecommendedClubs();
 	}, []);
 
+    console.log(userMembershipData);
+
+
 	return (
 		<>
 			<HomePageTitle title={"clubs"} />
-
 			<Grid
 				container
 				justifyContent={"center"}
@@ -97,7 +99,6 @@ function Clubs() {
 						variant={"outlined"}
 					/>
 				</Grid>
-
 				<Grid item xs={2}>
 					<FormButton
 						className={"create-button"}
@@ -105,14 +106,12 @@ function Clubs() {
 						onClick={createNewClub}
 					/>
 				</Grid>
-
 				<Grid item xs={12}>
 					<div className={"home-page-card-background"}>
 						<Grid container direction={"row"} padding={2}>
 							<Grid item xs={12}>
 								<h5 className={"home-page-card-title"}>your clubs</h5>
 							</Grid>
-
 							<Grid item xs={12}>
 								<Stack direction={"row"} overflow={"auto"}>
 									{myClubData.map((club) => {
@@ -123,11 +122,11 @@ function Clubs() {
 												<ListItem>
 													<ClubListing
 														clubName={club.club_name}
-														isMember={"M"}
+														isMember={true}
 														iconImage={club.iconImage}
 														description={club.mission_statement}
-														// isOrganiser={club.isOrganiser}
-														memberRole={userMembershipData.role}
+														isOrganiser={userMembershipData[0].is_organiser}
+														memberRole={userMembershipData[0].role}
 														clubTheme={club.theme}
 														ID={club.id}
 													/>
@@ -137,8 +136,7 @@ function Clubs() {
 											return (
 												<>
 													Not a member of any clubs
-													{/* {console.log(val.id)}
-                                        {console.log(memData.club)} */}
+													
 												</>
 											);
 										}
@@ -148,14 +146,12 @@ function Clubs() {
 						</Grid>
 					</div>
 				</Grid>
-
 				<Grid item xs={12}>
 					<div className={"home-page-card-background"}>
 						<Grid container direction={"row"} padding={2}>
 							<Grid item xs={12}>
 								<h5 className={"home-page-card-title"}>recommended</h5>
 							</Grid>
-
 							<Grid item xs={12}>
 								<Stack direction={"row"} overflow={"auto"}>
 									{recommendedClubData.map((club) => {
@@ -166,11 +162,11 @@ function Clubs() {
 												<ListItem>
 													<ClubListing
 														clubName={club.club_name}
-														isMember={"N"}
+														isMember={false}
 														iconImage={club.iconImage}
 														description={club.mission_statement}
-														isOrganiser={"O"}
-														memberRole={club.memberRole}
+														isOrganiser={null}
+														memberRole={null}
 														clubTheme={club.theme}
 														ID={club.id}
 													/>
@@ -185,7 +181,6 @@ function Clubs() {
 						</Grid>
 					</div>
 				</Grid>
-
 				<Grid item xs={12}>
 					<Outlet />
 				</Grid>
