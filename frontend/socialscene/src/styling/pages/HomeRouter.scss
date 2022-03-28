@@ -2,6 +2,8 @@
 
 .home-grid {
   height: base.$height;
+  overflow: hidden;
+
 }
 
 .home-grid-L-sidebar {
@@ -11,4 +13,6 @@
 
 .home-grid-R-content {
   padding: 0;
+  height: 100%;
+  overflow: auto;
 }

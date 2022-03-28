@@ -30,15 +30,6 @@ class GetClubMembersViewTestCase(APITestCase):
         self.assertTrue(self.user.is_authenticated)
         response = self.client.get(self.url)
         self._create_test_members(10)
-        users = self.club.club_members.all()
-        serializer = UserSerializer(users, many=True)
-        self.assertEqual(response.data, serializer.data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_get_club_members_endpoint_gets_club_members_returns_200_ok(self):
-        self.client.force_authenticate(user=self.user)
-        self.assertTrue(self.user.is_authenticated)
-        response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_club_members_endpoint_doesnt_get_club_members_for_non_existent_club_returns_404_not_found(self):

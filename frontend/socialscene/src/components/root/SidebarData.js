@@ -22,13 +22,8 @@ export const SidebarData = [
         cName: 'sidebar-text'
     },
     {
-        title: 'events',
-        path: '/home/events',
-        cName: 'sidebar-text'
-    },
-    {
-        title: 'messages',
-        path: '/home/messages',
+        title: 'discussion',
+        path: '/home/discussion',
         cName: 'sidebar-text'
     },
     {

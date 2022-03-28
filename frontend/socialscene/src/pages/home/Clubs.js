@@ -1,184 +1,197 @@
-import React, {useCallback, useState, useContext, useEffect} from "react";
-import {Box, Grid, List, ListItem, Paper, Stack, TextField} from "@mui/material";
-import {Outlet, useHistory} from "react-router-dom";
+import React, { useCallback, useState, useContext, useEffect } from "react";
+import {
+	Box,
+	Grid,
+	List,
+	ListItem,
+	Paper,
+	Stack,
+	TextField,
+} from "@mui/material";
+import { Outlet, useHistory } from "react-router-dom";
 import "../../styling/pages/Clubs.css";
 import FormButton from "../../components/FormButton";
 import ClubListing from "../../components/ClubListing";
-import {DummyClubData} from "../data/DummyClubsData";
-import {useNavigate} from "react-router";
+import { DummyClubData } from "../data/DummyClubsData";
+import { useNavigate } from "react-router";
 import AuthContext from "../../components/helper/AuthContext";
-
-
+import HomePageTitle from "../../components/HomePageTitle";
 
 function Clubs() {
+	const navigate = useNavigate();
+	const createNewClub = useCallback(
+		() => navigate("clubs/new", { replace: false }),
+		[navigate]
+	);
+	const [myClubData, setMyClubData] = useState([]);
+	const [userMembershipData, setUserMembershipData] = useState([]);
+	const [recommendedClubData, setRecommendedClubData] = useState([]);
+	let { user, authTokens } = useContext(AuthContext);
 
-    const navigate = useNavigate();
-    const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
-    const [myClubData, setMyClubData] = useState([]);
-    const [userMembershipData, setUserMembershipData] = useState([]);
-    const [recommendedClubData, setRecommendedClubData] = useState([]);
-    let {user, authTokens} = useContext(AuthContext);
+	let getMembershipData = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setMyClubData(data);
+	};
 
-    let getMembershipData = async (e) => {
-        // e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
-            method:'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + String(authTokens.access)
-            }
-        })
-        let data = await response.json()
-        setMyClubData(data)
-    }
+	let getMemData = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/mem/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setUserMembershipData(data);
+		console.log(userMembershipData);
+	};
 
-    let getMemData = async (e) => {
-        // e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/mem/' + user.user_id +'/', {
-            method:'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + String(authTokens.access)
-            }
-        })
-        let data = await response.json()
-        setUserMembershipData(data)
-        console.log(userMembershipData)
-    }
+	let getRecommendedClubs = async (e) => {
+		let response = await fetch("http://127.0.0.1:8000/rec_clubs/", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		let data = await response.json();
+		setRecommendedClubData(data);
+	};
 
-    
+	useEffect((e) => {
+		getMembershipData();
+		getMemData();
+		getRecommendedClubs();
+	}, []);
 
-    let getRecommendedClubs = async (e) => {
-        let response = await fetch('http://127.0.0.1:8000/rec/clubs', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + String(authTokens.access)
-            }
-        })
-        let data = await response.json()
-        setRecommendedClubData(data)
-    }
+	return (
+		<>
+			<HomePageTitle title={"clubs"} />
 
+			<Grid
+				container
+				justifyContent={"center"}
+				direction={"row"}
+				alignItems={"flex-start"}
+				padding={2}
+				spacing={2}
+			>
+				<Grid item xs={10}>
+					<TextField
+						className={"search-bar"}
+						id={"outlined-basic"}
+						label={"search"}
+						variant={"outlined"}
+					/>
+				</Grid>
 
-    useEffect((e) => { 
-        getMembershipData()
-        getMemData()
-        getRecommendedClubs()
-    },[])
+				<Grid item xs={2}>
+					<FormButton
+						className={"create-button"}
+						text={"create"}
+						onClick={createNewClub}
+					/>
+				</Grid>
 
+				<Grid item xs={12}>
+					<div className={"home-page-card-background"}>
+						<Grid container direction={"row"} padding={2}>
+							<Grid item xs={12}>
+								<h5 className={"home-page-card-title"}>your clubs</h5>
+							</Grid>
 
-
-    return (
-        <Grid container
-            justifyContent={"center"}
-            direction={"row"}
-            alignItems={"flex-start"}
-            spacing={2}
-        >
-            <Grid item xs={12}>
-                <div className={"home-page-title"}>
-                    <h3>clubs<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
-            <Grid item xs={10}>
-                <TextField
-                    className={"search-bar"}
-                    id={"outlined-basic"}
-                    label={"search"}
-                    variant={"outlined"}
-                />
-            </Grid>
-
-            <Grid item xs={2}>
-                <FormButton
-                    className={"create-button"}
-                    text={"create"}
-                    onClick={createNewClub}
-                />
-            </Grid>
-
-            <Grid item xs={12}>
-                <div className={"club-card-background"}>
-                    <h4 className={"club-card-heading"}>your clubs:</h4>
-
-                    <Stack direction={"row"}
-                           spacing={0}
-                           className={"club-card-list-frame"}
-                    >
-                        {/* {console.log(myClubData)}
-                        {console.log(userMembershipData)} */}
-                        {myClubData.map((club) => {
-                            if (club.club_members.includes(userMembershipData[0].user)) {
-                                return (
-                                    <ListItem
-                                    >
-                                    <ClubListing
-                                        clubName={club.club_name}
-                                        isMember={"M"}
-                                        iconImage={club.iconImage}
-                                        description={club.mission_statement}
-                                        // isOrganiser={club.isOrganiser}
-                                        memberRole={userMembershipData.role}
-                                        clubTheme={club.theme}
-                                        clubID={club.id}
-                                    />
-                                    </ListItem>)
-                            } else {
-                                return (
-                                    <>
-                                        Not a member of any clubs
-                                        {/* {console.log(val.id)}
+							<Grid item xs={12}>
+								<Stack direction={"row"} overflow={"auto"}>
+									{myClubData.map((club) => {
+										if (
+											club.club_members.includes(userMembershipData[0].user)
+										) {
+											return (
+												<ListItem>
+													<ClubListing
+														clubName={club.club_name}
+														isMember={"M"}
+														iconImage={club.iconImage}
+														description={club.mission_statement}
+														// isOrganiser={club.isOrganiser}
+														memberRole={userMembershipData.role}
+														clubTheme={club.theme}
+														ID={club.id}
+													/>
+												</ListItem>
+											);
+										} else {
+											return (
+												<>
+													Not a member of any clubs
+													{/* {console.log(val.id)}
                                         {console.log(memData.club)} */}
+												</>
+											);
+										}
+									})}
+								</Stack>
+							</Grid>
+						</Grid>
+					</div>
+				</Grid>
 
-                                    </>
-                                )
-                            }
-                        }
-                        )}
-                    </Stack>
-                </div>
-            </Grid>
+				<Grid item xs={12}>
+					<div className={"home-page-card-background"}>
+						<Grid container direction={"row"} padding={2}>
+							<Grid item xs={12}>
+								<h5 className={"home-page-card-title"}>recommended</h5>
+							</Grid>
 
-            <Grid item xs={12}>
-                <div className={"club-card-background"}>
-                    <h4 className={"club-card-heading"}>recommended clubs:</h4>
+							<Grid item xs={12}>
+								<Stack direction={"row"} overflow={"auto"}>
+									{recommendedClubData.map((club) => {
+										if (
+											!club.club_members.includes(userMembershipData[0].user)
+										) {
+											return (
+												<ListItem>
+													<ClubListing
+														clubName={club.club_name}
+														isMember={"N"}
+														iconImage={club.iconImage}
+														description={club.mission_statement}
+														isOrganiser={"O"}
+														memberRole={club.memberRole}
+														clubTheme={club.theme}
+														ID={club.id}
+													/>
+												</ListItem>
+											);
+										} else {
+											return <></>;
+										}
+									})}
+								</Stack>
+							</Grid>
+						</Grid>
+					</div>
+				</Grid>
 
-                    <Stack direction={"row"}
-                          spacing={0}
-                          className={"club-card-list-frame"}
-                    >
-                        {recommendedClubData.map((club) => {
-                            if (!club.club_members.includes(userMembershipData[0].user)) {
-                                return (
-                                    <ListItem>
-                                    <ClubListing
-                                        clubName={club.club_name}
-                                        isMember={"N"}
-                                        iconImage={club.iconImage}
-                                        description={club.mission_statement}
-                                        isOrganiser={"O"}
-                                        memberRole={club.memberRole}
-                                        clubTheme={club.theme}
-                                        clubID={club.id}
-                                    />
-                                    </ListItem>
-                                    )
-                            } else {
-                                return (
-                                    <></>
-                                )
-                            }
-                        })}
-                    </Stack>
-                </div>
-            </Grid>
-
-            <Grid item xs={12}>
-                    <Outlet/>
-            </Grid>
-        </Grid>
-    );
+				<Grid item xs={12}>
+					<Outlet />
+				</Grid>
+			</Grid>
+		</>
+	);
 }
 
 export default Clubs;

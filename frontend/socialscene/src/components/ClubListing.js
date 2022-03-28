@@ -32,7 +32,6 @@ function ClubListing(props) {
     }
 
     let getClubMembers = async (e) => {
-        e.preventDefault()
         let response = await fetch('http://127.0.0.1:8000/club_members/' + clubID +'/', {
             method:'GET',
             headers: {
@@ -43,10 +42,14 @@ function ClubListing(props) {
         let data = await response.json()
         setClubMembers(data)
         console.log(clubMembers)
+        // e.preventDefault()
+
+        // refreshPage(false)
+
     }
 
-    let joinClub = async (clubId) => {
-        let response = await fetch('http://127.0.0.1:8000/join_club/' + clubId +'/', {
+    let joinClub = async () => {
+        let response = await fetch('http://127.0.0.1:8000/join_club/' + clubID +'/', {
             method:'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,6 +58,10 @@ function ClubListing(props) {
         })
         let data = await response.json()
     }
+
+    function refreshPage(value) {
+        window.location.reload(value);
+      }
 
 
     useEffect((e) => { 
@@ -68,14 +75,16 @@ function ClubListing(props) {
             return (
                 <EnterButton
                     text={"info"}
-                    linkTo={`/home/clubs/${props.clubID}`}
+                    onClick={() => {getClubMembers()}}
+                    linkTo={`/home/clubs/${props.ID}`}
+
                 />
             )
         } else {
                 return (
                     <EnterButton
                         text={"join"}
-                        linkTo={`/home/clubs/${props.clubID}`}
+                        linkTo={`/home/clubs/${props.ID}`}
                     />
                 )
             }
@@ -85,7 +94,7 @@ function ClubListing(props) {
         if (props.isMember === true) {
             if (props.isOrganiser === true) {
                 return (
-                    <EnterButton text={"create meeting"} linkTo={"/home"} />
+                    <EnterButton text={"create meeting"} linkTo={`/home/discussion/${props.ID}/new`} />
                 )
             } else {
                 return (
@@ -101,47 +110,39 @@ function ClubListing(props) {
 
 
     return (
-         <div className={"club-listing"}>
-             <Grid container
-                   spacing={2}>
+         <Link className={"club-listing"} to={`/home/clubs/${props.ID}`}>
+             <Grid container spacing={1} padding={1}>
 
-                 <Grid item
-                       xs={5}>
-                     <Stack className={"club-listing-left-stack"}>
-                         <div className={"club-listing-image"}>
+                 <Grid item xs={4}>
+                     <Stack spacing={1} alignItems={"center"} justifyContent={"center"}>
                          <Avatar
                              alt={props.clubName}
                              src={props.iconImage}
-                             sx={{width: "100%", height: "100%"}}
+                             sx={{width: 1, height:1}}
                          />
-                         </div>
-                         <div className={"club-listing-button"}>
-                           <ClubButton />
-                         </div>
+
+                         <ClubButton />
                      </Stack>
                  </Grid>
 
-                 <Grid item
-                       xs={7}>
-                     <Stack className={"club-listing-right-stack"}>
-                         <Stack className={"club-listing-text"}
-                                spacing={2}
-                         >
-                             <h4 className={"club-listing-club-name"}>{props.clubName}<h4--emphasise>.</h4--emphasise></h4>
-                             <h6>{props.description}</h6>
-                             <div className={"club-listing-club-chip"}>
-                                 <ClubChip  />
-                             </div>
-                         </Stack>
+                 <Grid item xs={8}>
+                     <Stack spacing={1}>
+
+                         <h4 className={"club-listing-club-name"}>{props.clubName}<h4--emphasise>.</h4--emphasise></h4>
+
+                         <h6>{props.description}</h6>
+
+                         <ClubChip/>
+
                          <AvatarGroup max={4} className={"club-listing-avatars"}>
                              {clubMembers.map((user) => {
                                 return <Avatar alt={user.username} src={icon5}/>
                              })}
                          </AvatarGroup>
-                     </Stack>
+                         </Stack>
                  </Grid>
              </Grid>
-         </div>
+         </Link>
     );
 }
 

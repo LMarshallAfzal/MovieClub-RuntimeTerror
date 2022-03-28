@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useCallback} from "react";
 import "../styling/components/EnterButton.css";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 function EnterButton(props) {
+
+    const navigate = useNavigate();
+    const onCLickNavigate = useCallback(() => navigate(`${props.linkTo}`, {replace: false}), [navigate]);
+
     return (
-        <Link to={props.linkTo} onClick={props.onClick} className={"enter-button-wrapper"}>
-            <enterButton className='enter-button'>{props.text}</enterButton>
-        </Link>
+        <button className='enter-button' onClick={props.onClick || onCLickNavigate}>{props.text}</button>
     );
 }
 
