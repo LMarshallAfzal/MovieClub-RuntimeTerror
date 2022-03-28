@@ -240,6 +240,8 @@ class Membership(models.Model):
         )
     is_organiser = models.BooleanField(default=False)
 
+    notifications = models.BooleanField(default=False)
+
     """We must ensure that only one relationship is created per User-Club pair."""
     class Meta:
         unique_together = ('user', 'club')
@@ -252,6 +254,13 @@ class Membership(models.Model):
             self.is_organiser = False
         else:
             self.is_organiser = True
+        self.save()
+
+    def toggle_notifications(self):
+        if self.notifications == True:
+            self.notifications = False
+        else:
+            self.notifications = True
         self.save()
 class Movie(models.Model):
 
