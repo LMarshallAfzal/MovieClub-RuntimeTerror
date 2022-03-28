@@ -305,6 +305,7 @@ def train_movie_data(request):
 @club_exists
 @is_in_club
 @is_organiser
+@members_have_ratings_for_meeting_movie_recommendations
 def recommend_movie_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
     recommendations = []
