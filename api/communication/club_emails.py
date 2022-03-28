@@ -13,11 +13,10 @@ class ClubEmail:
         html = render_to_string('new_meeting_email.html',{'cover_url':meeting.movie.cover_link,'meeting_title':meeting.meeting_title,'meeting_description':meeting.description,'meeting_date':meeting.date,'meeting_start_time':meeting.start_time})
         for member in self.club.club_members.filter(membership__notifications=True):
             recipients.append(member.email)
-        print(recipients)
         send_mail(
             f"{meeting.club}'s upcoming meeting",
             f'A new meeting got added called: {meeting.meeting_title}.\n It will happen at {meeting.date} and the start time is {meeting.start_time}.',
             EMAIL_HOST_USER,
-            ['said.mamadov@gmail.com','jfrancisco.mail@gmail.com'],
+            recipients,
             html_message=html
             )
