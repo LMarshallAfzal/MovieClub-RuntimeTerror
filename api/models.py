@@ -302,7 +302,6 @@ class Rating(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     score = models.FloatField(
-
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
     )
     class Meta:

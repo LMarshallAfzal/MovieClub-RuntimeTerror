@@ -263,6 +263,7 @@ def add_rating(request, movie_id):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 @movie_exists
+@user_has_rated_movie
 def change_rating(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     serializer = ChangeRatingSerializer(movie, data=request.data)
@@ -271,6 +272,16 @@ def change_rating(request, movie_id):
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@movie_exists
+@user_has_rated_movie
+def get_rating(request,movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    rating = Rating.objects.get(user=request.user,movie=movie)
+    serializer = RatingSerializer(rating,many = False)
+    return Response(serializer.data,status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

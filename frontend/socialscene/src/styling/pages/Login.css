@@ -95,7 +95,10 @@ h6 {
   background-color: #5C5C5C;
   font-family: Helvetica-Bold, serif;
   padding: 10px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
   color: #FFFFFF;
 }
@@ -141,6 +144,4 @@ h6 {
 .login-form-row {
   width: 100%;
   max-width: 60%;
-}
-
-/*# sourceMappingURL=Login.css.map */
+}/*# sourceMappingURL=Login.css.map */

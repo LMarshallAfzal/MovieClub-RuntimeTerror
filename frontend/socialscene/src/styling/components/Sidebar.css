@@ -95,7 +95,10 @@ h6 {
   background-color: #5C5C5C;
   font-family: Helvetica-Bold, serif;
   padding: 10px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
   color: #FFFFFF;
 }
@@ -121,6 +124,7 @@ h6 {
 }
 
 .sidebar {
+  position: -webkit-sticky;
   position: sticky;
   height: 100%;
 }
@@ -176,8 +180,9 @@ h6 {
   font-size: 1.5rem;
   display: flex;
   align-items: center;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   font-family: inherit;
-}
-
-/*# sourceMappingURL=Sidebar.css.map */
+}/*# sourceMappingURL=Sidebar.css.map */
