@@ -1,5 +1,5 @@
 from .models import Movie, Club, Rating, Watch, Membership
-from .helpers import get_initial_recommendations_for_clubs, get_initial_recommendations_for_movies
+from .helpers import get_initial_recommendations_for_clubs, get_initial_recommendations_for_movies,get_initial_recommendations_for_meeting_movies
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework import status
@@ -172,6 +172,23 @@ def has_ratings_for_club_recommendations(view_function):
             serializer = ClubSerializer(recommendations, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
     return modified_view_function
+
+def members_have_ratings_for_meeting_movie_recommendations(view_function):
+    @wraps(view_function)
+    def modified_view_function(request, club_id, *args, **kwargs):
+        club = Club.objects.get(id=club_id)
+        ratings = []
+        for member in club.club_members.all():
+            if Rating.objects.filter(user=member):
+                ratings.append(Rating.objects.filter(user=member))
+        if not ratings:
+            recommendations = get_initial_recommendations_for_meeting_movies(club)
+            serializer = MovieSerializer(recommendations, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return view_function(request, club_id, *args, **kwargs)
+    return modified_view_function
+                
 
 def is_attendee(view_function):
     @wraps(view_function)

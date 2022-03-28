@@ -14,6 +14,7 @@ class RecommendMovieMeetingTestCase(APITestCase):
         'api/test/fixtures/other_users.json',
         'api/test/fixtures/default_club.json',
         'api/test/fixtures/recommended_movies.json',
+        'api/test/fixtures/other_movies.json',
     ]
 
     def setUp(self):
@@ -30,6 +31,13 @@ class RecommendMovieMeetingTestCase(APITestCase):
 
     def test_meeting_movie_recommender_url(self):
         self.assertEqual(self.url, f'/rec_meeting/{self.club.id}/')
+
+    def test_recommend_movies_to_meeting_organiser_endpoint_with_no_ratings_from_members_returns_5_recommended_movies_returns_200_ok(self):
+        self.client.force_authenticate(user=self.organiser)
+        self.assertTrue(self.organiser.is_authenticated)
+        response = self.client.get(self.url)
+        self.assertEqual(len(response.data), 5)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_recommend_movies_to_meeting_organiser_endpoint_returns_5_recommended_movies_returns_200_ok(self):
         self.client.force_authenticate(user=self.organiser)
