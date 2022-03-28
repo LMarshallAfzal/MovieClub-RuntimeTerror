@@ -175,11 +175,7 @@ const Home = () => {
                                                                     alt={movie.title}
                                                                 />
 
-                                                                <Stack
-                                                                    spacing={1}
-                                                                    padding={1}
-                                                                    alignItems={"left"}>
-
+                                                                <Stack paddingTop={1} alignItems={"center"}>
                                                                     <Rating
                                                                         name="simple-controlled"
                                                                         sx={{ fontSize: "1.2em" }}
@@ -187,6 +183,11 @@ const Home = () => {
                                                                         max={5}
                                                                     // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
                                                                     />
+                                                                </Stack>
+                                                                <Stack
+                                                                    spacing={1}
+                                                                    padding={1}
+                                                                    alignItems={"left"}>
 
                                                                     <Tooltip title={movie.title} placement="top-start">
                                                                         <Typography noWrap>{movie.title}</Typography>

@@ -244,19 +244,21 @@ const Movies = () => {
 																alt={movie.title}
 															/>
 
-															<Stack
-																spacing={1}
-																padding={1}
-																alignItems={"center"}
-															>
+															<Stack paddingTop={1} alignItems={"center"}>
 																<Rating
 																	name="simple-controlled"
 																	sx={{ fontSize: "1.2em" }}
 																	precision={0.5}
 																	max={5}
-																	// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+																// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
 																/>
+															</Stack>
 
+															<Stack
+																spacing={1}
+																padding={1}
+																alignItems={"left"}
+															>
 																<Tooltip
 																	title={movie.title}
 																	placement="top-start"
@@ -297,27 +299,32 @@ const Movies = () => {
 														alt={movie.title}
 													/>
 
-													<Stack spacing={1} padding={1} alignItems={"center"}>
+													<Stack paddingTop={1} alignItems={"center"}>
+
 														<Rating
 															name="simple-controlled"
 															sx={{ fontSize: "1.2em" }}
 															precision={0.5}
 															max={5}
-															// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+														// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
 														/>
+													</Stack>
+
+													<Stack spacing={1} padding={1} alignItems={"left"}>
+
 
 														<Tooltip title={movie.title} placement="top-start">
 															<Typography noWrap>{movie.title}</Typography>
 														</Tooltip>
 
 														<Tooltip title={`From ${movie.club}`} placement="top-start">
-                                                            <Typography fontSize="10px" noWrap>{`From ${movie.club}`}</Typography>
-                                                        </Tooltip>
+															<Typography fontSize="10px" noWrap>{`From ${movie.club}`}</Typography>
+														</Tooltip>
 
-                                                        <Tooltip title={`Due ${movie.deadline}`} placement="top-start">
-                                                            <Typography fontSize="10px" noWrap>{`Due ${movie.deadline}`}</Typography>
-                                                        </Tooltip>
-														
+														<Tooltip title={`Due ${movie.deadline}`} placement="top-start">
+															<Typography fontSize="10px" noWrap>{`Due ${movie.deadline}`}</Typography>
+														</Tooltip>
+
 														<FormButton text={"watch"} />
 													</Stack>
 												</Card>
@@ -347,7 +354,9 @@ const Movies = () => {
 														image={moviePoster}
 														alt={movie.title}
 													/>
-													<Stack spacing={1} padding={1} alignItems={"center"}>
+
+													<Stack paddingTop={1} alignItems={"center"}>
+
 														<Rating
 															name="simple-controlled"
 															sx={{ fontSize: "1.2em" }}
@@ -360,6 +369,9 @@ const Movies = () => {
 																})
 															}
 														/>
+													</Stack>
+
+													<Stack spacing={1} padding={1} alignItems={"left"}>
 														<Tooltip title={movie.title} placement="top-start">
 															<Typography noWrap>{movie.title}</Typography>
 														</Tooltip>
@@ -402,15 +414,17 @@ const Movies = () => {
 														alt={movie.title}
 													/>
 
-													<Stack spacing={1} padding={1} alignItems={"center"}>
+													<Stack paddingTop={1} alignItems={"center"}>
 														<Rating
 															name="simple-controlled"
 															sx={{ fontSize: "1.2em" }}
 															precision={0.5}
 															max={5}
-															// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+														// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
 														/>
+													</Stack>
 
+													<Stack spacing={1} padding={1} alignItems={"left"}>
 														<Tooltip title={movie.title} placement="top-start">
 															<Typography noWrap>{movie.title}</Typography>
 														</Tooltip>
