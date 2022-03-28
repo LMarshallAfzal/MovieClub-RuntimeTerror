@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import Count, F, Value
 from django.db.models.fields.related import ForeignKey
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator,MinLengthValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 import datetime
@@ -42,10 +42,10 @@ class User(AbstractUser):
         blank=True
     )
 
-    preferences = models.ManyToManyField('Genre', related_name='preferences', blank=False)
+    preferences = models.ManyToManyField(
+        'Genre', related_name='preferences', blank=False)
 
     watched_movies = models.ManyToManyField('Movie', through='Watch')
-    
 
     followers = models.ManyToManyField(
         'self', symmetrical=False, related_name='followees'
@@ -53,7 +53,7 @@ class User(AbstractUser):
 
     def toggle_follow(self, followee):
 
-        if followee==self:
+        if followee == self:
             return
         if self.is_following(followee):
             self._unfollow(followee)
@@ -77,17 +77,15 @@ class User(AbstractUser):
     def followee_count(self):
 
         return self.followees.count()
-    
-
 
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
 
     def get_user_clubs(self):
-         return Club.objects.all().filter(
-            club_members__username=self.username,role__club_role='M')|Club.objects.all().filter(
-            club_members__username=self.username,role__club_role='O')|Club.objects.all().filter(
-            club_members__username=self.username,role__club_role='C')
+        return Club.objects.all().filter(
+            club_members__username=self.username, role__club_role='M') | Club.objects.all().filter(
+            club_members__username=self.username, role__club_role='O') | Club.objects.all().filter(
+            club_members__username=self.username, role__club_role='C')
 
     def get_user_ratings(self):
         ratings = Rating.objects.filter(user=self)
@@ -96,28 +94,28 @@ class User(AbstractUser):
         else:
             return ratings
 
-    def attend_meeting(self,meeting):
+    def attend_meeting(self, meeting):
         meeting.attendees.add(self)
         meeting.save()
 
     def get_attending_meetings(self):
         meetings = []
-        meetings = Meeting.objects.all().filter(attendees = self)
+        meetings = Meeting.objects.all().filter(attendees=self)
         return meetings
 
-    def leave_meeting(self,meeting):
+    def leave_meeting(self, meeting):
         meeting.attendees.remove(self)
         meeting.save()
 
     def get_user_clubs(self):
         clubs = []
         for club in Club.objects.filter(club_members__username=self.username):
-            if Membership.objects.get(user=self,club=club).role != 'B':
+            if Membership.objects.get(user=self, club=club).role != 'B':
                 clubs.append(club)
         return clubs
 
     def get_user_memberships(self):
-        memberships = Membership.objects.filter(user=self).exclude(role = 'B')
+        memberships = Membership.objects.filter(user=self).exclude(role='B')
         return memberships
 
     def get_user_preferences(self):
@@ -131,7 +129,7 @@ class User(AbstractUser):
     def get_watched_movies(self):
         movies = self.watched_movies.all()
         return movies
-    
+
     def clean(self):
         if self.preferences.count() == 0:
             raise ValidationError(_('You must have at least one preference'))
@@ -172,42 +170,44 @@ class Club(models.Model):
 
     club_members = models.ManyToManyField(User, through='Membership')
 
-    club_messages = models.ManyToManyField('Message', related_name='club_messages')
+    club_messages = models.ManyToManyField(
+        'Message', related_name='club_messages')
 
-    club_meetings = models.ManyToManyField('Meeting', related_name='club_meetings')
+    club_meetings = models.ManyToManyField(
+        'Meeting', related_name='club_meetings')
 
     def get_all_users_in_club(self):
-        return self.club_members.all().exclude(membership__role = 'B')
+        return self.club_members.all().exclude(membership__role='B')
 
     def get_all_club_members(self):
         return self.club_members.all().filter(
-            club = self, membership__role = 'M')
+            club=self, membership__role='M')
 
     def get_club_owner(self):
-        return self.club_members.all().filter(club = self, membership__role = 'O')
-        
+        return self.club_members.all().filter(club=self, membership__role='O')
+
     def remove_user_from_club(self, user):
         Membership.objects.get(club=self, user=user).delete()
-    
+
     def get_banned_members(self):
-        return self.club_members.filter(club = self, membership__role = 'B')
-           
+        return self.club_members.filter(club=self, membership__role='B')
+
     def get_organiser(self):
-        return self.club_members.filter(club = self,membership__is_organiser = True)
-    
+        return self.club_members.filter(club=self, membership__is_organiser=True)
+
     def get_clubs_by_theme(preferences):
         clubs = []
         for preference in preferences:
             clubs.append(Club.objects.annotate(
-            string=Value(preference)
-                ).filter(string__icontains=F('theme')))
+                string=Value(preference)
+            ).filter(string__icontains=F('theme')))
         return clubs
 
     def get_club_membership(self, user):
         membership = Membership.objects.get(user=user, club=self).role
         return membership
 
-    def change_membership(self,user,role):
+    def change_membership(self, user, role):
         membership = Membership.objects.get(user=user, club=self)
         membership.role = role
         membership.save()
@@ -216,9 +216,9 @@ class Club(models.Model):
         return self.club_messages.all()
 
     def get_upcoming_meeting(self):
-            meeting = Meeting.objects.get(club=self, completed=False)
-            return meeting
-            
+        meeting = Meeting.objects.get(club=self, completed=False)
+        return meeting
+
     def __unicode__(self):
         return '%d: %s' % (self.club_name)
 
@@ -233,15 +233,15 @@ class Membership(models.Model):
     class MembershipStatus(models.TextChoices):
         MEMBER = 'M', _('Member')
         OWNER = 'O', _('Owner')
-        BANNED = 'B',_('BannedMember')
-    
+        BANNED = 'B', _('BannedMember')
+
     user = ForeignKey(User, on_delete=models.CASCADE)
     club = ForeignKey(Club, on_delete=models.CASCADE)
     role = models.CharField(
         max_length=1,
         choices=MembershipStatus.choices,
         default=MembershipStatus.MEMBER
-        )
+    )
     is_organiser = models.BooleanField(default=False)
 
     """We must ensure that only one relationship is created per User-Club pair."""
@@ -281,8 +281,8 @@ class Movie(models.Model):
     viewers = models.ManyToManyField(
         User, through='Watch', related_name='viewers')
 
-    cover_link = models.CharField(max_length=500,blank=True)
-    
+    cover_link = models.CharField(max_length=500, blank=True)
+
     class Meta:
         ordering = ['title']
 
@@ -304,6 +304,10 @@ class Movie(models.Model):
     def get_movies_by_genre(genres):
         return Movie.objects.filter(genres__id__in=genres)
 
+    def get_movies_by_club_theme(theme):
+        theme = [theme.get_genre_id(theme.name)]
+        return Movie.objects.filter(genres__id__in=theme)
+    
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -312,15 +316,17 @@ class Rating(models.Model):
     score = models.FloatField(
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
     )
+
     class Meta:
         ordering = ['user']
+
 
 class Meeting(models.Model):
     club = ForeignKey(Club, on_delete=models.CASCADE)
 
     movie = ForeignKey(Movie, on_delete=models.CASCADE)
 
-    meeting_title = models.CharField(max_length=200,blank=False)
+    meeting_title = models.CharField(max_length=200, blank=False)
 
     organiser = ForeignKey(User, on_delete=models.CASCADE)
 
@@ -332,7 +338,7 @@ class Meeting(models.Model):
 
     attendees = models.ManyToManyField(User, related_name="attendees")
 
-    meeting_link = models.CharField(max_length=100,blank=False)
+    meeting_link = models.CharField(max_length=100, blank=False)
 
     completed = models.BooleanField(default=False)
 
@@ -349,17 +355,19 @@ class Meeting(models.Model):
             self.completed = False
         self.save()
 
-class Message(models.Model):
-    sender = models.ForeignKey(User,to_field='username',on_delete=models.CASCADE,unique=False)
 
-    club = models.ForeignKey(Club,on_delete=models.CASCADE,unique=False)
+class Message(models.Model):
+    sender = models.ForeignKey(
+        User, to_field='username', on_delete=models.CASCADE, unique=False)
+
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, unique=False)
 
     message = models.CharField(max_length=1500)
 
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-            return self.message
+        return self.message
 
     class Meta:
         ordering = ('timestamp',)
