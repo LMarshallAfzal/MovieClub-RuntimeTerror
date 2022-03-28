@@ -19,16 +19,10 @@ class Command(BaseCommand):
             Movie.objects.create(
                 ml_id = int(row['movieId']),
                 title = row['title'],
-                genres = row['genres'].replace('|',','),
+                genres = str(row['genres']).replace('|',','),
                 year = int(row['year']),
-                cover_link = self.get_db_movie_cover_links(int(row['movieId']))
+                cover_link = row['cover_url']
             )
             movie_count+=1
         print('Movie seeding complete')
-
-    def get_db_movie_cover_links(self,ml_id):
-        file = pd.read_csv("recommender/dataset-latest/movie_covers_links.csv",encoding='latin-1')
-        for index,row in file.iterrows():
-            if int(row['movieId']) == ml_id:
-                return row['cover_link']
-
+        print(f'Seeded {movie_count} movies')
