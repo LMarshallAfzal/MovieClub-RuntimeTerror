@@ -9,7 +9,6 @@ from rest_framework import status
 from .serializers import *
 from .models import *
 from .helpers import *
-from rest_framework.parsers import JSONParser
 from django.contrib.auth import logout
 from recommender.user_movie_recommender import train_movie_data_for_user, recommend_movies_for_user
 from recommender.meeting_movie_recommender import train_movie_data_for_meeting, recommend_movies_for_meeting
@@ -18,6 +17,7 @@ from .decorators import *
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from .communication.club_emails import ClubEmail 
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -138,7 +138,7 @@ def get_other_user(request, user_id):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_current_user(request):
-    serializer = UserSerializer(request.user, many=False)
+    serializer = UserSerializer(request.user,many=False)
     return Response(serializer.data,status=status.HTTP_200_OK)
 
 @api_view(['PUT'])
@@ -188,7 +188,7 @@ def create_meeting(request, club_id):
     if serializer.is_valid():
         serializer.save()
         Membership.objects.get(user=request.user, club=club).toggle_organiser()
-        send_new_meeting_notification(club)
+        ClubEmail(club).send_new_meeting_notification()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         errors = serializer.errors
