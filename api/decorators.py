@@ -161,7 +161,6 @@ def has_ratings_for_movie_recommendations(view_function):
             return Response(serializer.data, status=status.HTTP_200_OK)
     return modified_view_function
 
-
 def has_ratings_for_club_recommendations(view_function):
     @wraps(view_function)
     def modified_view_function(request, *args, **kwargs):
@@ -173,7 +172,6 @@ def has_ratings_for_club_recommendations(view_function):
             serializer = ClubSerializer(recommendations, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
     return modified_view_function
-
 
 def is_attendee(view_function):
     @wraps(view_function)

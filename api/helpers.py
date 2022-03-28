@@ -57,6 +57,6 @@ def send_new_meeting_notification(club):
         f"{meeting.club}'s upcoming meeting",
         f'A new meeting got added called: {meeting.meeting_title}.\n It will happen at {meeting.date} and the start time is {meeting.start_time}.',
         EMAIL_HOST_USER,
-        ['jfrancisco.mail@gmail.com'],
+        recipients,
         html_message=html
     )
