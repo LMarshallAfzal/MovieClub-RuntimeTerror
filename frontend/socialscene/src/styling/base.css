@@ -100,23 +100,10 @@ h6 {
       -ms-user-select: none;
           user-select: none;
   transition: all 0.3s ease-out;
-  color: #FFFFFF;
-}
-
-.home-page-sub-section-heading {
-  background-color: #999999;
-  padding: 10px;
-  color: #FFFFFF;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
-  color: #000000;
-  font-family: Helvetica, serif;
+  color: #FFFFFF;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -124,10 +111,17 @@ h6 {
 }
 
 .home-page-card-background {
-  background-color: #C4C4C4;
+  background-color: #D8D8D8;
   overflow: hidden;
+}
+
+.home-page-sub-section-heading {
+  padding: 10px;
+  color: #FFFFFF;
+  background-color: #C4C4C4;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  transition: all 0.3s ease-out;
 }/*# sourceMappingURL=base.css.map */

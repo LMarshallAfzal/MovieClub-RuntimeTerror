@@ -47,6 +47,7 @@ class User(AbstractUser):
     )
 
     watched_movies = models.ManyToManyField('Movie', through='Watch')
+    
 
     followers = models.ManyToManyField(
         'self', symmetrical=False, related_name='followees'
@@ -265,6 +266,9 @@ class Movie(models.Model):
 
     viewers = models.ManyToManyField(
         User, through='Watch', related_name='viewers')
+
+    cover_link = models.CharField(max_length=500,blank=True)
+    
     class Meta:
         ordering = ['title']
 
@@ -292,14 +296,12 @@ class Movie(models.Model):
                 movies.append(movie)
         return movies
 
-
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     score = models.FloatField(
-
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
     )
     class Meta:

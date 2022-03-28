@@ -63,7 +63,6 @@ function ClubDiscussion() {
 
 
     let getClubMessages = async (e) => {
-        //USE PARAMS WHEN READY
         let response = await fetch('http://127.0.0.1:8000/message_forum/' + clubID + '/', {
             method: 'GET',
             headers: {
@@ -76,9 +75,8 @@ function ClubDiscussion() {
         let sender_data = data.sender
     }
 
-    let sendClubMessages = async () => {
-        const club = 2
-        let response = await fetch('http://127.0.0.1:8000/write_message/' + club + '/', {
+    let sendClubMessages = async (id) => {
+        let response = await fetch('http://127.0.0.1:8000/write_message/' + id + '/', {
             method: 'POST',
             body:JSON.stringify({
                 "sender": user.username,
@@ -92,7 +90,7 @@ function ClubDiscussion() {
             },
         })
         await response.json()
-        getClubMessages()
+        getClubMessages(clubID)
         message.message = ""
         console.log(message)
     }
@@ -171,7 +169,7 @@ function ClubDiscussion() {
                                     InputProps={{
                                         endAdornment:
                                             <TextButton
-                                                onClick={sendClubMessages}
+                                                onClick={sendClubMessages(club.ID)}
                                                 text={"send"}/>
                                 }}
                                 />
