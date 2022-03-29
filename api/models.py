@@ -157,12 +157,12 @@ class Club(models.Model):
 
     mission_statement = models.CharField(
         max_length=500,
-        blank=True,
+        blank=False,
         unique=False
     )
     theme = models.CharField(
         max_length=20,
-        blank=True,
+        blank=False,
         unique=False
     )
 
