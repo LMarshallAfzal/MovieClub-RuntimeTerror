@@ -105,6 +105,7 @@ const Options = () => {
                              <Stack spacing={2} height={"100%"}>
 
                                  <TextField
+                                    data-testid="old-password"
                                      error={oldPasswordError}
                                      helperText={errorOldPasswordText}
                                      required
@@ -119,7 +120,8 @@ const Options = () => {
                                  />
 
                                  <TextField
-                                     error={newPasswordError}
+                                    data-testid="new-password"
+                                    error={newPasswordError}
                                      helperText={errorNewPasswordText}
                                      required
                                      fullWidth
@@ -133,7 +135,8 @@ const Options = () => {
                                  />
 
                                  <TextField
-                                     error={newPasswordConfirmationError}
+                                    data-testid="confirm-new-password"
+                                    error={newPasswordConfirmationError}
                                      helperText={errorNewPasswordConfirmationText}
                                      required
                                      fullWidth
@@ -147,6 +150,7 @@ const Options = () => {
                                  />
 
                                  <FormButton
+                                    data-testid="submit-button"
                                      text={"submit"}
                                      onClick={submitChangePasswordForm}
                                      type="submit"

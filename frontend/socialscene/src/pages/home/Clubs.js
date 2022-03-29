@@ -26,6 +26,8 @@ function Clubs() {
 
             <Grid item xs={10}>
                 <TextField className={"search-bar"}
+                    data-testid={"search-bar"}
+                    inputProps={{ "data-testid": "content-input" }}
                     id={"outlined-basic"}
                     label={"search"}
                     variant={"outlined"}/>
@@ -33,6 +35,7 @@ function Clubs() {
 
             <Grid item xs={2}>
                 <FormButton className={"create-button"}
+                    data-testid={"create-button"}
                     text={"create"}
                     onClick={createNewClub}
                 />
