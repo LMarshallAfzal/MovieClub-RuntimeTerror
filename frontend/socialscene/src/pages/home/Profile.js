@@ -5,6 +5,7 @@ import FormButton from "../../components/FormButton";
 import AuthContext from "../../components/helper/AuthContext";
 // import FetchInstance from "../../components/helper/FetchInstance";
 import useFetch from "../../components/helper/useFetch";
+import { optionUnstyledClasses } from '@mui/base';
 
 
 const Profile = () => {
@@ -74,48 +75,67 @@ const Profile = () => {
         }
     };
 
+    // let submitChangeProfileForm = async (e) => {
+    //     e.preventDefault();
+    //     resetErrorState();
+    //     // let {response, data} = await api(`/edit_profile/${user.user_id}/`),{
+    //     //     method:'PUT',
+    //     //     body:JSON.stringify({
+    //     //         "username": userData.username, 
+    //     //         "first_name": userData.first_name, 
+    //     //         "last_name": userData.last_name,
+    //     //         "email": userData.email,
+    //     //         "bio": userData.bio, 
+    //     //         "preferences": userData.preferences
+    //     //     }),
+    //     // }
+            
+    //     let response = await fetch('http://127.0.0.1:8000/edit_profile/' + user.user_id ,{
+    //         method:'PUT',
+    //         body:JSON.stringify({
+    //             "username": userData.username, 
+    //             "first_name": userData.first_name, 
+    //             "last_name": userData.last_name,
+    //             "email": userData.email,
+    //             "bio": userData.bio, 
+    //             "preferences": userData.preferences
+    //         }),
+    //         headers:{
+    //             'Content-type': 'application/json; charset=UTF-8',
+    //             'Authorization': 'Bearer ' + String(authTokens.access)
+    //         }
+    //     })
+    //     let data = await response.json()
+    //     if(response.status === 200) {
+    //         setUserData(data)
+    //     }
+    //     else {
+    //         errorHandler(e, data)
+    //     }   
+    // }
+
     let submitChangeProfileForm = async (e) => {
         e.preventDefault();
         resetErrorState();
-        // let {response, data} = await api(`/edit_profile/${user.user_id}/`),{
-        //     method:'PUT',
-        //     body:JSON.stringify({
-        //         "username": userData.username, 
-        //         "first_name": userData.first_name, 
-        //         "last_name": userData.last_name,
-        //         "email": userData.email,
-        //         "bio": userData.bio, 
-        //         "preferences": userData.preferences
-        //     }),
-        // }
-            
-        let response = await fetch('http://127.0.0.1:8000/edit_profile/' + user.user_id ,{
-            method:'PUT',
-            body:JSON.stringify({
-                "username": userData.username, 
-                "first_name": userData.first_name, 
-                "last_name": userData.last_name,
-                "email": userData.email,
-                "bio": userData.bio, 
-                "preferences": userData.preferences
-            }),
-            headers:{
-                'Content-type': 'application/json; charset=UTF-8',
-                'Authorization': 'Bearer ' + String(authTokens.access)
-            }
+        let {response, data} = await api(`/edit_profile/${user.user_id}/`, 'PUT', {
+            "username": userData.username,
+            "first_name": userData.first_name,
+            "last_name": userData.last_name,
+            "email": userData.email,
+            "bio": userData.bio,
+            "preferences": userData.preferences
         })
-        let data = await response.json()
         if(response.status === 200) {
             setUserData(data)
         }
         else {
             errorHandler(e, data)
         }
-        
     }
 
+
     let getUserData = async () => {
-        let {response, data} = await api('/user/')
+        let {response, data} = await api('/user/', 'GET')
         
         if(response.status === 200) {
             setUserData(data)
