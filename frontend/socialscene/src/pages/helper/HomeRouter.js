@@ -67,12 +67,9 @@ function HomeRouter() {
                     />
                 </Grid>
 
-                <Grid item xs={9} height={1}>
+                <Grid item xs={9} className={"home-grid-R-content"}>
                     <HomePageTitle title={currentPage}/>
-
-                    <Grid item xs={12} overflow={"auto"}>
-                        <Outlet/>
-                    </Grid>
+                    <Outlet/>
                 </Grid>
             </Grid>
         </>

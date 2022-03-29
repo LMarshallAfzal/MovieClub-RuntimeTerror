@@ -36,6 +36,8 @@ import HomePageTitle from "../../components/HomePageTitle";
 import {DummyRecommendedMovies} from "../data/DummyRecommendedMovies";
 import {DummyClubData} from "../data/DummyClubsData";
 import ClubListing from "../../components/ClubListing";
+import movieQuote from "popular-movie-quotes";
+import MovieQuote from "../../components/MovieQuote";
 
 
 
@@ -50,6 +52,8 @@ const Home = () => {
 
     useEffect(() => {
     }, [])
+
+    console.log(movieQuote.getSomeRandom(2));
 
     let submitCreateClubForm = async (e) => {
         e.preventDefault()
@@ -83,6 +87,7 @@ const Home = () => {
                   spacing={2}
                   padding={2}
                   height={1}
+            overflow={"auto"}
             >
 
 
@@ -107,6 +112,10 @@ const Home = () => {
                             {/*        )}*/}
                             {/*    />*/}
                             {/*</Grid>*/}
+
+                            <Grid item xs={12}>
+                                <MovieQuote />
+                            </Grid>
 
 
                             <Grid item xs={12}>
