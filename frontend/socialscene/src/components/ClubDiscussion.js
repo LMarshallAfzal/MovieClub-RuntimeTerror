@@ -170,7 +170,7 @@ function ClubDiscussion() {
                                     InputProps={{
                                         endAdornment:
                                             <TextButton
-                                                onClick={sendClubMessages(clubID)}
+                                                // onClick={sendClubMessages(clubID)}
                                                 text={"send"}/>
                                 }}
                                 />
