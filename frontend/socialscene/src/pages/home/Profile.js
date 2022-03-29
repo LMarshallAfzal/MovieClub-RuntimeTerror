@@ -123,19 +123,16 @@ const Profile = () => {
     }, [])
 
     return (
-        <>
-            <HomePageTitle title={"profile"} />
-
             <Grid container
-                spacing={2}
-                direction={"row"}
+                  spacing={2}
+                  padding={2}
+                  direction={"row"}
             >
 
-                <Grid item xs={12} padding={2}>
+                <Grid item xs={12}>
                     <Grid container
                         spacing={2}
                         direction={"row"}
-                        padding={2}
                     >
                         <Grid item xs={6}>
                             <Stack spacing={2}>
@@ -383,8 +380,6 @@ const Profile = () => {
                     </Grid>
                 </Grid>
             </Grid >
-        </>
-
     );
 }
 

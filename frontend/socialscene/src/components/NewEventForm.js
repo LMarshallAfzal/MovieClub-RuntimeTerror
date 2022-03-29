@@ -12,7 +12,7 @@ import {
     Typography
 } from "@mui/material";
 import "../styling/components/NewEventForm.css";
-import {dummyRecommendedMovies} from "../pages/data/DummyRecommendedMovies";
+import {DummyRecommendedMovies} from "../pages/data/DummyRecommendedMovies";
 import FormButton from "./FormButton";
 import moviePoster from "../styling/images/empty_movie_poster.png";
 
@@ -38,7 +38,7 @@ function NewEvent() {
                           justifyContent="space-evenly"
                           alignItems="stretch">
 
-                        {dummyRecommendedMovies.map((movie) => {
+                        {DummyRecommendedMovies.map((movie) => {
                             return (
                                 <Grid item xs={2}>
                                     <Card sx={{flexDirection: "column", height: "100%"}} >

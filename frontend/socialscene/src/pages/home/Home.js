@@ -1,7 +1,27 @@
 import React, { useContext, useCallback } from 'react';
 
 import "../../styling/pages/Home.css";
-import { ListItem, Rating, Typography, Tooltip, CardHeader, CardMedia, Card, List, Paper, ListSubheader, Grid, TextField, Stack, Box, ListItemButton, ListItemText, Autocomplete, Button } from "@mui/material";
+import {
+    ListItem,
+    Rating,
+    Typography,
+    Tooltip,
+    CardHeader,
+    CardMedia,
+    Card,
+    List,
+    Paper,
+    ListSubheader,
+    Grid,
+    TextField,
+    Stack,
+    Box,
+    ListItemButton,
+    ListItemText,
+    Autocomplete,
+    Button,
+    ImageList, ImageListItem, ImageListItemBar
+} from "@mui/material";
 import FormButton from "../../components/FormButton";
 import { DummyDashboardClubsData, meetings, movies } from '../data/DummyDashboardClubsData';
 import { useState, useEffect } from 'react'
@@ -13,6 +33,9 @@ import moviePoster from '../../styling/images/empty_movie_poster.png';
 import { moviesWithPoster } from "../data/DummyMoviesData";
 import { useNavigate } from "react-router";
 import HomePageTitle from "../../components/HomePageTitle";
+import {DummyRecommendedMovies} from "../data/DummyRecommendedMovies";
+import {DummyClubData} from "../data/DummyClubsData";
+import ClubListing from "../../components/ClubListing";
 
 
 
@@ -52,163 +75,159 @@ const Home = () => {
 
     const navigate = useNavigate();
     const moreMovies = useCallback(() => navigate('movies', { replace: false }), [navigate]);
+    const moreClubs = useCallback(() => navigate('clubs', {replace:false}), [navigate]);
     return (
-        <>
+      <Grid container
+                  direction={"row"}
+                  justifyContent="space-evenly"
+                  spacing={2}
+                  padding={2}
+                  height={1}
+            >
 
-            <HomePageTitle title={"home"} />
 
-            <Grid style={{ borderSpacing: 0 }}>
+                    <Grid item xs={9} height={"inherit"}>
+                        <Grid container direction={'row'} spacing={2}>
 
-                <Grid container
-                    direction={"row"}
-                    justifyContent="space-evenly"
-                    alignItems="flex-start"
-                    spacing={2}
-                    padding={2}>
+                            {/*<Grid item xs={12}>*/}
+                            {/*    <Autocomplete*/}
+                            {/*        freeSolo*/}
+                            {/*        id="search"*/}
+                            {/*        disableClearable*/}
+                            {/*        options={DummyDashboardClubsData.map((movie) => movie.name)}*/}
+                            {/*        renderInput={(params) => (*/}
+                            {/*            <TextField*/}
+                            {/*                {...params}*/}
+                            {/*                label="search clubs"*/}
+                            {/*                InputProps={{*/}
+                            {/*                    ...params.InputProps,*/}
+                            {/*                    type: 'search',*/}
+                            {/*                }}*/}
+                            {/*            />*/}
+                            {/*        )}*/}
+                            {/*    />*/}
+                            {/*</Grid>*/}
 
-                    <Grid item xs={12}>
 
-                        <Autocomplete
-                            freeSolo
-                            id="search"
-                            disableClearable
-                            options={DummyDashboardClubsData.map((movie) => movie.name)}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="🔎︎ Search Clubs"
-                                    InputProps={{
-                                        ...params.InputProps,
-                                        type: 'search',
-                                    }}
-                                />
-                            )}
-                        />
-                    </Grid>
+                            <Grid item xs={12}>
 
-                    {/* <Grid item xs={4}>
-                        <div style={{ paddingBottom: '20px' }} className='list-header-text'>
-                            My Clubs
-                        </div>
-                    </Grid> */}
+                                <div className={"home-page-card-background"}>
 
-                    <Grid item xs={12}>
-                        <div className={"home-page-card-background"}>
-                            <Grid container direction={'row'} >
+                                    <Grid container direction={"row"} padding={2} spacing={2}>
 
-                                {/* <Grid item xs={10}>
-                                    <h4 className={"home-page-card-title"}>recommended movies:</h4>
-                                </Grid>
-
-                                <Grid item xs={2} style={{ paddingBottom: '20px' }}>
-                                    <FormButton
-                                        text={"more movies"}
-                                        onClick={moreMovies}
-                                    />
-                                </Grid> */}
-
-                                {/* <Grid container direction={"row"} spacing={1} alignItems={"center"}>
-                                    {moviesWithPoster.map((movie) => {
-                                        return (<Grid item>
-                                            <Card sx={{ width: 330 }}>
-                                                <CardMedia
-                                                    component="img"
-                                                    height="500"
-                                                    image={moviePoster}
-                                                    alt={movie.title}
-                                                />
-
-                                                <CardHeader title={
-                                                    <Tooltip title={movie.title} placement="top-start">
-                                                        <Typography noWrap maxWidth={'300px'} fontSize={"25px"}>{movie.title}</Typography>
-                                                    </Tooltip>
-                                                } />
-
-                                                <div style={{ paddingLeft: "18px", paddingBottom: "10px" }}>
-
-                                                    <Tooltip title={`Rate ${movie.title}`} placement="top-start">
-                                                        <Typography noWrap fontSize={"15px"}>Rate {movie.title}</Typography>
-                                                    </Tooltip>
-                                                    <Rating
-                                                        name="simple-controlled"
-                                                        precision={0.5}
-                                                        max={5}
-                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-                                                    />
-                                                </div>
-
-                                                <Box padding={1}>
-                                                    <FormButton text={"watch"} />
-                                                </Box>
-                                            </Card>
+                                        <Grid item xs={9}>
+                                            <h5 className={"home-page-card-title"}>recommended movies</h5>
                                         </Grid>
-                                        )
-                                    })}
-                                </Grid> */}
-                                <Grid item xs={12}>
 
-                                    <div className={"home-page-card-background"}>
+                                        <Grid item xs={3}>
+                                            <FormButton
+                                                text={"view movies"}
+                                                onClick={moreMovies}
+                                            />
+                                        </Grid>
 
-                                        <Grid container direction={"row"} padding={2} spacing={2}>
+                                        <Grid item xs={12}>
 
-                                            <Grid item xs={10}>
-                                                <h5 className={"home-page-card-title"}>recommended</h5>
-                                            </Grid>
+                                            <Stack direction={"row"} overflow={"auto"}>
+                                                {moviesWithPoster.map((movie) => {
+                                                    return (<ListItem sx={{ p: 1 }}>
+                                                        <Card sx={{ width: 150 }}>
+                                                            <CardMedia
+                                                                component="img"
+                                                                sx={{ height: "100%" }}
+                                                                image={moviePoster}
+                                                                alt={movie.title}
+                                                            />
 
-                                            <Grid item xs={2} style={{ paddingBottom: '20px' }}>
-                                                <FormButton
-                                                    text={"more movies"}
-                                                    onClick={moreMovies}
-                                                />
-                                            </Grid>
-
-                                            <Grid item xs={12}>
-
-                                                <Stack direction={"row"} overflow={"auto"}>
-                                                    {moviesWithPoster.map((movie) => {
-                                                        return (<ListItem sx={{ p: 1 }}>
-                                                            <Card sx={{ width: 150 }}>
-                                                                <CardMedia
-                                                                    component="img"
-                                                                    sx={{ height: "100%" }}
-                                                                    image={moviePoster}
-                                                                    alt={movie.title}
+                                                            <Stack paddingTop={1} alignItems={"center"}>
+                                                                <Rating
+                                                                    name="simple-controlled"
+                                                                    sx={{ fontSize: "1.2em" }}
+                                                                    precision={0.5}
+                                                                    max={5}
+                                                                // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
                                                                 />
+                                                            </Stack>
+                                                            <Stack
+                                                                spacing={1}
+                                                                padding={1}
+                                                                alignItems={"left"}>
 
-                                                                <Stack paddingTop={1} alignItems={"center"}>
-                                                                    <Rating
-                                                                        name="simple-controlled"
-                                                                        sx={{ fontSize: "1.2em" }}
-                                                                        precision={0.5}
-                                                                        max={5}
-                                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-                                                                    />
-                                                                </Stack>
-                                                                <Stack
-                                                                    spacing={1}
-                                                                    padding={1}
-                                                                    alignItems={"left"}>
+                                                                <Tooltip title={movie.title} placement="top-start">
+                                                                    <Typography noWrap>{movie.title}</Typography>
+                                                                </Tooltip>
 
-                                                                    <Tooltip title={movie.title} placement="top-start">
-                                                                        <Typography noWrap>{movie.title}</Typography>
-                                                                    </Tooltip>
-
-                                                                    <FormButton text={"watch"} />
-                                                                </Stack>
-                                                            </Card>
-                                                        </ListItem>)
-                                                    })}
-                                                </Stack>
-                                            </Grid>
+                                                                <FormButton text={"watch"} />
+                                                            </Stack>
+                                                        </Card>
+                                                    </ListItem>)
+                                                })}
+                                            </Stack>
                                         </Grid>
-                                    </div>
-                                </Grid>
+                                    </Grid>
+                                </div>
                             </Grid>
-                        </div>
+
+                            <Grid item xs={12}>
+                            <div className={"home-page-card-background"}>
+                                <Grid container direction={"row"} padding={2}>
+
+                                    <Grid item xs={9}>
+                                        <h5 className={"home-page-card-title"}>your clubs</h5>
+                                    </Grid>
+
+                                    <Grid item xs={3}>
+                                        <FormButton
+                                                text={"view clubs"}
+                                                onClick={moreClubs}
+                                            />
+                                    </Grid>
+
+                                    <Grid item xs={12}>
+                                        <Stack direction={"row"}
+                                               overflow={"auto"}>
+                                            {DummyClubData.map((club) => club.isMember === true && (
+                                                <ListItem sx={{width: 'auto',p:1}}>
+
+                                                    <ClubListing
+                                                        clubName={club.clubName}
+                                                        isMember={club.isMember}
+                                                        iconImage={club.iconImage}
+                                                        description={club.description}
+                                                        isOrganiser={club.isOrganiser}
+                                                        memberRole={club.memberRole}
+                                                        clubTheme={club.clubTheme}
+                                                        ID={club.ID}
+                                                    />
+                                                </ListItem>
+                                            ))}
+                                        </Stack>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                        </Grid>
+
+                        </Grid>
                     </Grid>
+
+                <Grid item xs={3} height={"inherit"}>
+                    <Box sx={{height: "100%", overflowY: 'scroll' }}>
+                    <ImageList variant="masonry" cols={2} gap={2}>
+                        {DummyRecommendedMovies.map((item) => (
+                            <ImageListItem key={item.poster}>
+                                <img
+                                    src={`${item.poster}?w=248&fit=crop&auto=format`}
+                                    srcSet={`${item.poster}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                    alt={item.title}
+                                    loading="lazy"
+                                />
+                            </ImageListItem>
+                        ))}
+                    </ImageList>
+                        </Box>
                 </Grid>
-            </Grid>
-        </>
+
+                </Grid>
     );
 }
 

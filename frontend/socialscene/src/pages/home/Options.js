@@ -101,9 +101,6 @@ const Options = () => {
 
 
     return (
-        <>
-            <HomePageTitle title={"options"} />
-
             <Grid container
                 direction={"row"}
                 spacing={2}
@@ -235,7 +232,6 @@ const Options = () => {
                     </div>
                 </Grid>
             </Grid>
-        </>
     );
 }
 

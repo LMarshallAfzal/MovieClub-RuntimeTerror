@@ -17,7 +17,7 @@ import "../styling/components/ShowEvent.css";
 import {useParams} from "react-router";
 import {DummyClubData} from "../pages/data/DummyClubsData";
 import {DummyClubEventData} from "../pages/data/DummyClubEventData";
-import {dummyRecommendedMovies} from "../pages/data/DummyRecommendedMovies";
+import {DummyRecommendedMovies} from "../pages/data/DummyRecommendedMovies";
 import EnterButton from "./EnterButton";
 import FormButton from "./FormButton";
 import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
@@ -28,7 +28,7 @@ function ShowEvent() {
     let { clubID } = useParams();
     let club = DummyClubData.find(obj => obj.ID === clubID);
     let event = DummyClubEventData.find(obj => obj.clubID === club.ID);
-    let movie = dummyRecommendedMovies.find(obj => obj.ID === event.movieID);
+    let movie = DummyRecommendedMovies.find(obj => obj.ID === event.movieID);
     let organiser = DummyClubMemberData.find(obj => obj.ID === event.organiserID);
     console.log(movie.title);
 
@@ -123,7 +123,7 @@ function ShowEvent() {
 
                                         <TextField
                                             fullWidth
-                                            id="outlined-read-only-input"
+                                            id={"outlined-read-only-input"}
                                             label={"title:"}
                                             value={event.title}
                                             InputProps={{readOnly: true}}

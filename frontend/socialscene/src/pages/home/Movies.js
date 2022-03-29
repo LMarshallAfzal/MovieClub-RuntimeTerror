@@ -178,10 +178,7 @@ const Movies = () => {
 	const [searchValue, setSearchValue] = useState("");
 
 	return (
-		<>
-			<HomePageTitle title={"movies"} />
-
-			<Grid
+		<Grid
 				container
 				justifyContent={"center"}
 				alignItems={"flex-start"}
@@ -441,7 +438,6 @@ const Movies = () => {
 					</div>
 				</Grid>
 			</Grid>
-		</>
 	);
 };
 
