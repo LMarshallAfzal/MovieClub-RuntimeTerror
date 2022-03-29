@@ -4,8 +4,48 @@
       "pk": 2,
       "fields": {
         "ml_id": 1,
-        "title": "Pulp Fiction",
-        "year": 1994,
+        "title": "Annabelle",
+        "year": 2014,
+        "genres": "Horror"
+      }
+    },
+    {
+      "model": "api.movie",
+      "pk": 30,
+      "fields": {
+        "ml_id": 30,
+        "title": "The Bye Bye Man",
+        "year": 2017,
+        "genres": "Horror"
+      }
+    },
+    {
+      "model": "api.movie",
+      "pk": 31,
+      "fields": {
+        "ml_id": 40,
+        "title": "It",
+        "year": 2017,
+        "genres": "Horror"
+      }
+    },
+    {
+      "model": "api.movie",
+      "pk": 55,
+      "fields": {
+        "ml_id": 55,
+        "title": "Alien Covenant",
+        "year": 2017,
+        "genres": "Horror"
+      }
+    },
+    {
+      "model": "api.movie",
+      "pk": 60,
+      "fields": {
+        "ml_id": 60,
+        "title": "The Nun",
+        "year": 2018,
         "genres": "Horror"
       }
     },

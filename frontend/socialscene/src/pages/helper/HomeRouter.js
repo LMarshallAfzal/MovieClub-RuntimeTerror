@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "../../styling/pages/HomeRouter.css";
 import {Outlet, useLocation} from "react-router-dom";
 import Sidebar from "../../components/root/Sidebar";
@@ -10,6 +10,28 @@ import HomePageTitle from "../../components/HomePageTitle";
 
 
 function HomeRouter() {
+
+    let {authTokens, user} = useContext(AuthContext);
+    const [userData, setUserData] = useState('')
+
+    let getCurrentUser = async () => {
+        let response = await fetch("http://127.0.0.1:8000/user_image/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authTokens.access,
+            },
+        });
+
+    let data = await response.json();
+        console.log(data)
+        setUserData(data);
+	};
+
+    useEffect(() => {
+        getCurrentUser();
+    }, []);
+
     const pageTabs = [
     {title: 'home', path: '/home'},
     {title: 'profile', path: 'profile'},
@@ -19,13 +41,12 @@ function HomeRouter() {
     {title: 'options', path: 'options'},
     ]
 
-    let {user} = useContext(AuthContext);
     let location = useLocation();
     let pathArray = location.pathname.split('/').filter((x) => x);
     console.log(pathArray);
     let currentPage = ((pathArray.length > 1) ? pathArray[1] : pathArray[0]);
     console.log(currentPage);
-
+    
     return (
         <>
         <CsrfToken/>
@@ -37,6 +58,7 @@ function HomeRouter() {
                         firstName={user.first_name || "error"}
                         lastName={user.last_name || "error"}
                         username={user.username || "error"}
+                        iconImage={userData}
                     />
 
                     <Sidebar

@@ -20,6 +20,7 @@ urlpatterns = [
     path("club_members/<int:club_id>/", views.get_club_members, name = "club_members"),
     path("user/",views.get_current_user, name = "get_current_user"),
     path("user/<int:user_id>/",views.get_other_user, name = "get_other_user"),
+    path("user_image/", views.get_user_image, name = "get_user_image"),
     path("clubs/",views.get_all_clubs, name = "get_all_clubs"),
     path("create_club/",views.create_club, name = "create_club"),
     path("create_meeting/<int:club_id>/",views.create_meeting, name = "create_meeting"),
@@ -54,4 +55,5 @@ urlpatterns = [
     path("toggle_follow/<int:user_id>/", views.toggle_follow, name = "toggle_follow"),
     path("followers/", views.get_followers, name = "get_followers"),
     path("following/",views.get_following, name="get_following"),
+    path("toggle_notifications/<int:club_id>/", views.toggle_notifications, name = "toggle_notifications"),
 ]

@@ -44,7 +44,7 @@ function NameHeader(props) {
 
                       <Avatar
                           alt={props.firstName + " " + props.lastName}
-                          src={iconImage}
+                          src={props.iconImage}
                           sx={{width: 1, height: 1}}
                       />
                   </div>
