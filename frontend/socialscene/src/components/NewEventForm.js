@@ -73,16 +73,16 @@ function NewEvent() {
                 <Grid item xs={6}>
                     <Stack spacing={2}>
                         <TextField id={"outlined"}
-                                   label={"title:"}
+                                   label={"title"}
                                    placeholder={"event title"}
                         />
                         <TextField id={"outlined"}
-                                   label={"description:"}
+                                   label={"description"}
                                    placeholder={"short event description"}
                         />
                         <TextField disabled
                                    id="outlined-disabled"
-                                   label="movie:"
+                                   label="movie"
                                    value={selectedMovie}
                         />
                     </Stack>
@@ -90,7 +90,7 @@ function NewEvent() {
                 <Grid item xs={6}>
                     <Stack spacing={2}>
                         <TextField id="date"
-                                   label="date:"
+                                   label="date"
                                    type="date"
                                    defaultValue={tomorrow}
                                    fullWidth
@@ -100,7 +100,7 @@ function NewEvent() {
                         />
                         <TextField
                             id="time"
-                            label="start:"
+                            label="start"
                             type="time"
                             defaultValue="17:00"
                             InputLabelProps={{
@@ -111,7 +111,7 @@ function NewEvent() {
                         />
                         <TextField
                             id="time"
-                            label="end:"
+                            label="end"
                             type="time"
                             defaultValue="18:00"
                             InputLabelProps={{

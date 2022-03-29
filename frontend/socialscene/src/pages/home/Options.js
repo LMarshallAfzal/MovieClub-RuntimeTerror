@@ -1,13 +1,27 @@
 import React, { useEffect, useState, useContext } from "react";
-import { FormControlLabel, Typography, Checkbox, Box, Grid, Stack, TextField, Button } from "@mui/material";
+import {
+    FormControlLabel,
+    Typography,
+    Checkbox,
+    Box,
+    Grid,
+    Stack,
+    TextField,
+    Button,
+    InputLabel,
+    OutlinedInput, InputAdornment, FormControl
+} from "@mui/material";
 import "../../styling/pages/Options.css";
 import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import HomePageTitle from "../../components/HomePageTitle";
+import TextButton from "../../components/TextButton";
 
 const Options = () => {
+    const [passwordVisibility, togglePasswordVisibility] = useState(false);
+
     const [passwordData, setPasswordData] = useState({
         old_password: '',
         new_password: '',
@@ -108,47 +122,83 @@ const Options = () => {
                             <Grid item xs={12}>
                                 <Stack spacing={2} height={"100%"}>
 
-                                    <TextField
-                                        error={oldPasswordError}
-                                        helperText={errorOldPasswordText}
-                                        required
-                                        fullWidth
-                                        id={"outlined-basic"}
-                                        label={"current"}
-                                        name={"old_password"}
-                                        type={"password"}
-                                        variant={"outlined"}
-                                        value={passwordData.old_password}
-                                        onChange={e => onChange(e)}
-                                    />
+                                    <FormControl fullWidth variant={"outlined"}>
+                                        <InputLabel htmlFor={"outlined-adornment-password"}>current</InputLabel>
+                                        <OutlinedInput
+                                            error={oldPasswordError}
+                                            fullWidth
+                                            helperText={errorOldPasswordText}
+                                            placeholder={"your current password"}
+                                            required
+                                            autoComplete="none"
+                                            id={"outlined-adornment-password"}
+                                            label={"current"}
+                                            name={"old_password"}
+                                            type={passwordVisibility ? "text" : "password"}
+                                            value={passwordData.old_password}
+                                            onChange={e => onChange(e)}
+                                            endAdornment={
+                                            <InputAdornment position="end">
+                                                <TextButton
+                                                    onClick={() => togglePasswordVisibility(!passwordVisibility)}
+                                                    text={passwordVisibility ? "hide" : "show"}
+                                                    style={{marginTop: "-20px"}}
+                                                />
+                                            </InputAdornment>
+                                        }/>
+                                    </FormControl>
 
-                                    <TextField
-                                        error={newPasswordError}
-                                        helperText={errorNewPasswordText}
-                                        required
-                                        fullWidth
-                                        id={"outlined-basic"}
-                                        label={"new"}
-                                        name={"new_password"}
-                                        type={"password"}
-                                        variant={"outlined"}
-                                        value={passwordData.password_confirmation}
-                                        onChange={e => onChange(e)}
-                                    />
+                                    <FormControl fullWidth variant={"outlined"}>
+                                        <InputLabel htmlFor={"outlined-adornment-password"}>new</InputLabel>
+                                        <OutlinedInput
+                                            error={newPasswordError}
+                                            fullWidth
+                                            helperText={errorNewPasswordText}
+                                            placeholder={"choose a new password"}
+                                            required
+                                            autoComplete="new-password"
+                                            id={"outlined-adornment-password"}
+                                            label={"new"}
+                                            name={"new_password"}
+                                            type={passwordVisibility ? "text" : "password"}
+                                            value={passwordData.password_confirmation}
+                                            onChange={e => onChange(e)}
+                                            endAdornment={
+                                            <InputAdornment position="end">
+                                                <TextButton
+                                                    onClick={() => togglePasswordVisibility(!passwordVisibility)}
+                                                    text={passwordVisibility ? "hide" : "show"}
+                                                    style={{marginTop: "-20px"}}
+                                                />
+                                            </InputAdornment>
+                                        }/>
+                                    </FormControl>
 
-                                    <TextField
-                                        error={newPasswordConfirmationError}
-                                        helperText={errorNewPasswordConfirmationText}
-                                        required
-                                        fullWidth
-                                        id={"outlined-basic"}
-                                        label={"confirm"}
-                                        name={"new_password_confirmation"}
-                                        type={"password"}
-                                        variant={"outlined"}
-                                        value={passwordData.new_password_confirmation}
-                                        onChange={e => onChange(e)}
-                                    />
+                                    <FormControl fullWidth variant={"outlined"}>
+                                        <InputLabel htmlFor={"outlined-adornment-password"}>confirm</InputLabel>
+                                        <OutlinedInput
+                                            error={newPasswordConfirmationError}
+                                            fullWidth
+                                            helperText={errorNewPasswordConfirmationText}
+                                            required
+                                            autoComplete="new-password"
+                                            placeholder={"re-enter your new password"}
+                                            id={"outlined-adornment-password"}
+                                            label={"confirm"}
+                                            name={"new_password_confirmation"}
+                                            type={passwordVisibility ? "text" : "password"}
+                                            value={passwordData.new_password_confirmation}
+                                            onChange={e => onChange(e)}
+                                            endAdornment={
+                                            <InputAdornment position="end">
+                                                <TextButton
+                                                    onClick={() => togglePasswordVisibility(!passwordVisibility)}
+                                                    text={passwordVisibility ? "hide" : "show"}
+                                                    style={{marginTop: "-20px"}}
+                                                />
+                                            </InputAdornment>
+                                        }/>
+                                    </FormControl>
 
                                     <FormButton
                                         text={"submit"}

@@ -25,8 +25,21 @@ function NewClub() {
 
             <Grid item xs={12}>
                 <Stack spacing={2}>
-                    <TextField id="outlined-basic" label="name" variant="outlined"/>
-                    <TextField id="outlined-basic" label="description" variant="outlined"/>
+
+                    <TextField
+                        id={"outlined-required"}
+                        label={"name"}
+                        required
+                        placeholder={"choose a club name"}
+                    />
+
+                    <TextField
+                        id={"outlined-required"}
+                        label={"description"}
+                        required
+                        placeholder={"short club description"}
+                    />
+
                     <Autocomplete
                             // multiple
                             id="tags-standard"
@@ -42,11 +55,12 @@ function NewClub() {
                                     required
                                     spacing={6}
                                     id={"outlined-basic"}
-                                    label={"themes"}
+                                    label={"theme"}
                                     name={"preferences"}
                                     type={"text"}
                                     variant={"outlined"}
                                     multiline
+                                    placeholder={"choose the club theme"}
                                     // value={userData.preferences}
                                     // onChange={e => onChange(e)}
                                 />

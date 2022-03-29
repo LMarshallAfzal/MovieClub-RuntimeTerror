@@ -170,6 +170,7 @@ export const Signup = () => {
                             error={usernameError}
                             fullWidth
                             required
+                            placeholder={"choose a username"}
                             helperText={errorUsernameText}
                             id={"outlined-required"}
                             label={"username"}
@@ -183,6 +184,7 @@ export const Signup = () => {
                             error={firstNameError}
                             fullWidth
                             required
+                            placeholder={"your first name"}
                             helperText={errorFirstNameText}
                             id={"outlined-required"}
                             label={"first name"}
@@ -196,6 +198,7 @@ export const Signup = () => {
                             error={lastNameError}
                             fullWidth
                             required
+                            placeholder={"your last name"}
                             helperText={errorLastNameText}
                             id={"outlined-required"}
                             label={"last name"}
@@ -209,6 +212,7 @@ export const Signup = () => {
                             error={emailError}
                             fullWidth
                             required
+                            placeholder={"example@socialscene.co.uk"}
                             helperText={errorEmailText}
                             id={"outlined-required"}
                             label={"email"}
@@ -263,6 +267,7 @@ export const Signup = () => {
                                     required
                                     helperText={errorPreferencesText}
                                     id={"outlined-required"}
+                                    placeholder={"select your favourite themes"}
                                     label={"preferences"}
                                     name={"preferences"}
                                     type={"text"}

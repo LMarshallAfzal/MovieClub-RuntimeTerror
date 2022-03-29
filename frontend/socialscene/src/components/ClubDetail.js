@@ -221,14 +221,16 @@ function ClubDetail() {
             <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" }}>
                 <Stack spacing={2} sx={{ height: "100%" }}>
                     <TextField
-                        id="outlined"
-                        label="club name:"
+                        id="outlined-required"
+                        required
+                        label="club name"
                         defaultValue={club.clubName}
                     />
 
                     <TextField
-                        id="outlined"
-                        label="club description:"
+                        id="outlined-required"
+                        required
+                        label="club description"
                         defaultValue={club.description}
                     />
 
@@ -252,7 +254,7 @@ function ClubDetail() {
                                 // required
                                 spacing={6}
                                 id={"outlined-basic"}
-                                label={"theme:"}
+                                label={"theme"}
                                 name={"preferences"}
                                 type={"text"}
                                 variant={"outlined"}

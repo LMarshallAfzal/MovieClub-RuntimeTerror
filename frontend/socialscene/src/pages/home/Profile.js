@@ -147,24 +147,29 @@ const Profile = () => {
                                                 <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
                                                     Basic information:
                                                 </Typography>
-                                                <TextField error={usernameError}
+                                                <TextField
+                                                    error={usernameError}
                                                     helperText={errorUsernameText}
+                                                    placeholder={"choose a different username"}
                                                     required
-                                                    id={"outlined"}
+                                                    fullWidth
+                                                    id={"outlined-required"}
                                                     label={"username"}
                                                     name={"username"}
-                                                    variant={"outlined"}
+                                                    type={"text"}
                                                     value={userData.username}
+                                                    defaultValue={userData.username}
                                                     InputLabelProps={{
                                                         shrink: true,
                                                     }}
                                                     onChange={e => onChange(e)}
-                                                    fullWidth
                                                 />
 
-                                                <TextField error={firstNameError}
+                                                <TextField
+                                                    error={firstNameError}
                                                     helperText={errorFirstNameText}
                                                     required
+                                                    placeholder={"your first name"}
                                                     id={"outlined-basic"}
                                                     label={"first name"}
                                                     name={"first_name"}
@@ -177,9 +182,11 @@ const Profile = () => {
                                                     onChange={e => onChange(e)}
                                                     fullWidth
                                                 />
-                                                <TextField error={lastNameError}
+                                                <TextField
+                                                    error={lastNameError}
                                                     helperText={errorLastNameText}
                                                     required
+                                                    placeholder={"your last name"}
                                                     id={"outlined-basic"}
                                                     label={"last name"}
                                                     name={"last_name"}
@@ -193,9 +200,11 @@ const Profile = () => {
                                                     fullWidth
                                                 />
 
-                                                <TextField error={emailError}
+                                                <TextField
+                                                    error={emailError}
                                                     helperText={errorEmailText}
                                                     required
+                                                    placeholder={"example@socialscene.co.uk"}
                                                     id={"outlined-basic"}
                                                     label={"email"}
                                                     name={"email"}
@@ -208,9 +217,11 @@ const Profile = () => {
                                                     onChange={e => onChange(e)}
                                                 />
 
-                                                <TextField error={bioError}
+                                                <TextField
+                                                    error={bioError}
                                                     helperText={errorBioText}
                                                     id={"outlined-multiline-static"}
+                                                    placeholder={"short personal description"}
                                                     label={"bio"}
                                                     name={"bio"}
                                                     multiline
@@ -236,6 +247,7 @@ const Profile = () => {
                                                             required
                                                             spacing={6}
                                                             id={"outlined-multiline-static"}
+                                                            placeholder={"select or change themes"}
                                                             label={"preferences"}
                                                             name={"preferences"}
                                                             type={"text"}
