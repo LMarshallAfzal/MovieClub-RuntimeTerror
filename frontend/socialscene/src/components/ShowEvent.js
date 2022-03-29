@@ -30,6 +30,7 @@ function ShowEvent() {
 	const [myMeetingData, setMyMeetingData] = useState("");
 	const [specificMovie, setSpecificMovie] = useState("");
 	const [organiser, setOrganiser] = useState("");
+	const [isOrgansier, setIsOrgansier] = useState(false);
 	let { clubID } = useParams();
 
 	let getMembershipData = async () => {
@@ -45,6 +46,9 @@ function ShowEvent() {
 		);
 		let data = await response.json();
 		setMyClubData(data);
+		if(data.is_organiser){
+			setIsOrgansier(true);
+		}
 	};
 
 	let addToWatchedList = async (id) => {
