@@ -59,6 +59,7 @@ function ClubDiscussion() {
 		setMyClubData(data);
 	};
 
+
     let club = myClubData.find(obj => obj.id === clubID);
 
 

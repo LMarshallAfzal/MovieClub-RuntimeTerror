@@ -118,6 +118,31 @@ function ShowEvent() {
 		setSpecificMovie(data);
 	};
 
+	let editMeeting = async (e) => {
+        e.preventDefault();
+        let response = await fetch("http://127.0.0.1:8000/edit_meeting/" + clubID + "/", {
+            method: "PUT",
+            body: JSON.stringify({
+                "meeting_title": e.target.meeting_title.value,
+				"description": e.target.description.value,
+				"date": e.target.date.value,
+				"start_time": e.target.end_time.value,
+				"end_time": e.target.end_time.value,
+				"meeting_link": "placeholder",
+        	}),
+			headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+		});
+		let data = await response.json();
+		if (response.status === 200) {
+			console.log(data);
+			setMyMeetingData(data);
+		}
+		
+	};
+
 	useEffect(() => {
 		getMembershipData();
 		getMeetingData(clubID);
@@ -236,6 +261,7 @@ function ShowEvent() {
 											fullWidth
 											id="outlined-read-only-input"
 											label={"title:"}
+											name={"meeting_title"}
 											value={myMeetingData.title}
 											InputProps={{ readOnly: true }}
 										/>
@@ -246,6 +272,7 @@ function ShowEvent() {
 											fullWidth
 											id="outlined-read-only-input"
 											label={"description:"}
+											name={"description"}
 											value={myMeetingData.description}
 											InputProps={{ readOnly: true }}
 										/>
@@ -256,6 +283,7 @@ function ShowEvent() {
 											id="date"
 											label="date:"
 											type="date"
+											name={"date"}
 											value={myMeetingData.date}
 											fullWidth
 											InputProps={{ readOnly: true }}
@@ -268,6 +296,7 @@ function ShowEvent() {
 											id="time"
 											label="start:"
 											type="time"
+											name={"start_time"}
 											value={myMeetingData.start_time}
 											fullWidth
 											InputLabelProps={{ shrink: true }}
@@ -280,6 +309,7 @@ function ShowEvent() {
 											id="time"
 											label="end:"
 											type="time"
+											name={"end_time"}
 											value={myMeetingData.end_time}
 											fullWidth
 											InputLabelProps={{ shrink: true }}
@@ -333,9 +363,10 @@ function ShowEvent() {
 
 						<Grid item xs={3}>
 							<FormButton
-								text={edit ? "edit" : "save"}
-								style={edit ? "normal" : "primary"}
+								text={edit ? "save" : "edit"}
+								style={edit ? "primary" : "normal"}
 								onClick={toggleEdit}
+								onChange={(e) => {editMeeting(e)}}
 							/>
 						</Grid>
 
