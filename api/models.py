@@ -264,6 +264,8 @@ class Membership(models.Model):
         self.save()
 class Movie(models.Model):
 
+    imdb_id = models.PositiveIntegerField(default=0,unique = True)    
+
     ml_id = models.PositiveIntegerField(
         unique=True,
         default=0
@@ -288,8 +290,6 @@ class Movie(models.Model):
     viewers = models.ManyToManyField(
         User, through='Watch', related_name='viewers')
 
-    cover_link = models.CharField(max_length=500,blank=True)
-    
     class Meta:
         ordering = ['title']
 

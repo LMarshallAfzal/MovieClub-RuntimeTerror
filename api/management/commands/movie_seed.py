@@ -18,10 +18,11 @@ class Command(BaseCommand):
             print(f'Seeding movie {movie_count}',  end='\r')
             Movie.objects.create(
                 ml_id = int(row['movieId']),
+                imdb_id = int(row['imdbId']),
                 title = row['title'],
                 genres = str(row['genres']).replace('|',','),
-                year = int(row['year']),
-                cover_link = row['cover_url']
+                year = int(row['year'])
+                
             )
             movie_count+=1
         print('Movie seeding complete')
