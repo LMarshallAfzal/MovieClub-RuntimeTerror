@@ -1,27 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import {
-	Tooltip,
-	IconButton,
-	Box,
-	Collapse,
-	TextField,
-	Grid,
-	Typography,
-	Rating,
-	Stack,
-	ListItem,
-} from "@mui/material";
+import {Tooltip, Collapse, TextField, Grid, Typography, Rating, Stack, ListItem,} from "@mui/material";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import { moviesWithPoster } from "../data/DummyMoviesData";
-import SearchIcon from "@mui/icons-material/Search";
-import CloseIcon from "@mui/icons-material/Close";
 import "../../styling/pages/Movies.css";
 import moviePoster from "../../styling/images/empty_movie_poster.png";
 import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
-import HomePageTitle from "../../components/HomePageTitle";
 import TextButton from "../../components/TextButton";
 
 const Movies = () => {

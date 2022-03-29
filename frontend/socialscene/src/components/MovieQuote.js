@@ -8,15 +8,15 @@ const theQuote = quoteArray[0];
 console.log(movieQuote)
 
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} height={300}>
 
             <Grid item xs={2}>
-                <h2>"</h2>
+                <h3>"</h3>
             </Grid>
 
             <Grid item xs={10}>
-                <h3>{theQuote.quote}</h3>
-                <h5 className={""}>{theQuote.movie}</h5>
+                <h5>{theQuote.quote}</h5>
+                <h6 className={""}>{theQuote.movie}</h6>
             </Grid>
 
         </Grid>

@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from "react";
+import React from "react";
 import "../../styling/pages/App.css";
 import Navbar from "../../components/root/Navbar";
 import HomePage from "../root/Homepage";
@@ -6,7 +6,7 @@ import LogIn from "../root/Login";
 import Logout from "../root/Logout";
 import NotFound404 from "../root/NotFound";
 import Profile from "../home/Profile";
-import {useLocation, BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Signup from "../root/Signup";
 import HomeRouter from "./HomeRouter";
 import Clubs from "../home/Clubs";
