@@ -23,6 +23,10 @@ import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
 import HomePageTitle from "../../components/HomePageTitle";
 import TextButton from "../../components/TextButton";
+import { Outlet } from "react-router";
+import MovieListing from "../../components/MovieListing";
+
+
 
 const Movies = () => {
 	let { user, authTokens } = useContext(AuthContext);
@@ -188,6 +192,10 @@ const Movies = () => {
 				spacing={2}
 				padding={2}
 			>
+				{/* <Grid item xs={12}>
+					<FormButton linkTo={"/home/movies/movie"}/>
+				</Grid> */}
+
 				<Grid item xs={12}>
 					<TextField
 						label={"search"}
@@ -237,7 +245,7 @@ const Movies = () => {
 											.map((movie) => {
 												return (
 													<Grid item>
-														<Card sx={{ width: 180 }}>
+														<Card sx={{ width: 150 }}>
 															<CardMedia
 																component="img"
 																image={moviePoster}
@@ -290,107 +298,41 @@ const Movies = () => {
 								<Stack direction={"row"} overflow={"auto"}>
 									{moviesWithPoster.map((movie) => {
 										return (
-											<ListItem sx={{ p: 1 }}>
-												<Card sx={{ width: 150 }}>
-													<CardMedia
-														component="img"
-														sx={{ height: "100%" }}
-														image={moviePoster}
-														alt={movie.title}
-													/>
-
-													<Stack paddingTop={1} alignItems={"center"}>
-
-														<Rating
-															name="simple-controlled"
-															sx={{ fontSize: "1.2em" }}
-															precision={0.5}
-															max={5}
-														// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-														/>
-													</Stack>
-
-													<Stack spacing={1} padding={1} alignItems={"left"}>
-
-
-														<Tooltip title={movie.title} placement="top-start">
-															<Typography noWrap>{movie.title}</Typography>
-														</Tooltip>
-
-														<Tooltip title={`From ${movie.club}`} placement="top-start">
-															<Typography fontSize="10px" noWrap>{`From ${movie.club}`}</Typography>
-														</Tooltip>
-
-														<Tooltip title={`Due ${movie.deadline}`} placement="top-start">
-															<Typography fontSize="10px" noWrap>{`Due ${movie.deadline}`}</Typography>
-														</Tooltip>
-
-														<FormButton text={"watch"} />
-													</Stack>
-												</Card>
-											</ListItem>
+											<MovieListing
+												isClubMovie={true}
+												movie={movie}
+												poster={moviePoster}
+											/>
 										);
 									})}
 								</Stack>
 							</Grid>
+
 						</Grid>
 					</div>
 				</Grid>
+
 				<Grid item xs={12}>
 					<div className={"home-page-card-background"}>
 						<Grid container direction={"row"} padding={2} spacing={2}>
 							<Grid item xs={12}>
 								<h5 className={"home-page-card-title"}>recommended</h5>
 							</Grid>
+
 							<Grid item xs={12}>
 								<Stack direction={"row"} overflow={"auto"}>
-									{recommendedMovies.map((movie) => {
+									{moviesWithPoster.map((movie) => {
 										return (
-											<ListItem sx={{ p: 1 }}>
-												<Card sx={{ width: 150 }}>
-													<CardMedia
-														component="img"
-														sx={{ height: "100%" }}
-														image={moviePoster}
-														alt={movie.title}
-													/>
-
-													<Stack paddingTop={1} alignItems={"center"}>
-
-														<Rating
-															name="simple-controlled"
-															sx={{ fontSize: "1.2em" }}
-															precision={0.5}
-															max={5}
-															onChange={(event, newValue) =>
-																setRating({
-																	score: newValue,
-																	onChange: AddRating(movie.id, newValue),
-																})
-															}
-														/>
-													</Stack>
-
-													<Stack spacing={1} padding={1} alignItems={"left"}>
-														<Tooltip title={movie.title} placement="top-start">
-															<Typography noWrap>{movie.title}</Typography>
-														</Tooltip>
-														<FormButton
-															text={"watch"}
-															onClick={() => {
-																addToWatchedList(movie.id);
-															}}
-															onChange={() => {
-																getRecommendedMovies();
-															}}
-														/>
-													</Stack>
-												</Card>
-											</ListItem>
+											<MovieListing
+												poster={moviePoster}
+												isClubMovie={false}
+												movie={movie}
+											/>
 										);
 									})}
 								</Stack>
 							</Grid>
+
 						</Grid>
 					</div>
 				</Grid>
@@ -403,42 +345,24 @@ const Movies = () => {
 
 							<Grid item xs={12}>
 								<Stack direction={"row"} overflow={"auto"}>
-									{watchedMovies.map((movie) => {
+									{moviesWithPoster.map((movie) => {
 										return (
-											<ListItem sx={{ p: 1 }}>
-												<Card sx={{ width: 150 }}>
-													<CardMedia
-														component="img"
-														sx={{ height: "100%" }}
-														image={moviePoster}
-														alt={movie.title}
-													/>
-
-													<Stack paddingTop={1} alignItems={"center"}>
-														<Rating
-															name="simple-controlled"
-															sx={{ fontSize: "1.2em" }}
-															precision={0.5}
-															max={5}
-														// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-														/>
-													</Stack>
-
-													<Stack spacing={1} padding={1} alignItems={"left"}>
-														<Tooltip title={movie.title} placement="top-start">
-															<Typography noWrap>{movie.title}</Typography>
-														</Tooltip>
-
-														<FormButton text={"watch"} />
-													</Stack>
-												</Card>
-											</ListItem>
+											<MovieListing
+												poster={moviePoster}
+												isClubMovie={false}
+												movie={movie}
+											/>
 										);
 									})}
 								</Stack>
 							</Grid>
+
 						</Grid>
 					</div>
+				</Grid>
+
+				<Grid item xs={12}>
+					<Outlet />
 				</Grid>
 			</Grid>
 		</>

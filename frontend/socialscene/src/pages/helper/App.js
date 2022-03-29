@@ -14,6 +14,7 @@ import Movies from "../home/Movies";
 import Options from "../home/Options";
 import Home from "../home/Home";
 import OthersProfile from "../../components/OthersProfile";
+import Movie from "../../components/Movie";
 import PrivateRoute from "../../components/helper/PrivateRoute";
 import { AuthProvider } from "../../components/helper/AuthContext";
 import ClubDetail from "../../components/ClubDetail";
@@ -39,7 +40,10 @@ function App() {
                   <Route index element={(<Home />)} />
                   <Route path={"logout"} element={(<Logout />)} />
                   <Route path={"profile"} element={(<Profile />)} />
-                  <Route path={"movies"} element={(<Movies />)} />
+                  <Route path={"movies"} element={(<Movies />)}>
+                      <Route path={":movieID"} element={(<Movie />)}/>
+                  </Route>
+                  
                   <Route path={"clubs"} element={(<Clubs />)} >
                       <Route path={":clubID"} element={(<ClubDetail />)}>
                           <Route path={":userID"} element={(<OthersProfile />)} />
