@@ -29,7 +29,7 @@ function ShowEvent() {
 	const [myClubData, setMyClubData] = useState([]);
 	const [myMeetingData, setMyMeetingData] = useState("");
 	const [specificMovie, setSpecificMovie] = useState("");
-    const [organiser, setOrganiser] = useState("");
+	const [organiser, setOrganiser] = useState("");
 	let { clubID } = useParams();
 
 	let getMembershipData = async () => {
@@ -45,6 +45,35 @@ function ShowEvent() {
 		);
 		let data = await response.json();
 		setMyClubData(data);
+	};
+
+	let addToWatchedList = async (id) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/add_watched_movie/" + id + "/",
+			{
+				method: "POST",
+				body: JSON.stringify({ movie: id, user: user.user_id }),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + authTokens.access,
+				},
+			}
+		);
+	};
+
+	let deleteMeeting = async (id) => {
+		let response = await fetch("http://127.0.0.1:8000/cancel_meeting/" + id + "/", {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + authTokens.access,
+			},
+		});
+		let data = await response.json();
+		if (response.status === 200) {
+			return data
+		} else {
+		}
 	};
 
 	let getMeetingData = async (id) => {
@@ -63,17 +92,14 @@ function ShowEvent() {
 		setMyMeetingData(data);
 	};
 
-    let getUser = async (id) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/user/" + id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
+	let getUser = async (id) => {
+		let response = await fetch("http://127.0.0.1:8000/user/" + id + "/", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
 		let data = await response.json();
 		console.log(data);
 		setOrganiser(data);
@@ -92,14 +118,13 @@ function ShowEvent() {
 		setSpecificMovie(data);
 	};
 
-	
 	useEffect(() => {
 		getMembershipData();
 		getMeetingData(clubID);
-        console.log(myMeetingData.movie);
+		console.log(myMeetingData.movie);
 		getMovie(myMeetingData.movie);
-        console.log(myMeetingData.organiser);
-        getUser(myMeetingData.organiser);
+		console.log(myMeetingData.organiser);
+		getUser(myMeetingData.organiser);
 		// getRecommendedMovies()
 	}, []);
 
@@ -295,7 +320,11 @@ function ShowEvent() {
 				<Grid item xs={12}>
 					<Grid container spacing={2}>
 						<Grid item xs={3}>
-							<FormButton text={"watched"} style={"primary"} />
+							<FormButton 
+								text={"watched"} 
+								style={"primary"} 
+								onClick={() => {addToWatchedList(myMeetingData.movie)}}
+							/>
 						</Grid>
 
 						<Grid item xs={3}>
@@ -311,7 +340,10 @@ function ShowEvent() {
 						</Grid>
 
 						<Grid item xs={3}>
-							<FormButton text={"delete"} />
+							<FormButton 
+								text={"delete"}
+								onClick={() => {deleteMeeting(clubID)}} 
+							/>
 						</Grid>
 					</Grid>
 				</Grid>
