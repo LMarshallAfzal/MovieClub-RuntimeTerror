@@ -21,7 +21,7 @@ class ClubEmail:
         'meeting_start_time':meeting.start_time,
         'meeting_end_time':meeting.end_time,
         'meeting_link':meeting.meeting_link,
-        'movie_title':meeting.movie_title,
+        'movie_title':meeting.movie.title,
         'movie_year':meeting.movie.year}
         )
 
@@ -35,7 +35,7 @@ class ClubEmail:
             to = recipients,
             )
         email.content_subtype = "html"
-        email.attach_file('calendar.ics')
+        email.attach_file('event.ics')
         email.send()
 
     def send_meeting_update_notification(self):
@@ -59,7 +59,7 @@ class ClubEmail:
             to = recipients,
             )
         email.content_subtype = "html"
-        email.attach_file('calendar.ics')
+        email.attach_file('event.ics')
         email.send()
 
 
