@@ -1,236 +1,425 @@
 import React, { useState, useContext, useEffect } from "react";
-import {IconButton, Box, Collapse, TextField, Grid, Typography, Rating} from "@mui/material";
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
+import {
+	Tooltip,
+	IconButton,
+	Box,
+	Collapse,
+	TextField,
+	Grid,
+	Typography,
+	Rating,
+	Stack,
+	ListItem,
+} from "@mui/material";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
 import { moviesWithPoster } from "../data/DummyMoviesData";
-import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
 import "../../styling/pages/Movies.css";
-import moviePoster from '../../styling/images/empty_movie_poster.png'
+import moviePoster from "../../styling/images/empty_movie_poster.png";
 import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
+import HomePageTitle from "../../components/HomePageTitle";
+import TextButton from "../../components/TextButton";
 
 const Movies = () => {
-    const [movie, setMovie] = useState('')
-    const [recommendedMovies, setRecommendedMovies] = useState([])
-    let { user, authTokens } = useContext(AuthContext)
+	let { user, authTokens } = useContext(AuthContext);
+	const [movie, setMovie] = useState("");
+	const [rating, setRating] = useState({
+		user: user.user_id,
+		movie: 0,
+		score: null,
+	});
+	const [recommendedMovies, setRecommendedMovies] = useState([]);
+	const [watchedMovies, setWatchedMovies] = useState([]);
 
-    useEffect(() => {
-        getRecommendedMovies()
-    }, [])
+	useEffect(() => {
+		getRecommendedMovies();
+		getWatchedMovies();
+	}, []);
 
+	let getWatchedMovies = async () => {
+		let response = await fetch("http://127.0.0.1:8000/watched_list/", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + authTokens.access,
+			},
+		});
+		let data = await response.json();
+		setWatchedMovies(data);
+	};
 
-    let getRecommendedMovies = async (e) => {
-        let response = await fetch('http://127.0.0.1:8000/rec/', {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-                'Authorization': 'Bearer ' + String(authTokens.access),
-            },
-        })
-        let data = await response.json()
-        console.log(data)
-        setRecommendedMovies(data)
-    }
+	let addToWatchedList = async (id) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/add_watched_movie/" + id + "/",
+			{
+				method: "POST",
+				body: JSON.stringify({ movie: id, user: user.user_id }),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + authTokens.access,
+				},
+			}
+		);
+	};
 
-    // let AddRating = async (e) => {
-    //     const token = JSON.parse(localStorage.getItem('token'))
-    //     fetch("http://127.0.0.1:8000/get_movie/" + movie + "/", {
-    //         method: 'GET',
-    //         headers: { 
-    //             'Content-type': 'application/json; charset=UTF8',
-    //             Authorization: token
-    //         }
-    //     })
-    //     .then(res => res.json())
-    //     .then(specifiedMovie => {
-    //         fetch('http://127.0.0.1:8000/add_rating/' + movie + '/', {
-    //             method: 'POST',
-    //             body: JSON.stringify(this.state),
-    //             headers: {
-    //                 'Content-Type': 'application/json; charset=UTF-8',
-    //                 Authorization: token
-    //             },
-    //         })
-    //         .then(data => data.json())
-    //         .then(data => this.setState({score : data.score, movie: specifiedMovie.id}))
-    //         .catch(error => console.error(error))
-    //     })
-    // }
+	let editRating = async (id) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/edit_rating/" + id + "/",
+			{
+				method: "PUT",
+				body: JSON.stringify({
+					user: user.user_id,
+					movie: id,
+					score: rating.score,
+				}),
+				headers: {
+					"Content-type": "application/json; charset=UTF-8",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		if (response.status === 200) {
+			setRating(data);
+		} else {
+			setRating({ user: user.user_id, movie: id, score: 0.0 });
+			console.log(rating.score);
+		}
+	};
 
-    const [openSearch, setOpenSearch] = React.useState(false);
+	let getRating = async (id) => {
+		let response = await fetch("http://127.0.0.1:8000/get_rating/" + id + "/", {
+			method: "GET",
+			headers: {
+				"Content-type": "application/json; charset=UTF-8",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		let data = await response.json();
+		if (response.status === 200) {
+			setRating(data);
+		} else if (response.status === 400) {
+			setRating({ user: user.user_id, movie: id, score: 0.0 });
+			console.log(rating.score);
+		} else {
+			setRating({ user: user.user_id, movie: id, score: 0.0 });
+			console.log(rating.score);
+		}
+	};
 
-    const clickSearch = () => {
-        setOpenSearch(true);
-    };
+	let getRecommendedMovies = async () => {
+		let response = await fetch("http://127.0.0.1:8000/rec_movies/", {
+			method: "GET",
+			headers: {
+				"Content-type": "application/json; charset=UTF-8",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		// .catch(err => console.log(err))
+		let data = await response.json();
+		console.log(data);
+		if (response.status === 200) {
+			setRecommendedMovies(data);
+		} else {
+			alert("Something went wrong");
+		}
+	};
 
-    const closeSearch = () => {
-        setOpenSearch(false);
-    };
+	let AddRating = async (id, ratingScore) => {
+		let response1 = await fetch(
+			"http://127.0.0.1:8000/add_rating/" + id + "/",
+			{
+				method: "POST",
+				body: JSON.stringify({
+					user: user.user_id,
+					movie: id,
+					score: ratingScore,
+				}),
+				headers: {
+					"Content-Type": "application/json; charset=UTF-8",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data1 = await response1.json();
+		setRating(data1);
+		let response2 = await fetch("http://127.0.0.1:8000/train/movie/", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json; charset=UTF-8",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		await response2.json();
+		let response3 = await fetch("http://127.0.0.1:8000/train/meeting/", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json; charset=UTF-8",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		await response3.json();
+	};
 
-    const [searchValue, setSearchValue] = React.useState('');
+	const [openSearch, setOpenSearch] = React.useState(false);
 
-    return (
-        <Grid container
-            justifyContent={"center"}
-            alignItems={"flex-start"}
-            spacing={2}>
+	const toggleSearch = () => {
+		setOpenSearch(!openSearch);
+	};
 
-            <Grid item xs={12}>
-                <div className={"home-page-title"}>
-                    <h3>movies<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
+	const openSearchCollapse = () => {
+		setOpenSearch(true);
+	};
 
-            <Grid item xs={12}>
-                <TextField
-                    label={"search"}
-                    fullWidth
-                    value={searchValue}
-                    onChange={event => { setSearchValue(event.target.value) }}
-                    InputProps={{
-                        endAdornment: <IconButton onClick={clickSearch}>
-                            <SearchIcon />
-                        </IconButton>
-                    }}
-                />
-            </Grid>
+	const [searchValue, setSearchValue] = useState("");
 
-            <Grid item xs={12}>
-                <Collapse in={openSearch} >
-                    <div className={"home-page-card-background"}>
-                        <Grid container direction={"row"}>
+	return (
+		<>
+			<HomePageTitle title={"movies"} />
 
-                            <Grid item xs={11}>
-                                <h4 className={"home-page-card-title"}>search result:</h4>
-                            </Grid>
+			<Grid
+				container
+				justifyContent={"center"}
+				alignItems={"flex-start"}
+				spacing={2}
+				padding={2}
+			>
+				<Grid item xs={12}>
+					<TextField
+						label={"search"}
+						fullWidth
+						value={searchValue}
+						placeholder={"search for a movie"}
+						onChange={(event) => {
+							setSearchValue(event.target.value);
+						}}
+						InputProps={{
+							endAdornment: (
+								<TextButton
+									text={openSearch ? "close" : "open"}
+									onClick={toggleSearch}
+								/>
+							),
+						}}
+					/>
+				</Grid>
 
-                            <Grid item xs={1}>
-                                <IconButton onClick={closeSearch}>
-                                    <CloseIcon />
-                                </IconButton>
-                            </Grid>
+				<Grid item xs={12}>
+					<Collapse in={openSearch}>
+						<div className={"home-page-card-background"}>
+							<Grid container direction={"row"} padding={2} spacing={2}>
+								<Grid item xs={12}>
+									<h5 className={"home-page-card-title"}>search result</h5>
+								</Grid>
 
-                            <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
-                                        {moviesWithPoster.filter((movie) => {
-                                if (movie.title.toLowerCase().includes(searchValue.toLowerCase())) {
-                                  return movie;
-                                }
-                            }).map((movie) => {
-                                return (<Grid item>
-                                        <Card sx={{width: 330}}>
-                                            <CardMedia
-                                                component="img"
-                                                height="500"
-                                                image={moviePoster}
-                                                alt={movie.title}
-                                            />
+								<Grid item xs={12}>
+									<Grid
+										container
+										direction={"row"}
+										spacing={2}
+										alignItems={"center"}
+									>
+										{/* LIST OF ALL MOVIES */}
+										{moviesWithPoster
+											.filter((movie) => {
+												if (
+													movie.title
+														.toLowerCase()
+														.includes(searchValue.toLowerCase())
+												) {
+													return movie;
+												}
+											})
+											.map((movie) => {
+												return (
+													<Grid item>
+														<Card sx={{ width: 180 }}>
+															<CardMedia
+																component="img"
+																image={moviePoster}
+																alt={movie.title}
+															/>
 
-                                            <CardHeader title={movie.title}/>
+															<Stack
+																spacing={1}
+																padding={1}
+																alignItems={"center"}
+															>
+																<Rating
+																	name="simple-controlled"
+																	sx={{ fontSize: "1.2em" }}
+																	precision={0.5}
+																	max={5}
+																	// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+																/>
 
-                                            <div style={{paddingLeft: "18px", paddingBottom: "10px"}}>
+																<Tooltip
+																	title={movie.title}
+																	placement="top-start"
+																>
+																	<Typography noWrap>{movie.title}</Typography>
+																</Tooltip>
 
-                                                <Typography component="legend">Rate {movie.title}</Typography>
-                                                <Rating
-                                                    name="simple-controlled"
-                                                    precision={0.5}
-                                                    max={5}
-                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-                                                />
-                                                {/*<Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>*/}
-                                            </div>
+																<FormButton text={"watch"} />
+															</Stack>
+														</Card>
+													</Grid>
+												);
+											})}
+									</Grid>
+								</Grid>
+							</Grid>
+						</div>
+					</Collapse>
+				</Grid>
 
-                                            <Box padding={1}>
-                                                <FormButton text={"watch"} />
-                                            </Box>
-                                        </Card>
-                                </Grid>
-                                )})}
-                            </Grid>
-                        </Grid>
-                    </div>
-                </Collapse >
-            </Grid>
+				<Grid item xs={12}>
+					<div className={"home-page-card-background"}>
+						<Grid container direction={"row"} padding={2} spacing={2}>
+							<Grid item xs={12}>
+								<h5 className={"home-page-card-title"}>club movies</h5>
+							</Grid>
 
-            <Grid item xs={12}>
-                <div className={"home-page-card-background"}>
-                    <h4 className={"home-page-card-title"}>club movies:</h4>
+							<Grid item xs={12}>
+								<Stack direction={"row"} overflow={"auto"}>
+									{moviesWithPoster.map((movie) => {
+										return (
+											<ListItem sx={{ p: 1 }}>
+												<Card sx={{ width: 150 }}>
+													<CardMedia
+														component="img"
+														sx={{ height: "100%" }}
+														image={moviePoster}
+														alt={movie.title}
+													/>
 
-                    <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
-                        {moviesWithPoster.map((movie) => {
-                            return (<Grid item>
-                                    <Card sx={{width: 330}}>
-                                        <CardMedia
-                                            component="img"
-                                            height="500"
-                                            image={moviePoster}
-                                            alt={movie.title}
-                                        />
+													<Stack spacing={1} padding={1} alignItems={"center"}>
+														<Rating
+															name="simple-controlled"
+															sx={{ fontSize: "1.2em" }}
+															precision={0.5}
+															max={5}
+															// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+														/>
 
-                                        <CardHeader title={movie.title}/>
+														<Tooltip title={movie.title} placement="top-start">
+															<Typography noWrap>{movie.title}</Typography>
+														</Tooltip>
+														<FormButton text={"watch"} />
+													</Stack>
+												</Card>
+											</ListItem>
+										);
+									})}
+								</Stack>
+							</Grid>
+						</Grid>
+					</div>
+				</Grid>
+				<Grid item xs={12}>
+					<div className={"home-page-card-background"}>
+						<Grid container direction={"row"} padding={2} spacing={2}>
+							<Grid item xs={12}>
+								<h5 className={"home-page-card-title"}>recommended</h5>
+							</Grid>
+							<Grid item xs={12}>
+								<Stack direction={"row"} overflow={"auto"}>
+									{recommendedMovies.map((movie) => {
+										return (
+											<ListItem sx={{ p: 1 }}>
+												<Card sx={{ width: 150 }}>
+													<CardMedia
+														component="img"
+														sx={{ height: "100%" }}
+														image={moviePoster}
+														alt={movie.title}
+													/>
+													<Stack spacing={1} padding={1} alignItems={"center"}>
+														<Rating
+															name="simple-controlled"
+															sx={{ fontSize: "1.2em" }}
+															precision={0.5}
+															max={5}
+															onChange={(event, newValue) =>
+																setRating({
+																	score: newValue,
+																	onChange: AddRating(movie.id, newValue),
+																})
+															}
+														/>
+														<Tooltip title={movie.title} placement="top-start">
+															<Typography noWrap>{movie.title}</Typography>
+														</Tooltip>
+														<FormButton
+															text={"watch"}
+															onClick={() => {
+																addToWatchedList(movie.id);
+															}}
+															onChange={() => {
+																getRecommendedMovies();
+															}}
+														/>
+													</Stack>
+												</Card>
+											</ListItem>
+										);
+									})}
+								</Stack>
+							</Grid>
+						</Grid>
+					</div>
+				</Grid>
+				<Grid item xs={12}>
+					<div className={"home-page-card-background"}>
+						<Grid container direction={"row"} padding={2} spacing={2}>
+							<Grid item xs={12}>
+								<h5 className={"home-page-card-title"}>watched</h5>
+							</Grid>
 
-                                        <div style={{paddingLeft: "18px", paddingBottom: "10px"}}>
+							<Grid item xs={12}>
+								<Stack direction={"row"} overflow={"auto"}>
+									{watchedMovies.map((movie) => {
+										return (
+											<ListItem sx={{ p: 1 }}>
+												<Card sx={{ width: 150 }}>
+													<CardMedia
+														component="img"
+														sx={{ height: "100%" }}
+														image={moviePoster}
+														alt={movie.title}
+													/>
 
-                                            <Typography component="legend">Rate {movie.title}</Typography>
-                                            <Rating
-                                                name="simple-controlled"
-                                                precision={0.5}
-                                                max={5}
-                                                // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-                                            />
-                                            <Typography paddingTop={"10px"} component="legend"> <b>Watch before *Meeting date and time*</b></Typography>
-                                        </div>
+													<Stack spacing={1} padding={1} alignItems={"center"}>
+														<Rating
+															name="simple-controlled"
+															sx={{ fontSize: "1.2em" }}
+															precision={0.5}
+															max={5}
+															// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+														/>
 
-                                        <Box padding={1}>
-                                            <FormButton text={"watch"} />
-                                        </Box>
-                                    </Card>
-                            </Grid>
-                            )})}
-                    </Grid>
-                </div>
-            </Grid>
+														<Tooltip title={movie.title} placement="top-start">
+															<Typography noWrap>{movie.title}</Typography>
+														</Tooltip>
 
-            <Grid item xs={12}>
-                <div className={"home-page-card-background"}>
-                    <h4 className={"home-page-card-title"}>recommended movies:</h4>
-
-                    <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
-                        {moviesWithPoster.map((movie) => {
-                            return (<Grid item>
-                                    <Card sx={{width: 330}}>
-                                        <CardMedia
-                                            component="img"
-                                            height="500"
-                                            image={moviePoster}
-                                            alt={movie.title}
-                                        />
-
-                                        <CardHeader title={movie.title}/>
-
-                                        <div style={{paddingLeft: "18px", paddingBottom: "10px"}}>
-
-                                            <Typography component="legend">Rate {movie.title}</Typography>
-                                            <Rating
-                                                name="simple-controlled"
-                                                precision={0.5}
-                                                max={5}
-                                                // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-                                            />
-                                        </div>
-
-                                        <Box padding={1}>
-                                            <FormButton text={"watch"} />
-                                        </Box>
-                                    </Card>
-                            </Grid>
-                            )})}
-                    </Grid>
-                </div>
-            </Grid>
-        </Grid >
-    );
-}
+														<FormButton text={"watch"} />
+													</Stack>
+												</Card>
+											</ListItem>
+										);
+									})}
+								</Stack>
+							</Grid>
+						</Grid>
+					</div>
+				</Grid>
+			</Grid>
+		</>
+	);
+};
 
 export default Movies;

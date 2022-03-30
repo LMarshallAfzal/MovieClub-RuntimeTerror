@@ -6,6 +6,7 @@ import AuthContext from "../../components/helper/AuthContext";
 // import FetchInstance from "../../components/helper/FetchInstance";
 import useFetch from "../../components/helper/useFetch";
 import { optionUnstyledClasses } from '@mui/base';
+import HomePageTitle from "../../components/HomePageTitle";
 
 
 const Profile = () => {
@@ -26,12 +27,13 @@ const Profile = () => {
     const [errorEmailText, setEmailErrorText] = useState('')
     const [errorBioText, setBioErrorText] = useState('')
     const [errorPreferencesText, setPreferencesErrorText] = useState('')
+    const [errorPasswordText, setPasswordErrorText] = useState('')
 
     const onChange = (e) => {
         setUserData( prevData => ({...prevData, [e.target.name]: e.target.value}))
-     }; 
+     };
 
-     let resetErrorState = () => {
+    let resetErrorState = () => {
         setUsernameError(false);
         setFirstNameError(false);
         setLastNameError(false);
@@ -49,70 +51,31 @@ const Profile = () => {
 
     let errorHandler = (e, data) => {
         e.preventDefault()
-        if((Object.keys(data)).includes('username')) {
+        if ((Object.keys(data)).includes('username')) {
             setUsernameError(true)
             setUsernameErrorText(data.username)
         }
-        if((Object.keys(data)).includes('first_name')) {
+        if ((Object.keys(data)).includes('first_name')) {
             setFirstNameError(true)
             setFirstNameErrorText(data.first_name)
         }
-        if((Object.keys(data)).includes('last_name')) {
+        if ((Object.keys(data)).includes('last_name')) {
             setLastNameError(true)
             setLastNameErrorText(data.last_name)
         }
-        if((Object.keys(data)).includes('email')) {
+        if ((Object.keys(data)).includes('email')) {
             setEmailError(true)
             setEmailErrorText(data.email)
         }
-        if((Object.keys(data)).includes('bio')) {
+        if ((Object.keys(data)).includes('bio')) {
             setPreferencesError(true)
             setBioErrorText(data.bio)
         }
-        if((Object.keys(data)).includes('preferences')) {
+        if ((Object.keys(data)).includes('preferences')) {
             setPreferencesError(true)
             setPreferencesErrorText(data.preferences)
         }
     };
-
-    // let submitChangeProfileForm = async (e) => {
-    //     e.preventDefault();
-    //     resetErrorState();
-    //     // let {response, data} = await api(`/edit_profile/${user.user_id}/`),{
-    //     //     method:'PUT',
-    //     //     body:JSON.stringify({
-    //     //         "username": userData.username, 
-    //     //         "first_name": userData.first_name, 
-    //     //         "last_name": userData.last_name,
-    //     //         "email": userData.email,
-    //     //         "bio": userData.bio, 
-    //     //         "preferences": userData.preferences
-    //     //     }),
-    //     // }
-            
-    //     let response = await fetch('http://127.0.0.1:8000/edit_profile/' + user.user_id ,{
-    //         method:'PUT',
-    //         body:JSON.stringify({
-    //             "username": userData.username, 
-    //             "first_name": userData.first_name, 
-    //             "last_name": userData.last_name,
-    //             "email": userData.email,
-    //             "bio": userData.bio, 
-    //             "preferences": userData.preferences
-    //         }),
-    //         headers:{
-    //             'Content-type': 'application/json; charset=UTF-8',
-    //             'Authorization': 'Bearer ' + String(authTokens.access)
-    //         }
-    //     })
-    //     let data = await response.json()
-    //     if(response.status === 200) {
-    //         setUserData(data)
-    //     }
-    //     else {
-    //         errorHandler(e, data)
-    //     }   
-    // }
 
     let submitChangeProfileForm = async (e) => {
         e.preventDefault();
@@ -145,21 +108,20 @@ const Profile = () => {
 
     useEffect(() => {
         getUserData();
-    },[])
+        // console.log(user)
+    }, [])
 
     return (
+        <>
+            <HomePageTitle title={"profile"}/>
+
        <Grid container
               direction={"row"}
               spacing={2}
+             padding={2}
         >
 
-            <Grid item xs={12}>
 
-                <div className={"home-page-title"}>
-
-                    <h3>profile<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
 
             <Grid item xs={12}>
 
@@ -228,12 +190,9 @@ const Profile = () => {
 
                         <TextField error={bioError}
                                    helperText={errorBioText}
-                                   spacing={6}
                                    id={"outlined-multiline-static"}
                                    label={"bio"}
                                    name={"bio"}
-                                   type={"text"}
-                                   variant={"outlined"}
                                    multiline
                                    rows={7.5}
                                    value={userData.bio}
@@ -246,12 +205,9 @@ const Profile = () => {
                         <TextField error={preferencesError}
                                    helperText={errorPreferencesText}
                                    required
-                                   spacing={6}
                                    id={"outlined-multiline-static"}
                                    label={"preferences"}
                                    name={"preferences"}
-                                   type={"text"}
-                                   variant={"outlined"}
                                    multiline
                                    rows={20}
                                    value={userData.preferences}
@@ -264,11 +220,13 @@ const Profile = () => {
                         <FormButton
                             text={"save"}
                             type={"submit"}
+                            style={"primary"}
                         />
                     </Stack>
                 </form>
             </Grid>
        </Grid>
+            </>
     );
 }
 

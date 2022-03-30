@@ -17,7 +17,7 @@ class UnBanMemberViewTestCase(APITestCase):
         self.other_user = User.objects.get(username='daviddoe')
         self.banned = User.objects.get(username='janedoe')
         self.club = Club.objects.get(club_name='Beatles')
-        self.club.club_members.add(self.user,through_defaults={'role':'C'})
+        self.club.club_members.add(self.user,through_defaults={'role':'O'})
         self.club.club_members.add(self.banned,through_defaults={'role':'B'})
         self.url = reverse('unban_member',kwargs={'club_id': self.club.id,'user_id':self.banned.id})
         self.client = APIClient()  
@@ -40,7 +40,7 @@ class UnBanMemberViewTestCase(APITestCase):
         self.assertEqual(before_banned,after_banned+1)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_unban_member_endpoint_with_invalid_user_returns_403_forbidden(self):
+    def test_unban_member_endpoint_with_invalid_user_returns_400_bad_request(self):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
         before = Membership.objects.all().filter(club=self.club,role='M').count()
@@ -50,7 +50,7 @@ class UnBanMemberViewTestCase(APITestCase):
         self.assertEqual(before,after)
         role = self.banned.membership_set.get(club=self.club)
         self.assertEqual('B',role.role)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_unban_member_endpoint_with_invalid_club_returns_404_not_found(self):
         self.client.force_authenticate(user=self.user)
@@ -61,14 +61,6 @@ class UnBanMemberViewTestCase(APITestCase):
 
     def test_unban_member_endpoint_as_member_returns_403_forbidden(self):
         self.club.club_members.add(self.other_user,through_defaults={'role':'M'})
-        self.client.force_authenticate(user=self.other_user)
-        self.assertTrue(self.other_user.is_authenticated)
-        response = self.client.put(self.url)
-        self.assertEqual(response.status_code,status.HTTP_403_FORBIDDEN)
-
-
-    def test_unban_member_endpoint_as_organiser_returns_403_forbidden(self):
-        self.club.club_members.add(self.other_user,through_defaults={'role':'O'})
         self.client.force_authenticate(user=self.other_user)
         self.assertTrue(self.other_user.is_authenticated)
         response = self.client.put(self.url)

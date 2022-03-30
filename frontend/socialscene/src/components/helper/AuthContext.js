@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect, useContext } from "react"
-import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
@@ -76,7 +75,7 @@ export const AuthProvider = ({children}) => {
         setAuthTokens(null)
         setUser(null)
         localStorage.removeItem('authTokens')
-        navigate('/');
+        navigate('/logout');
     }
 
 

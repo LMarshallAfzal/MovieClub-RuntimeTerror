@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "../../styling/pages/HomeRouter.css";
 import { Outlet} from "react-router-dom";
 import Sidebar from "../../components/root/Sidebar";
@@ -9,9 +9,26 @@ import AuthContext from "../../components/helper/AuthContext";
 
 function HomeRouter() {
    
-    let {user} = useContext(AuthContext)
+    let {authTokens, user} = useContext(AuthContext);
+    const [userData, setUserData] = useState('')
 
-    // if(!user) return null
+    let getCurrentUser = async () => {
+		let response = await fetch("http://127.0.0.1:8000/user_image/", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + authTokens.access,
+			},
+		});
+		let data = await response.json();
+        console.log(data)
+        setUserData(data);
+
+	};
+
+    useEffect(() => {
+        getCurrentUser();
+    }, []);
     
     return (
         <>
@@ -22,15 +39,15 @@ function HomeRouter() {
                 <Grid className={"home-grid-L-sidebar"} item xs={3}>
 
                     <NameHeader
-                        username={user.username}
-                        joinDate={"2022"} />
+                        firstName={user.first_name || "error"}
+                        lastName={user.last_name || "error"}
+                        username={user.username || "error"}
+                        iconImage={userData}
+                    />
                     <Sidebar />
                 </Grid>
 
-                <Grid className={"home-grid-R-content"} item
-                    xs={9}
-                    padding={2}>
-
+                <Grid className={"home-grid-R-content"} item xs={9}>
                     <Outlet/>
                 </Grid>
             </Grid>

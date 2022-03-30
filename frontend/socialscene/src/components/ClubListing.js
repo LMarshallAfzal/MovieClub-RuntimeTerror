@@ -32,7 +32,7 @@ function ClubListing(props) {
         if (props.isMember === true) {
             if (props.isOrganiser === true) {
                 return (
-                    <EnterButton text={"create meeting"} linkTo={`/home/events/${props.ID}`} />
+                    <EnterButton text={"create meeting"} linkTo={`/home/discussion/${props.ID}/new`} />
                 )
             } else {
                 return (
@@ -49,37 +49,29 @@ function ClubListing(props) {
 
     return (
          <Link className={"club-listing"} to={`/home/clubs/${props.ID}`}>
-             <Grid container
-                   spacing={2}>
+             <Grid container spacing={1} padding={1}>
 
-                 <Grid item
-                       xs={5}>
-                     <Stack className={"club-listing-left-stack"}>
-                         <div className={"club-listing-image"}>
+                 <Grid item xs={4}>
+                     <Stack spacing={1} alignItems={"center"} justifyContent={"center"}>
                          <Avatar
                              alt={props.clubName}
                              src={props.iconImage}
-                             sx={{width: "100%", height: "100%"}}
+                             sx={{width: 1, height:1}}
                          />
-                         </div>
-                         <div className={"club-listing-button"}>
-                           <ClubButton />
-                         </div>
+
+                         <ClubButton />
                      </Stack>
                  </Grid>
 
-                 <Grid item
-                       xs={7}>
-                     <Stack className={"club-listing-right-stack"}>
-                         <Stack className={"club-listing-text"}
-                                spacing={2}
-                         >
-                             <h4 className={"club-listing-club-name"}>{props.clubName}<h4--emphasise>.</h4--emphasise></h4>
-                             <h6>{props.description}</h6>
-                             <div className={"club-listing-club-chip"}>
-                                 <ClubChip  />
-                             </div>
-                         </Stack>
+                 <Grid item xs={8}>
+                     <Stack spacing={1}>
+
+                         <h4 className={"club-listing-club-name"}>{props.clubName}<h4--emphasise>.</h4--emphasise></h4>
+
+                         <h6>{props.description}</h6>
+
+                         <ClubChip/>
+
                          <AvatarGroup max={4} className={"club-listing-avatars"}>
                              {/*for (users in club) map {*/}
                              {/*   <Avatar alt="Club Name" src={club.icon}*/}
@@ -90,7 +82,7 @@ function ClubListing(props) {
                              <Avatar alt="Agnes Walker" src={icon4} />
                              <Avatar alt="Trevor Henderson" src="" />
                          </AvatarGroup>
-                     </Stack>
+                         </Stack>
                  </Grid>
              </Grid>
          </Link>

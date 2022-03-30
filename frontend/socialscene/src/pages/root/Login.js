@@ -30,7 +30,7 @@ export function Login() {
                   xs={6}
                   className={"login-grid-child"}>
 
-                <HeadingCircle title={"log in"}/>
+                <HeadingCircle title={"log in"} />
             </Grid>
 
             <Grid item
@@ -83,7 +83,7 @@ export function Login() {
                                         type="submit"
                                         text={"log in"}   
                                         onClick={loginUser}
-                                       
+                                        style={"primary"}
                                     />
                                 </Grid>
 
@@ -92,7 +92,6 @@ export function Login() {
                                     <FormButton
                                         type="submit"
                                         text={"forgot password"}
-                                        
                                     />
                                 </Grid>
                             </Grid>

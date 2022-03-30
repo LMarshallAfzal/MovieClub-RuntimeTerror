@@ -1,69 +1,76 @@
 [   
     {
         "model": "api.movie",
-        "pk": 1,
+        "pk": 6,
         "fields": {
             "ml_id": 3,
+            "imdb_id": "10",
             "title": "Grumpier Old Men  ",
-            "genres": "Comedy|Romance",
+            "genres": "Comedy,Romance",
             "year": 1995
-        }
-    },
-    {
-        "model": "api.movie",
-        "pk": 2,
-        "fields": {
-            "ml_id": 50,
-            "title": "Usual Suspects, The  ",
-            "genres": "Crime|Mystery|Thriller",
-            "year": 1995
-        }
-    },
-    {
-        "model": "api.movie",
-        "pk": 3,
-        "fields": {
-            "ml_id": 101,
-            "title": "Bottle Rocket  ",
-            "genres": "Adventure|Comedy|Crime|Romance",
-            "year": 1996
-        }
-    },
-    {
-        "model": "api.movie",
-        "pk": 4,
-        "fields": {
-            "ml_id": 163,
-            "title": "Desperado  ",
-            "genres": "Action|Romance|Western",
-            "year": 1995
-        }
-    },
-    {
-        "model": "api.movie",
-        "pk": 5,
-        "fields": {
-            "ml_id": 6658,
-            "title": "10  ",
-            "genres": "Comedy|Romance",
-            "year": 1979
         }
     },
     {
         "model": "api.movie",
         "pk": 7,
         "fields": {
+            "ml_id": 50,
+            "imdb_id": "11",
+            "title": "Usual Suspects, The  ",
+            "genres": "Crime,Mystery,Thriller",
+            "year": 1995
+        }
+    },
+    {
+        "model": "api.movie",
+        "pk": 8,
+        "fields": {
+            "ml_id": 101,
+            "imdb_id": "12",
+            "title": "Bottle Rocket  ",
+            "genres": "Adventure,Comedy,Crime,Romance",
+            "year": 1996
+        }
+    },
+    {
+        "model": "api.movie",
+        "pk": 9,
+        "fields": {
+            "ml_id": 163,
+            "imdb_id": "13",
+            "title": "Desperado  ",
+            "genres": "Action,Romance,Western",
+            "year": 1995
+        }
+    },
+    {
+        "model": "api.movie",
+        "pk": 10,
+        "fields": {
+            "ml_id": 6658,
+            "imdb_id": "14",
+            "title": "10  ",
+            "genres": "Comedy,Romance",
+            "year": 1979
+        }
+    },
+    {
+        "model": "api.movie",
+        "pk": 11,
+        "fields": {
             "ml_id": 7541,
+            "imdb_id": "15",
             "title": "100 Girls  ",
-            "genres": "Comedy|Romance",
+            "genres": "Comedy,Romance",
             "year": 2000
         }
     },
     {
         "model": "api.movie",
-        "pk": 6,
+        "pk": 12,
         "fields": {
             "ml_id": 216,
+            "imdb_id": "16",
             "title": "Billy Madison  ",
             "genres": "Comedy",
             "year": 1995

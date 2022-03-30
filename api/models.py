@@ -4,6 +4,11 @@ from django.db.models.fields.related import ForeignKey
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator,MinLengthValidator
 from django.utils.translation import gettext_lazy as _
+import datetime
+from datetime import datetime
+from libgravatar import Gravatar
+
+
 
 class User(AbstractUser):
 
@@ -44,9 +49,53 @@ class User(AbstractUser):
     )
 
     watched_movies = models.ManyToManyField('Movie', through='Watch')
+    
+
+    followers = models.ManyToManyField(
+        'self', symmetrical=False, related_name='followees'
+    )
+
+    def toggle_follow(self, followee):
+
+        if followee==self:
+            return
+        if self.is_following(followee):
+            self._unfollow(followee)
+        else:
+            self._follow(followee)
+
+    def _follow(self, user):
+        user.followers.add(self)
+
+    def _unfollow(self, user):
+        user.followers.remove(self)
+
+    def is_following(self, user):
+
+        return user in self.followees.all()
+
+    def follower_count(self):
+
+        return self.followers.count()
+
+    def followee_count(self):
+
+        return self.followees.count()
+    
+
 
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+    def mini_gravatar(self):
+        "Return a URL to a miniature version of the user's gravatar."""
+        return self.gravatar(size=60)
+
+    def gravatar(self, size=120):
+        """Return a URL to the user's gravatar."""
+        gravatar_object = Gravatar(self.email)
+        gravatar_url = gravatar_object.get_image(size=size, default='identicon')
+        return gravatar_url
 
     def get_user_clubs(self):
          return Club.objects.all().filter(
@@ -61,12 +110,28 @@ class User(AbstractUser):
         else:
             return ratings
 
+    def attend_meeting(self,meeting):
+        meeting.attendees.add(self)
+        meeting.save()
+
+    def get_attending_meetings(self):
+        meetings = []
+        meetings = Meeting.objects.all().filter(attendees = self)
+        return meetings
+
+    def leave_meeting(self,meeting):
+        meeting.attendees.remove(self)
+        meeting.save()
+
     def get_user_clubs(self):
-        clubs = Club.objects.filter(club_members__username=self.username)
+        clubs = []
+        for club in Club.objects.filter(club_members__username=self.username):
+            if Membership.objects.get(user=self,club=club).role != 'B':
+                clubs.append(club)
         return clubs
 
     def get_user_memberships(self):
-        memberships = Membership.objects.filter(user=self)
+        memberships = Membership.objects.filter(user=self).exclude(role = 'B')
         return memberships
 
     def get_user_preferences(self):
@@ -92,12 +157,12 @@ class Club(models.Model):
 
     mission_statement = models.CharField(
         max_length=500,
-        blank=True,
+        blank=False,
         unique=False
     )
     theme = models.CharField(
         max_length=20,
-        blank=True,
+        blank=False,
         unique=False
     )
 
@@ -108,20 +173,23 @@ class Club(models.Model):
     club_meetings = models.ManyToManyField('Meeting', related_name='club_meetings')
 
     def get_all_users_in_club(self):
-        return self.club_members.all()
+        return self.club_members.all().exclude(membership__role = 'B')
 
     def get_all_club_members(self):
         return self.club_members.all().filter(
             club = self, membership__role = 'M')
 
+    def get_club_owner(self):
+        return self.club_members.all().filter(club = self, membership__role = 'O')
+        
     def remove_user_from_club(self, user):
         Membership.objects.get(club=self, user=user).delete()
     
     def get_banned_members(self):
         return self.club_members.filter(club = self, membership__role = 'B')
-
+           
     def get_organiser(self):
-        return self.club_members.filter(club = self,membership__role = 'O')
+        return self.club_members.filter(club = self,membership__is_organiser = True)
     
     def get_clubs_by_theme(preferences):
         clubs = []
@@ -143,6 +211,10 @@ class Club(models.Model):
     def get_club_messages(self):
         return self.club_messages.all()
 
+    def get_upcoming_meeting(self):
+            meeting = Meeting.objects.get(club=self, completed=False)
+            return meeting
+            
     def __unicode__(self):
         return '%d: %s' % (self.club_name)
 
@@ -152,12 +224,11 @@ class Membership(models.Model):
     Membership is an intermediate model that connects Users to Clubs.
 
     Apart from the two foreign keys, it contains the nature of the relationship:
-        Club Owner | Organiser | Member | Banned
+        Club Owner | Member | Banned
     """
     class MembershipStatus(models.TextChoices):
         MEMBER = 'M', _('Member')
-        OWNER = 'C', _('Owner')
-        ORGANISER = 'O', _('Organiser')
+        OWNER = 'O', _('Owner')
         BANNED = 'B',_('BannedMember')
     
     user = ForeignKey(User, on_delete=models.CASCADE)
@@ -167,6 +238,9 @@ class Membership(models.Model):
         choices=MembershipStatus.choices,
         default=MembershipStatus.MEMBER
         )
+    is_organiser = models.BooleanField(default=False)
+
+    notifications = models.BooleanField(default=False)
 
     """We must ensure that only one relationship is created per User-Club pair."""
     class Meta:
@@ -174,12 +248,28 @@ class Membership(models.Model):
 
     def get_role_name(self):
         return self.MembershipStatus(self.role).name.title()
+
+    def toggle_organiser(self):
+        if self.is_organiser == True:
+            self.is_organiser = False
+        else:
+            self.is_organiser = True
+        self.save()
+
+    def toggle_notifications(self):
+        if self.notifications == True:
+            self.notifications = False
+        else:
+            self.notifications = True
+        self.save()
 class Movie(models.Model):
 
     ml_id = models.PositiveIntegerField(
         unique=True,
-        default=0
+        default=0,
     )
+
+    imdb_id = models.CharField(max_length=10,unique = True) 
 
     title = models.CharField(
         max_length=100,
@@ -200,7 +290,6 @@ class Movie(models.Model):
     viewers = models.ManyToManyField(
         User, through='Watch', related_name='viewers')
 
-    meetings = models.ManyToManyField('Meeting', related_name='meetings')
     class Meta:
         ordering = ['title']
 
@@ -216,10 +305,16 @@ class Movie(models.Model):
 
     def get_movies_by_genre(genres):
         movies = []
+        filtered_movies = Movie.objects.filter(genres=genres)
+        for movie in filtered_movies:
+            movies.append(movie)
+        genres = genres.split(',')
         for genre in genres:
-            movies.append(Movie.objects.annotate(
+            filtered_queryset = Movie.objects.annotate(
             string=Value(genre)
-                ).filter(string__icontains=F('genres')))
+                ).filter(string__icontains=F('genres'))
+            for movie in filtered_queryset:
+                movies.append(movie)
         return movies
 
 class Rating(models.Model):
@@ -228,8 +323,7 @@ class Rating(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     score = models.FloatField(
-
-        validators=[MinValueValidator(1.0), MaxValueValidator(5.0)]
+        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
     )
     class Meta:
         ordering = ['user']
@@ -253,20 +347,29 @@ class Meeting(models.Model):
 
     meeting_link = models.CharField(max_length=100,blank=False)
 
+    completed = models.BooleanField(default=False)
+
     description = models.CharField(
         max_length=500,
         blank=False,
         unique=False
     )
 
+    def toggle_completed(self):
+        if self.completed == False:
+            self.completed = True
+        else:
+            self.completed = False
+        self.save()
+
 class Message(models.Model):
-    sender = models.ForeignKey(User,on_delete=models.CASCADE,unique=False)
+    sender = models.ForeignKey(User,to_field='username',on_delete=models.CASCADE,unique=False)
 
     club = models.ForeignKey(Club,on_delete=models.CASCADE,unique=False)
 
     message = models.CharField(max_length=1500)
 
-    timestamp = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
             return self.message

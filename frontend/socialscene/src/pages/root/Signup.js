@@ -72,35 +72,35 @@ export const Signup = () => {
         e.preventDefault()
         if((Object.keys(data)).includes('username')) {
             setUsernameError(true)
-            setUsernameErrorText(data.username)
+            setUsernameErrorText("Error:" + data.username)
         }
         if((Object.keys(data)).includes('first_name')) {
             setFirstNameError(true)
-            setFirstNameErrorText(data.first_name)
+            setFirstNameErrorText("Error:" + data.first_name)
         }
         if((Object.keys(data)).includes('last_name')) {
             setLastNameError(true)
-            setLastNameErrorText(data.last_name)
+            setLastNameErrorText("Error:" + data.last_name)
         }
         if((Object.keys(data)).includes('email')) {
             setEmailError(true)
-            setEmailErrorText(data.email)
+            setEmailErrorText("Error:" + data.email)
         }
         if((Object.keys(data)).includes('bio')) {
             setPreferencesError(true)
-            setBioErrorText(data.bio)
+            setBioErrorText("Error:" + data.bio)
         }
         if((Object.keys(data)).includes('preferences')) {
             setPreferencesError(true)
-            setPreferencesErrorText(data.preferences)
+            setPreferencesErrorText("Error:" + data.preferences)
         }
         if((Object.keys(data)).includes('password')) {
             setPasswordError(true)
-            setPasswordErrorText(data.password)
+            setPasswordErrorText("Error:" + data.password)
         }
         if((Object.keys(data)).includes('password_confirmation')) {
             setPasswordConfirmationError(true)
-            setPasswordConfirmationErrorText(data.password_cofirmation)
+            setPasswordConfirmationErrorText("Error:" + data.password_cofirmation)
         }
     };
 
@@ -144,7 +144,7 @@ export const Signup = () => {
                   xs={6}
                   className={"signup-grid-child"}>
 
-                <HeadingCircle title={"sign up"}/>
+                <HeadingCircle title={"signup"}/>
             </Grid>
 
             <Grid item
@@ -275,7 +275,7 @@ export const Signup = () => {
 
                         <div className={"signup-form-row"}>
                             <FormButton
-
+                                style={"primary"}
                              type="submit"
                              text={"sign up"}
                             />

@@ -7,6 +7,7 @@ import "./styling/fonts/Helvetica-Oblique.ttf";
 import "./styling/fonts/Helvetica-Bold.ttf";
 import "./styling/fonts/Helvetica-BoldOblique.ttf";
 import {createTheme, ThemeProvider} from "@mui/material";
+import {hover} from "@testing-library/user-event/dist/hover";
 
 const theme = createTheme({
   palette: {
@@ -36,6 +37,35 @@ const theme = createTheme({
                   },
               },
       },
+        MuiRating: {
+          styleOverrides:{
+              root:{
+                  color: "#FF0000",
+              }
+          }
+
+        },
+        MuiCard: {
+          styleOverrides: {
+              root:{
+                  borderRadius: "0rem !important",
+
+
+              }
+          }
+        },
+
+        MuiCardActionArea: {
+          styleOverrides: {
+              root: {
+                  borderRadius: "0rem !important",
+                  //  border: "2px solid black",
+                  // borderColor: "#FF0000",
+                  // borderWidth: "thin"
+              },
+          }
+        },
+
       MuiInputLabel: {
           styleOverrides: {
               root:{

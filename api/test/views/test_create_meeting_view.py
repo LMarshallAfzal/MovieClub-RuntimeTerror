@@ -23,7 +23,7 @@ class CreateMeetingViewTestCase(APITestCase):
         self.url = reverse("create_meeting", kwargs={'club_id': self.club.id})
         self.user = User.objects.get(id=1)
         self.other_user = User.objects.get(id=2)
-        self.club.club_members.add(self.user, through_defaults={'role': 'O'})
+        self.club.club_members.add(self.user, through_defaults={'role': 'M','is_organiser' : True})
         
         self.client = APIClient()
         self.form_input = {
@@ -50,6 +50,31 @@ class CreateMeetingViewTestCase(APITestCase):
         after = Meeting.objects.count()
         self.assertEqual(after, before + 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_post_create_meeting_endpoint_with_upcoming_meeting_returns_validation_error_during_existing_meeting(self):
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
+        self._create_test_meeting()
+        before = Meeting.objects.count()
+        response = self.client.post(self.url, self.form_input)
+        after = Meeting.objects.count()
+        self.assertEqual(after, before)
+        self.assertEqual(response.data[0],'Beatles currently has an upcoming meeting.')
+        
+
+    def _create_test_meeting(self):
+        Meeting.objects.create(
+            club = self.club,
+            movie = self.movie,
+            organiser = self.user,
+            meeting_title = "Star Wars Meeting",
+            date = "1999-05-01",
+            start_time = "18:00",
+            end_time = "21:00",
+            description = "We are going to watch Sharknado 7",
+            meeting_link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            completed = False
+        )
 
     def test_post_create_meeting_endpoint_with_blank_date_returns_400_bad_request(self):
         self.client.force_authenticate(user=self.user)
@@ -185,7 +210,7 @@ class CreateMeetingViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_post_create_meeting_endpoint_with_user_member_role_in_club_returns_403_forbidden(self):
+    def test_post_create_meeting_endpoint_with_user_member_role_returns_201_create(self):
         self.club.club_members.add(self.other_user, through_defaults={'role': 'M'})
         self.client.force_authenticate(user=self.other_user)
         self.assertTrue(self.other_user.is_authenticated)
@@ -193,19 +218,19 @@ class CreateMeetingViewTestCase(APITestCase):
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
         after = Meeting.objects.count()
-        self.assertEqual(after, before)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(after, before+1)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_post_create_meeting_endpoint_with_user_owner_role_in_club_returns_403_forbidden(self):
-        self.club.club_members.add(self.other_user, through_defaults={'role': 'C'})
+    def test_post_create_meeting_endpoint_with_user_owner_role_in_club_returns_201_created(self):
+        self.club.club_members.add(self.other_user, through_defaults={'role': 'O'})
         self.client.force_authenticate(user=self.other_user)
         self.assertTrue(self.other_user.is_authenticated)
         self.form_input['organiser'] = self.other_user.id
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
         after = Meeting.objects.count()
-        self.assertEqual(after, before)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(after, before+1)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_post_create_meeting_endpoint_with_user_banned_role_in_club_returns_403_forbidden(self):
         self.club.club_members.add(self.other_user, through_defaults={'role': 'B'})

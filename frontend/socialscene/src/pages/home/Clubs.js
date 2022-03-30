@@ -6,6 +6,7 @@ import FormButton from "../../components/FormButton";
 import ClubListing from "../../components/ClubListing";
 import {DummyClubData} from "../data/DummyClubsData";
 import {useNavigate} from "react-router";
+import HomePageTitle from "../../components/HomePageTitle";
 
 function Clubs() {
 
@@ -13,17 +14,15 @@ function Clubs() {
     const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
 
     return (
-        <Grid container
+        <>
+            <HomePageTitle title={"clubs"}/>
+
+            <Grid container
             justifyContent={"center"}
             direction={"row"}
             alignItems={"flex-start"}
+              padding={2}
             spacing={2}>
-
-            <Grid item xs={12}>
-                <div className={"home-page-title"}>
-                    <h3>clubs<h3--emphasise>.</h3--emphasise></h3>
-                </div>
-            </Grid>
 
             <Grid item xs={10}>
                 <TextField className={"search-bar"}
@@ -41,57 +40,65 @@ function Clubs() {
 
             <Grid item xs={12}>
                 <div className={"home-page-card-background"}>
-                    <h4 className={"home-page-card-title"}>your clubs:</h4>
+                    <Grid container direction={"row"} padding={2}>
 
-                    <Stack direction={"row"}
-                           spacing={0}
-                           className={"club-card-list-frame"}>
+                        <Grid item xs={12}>
+                            <h5 className={"home-page-card-title"}>your clubs</h5>
+                        </Grid>
 
-                        {DummyClubData.map((club) =>
-                            club.isMember === true && (
-                                <ListItem sx={{width: 'auto'}}>
+                        <Grid item xs={12}>
+                            <Stack direction={"row"}
+                                   overflow={"auto"}>
+                                {DummyClubData.map((club) => club.isMember === true && (
+                                    <ListItem sx={{width: 'auto',p:1}}>
 
-                                <ClubListing
-                                    clubName={club.clubName}
-                                    isMember={club.isMember}
-                                    iconImage={club.iconImage}
-                                    description={club.description}
-                                    isOrganiser={club.isOrganiser}
-                                    memberRole={club.memberRole}
-                                    clubTheme={club.clubTheme}
-                                    ID={club.ID}
-                                />
-                                </ListItem>
+                                        <ClubListing
+                                            clubName={club.clubName}
+                                            isMember={club.isMember}
+                                            iconImage={club.iconImage}
+                                            description={club.description}
+                                            isOrganiser={club.isOrganiser}
+                                            memberRole={club.memberRole}
+                                            clubTheme={club.clubTheme}
+                                            ID={club.ID}
+                                        />
+                                    </ListItem>
                                 ))}
-                    </Stack>
+                            </Stack>
+                        </Grid>
+                    </Grid>
                 </div>
             </Grid>
 
             <Grid item xs={12}>
                 <div className={"home-page-card-background"}>
-                    <h4 className={"home-page-card-title"}>recommended clubs:</h4>
+                    <Grid container direction={"row"} padding={2}>
 
-                    <Stack direction={"row"}
-                          spacing={0}
-                          className={"club-card-list-frame"}>
+                        <Grid item xs={12}>
+                            <h5 className={"home-page-card-title"}>recommended</h5>
+                        </Grid>
 
-                        {DummyClubData.map((club) =>
-                            club.isMember === false && (
-                                <ListItem sx={{width: 'auto'}}>
+                        <Grid item xs={12}>
+                            <Stack direction={"row"}
+                                   overflow={"auto"}>
+                                {DummyClubData.map((club) => club.isMember === false && (
+                                    <ListItem sx={{width: 'auto',p: 1}}>
 
-                                <ClubListing
-                                    clubName={club.clubName}
-                                    isMember={club.isMember}
-                                    iconImage={club.iconImage}
-                                    description={club.description}
-                                    isOrganiser={club.isOrganiser}
-                                    memberRole={club.memberRole}
-                                    clubTheme={club.clubTheme}
-                                    ID={club.ID}
-                                />
-                                </ListItem>
-                            ))}
-                    </Stack>
+                                        <ClubListing
+                                            clubName={club.clubName}
+                                            isMember={club.isMember}
+                                            iconImage={club.iconImage}
+                                            description={club.description}
+                                            isOrganiser={club.isOrganiser}
+                                            memberRole={club.memberRole}
+                                            clubTheme={club.clubTheme}
+                                            ID={club.ID}
+                                        />
+                                    </ListItem>
+                                ))}
+                            </Stack>
+                        </Grid>
+                    </Grid>
                 </div>
             </Grid>
 
@@ -100,6 +107,7 @@ function Clubs() {
                 <Outlet/>
             </Grid>
         </Grid>
+        </>
     );
 }
 
