@@ -21,10 +21,10 @@ import {DummyRecommendedMovies} from "../pages/data/DummyRecommendedMovies";
 import EnterButton from "./EnterButton";
 import FormButton from "./FormButton";
 import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
+import MovieWatchRate from "./helper/MovieWatchRate";
 
 
 function ShowEvent() {
-
     let { clubID } = useParams();
     let club = DummyClubData.find(obj => obj.ID === clubID);
     let event = DummyClubEventData.find(obj => obj.clubID === club.ID);
@@ -33,6 +33,13 @@ function ShowEvent() {
     console.log(movie.title);
 
     const [edit, setEdit] = useState(false);
+
+    const [showPrompt, setShowPrompt] = useState(false);
+    const [promptData, setPromptData] = useState(movie);
+
+    const closePrompt = () => {
+        setShowPrompt(false);
+    }
 
     const toggleEdit = () => {
         setEdit(!edit);
@@ -297,8 +304,12 @@ function ShowEvent() {
                     <Grid container spacing={2}>
 
                         <Grid item xs={3}>
+                            <MovieWatchRate isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
 
-                            <FormButton text={"watched"} style={"primary"} />
+                            <FormButton text={"watched"} style={"primary"} onClick={() => {
+                                setPromptData(movie);
+                                setShowPrompt(true);
+                            }}/>
                         </Grid>
 
                         <Grid item xs={3}>
