@@ -17,7 +17,7 @@ class CreateClubViewTestCase(APITestCase,LogInTester):
     def setUp(self):
         self.url = reverse("create_club")
         self.user = User.objects.get(username='johndoe')
-        self.second_club = Club.objects.get(club_name='Beatles')
+        self.other_club = Club.objects.get(club_name='Beatles')
         self.form_input = {
             "club_name": "Sharknado Appreciation Society",
             "mission_statement": "We are a club dedicated to making the world a better place through the power of sharknado",
@@ -48,4 +48,29 @@ class CreateClubViewTestCase(APITestCase,LogInTester):
         self.form_input["club_name"] = ""
         response = self.client.post(self.url, self.form_input)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_club_endpoint_with_non_unique_club_name_returns_400_bad_request(self):
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
+        self.form_input["club_name"] = self.other_club.club_name
+        response = self.client.post(self.url, self.form_input)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_club_endpoint_with_empty_mission_statement_returns_400_bad_request(self):
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
+        self.form_input["mission_statement"] = ""
+        response = self.client.post(self.url, self.form_input)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_club_endpoint_with_empty_theme_returns_400_bad_request(self):
+        self.client.force_authenticate(user=self.user)
+        self.assertTrue(self.user.is_authenticated)
+        self.form_input["theme"] = ""
+        response = self.client.post(self.url, self.form_input)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_post_to_create_club_endpoint_with_user_logged_out_returns_401_unauthorized(self):
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 

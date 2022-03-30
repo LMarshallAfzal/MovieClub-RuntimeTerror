@@ -4,6 +4,7 @@
     "pk": 1,
     "fields": {
       "ml_id": 0,
+      "imdb_id": "1",
       "title": "The Godfather",
       "year": 1972,
       "genres": [6]

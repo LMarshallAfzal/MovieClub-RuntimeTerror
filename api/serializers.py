@@ -247,11 +247,11 @@ class ChangePasswordSerializer(serializers.Serializer):
 class CreateClubSerializer(serializers.Serializer):
     club_name = serializers.CharField(
         required=True,
-        validators=[MaxLengthValidator(50)]
+        validators=[UniqueValidator(queryset=Club.objects.all()),MaxLengthValidator(50)]
     )
 
     mission_statement = serializers.CharField(
-        required=False,
+        required=True,
         validators=[MaxLengthValidator(500)]
     )
 
@@ -273,6 +273,26 @@ class CreateClubSerializer(serializers.Serializer):
         club.save()
 
         return club
+
+class UpdateClubSerializer(serializers.ModelSerializer):
+    
+        club_name = serializers.CharField(
+            required=True,
+            validators=[UniqueValidator(queryset=Club.objects.all()),MaxLengthValidator(50)]
+        )
+    
+        mission_statement = serializers.CharField(
+            required=True,
+            validators=[MaxLengthValidator(500)]
+        )
+    
+        theme = serializers.CharField(
+            required=True,
+            validators=[MaxLengthValidator(500)]
+        )
+        class Meta:
+            model = Club
+            fields = ['club_name', 'mission_statement', 'theme']
 
 
 class CreateMeetingSerializer(serializers.Serializer):

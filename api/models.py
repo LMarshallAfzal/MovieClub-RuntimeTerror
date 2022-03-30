@@ -8,6 +8,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 import datetime
 from datetime import datetime
+from libgravatar import Gravatar
+
 
 
 class User(AbstractUser):
@@ -80,6 +82,16 @@ class User(AbstractUser):
 
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+    def mini_gravatar(self):
+        "Return a URL to a miniature version of the user's gravatar."""
+        return self.gravatar(size=60)
+
+    def gravatar(self, size=120):
+        """Return a URL to the user's gravatar."""
+        gravatar_object = Gravatar(self.email)
+        gravatar_url = gravatar_object.get_image(size=size, default='identicon')
+        return gravatar_url
 
     def get_user_clubs(self):
         return Club.objects.all().filter(
@@ -163,7 +175,7 @@ class Club(models.Model):
 
     mission_statement = models.CharField(
         max_length=500,
-        blank=True,
+        blank=False,
         unique=False
     )
     theme = models.ForeignKey(Genre, on_delete=models.CASCADE)
@@ -222,7 +234,6 @@ class Club(models.Model):
     def __unicode__(self):
         return '%d: %s' % (self.club_name)
 
-
 class Membership(models.Model):
     """
     Membership is an intermediate model that connects Users to Clubs.
@@ -244,6 +255,8 @@ class Membership(models.Model):
     )
     is_organiser = models.BooleanField(default=False)
 
+    notifications = models.BooleanField(default=False)
+
     """We must ensure that only one relationship is created per User-Club pair."""
     class Meta:
         unique_together = ('user', 'club')
@@ -258,13 +271,22 @@ class Membership(models.Model):
             self.is_organiser = True
         self.save()
 
+    def toggle_notifications(self):
+        if self.notifications == True:
+            self.notifications = False
+        else:
+            self.notifications = True
+        self.save()
+
 
 class Movie(models.Model):
 
     ml_id = models.PositiveIntegerField(
         unique=True,
-        default=0
+        default=0,
     )
+
+    imdb_id = models.CharField(max_length=10,unique = True) 
 
     title = models.CharField(
         max_length=100,

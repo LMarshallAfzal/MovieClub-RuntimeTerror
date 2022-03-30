@@ -41,6 +41,7 @@ class WatchListTestCase(APITestCase):
         for id in range(movie_count):
             movie = Movie.objects.create(
                 ml_id= 10000 + id,
+                imdb_id = "100" + str(id),
                 title="Best movie",
                 #genres=[1,2],
                 year=2000 + id,

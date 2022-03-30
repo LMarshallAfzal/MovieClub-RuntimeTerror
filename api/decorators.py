@@ -143,7 +143,7 @@ def user_in_club(view_function):
             user = User.objects.get(id=user_id)
             Membership.objects.get(club=club, user=user)
         except ObjectDoesNotExist:
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
             return view_function(request, club_id, user_id, *args, **kwargs)
     return modified_view_function

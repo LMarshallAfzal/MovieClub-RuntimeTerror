@@ -4,6 +4,7 @@
         "pk": 6,
         "fields": {
             "ml_id": 3,
+            "imdb_id": "10",
             "title": "Grumpier Old Men  ",
             "genres": [1,2,3],
             "year": 1995
@@ -14,6 +15,7 @@
         "pk": 7,
         "fields": {
             "ml_id": 50,
+            "imdb_id": "11",
             "title": "Usual Suspects, The  ",
             "genres": [1,2,3],
             "year": 1995
@@ -24,6 +26,7 @@
         "pk": 8,
         "fields": {
             "ml_id": 101,
+            "imdb_id": "12",
             "title": "Bottle Rocket  ",
             "genres": [1,2,3],
             "year": 1996
@@ -34,6 +37,7 @@
         "pk": 9,
         "fields": {
             "ml_id": 163,
+            "imdb_id": "13",
             "title": "Desperado  ",
             "genres": [1,2,3],
             "year": 1995
@@ -44,6 +48,7 @@
         "pk": 10,
         "fields": {
             "ml_id": 6658,
+            "imdb_id": "14",
             "title": "10  ",
             "genres": [1,2,3],
             "year": 1979
@@ -54,6 +59,7 @@
         "pk": 11,
         "fields": {
             "ml_id": 7541,
+            "imdb_id": "15",
             "title": "100 Girls  ",
             "genres": [1,2,3],
             "year": 2000
@@ -64,6 +70,7 @@
         "pk": 12,
         "fields": {
             "ml_id": 216,
+            "imdb_id": "16",
             "title": "Billy Madison  ",
             "genres": [1,2,3],
             "year": 1995
