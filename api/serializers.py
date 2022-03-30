@@ -286,10 +286,11 @@ class UpdateClubSerializer(serializers.ModelSerializer):
             validators=[MaxLengthValidator(500)]
         )
     
-        theme = serializers.CharField(
-            required=True,
-            validators=[MaxLengthValidator(500)]
+        theme = serializers.PrimaryKeyRelatedField(
+            required  = True,
+            queryset = Genre.objects.all()
         )
+
         class Meta:
             model = Club
             fields = ['club_name', 'mission_statement', 'theme']
