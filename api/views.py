@@ -134,7 +134,6 @@ def get_other_user(request, user_id):
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_current_user(request):

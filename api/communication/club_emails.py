@@ -1,6 +1,9 @@
 from django.core.mail import send_mail
 from backend.settings import EMAIL_HOST_USER
 from django.template.loader import render_to_string
+from .ics_manager import ICSGenerator
+from django.core.mail import EmailMessage
+
 
 class ClubEmail:
 
@@ -10,13 +13,17 @@ class ClubEmail:
     def send_new_meeting_notification(self):
         recipients = []
         meeting = self.club.get_upcoming_meeting()
-        html = render_to_string('new_meeting_email.html',{'cover_url':meeting.movie.cover_link,'meeting_title':meeting.meeting_title,'meeting_description':meeting.description,'meeting_date':meeting.date,'meeting_start_time':meeting.start_time})
+        html = render_to_string('new_meeting_email.html',{'cover_url':meeting.movie.cover_link,'meeting_title':meeting.meeting_title,'meeting_description':meeting.description,'meeting_date':meeting.date,'meeting_start_time':meeting.start_time,'meeting_end_time':meeting.end_time})
         for member in self.club.club_members.filter(membership__notifications=True):
             recipients.append(member.email)
-        send_mail(
+        ICSGenerator(meeting).generate_ics()
+        email = EmailMessage(
             f"{meeting.club}'s upcoming meeting",
-            f'A new meeting got added called: {meeting.meeting_title}.\n It will happen at {meeting.date} and the start time is {meeting.start_time}.',
+            html,
             EMAIL_HOST_USER,
-            recipients,
-            html_message=html
+            to = recipients,
             )
+        email.content_subtype = "html"
+        email.attach_file('temp.ics')
+        email.send()
+        
