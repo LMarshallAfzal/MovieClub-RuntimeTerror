@@ -2,6 +2,7 @@ from ast import Is, IsNot
 from math import perm
 from re import S
 from django import views
+from numpy import average
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -313,6 +314,19 @@ def get_rating(request,movie_id):
     serializer = RatingSerializer(rating,many = False)
     return Response(serializer.data,status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@movie_exists
+def get_average_rating(request,movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    ratings = Rating.objects.filter(movie=movie)
+    if len(ratings) == 0:
+        return Response({movie_id: 0},status=status.HTTP_200_OK)
+    all_movie_ratings = 0
+    for rating in ratings:
+        all_movie_ratings = all_movie_ratings + rating.score
+    average_rating = all_movie_ratings / len(ratings)
+    return Response({movie_id: average_rating},status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
