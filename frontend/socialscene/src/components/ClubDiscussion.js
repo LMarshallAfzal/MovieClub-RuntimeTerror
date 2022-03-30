@@ -119,7 +119,7 @@ function ClubDiscussion() {
                     <Grid container padding={2} spacing={2}>
 
                         <Grid item xs={12}>
-                            <h5 className={"home-page-card-title"}>messages:</h5>
+                            <h5 className={"home-page-card-title"}>messages</h5>
                         </Grid>
 
                         <Grid item xs={12}>
@@ -164,7 +164,7 @@ function ClubDiscussion() {
                                     label="message"
                                     name="message"
                                     value={message.message}
-                                    placeholder={"say something"}
+                                    placeholder={"say something nice"}
                                     variant="outlined"
                                     onChange={(e, dateTime) => onChange(e, dateTime)}
                                     InputProps={{

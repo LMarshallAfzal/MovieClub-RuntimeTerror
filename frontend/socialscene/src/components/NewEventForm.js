@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router";
 import "../styling/components/NewEventForm.css";
-import { dummyRecommendedMovies } from "../pages/data/DummyRecommendedMovies";
+import {DummyRecommendedMovies} from "../pages/data/DummyRecommendedMovies";
 import FormButton from "./FormButton";
 import moviePoster from "../styling/images/empty_movie_poster.png";
 import AuthContext from "./helper/AuthContext";
@@ -96,52 +96,49 @@ function NewEvent() {
         let data = await response.json();
         setMeetingData(data);
     };
-            
+
 
 	useEffect(() => {
 		getRecommendedMovies();
 	}, []);
 
-	return (
-		<div className={"home-page-card-background"}>
-			<Grid container padding={2} spacing={2}>
-				<Grid item xs={12}>
-					<h5 className={"home-page-card-title"}>new event:</h5>
-				</Grid>
+    return (
+        <div className={"home-page-card-background"}>
+            <Grid container padding={2} spacing={2}>
+
+                <Grid item xs={12}>
+                    <h5 className={"home-page-card-title"}>new event:</h5>
+                </Grid>
 
 				<Grid item xs={12}>
-					<Grid
-						container
+					<Grid container
 						direction="row"
 						justifyContent="space-evenly"
-						alignItems="stretch"
-					>
+						alignItems="stretch">
+
 						{recommendedMovies.map((movie) => {
 							return (
 								<Grid item xs={2}>
-									<Card sx={{ flexDirection: "column", height: "100%" }}>
+									<Card sx={{flexDirection: "column", height: "100%"}}>
 										<CardActionArea
-											sx={{ flexDirection: "column", height: "100%" }}
-											onClick={() => setSelectedMovie(movie.id)}
-										>
+											sx={{flexDirection: "column", height: "100%"}}
+											onClick={() => setSelectedMovie(movie.id)}>
+
 											<CardMedia
 												component={"img"}
 												alt={movie.title}
 												image={moviePoster}
 											/>
 
-											<Grid
-												container
-												direction={"column"}
-												alignItems={"center"}
-												textAlign={"center"}
-											>
-												<Rating
-													readOnly
-													sx={{ fontSize: "1.2em" }}
-													name={"read-only"}
-													value={movie.rating}
-												/>
+                                        <Grid container
+                                              direction={"column"}
+                                              alignItems={"center"}
+                                              textAlign={"center"}>
+
+                                            <Rating readOnly
+                                                    sx={{fontSize: "1.2em"}}
+                                                    name={"read-only"}
+                                                    value={movie.rating}/>
 
 												<Tooltip title={movie.title} placement="top-start">
 													<h6 className={"new-event-movie-text"}>
@@ -157,90 +154,92 @@ function NewEvent() {
 					</Grid>
 				</Grid>
 
-				<Grid item xs={6}>
-					<Stack spacing={2}>
-						<TextField
-							id={"outlined"}
-							label={"title:"}
+                <Grid item xs={6}>
+                    <Stack spacing={2}>
+
+                        <TextField
+                            fullWidth
+                            required
+                            placeholder={"event title"}
+                            label={"title"}
                             name={"meeting_title"}
-							placeholder={"event title"}
                             value={meeting_title}
                             onChange={e => onChange(e)}
+                        />
 
-						/>
-						<TextField
-							id={"outlined"}
-							label={"description:"}
+                        <TextField
+                            fullWidth
+                            required
+                            placeholder={"short event description"}
+                            label={"description"}
                             name={"description"}
-							placeholder={"short event description"}
                             value={description}
                             onChange={e => onChange(e)}
-						/>
-						<TextField
-							disabled
-							id="outlined-disabled"
-							label="movie:"
+                        />
+
+                        <TextField
+                            fullWidth
+                            disabled
+                            required
+                            label={"movie"}
                             name={"movie"}
-							value={selectedMovie}
+                            value={selectedMovie}
                             onChange={e => onChange(e)}
-						/>
-					</Stack>
-				</Grid>
-				<Grid item xs={6}>
-					<Stack spacing={2}>
-						<TextField
-							id="date"
-							label="date:"
+                        />
+                    </Stack>
+                </Grid>
+
+                <Grid item xs={6}>
+                    <Stack spacing={2}>
+
+                        <TextField
+                            fullWidth
+                            required
+                            label={"date"}
+                            type={"date"}
                             name={"date"}
-							type="date"
-							defaultValue={tomorrow}
                             value={date}
+                            defaultValue={tomorrow}
                             onChange={e => onChange(e)}
-							fullWidth
-							InputLabelProps={{
-								shrink: true,
-							}}
-						/>
-						<TextField
-							id="time"
-							label="start:"
+                            InputLabelProps={{shrink: true,}}
+                        />
+
+                        <TextField
+                            fullWidth
+                            label={"start"}
+                            type={"time"}
                             name={"start_time"}
-							type="time"
-							defaultValue="17:00"
                             value={start_time}
+                            defaultValue={"17:00"}
                             onChange={e => onChange(e)}
-							InputLabelProps={{
-								shrink: true,
-							}}
-							inputProps={{ step: 300 }}
-							fullWidth
-						/>
-						<TextField
-							id="time"
-							label="end:"
+                            InputLabelProps={{shrink: true,}}
+                            inputProps={{step: 300,}}
+                        />
+
+                        <TextField
+                            fullWidth
+                            label={"end"}
+                            type={"time"}
                             name={"end_time"}
-							type="time"
-							defaultValue="18:00"
                             value={end_time}
+                            defaultValue={"18:00"}
                             onChange={e => onChange(e)}
-							InputLabelProps={{
-								shrink: true,
-							}}
-							inputProps={{ step: 300 }}
-							fullWidth
-						/>
-					</Stack>
-				</Grid>
-				<Grid item xs={12}>
-					<FormButton 
-                        text={"create"} 
+                            InputLabelProps={{shrink: true,}}
+                            inputProps={{step: 300,}}
+                        />
+                    </Stack>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <FormButton
+                        text={"create"}
                         style={"primary"}
-                        onClick={(e) => {createMeeting(e)}} 
+                        onClick={(e) => {createMeeting(e)}}
                     />
-				</Grid>
-			</Grid>
-		</div>
-	);
+                </Grid>
+            </Grid>
+        </div>
+    );
 }
 
 export default NewEvent;

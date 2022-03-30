@@ -14,18 +14,19 @@ import {
 	Tooltip,
 } from "@mui/material";
 import "../styling/components/ShowEvent.css";
-import { useParams } from "react-router";
-import { DummyClubData } from "../pages/data/DummyClubsData";
-import { DummyClubEventData } from "../pages/data/DummyClubEventData";
-import { dummyRecommendedMovies } from "../pages/data/DummyRecommendedMovies";
+import {useParams} from "react-router";
+import {DummyClubData} from "../pages/data/DummyClubsData";
+import {DummyClubEventData} from "../pages/data/DummyClubEventData";
+import {DummyRecommendedMovies} from "../pages/data/DummyRecommendedMovies";
 import EnterButton from "./EnterButton";
 import FormButton from "./FormButton";
+import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
+import MovieWatchRate from "./helper/MovieWatchRate";
 import moviePoster from "../styling/images/empty_movie_poster.png";
-import { DummyClubMemberData } from "../pages/data/DummyClubMemberData";
 import AuthContext from "./helper/AuthContext";
 
 function ShowEvent() {
-	let { user, authTokens } = useContext(AuthContext);
+    let { user, authTokens } = useContext(AuthContext);
 	const [myClubData, setMyClubData] = useState([]);
 	const [myMeetingData, setMyMeetingData] = useState({});
 	const [specificMovie, setSpecificMovie] = useState("");
@@ -212,172 +213,289 @@ function ShowEvent() {
 	// console.log(movie)
 	// let organiser = DummyClubMemberData.find(obj => obj.ID === event.organiserID);
 
-	const [edit, setEdit] = useState(false);
+    const [edit, setEdit] = useState(false);
 
-	const toggleEdit = () => {
-		setEdit(!edit);
-	};
+    const [showPrompt, setShowPrompt] = useState(false);
+    const [promptData, setPromptData] = useState("");
 
-	return (
-		<div className={"home-page-card-background"}>
-			<Grid container padding={2} spacing={2}>
-				<Grid item xs={10}>
-					<h5 className={"show-event-title"}>
-						coming up:{" "}
-						<span className={"show-event-title-movie"}>
-							{myMeetingData.meeting_title}
-						</span>
-					</h5>
-				</Grid>
-				<Grid item xs={2}>
-					{/* <EnterButton text={event.hasStarted ? "attend" : "join"} linkTo={"/https://zoom.us"}/> */}
-				</Grid>
-				<Grid item xs={12}>
-					<Grid container spacing={2}>
-						<Grid item xs={6}>
-							<Grid container spacing={2}>
-								<Grid item xs={12}>
-									<Card>
-										<CardMedia
-											component={"img"}
-											alt={specificMovie.title}
+    const closePrompt = () => {
+        setShowPrompt(false);
+    }
+
+    const openEdit = () => {
+        setEdit(true);
+    }
+
+    const handleSave = () => {
+        console.log("form submitted") // substitute with edit meeting
+        setEdit(false);
+    }
+
+    function EventEditButton() {
+        if (organiser === user) { // replace with organiser condition
+            return (
+
+                 <FormButton
+                     text={edit ? "save" : "edit"}
+                     style={edit ? "primary" : "normal"}
+                     onClick={edit ? handleSave : openEdit} />
+                )
+        } else {
+            return (
+
+                <FormButton
+                    text={"edit"}
+                    style={"disabled"} />
+            )
+        }
+    }
+
+    function EventDeleteButton() {
+        if(organiser === user) { // replace with organiser condition
+            return (
+
+                <FormButton
+                    text={"delete"}
+                    onClick={() => {deleteMeeting(clubID);}}
+                    style={"primary"}
+                />
+            )
+        } else {
+            return (
+
+                <FormButton
+                    text={"delete"}
+                    style={"disabled"}
+                />
+            )
+        }
+    }
+
+    function EventFields() {
+        if (edit === false) {
+            return (
+                <Stack spacing={2}>
+
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"title"}
+                        value={myMeetingData.meeting_title}
+                        InputProps={{readOnly: true}}
+                    />
+
+
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"description"}
+                        value={myMeetingData.description}
+                        InputProps={{readOnly: true}}
+                    />
+
+
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"date"}
+                        type={"date"}
+                        value={myMeetingData.date}
+                        InputProps={{readOnly: true}}
+                        InputLabelProps={{shrink: true}}
+                    />
+
+
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"start"}
+                        type={"time"}
+                        value={myMeetingData.start_time}
+                        InputProps={{readOnly: true}}
+                        InputLabelProps={{shrink: true}}
+                    />
+
+
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"end"}
+                        type={"time"}
+                        value={myMeetingData.end_time}
+                        InputProps={{readOnly: true}}
+                        InputLabelProps={{shrink: true}}
+                    />
+                </Stack>
+            )
+        } else {
+            return (
+                <Stack spacing={2}>
+                {/* form needed?*/}
+
+                    <TextField
+                        fullWidth
+                        required
+                        placeholder={"event title"}
+                        label={"title"}
+                        name={"meeting_title"}
+                        value={myMeetingData.meeting_title}
+                        defaultValue={myMeetingData.meeting_title}
+                        onChange={e => onChange(e)}
+                    />
+
+                    <TextField
+                        fullWidth
+                        required
+                        placeholder={"short event description"}
+                        label={"description"}
+                        name={"description"}
+                        value={myMeetingData.description}
+                        defaultValue={myMeetingData.description}
+                        onChange={e => onChange(e)}
+                    />
+
+                    <TextField
+                        fullWidth
+                        required
+                        label={"date"}
+                        type={"date"}
+                        name={"date"}
+                        value={myMeetingData.date}
+                        defaultValue={myMeetingData.date}
+                        onChange={e => onChange(e)}
+                        InputLabelProps={{shrink: true}}
+                    />
+
+                    <TextField
+                        fullWidth
+                        required
+                        label={"start"}
+                        type={"time"}
+                        name={"start_time"}
+                        value={myMeetingData.start_time}
+                        defaultValue={myMeetingData.start_time}
+                        onChange={e => onChange(e)}
+                        InputLabelProps={{shrink: true,}}
+                        inputProps={{step: 300,}}
+                    />
+
+                    <TextField
+                        fullWidth
+                        required
+                        label={"end"}
+                        type={"time"}
+                        name={"end_time"}
+                        value={myMeetingData.end_time}
+                        defaultValue={myMeetingData.end_time}
+                        onChange={e => onChange(e)}
+                        InputLabelProps={{shrink: true,}}
+                        inputProps={{step: 300,}}
+                    />
+                </Stack>
+            )
+        }
+    }
+
+
+
+
+    return (
+        <div className={"home-page-card-background"}>
+            <Grid container padding={2} spacing={2}>
+
+                <Grid item xs={10}>
+                    <h5 className={"show-event-title"}>coming up:
+                        <span className={"show-event-title-movie"}>{myMeetingData.meeting_title}</span>
+                    </h5>
+                </Grid>
+
+                <Grid item xs={2}>
+                    {/*<EnterButton text={event.hasStarted ? "attend" : "join"} linkTo={"/https://zoom.us"}/>*/}
+                </Grid>
+
+                <Grid item xs={12}>
+
+                    <Grid container spacing={2}>
+
+                        <Grid item xs={6}>
+
+                            <Grid container spacing={2}>
+
+                                <Grid item xs={12}>
+
+                                    <Card>
+
+                                        <CardMedia
+                                            component={"img"}
+                                            alt={specificMovie.title}
 											image={moviePoster}
-										/>
-										<Stack spacing={1} padding={1} alignItems={"center"}>
-											<Rating
-												readOnly
-												sx={{ fontSize: "1.2em" }}
-												precision={0.5}
-												name={"read-only"}
-												// value={movie.rating}
-											/>
-											<Tooltip
-												title={specificMovie.title}
-												placement="top-start"
-											>
-												<h4 className={"new-event-movie-text"}>
-													{specificMovie.title}
-												</h4>
-											</Tooltip>
-										</Stack>
-									</Card>
-								</Grid>
-							</Grid>
-						</Grid>
-						<Grid item xs={6}>
-							<Stack
-								spacing={2}
-								sx={{ flexDirection: "column", height: "100%" }}
-							>
-								<Grid container spacing={2}>
-									<Grid item xs={12}>
-										<Divider>
-											<Chip
-												label={organiser.first_name + " " + organiser.last_name}
-												avatar={
-													<Avatar
-														src={organiser.iconImage}
-														alt={
-															organiser.first_name + " " + organiser.last_name
-														}
-													/>
-												}
-												sx={{ mr: 1, mt: 1 }}
-											/>
-										</Divider>
-									</Grid>
-									<Grid item xs={4}>
-										<Avatar
-											sx={{ width: 1, height: 1 }}
-											src={"organiser.iconImage"}
-										/>
-									</Grid>
+                                        />
 
-									<Grid item xs={8}>
-										<h6 className={"show-event-organiser-title"}>organiser:</h6>
-										<h5>{organiser.first_name}</h5>
+                                        <Stack spacing={1} padding={1} alignItems={"center"}>
+                                            <Rating
+                                                readOnly
+                                                sx={{fontSize: "1.2em"}}
+                                                precision={0.5}
+                                                name={"read-only"}
+                                                // value={movie.rating}
+                                            />
+
+                                            <Tooltip title={specificMovie.title} placement="top-start">
+                                                <h4 className={"new-event-movie-text"}>{specificMovie.title}</h4>
+                                            </Tooltip>
+                                        </Stack>
+                                    </Card>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <Grid item xs={6}>
+
+                            <Stack spacing={2} sx={{flexDirection: "column", height: "100%"}}>
+
+                                <Grid container spacing={2}>
+
+                                    <Grid item xs={12}>
+
+                                        <Divider>
+
+                                            <Chip
+                                                // label={club.clubName} // get club name
+                                                sx={ {mr: 1, mt: 1}}
+                                            />
+                                        </Divider>
+                                    </Grid>
+
+                                    <Grid item xs={4}>
+
+                                        <Avatar
+                                            sx={{ width: 1, height: 1}}
+                                            src={organiser.iconImage}/>
+
+                                    </Grid>
+
+                                    <Grid item xs={8}>
+
+                                        <h6 className={"show-event-organiser-title"}>organiser</h6>
+                                        <h5>{organiser.first_name}</h5>
 										<h5>{organiser.last_name}</h5>
-									</Grid>
+                                    </Grid>
 
-									<Grid item xs={12}>
-										<TextField
-											fullWidth
-											id="outlined-read-only-input"
-											label={"title:"}
-											name={"meeting_title"}
-											value={myMeetingData.meeting_title}
-											InputProps={{ readOnly: true }}
-											// onChange={e => onChange(e)}
-										/>
-									</Grid>
+                                    <Grid item xs={12}>
 
-									<Grid item xs={12}>
-										<TextField
-											fullWidth
-											id="outlined-read-only-input"
-											label={"description:"}
-											name={"description"}
-											value={myMeetingData.description}
-											InputProps={{ readOnly: true }}
-											// onChange={e => onChange(e)}
-										/>
-									</Grid>
+                                        <EventFields />
+                                    </Grid>
+                                </Grid>
+                            </Stack>
+                        </Grid>
+                    </Grid>
+                </Grid>
 
-									<Grid item xs={12}>
-										<TextField
-											id="date"
-											label="date:"
-											type="date"
-											name={"date"}
-											value={myMeetingData.date}
-											fullWidth
-											InputProps={{ readOnly: true }}
-											InputLabelProps={{ shrink: true }}
-											// onChange={e => onChange(e)}
-										/>
-									</Grid>
+                <Grid item xs={12}>
 
-									<Grid item xs={12}>
-										<TextField
-											id="time"
-											label="start:"
-											type="time"
-											name={"start_time"}
-											value={myMeetingData.start_time}
-											fullWidth
-											InputLabelProps={{ shrink: true }}
-											InputProps={{ readOnly: true }}
-											// onChange={e => onChange(e)}
-										/>
-									</Grid>
+                    <Box sx={{border: "1px solid black"}} maxHeight={200} overflow={"auto"} padding={1}>
 
-									<Grid item xs={12}>
-										<TextField
-											id="time"
-											label="end:"
-											type="time"
-											name={"end_time"}
-											value={myMeetingData.end_time}
-											fullWidth
-											InputLabelProps={{ shrink: true }}
-											InputProps={{ readOnly: true }}
-											// onChange={e => onChange(e)}
-										/>
-									</Grid>
-								</Grid>
-							</Stack>
-						</Grid>
-					</Grid>
-				</Grid>
-
-				<Grid item xs={12}>
-					<Box
-						sx={{ border: "1px solid black" }}
-						maxHeight={200}
-						overflow={"auto"}
-						padding={1}
-					>
-						{attendees.map((user) => {
+                        {attendees.map((user) => {
 							return (
 								<Chip
 									label={user.first_name + " " + user.last_name}
@@ -392,45 +510,40 @@ function ShowEvent() {
 								/>
 							);
 						})}
-					</Box>
-				</Grid>
-				<Grid item xs={12}>
-					<Grid container spacing={2}>
-						<Grid item xs={3}>
-							<FormButton
-								text={"watched"}
-								style={"primary"}
-								onClick={() => {
-									addToWatchedList(myMeetingData.movie);
-								}}
-							/>
+                    </Box>
+                </Grid>
+
+                <Grid item xs={12}>
+
+                    <Grid container spacing={2}>
+
+                        <Grid item xs={3}>
+                            <MovieWatchRate isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
+
+                            <FormButton text={"watched"} style={"primary"} onClick={() => {
+                                setPromptData(specificMovie);
+                                setShowPrompt(true);
+                            }}/>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                            <FormButton text={"rate"} />
+                        </Grid>
+
+                        <Grid item xs={3}>
+
+                            <EventEditButton />
+                        </Grid>
+
+                        <Grid item xs={3}>
+
+                            <EventDeleteButton />
 						</Grid>
-						<Grid item xs={3}>
-							<FormButton text={"rate"} />
-						</Grid>
-						<Grid item xs={3}>
-							<FormButton
-								text={edit ? "save" : "edit"}
-								style={edit ? "primary" : "normal"}
-								onClick={toggleEdit}
-								onChange={(e) => {
-									editMeeting(e);
-								}}
-							/>
-						</Grid>
-						<Grid item xs={3}>
-							<FormButton
-								text={"delete"}
-								onClick={() => {
-									deleteMeeting(clubID);
-								}}
-							/>
-						</Grid>
-					</Grid>
-				</Grid>
-			</Grid>
-		</div>
-	);
+                    </Grid>
+                </Grid>
+            </Grid>
+        </div>
+    );
 }
 
 export default ShowEvent;
