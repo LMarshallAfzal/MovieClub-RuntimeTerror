@@ -1,5 +1,5 @@
-import React, {useCallback} from "react";
-import {useNavigate, useParams} from "react-router";
+import React, { useCallback } from "react";
+import { useNavigate, useParams } from "react-router";
 import "../styling/pages/OthersProfile.css";
 import { Tooltip, Rating, CardHeader, CardMedia, Chip, Avatar, Box, Stack, Card, CardContent, TextField, Typography, Grid, Paper, ListItemText, ListItemButton } from "@mui/material";
 import FormButton from "./FormButton";
@@ -7,7 +7,8 @@ import iconImage from "../styling/images/testIconPic.jpg";
 import { DummyDashboardClubsData, meetings, movies } from '../pages/data/DummyDashboardClubsData';
 import { moviesWithPoster } from '../pages/data/DummyMoviesData';
 import moviePoster from '../styling/images/empty_movie_poster.png';
-import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
+import { DummyClubMemberData } from "../pages/data/DummyClubMemberData";
+import MovieListing from "./MovieListing";
 
 function OthersProfile() {
 
@@ -15,10 +16,10 @@ function OthersProfile() {
     let user = DummyClubMemberData.find(obj => obj.ID === userID);
 
     return (
-            <Grid container
-                spacing={2}
-                direction={"row"}
-            >
+        <Grid container
+            spacing={2}
+            direction={"row"}
+        >
 
             <Grid item xs={12} style={{ paddingTop: '20px' }}>
                 <div className={"home-page-card-background"} style={{ padding: '20px' }}>
@@ -46,40 +47,40 @@ function OthersProfile() {
                                 <div style={{ paddingRight: '20px' }}>{user.username}</div>
 
                                 {/* IF LOGGED IN USER IS THE *SAME* AS THE USER VIEWED, THEN SHOW THE EDIT BUTTON  */}
-                                    <div className={"single-button"}>
-                                        <Box
-                                            sx={{
-                                                display: 'grid',
-                                                gridAutoColumns: '1fr',
-                                                gap: 1,
-                                            }}
-                                        >
-                                            <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                                <FormButton
-                                                    text={"edit"}
-                                                // onClick={editProfile}
-                                                />
-                                            </Box>
+                                <div className={"single-button"}>
+                                    <Box
+                                        sx={{
+                                            display: 'grid',
+                                            gridAutoColumns: '1fr',
+                                            gap: 1,
+                                        }}
+                                    >
+                                        <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
+                                            <FormButton
+                                                text={"edit"}
+                                            // onClick={editProfile}
+                                            />
                                         </Box>
-                                    </div>
+                                    </Box>
+                                </div>
 
                                 {/* IF LOGGED IN USER IS *NOT* THE SAME AS THE USER VIEWED, THEN SHOW THE FOLLOW BUTTON  */}
-                                    <div className={"single-button"}>
-                                        <Box
-                                            sx={{
-                                                display: 'grid',
-                                                gridAutoColumns: '1fr',
-                                                gap: 1,
-                                            }}
-                                        >
-                                            <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                                <FormButton
-                                                    text={"follow"}
-                                                // onClick={this.submitForm}
-                                                />
-                                            </Box>
+                                <div className={"single-button"}>
+                                    <Box
+                                        sx={{
+                                            display: 'grid',
+                                            gridAutoColumns: '1fr',
+                                            gap: 1,
+                                        }}
+                                    >
+                                        <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
+                                            <FormButton
+                                                text={"follow"}
+                                            // onClick={this.submitForm}
+                                            />
                                         </Box>
-                                    </div>
+                                    </Box>
+                                </div>
 
                             </div>
                         </Grid>
@@ -111,23 +112,6 @@ function OthersProfile() {
                                         </Typography>
                                     </CardContent>
                                 </Card>
-                                
-                                {/* IF LOGGED IN USER IS *NOT* THE SAME AS THE USER VIEWED, THEN SHOW THE MUTUAL CLUBS LIST  */}
-                                    <div>
-                                        <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
-                                            Mutual Clubs:
-                                        </Typography>
-                                    </div>
-                                    <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
-                                        {/* SUBSTITUTE WITH MUTUAL CLUBS DATA */}
-                                        {DummyDashboardClubsData.map((val) => {
-                                            return (
-                                                <ListItemButton>
-                                                    <ListItemText primary={val.name} />
-                                                </ListItemButton>
-                                            );
-                                        })}
-                                    </Paper>
 
                                 <div>
                                     <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
@@ -170,30 +154,42 @@ function OthersProfile() {
                             <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
 
                                 <Grid item xs={12}>
+                                    {/* IF LOGGED IN USER IS *NOT* THE SAME AS THE USER VIEWED, THEN SHOW THE MUTUAL CLUBS LIST  */}
+                                    <div>
+                                        <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
+                                            Mutual Clubs:
+                                        </Typography>
+                                    </div>
+                                    <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
+                                        {/* SUBSTITUTE WITH MUTUAL CLUBS DATA */}
+                                        {DummyDashboardClubsData.map((val) => {
+                                            return (
+                                                <ListItemButton>
+                                                    <ListItemText primary={val.name} />
+                                                </ListItemButton>
+                                            );
+                                        })}
+                                    </Paper>
+                                </Grid>
+
+                                <Grid item xs={12}>
                                     <Typography sx={{ fontSize: 20 }} color="text.secondary" >
                                         Recently watched movies:
                                     </Typography>
                                 </Grid>
-                                {/* SUBSTITUTE WITH RECENTLY WATCHED MOVIES */}
-                                {moviesWithPoster.slice(0, 5).map((movie) => {
-                                    return (<Grid item>
-                                        <Card sx={{ width: 150 }}>
-                                            <CardMedia
-                                                component="img"
-                                                height="100%"
-                                                image={moviePoster}
-                                                alt={movie.title}
-                                            />
 
-                                            <CardHeader title={
-                                                <Tooltip title={movie.title} placement="top-start">
-                                                    <Typography noWrap maxWidth={"125px"} fontSize="13px" >{movie.title}</Typography>
-                                                </Tooltip>
-                                            } />
-                                        </Card>
-                                    </Grid>
-                                    )
-                                })}
+                                <Stack direction={"row"} overflow={"auto"}>
+                                    {/* SUBSTITUTE WITH RECENTLY WATCHED MOVIES */}
+                                    {moviesWithPoster.slice(0, 5).map((movie) => {
+                                        return (<MovieListing
+                                            movie={movie}
+                                            isMovieClub={false}
+                                            poster={moviePoster}
+                                            hasWatchButton={false}
+                                        />
+                                        )
+                                    })}
+                                </Stack>
 
                                 <Grid item xs={12}>
                                     <Typography sx={{ fontSize: 20 }} color="text.secondary" >
@@ -201,32 +197,24 @@ function OthersProfile() {
                                     </Typography>
                                 </Grid>
                                 {/* SUBSTITUTE WITH FAVOURITE MOVIES */}
-                                {moviesWithPoster.slice(0, 5).map((movie) => {
-                                    return (<Grid item>
-                                        <Card sx={{ width: 150 }}>
-                                            <CardMedia
-                                                component="img"
-                                                height="100%"
-                                                image={moviePoster}
-                                                alt={movie.title}
-                                            />
-
-                                            <CardHeader title={
-                                                <Tooltip title={movie.title} placement="top-start">
-                                                    <Typography noWrap maxWidth={"125px"} fontSize="13px" >{movie.title}</Typography>
-                                                </Tooltip>
-                                            } />
-                                        </Card>
-                                    </Grid>
-                                    )
-                                })}
+                                <Stack direction={"row"} overflow={"auto"}>
+                                    {moviesWithPoster.slice(0, 5).map((movie) => {
+                                        return (<MovieListing
+                                            movie={movie}
+                                            isMovieClub={false}
+                                            poster={moviePoster}
+                                            hasWatchButton={false}
+                                        />
+                                        )
+                                    })}
+                                </Stack>
                             </Grid>
                         </Grid>
 
                     </Grid>
                 </div>
             </Grid>
-            </Grid >
+        </Grid >
     );
 }
 

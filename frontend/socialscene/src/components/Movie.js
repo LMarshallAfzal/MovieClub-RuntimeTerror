@@ -10,7 +10,7 @@ import { DummyClubMemberData } from "../pages/data/DummyClubMemberData";
 
 
 function Movie() {
-    let {movieID} = useParams();
+    let { movieID } = useParams();
 
     return (
         <Grid container
@@ -31,7 +31,6 @@ function Movie() {
                     // alignItems="center"
                     >
                         <Grid item xs={4}>
-
                             <Grid item>
                                 <Stack paddingTop={1} alignItems={"center"} spacing={1}>
                                     <Card sx={{ width: "100%" }}>
@@ -47,20 +46,20 @@ function Movie() {
                             </Grid>
                         </Grid>
 
-                        <Grid item xs={8}>
+                        <Grid item xs={4}>
                             <Stack spacing={2}>
-
 
                                 <Card>
                                     <CardContent>
                                         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                                            Year and genre:
+                                            year | runtime | genre :
                                         </Typography>
                                         {/* UNCOMMENT AND SUBSTITUTE WITH MOVIE GENRE */}
                                         {/* {MOVIEGENRE.map((preference) =>
                                     return <Chip style={{margin:'5px'}} label={preference} />
                                     )} */}
-                                        <Chip  label="2021" />
+                                        <Chip style={{ margin: '5px' }} label="2021" />
+                                        <Chip style={{ margin: '5px' }} label="125 min" />
                                         <Chip style={{ margin: '5px' }} label="Horror" />
                                         <Chip style={{ margin: '5px' }} label="Fantasy" />
                                     </CardContent>
@@ -69,47 +68,72 @@ function Movie() {
                                 <Card>
                                     <CardContent>
                                         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                                            Director:
+                                            director:
                                         </Typography>
-                                        <Typography sx={{ fontSize: 25 }} variant="body2">
-                                            Christopher Nolan
-                                        </Typography>
+                                        {/* THE DIRECTOR */}
+                                        <h6>Christopher Nolan</h6>
                                     </CardContent>
                                 </Card>
 
                                 <Card>
                                     <CardContent>
                                         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                                            Rate the movie:
+                                            actors:
+                                        </Typography>
+                                        {/*THE ACTORS */}
+                                        <h6>Robin Williams, Kirsten Dunst, Bonnie Hunt</h6>
+                                    </CardContent>
+                                </Card>
+
+                                <Card>
+                                    <CardContent>
+                                        <Typography sx={{ fontSize: 20 }} color="text.secondary" >
+                                            rate the movie:
                                         </Typography>
                                         <Rating
                                             name="simple-controlled"
                                             sx={{ width: "100%" }}
                                             precision={0.5}
                                             max={5}
+                                            paddingBottom={1}
+                                        />
+                                        <FormButton
+                                            text={"watch"}
+                                        // onClick={() => {
+                                        //     addToWatchedList(movie.id);
+                                        // }}
+                                        // onChange={() => {
+                                        //     getRecommendedMovies();
+                                        // }}
                                         />
                                     </CardContent>
                                 </Card>
-
-                                <div>
-                                    <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
-                                        Casts:
-                                    </Typography>
-                                </div>
-                                <Paper style={{ maxHeight: 110, overflow: 'auto' }}>
-                                    <Stack direction={"row"}>
-                                        {/* SUBSTITUTE WITH MUTUAL CLUBS DATA */}
-                                        {DummyDashboardClubsData.map((val) => {
-                                            return (
-                                                <ListItemButton>
-                                                    <ListItemText primary={val.name} />
-                                                </ListItemButton>
-                                            );
-                                        })}
-                                    </Stack>
-                                </Paper>
-
                             </Stack>
+                        </Grid>
+
+                        <Grid item xs={4}>
+                            <Stack spacing={2}>
+                                <Card>
+                                    <CardContent>
+                                        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+                                            awards:
+                                        </Typography>
+                                        {/* THE PLOT */}
+                                        <h6>4 wins & 11 nominations</h6>
+                                    </CardContent>
+                                </Card>
+
+                                <Card>
+                                    <CardContent>
+                                        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+                                            plot:
+                                        </Typography>
+                                        {/* THE PLOT */}
+                                        <h6>When two kids find and play a magical board game, they release a man trapped in it for decades - and a host of dangers that can only be stopped by finishing the game.</h6>
+                                    </CardContent>
+                                </Card>
+                            </Stack>
+
                         </Grid>
 
                     </Grid>

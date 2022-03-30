@@ -13,6 +13,7 @@ import moviePoster from '../../styling/images/empty_movie_poster.png';
 import { moviesWithPoster } from "../data/DummyMoviesData";
 import { useNavigate } from "react-router";
 import HomePageTitle from "../../components/HomePageTitle";
+import MovieListing from "../../components/MovieListing";
 
 
 
@@ -166,37 +167,14 @@ const Home = () => {
 
                                                 <Stack direction={"row"} overflow={"auto"}>
                                                     {moviesWithPoster.map((movie) => {
-                                                        return (<ListItem sx={{ p: 1 }}>
-                                                            <Card sx={{ width: 150 }}>
-                                                                <CardMedia
-                                                                    component="img"
-                                                                    sx={{ height: "100%" }}
-                                                                    image={moviePoster}
-                                                                    alt={movie.title}
+                                                        return (
+                                                            <MovieListing
+                                                                movie={movie}
+                                                                isMovieClub={false}
+                                                                poster={moviePoster}
+                                                                hasWatchButton={true} 
                                                                 />
-
-                                                                <Stack paddingTop={1} alignItems={"center"}>
-                                                                    <Rating
-                                                                        name="simple-controlled"
-                                                                        sx={{ fontSize: "1.2em" }}
-                                                                        precision={0.5}
-                                                                        max={5}
-                                                                    // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-                                                                    />
-                                                                </Stack>
-                                                                <Stack
-                                                                    spacing={1}
-                                                                    padding={1}
-                                                                    alignItems={"left"}>
-
-                                                                    <Tooltip title={movie.title} placement="top-start">
-                                                                        <Typography noWrap>{movie.title}</Typography>
-                                                                    </Tooltip>
-
-                                                                    <FormButton text={"watch"} />
-                                                                </Stack>
-                                                            </Card>
-                                                        </ListItem>)
+                                                        )
                                                     })}
                                                 </Stack>
                                             </Grid>

@@ -34,6 +34,28 @@ function MovieListing(props) {
         }
     }
 
+    function WatchButton() {
+        if (props.hasWatchButton === true) {
+            return (
+                <>
+                    <FormButton
+                        text={"watch"}
+                    // onClick={() => {
+                    //     addToWatchedList(movie.id);
+                    // }}
+                    // onChange={() => {
+                    //     getRecommendedMovies();
+                    // }}
+                    />
+                </>
+            )
+        } else {
+            return (
+                <></>
+            )
+        }
+    }
+
 
     return (
         <ListItem sx={{ p: 1 }}>
@@ -66,15 +88,7 @@ function MovieListing(props) {
                         <Typography noWrap>{props.movie.title}</Typography>
                     </Tooltip>
                     <MovieClub />
-                    <FormButton
-                        text={"watch"}
-                    // onClick={() => {
-                    //     addToWatchedList(movie.id);
-                    // }}
-                    // onChange={() => {
-                    //     getRecommendedMovies();
-                    // }}
-                    />
+                    <WatchButton />
                     <clubInfo movie={props.movie} />
                 </Stack>
             </Card>

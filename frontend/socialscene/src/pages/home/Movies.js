@@ -302,6 +302,7 @@ const Movies = () => {
 												isClubMovie={true}
 												movie={movie}
 												poster={moviePoster}
+												hasWatchButton={true}
 											/>
 										);
 									})}
@@ -327,6 +328,7 @@ const Movies = () => {
 												poster={moviePoster}
 												isClubMovie={false}
 												movie={movie}
+												hasWatchButton={true}
 											/>
 										);
 									})}
@@ -351,6 +353,7 @@ const Movies = () => {
 												poster={moviePoster}
 												isClubMovie={false}
 												movie={movie}
+												hasWatchButton={true}
 											/>
 										);
 									})}

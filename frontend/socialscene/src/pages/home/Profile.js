@@ -9,6 +9,7 @@ import { DummyDashboardClubsData, meetings, movies } from '../../pages/data/Dumm
 import { moviesWithPoster } from '../../pages/data/DummyMoviesData';
 import moviePoster from '../../styling/images/empty_movie_poster.png';
 import { DummyClubMemberData } from "../../pages/data/DummyClubMemberData";
+import MovieListing from "../../components/MovieListing";
 
 const Profile = () => {
     const [userData, setUserData] = useState('')
@@ -261,23 +262,6 @@ const Profile = () => {
                                 <div>
                                     <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
                                         {/* SUBSTITUTE 30 WITH NUMBER OF FOLLOWING */}
-                                        My clubs
-                                    </Typography>
-                                </div>
-                                <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
-                                    {/* SUBSTITUTE WITH LIST OF PPL THE USER FOLLOWS */}
-                                    {DummyDashboardClubsData.map((val) => {
-                                        return (
-                                            <ListItemButton>
-                                                <ListItemText primary={val.name} />
-                                            </ListItemButton>
-                                        );
-                                    })}
-                                </Paper>
-
-                                <div>
-                                    <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
-                                        {/* SUBSTITUTE 30 WITH NUMBER OF FOLLOWING */}
                                         Following 30
                                     </Typography>
                                 </div>
@@ -316,30 +300,42 @@ const Profile = () => {
                             <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
 
                                 <Grid item xs={12}>
+                                    <div>
+                                        <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
+                                            {/* SUBSTITUTE 30 WITH NUMBER OF FOLLOWING */}
+                                            My clubs
+                                        </Typography>
+                                    </div>
+                                    <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
+                                        {/* SUBSTITUTE WITH LIST OF PPL THE USER FOLLOWS */}
+                                        {DummyDashboardClubsData.map((val) => {
+                                            return (
+                                                <ListItemButton>
+                                                    <ListItemText primary={val.name} />
+                                                </ListItemButton>
+                                            );
+                                        })}
+                                    </Paper>
+                                </Grid>
+
+                                <Grid item xs={12}>
                                     <Typography sx={{ fontSize: 20 }} color="text.secondary" >
                                         Recently watched movies:
                                     </Typography>
                                 </Grid>
-                                {/* SUBSTITUTE WITH RECENTLY WATCHED MOVIES */}
-                                {moviesWithPoster.slice(0, 5).map((movie) => {
-                                    return (<Grid item>
-                                        <Card sx={{ width: 150 }}>
-                                            <CardMedia
-                                                component="img"
-                                                height="100%"
-                                                image={moviePoster}
-                                                alt={movie.title}
+                                <Stack direction={"row"} overflow={"auto"}>
+                                    {/* SUBSTITUTE WITH RECENTLY WATCHED MOVIES */}
+                                    {moviesWithPoster.slice(0, 5).map((movie) => {
+                                        return (
+                                            <MovieListing
+                                                movie={movie}
+                                                isMovieClub={false}
+                                                poster={moviePoster}
+                                                hasWatchButton={false}
                                             />
-
-                                            <CardHeader title={
-                                                <Tooltip title={movie.title} placement="top-start">
-                                                    <Typography noWrap maxWidth={"125px"} fontSize="13px" >{movie.title}</Typography>
-                                                </Tooltip>
-                                            } />
-                                        </Card>
-                                    </Grid>
-                                    )
-                                })}
+                                        )
+                                    })}
+                                </Stack>
 
                                 <Grid item xs={12}>
                                     <Typography sx={{ fontSize: 20 }} color="text.secondary" >
@@ -347,25 +343,19 @@ const Profile = () => {
                                     </Typography>
                                 </Grid>
                                 {/* SUBSTITUTE WITH FAVOURITE MOVIES */}
-                                {moviesWithPoster.slice(0, 5).map((movie) => {
-                                    return (<Grid item>
-                                        <Card sx={{ width: 150 }}>
-                                            <CardMedia
-                                                component="img"
-                                                height="100%"
-                                                image={moviePoster}
-                                                alt={movie.title}
+                                <Stack direction={"row"} overflow={"auto"}>
+                                    {/* SUBSTITUTE WITH RECENTLY WATCHED MOVIES */}
+                                    {moviesWithPoster.slice(0, 5).map((movie) => {
+                                        return (
+                                            <MovieListing
+                                                movie={movie}
+                                                isMovieClub={false}
+                                                poster={moviePoster}
+                                                hasWatchButton={false}
                                             />
-
-                                            <CardHeader title={
-                                                <Tooltip title={movie.title} placement="top-start">
-                                                    <Typography noWrap maxWidth={"125px"} fontSize="13px" >{movie.title}</Typography>
-                                                </Tooltip>
-                                            } />
-                                        </Card>
-                                    </Grid>
-                                    )
-                                })}
+                                        )
+                                    })}
+                                </Stack>
                             </Grid>
                         </Grid>
                     </Grid>
