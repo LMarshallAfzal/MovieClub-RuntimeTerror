@@ -22,7 +22,6 @@ const Homepage = () => {
 
 
     const [movie, setMovie] = useState();
-    const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
     axios
@@ -33,7 +32,6 @@ const Homepage = () => {
   })
 
 
-console.log(movie);
 
     return (
         <>

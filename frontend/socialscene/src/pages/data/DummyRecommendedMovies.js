@@ -28,6 +28,8 @@ export const DummyRecommendedMovies = [
         poster: movie1,
         rating: 3.1,
         watched: false,
+        IMDB: "4975722",
+
     },
     {
         ID: 2,
@@ -35,6 +37,7 @@ export const DummyRecommendedMovies = [
         poster: movie2,
         rating: 4.9,
         watched: true,
+        IMDB: "0499549",
     },
     {
         ID: 3,
@@ -42,6 +45,7 @@ export const DummyRecommendedMovies = [
         poster: movie3,
         rating: 2.8,
         watched: false,
+        IMDB: "0389790",
     },
     {
         ID: 4,
@@ -49,6 +53,7 @@ export const DummyRecommendedMovies = [
         poster: movie4,
         rating: 5,
         watched: false,
+        IMDB: "0347149",
     },
     {
         ID: 5,
@@ -56,6 +61,7 @@ export const DummyRecommendedMovies = [
         poster: movie5,
         rating: 4.3,
         watched: true,
+        IMDB: "0479952",
     },
     {
         ID: 6,
@@ -63,6 +69,7 @@ export const DummyRecommendedMovies = [
         poster: movie6,
         rating: 3.7,
         watched: true,
+        IMDB: "1670345",
     },
     {
         ID: 7,
@@ -70,6 +77,7 @@ export const DummyRecommendedMovies = [
         poster: movie7,
         rating: 4.6,
         watched: true,
+        IMDB: "3890160",
     },
     {
         ID: 8,
@@ -77,6 +85,7 @@ export const DummyRecommendedMovies = [
         poster: movie8,
         rating: 3.2,
         watched: true,
+        IMDB: "0398286",
     },
     {
         ID: 9,
@@ -84,6 +93,7 @@ export const DummyRecommendedMovies = [
         poster: movie9,
         rating: 5,
         watched: true,
+        IMDB: "0268380",
     },
     {
         ID: 10,
@@ -91,6 +101,7 @@ export const DummyRecommendedMovies = [
         poster: movie10,
         rating: 2.9,
         watched: true,
+        IMDB: "0110357",
     },
     {
         ID: 11,
@@ -98,6 +109,7 @@ export const DummyRecommendedMovies = [
         poster: movie11,
         rating: 4.5,
         watched: true,
+        IMDB: "2980516",
     },
     {
         ID: 12,
@@ -105,6 +117,7 @@ export const DummyRecommendedMovies = [
         poster: movie12,
         rating: 4.8,
         watched: true,
+        IMDB: "0948470",
     },
     {
         ID: 13,
@@ -112,6 +125,7 @@ export const DummyRecommendedMovies = [
         poster: movie13,
         rating: 3.9,
         watched: true,
+        IMDB: "0073195",
     },
     {
         ID: 14,
@@ -119,6 +133,7 @@ export const DummyRecommendedMovies = [
         poster: movie14,
         rating: 4.0,
         watched: true,
+        IMDB: "0458290",
     },
     {
         ID: 15,
@@ -126,6 +141,7 @@ export const DummyRecommendedMovies = [
         poster: movie15,
         rating: 4.2,
         watched: true,
+        IMDB: "0298148",
     },
     {
         ID: 16,
@@ -133,6 +149,7 @@ export const DummyRecommendedMovies = [
         poster: movie16,
         rating: 4.7,
         watched: true,
+        IMDB: "9130508",
     },
     {
         ID: 17,
@@ -140,6 +157,7 @@ export const DummyRecommendedMovies = [
         poster: movie17,
         rating: 3.2,
         watched: true,
+        IMDB: "2304589",
     },
     {
         ID: 18,
@@ -147,6 +165,7 @@ export const DummyRecommendedMovies = [
         poster: movie18,
         rating: 1.0,
         watched: true,
+        IMDB: "0419887",
     },
     {
         ID: 19,
@@ -154,6 +173,7 @@ export const DummyRecommendedMovies = [
         poster: movie19,
         rating: 2.7,
         watched: true,
+        IMDB: "0317705",
     },
     {
         ID: 20,
@@ -161,5 +181,6 @@ export const DummyRecommendedMovies = [
         poster: movie20,
         rating: 3.8,
         watched: true,
+        IMDB: "0864835",
     },
 ]

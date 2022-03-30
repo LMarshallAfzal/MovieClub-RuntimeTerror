@@ -20,7 +20,7 @@ import {
     ListItemText,
     Autocomplete,
     Button,
-    ImageList, ImageListItem, ImageListItemBar
+    ImageList, ImageListItem, ImageListItemBar, Skeleton
 } from "@mui/material";
 import FormButton from "../../components/FormButton";
 import { DummyDashboardClubsData, meetings, movies } from '../data/DummyDashboardClubsData';
@@ -38,6 +38,7 @@ import {DummyClubData} from "../data/DummyClubsData";
 import ClubListing from "../../components/ClubListing";
 import movieQuote from "popular-movie-quotes";
 import MovieQuote from "../../components/MovieQuote";
+import {MovieDataAPI} from "../../components/helper/MovieDataAPI";
 
 
 
@@ -50,10 +51,8 @@ const Home = () => {
     const [myClubData, setMyClubData] = useState([]);
     let { user, authTokens } = useContext(AuthContext)
 
-    useEffect(() => {
-    }, [])
-
-    console.log(movieQuote.getSomeRandom(2));
+    // useEffect(() => {
+    // }, [])
 
     let submitCreateClubForm = async (e) => {
         e.preventDefault()
@@ -76,6 +75,8 @@ const Home = () => {
         }
 
     }
+
+
 
     const navigate = useNavigate();
     const moreMovies = useCallback(() => navigate('movies', { replace: false }), [navigate]);
@@ -144,10 +145,9 @@ const Home = () => {
                                                             <CardMedia
                                                                 component="img"
                                                                 sx={{ height: "100%" }}
-                                                                image={moviePoster}
+                                                                image={movie.poster}
                                                                 alt={movie.title}
                                                             />
-
                                                             <Stack paddingTop={1} alignItems={"center"}>
                                                                 <Rating
                                                                     name="simple-controlled"
@@ -219,22 +219,28 @@ const Home = () => {
                         </Grid>
                     </Grid>
 
-                <Grid item xs={3} height={"inherit"}>
-                    <Box sx={{height: "100%", overflowY: 'scroll' }}>
-                    <ImageList variant="masonry" cols={2} gap={2}>
-                        {DummyRecommendedMovies.map((item) => (
-                            <ImageListItem key={item.poster}>
-                                <img
-                                    src={`${item.poster}?w=248&fit=crop&auto=format`}
-                                    srcSet={`${item.poster}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                    alt={item.title}
-                                    loading="lazy"
-                                />
-                            </ImageListItem>
-                        ))}
-                    </ImageList>
-                        </Box>
-                </Grid>
+                {/*<Grid item xs={3} height={"inherit"}>*/}
+                {/*    <Box sx={{height: "100%", overflowY: 'scroll' }}>*/}
+                {/*        <ImageList variant="masonry" cols={2} gap={2}>*/}
+                {/*            {DummyRecommendedMovies.map((item) => {*/}
+                {/*                let movieData = MovieDataAPI(item.IMDB);*/}
+                {/*                return(*/}
+                {/*                    <ImageListItem key={item.poster}>*/}
+                {/*                        {(movieData) ? (*/}
+                {/*                            <img*/}
+                {/*                                src={`${movieData.Poster}?w=248&fit=crop&auto=format`}*/}
+                {/*                                srcSet={`${movieData.Poster}?w=248&fit=crop&auto=format&dpr=2 2x`}*/}
+                {/*                                alt={item.title}*/}
+                {/*                                loading="lazy"*/}
+                {/*                            />*/}
+                {/*                        ) : (*/}
+                {/*                            <Skeleton variant="rectangular" height={1} width={1} />*/}
+                {/*                        )}*/}
+                {/*                    </ImageListItem>*/}
+                {/*                )})}*/}
+                {/*        </ImageList>*/}
+                {/*    </Box>*/}
+                {/*</Grid>*/}
 
                 </Grid>
     );
