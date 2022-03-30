@@ -264,7 +264,7 @@ class Membership(models.Model):
         self.save()
 class Movie(models.Model):
 
-    imdb_id = models.PositiveIntegerField(default=0,unique = True)    
+    imdb_id = models.CharField(max_length=10,unique = True)    
 
     ml_id = models.PositiveIntegerField(
         unique=True,

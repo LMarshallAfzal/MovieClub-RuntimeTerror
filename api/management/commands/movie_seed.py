@@ -1,3 +1,4 @@
+from asyncore import write
 from django.core.management.base import BaseCommand
 from api.models import Movie
 from django.db import IntegrityError
@@ -12,13 +13,13 @@ class Command(BaseCommand):
         super().__init__()
 
     def handle(self, *args, **options):
-        file = pd.read_csv("recommender/dataset-latest/movies.csv",encoding='latin-1')
+        file = pd.read_csv("recommender/dataset-latest/movies.csv",dtype = str,encoding='latin-1')
         movie_count = 0
         for index,row in file.iterrows():
             print(f'Seeding movie {movie_count}',  end='\r')
-            Movie.objects.create(
+            movie = Movie.objects.create(
                 ml_id = int(row['movieId']),
-                imdb_id = int(row['imdbId']),
+                imdb_id = row['imdb_id'],
                 title = row['title'],
                 genres = str(row['genres']).replace('|',','),
                 year = int(row['year'])
@@ -27,3 +28,5 @@ class Command(BaseCommand):
             movie_count+=1
         print('Movie seeding complete')
         print(f'Seeded {movie_count} movies')
+
+                
