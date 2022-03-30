@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Box, Grid, Stack, TextField, Button } from "@mui/material";
+import { FormControlLabel, Typography, Checkbox, Box, Grid, Stack, TextField, Button } from "@mui/material";
 import "../../styling/pages/Options.css";
 import AuthContext from "../../components/helper/AuthContext";
 import FormButton from "../../components/FormButton";
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import HomePageTitle from "../../components/HomePageTitle";
 
 const Options = () => {
@@ -12,7 +14,7 @@ const Options = () => {
         new_password_confirmation: '',
     })
 
-    let {authTokens} = useContext(AuthContext)
+    let { authTokens } = useContext(AuthContext)
 
     const [oldPasswordError, setOldPasswordError] = useState(false)
     const [newPasswordError, setNewPasswordError] = useState(false)
@@ -22,8 +24,8 @@ const Options = () => {
     const [errorNewPasswordConfirmationText, setNewPasswordConfirmationErrorText] = useState('')
 
     const onChange = (e) => {
-        setPasswordData( fieldData => ({...fieldData, [e.target.name]: e.target.value}))
-    }; 
+        setPasswordData(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
+    };
 
     let resetErrorState = () => {
         setOldPasswordError(false);
@@ -37,19 +39,19 @@ const Options = () => {
 
     let errorHandler = (e, data) => {
         e.preventDefault()
-        if((Object.keys(data)).includes('old_password')) {
+        if ((Object.keys(data)).includes('old_password')) {
             setOldPasswordError(true)
             setOldPasswordErrorText(data.old_password)
         }
-        if((Object.keys(data)).includes('new_password')) {
+        if ((Object.keys(data)).includes('new_password')) {
             setNewPasswordError(true)
             setNewPasswordErrorText(data.new_password)
         }
-        if((Object.keys(data)).includes('new_password_confirmation')) {
+        if ((Object.keys(data)).includes('new_password_confirmation')) {
             setNewPasswordConfirmationError(true)
             setNewPasswordConfirmationErrorText(data.new_password_cofirmation)
         }
-        if((Object.keys(data)).includes('non_field_errors')) {
+        if ((Object.keys(data)).includes('non_field_errors')) {
             setNewPasswordError(true)
             setNewPasswordErrorText(data.non_field_errors)
             setNewPasswordConfirmationError(true)
@@ -62,9 +64,9 @@ const Options = () => {
         resetErrorState()
         let response = await fetch('http://127.0.0.1:8000/change_password/', {
             method: 'PUT',
-            body:JSON.stringify({
-                "old_password": passwordData.old_password, 
-                "new_password": passwordData.new_password, 
+            body: JSON.stringify({
+                "old_password": passwordData.old_password,
+                "new_password": passwordData.new_password,
                 "new_password_confirmation": passwordData.new_password_confirmation,
             }),
             headers: {
@@ -73,104 +75,117 @@ const Options = () => {
             },
         })
         let data = await response.json()
-        if(response.status === 200) {
+        if (response.status === 200) {
             setPasswordData(data);
             alert("You have successfully changed you password")
         }
         else {
             errorHandler(e, data)
-        }  
+        }
     }
-    
+
+
+
     return (
         <>
-            <HomePageTitle title={"options"}/>
+            <HomePageTitle title={"options"} />
 
-        <Grid container
-              direction={"row"}
-              spacing={2}
-              padding={2}
-        >
+            <Grid container
+                direction={"row"}
+                spacing={2}
+                padding={2}
+            >
 
-            <Grid item xs={6}>
+                <Grid item xs={6}>
 
-                <form onSubmit={submitChangePasswordForm} className={"home-page-card-background"}>
-                    <Grid container padding={2} spacing={2}>
+                    <form onSubmit={submitChangePasswordForm} className={"home-page-card-background"}>
+                        <Grid container padding={2} spacing={2}>
 
-                        <Grid item xs={12}>
-                            <h5 className={"home-page-card-title"}>change password:</h5>
-                        </Grid>
+                            <Grid item xs={12}>
+                                <h5 className={"home-page-card-title"}>change password:</h5>
+                            </Grid>
 
-                        <Grid item xs={12}>
-                             <Stack spacing={2} height={"100%"}>
+                            <Grid item xs={12}>
+                                <Stack spacing={2} height={"100%"}>
 
-                                 <TextField
-                                     error={oldPasswordError}
-                                     helperText={errorOldPasswordText}
-                                     required
-                                     fullWidth
-                                     id={"outlined-basic"}
-                                     label={"current"}
-                                     name={"old_password"}
-                                     type={"password"}
-                                     variant={"outlined"}
-                                     value={passwordData.old_password}
-                                     onChange={e => onChange(e)}
-                                 />
-
-                                 <TextField
-                                     error={newPasswordError}
-                                     helperText={errorNewPasswordText}
-                                     required
-                                     fullWidth
-                                     id={"outlined-basic"}
-                                     label={"new"}
-                                     name={"new_password"}
-                                     type={"password"}
-                                     variant={"outlined"}
-                                     value={passwordData.password_confirmation}
-                                     onChange={e => onChange(e)}
-                                 />
-
-                                 <TextField
-                                     error={newPasswordConfirmationError}
-                                     helperText={errorNewPasswordConfirmationText}
-                                     required
-                                     fullWidth
-                                     id={"outlined-basic"}
-                                     label={"confirm"}
-                                     name={"new_password_confirmation"}
-                                     type={"password"}
-                                     variant={"outlined"}
-                                     value={passwordData.new_password_confirmation}
-                                     onChange={e => onChange(e)}
-                                 />
-
-                                 <FormButton
-                                     text={"submit"}
-                                     onClick={submitChangePasswordForm}
-                                     type="submit"
-                                     style={"primary"}
+                                    <TextField
+                                        error={oldPasswordError}
+                                        helperText={errorOldPasswordText}
+                                        required
+                                        fullWidth
+                                        id={"outlined-basic"}
+                                        label={"current"}
+                                        name={"old_password"}
+                                        type={"password"}
+                                        variant={"outlined"}
+                                        value={passwordData.old_password}
+                                        onChange={e => onChange(e)}
                                     />
-                             </Stack>
+
+                                    <TextField
+                                        error={newPasswordError}
+                                        helperText={errorNewPasswordText}
+                                        required
+                                        fullWidth
+                                        id={"outlined-basic"}
+                                        label={"new"}
+                                        name={"new_password"}
+                                        type={"password"}
+                                        variant={"outlined"}
+                                        value={passwordData.password_confirmation}
+                                        onChange={e => onChange(e)}
+                                    />
+
+                                    <TextField
+                                        error={newPasswordConfirmationError}
+                                        helperText={errorNewPasswordConfirmationText}
+                                        required
+                                        fullWidth
+                                        id={"outlined-basic"}
+                                        label={"confirm"}
+                                        name={"new_password_confirmation"}
+                                        type={"password"}
+                                        variant={"outlined"}
+                                        value={passwordData.new_password_confirmation}
+                                        onChange={e => onChange(e)}
+                                    />
+
+                                    <FormButton
+                                        text={"submit"}
+                                        onClick={submitChangePasswordForm}
+                                        type="submit"
+                                        style={"primary"}
+                                    />
+                                </Stack>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </form>
-            </Grid>
+                    </form>
 
-            <Grid item xs={6}>
-                <div className={"home-page-card-background"}>
 
-                    <Grid container direction={"row"} padding={2}>
 
-                        <Grid item xs={11}>
-                            <h5 className={"home-page-card-title"}>notifications</h5>
+                </Grid>
+
+                <Grid item xs={6}>
+                    <div className={"home-page-card-background"}>
+
+                        <Grid container direction={"row"} padding={2}>
+
+                            <Grid item xs={11}>
+                                <h5 className={"home-page-card-title"}>notifications:</h5>
+                                <FormControlLabel
+                                    value="end"
+                                    control={<Checkbox icon={<NotificationsNoneIcon />} checkedIcon={<NotificationsActiveIcon />} color="default" />}
+                                    label={
+                                        <Typography noWrap fontSize={"20px"}>Turn on to receive emails about new meetings.</Typography>
+                                    }
+                                    labelPlacement="end"
+                                />
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </div>
+                    </div>
+                </Grid>
             </Grid>
-        </Grid>
-            </>
+        </>
     );
 }
 
