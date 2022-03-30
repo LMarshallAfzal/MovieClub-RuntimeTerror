@@ -13,7 +13,18 @@ class ClubEmail:
     def send_new_meeting_notification(self):
         recipients = []
         meeting = self.club.get_upcoming_meeting()
-        html = render_to_string('new_meeting_email.html',{'cover_url':meeting.movie.cover_link,'meeting_title':meeting.meeting_title,'meeting_description':meeting.description,'meeting_date':meeting.date,'meeting_start_time':meeting.start_time,'meeting_end_time':meeting.end_time})
+        html = render_to_string('new_meeting_email.html',
+        {'cover_url':meeting.movie.cover_link,
+        'meeting_title':meeting.meeting_title,
+        'meeting_description':meeting.description,
+        'meeting_date':meeting.date,
+        'meeting_start_time':meeting.start_time,
+        'meeting_end_time':meeting.end_time,
+        'meeting_link':meeting.meeting_link,
+        'movie_title':meeting.movie_title,
+        'movie_year':meeting.movie.year}
+        )
+
         for member in self.club.club_members.filter(membership__notifications=True):
             recipients.append(member.email)
         ICSGenerator(meeting).generate_ics()
@@ -24,6 +35,32 @@ class ClubEmail:
             to = recipients,
             )
         email.content_subtype = "html"
-        email.attach_file('temp.ics')
+        email.attach_file('calendar.ics')
         email.send()
+
+    def send_meeting_update_notification(self):
+        recipients = []
+        meeting = self.club.get_upcoming_meeting()
+        html = render_to_string('meeting_update_email.html',
+        {
+        'meeting_title':meeting.meeting_title,
+        'meeting_date':meeting.date,
+        'meeting_start_time':meeting.start_time,
+        'meeting_end_time':meeting.end_time,
+        'meeting_link':meeting.meeting_link}
+        )
+        for member in self.club.club_members.filter(membership__notifications=True):
+            recipients.append(member.email)
+        ICSGenerator(meeting).generate_ics()
+        email = EmailMessage(
+            f"{meeting.club} meeting update!",
+            html,
+            EMAIL_HOST_USER,
+            to = recipients,
+            )
+        email.content_subtype = "html"
+        email.attach_file('calendar.ics')
+        email.send()
+
+
         
