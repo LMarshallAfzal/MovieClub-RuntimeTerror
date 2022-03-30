@@ -4,6 +4,7 @@
       "pk": 2,
       "fields": {
         "ml_id": 1,
+        "imdb_id": "2",
         "title": "Annabelle",
         "year": 2014,
         "genres": "Horror"
@@ -14,6 +15,7 @@
       "pk": 30,
       "fields": {
         "ml_id": 30,
+        "imdb_id": "3",
         "title": "The Bye Bye Man",
         "year": 2017,
         "genres": "Horror"
@@ -24,6 +26,7 @@
       "pk": 31,
       "fields": {
         "ml_id": 40,
+        "imdb_id": "4",
         "title": "It",
         "year": 2017,
         "genres": "Horror"
@@ -34,6 +37,7 @@
       "pk": 55,
       "fields": {
         "ml_id": 55,
+        "imdb_id": "5",
         "title": "Alien Covenant",
         "year": 2017,
         "genres": "Horror"
@@ -44,6 +48,7 @@
       "pk": 60,
       "fields": {
         "ml_id": 60,
+        "imdb_id": "6",
         "title": "The Nun",
         "year": 2018,
         "genres": "Horror"
@@ -54,6 +59,7 @@
       "pk": 3,
       "fields": {
         "ml_id": 2,
+        "imdb_id": "7",
         "title": "Shrek",
         "year": 2001,
         "genres": "Action"
@@ -64,6 +70,7 @@
       "pk": 4,
       "fields": {
         "ml_id": 7,
+        "imdb_id": "8",
         "title": "Django Unchained",
         "year": 2012,
         "genres": "Horror,Action"
@@ -74,6 +81,7 @@
       "pk": 5,
       "fields": {
         "ml_id": 8,
+        "imdb_id": "9",
         "title": "The Shining",
         "year": 2012,
         "genres": "Horror,Action"
