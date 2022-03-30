@@ -38,7 +38,10 @@ function App() {
 
                   <Route index element={(<Home />)} />
                   <Route path={"logout"} element={(<Logout />)} />
-                  <Route path={"profile"} element={(<Profile />)} />
+                  <Route path={"profile"}>
+                      <Route index element={(<Profile />)} />
+                      <Route path={":userID"} element={(<OthersProfile />)} />
+                  </Route>
                   <Route path={"movies"} element={(<Movies />)} />
                   <Route path={"clubs"} element={(<Clubs />)} >
                       <Route path={":clubID"} element={(<ClubDetail />)}>

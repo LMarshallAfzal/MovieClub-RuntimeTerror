@@ -219,28 +219,28 @@ const Home = () => {
                         </Grid>
                     </Grid>
 
-                {/*<Grid item xs={3} height={"inherit"}>*/}
-                {/*    <Box sx={{height: "100%", overflowY: 'scroll' }}>*/}
-                {/*        <ImageList variant="masonry" cols={2} gap={2}>*/}
-                {/*            {DummyRecommendedMovies.map((item) => {*/}
-                {/*                let movieData = MovieDataAPI(item.IMDB);*/}
-                {/*                return(*/}
-                {/*                    <ImageListItem key={item.poster}>*/}
-                {/*                        {(movieData) ? (*/}
-                {/*                            <img*/}
-                {/*                                src={`${movieData.Poster}?w=248&fit=crop&auto=format`}*/}
-                {/*                                srcSet={`${movieData.Poster}?w=248&fit=crop&auto=format&dpr=2 2x`}*/}
-                {/*                                alt={item.title}*/}
-                {/*                                loading="lazy"*/}
-                {/*                            />*/}
-                {/*                        ) : (*/}
-                {/*                            <Skeleton variant="rectangular" height={1} width={1} />*/}
-                {/*                        )}*/}
-                {/*                    </ImageListItem>*/}
-                {/*                )})}*/}
-                {/*        </ImageList>*/}
-                {/*    </Box>*/}
-                {/*</Grid>*/}
+                <Grid item xs={3} height={"inherit"}>
+                    {/*<Box sx={{height: "100%", overflowY: 'scroll' }}>*/}
+                    {/*    <ImageList variant="masonry" cols={2} gap={2}>*/}
+                    {/*        {DummyRecommendedMovies.map((item) => {*/}
+                    {/*            let movieData = MovieDataAPI(item.IMDB);*/}
+                    {/*            return(*/}
+                    {/*                <ImageListItem key={item.poster}>*/}
+                    {/*                    {(movieData) ? (*/}
+                    {/*                        <img*/}
+                    {/*                            src={`${movieData.Poster}?w=248&fit=crop&auto=format`}*/}
+                    {/*                            srcSet={`${movieData.Poster}?w=248&fit=crop&auto=format&dpr=2 2x`}*/}
+                    {/*                            alt={item.title}*/}
+                    {/*                            loading="lazy"*/}
+                    {/*                        />*/}
+                    {/*                    ) : (*/}
+                    {/*                        <Skeleton variant="rectangular" height={1} width={1} />*/}
+                    {/*                    )}*/}
+                    {/*                </ImageListItem>*/}
+                    {/*            )})}*/}
+                    {/*    </ImageList>*/}
+                    {/*</Box>*/}
+                </Grid>
 
                 </Grid>
     );

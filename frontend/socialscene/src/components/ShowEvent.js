@@ -38,6 +38,158 @@ function ShowEvent() {
         setEdit(!edit);
     }
 
+    const handleSave = () => {
+        console.log("form submitted")
+        setEdit(false);
+    }
+
+    function EventEditButton() {
+        if (event.isOrganiser) {
+            return (
+
+                 <FormButton
+                     text={edit ? "save" : "edit"}
+                     style={edit ? "primary" : "normal"}
+                     onClick={edit ? handleSave : toggleEdit} />
+                )
+        } else {
+            return (
+
+                <FormButton
+                    text={"edit"}
+                    style={"disabled"} />
+            )
+        }
+    }
+
+    function EventFields() {
+        if (edit === false) {
+            return (
+                <>
+                    <Grid item xs={12}>
+
+                        <TextField
+                            fullWidth
+                            id={"outlined-read-only-input"}
+                            label={"title"}
+                            value={event.title}
+                            InputProps={{readOnly: true}}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12}>
+
+                        <TextField
+                            fullWidth
+                            id="outlined-read-only-input"
+                            label={"description"}
+                            value={event.description}
+                            InputProps={{readOnly: true}}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12}>
+
+                        <TextField
+                            id="date"
+                            label="date"
+                            type="date"
+                            value={event.date}
+                            fullWidth
+                            InputProps={{readOnly: true}}
+                            InputLabelProps={{shrink: true}}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12}>
+
+                        <TextField
+                            id="time"
+                            label="start"
+                            type="time"
+                            value={event.start}
+                            fullWidth
+                            InputLabelProps={{shrink: true}}
+                            InputProps={{readOnly: true}}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12}>
+
+                        <TextField
+                            id="time"
+                            label="end"
+                            type="time"
+                            value={event.end}
+                            fullWidth
+                            InputLabelProps={{shrink: true}}
+                            InputProps={{readOnly: true}}
+                        />
+                    </Grid>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <Grid item xs={12}>
+
+                        <TextField
+                            fullWidth
+                            required
+                            label={"title"}
+                            defaultValue={event.title}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12}>
+
+                        <TextField
+                            fullWidth
+                            required
+                            label={"description"}
+                            defaultValue={event.description}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12}>
+
+                        <TextField
+                            label={"date"}
+                            type={"date"}
+                            defaultValue={event.date}
+                            fullWidth
+                            InputLabelProps={{shrink: true}}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12}>
+
+                        <TextField
+                            label={"start"}
+                            type={"time"}
+                            defaultValue={event.start}
+                            fullWidth
+                            InputLabelProps={{shrink: true}}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12}>
+
+                        <TextField
+                            label={"end"}
+                            type={"time"}
+                            defaultValue={event.end}
+                            fullWidth
+                            InputLabelProps={{shrink: true}}
+                        />
+                    </Grid>
+                </>
+            )
+        }
+    }
+
+
+
 
     return (
         <div className={"home-page-card-background"}>
@@ -95,10 +247,7 @@ function ShowEvent() {
                                         <Divider>
 
                                             <Chip
-                                                label={organiser.firstName + " " + organiser.lastName}
-                                                avatar={<Avatar
-                                                src={organiser.iconImage}
-                                                alt={organiser.firstName + " " + organiser.lastName}/>}
+                                                label={club.clubName}
                                                 sx={ {mr: 1, mt: 1}}
                                             />
                                         </Divider>
@@ -114,75 +263,12 @@ function ShowEvent() {
 
                                     <Grid item xs={8}>
 
-                                        <h6 className={"show-event-organiser-title"}>organiser:</h6>
+                                        <h6 className={"show-event-organiser-title"}>organiser</h6>
                                         <h5>{organiser.firstName}</h5>
                                         <h5>{organiser.lastName}</h5>
                                     </Grid>
 
-                                    <Grid item xs={12}>
-
-                                        <TextField
-                                            fullWidth
-                                            id={"outlined-read-only-input"}
-                                            label={"title:"}
-                                            value={event.title}
-                                            InputProps={{readOnly: true}}
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={12}>
-
-                                        <TextField
-                                            fullWidth
-                                            id="outlined-read-only-input"
-                                            label={"description:"}
-                                            value={event.description}
-                                            InputProps={{readOnly: true}}
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={12}>
-
-                                        <TextField
-                                            id="date"
-                                            label="date:"
-                                            type="date"
-                                            value={event.date}
-                                            fullWidth
-                                            InputProps={{readOnly: true}}
-                                            InputLabelProps={{shrink: true}}
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={12}>
-
-                                        <TextField
-                                            id="time"
-                                            label="start:"
-                                            type="time"
-                                            value={event.start}
-                                            fullWidth
-                                            InputLabelProps={{shrink: true}}
-                                            InputProps={{readOnly: true}}
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={12}>
-
-                                        <TextField
-                                            id="time"
-                                            label="end:"
-                                            type="time"
-                                            value={event.end}
-                                            fullWidth
-                                            InputLabelProps={{shrink: true}}
-                                            InputProps={{readOnly: true}}
-                                        />
-                                    </Grid>
-
-
-
-
+                                    <EventFields />
 
                                 </Grid>
                             </Stack>
@@ -211,21 +297,24 @@ function ShowEvent() {
                     <Grid container spacing={2}>
 
                         <Grid item xs={3}>
-                            <FormButton text={"watched"} style={"primary"}/>
+
+                            <FormButton text={"watched"} style={"primary"} />
                         </Grid>
 
                         <Grid item xs={3}>
+
                             <FormButton text={"rate"} />
                         </Grid>
 
                         <Grid item xs={3}>
-                            <FormButton text={edit ? "edit" : "save"} style={edit ? "normal" : "primary"} onClick={toggleEdit}/>
+
+                            <EventEditButton />
                         </Grid>
 
                         <Grid item xs={3}>
-                            <FormButton text={"delete"}/>
-                        </Grid>
 
+                            <FormButton text={"delete"} />
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
