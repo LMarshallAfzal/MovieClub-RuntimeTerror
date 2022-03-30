@@ -368,6 +368,14 @@ def get_all_movies(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_specific_movie(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    serializer = MovieSerializer(movie, many=False)
+    return Response(serializer.data)
+
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_memberships_of_user(request, user_id):
