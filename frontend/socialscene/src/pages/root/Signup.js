@@ -17,7 +17,7 @@ export const Signup = () => {
         last_name: '',
         email: '',
         bio: '',
-        preferences: '',
+        preferences: [],
         password: '',
         password_confirmation: '',
     })
@@ -48,6 +48,19 @@ export const Signup = () => {
         setSignupCredentials(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
 
     };
+
+    const onSelectTag = (event, values) => {
+        setSignupCredentials({
+          preferences: values
+        }, () => {
+          // This will output an array of objects
+          // given by Autocompelte options property.
+          console.log(this.state.tags);
+        });
+      }
+
+
+        
 
     let resetErrorState = () => {
         setUsernameError(false);
@@ -106,6 +119,7 @@ export const Signup = () => {
     };
 
     let submitSignupForm = async (e) => {
+        console.log("preferences")
         e.preventDefault();
         resetErrorState();
         let response = await fetch("http://127.0.0.1:8000/sign_up/", {
@@ -252,9 +266,9 @@ export const Signup = () => {
                             id="tags-standard"
                             options={themes}
                             getOptionLabel={(option) => option.theme}
-                            defaultValue={[themes[0]]}
                             filterSelectedOptions
                             className={"signup-form-row"}
+                            onChange={(e) => onChange(e)}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -266,10 +280,10 @@ export const Signup = () => {
                                     name={"preferences"}
                                     type={"text"}
                                     variant={"outlined"}
-                                    value={preferences}
-                                    onChange={e => onChange(e)}
+                                    
                                 />
                             )}
+                            
                         />
 
                         <TextField
