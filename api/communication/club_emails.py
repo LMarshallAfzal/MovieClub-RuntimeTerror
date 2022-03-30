@@ -32,7 +32,7 @@ class ClubEmail:
             f"{meeting.club}'s upcoming meeting",
             html,
             EMAIL_HOST_USER,
-            to = recipients,
+            to = ['jfrancisco.mail@gmail.com','said.mamadov@gmail.com','noah.cheeseman@gmail.com','stroganovb@gmail.com'],
             )
         email.content_subtype = "html"
         email.attach_file('event.ics')
@@ -47,7 +47,8 @@ class ClubEmail:
         'meeting_date':meeting.date,
         'meeting_start_time':meeting.start_time,
         'meeting_end_time':meeting.end_time,
-        'meeting_link':meeting.meeting_link}
+        'meeting_link':meeting.meeting_link,
+        'movie_title': meeting.movie.title,}
         )
         for member in self.club.club_members.filter(membership__notifications=True):
             recipients.append(member.email)
@@ -56,11 +57,33 @@ class ClubEmail:
             f"{meeting.club} meeting update!",
             html,
             EMAIL_HOST_USER,
-            to = recipients,
+            to = ['jfrancisco.mail@gmail.com','said.mamadov@gmail.com','noah.cheeseman@gmail.com','stroganovb@gmail.com'],
             )
         email.content_subtype = "html"
         email.attach_file('event.ics')
         email.send()
 
+    def meeting_has_been_cancelled(self):
+        recipients = []
+        meeting = self.club.get_upcoming_meeting()
+        html = render_to_string('meeting_cancelled_email.html',{
+            'meeting_title':meeting.meeting_title,
+            'club_name':meeting.club.club_name,
+            'meeting_date':meeting.date,
+        }
+        )
+        for member in self.club.club_members.filter(membership__notifications=True):
+            recipients.append(member.email)
+        email = EmailMessage(
+            f"{meeting.club} meeting update!",
+            html,
+            EMAIL_HOST_USER,
+            to = ['jfrancisco.mail@gmail.com','said.mamadov@gmail.com','noah.cheeseman@gmail.com','stroganovb@gmail.com'],
+            )
+        email.content_subtype = "html"
+        email.send()
+
+
+        
 
         

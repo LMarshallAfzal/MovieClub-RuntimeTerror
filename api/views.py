@@ -492,7 +492,7 @@ def cancel_meeting(request, club_id):
 @club_has_upcoming_meeting
 @not_banned
 def get_club_upcoming_meeting(request, club_id):
-    club = Club.objects.get(id=1)
+    club = Club.objects.get(id=club_id)
     meeting = club.get_upcoming_meeting()
     serializer = MeetingSerializer(meeting, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
