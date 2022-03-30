@@ -1,23 +1,21 @@
 import React, {useState} from 'react';
-import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Rating} from "@mui/material";
+import {Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Rating} from "@mui/material";
 import FormButton from "../FormButton";
 import {DummyRecommendedMovies} from "../../pages/data/DummyRecommendedMovies";
 
 function MovieWatchRate(props) {
-    // const [showPrompt, setShowPrompt] = useState(true);
-    let movie = (props.data && DummyRecommendedMovies.find(obj => obj.ID === props.data.ID));
+    let movie = (props.data && DummyRecommendedMovies.find(obj => obj.ID === props.data.ID)); // substitute for movie logic
+    let movieTitle = (props.data && movie.title);
 
     const handleClose = () => {
+        console.log(`${movie.title} set as watched`) // substitute for watch logic
         props.onClose();
     }
 
     const handleRateMovie = () => {
-        console.log(`${movie.title} rated`);
+        console.log(`${movieTitle} rated`); // substitute for rate logic
         handleClose();
     }
-
-    console.log(`${movie.title} set as watched`)
-
 
     return (
         <Dialog
@@ -33,15 +31,20 @@ function MovieWatchRate(props) {
 
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    <h6>rate {movie.title}</h6>
+
+                    <h6>marked as watched, how was <span style={{color: "red"}}>{movieTitle}</span>?</h6>
                 </DialogContentText>
 
-                <Rating
+                <Box justifyItems={"center"}>
+
+                    <Rating
                     name="half-rating"
                     defaultValue={2.5}
                     precision={0.5}
                     size={"large"}
                 />
+                </Box>
+
             </DialogContent>
 
             <DialogActions>

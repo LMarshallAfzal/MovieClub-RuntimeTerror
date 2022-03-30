@@ -35,7 +35,7 @@ function ShowEvent() {
     const [edit, setEdit] = useState(false);
 
     const [showPrompt, setShowPrompt] = useState(false);
-    const [promptData, setPromptData] = useState(movie);
+    const [promptData, setPromptData] = useState("");
 
     const closePrompt = () => {
         setShowPrompt(false);
