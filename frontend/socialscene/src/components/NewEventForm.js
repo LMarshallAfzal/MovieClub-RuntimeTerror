@@ -46,7 +46,19 @@ function NewEvent() {
         setMeetingData(fieldData => ({...fieldData, [e.target.name]: e.target.value}));
     };
 
+	let trainMeetingRecommendation = async () => {
+		let response = await fetch("http://127.0.0.1:8000/train/meeting/", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json; charset=UTF-8",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		await response.json();
+	};
+
 	let getRecommendedMovies = async () => {
+		trainMeetingRecommendation();
 		let response = await fetch(
 			"http://127.0.0.1:8000/rec_meeting/" + clubID + "/",
 			{
@@ -67,7 +79,7 @@ function NewEvent() {
             method: "POST",
             body: JSON.stringify({
                 "club": clubID,
-                "movie": selectedMovie.id,
+                "movie": selectedMovie,
                 "organiser": user.user_id,
                 "meeting_title": meetingData.meeting_title,
                 "date": meetingData.date,
@@ -110,7 +122,7 @@ function NewEvent() {
 									<Card sx={{ flexDirection: "column", height: "100%" }}>
 										<CardActionArea
 											sx={{ flexDirection: "column", height: "100%" }}
-											onClick={() => setSelectedMovie(movie.title)}
+											onClick={() => setSelectedMovie(movie.id)}
 										>
 											<CardMedia
 												component={"img"}

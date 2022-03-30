@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import {
 	Autocomplete,
 	Avatar,
@@ -27,11 +27,52 @@ import AuthContext from "./helper/AuthContext";
 function ShowEvent() {
 	let { user, authTokens } = useContext(AuthContext);
 	const [myClubData, setMyClubData] = useState([]);
-	const [myMeetingData, setMyMeetingData] = useState("");
+	const [myMeetingData, setMyMeetingData] = useState({});
 	const [specificMovie, setSpecificMovie] = useState("");
 	const [organiser, setOrganiser] = useState("");
-	const [isOrgansier, setIsOrgansier] = useState(false);
+	const [isOrganiser, setIsOrganiser] = useState(false);
+	const [attendees, setAttendees] = useState([]);
 	let { clubID } = useParams();
+
+	let getUser = useCallback(
+		async (id) => {
+			let response = await fetch("http://127.0.0.1:8000/user/" + id + "/", {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			});
+			let data = await response.json();
+			setOrganiser(data);
+			return data;
+		},
+		[authTokens]
+	);
+
+	useEffect(() => {
+		getMembershipData();
+		getMeetingData(clubID);
+		console.log(myMeetingData.movie);
+		//getMovie(myMeetingData.movie);
+		console.log(myMeetingData.organiser);
+		// console.log("attendees", attendee)
+		//getUser(myMeetingData.organiser);
+		// getRecommendedMovies()
+	}, []);
+
+	useEffect(() => {
+		async function fetchAttendees() {
+			if (myMeetingData.attendees) {
+				setAttendees(await Promise.all(myMeetingData.attendees.map(getUser)));
+			}
+		}
+		fetchAttendees();
+	}, [myMeetingData, getUser]);
+
+	const onChange = (e) => {
+        setMyMeetingData(fieldData => ({...fieldData, [e.target.name]: e.target.value}));
+    };
 
 	let getMembershipData = async () => {
 		let response = await fetch(
@@ -46,8 +87,8 @@ function ShowEvent() {
 		);
 		let data = await response.json();
 		setMyClubData(data);
-		if(data.is_organiser){
-			setIsOrgansier(true);
+		if (data.is_organiser) {
+			setIsOrganiser(true);
 		}
 	};
 
@@ -66,19 +107,27 @@ function ShowEvent() {
 	};
 
 	let deleteMeeting = async (id) => {
-		let response = await fetch("http://127.0.0.1:8000/cancel_meeting/" + id + "/", {
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + authTokens.access,
-			},
-		});
+		let response = await fetch(
+			"http://127.0.0.1:8000/cancel_meeting/" + id + "/",
+			{
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + authTokens.access,
+				},
+			}
+		);
 		let data = await response.json();
 		if (response.status === 200) {
-			return data
+			return data;
 		} else {
 		}
 	};
+
+	// let getAttendees = () => {
+	// 	setAttendees(myMeetingData.attendees?.map(getUser) ?? []);
+	// 	console.log(attendees)
+	//   };
 
 	let getMeetingData = async (id) => {
 		let response = await fetch(
@@ -94,20 +143,23 @@ function ShowEvent() {
 		let data = await response.json();
 		console.log(data);
 		setMyMeetingData(data);
+		getMovie(data.movie);
+		getUser(data.organiser);
+		// getAttendees();
 	};
 
-	let getUser = async (id) => {
-		let response = await fetch("http://127.0.0.1:8000/user/" + id + "/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		let data = await response.json();
-		console.log(data);
-		setOrganiser(data);
-	};
+	// let getUser = async (id) => {
+	// 	let response = await fetch("http://127.0.0.1:8000/user/" + id + "/", {
+	// 		method: "GET",
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 			Authorization: "Bearer " + String(authTokens.access),
+	// 		},
+	// 	});
+	// 	let data = await response.json();
+	// 	// console.log(data);
+	// 	setOrganiser(data);
+	// };
 
 	let getMovie = async (id) => {
 		let response = await fetch("http://127.0.0.1:8000/get_movie/" + id + "/", {
@@ -118,44 +170,37 @@ function ShowEvent() {
 			},
 		});
 		let data = await response.json();
-		console.log(data);
+		// console.log(data);
 		setSpecificMovie(data);
 	};
 
 	let editMeeting = async (e) => {
-        e.preventDefault();
-        let response = await fetch("http://127.0.0.1:8000/edit_meeting/" + clubID + "/", {
-            method: "PUT",
-            body: JSON.stringify({
-                "meeting_title": e.target.meeting_title.value,
-				"description": e.target.description.value,
-				"date": e.target.date.value,
-				"start_time": e.target.end_time.value,
-				"end_time": e.target.end_time.value,
-				"meeting_link": "placeholder",
-        	}),
-			headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + String(authTokens.access),
-            },
-		});
+		e.preventDefault();
+		let response = await fetch(
+			"http://127.0.0.1:8000/edit_meeting/" + clubID + "/",
+			{
+				method: "PUT",
+				body: JSON.stringify({
+					meeting_title: e.target.meeting_title.value,
+					description: e.target.description.value,
+					date: e.target.date.value,
+					start_time: e.target.end_time.value,
+					end_time: e.target.end_time.value,
+					meeting_link: "placeholder",
+				}),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
 		let data = await response.json();
 		if (response.status === 200) {
-			console.log(data);
+			// console.log(data);
 			setMyMeetingData(data);
 		}
-		
 	};
 
-	useEffect(() => {
-		getMembershipData();
-		getMeetingData(clubID);
-		console.log(myMeetingData.movie);
-		getMovie(myMeetingData.movie);
-		console.log(myMeetingData.organiser);
-		getUser(myMeetingData.organiser);
-		// getRecommendedMovies()
-	}, []);
 
 	console.log(myClubData);
 	console.log(myMeetingData);
@@ -184,11 +229,9 @@ function ShowEvent() {
 						</span>
 					</h5>
 				</Grid>
-
 				<Grid item xs={2}>
 					{/* <EnterButton text={event.hasStarted ? "attend" : "join"} linkTo={"/https://zoom.us"}/> */}
 				</Grid>
-
 				<Grid item xs={12}>
 					<Grid container spacing={2}>
 						<Grid item xs={6}>
@@ -200,7 +243,6 @@ function ShowEvent() {
 											alt={specificMovie.title}
 											image={moviePoster}
 										/>
-
 										<Stack spacing={1} padding={1} alignItems={"center"}>
 											<Rating
 												readOnly
@@ -209,7 +251,6 @@ function ShowEvent() {
 												name={"read-only"}
 												// value={movie.rating}
 											/>
-
 											<Tooltip
 												title={specificMovie.title}
 												placement="top-start"
@@ -223,7 +264,6 @@ function ShowEvent() {
 								</Grid>
 							</Grid>
 						</Grid>
-
 						<Grid item xs={6}>
 							<Stack
 								spacing={2}
@@ -246,7 +286,6 @@ function ShowEvent() {
 											/>
 										</Divider>
 									</Grid>
-
 									<Grid item xs={4}>
 										<Avatar
 											sx={{ width: 1, height: 1 }}
@@ -266,8 +305,9 @@ function ShowEvent() {
 											id="outlined-read-only-input"
 											label={"title:"}
 											name={"meeting_title"}
-											value={myMeetingData.title}
+											value={myMeetingData.meeting_title}
 											InputProps={{ readOnly: true }}
+											// onChange={e => onChange(e)}
 										/>
 									</Grid>
 
@@ -279,6 +319,7 @@ function ShowEvent() {
 											name={"description"}
 											value={myMeetingData.description}
 											InputProps={{ readOnly: true }}
+											// onChange={e => onChange(e)}
 										/>
 									</Grid>
 
@@ -292,6 +333,7 @@ function ShowEvent() {
 											fullWidth
 											InputProps={{ readOnly: true }}
 											InputLabelProps={{ shrink: true }}
+											// onChange={e => onChange(e)}
 										/>
 									</Grid>
 
@@ -305,6 +347,7 @@ function ShowEvent() {
 											fullWidth
 											InputLabelProps={{ shrink: true }}
 											InputProps={{ readOnly: true }}
+											// onChange={e => onChange(e)}
 										/>
 									</Grid>
 
@@ -318,6 +361,7 @@ function ShowEvent() {
 											fullWidth
 											InputLabelProps={{ shrink: true }}
 											InputProps={{ readOnly: true }}
+											// onChange={e => onChange(e)}
 										/>
 									</Grid>
 								</Grid>
@@ -333,14 +377,14 @@ function ShowEvent() {
 						overflow={"auto"}
 						padding={1}
 					>
-						{DummyClubMemberData.map((user) => {
+						{attendees.map((user) => {
 							return (
 								<Chip
-									label={user.firstName + " " + user.lastName}
+									label={user.first_name + " " + user.last_name}
 									avatar={
 										<Avatar
 											src={user.iconImage}
-											alt={user.firstName + " " + user.lastName}
+											alt={user.first_name + " " + user.last_name}
 										/>
 									}
 									sx={{ mr: 1, mt: 1 }}
@@ -350,34 +394,36 @@ function ShowEvent() {
 						})}
 					</Box>
 				</Grid>
-
 				<Grid item xs={12}>
 					<Grid container spacing={2}>
 						<Grid item xs={3}>
-							<FormButton 
-								text={"watched"} 
-								style={"primary"} 
-								onClick={() => {addToWatchedList(myMeetingData.movie)}}
+							<FormButton
+								text={"watched"}
+								style={"primary"}
+								onClick={() => {
+									addToWatchedList(myMeetingData.movie);
+								}}
 							/>
 						</Grid>
-
 						<Grid item xs={3}>
 							<FormButton text={"rate"} />
 						</Grid>
-
 						<Grid item xs={3}>
 							<FormButton
 								text={edit ? "save" : "edit"}
 								style={edit ? "primary" : "normal"}
 								onClick={toggleEdit}
-								onChange={(e) => {editMeeting(e)}}
+								onChange={(e) => {
+									editMeeting(e);
+								}}
 							/>
 						</Grid>
-
 						<Grid item xs={3}>
-							<FormButton 
+							<FormButton
 								text={"delete"}
-								onClick={() => {deleteMeeting(clubID)}} 
+								onClick={() => {
+									deleteMeeting(clubID);
+								}}
 							/>
 						</Grid>
 					</Grid>
