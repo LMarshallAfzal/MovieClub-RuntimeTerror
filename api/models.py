@@ -264,12 +264,12 @@ class Membership(models.Model):
         self.save()
 class Movie(models.Model):
 
-    imdb_id = models.CharField(max_length=10,unique = True)    
-
     ml_id = models.PositiveIntegerField(
         unique=True,
-        default=0
+        default=0,
     )
+
+    imdb_id = models.CharField(max_length=10,unique = True) 
 
     title = models.CharField(
         max_length=100,
