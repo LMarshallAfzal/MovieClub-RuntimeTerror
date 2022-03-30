@@ -158,23 +158,29 @@ function NewEvent() {
                     <Stack spacing={2}>
 
                         <TextField
-                            label={"title"}
+                            fullWidth
+                            required
                             placeholder={"event title"}
+                            label={"title"}
                             name={"meeting_title"}
                             value={meeting_title}
                             onChange={e => onChange(e)}
                         />
 
                         <TextField
-                            label={"description"}
+                            fullWidth
+                            required
                             placeholder={"short event description"}
+                            label={"description"}
                             name={"description"}
                             value={description}
                             onChange={e => onChange(e)}
                         />
 
                         <TextField
+                            fullWidth
                             disabled
+                            required
                             label={"movie"}
                             name={"movie"}
                             value={selectedMovie}
@@ -188,15 +194,14 @@ function NewEvent() {
 
                         <TextField
                             fullWidth
+                            required
                             label={"date"}
                             type={"date"}
                             name={"date"}
                             value={date}
                             defaultValue={tomorrow}
                             onChange={e => onChange(e)}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
+                            InputLabelProps={{shrink: true,}}
                         />
 
                         <TextField
@@ -207,13 +212,8 @@ function NewEvent() {
                             value={start_time}
                             defaultValue={"17:00"}
                             onChange={e => onChange(e)}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            inputProps={{
-                                step: 300,
-                            }}
-
+                            InputLabelProps={{shrink: true,}}
+                            inputProps={{step: 300,}}
                         />
 
                         <TextField
@@ -224,12 +224,8 @@ function NewEvent() {
                             value={end_time}
                             defaultValue={"18:00"}
                             onChange={e => onChange(e)}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            inputProps={{
-                                step: 300,
-                            }}
+                            InputLabelProps={{shrink: true,}}
+                            inputProps={{step: 300,}}
                         />
                     </Stack>
                 </Grid>

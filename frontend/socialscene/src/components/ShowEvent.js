@@ -222,8 +222,8 @@ function ShowEvent() {
         setShowPrompt(false);
     }
 
-    const toggleEdit = () => {
-        setEdit(!edit);
+    const openEdit = () => {
+        setEdit(true);
     }
 
     const handleSave = () => {
@@ -232,13 +232,13 @@ function ShowEvent() {
     }
 
     function EventEditButton() {
-        if (isOrganiser) { // replace with organiser condition
+        if (organiser === user) { // replace with organiser condition
             return (
 
                  <FormButton
                      text={edit ? "save" : "edit"}
                      style={edit ? "primary" : "normal"}
-                     onClick={edit ? handleSave : toggleEdit} />
+                     onClick={edit ? handleSave : openEdit} />
                 )
         } else {
             return (
@@ -251,8 +251,9 @@ function ShowEvent() {
     }
 
     function EventDeleteButton() {
-        if(isOrganiser) {
+        if(organiser === user) { // replace with organiser condition
             return (
+
                 <FormButton
                     text={"delete"}
                     onClick={() => {deleteMeeting(clubID);}}
@@ -261,6 +262,7 @@ function ShowEvent() {
             )
         } else {
             return (
+
                 <FormButton
                     text={"delete"}
                     style={"disabled"}
@@ -272,142 +274,124 @@ function ShowEvent() {
     function EventFields() {
         if (edit === false) {
             return (
-                <>
-                    <Grid item xs={12}>
+                <Stack spacing={2}>
 
-                        <TextField
-                            fullWidth
-                            label={"title"}
-                            value={myMeetingData.meeting_title}
-                            InputProps={{readOnly: true}}
-                        />
-                    </Grid>
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"title"}
+                        value={myMeetingData.meeting_title}
+                        InputProps={{readOnly: true}}
+                    />
 
-                    <Grid item xs={12}>
 
-                        <TextField
-                            fullWidth
-                            required
-                            label={"description"}
-                            name={"description"}
-                            value={myMeetingData.description}
-                            InputProps={{readOnly: true}}
-                        />
-                    </Grid>
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"description"}
+                        value={myMeetingData.description}
+                        InputProps={{readOnly: true}}
+                    />
 
-                    <Grid item xs={12}>
 
-                        <TextField
-                            fullWidth
-                            required
-                            label={"date"}
-                            type={"date"}
-                            name={"date"}
-                            value={myMeetingData.date}
-                            InputProps={{readOnly: true}}
-                            InputLabelProps={{shrink: true}}
-                        />
-                    </Grid>
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"date"}
+                        type={"date"}
+                        value={myMeetingData.date}
+                        InputProps={{readOnly: true}}
+                        InputLabelProps={{shrink: true}}
+                    />
 
-                    <Grid item xs={12}>
 
-                        <TextField
-                            fullWidth
-                            required
-                            label={"start"}
-                            type={"time"}
-                            name={"start_time"}
-                            value={myMeetingData.start_time}
-                            InputProps={{readOnly: true}}
-                            InputLabelProps={{shrink: true}}
-                        />
-                    </Grid>
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"start"}
+                        type={"time"}
+                        value={myMeetingData.start_time}
+                        InputProps={{readOnly: true}}
+                        InputLabelProps={{shrink: true}}
+                    />
 
-                    <Grid item xs={12}>
 
-                        <TextField
-                            fullWidth
-                            required
-                            label={"end"}
-                            type={"time"}
-                            name={"end_time"}
-                            value={myMeetingData.end_time}
-                            InputProps={{readOnly: true}}
-                            InputLabelProps={{shrink: true}}
-                        />
-                    </Grid>
-                </>
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"end"}
+                        type={"time"}
+                        value={myMeetingData.end_time}
+                        InputProps={{readOnly: true}}
+                        InputLabelProps={{shrink: true}}
+                    />
+                </Stack>
             )
         } else {
             return (
-                <>
+                <Stack spacing={2}>
+                {/* form needed?*/}
 
-                    <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        required
+                        placeholder={"event title"}
+                        label={"title"}
+                        name={"meeting_title"}
+                        value={myMeetingData.meeting_title}
+                        defaultValue={myMeetingData.meeting_title}
+                        onChange={e => onChange(e)}
+                    />
 
-                        <TextField
-                            fullWidth
-                            required
-                            label={"title"}
-                            name={"meeting_title"}
-                            defaultValue={myMeetingData.meeting_title}
-                            onChange={e => onChange(e)}
-                        />
-                    </Grid>
+                    <TextField
+                        fullWidth
+                        required
+                        placeholder={"short event description"}
+                        label={"description"}
+                        name={"description"}
+                        value={myMeetingData.description}
+                        defaultValue={myMeetingData.description}
+                        onChange={e => onChange(e)}
+                    />
 
-                    <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        required
+                        label={"date"}
+                        type={"date"}
+                        name={"date"}
+                        value={myMeetingData.date}
+                        defaultValue={myMeetingData.date}
+                        onChange={e => onChange(e)}
+                        InputLabelProps={{shrink: true}}
+                    />
 
-                        <TextField
-                            fullWidth
-                            required
-                            label={"description"}
-                            name={"description"}
-                            defaultValue={myMeetingData.description}
-                            onChange={e => onChange(e)}
-                        />
-                    </Grid>
+                    <TextField
+                        fullWidth
+                        required
+                        label={"start"}
+                        type={"time"}
+                        name={"start_time"}
+                        value={myMeetingData.start_time}
+                        defaultValue={myMeetingData.start_time}
+                        onChange={e => onChange(e)}
+                        InputLabelProps={{shrink: true,}}
+                        inputProps={{step: 300,}}
+                    />
 
-                    <Grid item xs={12}>
-
-                        <TextField
-                            fullWidth
-                            required
-                            label={"date"}
-                            type={"date"}
-                            name={"date"}
-                            value={myMeetingData.date}
-                            onChange={e => onChange(e)}
-                            InputLabelProps={{shrink: true}}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12}>
-
-                        <TextField
-                            fullWidth
-                            required
-                            label={"start"}
-                            type={"time"}
-                            name={"start_time"}
-                            value={myMeetingData.start_time}
-                            onChange={e => onChange(e)}
-                            InputLabelProps={{shrink: true}}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12}>
-
-                        <TextField
-                            fullWidth
-                            required
-                            label={"end"}
-                            type={"time"}
-                            name={"end_time"}
-                            value={myMeetingData.end_time}
-                            onChange={e => onChange(e)}
-                            InputLabelProps={{shrink: true}}
-                        />
-                    </Grid>
-                </>
+                    <TextField
+                        fullWidth
+                        required
+                        label={"end"}
+                        type={"time"}
+                        name={"end_time"}
+                        value={myMeetingData.end_time}
+                        defaultValue={myMeetingData.end_time}
+                        onChange={e => onChange(e)}
+                        InputLabelProps={{shrink: true,}}
+                        inputProps={{step: 300,}}
+                    />
+                </Stack>
             )
         }
     }
@@ -497,9 +481,10 @@ function ShowEvent() {
 										<h5>{organiser.last_name}</h5>
                                     </Grid>
 
-                                    <EventFields />
+                                    <Grid item xs={12}>
 
-
+                                        <EventFields />
+                                    </Grid>
                                 </Grid>
                             </Stack>
                         </Grid>
@@ -536,7 +521,7 @@ function ShowEvent() {
                             <MovieWatchRate isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
 
                             <FormButton text={"watched"} style={"primary"} onClick={() => {
-                                setPromptData(movie);
+                                setPromptData(specificMovie);
                                 setShowPrompt(true);
                             }}/>
                         </Grid>
