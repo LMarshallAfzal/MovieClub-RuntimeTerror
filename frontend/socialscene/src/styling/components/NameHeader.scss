@@ -6,7 +6,7 @@
 }
 
 .name-header-text{
-    font-family: base.$helvetica-light;
+    font-family: base.$helvetica-light-oblique;
     color: base.$grey-4;
     font-size: 1.3em;
 
@@ -14,10 +14,10 @@
 
 .name-header-name{
     color: base.$primary-white;
-    font-family: base.$helvetica;
+    font-family: base.$helvetica-bold;
 }
 
-.name-header-text-date {
-    color: base.$grey-4;
-    font-family: base.$helvetica-light;
+.name-header-username {
+    color: base.$grey-3;
+    font-family: base.$helvetica;
 }

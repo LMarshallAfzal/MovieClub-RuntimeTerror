@@ -29,34 +29,66 @@ $pale-blue: #3364EB;
 
 
 //FONTS
+//@font-face {
+//  font-family: Helvetica;
+//  src: url("../fonts/Helvetica.ttf") format("truetype");
+//}
+//
+//@font-face {
+//  font-family: Helvetica-Light;
+//  src: url("../fonts/Helvetica-Light.ttf") format("truetype");
+//}
+//
+//@font-face {
+//  font-family: Helvetica-Oblique;
+//  src: url("../fonts/Helvetica-Oblique.ttf") format("truetype");
+//}
+//
+//@font-face {
+//  font-family: Helvetica-Bold;
+//  src: url("../fonts/Helvetica-Bold.ttf") format("truetype");
+//}
+//
+//@font-face {
+//  font-family: Helvetica-BoldOblique;
+//  src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
+//}
+
+//NEW FONTS
 @font-face {
   font-family: Helvetica;
-  src: url("../fonts/Helvetica.ttf") format("truetype");
+  src: url("../newfonts/Helvetica.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Helvetica-Italic;
+  src: url("../newfonts/Helvetica-Italic.ttf") format("truetype");
 }
 
 @font-face {
   font-family: Helvetica-Light;
-  src: url("../fonts/Helvetica-Light.ttf") format("truetype");
+  src: url("../newfonts/Helvetica-Light.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: Helvetica-Oblique;
-  src: url("../fonts/Helvetica-Oblique.ttf") format("truetype");
+  font-family: Helvetica-Light-Italic;
+  src: url("../newfonts/Helvetica-Light-Italic.ttf") format("truetype");
 }
 
 @font-face {
   font-family: Helvetica-Bold;
-  src: url("../fonts/Helvetica-Bold.ttf") format("truetype");
+  src: url("../newfonts/Helvetica-Bold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: Helvetica-BoldOblique;
-  src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
+  font-family: Helvetica-Bold-Italic;
+  src: url("../newfonts/Helvetica-Bold-Italic.ttf") format("truetype");
 }
 
 $helvetica: Helvetica, serif;
+$helvetica-oblique: Helvetica-Italic, serif;
 $helvetica-light: Helvetica-Light, serif;
-$helvetica-oblique: Helvetica-Oblique, serif;
+$helvetica-light-oblique: Helvetica-Light-Italic, serif;
 $helvetica-bold: Helvetica-Bold, serif;
 $helvetica-bold-oblique: Helvetica-BoldOblique, serif;
 
@@ -160,24 +192,24 @@ h6{
 
 .home-page-title {
   background-color: $grey-1;
-  font-family: $helvetica-bold;
-  padding: 10px;
   user-select: none;
   transition: all 0.3s ease-out;
-  color: $primary-white;
 }
 
-.home-page-sub-section-heading {
+.home-page-sub-title {
   background-color: $grey-2;
-  padding: 10px;
-  color: $primary-white;
   user-select: none;
   transition: all 0.3s ease-out;
+}
+
+.sub-title-text {
+  font-family: $helvetica-bold;
+  color: $primary-white;
 }
 
 .home-page-card-title {
   color: $primary-black;
-  font-family: $helvetica;
+  font-family: $helvetica-bold;
   user-select: none;
 }
 

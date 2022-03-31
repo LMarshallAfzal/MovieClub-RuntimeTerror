@@ -1,10 +1,10 @@
 import React, { useCallback, useState, useEffect, useContext } from "react";
 import { Collapse, Grid, ListItem, Stack } from "@mui/material";
-import EnterButton from "./EnterButton";
+import RoundButton from "./core/RoundButton";
 import "../styling/components/ClubSelector.css";
-import { DummyClubData } from "../pages/data/DummyClubsData";
-import FormButton from "./FormButton";
-import TextButton from "./TextButton";
+import { DummyClubData } from "../resources/data/DummyClubsData";
+import ThemeButton from "./core/ThemeButton";
+import TextButton from "./core/TextButton";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../components/helper/AuthContext";
 
@@ -80,7 +80,7 @@ function ClubSelector() {
 													<h4>{club.club_name}</h4>
 												</Grid>
 												<Grid item xs={4}>
-													<EnterButton
+													<RoundButton
 														text={"view"}
 														onClick={() =>
 															navigateAndToggle(`/home/discussion/${club.id}`)

@@ -13,11 +13,11 @@ import {
 } from "@mui/material";
 import "../../styling/pages/Options.css";
 import AuthContext from "../../components/helper/AuthContext";
-import FormButton from "../../components/FormButton";
+import ThemeButton from "../../components/core/ThemeButton";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import HomePageTitle from "../../components/HomePageTitle";
-import TextButton from "../../components/TextButton";
+import HomepageTitle from "../../components/HomepageTitle";
+import TextButton from "../../components/core/TextButton";
 
 const Options = () => {
     const [passwordVisibility, togglePasswordVisibility] = useState(false);
@@ -197,7 +197,7 @@ const Options = () => {
                                         }/>
                                     </FormControl>
 
-                                    <FormButton
+                                    <ThemeButton
                                         text={"submit"}
                                         onClick={submitChangePasswordForm}
                                         type="submit"

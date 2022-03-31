@@ -22,23 +22,25 @@ import {
     Button,
     ImageList, ImageListItem, ImageListItemBar, Skeleton
 } from "@mui/material";
-import FormButton from "../../components/FormButton";
-import { DummyDashboardClubsData, meetings, movies } from '../data/DummyDashboardClubsData';
+import ThemeButton from "../../components/core/ThemeButton";
+import { DummyDashboardClubsData, meetings, movies } from '../../resources/data/DummyDashboardClubsData';
 import { useState, useEffect } from 'react'
 import AuthContext from "../../components/helper/AuthContext";
 import CsrfToken from "../../components/helper/CsrfToken";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
-import moviePoster from '../../styling/images/empty_movie_poster.png';
-import { moviesWithPoster } from "../data/DummyMoviesData";
+import moviePoster from '../../resources/images/empty_movie_poster.png';
+import { moviesWithPoster } from "../../resources/data/DummyMoviesData";
 import { useNavigate } from "react-router";
-import HomePageTitle from "../../components/HomePageTitle";
-import {DummyRecommendedMovies} from "../data/DummyRecommendedMovies";
-import {DummyClubData} from "../data/DummyClubsData";
-import ClubListing from "../../components/ClubListing";
+import HomepageTitle from "../../components/HomepageTitle";
+import {DummyRecommendedMovies} from "../../resources/data/DummyRecommendedMovies";
+import {DummyClubData} from "../../resources/data/DummyClubsData";
+import ClubCard from "../../components/ClubCard";
 import movieQuote from "popular-movie-quotes";
 import MovieQuote from "../../components/MovieQuote";
 import {MovieDataAPI} from "../../components/helper/MovieDataAPI";
+import LoadingSkeleton from "../../components/helper/LoadingSkeleton";
+import moviePlaceholder from "../../resources/images/empty_movie_poster.png";
 
 
 
@@ -130,7 +132,7 @@ const Home = () => {
                                         </Grid>
 
                                         <Grid item xs={3}>
-                                            <FormButton
+                                            <ThemeButton
                                                 text={"view movies"}
                                                 onClick={moreMovies}
                                             />
@@ -166,7 +168,7 @@ const Home = () => {
                                                                     <Typography noWrap>{movie.title}</Typography>
                                                                 </Tooltip>
 
-                                                                <FormButton text={"watch"} />
+                                                                <ThemeButton text={"watch"} />
                                                             </Stack>
                                                         </Card>
                                                     </ListItem>)
@@ -186,7 +188,7 @@ const Home = () => {
                                     </Grid>
 
                                     <Grid item xs={3}>
-                                        <FormButton
+                                        <ThemeButton
                                                 text={"view clubs"}
                                                 onClick={moreClubs}
                                             />
@@ -198,7 +200,7 @@ const Home = () => {
                                             {DummyClubData.map((club) => club.isMember === true && (
                                                 <ListItem sx={{width: 'auto',p:1}}>
 
-                                                    <ClubListing
+                                                    <ClubCard
                                                         clubName={club.clubName}
                                                         isMember={club.isMember}
                                                         iconImage={club.iconImage}
@@ -220,26 +222,38 @@ const Home = () => {
                     </Grid>
 
                 <Grid item xs={3} height={"inherit"}>
-                    {/*<Box sx={{height: "100%", overflowY: 'scroll' }}>*/}
-                    {/*    <ImageList variant="masonry" cols={2} gap={2}>*/}
-                    {/*        {DummyRecommendedMovies.map((item) => {*/}
-                    {/*            let movieData = MovieDataAPI(item.IMDB);*/}
-                    {/*            return(*/}
-                    {/*                <ImageListItem key={item.poster}>*/}
-                    {/*                    {(movieData) ? (*/}
-                    {/*                        <img*/}
-                    {/*                            src={`${movieData.Poster}?w=248&fit=crop&auto=format`}*/}
-                    {/*                            srcSet={`${movieData.Poster}?w=248&fit=crop&auto=format&dpr=2 2x`}*/}
-                    {/*                            alt={item.title}*/}
-                    {/*                            loading="lazy"*/}
-                    {/*                        />*/}
-                    {/*                    ) : (*/}
-                    {/*                        <Skeleton variant="rectangular" height={1} width={1} />*/}
-                    {/*                    )}*/}
-                    {/*                </ImageListItem>*/}
-                    {/*            )})}*/}
-                    {/*    </ImageList>*/}
-                    {/*</Box>*/}
+                    <Box sx={{height: "100%", overflowY: 'scroll' }}>
+                        <ImageList variant="masonry" cols={2} gap={2}>
+                            {DummyRecommendedMovies.map((item) => {
+                                const movieData = MovieDataAPI(item.IMDB);
+                                return(
+                                    <LoadingSkeleton loading={movieData}>
+                                        <ImageListItem key={item.poster}>
+                                            <img
+                                                src={`${movieData ? movieData.Poster : moviePlaceholder}?w=248&fit=crop&auto=format`}
+                                                srcSet={`${movieData ? movieData.Poster : moviePlaceholder}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                                alt={item.title}
+                                                loading="lazy"
+                                            />
+                                        </ImageListItem>
+                                    </LoadingSkeleton>
+
+
+                                    // <ImageListItem key={item.poster}>
+                                    //     {(movieData) ? (
+                                    //         <img
+                                    //             src={`${movieData.Poster}?w=248&fit=crop&auto=format`}
+                                    //             srcSet={`${movieData.Poster}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                    //             alt={item.title}
+                                    //             loading="lazy"
+                                    //         />
+                                    //     ) : (
+                                    //         <Skeleton variant="rectangular" height={1} width={1} />
+                                    //     )}
+                                    // </ImageListItem>
+                                )})}
+                        </ImageList>
+                    </Box>
                 </Grid>
 
                 </Grid>
