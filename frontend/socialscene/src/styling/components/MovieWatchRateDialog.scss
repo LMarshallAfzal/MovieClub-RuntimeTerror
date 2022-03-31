@@ -1,0 +1,15 @@
+@use "../base";
+
+.dialog-title {
+
+}
+
+.dialog-content {
+  font-family: base.$helvetica;
+  color: base.$primary-black;
+
+  &-emphasise {
+    color: base.$primary-red;
+    font-family: base.$helvetica-bold;
+  }
+}

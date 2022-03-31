@@ -197,7 +197,8 @@ const Movies = () => {
                         <Stack direction={"row"}
                                spacing={2}
                                paddingBottom={1}
-                               overflow={"auto"}>
+                               overflow={"auto"}
+                        >
 
                             {moviesWithPoster.filter((movie) => {
                                 if (movie.title
