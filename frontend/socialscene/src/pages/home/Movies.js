@@ -12,7 +12,6 @@ import { Outlet } from "react-router";
 import MovieCard from "../../components/MovieCard";
 
 
-
 const Movies = () => {
 	let { user, authTokens } = useContext(AuthContext);
 	const [movie, setMovie] = useState("");
@@ -183,6 +182,8 @@ const Movies = () => {
 						label={"search"}
 						fullWidth
 						value={searchValue}
+						data-testid={"search-bar"}
+                        inputProps={{ "data-testid": "content-input" }}
 						placeholder={"search for a movie"}
 						onChange={(event) => {
 							setSearchValue(event.target.value);
@@ -289,7 +290,6 @@ const Movies = () => {
 									})}
 								</Stack>
 							</Grid>
-
 						</Grid>
 					</div>
 				</Grid>

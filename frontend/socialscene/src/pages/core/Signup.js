@@ -157,7 +157,7 @@ export const Signup = () => {
 
             <Grid item xs={6} width={1}>
 
-                <HeadingCircle title={"sign up"}/>
+                <HeadingCircle title={"sign up"} data-testid="signup-circle"/>
             </Grid>
 
             <Grid item xs={6}>
@@ -167,6 +167,7 @@ export const Signup = () => {
                     <Stack sx={{width: '60%'}} className={"signup-form-stack"} spacing={2}>
 
                         <TextField
+                            data-testid="username-field"
                             error={usernameError}
                             fullWidth
                             required
@@ -181,6 +182,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            data-testid="first-name-field"
                             error={firstNameError}
                             fullWidth
                             required
@@ -195,6 +197,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            data-testid="last-name-field"
                             error={lastNameError}
                             fullWidth
                             required
@@ -209,6 +212,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            data-testid="email-field"
                             error={emailError}
                             fullWidth
                             required
@@ -223,6 +227,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            data-testid="bio-field"
                             error={bioError}
                             fullWidth
                             helperText={errorBioText}
