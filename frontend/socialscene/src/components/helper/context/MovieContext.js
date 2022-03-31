@@ -13,7 +13,7 @@ export default MovieContext;
 export const MovieProvider = ({ children }) => {
 	let { user } = useContext(AuthContext);
 	let { trainMeetingRecommendation } = useContext(EventContext)
-	let api = useFetch;
+	let api = useFetch();
 
 	const [movie, setMovie] = useState("");
 	const [rating, setRating] = useState({
@@ -27,6 +27,7 @@ export const MovieProvider = ({ children }) => {
 	useEffect(() => {
 		getRecommendedMovies();
 		getWatchedMovies();
+		console.log("movie context");
 	}, []);
 
 	let getWatchedMovies = async () => {
@@ -37,7 +38,7 @@ export const MovieProvider = ({ children }) => {
 	};
 
 	let addToWatchedList = async (id) => {
-		let { response, data } = await api(`/add_watched_movie/${id}`, "POST", {
+		let { response, data } = await api(`/add_watched_movie/${id}/`, "POST", {
 			movie: id,
 			user: user.user_id,
 		});
@@ -58,7 +59,7 @@ export const MovieProvider = ({ children }) => {
 	};
 
 	let getRating = async (id) => {
-		let { response, data } = api(`/get_rating/${id}`, "GET");
+		let { response, data } = await api(`/get_rating/${id}`, "GET");
 		if (response.status === 200) {
 			setRating(data);
 		} else if (response.status === 400) {
@@ -71,7 +72,7 @@ export const MovieProvider = ({ children }) => {
 	};
 
 	let getRecommendedMovies = async () => {
-		let { response, data } = api(`/rec_movies/`, "GET");
+		let { response, data } = await api(`/rec_movies/`, "GET");
 		if (response.status === 200) {
 			setRecommendedMovies(data);
 		} else {
@@ -80,11 +81,11 @@ export const MovieProvider = ({ children }) => {
 	};
 
 	let trainMovieRecommendation = async () => {
-		let { response, data } = api(`/train/movie/`, "GET");
+		let { response, data } = await api(`/train/movie/`, "GET");
 	};
 
 	let AddRating = async (id, ratingScore) => {
-		let { response, data } = await api(`/add_rating/${id}`, "POST", {
+		let { response, data } = await api(`/add_rating/${id}/`, "POST", {
 			user: user.user_id,
 			movie: id,
 			score: ratingScore,

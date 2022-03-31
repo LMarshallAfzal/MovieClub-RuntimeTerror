@@ -39,18 +39,20 @@ function App() {
 				<UserProvider>
 					<OptionProvider>
 						<EventProvider>
-							<Navbar />
-							<Routes>
-								<Route path={"/"} element={<HomePage />} />
-								<Route path={"/login"} element={<LogIn />} />
-								<Route path={"/signup"} element={<Signup />} />
-								<Route path={"/logout"} element={<Logout />} />
-								<MovieProvider>
+							
+								<Navbar />
+								<Routes>
+									<Route path={"/"} element={<HomePage />} />
+									<Route path={"/login"} element={<LogIn />} />
+									<Route path={"/signup"} element={<Signup />} />
+									<Route path={"/logout"} element={<Logout />} />
 									<Route
 										path={"/home"}
 										element={
 											<PrivateRoute>
+												<MovieProvider>
 												<HomeRouter />
+												</MovieProvider>
 											</PrivateRoute>
 										}
 									>
@@ -72,9 +74,8 @@ function App() {
 										</Route>
 										<Route path={"options"} element={<Options />} />
 									</Route>
-								</MovieProvider>
-								<Route path={"*"} element={<NotFound404 />} />
-							</Routes>
+									<Route path={"*"} element={<NotFound404 />} />
+								</Routes>
 						</EventProvider>
 					</OptionProvider>
 				</UserProvider>
