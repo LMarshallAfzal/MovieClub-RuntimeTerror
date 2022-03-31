@@ -2,20 +2,14 @@ import React, { useCallback, useState, useEffect, useContext } from "react";
 import { Collapse, Grid, ListItem, Stack } from "@mui/material";
 import EnterButton from "./EnterButton";
 import "../styling/components/ClubSelector.css";
-import { DummyClubData } from "../pages/data/DummyClubsData";
-import FormButton from "./FormButton";
 import TextButton from "./TextButton";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../components/helper/AuthContext";
+import UserContext from "../components/helper/context/UserContext";
 
 function ClubSelector() {
-	let { user, authTokens } = useContext(AuthContext);
+	let { myClubData } = useContext(UserContext);
 	const navigate = useNavigate();
 	const [showClubs, setShowClubs] = useState(true);
-	const [myClubData, setMyClubData] = useState([]);
-	const [errorText, setErrorText] = useState("");
-	const [error, setError] = useState(false);
-
 	const toggleShowClubs = () => {
 		setShowClubs(!showClubs);
 	};
@@ -24,37 +18,6 @@ function ClubSelector() {
 		setShowClubs(!showClubs);
 		navigate(props);
 	}
-
-	let errorHandler = (data) => {
-		if (Object.keys(data).includes(0)) {
-			setError(true);
-			setErrorText(data);
-		}
-	};
-
-	let getMembershipData = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		console.log(data);
-		if (response.status === 200) {
-			setMyClubData(data);
-		} else {
-			errorHandler(data);
-		}
-	};
-
-	useEffect(() => {
-		getMembershipData();
-	}, []);
 
 	return (
 		<Grid item xs={12}>

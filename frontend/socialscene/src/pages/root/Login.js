@@ -5,7 +5,7 @@ import HeadingCircle from "../../components/HeadingCircle";
 import {Grid, Stack, TextField} from "@mui/material";
 import FormButton from "../../components/FormButton";
 import CsrfToken from "../../components/helper/CsrfToken";
-import AuthContext from "../../components/helper/AuthContext";
+import AuthContext from "../../components/helper/context/AuthContext";
 
 
 export function Login() {

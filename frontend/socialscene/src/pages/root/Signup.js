@@ -4,7 +4,7 @@ import HeadingCircle from "../../components/HeadingCircle";
 import {Box, Grid, Stack, TextField, Button} from "@mui/material";
 import FormButton from "../../components/FormButton";
 import Cookies from "js-cookie";
-import AuthContext from "../../components/helper/AuthContext";
+import AuthContext from "../../components/helper/context/AuthContext";
 import CsrfToken from "../../components/helper/CsrfToken";
 import { useNavigate } from "react-router-dom"
 

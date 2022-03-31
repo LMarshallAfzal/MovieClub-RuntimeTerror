@@ -19,152 +19,27 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import "../../styling/pages/Movies.css";
 import moviePoster from "../../styling/images/empty_movie_poster.png";
-import AuthContext from "../../components/helper/AuthContext";
+import MovieContext from "../../components/helper/context/MovieContext";
 import FormButton from "../../components/FormButton";
 import HomePageTitle from "../../components/HomePageTitle";
 import TextButton from "../../components/TextButton";
 
 const Movies = () => {
-	let { user, authTokens } = useContext(AuthContext);
-	const [movie, setMovie] = useState("");
-	const [rating, setRating] = useState({
-		user: user.user_id,
-		movie: 0,
-		score: null,
-	});
-	const [recommendedMovies, setRecommendedMovies] = useState([]);
-	const [watchedMovies, setWatchedMovies] = useState([]);
-
-	useEffect(() => {
-		getRecommendedMovies();
-		getWatchedMovies();
-	}, []);
-
-	let getWatchedMovies = async () => {
-		let response = await fetch("http://127.0.0.1:8000/watched_list/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + authTokens.access,
-			},
-		});
-		let data = await response.json();
-		setWatchedMovies(data);
-	};
-
-	let addToWatchedList = async (id) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/add_watched_movie/" + id + "/",
-			{
-				method: "POST",
-				body: JSON.stringify({ movie: id, user: user.user_id }),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + authTokens.access,
-				},
-			}
-		);
-	};
-
-	let editRating = async (id) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/edit_rating/" + id + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify({
-					user: user.user_id,
-					movie: id,
-					score: rating.score,
-				}),
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		if (response.status === 200) {
-			setRating(data);
-		} else {
-			setRating({ user: user.user_id, movie: id, score: 0.0 });
-			console.log(rating.score);
-		}
-	};
-
-	let getRating = async (id) => {
-		let response = await fetch("http://127.0.0.1:8000/get_rating/" + id + "/", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json; charset=UTF-8",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		let data = await response.json();
-		if (response.status === 200) {
-			setRating(data);
-		} else if (response.status === 400) {
-			setRating({ user: user.user_id, movie: id, score: 0.0 });
-			console.log(rating.score);
-		} else {
-			setRating({ user: user.user_id, movie: id, score: 0.0 });
-			console.log(rating.score);
-		}
-	};
-
-	let getRecommendedMovies = async () => {
-		let response = await fetch("http://127.0.0.1:8000/rec_movies/", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json; charset=UTF-8",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		// .catch(err => console.log(err))
-		let data = await response.json();
-		console.log(data);
-		if (response.status === 200) {
-			setRecommendedMovies(data);
-		} else {
-			alert("Something went wrong");
-		}
-	};
-
-	let AddRating = async (id, ratingScore) => {
-		let response1 = await fetch(
-			"http://127.0.0.1:8000/add_rating/" + id + "/",
-			{
-				method: "POST",
-				body: JSON.stringify({
-					user: user.user_id,
-					movie: id,
-					score: ratingScore,
-				}),
-				headers: {
-					"Content-Type": "application/json; charset=UTF-8",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data1 = await response1.json();
-		setRating(data1);
-		let response2 = await fetch("http://127.0.0.1:8000/train/movie/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json; charset=UTF-8",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		await response2.json();
-		let response3 = await fetch("http://127.0.0.1:8000/train/meeting/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json; charset=UTF-8",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		await response3.json();
-	};
-
+	let {
+		movie,
+		rating,
+		recommendedMovies,
+		watchedMovies,
+		setMovie,
+		setRating,
+		setRecommendedMovies,
+		setWatchedMovies,
+		getWatchedMovies,
+		addToWatchedList,
+		getRating,
+		getRecommendedMovies,
+		AddRating,
+	} = useContext(MovieContext);
 	const [openSearch, setOpenSearch] = React.useState(false);
 
 	const toggleSearch = () => {
@@ -207,7 +82,6 @@ const Movies = () => {
 						}}
 					/>
 				</Grid>
-
 				<Grid item xs={12}>
 					<Collapse in={openSearch}>
 						<div className={"home-page-card-background"}>
@@ -215,7 +89,6 @@ const Movies = () => {
 								<Grid item xs={12}>
 									<h5 className={"home-page-card-title"}>search result</h5>
 								</Grid>
-
 								<Grid item xs={12}>
 									<Grid
 										container

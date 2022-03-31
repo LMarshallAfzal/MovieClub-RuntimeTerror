@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {Link, useLocation,matchPath} from "react-router-dom";
 import "../../styling/components/Navbar.css";
 import EnterButton from "../EnterButton";
-import AuthContext from "../../components/helper/AuthContext"
+import AuthContext from "../helper/context/AuthContext"
 
 
 function Navbar() {

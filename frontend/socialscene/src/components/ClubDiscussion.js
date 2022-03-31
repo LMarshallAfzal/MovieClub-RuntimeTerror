@@ -9,7 +9,7 @@ import iconImage from "../styling/images/testIconPic.jpg";
 import TextButton from "./TextButton";
 import ShowEvent from "./ShowEvent";
 import {Outlet, useLocation} from "react-router-dom";
-import AuthContext from "./helper/AuthContext";
+import AuthContext from "./helper/context/AuthContext";
 
 
 function ClubDiscussion() {

@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
-import AuthContext from "./AuthContext";
+import AuthContext from "../context/AuthContext";
 
 let useFetch = () => { 
     let config = {}

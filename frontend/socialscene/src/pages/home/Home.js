@@ -3,7 +3,7 @@ import "../../styling/pages/Home.css";
 import { List, Paper, ListSubheader, Grid, TextField, Stack, Box, ListItemButton, ListItemText, Autocomplete, Button } from "@mui/material";
 import { DummyDashboardClubsData, meetings, movies } from '../data/DummyDashboardClubsData';
 import { useState, useEffect } from 'react'
-import AuthContext from "../../components/helper/AuthContext";
+import AuthContext from "../../components/helper/context/AuthContext";
 import HomePageTitle from "../../components/HomePageTitle";
 
 const Home = () =>  {

@@ -5,7 +5,7 @@ import Sidebar from "../../components/root/Sidebar";
 import NameHeader from "../../components/NameHeader";
 import { Grid } from "@mui/material";
 import CsrfToken from "../../components/helper/CsrfToken";
-import AuthContext from "../../components/helper/AuthContext";
+import AuthContext from "../../components/helper/context/AuthContext";
 
 function HomeRouter() {
    

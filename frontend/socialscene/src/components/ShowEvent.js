@@ -22,7 +22,7 @@ import EnterButton from "./EnterButton";
 import FormButton from "./FormButton";
 import moviePoster from "../styling/images/empty_movie_poster.png";
 import { DummyClubMemberData } from "../pages/data/DummyClubMemberData";
-import AuthContext from "./helper/AuthContext";
+import AuthContext from "./helper/context/AuthContext";
 
 function ShowEvent() {
 	let { user, authTokens } = useContext(AuthContext);
