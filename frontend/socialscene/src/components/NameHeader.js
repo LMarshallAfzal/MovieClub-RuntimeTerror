@@ -1,8 +1,8 @@
 import React from 'react'
 import "../styling/components/NameHeader.css";
 import {Avatar, Box, Grid, Stack} from "@mui/material";
-import iconImage from "../styling/images/testIconPic.jpg";
-import {DummyClubData} from "../pages/data/DummyClubsData";
+import iconImage from "../resources/images/testIconPic.jpg";
+import {DummyClubData} from "../resources/data/DummyClubsData";
 
 
 function NameHeader(props) {
@@ -56,7 +56,7 @@ function NameHeader(props) {
                       <h5 className={"name-header-text"}>{currentMessage.message}</h5>
                       <h4 className={"name-header-name"}>{props.firstName} {props.lastName}</h4>
 
-                      <h6 className={"name-header-text-date"}>{props.username}</h6>
+                      <h6 className={"name-header-username"}>{props.username}</h6>
                   </Stack>
               </Grid>
           </Grid>

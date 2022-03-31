@@ -1,0 +1,16 @@
+@use "../base";
+
+.quote-icon {
+  color: base.$grey-2;
+}
+
+.quote-title {
+  z-index: 100;
+  font-family: base.$helvetica-bold;
+}
+
+.quote-movie {
+  z-index: 100;
+  font-family: base.$helvetica-light-oblique;
+  color: base.$primary-red;
+}

@@ -7,23 +7,27 @@
 
 @font-face {
   font-family: Helvetica;
-  src: url("../fonts/Helvetica.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Italic;
+  src: url("../../resources/newfonts/Helvetica-Italic.ttf") format("truetype");
 }
 @font-face {
   font-family: Helvetica-Light;
-  src: url("../fonts/Helvetica-Light.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Light.ttf") format("truetype");
 }
 @font-face {
-  font-family: Helvetica-Oblique;
-  src: url("../fonts/Helvetica-Oblique.ttf") format("truetype");
+  font-family: Helvetica-Light-Italic;
+  src: url("../../resources/newfonts/Helvetica-Light-Italic.ttf") format("truetype");
 }
 @font-face {
   font-family: Helvetica-Bold;
-  src: url("../fonts/Helvetica-Bold.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Bold.ttf") format("truetype");
 }
 @font-face {
-  font-family: Helvetica-BoldOblique;
-  src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
+  font-family: Helvetica-Bold-Italic;
+  src: url("../../resources/newfonts/Helvetica-Bold-Italic.ttf") format("truetype");
 }
 a {
   display: block;
@@ -93,43 +97,31 @@ h6 {
 
 .home-page-title {
   background-color: #5C5C5C;
-  font-family: Helvetica-Bold, serif;
-  padding: 10px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
-  color: #FFFFFF;
 }
 
-.home-page-sub-section-heading {
+.home-page-sub-title {
   background-color: #999999;
-  padding: 10px;
-  color: #FFFFFF;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
+}
+
+.sub-title-text {
+  font-family: Helvetica-Bold, serif;
+  color: #FFFFFF;
 }
 
 .home-page-card-title {
   color: #000000;
-  font-family: Helvetica, serif;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  font-family: Helvetica-Bold, serif;
+  user-select: none;
 }
 
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .form-button {
@@ -147,10 +139,7 @@ h6 {
   font-family: Helvetica-Bold, serif;
   transition: all 0.3s ease-in-out;
   border-left: 0 solid #000000;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .form-button#normal:hover {
@@ -168,4 +157,6 @@ h6 {
 
 .form-button#disabled:hover {
   cursor: not-allowed;
-}/*# sourceMappingURL=FormButton.css.map */
+}
+
+/*# sourceMappingURL=ThemeButton.css.map */

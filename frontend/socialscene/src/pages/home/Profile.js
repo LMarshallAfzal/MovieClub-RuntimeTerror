@@ -1,14 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react'
 import "../../styling/pages/Profile.css";
 import { Tooltip, CardHeader, CardMedia, ListItemText, ListItemButton, Paper, Chip, Typography, CardContent, Card, Avatar, Autocomplete, Box, Stack, TextField, Button, Grid } from "@mui/material";
-import FormButton from "../../components/FormButton";
+import ThemeButton from "../../components/core/ThemeButton";
 import AuthContext from "../../components/helper/AuthContext";
-import { themes } from "../data/MovieThemes"
-import HomePageTitle from "../../components/HomePageTitle";
-import { DummyDashboardClubsData, meetings, movies } from '../../pages/data/DummyDashboardClubsData';
-import { moviesWithPoster } from '../../pages/data/DummyMoviesData';
-import moviePoster from '../../styling/images/empty_movie_poster.png';
-import { DummyClubMemberData } from "../../pages/data/DummyClubMemberData";
+import { themes } from "../../resources/data/MovieThemes"
+import HomepageTitle from "../../components/HomepageTitle";
+import { DummyDashboardClubsData, meetings, movies } from '../../resources/data/DummyDashboardClubsData';
+import { moviesWithPoster } from '../../resources/data/DummyMoviesData';
+import moviePoster from '../../resources/images/empty_movie_poster.png';
+import { DummyClubMemberData } from "../../resources/data/DummyClubMemberData";
 
 const Profile = () => {
     const [userData, setUserData] = useState('')
@@ -254,7 +254,7 @@ const Profile = () => {
                                                         />
                                                     )}
                                                 />
-                                                <FormButton
+                                                <ThemeButton
                                                     text={"save"}
                                                     type={"submit"}
                                                     style={"primary"}

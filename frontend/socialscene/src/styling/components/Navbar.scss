@@ -25,9 +25,23 @@
   user-select: none;
 }
 
-.navbar-logo {
+.logo-social {
+  font-family: base.$helvetica-light;
   color: base.$primary-white;
-  font-family: base.$helvetica;
+}
+
+.logo-scene {
+  font-family: base.$helvetica-bold;
+  color: base.$primary-white;
+
+  &-emphasise {
+    font-family: base.$helvetica-bold;
+    color: base.$primary-red;
+  }
+}
+
+
+.navbar-logo {
   float: left;
   margin: auto;
   width: auto;

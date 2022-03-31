@@ -2,14 +2,14 @@ import React, { useState, useContext, useEffect } from "react";
 import {Tooltip, Collapse, TextField, Grid, Typography, Rating, Stack, ListItem,} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
-import { moviesWithPoster } from "../data/DummyMoviesData";
+import { moviesWithPoster } from "../../resources/data/DummyMoviesData";
 import "../../styling/pages/Movies.css";
-import moviePoster from "../../styling/images/empty_movie_poster.png";
+import moviePoster from "../../resources/images/empty_movie_poster.png";
 import AuthContext from "../../components/helper/AuthContext";
-import FormButton from "../../components/FormButton";
-import TextButton from "../../components/TextButton";
+import ThemeButton from "../../components/core/ThemeButton";
+import TextButton from "../../components/core/TextButton";
 import { Outlet } from "react-router";
-import MovieListing from "../../components/MovieListing";
+import MovieCard from "../../components/MovieCard";
 
 
 const Movies = () => {
@@ -174,7 +174,7 @@ const Movies = () => {
 				padding={2}
 			>
 				{/* <Grid item xs={12}>
-					<FormButton linkTo={"/home/movies/movie"}/>
+					<ThemeButton linkTo={"/home/movies/movie"}/>
 				</Grid> */}
 
 				<Grid item xs={12}>
@@ -257,7 +257,7 @@ const Movies = () => {
 																	<Typography noWrap>{movie.title}</Typography>
 																</Tooltip>
 
-																<FormButton text={"watch"} />
+																<ThemeButton text={"watch"} />
 															</Stack>
 														</Card>
 													</Grid>
@@ -281,7 +281,7 @@ const Movies = () => {
 								<Stack direction={"row"} overflow={"auto"}>
 									{moviesWithPoster.map((movie) => {
 										return (
-											<MovieListing
+											<MovieCard
 												isClubMovie={true}
 												movie={movie}
 												poster={moviePoster}
@@ -305,7 +305,7 @@ const Movies = () => {
 								<Stack direction={"row"} overflow={"auto"}>
 									{moviesWithPoster.map((movie) => {
 										return (
-											<MovieListing
+											<MovieCard
 												poster={moviePoster}
 												isClubMovie={false}
 												movie={movie}
@@ -329,7 +329,7 @@ const Movies = () => {
 								<Stack direction={"row"} overflow={"auto"}>
 									{moviesWithPoster.map((movie) => {
 										return (
-											<MovieListing
+											<MovieCard
 												poster={moviePoster}
 												isClubMovie={false}
 												movie={movie}
