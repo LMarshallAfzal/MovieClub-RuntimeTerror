@@ -1,7 +1,7 @@
 import React from 'react'
-import avengerImage from "../../styling/images/avengers.jpg";
-import djangoImage from "../../styling/images/django.jpeg";
-import jackImage from "../../styling/images/jack-giant.jpg";
+import avengerImage from "../images/avengers.jpg";
+import djangoImage from "../images/django.jpeg";
+import jackImage from "../images/jack-giant.jpg";
 
 export const moviesWithPoster = [
     {

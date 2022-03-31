@@ -1,11 +1,11 @@
 import React from "react";
-import icon3 from "../../styling/images/example icons/club3.png";
-import icon4 from "../../styling/images/example icons/club4.png";
-import icon5 from "../../styling/images/example icons/club5.png";
-import icon6 from "../../styling/images/example icons/club6.png";
-import icon7 from "../../styling/images/example icons/club7.png";
-import icon1 from "../../styling/images/example icons/club1.png";
-import icon2 from "../../styling/images/example icons/club2.png";
+import icon3 from "../images/example icons/club3.png";
+import icon4 from "../images/example icons/club4.png";
+import icon5 from "../images/example icons/club5.png";
+import icon6 from "../images/example icons/club6.png";
+import icon7 from "../images/example icons/club7.png";
+import icon1 from "../images/example icons/club1.png";
+import icon2 from "../images/example icons/club2.png";
 
 export const DummyClubData = [
         {ID: "1", clubName: "Some Club", isMember: false, iconImage: icon3, description: "some people in a club", isOrganiser: false, clubTheme: "action", memberRole: ""},

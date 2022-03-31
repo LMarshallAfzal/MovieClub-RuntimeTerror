@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import "../../styling/pages/Login.css";
 import HeadingCircle from "../../components/HeadingCircle";
 import {FormControl, Grid, InputAdornment, InputLabel, OutlinedInput, Stack, TextField} from "@mui/material";
-import FormButton from "../../components/FormButton";
+import ThemeButton from "../../components/core/ThemeButton";
 import CsrfToken from "../../components/helper/CsrfToken";
 import AuthContext from "../../components/helper/AuthContext";
-import TextButton from "../../components/TextButton";
+import TextButton from "../../components/core/TextButton";
 
 
 export function Login() {
@@ -104,7 +104,7 @@ export function Login() {
 
                                 <Grid item xs={4}>
 
-                                    <FormButton
+                                    <ThemeButton
                                         type="submit"
                                         text={"log in"}   
                                         onClick={loginUser}
@@ -114,7 +114,7 @@ export function Login() {
 
                                 <Grid item xs={8}>
 
-                                    <FormButton
+                                    <ThemeButton
                                         type="submit"
                                         text={"forgot password"}
                                     />

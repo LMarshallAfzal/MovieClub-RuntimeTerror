@@ -1,13 +1,13 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import "../styling/components/ClubDiscussion.css";
 import {useParams, useNavigate} from "react-router";
-import {DummyClubData} from "../pages/data/DummyClubsData";
+import {DummyClubData} from "../resources/data/DummyClubsData";
 import {Avatar, Divider, FormControl, Grid, IconButton, TextField, Typography} from "@mui/material";
-import FormButton from "./FormButton";
-import {comments} from "../pages/data/DummyForumData";
-import iconImage from "../styling/images/testIconPic.jpg";
-import TextButton from "./TextButton";
-import ShowEvent from "./ShowEvent";
+import ThemeButton from "./core/ThemeButton";
+import {comments} from "../resources/data/DummyForumData";
+import iconImage from "../resources/images/testIconPic.jpg";
+import TextButton from "./core/TextButton";
+import EventDetail from "./EventDetail";
 import {Outlet, useLocation} from "react-router-dom";
 import AuthContext from "./helper/AuthContext";
 
@@ -104,9 +104,9 @@ function ClubDiscussion() {
             </Grid>
 
             <Grid item xs={2}>
-                <FormButton className={"create-button"}
-                    text={"create"}
-                    onClick={createNewEvent}
+                <ThemeButton className={"create-button"}
+                             text={"create"}
+                             onClick={createNewEvent}
                 />
             </Grid>
 

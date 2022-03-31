@@ -1,5 +1,5 @@
 import React from "react";
-import "../styling/components/TextButton.css";
+import "../../styling/components/TextButton.css";
 
 function TextButton(props) {
     return (

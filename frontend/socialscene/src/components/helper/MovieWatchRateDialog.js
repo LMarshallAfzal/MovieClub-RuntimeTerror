@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Rating} from "@mui/material";
-import FormButton from "../FormButton";
-import {DummyRecommendedMovies} from "../../pages/data/DummyRecommendedMovies";
+import ThemeButton from "../core/ThemeButton";
+import {DummyRecommendedMovies} from "../../resources/data/DummyRecommendedMovies";
 
-function MovieWatchRate(props) {
+function MovieWatchRateDialog(props) {
     let movie = (props.data && DummyRecommendedMovies.find(obj => obj.ID === props.data.ID)); // substitute for movie logic
     let movieTitle = (props.data && movie.title);
 
@@ -49,13 +49,13 @@ function MovieWatchRate(props) {
 
             <DialogActions>
 
-                <FormButton
+                <ThemeButton
                     onClick={handleRateMovie}
                     text={"save"}
                     style={"primary"}
                 />
 
-                <FormButton
+                <ThemeButton
                     onClick={handleClose}
                     text={"cancel"} />
             </DialogActions>
@@ -64,4 +64,4 @@ function MovieWatchRate(props) {
     );
 }
 
-export default MovieWatchRate;
+export default MovieWatchRateDialog;

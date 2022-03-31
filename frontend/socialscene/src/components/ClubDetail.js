@@ -15,10 +15,10 @@ import {
     Autocomplete
 } from "@mui/material";
 import "../styling/components/ClubDetail.css";
-import FormButton from "./FormButton";
-import { DummyClubData } from "../pages/data/DummyClubsData";
-import { DummyClubMemberData } from "../pages/data/DummyClubMemberData";
-import { themes } from "../pages/data/MovieThemes"
+import ThemeButton from "./core/ThemeButton";
+import { DummyClubData } from "../resources/data/DummyClubsData";
+import { DummyClubMemberData } from "../resources/data/DummyClubMemberData";
+import { themes } from "../resources/data/MovieThemes"
 
 
 function ClubDetail() {
@@ -180,12 +180,12 @@ function ClubDetail() {
                         </DialogContent>
 
                         <DialogActions>
-                            <FormButton
+                            <ThemeButton
                                 onClick={handleClubDelete}
                                 text={"delete"}
                                 style={"primary"}
                             />
-                            <FormButton onClick={closeDeleteClubDialog} text={"cancel"} />
+                            <ThemeButton onClick={closeDeleteClubDialog} text={"cancel"} />
                         </DialogActions>
                     </Dialog>
 
@@ -206,18 +206,18 @@ function ClubDetail() {
                         </DialogContent>
 
                         <DialogActions>
-                            <FormButton onClick={handleBan} text={"ban"} style={"primary"}/>
-                            <FormButton onClick={handleRemoveUser} text={"remove"} />
+                            <ThemeButton onClick={handleBan} text={"ban"} style={"primary"}/>
+                            <ThemeButton onClick={handleRemoveUser} text={"remove"} />
                         </DialogActions>
                     </Dialog>
 
-                    <FormButton text={"join"} style={club.isMember ? "disabled" : "primary"} />
+                    <ThemeButton text={"join"} style={club.isMember ? "disabled" : "primary"} />
 
-                    <FormButton text={"leave"} style={club.isMember ? "primary" : "disabled"} />
+                    <ThemeButton text={"leave"} style={club.isMember ? "primary" : "disabled"} />
 
-                    <FormButton text={"delete"} style={club.isOrganiser ? "primary" : "disabled"} onClick={openDeleteClubDialog} />
+                    <ThemeButton text={"delete"} style={club.isOrganiser ? "primary" : "disabled"} onClick={openDeleteClubDialog} />
 
-                    <FormButton text={showBannedMembers ? "members" : "banned"} style={"normal"} onClick={toggleBannedView} />
+                    <ThemeButton text={showBannedMembers ? "members" : "banned"} style={"normal"} onClick={toggleBannedView} />
                 </Stack>
             </Grid>
 
@@ -266,7 +266,7 @@ function ClubDetail() {
                         )}
                     />
 
-                    <FormButton text={edit ? "edit" : "save"} style={edit ? "normal" : "primary"} onClick={toggleEdit}/>
+                    <ThemeButton text={edit ? "edit" : "save"} style={edit ? "normal" : "primary"} onClick={toggleEdit}/>
                 </Stack>
             </Grid>
 

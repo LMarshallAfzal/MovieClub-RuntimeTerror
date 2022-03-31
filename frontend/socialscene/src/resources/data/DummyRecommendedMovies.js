@@ -1,24 +1,24 @@
 import React from "react";
-import movie1 from "../../styling/images/example movies/movie1.jpg";
-import movie2 from "../../styling/images/example movies/movie2.jpg";
-import movie3 from "../../styling/images/example movies/movie3.jpeg";
-import movie4 from "../../styling/images/example movies/movie4.jpg";
-import movie5 from "../../styling/images/example movies/movie5.jpg";
-import movie6 from "../../styling/images/example movies/movie6.jpg";
-import movie7 from "../../styling/images/example movies/movie7.jpg";
-import movie8 from "../../styling/images/example movies/movie8.jpg";
-import movie9 from "../../styling/images/example movies/movie9.jpg";
-import movie10 from "../../styling/images/example movies/movie10.jpg";
-import movie11 from "../../styling/images/example movies/movie11.jpg";
-import movie12 from "../../styling/images/example movies/movie12.jpg";
-import movie13 from "../../styling/images/example movies/movie13.jpg";
-import movie14 from "../../styling/images/example movies/movie14.jpg";
-import movie15 from "../../styling/images/example movies/movie15.jpg";
-import movie16 from "../../styling/images/example movies/movie16.jpg";
-import movie17 from "../../styling/images/example movies/movie17.jpg";
-import movie18 from "../../styling/images/example movies/movie18.jpg";
-import movie19 from "../../styling/images/example movies/movie19.jpg";
-import movie20 from "../../styling/images/example movies/movie20.jpg";
+import movie1 from "../images/example movies/movie1.jpg";
+import movie2 from "../images/example movies/movie2.jpg";
+import movie3 from "../images/example movies/movie3.jpeg";
+import movie4 from "../images/example movies/movie4.jpg";
+import movie5 from "../images/example movies/movie5.jpg";
+import movie6 from "../images/example movies/movie6.jpg";
+import movie7 from "../images/example movies/movie7.jpg";
+import movie8 from "../images/example movies/movie8.jpg";
+import movie9 from "../images/example movies/movie9.jpg";
+import movie10 from "../images/example movies/movie10.jpg";
+import movie11 from "../images/example movies/movie11.jpg";
+import movie12 from "../images/example movies/movie12.jpg";
+import movie13 from "../images/example movies/movie13.jpg";
+import movie14 from "../images/example movies/movie14.jpg";
+import movie15 from "../images/example movies/movie15.jpg";
+import movie16 from "../images/example movies/movie16.jpg";
+import movie17 from "../images/example movies/movie17.jpg";
+import movie18 from "../images/example movies/movie18.jpg";
+import movie19 from "../images/example movies/movie19.jpg";
+import movie20 from "../images/example movies/movie20.jpg";
 
 
 export const DummyRecommendedMovies = [

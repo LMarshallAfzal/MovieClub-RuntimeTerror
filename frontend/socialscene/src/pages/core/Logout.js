@@ -3,7 +3,7 @@ import "../../styling/pages/Logout.css";
 import {useNavigate} from "react-router";
 import {Grid, Stack} from "@mui/material";
 import HeadingCircle from "../../components/HeadingCircle";
-import FormButton from "../../components/FormButton";
+import ThemeButton from "../../components/core/ThemeButton";
 
 function Logout() {
     // let {logoutUser} = useContext(AuthContext)
@@ -41,7 +41,7 @@ function Logout() {
                            alignItems={"center"}>
 
                     <div className={"logout-row"}>
-                        <FormButton
+                        <ThemeButton
                         text={"home"}
                         style={"normal"}
                         onClick={goHome}
@@ -49,7 +49,7 @@ function Logout() {
                     </div>
 
                     <div className={"logout-row"}>
-                        <FormButton
+                        <ThemeButton
                         text={"login"}
                         style={"primary"}
                         onClick={goLogin}

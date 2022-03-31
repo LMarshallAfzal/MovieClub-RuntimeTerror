@@ -15,17 +15,17 @@ import {
 } from "@mui/material";
 import "../styling/components/ShowEvent.css";
 import {useParams} from "react-router";
-import {DummyClubData} from "../pages/data/DummyClubsData";
-import {DummyClubEventData} from "../pages/data/DummyClubEventData";
-import {DummyRecommendedMovies} from "../pages/data/DummyRecommendedMovies";
-import EnterButton from "./EnterButton";
-import FormButton from "./FormButton";
-import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
-import MovieWatchRate from "./helper/MovieWatchRate";
-import moviePoster from "../styling/images/empty_movie_poster.png";
+import {DummyClubData} from "../resources/data/DummyClubsData";
+import {DummyClubEventData} from "../resources/data/DummyClubEventData";
+import {DummyRecommendedMovies} from "../resources/data/DummyRecommendedMovies";
+import RoundButton from "./core/RoundButton";
+import ThemeButton from "./core/ThemeButton";
+import {DummyClubMemberData} from "../resources/data/DummyClubMemberData";
+import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
+import moviePoster from "../resources/images/empty_movie_poster.png";
 import AuthContext from "./helper/AuthContext";
 
-function ShowEvent() {
+function EventDetail() {
     let { user, authTokens } = useContext(AuthContext);
 	const [myClubData, setMyClubData] = useState([]);
 	const [myMeetingData, setMyMeetingData] = useState({});
@@ -235,7 +235,7 @@ function ShowEvent() {
         if (organiser === user) { // replace with organiser condition
             return (
 
-                 <FormButton
+                 <ThemeButton
                      text={edit ? "save" : "edit"}
                      style={edit ? "primary" : "normal"}
                      onClick={edit ? handleSave : openEdit} />
@@ -243,7 +243,7 @@ function ShowEvent() {
         } else {
             return (
 
-                <FormButton
+                <ThemeButton
                     text={"edit"}
                     style={"disabled"} />
             )
@@ -254,7 +254,7 @@ function ShowEvent() {
         if(organiser === user) { // replace with organiser condition
             return (
 
-                <FormButton
+                <ThemeButton
                     text={"delete"}
                     onClick={() => {deleteMeeting(clubID);}}
                     style={"primary"}
@@ -263,7 +263,7 @@ function ShowEvent() {
         } else {
             return (
 
-                <FormButton
+                <ThemeButton
                     text={"delete"}
                     style={"disabled"}
                 />
@@ -410,7 +410,7 @@ function ShowEvent() {
                 </Grid>
 
                 <Grid item xs={2}>
-                    {/*<EnterButton text={event.hasStarted ? "attend" : "join"} linkTo={"/https://zoom.us"}/>*/}
+                    {/*<RoundButton text={event.hasStarted ? "attend" : "join"} linkTo={"/https://zoom.us"}/>*/}
                 </Grid>
 
                 <Grid item xs={12}>
@@ -518,16 +518,16 @@ function ShowEvent() {
                     <Grid container spacing={2}>
 
                         <Grid item xs={3}>
-                            <MovieWatchRate isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
+                            <MovieWatchRateDialog isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
 
-                            <FormButton text={"watched"} style={"primary"} onClick={() => {
+                            <ThemeButton text={"watched"} style={"primary"} onClick={() => {
                                 setPromptData(specificMovie);
                                 setShowPrompt(true);
                             }}/>
                         </Grid>
 
                         <Grid item xs={3}>
-                            <FormButton text={"rate"} />
+                            <ThemeButton text={"rate"} />
                         </Grid>
 
                         <Grid item xs={3}>
@@ -546,4 +546,4 @@ function ShowEvent() {
     );
 }
 
-export default ShowEvent;
+export default EventDetail;

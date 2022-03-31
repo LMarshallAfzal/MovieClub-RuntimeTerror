@@ -12,13 +12,13 @@ import {
     OutlinedInput,
     FormControl, InputLabel
 } from "@mui/material";
-import FormButton from "../../components/FormButton";
+import ThemeButton from "../../components/core/ThemeButton";
 import Cookies from "js-cookie";
 import AuthContext from "../../components/helper/AuthContext";
 import CsrfToken from "../../components/helper/CsrfToken";
 import { useNavigate } from "react-router-dom";
-import { themes } from "../data/MovieThemes"
-import TextButton from "../../components/TextButton";
+import { themes } from "../../resources/data/MovieThemes"
+import TextButton from "../../components/core/TextButton";
 
 export const Signup = () => {
     const [passwordVisibility, togglePasswordVisibility] = useState(false);
@@ -330,7 +330,7 @@ export const Signup = () => {
                         </FormControl>
 
                         <div style={{width: '100%'}}>
-                            <FormButton
+                            <ThemeButton
                                 style={"primary"}
                                 type="submit"
                                 text={"sign up"}

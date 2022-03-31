@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import {Link, useLocation,matchPath} from "react-router-dom";
 import "../../styling/components/Navbar.css";
-import EnterButton from "../EnterButton";
+import RoundButton from "./RoundButton";
 import AuthContext from "../../components/helper/AuthContext"
 
 
@@ -37,13 +37,13 @@ function NavbarButton() {
     switch (location.pathname){
         case "/": if (user) {return (
 
-            <EnterButton
+            <RoundButton
                 text={"enter"}
                 linkTo={"/home"}
             />
         )} else {return (
 
-            <EnterButton
+            <RoundButton
                 text={"enter"}
                 linkTo={"/login"}
             />
@@ -51,7 +51,7 @@ function NavbarButton() {
 
         case "/login": return (
 
-            <EnterButton
+            <RoundButton
                 text={"sign up"}
                 linkTo={"/signup"}
             />
@@ -59,7 +59,7 @@ function NavbarButton() {
 
         default: if(user) {return (
 
-            <EnterButton
+            <RoundButton
                 text={"log out"}
                 onClick={logoutUser}
             />

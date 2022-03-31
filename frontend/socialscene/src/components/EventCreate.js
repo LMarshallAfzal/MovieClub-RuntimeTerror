@@ -13,12 +13,12 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router";
 import "../styling/components/NewEventForm.css";
-import {DummyRecommendedMovies} from "../pages/data/DummyRecommendedMovies";
-import FormButton from "./FormButton";
-import moviePoster from "../styling/images/empty_movie_poster.png";
+import {DummyRecommendedMovies} from "../resources/data/DummyRecommendedMovies";
+import ThemeButton from "./core/ThemeButton";
+import moviePoster from "../resources/images/empty_movie_poster.png";
 import AuthContext from "./helper/AuthContext";
 
-function NewEvent() {
+function EventCreate() {
 	let day = new Date();
 	let nextDay = new Date(day);
 	let tomorrow = nextDay.setDate(day.getDate() + 2);
@@ -231,7 +231,7 @@ function NewEvent() {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <FormButton
+                    <ThemeButton
                         text={"create"}
                         style={"primary"}
                         onClick={(e) => {createMeeting(e)}}
@@ -242,4 +242,4 @@ function NewEvent() {
     );
 }
 
-export default NewEvent;
+export default EventCreate;

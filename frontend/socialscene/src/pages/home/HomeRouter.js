@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import "../../styling/pages/HomeRouter.css";
 import {Outlet, useLocation} from "react-router-dom";
-import Sidebar from "../../components/root/Sidebar";
+import Sidebar from "../../components/core/Sidebar";
 import NameHeader from "../../components/NameHeader";
 import { Grid } from "@mui/material";
 import CsrfToken from "../../components/helper/CsrfToken";
 import AuthContext from "../../components/helper/AuthContext";
-import HomePageTitle from "../../components/HomePageTitle";
+import HomepageTitle from "../../components/HomepageTitle";
 
 
 function HomeRouter() {
@@ -68,7 +68,7 @@ function HomeRouter() {
                 </Grid>
 
                 <Grid item xs={9} className={"home-grid-R-content"}>
-                    <HomePageTitle title={currentPage}/>
+                    <HomepageTitle title={currentPage}/>
                     <Outlet/>
                 </Grid>
             </Grid>

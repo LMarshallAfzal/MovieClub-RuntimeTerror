@@ -1,9 +1,9 @@
 import React from "react";
-import icon1 from "../../styling/images/example icons/icon1.jpeg";
-import icon2 from "../../styling/images/example icons/icon2.jpeg";
-import icon3 from "../../styling/images/example icons/icon3.jpeg";
-import icon4 from "../../styling/images/example icons/icon4.jpeg";
-import icon5 from "../../styling/images/example icons/icon5.jpeg";
+import icon1 from "../images/example icons/icon1.jpeg";
+import icon2 from "../images/example icons/icon2.jpeg";
+import icon3 from "../images/example icons/icon3.jpeg";
+import icon4 from "../images/example icons/icon4.jpeg";
+import icon5 from "../images/example icons/icon5.jpeg";
 
 
 export const DummyClubMemberData = [

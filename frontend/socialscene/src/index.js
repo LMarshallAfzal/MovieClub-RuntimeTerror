@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './pages/helper/App';
-import Helvetica from "./styling/fonts/Helvetica.ttf";
-import HelveticaLight from "./styling/fonts/Helvetica-Light.ttf";
-import HelveticaOblique from "./styling/fonts/Helvetica-Oblique.ttf";
-import HelveticaBold from "./styling/fonts/Helvetica-Bold.ttf";
-import HelveticaBoldOblique from "./styling/fonts/Helvetica-BoldOblique.ttf";
+import App from './pages/core/App';
+import Helvetica from "./resources/fonts/Helvetica.ttf";
+import HelveticaLight from "./resources/fonts/Helvetica-Light.ttf";
+import HelveticaOblique from "./resources/fonts/Helvetica-Oblique.ttf";
+import HelveticaBold from "./resources/fonts/Helvetica-Bold.ttf";
+import HelveticaBoldOblique from "./resources/fonts/Helvetica-BoldOblique.ttf";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {hover} from "@testing-library/user-event/dist/hover";
 

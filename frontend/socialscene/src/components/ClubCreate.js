@@ -1,14 +1,14 @@
 import React from "react";
 import {Autocomplete, Box, Grid, Stack, TextField} from "@mui/material";
 import HeadingCircle from "./HeadingCircle";
-import FormButton from "./FormButton";
+import ThemeButton from "./core/ThemeButton";
 import "../styling/components/NewClubForm.css";
-import { themes } from "../pages/data/MovieThemes"
+import { themes } from "../resources/data/MovieThemes"
 
 
 
 
-function NewClub() {
+function ClubCreate() {
     return (
         <Grid
             container
@@ -66,11 +66,11 @@ function NewClub() {
                                 />
                             )}
                         />
-                    <FormButton text={"create"} style={"primary"}/>
+                    <ThemeButton text={"create"} style={"primary"}/>
                 </Stack>
             </Grid>
         </Grid>
     );
 }
 
-export default NewClub;
+export default ClubCreate;

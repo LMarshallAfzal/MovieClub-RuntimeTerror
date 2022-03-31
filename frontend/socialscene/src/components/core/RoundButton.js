@@ -1,8 +1,8 @@
 import React, {useCallback} from "react";
-import "../styling/components/EnterButton.css";
+import "../../styling/components/EnterButton.css";
 import {useNavigate} from "react-router";
 
-function EnterButton(props) {
+function RoundButton(props) {
 
     const navigate = useNavigate();
     const onCLickNavigate = useCallback(() => navigate(`${props.linkTo}`, {replace: false}), [navigate]);
@@ -12,4 +12,4 @@ function EnterButton(props) {
     );
 }
 
-export default EnterButton;
+export default RoundButton;

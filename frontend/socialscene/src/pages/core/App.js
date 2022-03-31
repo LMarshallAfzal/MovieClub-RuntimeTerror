@@ -1,28 +1,28 @@
 import React from "react";
 import "../../styling/pages/App.css";
-import Navbar from "../../components/root/Navbar";
-import HomePage from "../root/Homepage";
-import LogIn from "../root/Login";
-import Logout from "../root/Logout";
-import NotFound404 from "../root/NotFound";
+import Navbar from "../../components/core/Navbar";
+import HomePage from "./Homepage";
+import LogIn from "./Login";
+import Logout from "./Logout";
+import NotFound404 from "./NotFound";
 import Profile from "../home/Profile";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import Signup from "../root/Signup";
-import HomeRouter from "./HomeRouter";
+import Signup from "./Signup";
+import HomeRouter from "../home/HomeRouter";
 import Clubs from "../home/Clubs";
 import Movies from "../home/Movies";
 import Options from "../home/Options";
 import Home from "../home/Home";
-import OthersProfile from "../../components/OthersProfile";
+import UserDetail from "../../components/UserDetail";
 import MovieDetail from "../../components/MovieDetail";
 import PrivateRoute from "../../components/helper/PrivateRoute";
 import { AuthProvider } from "../../components/helper/AuthContext";
 import ClubDetail from "../../components/ClubDetail";
-import NewClub from "../../components/NewClubForm";
+import ClubCreate from "../../components/ClubCreate";
 import Discussion from "../home/Discussion";
-import NewEvent from "../../components/NewEventForm";
+import EventCreate from "../../components/EventCreate";
 import ClubDiscussion from "../../components/ClubDiscussion";
-import ShowEvent from "../../components/ShowEvent";
+import EventDetail from "../../components/EventDetail";
 
 function App() {
 
@@ -42,7 +42,7 @@ function App() {
 
                   <Route path={"profile"}>
                       <Route index element={(<Profile />)} />
-                      <Route path={":userID"} element={(<OthersProfile />)} />
+                      <Route path={":userID"} element={(<UserDetail />)} />
                   </Route>
 
                   <Route path={"movies"} element={(<Movies />)}>
@@ -51,15 +51,15 @@ function App() {
 
                   <Route path={"clubs"} element={(<Clubs />)} >
                       <Route path={":clubID"} element={(<ClubDetail />)}>
-                          <Route path={":userID"} element={(<OthersProfile />)} />
+                          <Route path={":userID"} element={(<UserDetail />)} />
                       </Route>
-                      <Route path={"clubs/new"} element={(<NewClub />)} />
+                      <Route path={"clubs/new"} element={(<ClubCreate />)} />
                   </Route>
 
                   <Route path={"discussion"} element={(<Discussion />)}>
                       <Route path={":clubID"} element={(<ClubDiscussion />)}>
-                          <Route index element={(<ShowEvent />)} />
-                          <Route path={"new"} element={(<NewEvent />)} />
+                          <Route index element={(<EventDetail />)} />
+                          <Route path={"new"} element={(<EventCreate />)} />
                       </Route>
                   </Route>
 

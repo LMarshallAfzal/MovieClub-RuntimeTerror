@@ -2,7 +2,7 @@ import React from "react";
 import {Grid} from "@mui/material";
 import "../styling/pages/HomePageTitle.css";
 
-function HomePageTitle(props) {
+function HomepageTitle(props) {
     return (
         <Grid
             item xs={12}
@@ -16,4 +16,4 @@ function HomePageTitle(props) {
     )
 }
 
-export default HomePageTitle;
+export default HomepageTitle;

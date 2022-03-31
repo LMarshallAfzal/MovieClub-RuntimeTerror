@@ -2,11 +2,11 @@ import React, {useCallback} from "react";
 import {Grid, ListItem, Stack, TextField} from "@mui/material";
 import {Outlet} from "react-router-dom";
 import "../../styling/pages/Clubs.css";
-import FormButton from "../../components/FormButton";
-import ClubListing from "../../components/ClubListing";
-import {DummyClubData} from "../data/DummyClubsData";
+import ThemeButton from "../../components/core/ThemeButton";
+import ClubCard from "../../components/ClubCard";
+import {DummyClubData} from "../../resources/data/DummyClubsData";
 import {useNavigate} from "react-router";
-import HomePageTitle from "../../components/HomePageTitle";
+import HomepageTitle from "../../components/HomepageTitle";
 
 function Clubs() {
 
@@ -29,9 +29,9 @@ function Clubs() {
             </Grid>
 
             <Grid item xs={2}>
-                <FormButton className={"create-button"}
-                    text={"create"}
-                    onClick={createNewClub}
+                <ThemeButton className={"create-button"}
+                             text={"create"}
+                             onClick={createNewClub}
                 />
             </Grid>
 
@@ -50,7 +50,7 @@ function Clubs() {
                                 {DummyClubData.map((club) => club.isMember === true && (
                                     <ListItem sx={{width: 'auto',p:1}}>
 
-                                        <ClubListing
+                                        <ClubCard
                                             clubName={club.clubName}
                                             isMember={club.isMember}
                                             iconImage={club.iconImage}
@@ -82,7 +82,7 @@ function Clubs() {
                                 {DummyClubData.map((club) => club.isMember === false && (
                                     <ListItem sx={{width: 'auto',p: 1}}>
 
-                                        <ClubListing
+                                        <ClubCard
                                             clubName={club.clubName}
                                             isMember={club.isMember}
                                             iconImage={club.iconImage}

@@ -7,27 +7,27 @@
 
 @font-face {
   font-family: Helvetica;
-  src: url("../newfonts/Helvetica.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica.ttf") format("truetype");
 }
 @font-face {
   font-family: Helvetica-Italic;
-  src: url("../newfonts/Helvetica-Italic.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Italic.ttf") format("truetype");
 }
 @font-face {
   font-family: Helvetica-Light;
-  src: url("../newfonts/Helvetica-Light.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Light.ttf") format("truetype");
 }
 @font-face {
   font-family: Helvetica-Light-Italic;
-  src: url("../newfonts/Helvetica-Light-Italic.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Light-Italic.ttf") format("truetype");
 }
 @font-face {
   font-family: Helvetica-Bold;
-  src: url("../newfonts/Helvetica-Bold.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Bold.ttf") format("truetype");
 }
 @font-face {
   font-family: Helvetica-Bold-Italic;
-  src: url("../newfonts/Helvetica-Bold-Italic.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Bold-Italic.ttf") format("truetype");
 }
 a {
   display: block;
@@ -159,4 +159,4 @@ h6 {
   cursor: not-allowed;
 }
 
-/*# sourceMappingURL=FormButton.css.map */
+/*# sourceMappingURL=ThemeButton.css.map */

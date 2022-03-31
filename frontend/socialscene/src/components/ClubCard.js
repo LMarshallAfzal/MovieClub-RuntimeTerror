@@ -1,27 +1,27 @@
 import React from "react";
 import {useParams} from "react-router";
 import {Avatar, AvatarGroup, Box, Chip, Grid, Stack} from "@mui/material";
-import icon5 from "../styling/images/example icons/icon5.jpeg"
-import icon2 from "../styling/images/example icons/icon2.jpeg"
-import icon3 from "../styling/images/example icons/icon3.jpeg"
-import icon4 from "../styling/images/example icons/icon4.jpeg"
-import "../styling/components/ClubListing.css";
-import EnterButton from "./EnterButton";
+import icon5 from "../resources/images/example icons/icon5.jpeg"
+import icon2 from "../resources/images/example icons/icon2.jpeg"
+import icon3 from "../resources/images/example icons/icon3.jpeg"
+import icon4 from "../resources/images/example icons/icon4.jpeg"
+import "../styling/components/ClubCard.css";
+import RoundButton from "./core/RoundButton";
 import {Link} from "react-router-dom";
 
-function ClubListing(props) {
+function ClubCard(props) {
     let { clubID } = useParams();
 
     function ClubButton() {
         if (props.isMember === true) {
             return (
-                <EnterButton
+                <RoundButton
                     text={"info"}
                     linkTo={`/home/clubs/${props.ID}`}/>
             )
         } else {
                 return (
-                    <EnterButton
+                    <RoundButton
                         text={"join"}
                         linkTo={`/home/clubs/${props.ID}`}/>
                 )
@@ -32,7 +32,7 @@ function ClubListing(props) {
         if (props.isMember === true) {
             if (props.isOrganiser === true) {
                 return (
-                    <EnterButton text={"create meeting"} linkTo={`/home/discussion/${props.ID}/new`} />
+                    <RoundButton text={"create meeting"} linkTo={`/home/discussion/${props.ID}/new`} />
                 )
             } else {
                 return (
@@ -88,5 +88,5 @@ function ClubListing(props) {
     );
 }
 
-export default ClubListing;
+export default ClubCard;
 

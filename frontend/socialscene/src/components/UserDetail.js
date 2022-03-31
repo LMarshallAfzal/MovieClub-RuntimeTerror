@@ -2,14 +2,14 @@ import React, {useCallback} from "react";
 import {useNavigate, useParams} from "react-router";
 import "../styling/pages/OthersProfile.css";
 import { Tooltip, Rating, CardHeader, CardMedia, Chip, Avatar, Box, Stack, Card, CardContent, TextField, Typography, Grid, Paper, ListItemText, ListItemButton } from "@mui/material";
-import FormButton from "./FormButton";
-import iconImage from "../styling/images/testIconPic.jpg";
-import { DummyDashboardClubsData, meetings, movies } from '../pages/data/DummyDashboardClubsData';
-import { moviesWithPoster } from '../pages/data/DummyMoviesData';
-import moviePoster from '../styling/images/empty_movie_poster.png';
-import {DummyClubMemberData} from "../pages/data/DummyClubMemberData";
+import ThemeButton from "./core/ThemeButton";
+import iconImage from "../resources/images/testIconPic.jpg";
+import { DummyDashboardClubsData, meetings, movies } from '../resources/data/DummyDashboardClubsData';
+import { moviesWithPoster } from '../resources/data/DummyMoviesData';
+import moviePoster from '../resources/images/empty_movie_poster.png';
+import {DummyClubMemberData} from "../resources/data/DummyClubMemberData";
 
-function OthersProfile() {
+function UserDetail() {
 
     let { userID } = useParams();
     let user = DummyClubMemberData.find(obj => obj.ID === userID);
@@ -55,7 +55,7 @@ function OthersProfile() {
                                             }}
                                         >
                                             <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                                <FormButton
+                                                <ThemeButton
                                                     text={"edit"}
                                                 // onClick={editProfile}
                                                 />
@@ -73,7 +73,7 @@ function OthersProfile() {
                                             }}
                                         >
                                             <Box sx={{ gridRow: '1', gridColumn: 'span 1' }}>
-                                                <FormButton
+                                                <ThemeButton
                                                     text={"follow"}
                                                 // onClick={this.submitForm}
                                                 />
@@ -230,4 +230,4 @@ function OthersProfile() {
     );
 }
 
-export default OthersProfile;
+export default UserDetail;

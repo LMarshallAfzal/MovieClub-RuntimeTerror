@@ -1,5 +1,5 @@
 import React from 'react';
-import jack from "../../styling/images/jack-giant.jpg";
+import jack from "../images/jack-giant.jpg";
 
 export const comments = [
     {
