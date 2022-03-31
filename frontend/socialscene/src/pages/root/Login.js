@@ -1,14 +1,16 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styling/pages/Login.css";
 import HeadingCircle from "../../components/HeadingCircle";
-import {Grid, Stack, TextField} from "@mui/material";
+import {FormControl, Grid, InputAdornment, InputLabel, OutlinedInput, Stack, TextField} from "@mui/material";
 import FormButton from "../../components/FormButton";
 import CsrfToken from "../../components/helper/CsrfToken";
 import AuthContext from "../../components/helper/AuthContext";
+import TextButton from "../../components/TextButton";
 
 
 export function Login() {
+    const [passwordVisibility, togglePasswordVisibility] = useState(false);
 
     let {loginUser, loginCredentials, setLoginCredentials, usernameError, passwordError, errorUsernameText, errorPasswordText} = useContext(AuthContext)
     
@@ -30,54 +32,72 @@ export function Login() {
               spacing={2}>
             <CsrfToken />
 
-            <Grid item
-                  xs={6}
-                  className={"login-grid-child"}>
+            <Grid item xs={6} width={1}>
 
                 <HeadingCircle title={"log in"} data-testid="login-circle"/>
             </Grid>
 
-            <Grid item
-                  xs={6}
-                  className={"login-grid-child"}>
+            <Grid item xs={6}>
 
                 <form onSubmit={loginUser} className={"login-form"}>
 
-                    <Stack className={"login-form-stack"}
-                           spacing={3}
-                           alignItems={"center"}
-                    >
+                    <Stack sx={{width: '60%'}} className={"login-form-stack"} spacing={2}>
 
                         <TextField
                             data-testid="username-field"
                             error={usernameError}
                             helperText={errorUsernameText}
+                            fullWidth
                             required
-                            className={"login-form-row"}
-                            id={"outlined-basic"}
+                            id={"outlined-required"}
                             label={"username"}
                             name={"username"}
-                            variant={"outlined"}
+                            type={"text"}
                             value={username}
                             onChange={e => onChange(e)}
                         />
 
-                        <TextField
-                            data-testid="password-field"
+                        {/*<TextField*/}
+                        {/*    error={passwordError}*/}
+                        {/*    helperText={errorPasswordText}*/}
+                        {/*    required*/}
+                        {/*    className={"login-form-row"}*/}
+                        {/*    id={"outlined-basic"}*/}
+                        {/*    label={"password"}*/}
+                        {/*    name={"password"}*/}
+                        {/*    type={"password"}*/}
+                        {/*    variant={"outlined"}*/}
+                        {/*    value={password}*/}
+                        {/*    onChange={e => onChange(e)}*/}
+                        {/*/>*/}
+
+                        <FormControl fullWidth variant={"outlined"}>
+                            <InputLabel htmlFor={"outlined-adornment-password"}>password</InputLabel>
+                            <OutlinedInput
                             error={passwordError}
+                            fullWidth
                             helperText={errorPasswordText}
                             required
-                            className={"login-form-row"}
-                            id={"outlined-basic"}
+                            autoComplete="current-password"
+                            id={"outlined-adornment-password"}
                             label={"password"}
                             name={"password"}
-                            type={"password"}
-                            variant={"outlined"}
+                            type={passwordVisibility ? "text" : "password"}
                             value={password}
                             onChange={e => onChange(e)}
-                        />
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <TextButton
+                                        onClick={() => togglePasswordVisibility(!passwordVisibility)}
+                                        text={passwordVisibility ? "hide" : "show"}
+                                        style={{marginTop: "-20px"}}
+                                    />
+                                    </InputAdornment>
 
-                        <div className={"login-form-row"}>
+                            }/>
+                        </FormControl>
+
+                        <div style={{width: '100%'}}>
                             <Grid container
                                   direction={"row"}
                                   spacing={2}

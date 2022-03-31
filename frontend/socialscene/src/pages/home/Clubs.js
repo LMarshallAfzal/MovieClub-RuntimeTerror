@@ -14,23 +14,18 @@ function Clubs() {
     const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
 
     return (
-        <>
-            <HomePageTitle title={"clubs"}/>
-
-            <Grid container
-            justifyContent={"center"}
-            direction={"row"}
-            alignItems={"flex-start"}
+        <Grid container
+              justifyContent={"center"}
+              direction={"row"}
+              alignItems={"flex-start"}
               padding={2}
-            spacing={2}>
+              spacing={2}>
 
             <Grid item xs={10}>
                 <TextField className={"search-bar"}
-                    data-testid={"search-bar"}
-                    inputProps={{ "data-testid": "content-input" }}
-                    id={"outlined-basic"}
-                    label={"search"}
-                    variant={"outlined"}/>
+                           id={"outlined-basic"}
+                           label={"search"}
+                           variant={"outlined"}/>
             </Grid>
 
             <Grid item xs={2}>
@@ -110,7 +105,6 @@ function Clubs() {
                 <Outlet/>
             </Grid>
         </Grid>
-        </>
     );
 }
 

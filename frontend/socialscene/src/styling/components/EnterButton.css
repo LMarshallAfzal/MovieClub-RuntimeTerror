@@ -95,7 +95,10 @@ h6 {
   background-color: #5C5C5C;
   font-family: Helvetica-Bold, serif;
   padding: 10px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
   color: #FFFFFF;
 }
@@ -104,25 +107,37 @@ h6 {
   background-color: #999999;
   padding: 10px;
   color: #FFFFFF;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
   color: #000000;
   font-family: Helvetica, serif;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .enter-button-wrapper {
   padding: 8px 18px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .enter-button {
@@ -141,6 +156,4 @@ h6 {
 .enter-button:hover {
   background-color: #FF0000;
   color: #FFFFFF;
-}
-
-/*# sourceMappingURL=EnterButton.css.map */
+}/*# sourceMappingURL=EnterButton.css.map */

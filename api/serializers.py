@@ -55,7 +55,6 @@ class MovieSerializer(ModelSerializer):
         model = Movie
         fields = '__all__'
 
-
 class MembershipSerializer(ModelSerializer):
     class Meta:
         model = Membership
@@ -66,8 +65,6 @@ class RatingSerializer(ModelSerializer):
     class Meta:
         model = Rating
         fields = '__all__'
-
-
 class WatchMovieSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=User.objects.all())
@@ -121,6 +118,7 @@ class SignUpSerializer(serializers.Serializer):
 
     password_confirmation = serializers.CharField(
         write_only=True, required=True)
+
 
     class Meta:
         model = User
@@ -246,11 +244,11 @@ class ChangePasswordSerializer(serializers.Serializer):
 class CreateClubSerializer(serializers.Serializer):
     club_name = serializers.CharField(
         required=True,
-        validators=[MaxLengthValidator(50)]
+        validators=[UniqueValidator(queryset=Club.objects.all()),MaxLengthValidator(50)]
     )
 
     mission_statement = serializers.CharField(
-        required=False,
+        required=True,
         validators=[MaxLengthValidator(500)]
     )
 
@@ -272,6 +270,26 @@ class CreateClubSerializer(serializers.Serializer):
         club.save()
 
         return club
+
+class UpdateClubSerializer(serializers.ModelSerializer):
+    
+        club_name = serializers.CharField(
+            required=True,
+            validators=[UniqueValidator(queryset=Club.objects.all()),MaxLengthValidator(50)]
+        )
+    
+        mission_statement = serializers.CharField(
+            required=True,
+            validators=[MaxLengthValidator(500)]
+        )
+    
+        theme = serializers.CharField(
+            required=True,
+            validators=[MaxLengthValidator(500)]
+        )
+        class Meta:
+            model = Club
+            fields = ['club_name', 'mission_statement', 'theme']
 
 
 class CreateMeetingSerializer(serializers.Serializer):

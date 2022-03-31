@@ -6,6 +6,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator,MinLengt
 from django.utils.translation import gettext_lazy as _
 import datetime
 from datetime import datetime
+from libgravatar import Gravatar
+
 
 
 class User(AbstractUser):
@@ -47,6 +49,7 @@ class User(AbstractUser):
     )
 
     watched_movies = models.ManyToManyField('Movie', through='Watch')
+    
 
     followers = models.ManyToManyField(
         'self', symmetrical=False, related_name='followees'
@@ -83,6 +86,16 @@ class User(AbstractUser):
 
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+    def mini_gravatar(self):
+        "Return a URL to a miniature version of the user's gravatar."""
+        return self.gravatar(size=60)
+
+    def gravatar(self, size=120):
+        """Return a URL to the user's gravatar."""
+        gravatar_object = Gravatar(self.email)
+        gravatar_url = gravatar_object.get_image(size=size, default='identicon')
+        return gravatar_url
 
     def get_user_clubs(self):
          return Club.objects.all().filter(
@@ -144,12 +157,12 @@ class Club(models.Model):
 
     mission_statement = models.CharField(
         max_length=500,
-        blank=True,
+        blank=False,
         unique=False
     )
     theme = models.CharField(
         max_length=20,
-        blank=True,
+        blank=False,
         unique=False
     )
 
@@ -227,6 +240,8 @@ class Membership(models.Model):
         )
     is_organiser = models.BooleanField(default=False)
 
+    notifications = models.BooleanField(default=False)
+
     """We must ensure that only one relationship is created per User-Club pair."""
     class Meta:
         unique_together = ('user', 'club')
@@ -240,12 +255,21 @@ class Membership(models.Model):
         else:
             self.is_organiser = True
         self.save()
+
+    def toggle_notifications(self):
+        if self.notifications == True:
+            self.notifications = False
+        else:
+            self.notifications = True
+        self.save()
 class Movie(models.Model):
 
     ml_id = models.PositiveIntegerField(
         unique=True,
-        default=0
+        default=0,
     )
+
+    imdb_id = models.CharField(max_length=10,unique = True) 
 
     title = models.CharField(
         max_length=100,
@@ -265,6 +289,7 @@ class Movie(models.Model):
 
     viewers = models.ManyToManyField(
         User, through='Watch', related_name='viewers')
+
     class Meta:
         ordering = ['title']
 
@@ -292,14 +317,13 @@ class Movie(models.Model):
                 movies.append(movie)
         return movies
 
-
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     score = models.FloatField(
-
+        null=True,
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
     )
     class Meta:

@@ -19,10 +19,10 @@ function ClubDiscussion() {
     const [defaultMessage, setDefaultMessage] = useState('');
     const [userData, setUserData] = useState([]);
     const [dateTime, setDateTime] = useState(new Date(Date.now()));
+	const [myClubData, setMyClubData] = useState([]);
     const [messages, setMessages] = useState([]);
 
     let { clubID } = useParams();
-    let club = DummyClubData.find(obj => obj.ID === clubID);
 
 
     const navigate = useNavigate();
@@ -30,7 +30,11 @@ function ClubDiscussion() {
 
     useEffect(() => {
         getClubMessages()
+        getMembershipData()
+        
     },[])
+
+    console.log(myClubData)
 
     const onChange = (e, newDateTime) => {
         e.preventDefault();
@@ -39,10 +43,28 @@ function ClubDiscussion() {
 
      }; 
 
+     let getMembershipData = async () => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+        console.log(data)
+		setMyClubData(data);
+	};
+
+
+    let club = myClubData.find(obj => obj.id === clubID);
+
+
     let getClubMessages = async (e) => {
-        //USE PARAMS WHEN READY
-        const club = 2
-        let response = await fetch('http://127.0.0.1:8000/message_forum/' + club + '/', {
+        let response = await fetch('http://127.0.0.1:8000/message_forum/' + clubID + '/', {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -54,9 +76,8 @@ function ClubDiscussion() {
         let sender_data = data.sender
     }
 
-    let sendClubMessages = async () => {
-        const club = 2
-        let response = await fetch('http://127.0.0.1:8000/write_message/' + club + '/', {
+    let sendClubMessages = async (id) => {
+        let response = await fetch('http://127.0.0.1:8000/write_message/' + id + '/', {
             method: 'POST',
             body:JSON.stringify({
                 "sender": user.username,
@@ -70,7 +91,7 @@ function ClubDiscussion() {
             },
         })
         await response.json()
-        getClubMessages()
+        getClubMessages(clubID)
         message.message = ""
         console.log(message)
     }
@@ -79,7 +100,7 @@ function ClubDiscussion() {
         <Grid container spacing={2}>
 
             <Grid item xs={10}>
-                <h4 className={"home-page-sub-section-heading"}>{club.clubName}</h4>
+                <h4 className={"home-page-sub-section-heading"}>{'club.club_name'}</h4>
             </Grid>
 
             <Grid item xs={2}>
@@ -98,7 +119,7 @@ function ClubDiscussion() {
                     <Grid container padding={2} spacing={2}>
 
                         <Grid item xs={12}>
-                            <h5 className={"home-page-card-title"}>messages:</h5>
+                            <h5 className={"home-page-card-title"}>messages</h5>
                         </Grid>
 
                         <Grid item xs={12}>
@@ -143,13 +164,13 @@ function ClubDiscussion() {
                                     label="message"
                                     name="message"
                                     value={message.message}
-                                    placeholder={"say something"}
+                                    placeholder={"say something nice"}
                                     variant="outlined"
                                     onChange={(e, dateTime) => onChange(e, dateTime)}
                                     InputProps={{
                                         endAdornment:
                                             <TextButton
-                                                onClick={sendClubMessages}
+                                                // onClick={sendClubMessages(clubID)}
                                                 text={"send"}/>
                                 }}
                                 />

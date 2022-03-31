@@ -1,10 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react'
 import "../../styling/pages/Profile.css";
-import { Box, Stack, TextField, Button, Grid } from "@mui/material";
+import { Tooltip, CardHeader, CardMedia, ListItemText, ListItemButton, Paper, Chip, Typography, CardContent, Card, Avatar, Autocomplete, Box, Stack, TextField, Button, Grid } from "@mui/material";
 import FormButton from "../../components/FormButton";
 import AuthContext from "../../components/helper/AuthContext";
+import { themes } from "../data/MovieThemes"
 import HomePageTitle from "../../components/HomePageTitle";
-
+import { DummyDashboardClubsData, meetings, movies } from '../../pages/data/DummyDashboardClubsData';
+import { moviesWithPoster } from '../../pages/data/DummyMoviesData';
+import moviePoster from '../../styling/images/empty_movie_poster.png';
+import { DummyClubMemberData } from "../../pages/data/DummyClubMemberData";
 
 const Profile = () => {
     const [userData, setUserData] = useState('')
@@ -25,8 +29,8 @@ const Profile = () => {
     const [errorPreferencesText, setPreferencesErrorText] = useState('')
 
     const onChange = (e) => {
-        setUserData( prevData => ({...prevData, [e.target.name]: e.target.value}))
-     };
+        setUserData(prevData => ({ ...prevData, [e.target.name]: e.target.value }))
+    };
 
     let resetErrorState = () => {
         setUsernameError(false);
@@ -114,136 +118,267 @@ const Profile = () => {
 
     useEffect(() => {
         getUserData();
+        // console.log(user)
     }, [])
 
     return (
-        <>
-            <HomePageTitle title={"profile"}/>
+            <Grid container
+                  spacing={2}
+                  padding={2}
+                  direction={"row"}
+            >
 
-       <Grid container
-              direction={"row"}
-              spacing={2}
-             padding={2}
-        >
+                <Grid item xs={12}>
+                    <Grid container
+                        spacing={2}
+                        direction={"row"}
+                    >
+                        <Grid item xs={6}>
+                            <Stack spacing={2}>
 
+                                <Card>
+                                    <CardContent>
+                                        <form onSubmit={submitChangeProfileForm}>
+                                            <Stack spacing={2}>
+                                                <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+                                                    Basic information:
+                                                </Typography>
+                                                <TextField
+                                                    error={usernameError}
+                                                    helperText={errorUsernameText}
+                                                    placeholder={"choose a different username"}
+                                                    required
+                                                    fullWidth
+                                                    id={"outlined-required"}
+                                                    label={"username"}
+                                                    name={"username"}
+                                                    type={"text"}
+                                                    value={userData.username}
+                                                    defaultValue={userData.username}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                    onChange={e => onChange(e)}
+                                                />
 
+                                                <TextField
+                                                    error={firstNameError}
+                                                    helperText={errorFirstNameText}
+                                                    required
+                                                    placeholder={"your first name"}
+                                                    id={"outlined-basic"}
+                                                    label={"first name"}
+                                                    name={"first_name"}
+                                                    type={"text"}
+                                                    variant={"outlined"}
+                                                    value={userData.first_name}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                    onChange={e => onChange(e)}
+                                                    fullWidth
+                                                />
+                                                <TextField
+                                                    error={lastNameError}
+                                                    helperText={errorLastNameText}
+                                                    required
+                                                    placeholder={"your last name"}
+                                                    id={"outlined-basic"}
+                                                    label={"last name"}
+                                                    name={"last_name"}
+                                                    type={"text"}
+                                                    variant={"outlined"}
+                                                    value={userData.last_name}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                    onChange={e => onChange(e)}
+                                                    fullWidth
+                                                />
 
-            <Grid item xs={12}>
+                                                <TextField
+                                                    error={emailError}
+                                                    helperText={errorEmailText}
+                                                    required
+                                                    placeholder={"example@socialscene.co.uk"}
+                                                    id={"outlined-basic"}
+                                                    label={"email"}
+                                                    name={"email"}
+                                                    type={"email"}
+                                                    variant={"outlined"}
+                                                    value={userData.email}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                    onChange={e => onChange(e)}
+                                                />
 
-                <form onSubmit={submitChangeProfileForm}>
+                                                <TextField
+                                                    error={bioError}
+                                                    helperText={errorBioText}
+                                                    id={"outlined-multiline-static"}
+                                                    placeholder={"short personal description"}
+                                                    label={"bio"}
+                                                    name={"bio"}
+                                                    multiline
+                                                    rows={7.5}
+                                                    value={userData.bio}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                    onChange={e => onChange(e)}
+                                                />
+                                                <Autocomplete
+                                                    multiple
+                                                    id="tags-standard"
+                                                    options={themes}
+                                                    getOptionLabel={(option) => option.theme}
+                                                    defaultValue={[themes[0]]}
+                                                    filterSelectedOptions
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+                                                            error={preferencesError}
+                                                            helperText={errorPreferencesText}
+                                                            required
+                                                            spacing={6}
+                                                            id={"outlined-multiline-static"}
+                                                            placeholder={"select or change themes"}
+                                                            label={"preferences"}
+                                                            name={"preferences"}
+                                                            type={"text"}
+                                                            variant={"outlined"}
+                                                            multiline
+                                                            value={userData.preferences}
+                                                            onChange={e => onChange(e)}
+                                                        />
+                                                    )}
+                                                />
+                                                <FormButton
+                                                    text={"save"}
+                                                    type={"submit"}
+                                                    style={"primary"}
+                                                />
 
-                    <Stack spacing={2}>
+                                            </Stack>
+                                        </form>
 
-                        <TextField 
-                            data-testid="username-field"
-                            error={usernameError}
-                            helperText={errorUsernameText}
-                            required
-                            id={"outlined"}
-                            label={"username"}
-                            name={"username"}
-                            variant={"outlined"}
-                            value={userData.username}
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            onChange={e => onChange(e)}
-                        />
+                                    </CardContent>
+                                </Card>
 
-                        <TextField 
-                            data-testid="first-name-field"
-                            error={firstNameError}
-                            helperText={errorFirstNameText}
-                            required
-                            id={"outlined-basic"}
-                            label={"first name"}
-                            name={"first_name"}
-                            type={"text"}
-                            variant={"outlined"}
-                            value={userData.first_name}
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            onChange={e => onChange(e)}
-                        />
+                                <div>
+                                    <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
+                                        {/* SUBSTITUTE 30 WITH NUMBER OF FOLLOWING */}
+                                        My clubs
+                                    </Typography>
+                                </div>
+                                <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
+                                    {/* SUBSTITUTE WITH LIST OF PPL THE USER FOLLOWS */}
+                                    {DummyDashboardClubsData.map((val) => {
+                                        return (
+                                            <ListItemButton>
+                                                <ListItemText primary={val.name} />
+                                            </ListItemButton>
+                                        );
+                                    })}
+                                </Paper>
 
-                        <TextField 
-                            data-testid="last-name-field"
-                            error={lastNameError}
-                            helperText={errorLastNameText}
-                            required
-                            id={"outlined-basic"}
-                            label={"last name"}
-                            name={"last_name"}
-                            type={"text"}
-                            variant={"outlined"}
-                            value={userData.last_name}
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            onChange={e => onChange(e)}
-                        />
+                                <div>
+                                    <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
+                                        {/* SUBSTITUTE 30 WITH NUMBER OF FOLLOWING */}
+                                        Following 30
+                                    </Typography>
+                                </div>
+                                <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
+                                    {/* SUBSTITUTE WITH LIST OF PPL THE USER FOLLOWS */}
+                                    {DummyDashboardClubsData.map((val) => {
+                                        return (
+                                            <ListItemButton>
+                                                <ListItemText primary={val.name} />
+                                            </ListItemButton>
+                                        );
+                                    })}
+                                </Paper>
 
-                        <TextField 
-                            data-testid="email-field"
-                            error={emailError}
-                            helperText={errorEmailText}
-                            required
-                            id={"outlined-basic"}
-                            label={"email"}
-                            name={"email"}
-                            type={"email"}
-                            variant={"outlined"}
-                            value={userData.email}
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            onChange={e => onChange(e)}
-                        />
+                                <div>
+                                    <Typography style={{ paddingLeft: '10px' }} sx={{ fontSize: 20 }} color="text.secondary" >
+                                        {/* SUBSTITUTE 30 WITH NUMBER OF FOLLOWERS */}
+                                        Followers 30
+                                    </Typography>
+                                </div>
+                                <Paper style={{ maxHeight: 250, overflow: 'auto' }}>
+                                    {/* SUBSTITUTE WITH LIST OF PPL WHO FOLLOWS THE USER*/}
+                                    {DummyDashboardClubsData.map((val) => {
+                                        return (
+                                            <ListItemButton>
+                                                <ListItemText primary={val.name} />
+                                            </ListItemButton>
+                                        );
+                                    })}
+                                </Paper>
 
-                        <TextField 
-                            data-testid="bio-field"
-                            error={bioError}
-                            helperText={errorBioText}
-                            id={"outlined-multiline-static"}
-                            label={"bio"}
-                            name={"bio"}
-                            multiline
-                            rows={7.5}
-                            value={userData.bio}
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            onChange={e => onChange(e)}
-                        />
+                            </Stack>
+                        </Grid>
 
-                        <TextField  
-                            data-testid="preferences-field"
-                            error={preferencesError}
-                            helperText={errorPreferencesText}
-                            required
-                            id={"outlined-multiline-static"}
-                            label={"preferences"}
-                            name={"preferences"}
-                            multiline
-                            rows={20}
-                            value={userData.preferences}
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            onChange={e => onChange(e)}
-                        />
+                        <Grid item xs={6}>
+                            <Grid container direction={"row"} spacing={1} alignItems={"center"} padding={1}>
 
-                        <FormButton
-                            text={"save"}
-                            type={"submit"}
-                            style={"primary"}
-                        />
-                    </Stack>
-                </form>
-            </Grid>
-       </Grid>
-            </>
+                                <Grid item xs={12}>
+                                    <Typography sx={{ fontSize: 20 }} color="text.secondary" >
+                                        Recently watched movies:
+                                    </Typography>
+                                </Grid>
+                                {/* SUBSTITUTE WITH RECENTLY WATCHED MOVIES */}
+                                {moviesWithPoster.slice(0, 5).map((movie) => {
+                                    return (<Grid item>
+                                        <Card sx={{ width: 150 }}>
+                                            <CardMedia
+                                                component="img"
+                                                height="100%"
+                                                image={moviePoster}
+                                                alt={movie.title}
+                                            />
+
+                                            <CardHeader title={
+                                                <Tooltip title={movie.title} placement="top-start">
+                                                    <Typography noWrap maxWidth={"125px"} fontSize="13px" >{movie.title}</Typography>
+                                                </Tooltip>
+                                            } />
+                                        </Card>
+                                    </Grid>
+                                    )
+                                })}
+
+                                <Grid item xs={12}>
+                                    <Typography sx={{ fontSize: 20 }} color="text.secondary" >
+                                        Favourite movies:
+                                    </Typography>
+                                </Grid>
+                                {/* SUBSTITUTE WITH FAVOURITE MOVIES */}
+                                {moviesWithPoster.slice(0, 5).map((movie) => {
+                                    return (<Grid item>
+                                        <Card sx={{ width: 150 }}>
+                                            <CardMedia
+                                                component="img"
+                                                height="100%"
+                                                image={moviePoster}
+                                                alt={movie.title}
+                                            />
+
+                                            <CardHeader title={
+                                                <Tooltip title={movie.title} placement="top-start">
+                                                    <Typography noWrap maxWidth={"125px"} fontSize="13px" >{movie.title}</Typography>
+                                                </Tooltip>
+                                            } />
+                                        </Card>
+                                    </Grid>
+                                    )
+                                })}
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid >
     );
 }
 
