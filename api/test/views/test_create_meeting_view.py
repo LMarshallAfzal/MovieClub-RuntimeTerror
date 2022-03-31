@@ -1,4 +1,4 @@
-from api.models import Club, Movie, User, Meeting
+from api.models import Club, Movie, User, Meeting,Membership
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
@@ -24,6 +24,8 @@ class CreateMeetingViewTestCase(APITestCase):
         self.user = User.objects.get(id=1)
         self.other_user = User.objects.get(id=2)
         self.club.club_members.add(self.user, through_defaults={'role': 'M','is_organiser' : True})
+        self.club.club_members.add(self.other_user, through_defaults={'role': 'M','is_organiser' : True,'notifications': True})
+
         
         self.client = APIClient()
         self.form_input = {
@@ -51,7 +53,7 @@ class CreateMeetingViewTestCase(APITestCase):
         self.assertEqual(after, before + 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_post_create_meeting_endpoint_with_upcoming_meeting_returns_validation_error_during_existing_meeting(self):
+    def test_post_create_meeting_endpoint_with_upcoming_meeting_returns_400_bad_request(self):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
         self._create_test_meeting()
@@ -59,7 +61,7 @@ class CreateMeetingViewTestCase(APITestCase):
         response = self.client.post(self.url, self.form_input)
         after = Meeting.objects.count()
         self.assertEqual(after, before)
-        self.assertEqual(response.data[0],'Beatles currently has an upcoming meeting.')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         
 
     def _create_test_meeting(self):
@@ -211,7 +213,6 @@ class CreateMeetingViewTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_create_meeting_endpoint_with_user_member_role_returns_201_create(self):
-        self.club.club_members.add(self.other_user, through_defaults={'role': 'M'})
         self.client.force_authenticate(user=self.other_user)
         self.assertTrue(self.other_user.is_authenticated)
         self.form_input['organiser'] = self.other_user.id
@@ -233,7 +234,7 @@ class CreateMeetingViewTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_post_create_meeting_endpoint_with_user_banned_role_in_club_returns_403_forbidden(self):
-        self.club.club_members.add(self.other_user, through_defaults={'role': 'B'})
+        self.club.change_membership(self.other_user, 'B')
         self.client.force_authenticate(user=self.other_user)
         self.assertTrue(self.other_user.is_authenticated)
         self.form_input['organiser'] = self.other_user.id
@@ -244,6 +245,7 @@ class CreateMeetingViewTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_post_create_meeting_endpoint_with_visitor_in_club_returns_403_forbidden(self):
+        self.club.club_members.remove(self.other_user)
         self.client.force_authenticate(user=self.other_user)
         self.assertTrue(self.other_user.is_authenticated)
         self.form_input['organiser'] = self.other_user.id

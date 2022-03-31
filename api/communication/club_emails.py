@@ -12,6 +12,8 @@ class ClubEmail:
 
     def send_new_meeting_notification(self):
         recipients = []
+        for member in self.club.club_members.filter(membership__notifications=True):
+            recipients.append(member.email)
         meeting = self.club.get_upcoming_meeting()
         html = render_to_string('new_meeting_email.html',
         {'cover_url':meeting.movie.cover_link,
@@ -24,15 +26,12 @@ class ClubEmail:
         'movie_title':meeting.movie.title,
         'movie_year':meeting.movie.year}
         )
-
-        for member in self.club.club_members.filter(membership__notifications=True):
-            recipients.append(member.email)
         ICSGenerator(meeting).generate_ics()
         email = EmailMessage(
             f"{meeting.club}'s upcoming meeting",
             html,
             EMAIL_HOST_USER,
-            to = ['jfrancisco.mail@gmail.com','said.mamadov@gmail.com','noah.cheeseman@gmail.com','stroganovb@gmail.com'],
+            to = recipients,
             )
         email.content_subtype = "html"
         email.attach_file('event.ics')
@@ -40,6 +39,8 @@ class ClubEmail:
 
     def send_meeting_update_notification(self):
         recipients = []
+        for member in self.club.club_members.filter(membership__notifications=True):
+            recipients.append(member.email)
         meeting = self.club.get_upcoming_meeting()
         html = render_to_string('meeting_update_email.html',
         {
@@ -50,21 +51,21 @@ class ClubEmail:
         'meeting_link':meeting.meeting_link,
         'movie_title': meeting.movie.title,}
         )
-        for member in self.club.club_members.filter(membership__notifications=True):
-            recipients.append(member.email)
         ICSGenerator(meeting).generate_ics()
         email = EmailMessage(
             f"{meeting.club} meeting update!",
             html,
             EMAIL_HOST_USER,
-            to = ['jfrancisco.mail@gmail.com','said.mamadov@gmail.com','noah.cheeseman@gmail.com','stroganovb@gmail.com'],
+            to = recipients,
             )
         email.content_subtype = "html"
         email.attach_file('event.ics')
         email.send()
 
-    def meeting_has_been_cancelled(self):
+    def send_meeting_cancellation_notification(self):
         recipients = []
+        for member in self.club.club_members.filter(membership__notifications=True):
+            recipients.append(member.email)
         meeting = self.club.get_upcoming_meeting()
         html = render_to_string('meeting_cancelled_email.html',{
             'meeting_title':meeting.meeting_title,
@@ -72,13 +73,11 @@ class ClubEmail:
             'meeting_date':meeting.date,
         }
         )
-        for member in self.club.club_members.filter(membership__notifications=True):
-            recipients.append(member.email)
         email = EmailMessage(
             f"{meeting.club} meeting update!",
             html,
             EMAIL_HOST_USER,
-            to = ['jfrancisco.mail@gmail.com','said.mamadov@gmail.com','noah.cheeseman@gmail.com','stroganovb@gmail.com'],
+            to = recipients,
             )
         email.content_subtype = "html"
         email.send()
