@@ -100,7 +100,7 @@ export const Signup = () => {
         }
         if((Object.keys(data)).includes('password_confirmation')) {
             setPasswordConfirmationError(true)
-            setPasswordConfirmationErrorText("Error:" + data.password_cofirmation)
+            setPasswordConfirmationErrorText("Error:" + data.password_confirmation)
         }
     };
 
