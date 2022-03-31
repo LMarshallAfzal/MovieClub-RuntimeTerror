@@ -16,7 +16,7 @@ class ClubEmail:
             recipients.append(member.email)
         meeting = self.club.get_upcoming_meeting()
         html = render_to_string('new_meeting_email.html',
-        {'cover_url':meeting.movie.cover_link,
+        {'cover_url':f'http://img.omdbapi.com/?i=tt{meeting.movie.imdb_id}&apikey=d938f360',
         'meeting_title':meeting.meeting_title,
         'meeting_description':meeting.description,
         'meeting_date':meeting.date,

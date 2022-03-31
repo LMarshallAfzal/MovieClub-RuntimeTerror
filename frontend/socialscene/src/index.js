@@ -23,7 +23,7 @@ const theme = createTheme({
           },
           styleOverrides: {
               root: {
-                   borderRadius: "0rem !important",
+                   // borderRadius: "0rem !important",
               },
           },
       },
@@ -64,6 +64,16 @@ const theme = createTheme({
                   // borderWidth: "thin"
               },
           }
+        },
+
+        MuiChip:{
+          styleOverrides:{
+              root: {
+                  // borderRadius: "0rem !important",
+
+              },
+          }
+
         },
 
       MuiInputLabel: {

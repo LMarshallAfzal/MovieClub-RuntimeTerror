@@ -58,7 +58,6 @@ function ClubListing(props) {
                              src={props.iconImage}
                              sx={{width: 1, height:1}}
                          />
-
                          <ClubButton />
                      </Stack>
                  </Grid>

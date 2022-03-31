@@ -4,12 +4,11 @@
   height: base.$height;
 }
 
-.login-grid-child {
-  height: 100%;
-}
-
 .login-form {
   height: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .login-form-stack {
@@ -17,9 +16,3 @@
   align-items: center;
   justify-content: center;
 }
-
-.login-form-row {
-  width: 100%;
-  max-width: 60%;
-}
-

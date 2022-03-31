@@ -266,8 +266,10 @@ class Movie(models.Model):
 
     ml_id = models.PositiveIntegerField(
         unique=True,
-        default=0
+        default=0,
     )
+
+    imdb_id = models.CharField(max_length=10,unique = True) 
 
     title = models.CharField(
         max_length=100,
@@ -288,8 +290,6 @@ class Movie(models.Model):
     viewers = models.ManyToManyField(
         User, through='Watch', related_name='viewers')
 
-    cover_link = models.CharField(max_length=500,blank=True)
-    
     class Meta:
         ordering = ['title']
 
@@ -323,6 +323,7 @@ class Rating(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     score = models.FloatField(
+        null=True,
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
     )
     class Meta:

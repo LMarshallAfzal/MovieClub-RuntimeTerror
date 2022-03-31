@@ -107,20 +107,27 @@ h6 {
   background-color: #999999;
   padding: 10px;
   color: #FFFFFF;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-card-title {
   color: #000000;
   font-family: Helvetica, serif;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  user-select: none;
-}
-
-/*# sourceMappingURL=App.css.map */
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}/*# sourceMappingURL=App.css.map */
