@@ -30,7 +30,7 @@ import ClubDiscussion from "../../components/ClubDiscussion";
 import ShowEvent from "../../components/ShowEvent";
 import { OptionProvider } from "../../components/helper/context/OptionContext";
 import { EventProvider } from "../../components/helper/context/EventContext";
-import MovieProvider from "../../components/helper/context/MovieContext";
+import { MovieProvider } from "../../components/helper/context/MovieContext";
 
 function App() {
 	return (
@@ -39,13 +39,13 @@ function App() {
 				<UserProvider>
 					<OptionProvider>
 						<EventProvider>
-							<MovieProvider>
-								<Navbar />
-								<Routes>
-									<Route path={"/"} element={<HomePage />} />
-									<Route path={"/login"} element={<LogIn />} />
-									<Route path={"/signup"} element={<Signup />} />
-									<Route path={"/logout"} element={<Logout />} />
+							<Navbar />
+							<Routes>
+								<Route path={"/"} element={<HomePage />} />
+								<Route path={"/login"} element={<LogIn />} />
+								<Route path={"/signup"} element={<Signup />} />
+								<Route path={"/logout"} element={<Logout />} />
+								<MovieProvider>
 									<Route
 										path={"/home"}
 										element={
@@ -72,9 +72,9 @@ function App() {
 										</Route>
 										<Route path={"options"} element={<Options />} />
 									</Route>
-									<Route path={"*"} element={<NotFound404 />} />
-								</Routes>
-							</MovieProvider>
+								</MovieProvider>
+								<Route path={"*"} element={<NotFound404 />} />
+							</Routes>
 						</EventProvider>
 					</OptionProvider>
 				</UserProvider>

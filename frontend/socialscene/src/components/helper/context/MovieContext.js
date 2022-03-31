@@ -24,10 +24,10 @@ export const MovieProvider = ({ children }) => {
 	const [recommendedMovies, setRecommendedMovies] = useState([]);
 	const [watchedMovies, setWatchedMovies] = useState([]);
 
-	// useEffect(() => {
-	// 	getRecommendedMovies();
-	// 	getWatchedMovies();
-	// }, []);
+	useEffect(() => {
+		getRecommendedMovies();
+		getWatchedMovies();
+	}, []);
 
 	let getWatchedMovies = async () => {
 		let { response, data } = await api(`/watched_list/`, "GET");
@@ -95,6 +95,8 @@ export const MovieProvider = ({ children }) => {
 		trainMovieRecommendation();
 		trainMeetingRecommendation();
 	};
+
+	
 
 	let contextData = {
 		movie: movie,

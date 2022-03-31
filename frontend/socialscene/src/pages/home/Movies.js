@@ -26,17 +26,17 @@ import TextButton from "../../components/TextButton";
 
 const Movies = () => {
 	let {
-		movie,
-		rating,
+		// movie,
+		// rating,
 		recommendedMovies,
 		watchedMovies,
-		setMovie,
+		// setMovie,
 		setRating,
-		setRecommendedMovies,
-		setWatchedMovies,
+		//setRecommendedMovies,
+		// setWatchedMovies,
 		getWatchedMovies,
 		addToWatchedList,
-		getRating,
+		// getRating,
 		getRecommendedMovies,
 		AddRating,
 	} = useContext(MovieContext);
@@ -49,6 +49,11 @@ const Movies = () => {
 	const openSearchCollapse = () => {
 		setOpenSearch(true);
 	};
+
+	useEffect(() => {
+		getRecommendedMovies();
+		getWatchedMovies();
+	}, []);
 
 	const [searchValue, setSearchValue] = useState("");
 
