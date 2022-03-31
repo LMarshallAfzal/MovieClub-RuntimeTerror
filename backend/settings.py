@@ -207,3 +207,5 @@ EMAIL_HOST_USER = 'social.scene.noreply@gmail.com'
 EMAIL_HOST_PASSWORD = 'Pa$word123'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+USE_TZ=True

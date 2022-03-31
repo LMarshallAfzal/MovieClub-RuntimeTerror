@@ -17,9 +17,11 @@ class EditMeetingViewTestCase(APITestCase):
 
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
+        self.other_user = User.objects.get(username='janedoe')
         self.movie = Movie.objects.get(id=1)
         self.club = Club.objects.get(id=1)
         self.membership = Membership.objects.create(user = self.user,club=self.club, is_organiser = True)
+        self.other_membership = Membership.objects.create(user = self.other_user,club=self.club, is_organiser = False,notifications=True)
         self.url = reverse('edit_meeting', kwargs={'club_id':self.club.id})
         self.meeting = self._create_test_meetings()
 
