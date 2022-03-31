@@ -39,6 +39,7 @@ urlpatterns = [
     path("add_watched_movie/<int:movie_id>/",views.add_watched_movie,name = "add_watched_movie"),
     path("remove_watched_movie/<int:movie_id>/",views.remove_watched_movie,name = "remove_watched_movie"),
     path("get_movie/<int:movie_id>/", views.get_movie, name = "get_movie"),
+    path("random_movie/<int:movie_num>/", views.get_random_movies, name = "get_random_movies"),
     path("watched_list/", views.get_watched_list, name = "get_watched_movies"),
     path("get_all_movies/", views.get_all_movies, name = "all_movies"),
     path("get_movie/<int:movie_id>/", views.get_specific_movie, name = "one_movie"),

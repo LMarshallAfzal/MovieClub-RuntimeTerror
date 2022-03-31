@@ -7,7 +7,11 @@ from backend.settings import EMAIL_HOST_USER
 from django.template.loader import render_to_string
 
 
-
+def get_random_movies(num_movies):
+    query = Movie.objects.all()
+    movies = random.sample(query,num_movies)
+    return movies
+    
 def get_initial_recommendations_for_movies(user, user_preferences):
     query = Movie.get_movies_by_genre(user_preferences)
     watched_movies = user.get_watched_movies()
