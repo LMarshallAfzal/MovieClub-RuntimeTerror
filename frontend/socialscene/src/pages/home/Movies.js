@@ -182,6 +182,8 @@ const Movies = () => {
 						label={"search"}
 						fullWidth
 						value={searchValue}
+						data-testid={"search-bar"}
+                        inputProps={{ "data-testid": "content-input" }}
 						placeholder={"search for a movie"}
 						onChange={(event) => {
 							setSearchValue(event.target.value);
