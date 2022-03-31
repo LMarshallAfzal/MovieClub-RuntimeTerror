@@ -20,7 +20,7 @@ class CancelMeetingViewTestCase(APITestCase):
         self.club2 = Club.objects.get(club_name='Metallica')
         self.movie = Movie.objects.get(title='The Godfather')
         Membership.objects.create(user = self.meeting_organiser, club = self.club, role = 'M',is_organiser = True)
-        Membership.objects.create(user = self.non_organiser, club = self.club, role = 'M',is_organiser = False)
+        Membership.objects.create(user = self.non_organiser, club = self.club, role = 'M',is_organiser = False,notifications = True)
         self.url = reverse('cancel_meeting', kwargs={'club_id':self.club.id})
         self.meeting = Meeting.objects.create(
             club = self.club,

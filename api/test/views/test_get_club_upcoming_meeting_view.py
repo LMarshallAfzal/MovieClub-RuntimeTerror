@@ -37,14 +37,14 @@ class ClubUpcomingMeetingTestCase(APITestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_get_club_upcoming_meeting_endpoint_club_has_no_upcoming_meeting_returns_validation_error(self):
+    def test_get_club_upcoming_meeting_endpoint_club_has_no_upcoming_meeting_returns_400_bad_request(self):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
         self._create_test_meetings()
         meeting = self.club.get_upcoming_meeting()
         meeting.toggle_completed()
         response = self.client.get(self.url)
-        self.assertEqual(response.data[0],'Beatles currently have no upcoming meeting.')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_get_club_upcoming_meeting_endpoint_user_not_a_member_returns_403_forbidden(self):
         self.client.force_authenticate(user=self.other_user)

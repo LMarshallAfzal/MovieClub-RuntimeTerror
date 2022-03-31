@@ -168,7 +168,7 @@ def user_has_rated_movie(view_function):
         try:
             Rating.objects.get(user=request.user,movie=movie)
         except ObjectDoesNotExist:
-            raise serializers.ValidationError("User has not rated this movie")
+            raise serializers.ValidationError({"movie_not_rated":"User has not rated this movie"})
         else:
             return view_function(request,movie_id,*args,**kwargs)
     return modified_view_function
@@ -228,7 +228,7 @@ def not_attendee(view_function):
         except ObjectDoesNotExist:
             return view_function(request,club_id, *args, **kwargs)
         else:
-            raise serializers.ValidationError("You are already attending this meeting.")
+            raise serializers.ValidationError({"user_attendee_already":"You are already attending this meeting."})
     return modified_view_function
 
 
@@ -239,8 +239,8 @@ def club_has_upcoming_meeting(view_function):
         try:
             upcoming_meeting = club.get_upcoming_meeting()
         except ObjectDoesNotExist:
-            raise serializers.ValidationError(
-                f'{club.club_name} currently have no upcoming meeting.')
+            raise serializers.ValidationError({'club_has_no_upcoming_meeting':
+                f'{club.club_name} currently have no upcoming meeting.'})
         else:
             return view_function(request, club_id, *args, **kwargs)
     return modified_view_function
@@ -256,6 +256,6 @@ def club_has_no_upcoming_meeting(view_function):
         except ObjectDoesNotExist:
             return view_function(request, club_id, *args, **kwargs)
         else:
-            raise serializers.ValidationError(
-                f'{club.club_name} currently has an upcoming meeting.')
+            raise serializers.ValidationError({'club_has_upcoming_meeting':
+                f'{club.club_name} currently has an upcoming meeting.'})
     return modified_view_function
