@@ -14,7 +14,7 @@ import Movies from "../home/Movies";
 import Options from "../home/Options";
 import Home from "../home/Home";
 import OthersProfile from "../../components/OthersProfile";
-import Movie from "../../components/Movie";
+import MovieDetail from "../../components/MovieDetail";
 import PrivateRoute from "../../components/helper/PrivateRoute";
 import { AuthProvider } from "../../components/helper/AuthContext";
 import ClubDetail from "../../components/ClubDetail";
@@ -46,7 +46,7 @@ function App() {
                   </Route>
 
                   <Route path={"movies"} element={(<Movies />)}>
-                      <Route path={":movieID"} element={(<Movie />)}/>
+                      <Route path={":movieID"} element={(<MovieDetail />)}/>
                   </Route>
 
                   <Route path={"clubs"} element={(<Clubs />)} >

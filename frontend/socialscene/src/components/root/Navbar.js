@@ -12,9 +12,9 @@ function Navbar() {
             <div className={"navbar"}>
                 <div className={"navbar-black"}>
                     <Link to={"/"} className={"navbar-logo"}>
-                        <span style={{fontFamily: "Helvetica-Light"}}>social</span>
-                        <span style={{fontFamily: "Helvetica-Bold"}}>scene</span>
-                        <span style={{ color: "red", fontWeight: "bold" }}>.</span>
+                        <span className={"logo-social"}>social</span>
+                        <span className={"logo-scene"}>scene</span>
+                        <span className={"logo-scene-emphasise"}>.</span>
                     </Link>
 
                     <div className={"navbar-enter-button"}>

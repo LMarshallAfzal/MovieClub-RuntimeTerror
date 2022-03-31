@@ -138,13 +138,16 @@ function ClubDetail() {
         >
 
             <Grid item xs={12}>
-                <h4 className={"home-page-sub-section-heading"}>{club.clubName}</h4>
+
+                <Box padding={1} className={"home-page-sub-title"}>
+                    <h4 className={"sub-title-text"}>{club.clubName}</h4>
+                </Box>
             </Grid>
 
             <Grid item xs={6} maxHeight={"inherit"} sx={{ display: "flex", flexDirection: "column" }}>
 
                     <div className={"home-page-card-background"}>
-                        <Grid container spacing={2} padding={2}>
+                        <Grid container padding={2}>
 
                             <Grid item xs={12}>
                                 <h5 className={"home-page-card-title"}>{showBannedMembers ? "banned users" : "members"}</h5>

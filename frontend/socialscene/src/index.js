@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './pages/helper/App';
-import "./styling/fonts/Helvetica.ttf";
-import "./styling/fonts/Helvetica-Light.ttf";
-import "./styling/fonts/Helvetica-Oblique.ttf";
-import "./styling/fonts/Helvetica-Bold.ttf";
-import "./styling/fonts/Helvetica-BoldOblique.ttf";
+import Helvetica from "./styling/fonts/Helvetica.ttf";
+import HelveticaLight from "./styling/fonts/Helvetica-Light.ttf";
+import HelveticaOblique from "./styling/fonts/Helvetica-Oblique.ttf";
+import HelveticaBold from "./styling/fonts/Helvetica-Bold.ttf";
+import HelveticaBoldOblique from "./styling/fonts/Helvetica-BoldOblique.ttf";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {hover} from "@testing-library/user-event/dist/hover";
 
@@ -88,6 +88,11 @@ const theme = createTheme({
     typography: {
        typography: {
            fontFamily: [
+               Helvetica,
+               HelveticaLight,
+               HelveticaOblique,
+               HelveticaBold,
+               HelveticaBoldOblique,
                '-apple-system',
                'BlinkMacSystemFont',
                '"Segoe UI"',

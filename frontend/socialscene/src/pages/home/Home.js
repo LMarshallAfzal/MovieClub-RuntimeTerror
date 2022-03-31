@@ -39,6 +39,8 @@ import ClubListing from "../../components/ClubListing";
 import movieQuote from "popular-movie-quotes";
 import MovieQuote from "../../components/MovieQuote";
 import {MovieDataAPI} from "../../components/helper/MovieDataAPI";
+import LoadingSkeleton from "../../components/helper/LoadingSkeleton";
+import moviePlaceholder from "../../styling/images/empty_movie_poster.png";
 
 
 
@@ -220,26 +222,38 @@ const Home = () => {
                     </Grid>
 
                 <Grid item xs={3} height={"inherit"}>
-                    {/*<Box sx={{height: "100%", overflowY: 'scroll' }}>*/}
-                    {/*    <ImageList variant="masonry" cols={2} gap={2}>*/}
-                    {/*        {DummyRecommendedMovies.map((item) => {*/}
-                    {/*            let movieData = MovieDataAPI(item.IMDB);*/}
-                    {/*            return(*/}
-                    {/*                <ImageListItem key={item.poster}>*/}
-                    {/*                    {(movieData) ? (*/}
-                    {/*                        <img*/}
-                    {/*                            src={`${movieData.Poster}?w=248&fit=crop&auto=format`}*/}
-                    {/*                            srcSet={`${movieData.Poster}?w=248&fit=crop&auto=format&dpr=2 2x`}*/}
-                    {/*                            alt={item.title}*/}
-                    {/*                            loading="lazy"*/}
-                    {/*                        />*/}
-                    {/*                    ) : (*/}
-                    {/*                        <Skeleton variant="rectangular" height={1} width={1} />*/}
-                    {/*                    )}*/}
-                    {/*                </ImageListItem>*/}
-                    {/*            )})}*/}
-                    {/*    </ImageList>*/}
-                    {/*</Box>*/}
+                    <Box sx={{height: "100%", overflowY: 'scroll' }}>
+                        <ImageList variant="masonry" cols={2} gap={2}>
+                            {DummyRecommendedMovies.map((item) => {
+                                const movieData = MovieDataAPI(item.IMDB);
+                                return(
+                                    <LoadingSkeleton loading={movieData}>
+                                        <ImageListItem key={item.poster}>
+                                            <img
+                                                src={`${movieData ? movieData.Poster : moviePlaceholder}?w=248&fit=crop&auto=format`}
+                                                srcSet={`${movieData ? movieData.Poster : moviePlaceholder}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                                alt={item.title}
+                                                loading="lazy"
+                                            />
+                                        </ImageListItem>
+                                    </LoadingSkeleton>
+
+
+                                    // <ImageListItem key={item.poster}>
+                                    //     {(movieData) ? (
+                                    //         <img
+                                    //             src={`${movieData.Poster}?w=248&fit=crop&auto=format`}
+                                    //             srcSet={`${movieData.Poster}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                    //             alt={item.title}
+                                    //             loading="lazy"
+                                    //         />
+                                    //     ) : (
+                                    //         <Skeleton variant="rectangular" height={1} width={1} />
+                                    //     )}
+                                    // </ImageListItem>
+                                )})}
+                        </ImageList>
+                    </Box>
                 </Grid>
 
                 </Grid>

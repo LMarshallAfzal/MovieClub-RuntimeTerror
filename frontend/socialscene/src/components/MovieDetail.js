@@ -9,7 +9,7 @@ import moviePoster from '../styling/images/empty_movie_poster.png';
 import { DummyClubMemberData } from "../pages/data/DummyClubMemberData";
 
 
-function Movie() {
+function MovieDetail() {
     let {movieID} = useParams();
 
     return (
@@ -119,4 +119,4 @@ function Movie() {
     );
 }
 
-export default Movie;
+export default MovieDetail;

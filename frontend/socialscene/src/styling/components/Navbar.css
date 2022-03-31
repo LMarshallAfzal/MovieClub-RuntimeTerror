@@ -7,23 +7,27 @@
 
 @font-face {
   font-family: Helvetica;
-  src: url("../fonts/Helvetica.ttf") format("truetype");
+  src: url("../newfonts/Helvetica.ttf") format("truetype");
+}
+@font-face {
+  font-family: Helvetica-Italic;
+  src: url("../newfonts/Helvetica-Italic.ttf") format("truetype");
 }
 @font-face {
   font-family: Helvetica-Light;
-  src: url("../fonts/Helvetica-Light.ttf") format("truetype");
+  src: url("../newfonts/Helvetica-Light.ttf") format("truetype");
 }
 @font-face {
-  font-family: Helvetica-Oblique;
-  src: url("../fonts/Helvetica-Oblique.ttf") format("truetype");
+  font-family: Helvetica-Light-Italic;
+  src: url("../newfonts/Helvetica-Light-Italic.ttf") format("truetype");
 }
 @font-face {
   font-family: Helvetica-Bold;
-  src: url("../fonts/Helvetica-Bold.ttf") format("truetype");
+  src: url("../newfonts/Helvetica-Bold.ttf") format("truetype");
 }
 @font-face {
-  font-family: Helvetica-BoldOblique;
-  src: url("../fonts/Helvetica-BoldOblique.ttf") format("truetype");
+  font-family: Helvetica-Bold-Italic;
+  src: url("../newfonts/Helvetica-Bold-Italic.ttf") format("truetype");
 }
 a {
   display: block;
@@ -93,47 +97,34 @@ h6 {
 
 .home-page-title {
   background-color: #5C5C5C;
-  font-family: Helvetica-Bold, serif;
-  padding: 10px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
-  color: #FFFFFF;
 }
 
-.home-page-sub-section-heading {
+.home-page-sub-title {
   background-color: #999999;
-  padding: 10px;
-  color: #FFFFFF;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
+}
+
+.sub-title-text {
+  font-family: Helvetica-Bold, serif;
+  color: #FFFFFF;
 }
 
 .home-page-card-title {
   color: #000000;
-  font-family: Helvetica, serif;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  font-family: Helvetica-Bold, serif;
+  user-select: none;
 }
 
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100%;
@@ -148,25 +139,31 @@ h6 {
   font-size: 1.2rem;
   overflow: auto;
   width: 100%;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar-red {
   height: 10px;
   display: flex;
   background: #FF0000;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
+}
+
+.logo-social {
+  font-family: Helvetica-Light, serif;
+  color: #FFFFFF;
+}
+
+.logo-scene {
+  font-family: Helvetica-Bold, serif;
+  color: #FFFFFF;
+}
+.logo-scene-emphasise {
+  font-family: Helvetica-Bold, serif;
+  color: #FF0000;
 }
 
 .navbar-logo {
-  color: #FFFFFF;
-  font-family: Helvetica, serif;
   float: left;
   margin: auto;
   width: auto;
@@ -175,10 +172,7 @@ h6 {
   text-decoration: none;
   font-size: 2rem;
   padding-top: 20px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar-enter-button {
@@ -188,4 +182,6 @@ h6 {
   padding-right: 20px;
   padding-top: 20px;
   text-decoration: none;
-}/*# sourceMappingURL=Navbar.css.map */
+}
+
+/*# sourceMappingURL=Navbar.css.map */

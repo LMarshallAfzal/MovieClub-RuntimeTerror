@@ -8,7 +8,7 @@ function EnterButton(props) {
     const onCLickNavigate = useCallback(() => navigate(`${props.linkTo}`, {replace: false}), [navigate]);
 
     return (
-        <button className='enter-button' onClick={props.onClick || onCLickNavigate}>{props.text}</button>
+        <button className={"enter-button"} onClick={props.onClick || onCLickNavigate}>{props.text}</button>
     );
 }
 

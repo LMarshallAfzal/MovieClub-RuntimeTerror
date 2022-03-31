@@ -45,7 +45,8 @@ function Clubs() {
 
                         <Grid item xs={12}>
                             <Stack direction={"row"}
-                                   overflow={"auto"}>
+                                   overflow={"auto"}
+                            >
                                 {DummyClubData.map((club) => club.isMember === true && (
                                     <ListItem sx={{width: 'auto',p:1}}>
 

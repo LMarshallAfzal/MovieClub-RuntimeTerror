@@ -124,13 +124,19 @@ h6 {
   user-select: none;
 }
 
-.watched-button {
+.quote-icon {
   color: #999999;
-  border-color: #999999;
 }
 
-.watched-button:hover {
-  border-color: #5C5C5C;
+.quote-title {
+  z-index: 100;
+  font-family: Helvetica-Bold, serif;
 }
 
-/*# sourceMappingURL=WhatsOn.css.map */
+.quote-movie {
+  z-index: 100;
+  font-family: Helvetica-Light-Italic, serif;
+  color: #FF0000;
+}
+
+/*# sourceMappingURL=MovieQuote.css.map */
