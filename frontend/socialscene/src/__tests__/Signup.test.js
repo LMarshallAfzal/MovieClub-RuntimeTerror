@@ -210,41 +210,67 @@ describe("Sign up form", () => {
     expect(errors.length).toBeGreaterThanOrEqual(1); // or toHaveLength(8)
   });
 
-  // TODO(4): Why is fetch request body not properly filled by change?
-  test.skip("Given valid input data when sign up form is submitted then no error message is shown", () => {
-    fireEvent.change(screen.getByLabelText(/username/i), {
+  // TODO(4): Extract this ginormous test into more concise parts
+  test("Given valid input data when sign up form is submitted then no error message is shown", async () => {
+    fireEvent.change(screen.getByTestId(/username/i), {
       target: { value: "@janedoe" },
     });
-    fireEvent.change(screen.getByLabelText(/first.name/i), {
+    fireEvent.change(screen.getByTestId(/first.name/i), {
       target: { value: "Jane" },
     });
-    fireEvent.change(screen.getByLabelText(/last.name/i), {
+    fireEvent.change(screen.getByTestId(/last.name/i), {
       target: { value: "Doe" },
     });
-    fireEvent.change(screen.getByLabelText(/email/i), {
+    fireEvent.change(screen.getByTestId(/email/i), {
       target: { value: "janedoe@example.org" },
     });
-    fireEvent.change(screen.getByLabelText(/bio/i), {
+    fireEvent.change(screen.getByTestId(/bio/i), {
       target: { value: "The quick brown fox jumps over the lazy dog." },
     });
-    fireEvent.change(screen.getByLabelText(/preferences/i), {
+    fireEvent.change(screen.getByTestId(/preference/i), {
       target: { value: "Romance" },
     });
-    fireEvent.change(screen.getByLabelText(/password/i), {
+    fireEvent.change(screen.getByTestId(/^password$/i), {
       target: { value: "Password123" },
     });
-    fireEvent.change(screen.getByLabelText(/password.confirm/i), {
+    fireEvent.change(screen.getByTestId(/password.confirm/i), {
       target: { value: "Password123" },
     });
+    // Mocked fetch function
+    // with stubbed server response
+    window.fetch.mockReturnValue(responseOk(201, {}));
 
     const submitButton = screen.getByRole("button", { name: /sign.up/i });
-    userEvent.click(submitButton);
+    await userEvent.click(submitButton);
 
-    expect(fetchMock).toHaveBeenCalled();
-    expect(fetchMock).toHaveBeenCalledWith(
+    expect(window.fetch).toHaveBeenCalledTimes(1);
+    expect(window.fetch).toHaveBeenCalledWith(
       "http://127.0.0.1:8000/sign_up/",
       expect.any(Object)
     );
+    expect(screen.getByTestId(/username/i)).toHaveValue("@janedoe");
+    expect(screen.getByTestId(/first.name/i)).toHaveValue("Jane");
+    expect(screen.getByTestId(/last.name/i)).toHaveValue("Doe");
+    expect(screen.getByTestId(/email/i)).toHaveValue("janedoe@example.org");
+    expect(screen.getByTestId(/bio/i)).toHaveValue(
+      "The quick brown fox jumps over the lazy dog."
+    );
+    expect(screen.getByTestId(/preference/i)).toHaveValue("Romance");
+    expect(screen.getByTestId(/^password$/i)).toHaveValue("Password123");
+    expect(screen.getByTestId(/password.confirm/i)).toHaveValue("Password123");
+    expect(JSON.parse(window.fetch.mock.calls[0][1].body)).toMatchObject({
+      ["username"]: "@janedoe",
+      ["first_name"]: "Jane",
+      ["last_name"]: "Doe",
+      ["email"]: "janedoe@example.org",
+      ["bio"]: "The quick brown fox jumps over the lazy dog.",
+      ["preferences"]: "Romance",
+      ["password"]: "Password123",
+      ["password_confirmation"]: "Password123",
+    });
+    await Promise.resolve().then();
+    await waitForNextUpdate;
+    expect(loginUser).toHaveBeenCalled();
     expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
   });
 });

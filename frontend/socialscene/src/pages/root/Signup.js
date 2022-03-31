@@ -161,6 +161,7 @@ export const Signup = () => {
                     >
 
                         <TextField
+                            inputProps={{ "data-testid": "username" }}
                             error={usernameError}
                             className={"signup-form-row"}
                             helperText={errorUsernameText}
@@ -175,6 +176,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            inputProps={{ "data-testid": "first_name" }}
                             error={firstNameError}
                             className={"signup-form-row"}
                             helperText={errorFirstNameText}
@@ -189,6 +191,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            inputProps={{ "data-testid": "last_name" }}
                             error={lastNameError}
                             className={"signup-form-row"}
                             helperText={errorLastNameText}
@@ -203,6 +206,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            inputProps={{ "data-testid": "email" }}
                             error={emailError}
                             className={"signup-form-row"}
                             helperText={errorEmailText}
@@ -217,6 +221,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            inputProps={{ "data-testid": "bio" }}
                             error={bioError}
                             className={"signup-form-row"}
                             helperText={errorBioText}
@@ -232,6 +237,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            inputProps={{ "data-testid": "preferences" }}
                             error={preferencesError}
                             className={"signup-form-row"}
                             helperText={errorPreferencesText}
@@ -246,6 +252,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            inputProps={{ "data-testid": "password" }}
                             error={passwordError}
                             className={"signup-form-row"}
                             helperText={errorPasswordText}
@@ -260,6 +267,7 @@ export const Signup = () => {
                         />
 
                         <TextField
+                            inputProps={{ "data-testid": "password_confirmation" }}
                             error={passwordConfirmationError}
                             className={"signup-form-row"}
                             helperText={errorPasswordConfirmationText}
