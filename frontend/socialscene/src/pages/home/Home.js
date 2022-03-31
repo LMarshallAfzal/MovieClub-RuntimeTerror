@@ -89,8 +89,6 @@ const Home = () => {
                   justifyContent="space-evenly"
                   spacing={2}
                   padding={2}
-                  height={1}
-            overflow={"auto"}
             >
 
 
@@ -221,8 +219,8 @@ const Home = () => {
                         </Grid>
                     </Grid>
 
-                <Grid item xs={3} height={"inherit"}>
-                    <Box sx={{height: "100%", overflowY: 'scroll' }}>
+                <Grid item xs={3} height={1}>
+                    <Box sx={{overflowY: 'scroll' }}>
                         <ImageList variant="masonry" cols={2} gap={2}>
                             {DummyRecommendedMovies.map((item) => {
                                 const movieData = MovieDataAPI(item.IMDB);

@@ -1,13 +1,6 @@
-import React, { useState } from "react";
-import { useParams } from "react-router";
-import { Typography, Tooltip, Rating, CardMedia, Card, ListItem, Avatar, AvatarGroup, Box, Chip, Grid, Stack } from "@mui/material";
-import icon5 from "../resources/images/example icons/icon5.jpeg"
-import icon2 from "../resources/images/example icons/icon2.jpeg"
-import icon3 from "../resources/images/example icons/icon3.jpeg"
-import icon4 from "../resources/images/example icons/icon4.jpeg"
+import React, {useState} from "react";
+import {Card, CardMedia, Grid, Rating, Stack, Tooltip, Typography} from "@mui/material";
 import "../styling/components/ClubCard.css";
-import RoundButton from "./core/RoundButton";
-import { Link } from "react-router-dom";
 import ThemeButton from "./core/ThemeButton";
 
 function MovieCard(props) {
@@ -36,11 +29,11 @@ function MovieCard(props) {
 
 
     return (
-        <ListItem sx={{ p: 1 }}>
-            <Card sx={{ width: 150 }}>
+        <Grid item>
+            <Card sx={{width: 150}}>
                 <CardMedia
                     component="img"
-                    sx={{ height: "100%" }}
+                    sx={{height: "100%"}}
                     image={props.poster}
                     alt={props.movie.title}
                 />
@@ -49,15 +42,15 @@ function MovieCard(props) {
 
                     <Rating
                         name="simple-controlled"
-                        sx={{ fontSize: "1.2em" }}
+                        sx={{fontSize: "1.2em"}}
                         precision={0.5}
                         max={5}
-                    // onChange={(event, newValue) =>
-                    //     setRating({
-                    //         score: newValue,
-                    //         onChange: AddRating(movie.id, newValue),
-                    //     })
-                    // }
+                        // onChange={(event, newValue) =>
+                        //     setRating({
+                        //         score: newValue,
+                        //         onChange: AddRating(movie.id, newValue),
+                        //     })
+                        // }
                     />
                 </Stack>
 
@@ -65,22 +58,57 @@ function MovieCard(props) {
                     <Tooltip title={props.movie.title} placement="top-start">
                         <Typography noWrap>{props.movie.title}</Typography>
                     </Tooltip>
-                    <MovieClub />
+                    <MovieClub/>
                     <ThemeButton
                         text={"watch"}
-                    // onClick={() => {
-                    //     addToWatchedList(movie.id);
-                    // }}
-                    // onChange={() => {
-                    //     getRecommendedMovies();
-                    // }}
+                        // onClick={() => {
+                        //     addToWatchedList(movie.id);
+                        // }}
+                        // onChange={() => {
+                        //     getRecommendedMovies();
+                        // }}
                     />
-                    <clubInfo movie={props.movie} />
+                    <clubInfo movie={props.movie}/>
                 </Stack>
             </Card>
-        </ListItem>
+        </Grid>
     );
 }
+
+// <Grid item>
+//                                         <Card sx={{width: 150}}>
+//                                             <CardMedia
+//                                                 component="img"
+//                                                 image={moviePoster}
+//                                                 alt={movie.title}
+//                                             />
+//
+//                                             <Stack paddingTop={1} alignItems={"center"}>
+//                                                 <Rating
+//                                                     name="simple-controlled"
+//                                                     sx={{fontSize: "1.2em"}}
+//                                                     precision={0.5}
+//                                                     max={5}
+//                                                     // onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
+//                                                 />
+//                                             </Stack>
+//
+//                                             <Stack
+//                                                 spacing={1}
+//                                                 padding={1}
+//                                                 alignItems={"left"}
+//                                             >
+//                                                 <Tooltip
+//                                                     title={movie.title}
+//                                                     placement="top-start"
+//                                                 >
+//                                                     <Typography noWrap>{movie.title}</Typography>
+//                                                 </Tooltip>
+//
+//                                                 <ThemeButton text={"watch"}/>
+//                                             </Stack>
+//                                         </Card>
+//                                     </Grid>
 
 export default MovieCard;
 

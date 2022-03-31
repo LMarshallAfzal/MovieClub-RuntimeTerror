@@ -4,7 +4,6 @@ import { Tooltip, CardHeader, CardMedia, ListItemText, ListItemButton, Paper, Ch
 import ThemeButton from "../../components/core/ThemeButton";
 import AuthContext from "../../components/helper/AuthContext";
 import { themes } from "../../resources/data/MovieThemes"
-import HomepageTitle from "../../components/HomepageTitle";
 import { DummyDashboardClubsData, meetings, movies } from '../../resources/data/DummyDashboardClubsData';
 import { moviesWithPoster } from '../../resources/data/DummyMoviesData';
 import moviePoster from '../../resources/images/empty_movie_poster.png';
@@ -123,17 +122,19 @@ const Profile = () => {
     }, [])
 
     return (
-            <Grid container
-                  spacing={2}
-                  padding={2}
-                  direction={"row"}
-            >
+            // <Grid container
+            //       spacing={2}
+            //       padding={2}
+            //       direction={"row"}
+            // >
 
-                <Grid item xs={12}>
+                // <Grid item xs={12}>
                     <Grid container
-                        spacing={2}
-                        direction={"row"}
+                          spacing={2}
+                          padding={2}
+                          direction={"row"}
                     >
+
                         <Grid item xs={6}>
                             <Stack spacing={2}>
 
@@ -378,8 +379,8 @@ const Profile = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </Grid >
+                // </Grid>
+            // </Grid >
     );
 }
 

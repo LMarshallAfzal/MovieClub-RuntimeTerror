@@ -3,7 +3,7 @@ import "../../styling/pages/HomeRouter.css";
 import {Outlet, useLocation} from "react-router-dom";
 import Sidebar from "../../components/core/Sidebar";
 import NameHeader from "../../components/NameHeader";
-import { Grid } from "@mui/material";
+import {Grid} from "@mui/material";
 import CsrfToken from "../../components/helper/CsrfToken";
 import AuthContext from "../../components/helper/AuthContext";
 import HomepageTitle from "../../components/HomepageTitle";
@@ -23,22 +23,22 @@ function HomeRouter() {
             },
         });
 
-    let data = await response.json();
+        let data = await response.json();
         console.log(data)
         setUserData(data);
-	};
+    };
 
     useEffect(() => {
         getCurrentUser();
     }, []);
 
     const pageTabs = [
-    {title: 'home', path: '/home'},
-    {title: 'profile', path: 'profile'},
-    {title: 'movies', path: 'movies'},
-    {title: 'clubs', path: 'clubs'},
-    {title: 'discussion', path: 'discussion'},
-    {title: 'options', path: 'options'},
+        {title: 'home', path: '/home'},
+        {title: 'profile', path: 'profile'},
+        {title: 'movies', path: 'movies'},
+        {title: 'clubs', path: 'clubs'},
+        {title: 'discussion', path: 'discussion'},
+        {title: 'options', path: 'options'},
     ]
 
     let location = useLocation();
@@ -46,11 +46,12 @@ function HomeRouter() {
     console.log(pathArray);
     let currentPage = ((pathArray.length > 1) ? pathArray[1] : pathArray[0]);
     console.log(currentPage);
-    
+
     return (
         <>
-        <CsrfToken/>
+            <CsrfToken/>
             <Grid className={"home-grid"} container>
+
 
                 <Grid className={"home-grid-L-sidebar"} item xs={3}>
 

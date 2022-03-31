@@ -57,32 +57,32 @@ $pale-blue: #3364EB;
 //NEW FONTS
 @font-face {
   font-family: Helvetica;
-  src: url("../newfonts/Helvetica.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica.ttf") format("truetype");
 }
 
 @font-face {
   font-family: Helvetica-Italic;
-  src: url("../newfonts/Helvetica-Italic.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Italic.ttf") format("truetype");
 }
 
 @font-face {
   font-family: Helvetica-Light;
-  src: url("../newfonts/Helvetica-Light.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Light.ttf") format("truetype");
 }
 
 @font-face {
   font-family: Helvetica-Light-Italic;
-  src: url("../newfonts/Helvetica-Light-Italic.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Light-Italic.ttf") format("truetype");
 }
 
 @font-face {
   font-family: Helvetica-Bold;
-  src: url("../newfonts/Helvetica-Bold.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Bold.ttf") format("truetype");
 }
 
 @font-face {
   font-family: Helvetica-Bold-Italic;
-  src: url("../newfonts/Helvetica-Bold-Italic.ttf") format("truetype");
+  src: url("../../resources/newfonts/Helvetica-Bold-Italic.ttf") format("truetype");
 }
 
 $helvetica: Helvetica, serif;
@@ -135,7 +135,6 @@ h3{
   &--emphasise {
     color: $primary-red
   }
-
 }
 
 h4{
@@ -162,33 +161,7 @@ h6{
   font-family: $helvetica-light ;
   margin: 0;
   font-size: 1.1rem;
-
 }
-
-//.page-title{
-//  padding-top: 20px;
-//  height: 100%;
-//  font-size: 1.5rem;
-//  display: flex;
-//  align-items: center;
-//  -webkit-user-select: none;
-//  user-select: none;
-//  font-family: Helvetica-Bold, serif;
-//  width: 100%;
-//  text-align: center;
-//}
-//
-//.page-subtitle{
-//  height: 100%;
-//  font-size: 1.5rem;
-//  display: flex;
-//  align-items: center;
-//  -webkit-user-select: none;
-//  user-select: none;
-//  font-family: Helvetica, serif;
-//  width: 100%;
-//  text-align: center;
-//}
 
 .home-page-title {
   background-color: $grey-1;
@@ -218,4 +191,3 @@ h6{
   overflow: hidden;
   user-select: none;
 }
-
