@@ -167,7 +167,7 @@ export const Signup = () => {
                     <Stack sx={{width: '60%'}} className={"signup-form-stack"} spacing={2}>
 
                         <TextField
-                            data-testid="username-field"
+                            inputProps={{ "data-testid": "username" }}
                             error={usernameError}
                             fullWidth
                             required
@@ -182,7 +182,7 @@ export const Signup = () => {
                         />
 
                         <TextField
-                            data-testid="first-name-field"
+                            inputProps={{ "data-testid": "first_name" }}
                             error={firstNameError}
                             fullWidth
                             required
@@ -197,7 +197,7 @@ export const Signup = () => {
                         />
 
                         <TextField
-                            data-testid="last-name-field"
+                            inputProps={{ "data-testid": "last_name" }}
                             error={lastNameError}
                             fullWidth
                             required
@@ -212,7 +212,7 @@ export const Signup = () => {
                         />
 
                         <TextField
-                            data-testid="email-field"
+                            inputProps={{ "data-testid": "email" }}
                             error={emailError}
                             fullWidth
                             required
@@ -227,7 +227,7 @@ export const Signup = () => {
                         />
 
                         <TextField
-                            data-testid="bio-field"
+                            inputProps={{ "data-testid": "bio" }}
                             error={bioError}
                             fullWidth
                             helperText={errorBioText}
@@ -267,6 +267,7 @@ export const Signup = () => {
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
+                                    inputProps={{ "data-testid": "preferences" }}
                                     error={preferencesError}
                                     fullWidth
                                     required
@@ -285,6 +286,7 @@ export const Signup = () => {
                         <FormControl fullWidth variant={"outlined"}>
                             <InputLabel htmlFor={"outlined-adornment-password"}>password</InputLabel>
                             <OutlinedInput
+                            inputProps={{ "data-testid": "password" }}
                             error={passwordError}
                             fullWidth
                             helperText={errorPasswordText}
@@ -311,6 +313,7 @@ export const Signup = () => {
                          <FormControl fullWidth variant={"outlined"}>
                             <InputLabel htmlFor={"outlined-adornment-password"}>confirm</InputLabel>
                              <OutlinedInput
+                            inputProps={{ "data-testid": "password_confirmation" }}
                             error={passwordConfirmationError}
                             fullWidth
                             helperText={errorPasswordConfirmationText}
