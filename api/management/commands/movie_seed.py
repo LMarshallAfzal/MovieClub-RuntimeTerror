@@ -31,7 +31,6 @@ class Command(BaseCommand):
                 imdb_id = row['imdb_id'],
                 title = row['title'],
                 year = int(row['year']),
-                cover_link = self.get_db_movie_cover_links(int(row['movieId']))
             )
             movie.genres.set(genres)
             movie_count+=1

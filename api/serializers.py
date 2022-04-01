@@ -103,7 +103,11 @@ class SignUpSerializer(serializers.Serializer):
         required=False, allow_blank=True
     )
 
-    preferences = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True, required=True)
+    preferences = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',
+        queryset=Genre.objects.all()
+    )
 
     password = serializers.CharField(
         style={"input_type": "password"},

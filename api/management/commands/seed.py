@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from api.models import User, Club
+from api.models import User, Club,Genre
 from django.db import IntegrityError
 from faker import Faker
 import random
@@ -43,17 +43,18 @@ class Command(BaseCommand):
         username = self._username(first_name, last_name)
         email = self._email(first_name, last_name)
         bio = self.faker.unique.text(max_nb_chars=520)
-        preferences = "Action,Horror,Sci-fi"
+        
 
-        User.objects.create_user(
+        user = User.objects.create_user(
             username=username,
             first_name=first_name,
             last_name=last_name,
             email=email,
             password=Command.PASSWORD,
             bio=bio,
-            preferences=preferences,
+            
         )
+        user.preferences.set([3,4])
 
     def _email(self, first_name, last_name):
         email = f'{first_name}.{last_name}.{random.randint(100,999)}@example.org'
@@ -64,10 +65,10 @@ class Command(BaseCommand):
         return username
 
     def _create_club(self):
-        themes = ["Action","Horror","Sci-fi"]
+        themes = Genre.objects.get(id = 3)
         club_name = self.faker.word().capitalize() + "Movie Club"
         mission_statement = 'Best movie club in town!'
-        theme = random.choice(themes)
+        theme = themes
         new_club = Club.objects.create(
             club_name=club_name,
             mission_statement=mission_statement,
