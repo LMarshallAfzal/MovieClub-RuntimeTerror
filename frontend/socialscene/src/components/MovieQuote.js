@@ -27,8 +27,8 @@ function MovieQuote() {
                                  opacity: "50%",
                              }}/>
             <Box sx={{p: 6}}>
-                <h5 className={"quote-title"}>{quoteText}</h5>
-                <h6 className={"quote-movie"}>{quoteMovie}</h6>
+                <h4 className={"quote-title"}>{quoteText}</h4>
+                <h5 className={"quote-movie"}>{quoteMovie}</h5>
             </Box>
         </Box>
 

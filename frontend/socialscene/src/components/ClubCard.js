@@ -33,7 +33,7 @@ function ClubCard(props) {
             
             if (props.isOrganiser === true) {
                 return (
-                    <RoundButton text={"create meeting"} linkTo={`/home/discussion/${props.ID}/new`}/>
+                    <RoundButton text={"create meeting"} linkTo={"/home/discussion"}/>
                 )
             } else {
                 return (

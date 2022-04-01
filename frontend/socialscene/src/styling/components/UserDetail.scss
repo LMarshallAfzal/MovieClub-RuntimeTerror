@@ -1,61 +1,72 @@
 @use "../core/base";
 
-.others-profile-info-text{
-    // padding-top: 20px;
-    height: 100%;
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    -webkit-user-select: none;
-    user-select: none;
-    font-family: Helvetica-Bold, serif;
-    width: 100%;
-    text-align: center;
+.user-detail {
+  color: base.$primary-black;
+  font-family: base.$helvetica;
 }
 
-.text-field{
-    text-align: left;
-    vertical-align: top;
-}
-
-.others-profile-table{
-    width: 100%;
-    border-collapse: separate;
-    // border-spacing: 20px;
-}
-
-.others-profile-grid {
-    height: base.$height;
-    justify-content: center;
-
-    &-left {
-        // margin: 25;
-        align-self: center;
-    }
-
-    &-right {
-        margin: 0;
-        align-self: center;
-
-    }
-}
-
-.form-stack {
-    margin-top: 20px;
+.user-detail-heading {
+  font-family: base.$helvetica-light;
+  color: base.$grey-1;
 
 }
 
-.profile-text-box {
-    background-color: base.$grey-4;
-}
-
-.profile-image{
-    align-self: center;
-    width: 100px;
-    padding: 20px;
-}
-
-.card-content{
-    border: 20px;
-    background-color: base.$grey-3;
-}
+//.others-profile-info-text{
+//    // padding-top: 20px;
+//    height: 100%;
+//    font-size: 1.5rem;
+//    display: flex;
+//    align-items: center;
+//    -webkit-user-select: none;
+//    user-select: none;
+//    font-family: Helvetica-Bold, serif;
+//    width: 100%;
+//    text-align: center;
+//}
+//
+//.text-field{
+//    text-align: left;
+//    vertical-align: top;
+//}
+//
+//.others-profile-table{
+//    width: 100%;
+//    border-collapse: separate;
+//    // border-spacing: 20px;
+//}
+//
+//.others-profile-grid {
+//    height: base.$height;
+//    justify-content: center;
+//
+//    &-left {
+//        // margin: 25;
+//        align-self: center;
+//    }
+//
+//    &-right {
+//        margin: 0;
+//        align-self: center;
+//
+//    }
+//}
+//
+//.form-stack {
+//    margin-top: 20px;
+//
+//}
+//
+//.profile-text-box {
+//    background-color: base.$grey-4;
+//}
+//
+//.profile-image{
+//    align-self: center;
+//    width: 100px;
+//    padding: 20px;
+//}
+//
+//.card-content{
+//    border: 20px;
+//    background-color: base.$grey-3;
+//}

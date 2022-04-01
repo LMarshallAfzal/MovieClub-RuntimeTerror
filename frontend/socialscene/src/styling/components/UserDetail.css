@@ -118,57 +118,14 @@ h6 {
   user-select: none;
 }
 
-.others-profile-info-text {
-  height: 100%;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  -webkit-user-select: none;
-  user-select: none;
-  font-family: Helvetica-Bold, serif;
-  width: 100%;
-  text-align: center;
+.user-detail {
+  color: #000000;
+  font-family: Helvetica, serif;
 }
 
-.text-field {
-  text-align: left;
-  vertical-align: top;
-}
-
-.others-profile-table {
-  width: 100%;
-  border-collapse: separate;
-}
-
-.others-profile-grid {
-  height: calc(100% - 90px);
-  justify-content: center;
-}
-.others-profile-grid-left {
-  align-self: center;
-}
-.others-profile-grid-right {
-  margin: 0;
-  align-self: center;
-}
-
-.form-stack {
-  margin-top: 20px;
-}
-
-.profile-text-box {
-  background-color: #D8D8D8;
-}
-
-.profile-image {
-  align-self: center;
-  width: 100px;
-  padding: 20px;
-}
-
-.card-content {
-  border: 20px;
-  background-color: #C4C4C4;
+.user-detail-heading {
+  font-family: Helvetica-Light, serif;
+  color: #5C5C5C;
 }
 
 /*# sourceMappingURL=UserDetail.css.map */

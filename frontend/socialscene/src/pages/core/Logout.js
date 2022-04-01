@@ -3,10 +3,9 @@ import "../../styling/pages/Logout.css";
 import {Grid, Stack} from "@mui/material";
 import HeadingCircle from "../../components/HeadingCircle";
 import ThemeButton from "../../components/core/ThemeButton";
-import {HandleNavigate} from "../../components/helper/HandleNavigate";
 
 function Logout() {
-    
+
     return (
         <Grid container
               direction={"row"}
@@ -35,7 +34,7 @@ function Logout() {
                         <ThemeButton
                             text={"home"}
                             style={"normal"}
-                            onClick={() => HandleNavigate("")}
+                            linkTo={"/"}
                         />
                     </div>
 
@@ -43,7 +42,7 @@ function Logout() {
                         <ThemeButton
                             text={"login"}
                             style={"primary"}
-                            onClick={() => HandleNavigate("/login")}
+                            linkTo={"/login"}
                         />
                     </div>
                 </Stack>

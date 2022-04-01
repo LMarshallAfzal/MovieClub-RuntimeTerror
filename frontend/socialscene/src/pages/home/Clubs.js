@@ -5,15 +5,9 @@ import "../../styling/pages/Clubs.css";
 import ThemeButton from "../../components/core/ThemeButton";
 import ClubCard from "../../components/ClubCard";
 import {DummyClubData} from "../../resources/data/DummyClubsData";
-import {useNavigate} from "react-router";
 
 function Clubs() {
 
-    const navigate = useNavigate();
-
-    const handleNewClub = () => {
-        navigate(`/home/clubs/new`, {replace: false});
-    }
     return (
         <Grid container
               justifyContent={"center"}
@@ -34,7 +28,7 @@ function Clubs() {
             <Grid item xs={2}>
                 <ThemeButton className={"create-button"}
                              text={"create"}
-                             onClick={() => handleNewClub}
+                             linkTo={"clubs/new"}
                 />
             </Grid>
 
@@ -50,8 +44,8 @@ function Clubs() {
                             <Stack direction={"row"}
                                    overflow={"auto"}
                             >
-                                {DummyClubData.map((club) => club.isMember === true && (
-                                    <ListItem sx={{width: 'auto', p: 1}}>
+                                {DummyClubData.map((club, index) => club.isMember === true && (
+                                    <ListItem key={index} sx={{width: 'auto', p: 1}}>
 
                                         <ClubCard
                                             clubName={club.clubName}
@@ -82,8 +76,8 @@ function Clubs() {
                         <Grid item xs={12}>
                             <Stack direction={"row"}
                                    overflow={"auto"}>
-                                {DummyClubData.map((club) => club.isMember === false && (
-                                    <ListItem sx={{width: 'auto', p: 1}}>
+                                {DummyClubData.map((club, index) => club.isMember === false && (
+                                    <ListItem key={index} sx={{width: 'auto', p: 1}}>
 
                                         <ClubCard
                                             clubName={club.clubName}

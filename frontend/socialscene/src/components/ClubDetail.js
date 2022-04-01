@@ -87,9 +87,10 @@ function ClubDetail() {
         if (showBannedMembers === false) {
             return (
                 <>
-                    {DummyClubMemberData.map((user) => {
+                    {DummyClubMemberData.map((user, index) => {
                         return (
                             <Chip
+                                key={index}
                                 label={user.firstName + " " + user.lastName}
                                 avatar={
                                     <Avatar
@@ -107,9 +108,10 @@ function ClubDetail() {
         } else {
             return (
                 <>
-                    {DummyClubMemberData.map((user) => {
+                    {DummyClubMemberData.map((user, index) => {
                         return (
                             <Chip
+                                key={index}
                                 label={user.firstName + " " + user.lastName}
                                 avatar={
                                     <Avatar

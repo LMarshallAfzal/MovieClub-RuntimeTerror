@@ -151,7 +151,6 @@ const Profile = () => {
                                         placeholder={"choose a different username"}
                                         required
                                         fullWidth
-                                        id={"outlined-required"}
                                         label={"username"}
                                         name={"username"}
                                         type={"text"}
@@ -168,7 +167,6 @@ const Profile = () => {
                                         helperText={errorFirstNameText}
                                         required
                                         placeholder={"your first name"}
-                                        id={"outlined-basic"}
                                         label={"first name"}
                                         name={"first_name"}
                                         type={"text"}
@@ -185,7 +183,6 @@ const Profile = () => {
                                         helperText={errorLastNameText}
                                         required
                                         placeholder={"your last name"}
-                                        id={"outlined-basic"}
                                         label={"last name"}
                                         name={"last_name"}
                                         type={"text"}
@@ -203,7 +200,6 @@ const Profile = () => {
                                         helperText={errorEmailText}
                                         required
                                         placeholder={"example@socialscene.co.uk"}
-                                        id={"outlined-basic"}
                                         label={"email"}
                                         name={"email"}
                                         type={"email"}
@@ -218,12 +214,11 @@ const Profile = () => {
                                     <TextField
                                         error={bioError}
                                         helperText={errorBioText}
-                                        id={"outlined-multiline-static"}
                                         placeholder={"short personal description"}
                                         label={"bio"}
                                         name={"bio"}
                                         multiline
-                                        rows={7.5}
+                                        rows={4}
                                         value={userData.bio}
                                         InputLabelProps={{
                                             shrink: true,
@@ -232,7 +227,6 @@ const Profile = () => {
                                     />
                                     <Autocomplete
                                         multiple
-                                        id="tags-standard"
                                         options={themes}
                                         getOptionLabel={(option) => option.theme}
                                         defaultValue={[themes[0]]}
@@ -244,7 +238,6 @@ const Profile = () => {
                                                 helperText={errorPreferencesText}
                                                 required
                                                 spacing={6}
-                                                id={"outlined-multiline-static"}
                                                 placeholder={"select or change themes"}
                                                 label={"preferences"}
                                                 name={"preferences"}
@@ -269,9 +262,10 @@ const Profile = () => {
 
                     <HomepageCard title={"following"} titleItemText={cardHeight}>
                         <Box maxHeight={cardHeight / 2} sx={{overflowY: "scroll"}}>
-                            {DummyClubMemberData.map((user) => {
+                            {DummyClubMemberData.map((user, index) => {
                                 return (
                                     <Chip
+                                        key={index}
                                         label={user.firstName + " " + user.lastName}
                                         avatar={
                                             <Avatar
@@ -290,9 +284,10 @@ const Profile = () => {
 
                     <HomepageCard title={"followers"} titleItemText={cardHeight}>
                         <Box maxHeight={cardHeight / 2} sx={{overflowY: "scroll"}}>
-                            {DummyClubMemberData.map((user) => {
+                            {DummyClubMemberData.map((user, index) => {
                                 return (
                                     <Chip
+                                        key={"index"}
                                         label={user.firstName + " " + user.lastName}
                                         avatar={
                                             <Avatar
@@ -360,9 +355,10 @@ const Profile = () => {
                     <HomepageCard title={"clubs"} titleItemText={cardHeight}>
                         <Box maxHeight={cardHeight / 2} sx={{overflowY: "scroll"}}>
 
-                            {DummyClubData.map((club) => {
+                            {DummyClubData.map((club, index) => {
                                 return (
                                     <Chip
+                                        key={"index"}
                                         label={club.clubName}
                                         avatar={
                                             <Avatar
@@ -375,11 +371,8 @@ const Profile = () => {
 
                                 )
                             })}
-
                         </Box>
                     </HomepageCard>
-
-
                 </Stack>
             </Grid>
         </Grid>

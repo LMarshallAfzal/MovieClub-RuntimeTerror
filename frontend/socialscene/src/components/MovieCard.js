@@ -5,7 +5,7 @@ import ThemeButton from "./core/ThemeButton";
 import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
 import LoadingSkeleton from "./helper/LoadingSkeleton";
 import placeholder from "../resources/images/empty_movie_poster.png";
-import {HandleNavigate} from "./helper/HandleNavigate";
+import {useNavigate} from "react-router";
 
 function MovieCard(props) {
     const [watchedMovies, setWatchedMovies] = useState([]);
@@ -20,6 +20,14 @@ function MovieCard(props) {
 
     const closePrompt = () => {
         setShowPrompt(false);
+    }
+
+    const navigate = useNavigate();
+
+    const HandleNavigate = (location) => {
+        return (
+            navigate(`${location}`, {replace: false})
+        )
     }
 
     //MovieCard is passed the movie object, all movie interactions occurs here

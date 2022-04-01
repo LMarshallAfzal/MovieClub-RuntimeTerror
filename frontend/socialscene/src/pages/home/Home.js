@@ -1,9 +1,10 @@
 import React, {useContext, useState} from 'react';
 
 import "../../styling/pages/Home.css";
-import {Grid, ListItem, Stack} from "@mui/material";
+import {Box, Grid, ImageList, ImageListItem, ListItem, Stack} from "@mui/material";
 import AuthContext from "../../components/helper/AuthContext";
 import moviePoster from '../../resources/images/empty_movie_poster.png';
+import placeHolder from '../../resources/images/empty_movie_poster.png';
 import {moviesWithPoster} from "../../resources/data/DummyMoviesData";
 import {DummyClubData} from "../../resources/data/DummyClubsData";
 import ClubCard from "../../components/ClubCard";
@@ -11,7 +12,9 @@ import MovieQuote from "../../components/MovieQuote";
 import HomepageCard from "../../components/helper/HomepageCard";
 import MovieCard from "../../components/MovieCard";
 import TextButton from "../../components/core/TextButton";
-import {HandleNavigate} from "../../components/helper/HandleNavigate";
+import {DummyRecommendedMovies} from "../../resources/data/DummyRecommendedMovies";
+import {MovieDataAPI} from "../../components/helper/MovieDataAPI";
+import LoadingSkeleton from "../../components/helper/LoadingSkeleton";
 
 
 const Home = () => {
@@ -62,15 +65,38 @@ const Home = () => {
                 <Grid container direction={'row'} spacing={2}>
 
 
-                    <Grid item xs={12}>
+                    <Grid item xs={9}>
                         <MovieQuote/>
                     </Grid>
+
+                    {/*<Grid item xs={3} overflow={"hidden"}>*/}
+                    {/*    <Box>*/}
+                    {/*        <ImageList cols={2} rowHeight={100}>*/}
+                    {/*            {DummyRecommendedMovies.map((item) => {*/}
+                    {/*                const movieData = MovieDataAPI(item.IMDB);*/}
+                    {/*                return (*/}
+
+                    {/*                    <LoadingSkeleton loading={movieData}>*/}
+                    {/*                        <ImageListItem key={item.poster}>*/}
+                    {/*                            <img*/}
+                    {/*                                src={`${movieData ? movieData.Poster : placeHolder}?w=100&h=100&fit=crop&auto=format`}*/}
+                    {/*                                srcSet={`${movieData ? movieData.Poster : placeHolder}?w=100&h=100&fit=crop&auto=format&dpr=2 2x`}*/}
+                    {/*                                alt={item.title}*/}
+                    {/*                                loading="lazy"*/}
+                    {/*                            />*/}
+                    {/*                        </ImageListItem>*/}
+                    {/*                    </LoadingSkeleton>*/}
+                    {/*                )*/}
+                    {/*            })}*/}
+                    {/*        </ImageList>*/}
+                    {/*    </Box>*/}
+                    {/*</Grid>*/}
 
                     <Grid item xs={12}>
                         <HomepageCard title={"recommended"} titleItem={
                             <TextButton
                                 text={"view movies"}
-                                onClick={() => HandleNavigate("/home/movies")}
+                                linkTo={"/home/movies"}
                                 style={{textAlign: "right"}}
                             />
                         }>
@@ -80,9 +106,10 @@ const Home = () => {
                                        height={cardHeight}
                                        sx={{overflowX: "scroll", overflowY: "hidden"}}
                                 >
-                                    {moviesWithPoster.map((movie) => {
+                                    {moviesWithPoster.map((movie, index) => {
                                         return (
                                             <MovieCard
+                                                key={index}
                                                 poster={moviePoster}
                                                 clubMovie={false}
                                                 rateMovie={true}
@@ -99,15 +126,15 @@ const Home = () => {
                         <HomepageCard title={"your clubs"} titleItem={
                             <TextButton
                                 text={"view clubs"}
-                                onClick={() => HandleNavigate("/home/clubs")}
+                                linkTo={"/home/clubs"}
                                 style={{textAlign: "right"}}
                             />
                         }>
                             <Grid item xs={12}>
                                 <Stack direction={"row"}
                                        overflow={"auto"}>
-                                    {DummyClubData.map((club) => club.isMember === true && (
-                                        <ListItem sx={{width: 'auto', p: 1}}>
+                                    {DummyClubData.map((club, index) => club.isMember === true && (
+                                        <ListItem key={index} sx={{width: 'auto', p: 1}}>
 
                                             <ClubCard
                                                 clubName={club.clubName}
@@ -123,48 +150,12 @@ const Home = () => {
                                     ))}
                                 </Stack>
                             </Grid>
-
                         </HomepageCard>
                     </Grid>
                 </Grid>
             </Grid>
-
-            {/*<Grid item xs={3} height={1}>*/}
-            {/*    <Box sx={{overflowY: 'scroll'}}>*/}
-            {/*        <ImageList variant="masonry" cols={2} gap={2}>*/}
-            {/*            {DummyRecommendedMovies.map((item) => {*/}
-            {/*                const movieData = MovieDataAPI(item.IMDB);*/}
-            {/*                return (*/}
-            {/*                    <LoadingSkeleton loading={movieData}>*/}
-            {/*                        <ImageListItem key={item.poster}>*/}
-            {/*                            <img*/}
-            {/*                                src={`${movieData ? movieData.Poster : moviePlaceholder}?w=248&fit=crop&auto=format`}*/}
-            {/*                                srcSet={`${movieData ? movieData.Poster : moviePlaceholder}?w=248&fit=crop&auto=format&dpr=2 2x`}*/}
-            {/*                                alt={item.title}*/}
-            {/*                                loading="lazy"*/}
-            {/*                            />*/}
-            {/*                        </ImageListItem>*/}
-            {/*                    </LoadingSkeleton>*/}
-
-
-            {/*                    // <ImageListItem key={item.poster}>*/}
-            {/*                    //     {(movieData) ? (*/}
-            {/*                    //         <img*/}
-            {/*                    //             src={`${movieData.Poster}?w=248&fit=crop&auto=format`}*/}
-            {/*                    //             srcSet={`${movieData.Poster}?w=248&fit=crop&auto=format&dpr=2 2x`}*/}
-            {/*                    //             alt={item.title}*/}
-            {/*                    //             loading="lazy"*/}
-            {/*                    //         />*/}
-            {/*                    //     ) : (*/}
-            {/*                    //         <Skeleton variant="rectangular" height={1} width={1} />*/}
-            {/*                    //     )}*/}
-            {/*                    // </ImageListItem>*/}
-            {/*                )*/}
-            {/*            })}*/}
-            {/*        </ImageList>*/}
-            {/*    </Box>*/}
-            {/*</Grid>*/}
         </Grid>
+
     );
 }
 
