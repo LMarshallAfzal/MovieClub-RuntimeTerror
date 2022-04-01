@@ -151,7 +151,7 @@ const Movies = () => {
         await response3.json();
     };
 
-    const [openSearch, setOpenSearch] = React.useState(false);
+    const [openSearch, setOpenSearch] = useState(false);
 
     const toggleSearch = () => {
         setOpenSearch(!openSearch);
@@ -178,6 +178,8 @@ const Movies = () => {
                     label={"search"}
                     fullWidth
                     value={searchValue}
+                    data-testid={"search-bar"}
+                    inputProps={{"data-testid": "content-input"}}
                     placeholder={"search for a movie"}
                     onChange={(event) => {
                         setSearchValue(event.target.value);
@@ -223,21 +225,25 @@ const Movies = () => {
 
             <Grid item xs={12}>
                 <HomepageCard title={"club movies"}>
-                    <Stack direction={"row"}
-                           spacing={2}
-                           paddingBottom={1}
-                           overflow={"auto"}>
+                    <Grid item xs={12}>
+                        <Stack direction={"row"}
+                               spacing={2}
+                               height={435}
+                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                        >
+                            {moviesWithPoster.map((movie, index) => {
+                                return (
+                                    <MovieCard
+                                        key={index}
+                                        isClubMovie={true}
+                                        movie={movie}
+                                        poster={moviePoster}
+                                    />
+                                );
+                            })}
+                        </Stack>
+                    </Grid>
 
-                        {moviesWithPoster.map((movie) => {
-                            return (
-                                <MovieCard
-                                    isClubMovie={true}
-                                    movie={movie}
-                                    poster={moviePoster}
-                                />
-                            );
-                        })}
-                    </Stack>
                 </HomepageCard>
             </Grid>
 

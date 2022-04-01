@@ -9,7 +9,7 @@ function Navbar() {
 
     return (
         <>
-            <div className={"navbar"}>
+            <div data-testid="navbar" className={"navbar"}>
                 <div className={"navbar-black"}>
                     <Link to={"/"} className={"navbar-logo"}>
                         <span className={"logo-social"}>social</span>
@@ -66,5 +66,6 @@ function NavbarButton() {
         )} else {return (
             <></>
         )}
+        
     }
 }

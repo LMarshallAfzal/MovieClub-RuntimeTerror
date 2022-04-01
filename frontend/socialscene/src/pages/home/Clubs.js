@@ -24,6 +24,8 @@ function Clubs() {
             <Grid item xs={10}>
                 <TextField className={"search-bar"}
                            id={"outlined-basic"}
+                           data-testid={"search-bar"}
+                           inputProps={{ "data-testid": "content-input" }}
                            label={"search"}
                            variant={"outlined"}/>
             </Grid>

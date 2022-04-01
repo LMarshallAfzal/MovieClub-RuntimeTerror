@@ -34,7 +34,7 @@ export function Login() {
 
             <Grid item xs={6} width={1}>
 
-                <HeadingCircle title={"log in"} />
+                <HeadingCircle title={"log in"} data-testid="login-circle"/>
             </Grid>
 
             <Grid item xs={6}>
@@ -44,6 +44,7 @@ export function Login() {
                     <Stack sx={{width: '60%'}} className={"login-form-stack"} spacing={2}>
 
                         <TextField
+                            data-testid="username-field"
                             error={usernameError}
                             helperText={errorUsernameText}
                             fullWidth
