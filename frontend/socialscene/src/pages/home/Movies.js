@@ -24,6 +24,7 @@ const Movies = () => {
     useEffect(() => {
         getRecommendedMovies();
         getWatchedMovies();
+
     }, []);
 
     let getWatchedMovies = async () => {
@@ -157,11 +158,15 @@ const Movies = () => {
         setOpenSearch(!openSearch);
     };
 
-    const openSearchCollapse = () => {
-        setOpenSearch(true);
+    const openSearchAuto = (text) => {
+        (text === "") ? setOpenSearch(false) : setOpenSearch(true);
     };
 
+
     const [searchValue, setSearchValue] = useState("");
+
+    const cardHeight = 390;
+    const clubCardHeight = cardHeight + 40;
 
     return (
         <Grid container
@@ -183,12 +188,14 @@ const Movies = () => {
                     placeholder={"search for a movie"}
                     onChange={(event) => {
                         setSearchValue(event.target.value);
+                        openSearchAuto(event.target.value);
                     }}
                     InputProps={{
                         endAdornment: (
                             <TextButton
                                 text={openSearch ? "close" : "open"}
                                 onClick={toggleSearch}
+                                style={{textAlign: "right"}}
                             />
                         ),
                     }}
@@ -196,29 +203,31 @@ const Movies = () => {
 
                 <Collapse in={openSearch}>
                     <HomepageCard title={"search result"}>
-                        <Stack direction={"row"}
-                               spacing={2}
-                               height={430}
-                               sx={{overflowX: "scroll", overflowY: "hidden"}}
-                        >
+                        <Grid item xs={12}>
+                            <Stack direction={"row"}
+                                   spacing={2}
+                                   height={cardHeight}
+                                   sx={{overflowX: "scroll", overflowY: "hidden"}}
+                            >
 
-                            {moviesWithPoster.filter((movie) => {
-                                if (movie.title
-                                    .toLowerCase()
-                                    .includes(searchValue.toLowerCase())
-                                ) {
-                                    return movie;
-                                }
-                            }).map((movie) => {
-                                return (
-                                    <MovieCard
-                                        isClubMovie={false}
-                                        movie={movie}
-                                        poster={moviePoster}
-                                    />
-                                );
-                            })}
-                        </Stack>
+                                {moviesWithPoster.filter((movie) => {
+                                    if (movie.title
+                                        .toLowerCase()
+                                        .includes(searchValue.toLowerCase())
+                                    ) {
+                                        return movie;
+                                    }
+                                }).map((movie) => {
+                                    return (
+                                        <MovieCard
+                                            isClubMovie={false}
+                                            movie={movie}
+                                            poster={moviePoster}
+                                        />
+                                    );
+                                })}
+                            </Stack>
+                        </Grid>
                     </HomepageCard>
                 </Collapse>
             </Grid>
@@ -228,7 +237,7 @@ const Movies = () => {
                     <Grid item xs={12}>
                         <Stack direction={"row"}
                                spacing={2}
-                               height={435}
+                               height={clubCardHeight}
                                sx={{overflowX: "scroll", overflowY: "hidden"}}
                         >
                             {moviesWithPoster.map((movie, index) => {
@@ -249,39 +258,45 @@ const Movies = () => {
 
             <Grid item xs={12}>
                 <HomepageCard title={"recommended"}>
-                    <Stack direction={"row"}
-                           spacing={2}
-                           paddingBottom={1}
-                           overflow={"auto"}>
-                        {moviesWithPoster.map((movie) => {
-                            return (
-                                <MovieCard
-                                    poster={moviePoster}
-                                    isClubMovie={false}
-                                    movie={movie}
-                                />
-                            );
-                        })}
-                    </Stack>
+                    <Grid item xs={12}>
+                        <Stack direction={"row"}
+                               spacing={2}
+                               height={cardHeight}
+                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                        >
+                            {moviesWithPoster.map((movie) => {
+                                return (
+                                    <MovieCard
+                                        poster={moviePoster}
+                                        isClubMovie={false}
+                                        movie={movie}
+                                    />
+                                );
+                            })}
+                        </Stack>
+                    </Grid>
                 </HomepageCard>
             </Grid>
 
             <Grid item xs={12}>
                 <HomepageCard title={"watched"}>
-                    <Stack direction={"row"}
-                           spacing={2}
-                           paddingBottom={1}
-                           overflow={"auto"}>
-                        {moviesWithPoster.map((movie) => {
-                            return (
-                                <MovieCard
-                                    poster={moviePoster}
-                                    isClubMovie={false}
-                                    movie={movie}
-                                />
-                            );
-                        })}
-                    </Stack>
+                    <Grid item xs={12}>
+                        <Stack direction={"row"}
+                               spacing={2}
+                               height={cardHeight}
+                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                        >
+                            {moviesWithPoster.map((movie) => {
+                                return (
+                                    <MovieCard
+                                        poster={moviePoster}
+                                        isClubMovie={false}
+                                        movie={movie}
+                                    />
+                                );
+                            })}
+                        </Stack>
+                    </Grid>
                 </HomepageCard>
             </Grid>
 

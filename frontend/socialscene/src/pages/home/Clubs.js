@@ -6,7 +6,6 @@ import ThemeButton from "../../components/core/ThemeButton";
 import ClubCard from "../../components/ClubCard";
 import {DummyClubData} from "../../resources/data/DummyClubsData";
 import {useNavigate} from "react-router";
-import HomepageTitle from "../../components/HomepageTitle";
 
 function Clubs() {
 
@@ -25,7 +24,7 @@ function Clubs() {
                 <TextField className={"search-bar"}
                            id={"outlined-basic"}
                            data-testid={"search-bar"}
-                           inputProps={{ "data-testid": "content-input" }}
+                           inputProps={{"data-testid": "content-input"}}
                            label={"search"}
                            variant={"outlined"}/>
             </Grid>
@@ -50,7 +49,7 @@ function Clubs() {
                                    overflow={"auto"}
                             >
                                 {DummyClubData.map((club) => club.isMember === true && (
-                                    <ListItem sx={{width: 'auto',p:1}}>
+                                    <ListItem sx={{width: 'auto', p: 1}}>
 
                                         <ClubCard
                                             clubName={club.clubName}
@@ -82,7 +81,7 @@ function Clubs() {
                             <Stack direction={"row"}
                                    overflow={"auto"}>
                                 {DummyClubData.map((club) => club.isMember === false && (
-                                    <ListItem sx={{width: 'auto',p: 1}}>
+                                    <ListItem sx={{width: 'auto', p: 1}}>
 
                                         <ClubCard
                                             clubName={club.clubName}

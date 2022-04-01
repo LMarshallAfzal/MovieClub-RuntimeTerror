@@ -125,16 +125,15 @@ h6 {
 }
 
 .text-button {
-  width: auto;
-  height: 100%;
   margin: 0;
+  height: 100%;
+  width: 100%;
   transition: all 0.3s ease-out;
   cursor: pointer;
   outline: none;
   display: block;
   border: none;
   font-size: 1.2rem;
-  text-align: center;
   color: #000000;
   font-family: Helvetica-Bold, serif;
   background-color: transparent;

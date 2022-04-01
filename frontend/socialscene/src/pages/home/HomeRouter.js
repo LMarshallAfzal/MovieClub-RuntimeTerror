@@ -6,7 +6,7 @@ import NameHeader from "../../components/NameHeader";
 import {Grid} from "@mui/material";
 import CsrfToken from "../../components/helper/CsrfToken";
 import AuthContext from "../../components/helper/AuthContext";
-import HomepageTitle from "../../components/HomepageTitle";
+import HomepageTitle from "../../components/helper/HomepageTitle";
 
 
 function HomeRouter() {
