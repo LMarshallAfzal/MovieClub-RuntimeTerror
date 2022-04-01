@@ -1,6 +1,6 @@
 import React from "react";
 import {Grid} from "@mui/material";
-import "../../styling/pages/HomePageTitle.css";
+import "../../styling/pages/HomepageTitle.css";
 
 function HomepageTitle(props) {
     return (

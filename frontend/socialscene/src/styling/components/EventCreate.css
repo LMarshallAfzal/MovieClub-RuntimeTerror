@@ -124,19 +124,10 @@ h6 {
   user-select: none;
 }
 
-.show-event-title {
-  font-family: Helvetica-Light, serif;
-  color: #FFFFFF;
-}
-
-.show-event-title-movie {
+.new-event-movie-text {
+  font-size: 1em;
+  overflow: auto;
   font-family: Helvetica, serif;
-  color: #000000;
 }
 
-.show-event-organiser-title {
-  font-family: Helvetica-Light, serif;
-  color: #FFFFFF;
-}
-
-/*# sourceMappingURL=ShowEvent.css.map */
+/*# sourceMappingURL=EventCreate.css.map */

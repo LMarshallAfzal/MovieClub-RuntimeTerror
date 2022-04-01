@@ -1,5 +1,5 @@
 import React, {useCallback} from "react";
-import "../../styling/components/EnterButton.css";
+import "../../styling/components/RoundButton.css";
 import {useNavigate} from "react-router";
 
 function RoundButton(props) {

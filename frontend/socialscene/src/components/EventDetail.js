@@ -1,6 +1,6 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import {Avatar, Box, Card, CardMedia, Chip, Divider, Grid, Rating, Stack, TextField, Tooltip,} from "@mui/material";
-import "../styling/components/ShowEvent.css";
+import "../styling/components/EventDetail.css";
 import {useParams} from "react-router";
 import ThemeButton from "./core/ThemeButton";
 import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";

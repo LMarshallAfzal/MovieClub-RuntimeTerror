@@ -124,22 +124,4 @@ h6 {
   user-select: none;
 }
 
-.enter-button {
-  padding: 8px 30px;
-  outline: none;
-  border: none;
-  font-size: 18px;
-  color: #000000;
-  cursor: pointer;
-  background-color: #FFFFFF;
-  font-family: Helvetica-Bold, serif;
-  transition: all 0.3s ease-out;
-  border-radius: 99em;
-}
-
-.enter-button:hover {
-  background-color: #FF0000;
-  color: #FFFFFF;
-}
-
-/*# sourceMappingURL=EnterButton.css.map */
+/*# sourceMappingURL=ClubCreate.css.map */

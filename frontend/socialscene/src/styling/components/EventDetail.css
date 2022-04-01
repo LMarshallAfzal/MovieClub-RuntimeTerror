@@ -124,25 +124,19 @@ h6 {
   user-select: none;
 }
 
-.round-forward {
-  padding: 18px;
-  outline: none;
-  border: none;
-  width: auto;
-  font-size: 18px;
+.show-event-title {
+  font-family: Helvetica-Light, serif;
   color: #FFFFFF;
-  cursor: pointer;
-  background-color: #000000;
-  font-family: Helvetica-Bold, serif;
-  transition: all 0.3s ease-out;
-  display: block;
-  border-radius: 100%;
-  text-align: center;
 }
 
-.round-forward:hover {
-  background-color: #FF0000;
+.show-event-title-movie {
+  font-family: Helvetica, serif;
   color: #000000;
 }
 
-/*# sourceMappingURL=RoundButtonForward.css.map */
+.show-event-organiser-title {
+  font-family: Helvetica-Light, serif;
+  color: #FFFFFF;
+}
+
+/*# sourceMappingURL=EventDetail.css.map */
