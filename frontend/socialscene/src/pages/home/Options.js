@@ -123,7 +123,6 @@ const Options = () => {
                                         placeholder={"your current password"}
                                         required
                                         autoComplete="none"
-                                        id={"outlined-adornment-password"}
                                         label={"current"}
                                         name={"old_password"}
                                         type={passwordVisibility ? "text" : "password"}
@@ -149,7 +148,6 @@ const Options = () => {
                                         placeholder={"choose a new password"}
                                         required
                                         autoComplete="new-password"
-                                        id={"outlined-adornment-password"}
                                         label={"new"}
                                         name={"new_password"}
                                         type={passwordVisibility ? "text" : "password"}
@@ -175,7 +173,6 @@ const Options = () => {
                                         required
                                         autoComplete="new-password"
                                         placeholder={"re-enter your new password"}
-                                        id={"outlined-adornment-password"}
                                         label={"confirm"}
                                         name={"new_password_confirmation"}
                                         type={passwordVisibility ? "text" : "password"}

@@ -43,9 +43,7 @@ function HomeRouter() {
 
     let location = useLocation();
     let pathArray = location.pathname.split('/').filter((x) => x);
-    console.log(pathArray);
     let currentPage = ((pathArray.length > 1) ? pathArray[1] : pathArray[0]);
-    console.log(currentPage);
 
     return (
         <>

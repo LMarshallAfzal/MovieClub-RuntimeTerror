@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React from "react";
 import {Grid, ListItem, Stack, TextField} from "@mui/material";
 import {Outlet} from "react-router-dom";
 import "../../styling/pages/Clubs.css";
@@ -10,8 +10,10 @@ import {useNavigate} from "react-router";
 function Clubs() {
 
     const navigate = useNavigate();
-    const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
 
+    const handleNewClub = () => {
+        navigate(`/home/clubs/new`, {replace: false});
+    }
     return (
         <Grid container
               justifyContent={"center"}
@@ -32,7 +34,7 @@ function Clubs() {
             <Grid item xs={2}>
                 <ThemeButton className={"create-button"}
                              text={"create"}
-                             onClick={createNewClub}
+                             onClick={() => handleNewClub}
                 />
             </Grid>
 

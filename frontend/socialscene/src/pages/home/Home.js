@@ -1,18 +1,17 @@
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import "../../styling/pages/Home.css";
 import {Grid, ListItem, Stack} from "@mui/material";
-import {movies} from '../../resources/data/DummyDashboardClubsData';
 import AuthContext from "../../components/helper/AuthContext";
 import moviePoster from '../../resources/images/empty_movie_poster.png';
 import {moviesWithPoster} from "../../resources/data/DummyMoviesData";
-import {useNavigate} from "react-router";
 import {DummyClubData} from "../../resources/data/DummyClubsData";
 import ClubCard from "../../components/ClubCard";
 import MovieQuote from "../../components/MovieQuote";
 import HomepageCard from "../../components/helper/HomepageCard";
 import MovieCard from "../../components/MovieCard";
 import TextButton from "../../components/core/TextButton";
+import {HandleNavigate} from "../../components/helper/HandleNavigate";
 
 
 const Home = () => {
@@ -48,10 +47,6 @@ const Home = () => {
 
     }
 
-
-    const navigate = useNavigate();
-    const moreMovies = useCallback(() => navigate('movies', {replace: false}), [navigate]);
-    const moreClubs = useCallback(() => navigate('clubs', {replace: false}), [navigate]);
     const cardHeight = 390;
 
     return (
@@ -75,7 +70,7 @@ const Home = () => {
                         <HomepageCard title={"recommended"} titleItem={
                             <TextButton
                                 text={"view movies"}
-                                onClick={moreMovies}
+                                onClick={() => HandleNavigate("/home/movies")}
                                 style={{textAlign: "right"}}
                             />
                         }>
@@ -89,7 +84,8 @@ const Home = () => {
                                         return (
                                             <MovieCard
                                                 poster={moviePoster}
-                                                isClubMovie={false}
+                                                clubMovie={false}
+                                                rateMovie={true}
                                                 movie={movie}
                                             />
                                         );
@@ -103,7 +99,7 @@ const Home = () => {
                         <HomepageCard title={"your clubs"} titleItem={
                             <TextButton
                                 text={"view clubs"}
-                                onClick={moreClubs}
+                                onClick={() => HandleNavigate("/home/clubs")}
                                 style={{textAlign: "right"}}
                             />
                         }>

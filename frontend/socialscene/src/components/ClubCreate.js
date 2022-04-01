@@ -1,5 +1,5 @@
 import React from "react";
-import {Autocomplete, Grid, Stack, TextField} from "@mui/material";
+import {Autocomplete, Box, Grid, Stack, TextField} from "@mui/material";
 import ThemeButton from "./core/ThemeButton";
 import "../styling/components/ClubCreate.css";
 import {themes} from "../resources/data/MovieThemes"
@@ -17,7 +17,10 @@ function ClubCreate() {
 
 
             <Grid item xs={12}>
-                <h4 className={"home-page-sub-section-heading"}>new club:</h4>
+
+                <Box padding={1} className={"home-page-sub-title"}>
+                    <h4 className={"sub-title-text"}>new club:</h4>
+                </Box>
             </Grid>
 
             <Grid item xs={12}>

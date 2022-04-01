@@ -11,6 +11,7 @@ function HomepageCard(props) {
                 </Grid>
 
                 <Grid item xs={3}>
+                    <h5 className={"home-page-card-title-item"}>{props.titleItemText}</h5>
                     {props.titleItem}
                 </Grid>
 

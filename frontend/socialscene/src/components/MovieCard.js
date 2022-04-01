@@ -1,11 +1,11 @@
-import React, {useCallback, useState} from "react";
+import React, {useState} from "react";
 import {Card, CardMedia, Chip, Grid, Rating, Stack, Tooltip} from "@mui/material";
 import "../styling/components/MovieCard.css";
 import ThemeButton from "./core/ThemeButton";
-import {useNavigate} from "react-router-dom";
 import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
 import LoadingSkeleton from "./helper/LoadingSkeleton";
 import placeholder from "../resources/images/empty_movie_poster.png";
+import {HandleNavigate} from "./helper/HandleNavigate";
 
 function MovieCard(props) {
     const [watchedMovies, setWatchedMovies] = useState([]);
@@ -22,14 +22,10 @@ function MovieCard(props) {
         setShowPrompt(false);
     }
 
-    const navigate = useNavigate();
-    const createNewClub = useCallback(() => navigate('/home/discussion', {replace: false}), [navigate]);
-
-
     //MovieCard is passed the movie object, all movie interactions occurs here
 
-    function MovieClub() {
-        if (props.isClubMovie === true) {
+    function ClubMovie() {
+        if (props.clubMovie === true) {
             const toolText = `event: {event.title} 
                             ${props.movie.deadline}
                             at {eventtime}`;
@@ -47,9 +43,31 @@ function MovieCard(props) {
                         }>
                         <Chip
                             label={props.movie.club}
-                            onClick={createNewClub}
+                            onClick={() => HandleNavigate("/home/discussion")}
                         />
                     </Tooltip>
+                </>
+            )
+        } else {
+            return (
+                <></>
+            )
+        }
+    }
+
+    function RateMovie() {
+        if (props.rateMovie === true) {
+            return (
+                <>
+                    <MovieWatchRateDialog isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
+                    <ThemeButton
+                        text={"watch"}
+                        style={"primary"}
+                        onClick={() => {
+                            setPromptData(props.movie);
+                            setShowPrompt(true);
+                        }}
+                    />
                 </>
             )
         } else {
@@ -104,7 +122,8 @@ function MovieCard(props) {
                                 value={props.movie.rating}
                             />
 
-                        </Stack></Tooltip>
+                        </Stack>
+                    </Tooltip>
 
                     <Stack spacing={1} padding={1} alignItems={"left"}>
                         <Tooltip
@@ -117,16 +136,10 @@ function MovieCard(props) {
                             <h6 className={"movie-card-title"}>{props.movie.title}</h6>
                         </Tooltip>
 
-                        <MovieClub/>
-                        <MovieWatchRateDialog isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
-                        <ThemeButton
-                            text={"watch"}
-                            style={"primary"}
-                            onClick={() => {
-                                setPromptData(props.movie);
-                                setShowPrompt(true);
-                            }}
-                        />
+                        <ClubMovie/>
+
+                        <RateMovie/>
+
                     </Stack>
                 </Card>
             </LoadingSkeleton>

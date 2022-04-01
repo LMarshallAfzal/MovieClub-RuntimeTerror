@@ -66,7 +66,7 @@ const theme = createTheme({
         MuiChip: {
             styleOverrides: {
                 root: {
-                    fontFamily: 'Helvetica-Bold',
+                    fontFamily: 'Helvetica',
                     // borderRadius: "0rem !important",
 
                 },

@@ -165,17 +165,14 @@ const Movies = () => {
 
     const [searchValue, setSearchValue] = useState("");
 
-    const cardHeight = 390;
-    const clubCardHeight = cardHeight + 40;
+    const cardHeight = 325;
+    const rateCardHeight = cardHeight + 65;
+    const clubCardHeight = rateCardHeight + 40;
 
     return (
         <Grid container
               spacing={2}
               padding={2}>
-
-            {/* <Grid item xs={12}>
-					<ThemeButton linkTo={"/home/movies/movie"}/>
-				</Grid> */}
 
             <Grid item xs={12}>
 
@@ -217,10 +214,12 @@ const Movies = () => {
                                     ) {
                                         return movie;
                                     }
-                                }).map((movie) => {
+                                }).map((movie, index) => {
                                     return (
                                         <MovieCard
-                                            isClubMovie={false}
+                                            key={index}
+                                            clubMovie={false}
+                                            rateMovie={true}
                                             movie={movie}
                                             poster={moviePoster}
                                         />
@@ -244,7 +243,8 @@ const Movies = () => {
                                 return (
                                     <MovieCard
                                         key={index}
-                                        isClubMovie={true}
+                                        clubMovie={true}
+                                        rateMovie={true}
                                         movie={movie}
                                         poster={moviePoster}
                                     />
@@ -261,14 +261,16 @@ const Movies = () => {
                     <Grid item xs={12}>
                         <Stack direction={"row"}
                                spacing={2}
-                               height={cardHeight}
+                               height={rateCardHeight}
                                sx={{overflowX: "scroll", overflowY: "hidden"}}
                         >
-                            {moviesWithPoster.map((movie) => {
+                            {moviesWithPoster.map((movie, index) => {
                                 return (
                                     <MovieCard
+                                        key={index}
                                         poster={moviePoster}
-                                        isClubMovie={false}
+                                        rateMovie={true}
+                                        clubMovie={false}
                                         movie={movie}
                                     />
                                 );
@@ -286,11 +288,13 @@ const Movies = () => {
                                height={cardHeight}
                                sx={{overflowX: "scroll", overflowY: "hidden"}}
                         >
-                            {moviesWithPoster.map((movie) => {
+                            {moviesWithPoster.map((movie, index) => {
                                 return (
                                     <MovieCard
+                                        key={index}
                                         poster={moviePoster}
-                                        isClubMovie={false}
+                                        rateMovie={false}
+                                        clubMovie={false}
                                         movie={movie}
                                     />
                                 );

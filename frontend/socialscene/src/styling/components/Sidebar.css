@@ -112,12 +112,6 @@ h6 {
   color: #FFFFFF;
 }
 
-.home-page-card-title {
-  color: #000000;
-  font-family: Helvetica-Bold, serif;
-  user-select: none;
-}
-
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
@@ -158,6 +152,7 @@ h6 {
   cursor: pointer;
   border-left: 10px solid #FF8585;
   background-color: #C4C4C4;
+  font-family: Helvetica, serif;
 }
 
 .sidebar-list #active {
