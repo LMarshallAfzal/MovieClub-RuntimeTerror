@@ -1,65 +1,65 @@
-@use "../base";
+@use "../core/base";
 
-.sidebar{
-    position: sticky;
-    height: 100%;
+.sidebar {
+  position: sticky;
+  height: 100%;
 }
 
-.sidebar-list{
-    margin: 0;
-    padding: 0;
-    width: 100%;
+.sidebar-list {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-.sidebar-list .sidebar-text{
-    font-family: base.$helvetica;
+.sidebar-list .sidebar-text {
+  font-family: base.$helvetica;
 }
 
-.sidebar-list .sidebar-list-item{
-    background-color: base.$grey-4;
-    box-sizing: border-box;
-    width: 100%;
-    height: 4em;
-    list-style-type: none;
-    //border-left: 10px solid base.$grey-3;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s ease-out;
-    border-left: 0 solid base.$primary-black;
-    font-family: base.$helvetica;
+.sidebar-list .sidebar-list-item {
+  background-color: base.$grey-4;
+  box-sizing: border-box;
+  width: 100%;
+  height: 4em;
+  list-style-type: none;
+  //border-left: 10px solid base.$grey-3;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-out;
+  border-left: 0 solid base.$primary-black;
+  font-family: base.$helvetica;
 }
 
-.sidebar-list .sidebar-list-item:hover{
-    cursor: pointer;
-    border-left: 10px solid base.$pale-red;
-    background-color: base.$grey-3;
+.sidebar-list .sidebar-list-item:hover {
+  cursor: pointer;
+  border-left: 10px solid base.$pale-red;
+  background-color: base.$grey-3;
 
 }
 
-.sidebar-list #active{
-    font-family: base.$helvetica;
-    background-color: base.$grey-2;
-    border-left: 10px solid base.$primary-red;
-    color: base.$primary-red !important;
+.sidebar-list #active {
+  font-family: base.$helvetica-bold;
+  background-color: base.$grey-2;
+  border-left: 10px solid base.$primary-red;
+  color: base.$primary-red !important;
 
 }
 
 .sidebar-list-link-box {
-    height: 100%;
-    width: 100%;
-    align-items: center;
+  height: 100%;
+  width: 100%;
+  align-items: center;
 
 }
 
 .sidebar-list-link-text {
-    padding-left: 20px;
-    height: 100%;
-    width: calc(100% - 20px);
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    user-select: none;
-    font-family: inherit;
+  padding-left: 20px;
+  height: 100%;
+  width: calc(100% - 20px);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  font-family: inherit;
 }

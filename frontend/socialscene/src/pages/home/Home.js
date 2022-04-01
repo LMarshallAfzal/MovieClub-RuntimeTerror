@@ -1,20 +1,15 @@
 import React, {useCallback, useContext, useState} from 'react';
 
 import "../../styling/pages/Home.css";
-import {Box, Grid, ImageList, ImageListItem, ListItem, Stack} from "@mui/material";
-import ThemeButton from "../../components/core/ThemeButton";
+import {Grid, ListItem, Stack} from "@mui/material";
 import {movies} from '../../resources/data/DummyDashboardClubsData';
 import AuthContext from "../../components/helper/AuthContext";
 import moviePoster from '../../resources/images/empty_movie_poster.png';
-import moviePlaceholder from '../../resources/images/empty_movie_poster.png';
 import {moviesWithPoster} from "../../resources/data/DummyMoviesData";
 import {useNavigate} from "react-router";
-import {DummyRecommendedMovies} from "../../resources/data/DummyRecommendedMovies";
 import {DummyClubData} from "../../resources/data/DummyClubsData";
 import ClubCard from "../../components/ClubCard";
 import MovieQuote from "../../components/MovieQuote";
-import {MovieDataAPI} from "../../components/helper/MovieDataAPI";
-import LoadingSkeleton from "../../components/helper/LoadingSkeleton";
 import HomepageCard from "../../components/helper/HomepageCard";
 import MovieCard from "../../components/MovieCard";
 import TextButton from "../../components/core/TextButton";
@@ -68,27 +63,9 @@ const Home = () => {
         >
 
 
-            <Grid item xs={9} height={"inherit"}>
+            <Grid item xs={12}>
                 <Grid container direction={'row'} spacing={2}>
 
-                    {/*<Grid item xs={12}>*/}
-                    {/*    <Autocomplete*/}
-                    {/*        freeSolo*/}
-                    {/*        id="search"*/}
-                    {/*        disableClearable*/}
-                    {/*        options={DummyDashboardClubsData.map((movie) => movie.name)}*/}
-                    {/*        renderInput={(params) => (*/}
-                    {/*            <TextField*/}
-                    {/*                {...params}*/}
-                    {/*                label="search clubs"*/}
-                    {/*                InputProps={{*/}
-                    {/*                    ...params.InputProps,*/}
-                    {/*                    type: 'search',*/}
-                    {/*                }}*/}
-                    {/*            />*/}
-                    {/*        )}*/}
-                    {/*    />*/}
-                    {/*</Grid>*/}
 
                     <Grid item xs={12}>
                         <MovieQuote/>
@@ -123,83 +100,74 @@ const Home = () => {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <div className={"home-page-card-background"}>
-                            <Grid container direction={"row"} padding={2}>
+                        <HomepageCard title={"your clubs"} titleItem={
+                            <TextButton
+                                text={"view clubs"}
+                                onClick={moreClubs}
+                                style={{textAlign: "right"}}
+                            />
+                        }>
+                            <Grid item xs={12}>
+                                <Stack direction={"row"}
+                                       overflow={"auto"}>
+                                    {DummyClubData.map((club) => club.isMember === true && (
+                                        <ListItem sx={{width: 'auto', p: 1}}>
 
-                                <Grid item xs={9}>
-                                    <h5 className={"home-page-card-title"}>your clubs</h5>
-                                </Grid>
-
-                                <Grid item xs={3}>
-                                    <ThemeButton
-                                        text={"view clubs"}
-                                        onClick={moreClubs}
-                                    />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <Stack direction={"row"}
-                                           overflow={"auto"}>
-                                        {DummyClubData.map((club) => club.isMember === true && (
-                                            <ListItem sx={{width: 'auto', p: 1}}>
-
-                                                <ClubCard
-                                                    clubName={club.clubName}
-                                                    isMember={club.isMember}
-                                                    iconImage={club.iconImage}
-                                                    description={club.description}
-                                                    isOrganiser={club.isOrganiser}
-                                                    memberRole={club.memberRole}
-                                                    clubTheme={club.clubTheme}
-                                                    ID={club.ID}
-                                                />
-                                            </ListItem>
-                                        ))}
-                                    </Stack>
-                                </Grid>
+                                            <ClubCard
+                                                clubName={club.clubName}
+                                                isMember={club.isMember}
+                                                iconImage={club.iconImage}
+                                                description={club.description}
+                                                isOrganiser={club.isOrganiser}
+                                                memberRole={club.memberRole}
+                                                clubTheme={club.clubTheme}
+                                                ID={club.ID}
+                                            />
+                                        </ListItem>
+                                    ))}
+                                </Stack>
                             </Grid>
-                        </div>
-                    </Grid>
 
+                        </HomepageCard>
+                    </Grid>
                 </Grid>
             </Grid>
 
-            <Grid item xs={3} height={1}>
-                <Box sx={{overflowY: 'scroll'}}>
-                    <ImageList variant="masonry" cols={2} gap={2}>
-                        {DummyRecommendedMovies.map((item) => {
-                            const movieData = MovieDataAPI(item.IMDB);
-                            return (
-                                <LoadingSkeleton loading={movieData}>
-                                    <ImageListItem key={item.poster}>
-                                        <img
-                                            src={`${movieData ? movieData.Poster : moviePlaceholder}?w=248&fit=crop&auto=format`}
-                                            srcSet={`${movieData ? movieData.Poster : moviePlaceholder}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                            alt={item.title}
-                                            loading="lazy"
-                                        />
-                                    </ImageListItem>
-                                </LoadingSkeleton>
+            {/*<Grid item xs={3} height={1}>*/}
+            {/*    <Box sx={{overflowY: 'scroll'}}>*/}
+            {/*        <ImageList variant="masonry" cols={2} gap={2}>*/}
+            {/*            {DummyRecommendedMovies.map((item) => {*/}
+            {/*                const movieData = MovieDataAPI(item.IMDB);*/}
+            {/*                return (*/}
+            {/*                    <LoadingSkeleton loading={movieData}>*/}
+            {/*                        <ImageListItem key={item.poster}>*/}
+            {/*                            <img*/}
+            {/*                                src={`${movieData ? movieData.Poster : moviePlaceholder}?w=248&fit=crop&auto=format`}*/}
+            {/*                                srcSet={`${movieData ? movieData.Poster : moviePlaceholder}?w=248&fit=crop&auto=format&dpr=2 2x`}*/}
+            {/*                                alt={item.title}*/}
+            {/*                                loading="lazy"*/}
+            {/*                            />*/}
+            {/*                        </ImageListItem>*/}
+            {/*                    </LoadingSkeleton>*/}
 
 
-                                // <ImageListItem key={item.poster}>
-                                //     {(movieData) ? (
-                                //         <img
-                                //             src={`${movieData.Poster}?w=248&fit=crop&auto=format`}
-                                //             srcSet={`${movieData.Poster}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                //             alt={item.title}
-                                //             loading="lazy"
-                                //         />
-                                //     ) : (
-                                //         <Skeleton variant="rectangular" height={1} width={1} />
-                                //     )}
-                                // </ImageListItem>
-                            )
-                        })}
-                    </ImageList>
-                </Box>
-            </Grid>
-
+            {/*                    // <ImageListItem key={item.poster}>*/}
+            {/*                    //     {(movieData) ? (*/}
+            {/*                    //         <img*/}
+            {/*                    //             src={`${movieData.Poster}?w=248&fit=crop&auto=format`}*/}
+            {/*                    //             srcSet={`${movieData.Poster}?w=248&fit=crop&auto=format&dpr=2 2x`}*/}
+            {/*                    //             alt={item.title}*/}
+            {/*                    //             loading="lazy"*/}
+            {/*                    //         />*/}
+            {/*                    //     ) : (*/}
+            {/*                    //         <Skeleton variant="rectangular" height={1} width={1} />*/}
+            {/*                    //     )}*/}
+            {/*                    // </ImageListItem>*/}
+            {/*                )*/}
+            {/*            })}*/}
+            {/*        </ImageList>*/}
+            {/*    </Box>*/}
+            {/*</Grid>*/}
         </Grid>
     );
 }

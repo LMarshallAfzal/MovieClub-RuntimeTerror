@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './pages/core/App';
+import "./styling/core/base.css";
 import Helvetica from "./resources/newfonts/Helvetica.ttf";
-import HelveticaLight from "./resources/newfonts/Helvetica-Light.ttf";
-import HelveticaOblique from "./resources/newfonts/Helvetica-Italic.ttf";
-import HelveticaBold from "./resources/newfonts/Helvetica-Bold.ttf";
-import HelveticaBoldOblique from "./resources/newfonts/Helvetica-Bold-Italic.ttf";
 import {createTheme, ThemeProvider} from "@mui/material";
 
 const theme = createTheme({
@@ -13,6 +10,7 @@ const theme = createTheme({
         primary: {
             main: '#FF0000',
         },
+        text: {}
     },
 
     components: {
@@ -68,6 +66,7 @@ const theme = createTheme({
         MuiChip: {
             styleOverrides: {
                 root: {
+                    fontFamily: 'Helvetica-Bold',
                     // borderRadius: "0rem !important",
 
                 },
@@ -84,26 +83,28 @@ const theme = createTheme({
         MuiInputLabel: {
             styleOverrides: {
                 root: {
-                    fontWeight: "bold",
-                }
+                    fontFamily: 'Helvetica-Bold',
+                },
             }
+        },
+        MuiInputBase: {
+            styleOverrides: {}
         }
     },
 
     typography: {
         typography: {
             fontFamily: [
-                Helvetica,
-                HelveticaLight,
-                HelveticaOblique,
-                HelveticaBold,
-                HelveticaBoldOblique,
+                'Helvetica',
+                'Helvetica-Italic',
+                'Helvetica-Light',
+                'Helvetica-Light-Italic',
+                'Helvetica-Bold',
+                'helvetica-Bold-Italic',
                 '-apple-system',
                 'BlinkMacSystemFont',
                 '"Segoe UI"',
-                'Roboto',
                 '"Helvetica Neue"',
-                'Arial',
                 'sans-serif',
                 '"Apple Color Emoji"',
                 '"Segoe UI Emoji"',

@@ -161,7 +161,7 @@ h6 {
 }
 
 .sidebar-list #active {
-  font-family: Helvetica, serif;
+  font-family: Helvetica-Bold, serif;
   background-color: #999999;
   border-left: 10px solid #FF0000;
   color: #FF0000 !important;
