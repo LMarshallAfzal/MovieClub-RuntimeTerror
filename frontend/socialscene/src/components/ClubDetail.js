@@ -30,6 +30,8 @@ function ClubDetail() {
     let { clubID } = useParams();
     let club = DummyClubData.find(obj => obj.ID === clubID);
 
+    
+
     const toggleEdit = () => {
         setEdit(!edit);
     }

@@ -66,7 +66,7 @@ function ClubCreate() {
                                 />
                             )}
                         />
-                    <ThemeButton text={"create"} style={"primary"}/>
+                    <ThemeButton text={"create"} data-testid={"search-bar"} style={"primary"}/>
                 </Stack>
             </Grid>
         </Grid>

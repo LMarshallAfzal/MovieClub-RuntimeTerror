@@ -2,7 +2,7 @@
 import React, {useContext} from 'react';
 import {render, fireEvent, screen, waitFor} from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Signup from "../pages/root/Signup";
+import Signup from "../pages/core/Signup";
 import AuthContext from "../components/helper/AuthContext";
 import {MemoryRouter} from 'react-router-dom'
 import user from '@testing-library/user-event';

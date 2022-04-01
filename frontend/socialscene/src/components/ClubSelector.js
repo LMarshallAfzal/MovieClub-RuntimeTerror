@@ -3,7 +3,6 @@ import { Collapse, Grid, ListItem, Stack } from "@mui/material";
 import RoundButton from "./core/RoundButton";
 import "../styling/components/ClubSelector.css";
 import { DummyClubData } from "../resources/data/DummyClubsData";
-import ThemeButton from "./core/ThemeButton";
 import TextButton from "./core/TextButton";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../components/helper/AuthContext";

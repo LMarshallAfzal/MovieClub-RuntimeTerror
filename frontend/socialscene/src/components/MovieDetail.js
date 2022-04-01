@@ -1,12 +1,8 @@
 import React, { useCallback } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Tooltip, Rating, CardHeader, CardMedia, Chip, Avatar, Box, Stack, Card, CardContent, TextField, Typography, Grid, Paper, ListItemText, ListItemButton } from "@mui/material";
-import ThemeButton from "./core/ThemeButton";
-import iconImage from "../resources/images/testIconPic.jpg";
 import { DummyDashboardClubsData, meetings, movies } from '../resources/data/DummyDashboardClubsData';
-import { moviesWithPoster } from '../resources/data/DummyMoviesData';
 import moviePoster from '../resources/images/empty_movie_poster.png';
-import { DummyClubMemberData } from "../resources/data/DummyClubMemberData";
 
 
 function MovieDetail() {

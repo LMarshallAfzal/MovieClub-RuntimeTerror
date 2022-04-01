@@ -89,9 +89,10 @@ const Options = () => {
             },
         })
         let data = await response.json()
+        console.log(data)
         if (response.status === 200) {
             setPasswordData(data);
-            alert("You have successfully changed you password")
+            alert("You have successfully changed your password.")
         }
         else {
             errorHandler(e, data)
@@ -128,6 +129,7 @@ const Options = () => {
                                             placeholder={"your current password"}
                                             required
                                             autoComplete="none"
+                                            data-testid={"old-password"}
                                             id={"outlined-adornment-password"}
                                             label={"current"}
                                             name={"old_password"}
@@ -154,6 +156,7 @@ const Options = () => {
                                             placeholder={"choose a new password"}
                                             required
                                             autoComplete="new-password"
+                                            data-testid={"new-password"}
                                             id={"outlined-adornment-password"}
                                             label={"new"}
                                             name={"new_password"}
@@ -179,6 +182,7 @@ const Options = () => {
                                             helperText={errorNewPasswordConfirmationText}
                                             required
                                             autoComplete="new-password"
+                                            data-testid={"new-password-confirmation"}
                                             placeholder={"re-enter your new password"}
                                             id={"outlined-adornment-password"}
                                             label={"confirm"}
@@ -190,6 +194,7 @@ const Options = () => {
                                             <InputAdornment position="end">
                                                 <TextButton
                                                     onClick={() => togglePasswordVisibility(!passwordVisibility)}
+                                                    data-testid={"password-visibility"}
                                                     text={passwordVisibility ? "hide" : "show"}
                                                     style={{marginTop: "-20px"}}
                                                 />
