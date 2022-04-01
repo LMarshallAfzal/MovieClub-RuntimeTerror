@@ -75,6 +75,12 @@ const theme = createTheme({
 
         },
 
+        MuiTooltip: {
+            styleOverrides: {
+                root: {}
+            }
+        },
+
         MuiInputLabel: {
             styleOverrides: {
                 root: {

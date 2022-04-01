@@ -198,8 +198,8 @@ const Movies = () => {
                     <HomepageCard title={"search result"}>
                         <Stack direction={"row"}
                                spacing={2}
-                               paddingBottom={1}
-                               overflow={"auto"}
+                               height={430}
+                               sx={{overflowX: "scroll", overflowY: "hidden"}}
                         >
 
                             {moviesWithPoster.filter((movie) => {

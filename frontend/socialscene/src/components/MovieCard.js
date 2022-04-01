@@ -35,7 +35,16 @@ function MovieCard(props) {
                             at {eventtime}`;
             return (
                 <>
-                    <Tooltip title={toolText}>
+                    <Tooltip
+                        arrow
+                        placement={"right"}
+                        title={
+                            <>
+                                <p className={"movie-card-event"}>event</p>
+                                <h6>{props.movie.deadline}</h6>
+                                <h6>17:30</h6>
+                            </>
+                        }>
                         <Chip
                             label={props.movie.club}
                             onClick={createNewClub}
@@ -72,27 +81,42 @@ function MovieCard(props) {
 
 
                     <CardMedia
-                        component="img"
+                        component={"img"}
                         sx={{height: "100%"}}
                         image={moviePoster}
                         alt={props.movie.title}
                     />
 
+                    <Tooltip
+                        arrow
+                        placement="right"
+                        title={
+                            <p className={"movie-card-event"}>{props.movie.rating} stars</p>
+                        }
+                    >
+                        <Stack paddingTop={1} alignItems={"center"}>
 
-                    <Stack paddingTop={1} alignItems={"center"}>
-                        <Rating
-                            readOnly
-                            sx={{fontSize: "1.2em"}}
-                            precision={0.5}
-                            name={"read-only"}
-                            value={props.movie.rating}
-                        />
-                    </Stack>
+                            <Rating
+                                readOnly
+                                sx={{fontSize: "1.2em"}}
+                                precision={0.5}
+                                name={"read-only"}
+                                value={props.movie.rating}
+                            />
+
+                        </Stack></Tooltip>
 
                     <Stack spacing={1} padding={1} alignItems={"left"}>
-                        <Tooltip title={props.movie.title} placement="top">
+                        <Tooltip
+                            arrow
+                            placement="right"
+                            title={
+                                <p className={"movie-card-event"}>{props.movie.title}</p>
+                            }
+                        >
                             <h6 className={"movie-card-title"}>{props.movie.title}</h6>
                         </Tooltip>
+
                         <MovieClub/>
                         <MovieWatchRateDialog isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
                         <ThemeButton
