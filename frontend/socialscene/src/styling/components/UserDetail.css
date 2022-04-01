@@ -112,37 +112,20 @@ h6 {
   color: #FFFFFF;
 }
 
-.home-page-card-title {
-  color: #000000;
-  font-family: Helvetica-Bold, serif;
-  user-select: none;
-}
-
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
   user-select: none;
 }
 
-.round-forward {
-  padding: 18px;
-  outline: none;
-  border: none;
-  width: auto;
-  font-size: 18px;
-  color: #FFFFFF;
-  cursor: pointer;
-  background-color: #000000;
-  font-family: Helvetica-Bold, serif;
-  transition: all 0.3s ease-out;
-  display: block;
-  border-radius: 100%;
-  text-align: center;
-}
-
-.round-forward:hover {
-  background-color: #FF0000;
+.user-detail {
   color: #000000;
+  font-family: Helvetica, serif;
 }
 
-/*# sourceMappingURL=RoundButtonForward.css.map */
+.user-detail-heading {
+  font-family: Helvetica-Light, serif;
+  color: #5C5C5C;
+}
+
+/*# sourceMappingURL=UserDetail.css.map */

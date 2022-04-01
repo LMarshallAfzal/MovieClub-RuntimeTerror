@@ -1,353 +1,314 @@
-import React, { useState, useContext, useEffect } from "react";
-import {Tooltip, Collapse, TextField, Grid, Typography, Rating, Stack, ListItem,} from "@mui/material";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import { moviesWithPoster } from "../../resources/data/DummyMoviesData";
+import React, {useContext, useEffect, useState} from "react";
+import {Collapse, Grid, Stack, TextField,} from "@mui/material";
+import {moviesWithPoster} from "../../resources/data/DummyMoviesData";
 import "../../styling/pages/Movies.css";
 import moviePoster from "../../resources/images/empty_movie_poster.png";
 import AuthContext from "../../components/helper/AuthContext";
-import ThemeButton from "../../components/core/ThemeButton";
 import TextButton from "../../components/core/TextButton";
-import { Outlet } from "react-router";
+import {Outlet} from "react-router";
 import MovieCard from "../../components/MovieCard";
+import HomepageCard from "../../components/helper/HomepageCard";
 
 
 const Movies = () => {
-	let { user, authTokens } = useContext(AuthContext);
-	const [movie, setMovie] = useState("");
-	const [rating, setRating] = useState({
-		user: user.user_id,
-		movie: 0,
-		score: null,
-	});
-	const [recommendedMovies, setRecommendedMovies] = useState([]);
-	const [watchedMovies, setWatchedMovies] = useState([]);
+    let {user, authTokens} = useContext(AuthContext);
+    const [movie, setMovie] = useState("");
+    const [rating, setRating] = useState({
+        user: user.user_id,
+        movie: 0,
+        score: null,
+    });
+    const [recommendedMovies, setRecommendedMovies] = useState([]);
+    const [watchedMovies, setWatchedMovies] = useState([]);
 
-	useEffect(() => {
-		getRecommendedMovies();
-		getWatchedMovies();
-	}, []);
+    useEffect(() => {
+        getRecommendedMovies();
+        getWatchedMovies();
 
-	let getWatchedMovies = async () => {
-		let response = await fetch("http://127.0.0.1:8000/watched_list/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + authTokens.access,
-			},
-		});
-		let data = await response.json();
-		setWatchedMovies(data);
-	};
+    }, []);
 
-	let addToWatchedList = async (id) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/add_watched_movie/" + id + "/",
-			{
-				method: "POST",
-				body: JSON.stringify({ movie: id, user: user.user_id }),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + authTokens.access,
-				},
-			}
-		);
-	};
+    let getWatchedMovies = async () => {
+        let response = await fetch("http://127.0.0.1:8000/watched_list/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authTokens.access,
+            },
+        });
+        let data = await response.json();
+        setWatchedMovies(data);
+    };
 
-	let editRating = async (id) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/edit_rating/" + id + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify({
-					user: user.user_id,
-					movie: id,
-					score: rating.score,
-				}),
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		if (response.status === 200) {
-			setRating(data);
-		} else {
-			setRating({ user: user.user_id, movie: id, score: 0.0 });
-			console.log(rating.score);
-		}
-	};
+    let addToWatchedList = async (id) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/add_watched_movie/" + id + "/",
+            {
+                method: "POST",
+                body: JSON.stringify({movie: id, user: user.user_id}),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + authTokens.access,
+                },
+            }
+        );
+    };
 
-	let getRating = async (id) => {
-		let response = await fetch("http://127.0.0.1:8000/get_rating/" + id + "/", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json; charset=UTF-8",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		let data = await response.json();
-		if (response.status === 200) {
-			setRating(data);
-		} else if (response.status === 400) {
-			setRating({ user: user.user_id, movie: id, score: 0.0 });
-			console.log(rating.score);
-		} else {
-			setRating({ user: user.user_id, movie: id, score: 0.0 });
-			console.log(rating.score);
-		}
-	};
+    let editRating = async (id) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/edit_rating/" + id + "/",
+            {
+                method: "PUT",
+                body: JSON.stringify({
+                    user: user.user_id,
+                    movie: id,
+                    score: rating.score,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        if (response.status === 200) {
+            setRating(data);
+        } else {
+            setRating({user: user.user_id, movie: id, score: 0.0});
+            console.log(rating.score);
+        }
+    };
 
-	let getRecommendedMovies = async () => {
-		let response = await fetch("http://127.0.0.1:8000/rec_movies/", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json; charset=UTF-8",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		// .catch(err => console.log(err))
-		let data = await response.json();
-		console.log(data);
-		if (response.status === 200) {
-			setRecommendedMovies(data);
-		} else {
-			alert("Something went wrong");
-		}
-	};
+    let getRating = async (id) => {
+        let response = await fetch("http://127.0.0.1:8000/get_rating/" + id + "/", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        let data = await response.json();
+        if (response.status === 200) {
+            setRating(data);
+        } else if (response.status === 400) {
+            setRating({user: user.user_id, movie: id, score: 0.0});
+            console.log(rating.score);
+        } else {
+            setRating({user: user.user_id, movie: id, score: 0.0});
+            console.log(rating.score);
+        }
+    };
 
-	let AddRating = async (id, ratingScore) => {
-		let response1 = await fetch(
-			"http://127.0.0.1:8000/add_rating/" + id + "/",
-			{
-				method: "POST",
-				body: JSON.stringify({
-					user: user.user_id,
-					movie: id,
-					score: ratingScore,
-				}),
-				headers: {
-					"Content-Type": "application/json; charset=UTF-8",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data1 = await response1.json();
-		setRating(data1);
-		let response2 = await fetch("http://127.0.0.1:8000/train/movie/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json; charset=UTF-8",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		await response2.json();
-		let response3 = await fetch("http://127.0.0.1:8000/train/meeting/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json; charset=UTF-8",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		await response3.json();
-	};
+    let getRecommendedMovies = async () => {
+        let response = await fetch("http://127.0.0.1:8000/rec_movies/", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        // .catch(err => console.log(err))
+        let data = await response.json();
+        console.log(data);
+        if (response.status === 200) {
+            setRecommendedMovies(data);
+        } else {
+            alert("Something went wrong");
+        }
+    };
 
-	const [openSearch, setOpenSearch] = React.useState(false);
+    let AddRating = async (id, ratingScore) => {
+        let response1 = await fetch(
+            "http://127.0.0.1:8000/add_rating/" + id + "/",
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    user: user.user_id,
+                    movie: id,
+                    score: ratingScore,
+                }),
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data1 = await response1.json();
+        setRating(data1);
+        let response2 = await fetch("http://127.0.0.1:8000/train/movie/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        await response2.json();
+        let response3 = await fetch("http://127.0.0.1:8000/train/meeting/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        await response3.json();
+    };
 
-	const toggleSearch = () => {
-		setOpenSearch(!openSearch);
-	};
+    const [openSearch, setOpenSearch] = useState(false);
 
-	const openSearchCollapse = () => {
-		setOpenSearch(true);
-	};
+    const toggleSearch = () => {
+        setOpenSearch(!openSearch);
+    };
 
-	const [searchValue, setSearchValue] = useState("");
+    const openSearchAuto = (text) => {
+        (text === "") ? setOpenSearch(false) : setOpenSearch(true);
+    };
 
-	return (
-		<Grid
-				container
-				justifyContent={"center"}
-				alignItems={"flex-start"}
-				spacing={2}
-				padding={2}
-			>
-				{/* <Grid item xs={12}>
-					<ThemeButton linkTo={"/home/movies/movie"}/>
-				</Grid> */}
 
-				<Grid item xs={12}>
-					<TextField
-						label={"search"}
-						fullWidth
-						value={searchValue}
-						data-testid={"search-bar"}
-                        inputProps={{ "data-testid": "content-input" }}
-						placeholder={"search for a movie"}
-						onChange={(event) => {
-							setSearchValue(event.target.value);
-						}}
-						InputProps={{
-							endAdornment: (
-								<TextButton
-									text={openSearch ? "close" : "open"}
-									onClick={toggleSearch}
-								/>
-							),
-						}}
-					/>
-				</Grid>
+    const [searchValue, setSearchValue] = useState("");
 
-				<Grid item xs={12}>
-					<Collapse in={openSearch}>
-						<div className={"home-page-card-background"}>
-							<Grid container direction={"row"} padding={2} spacing={2}>
-								<Grid item xs={12}>
-									<h5 className={"home-page-card-title"}>search result</h5>
-								</Grid>
+    const cardHeight = 325;
+    const rateCardHeight = cardHeight + 65;
+    const clubCardHeight = rateCardHeight + 40;
 
-								<Grid item xs={12}>
-									<Grid
-										container
-										direction={"row"}
-										spacing={2}
-										alignItems={"center"}
-									>
-										{/* LIST OF ALL MOVIES */}
-										{moviesWithPoster
-											.filter((movie) => {
-												if (
-													movie.title
-														.toLowerCase()
-														.includes(searchValue.toLowerCase())
-												) {
-													return movie;
-												}
-											})
-											.map((movie) => {
-												return (
-													<Grid item>
-														<Card sx={{ width: 150 }}>
-															<CardMedia
-																component="img"
-																image={moviePoster}
-																alt={movie.title}
-															/>
+    return (
+        <Grid container
+              spacing={2}
+              padding={2}>
 
-															<Stack paddingTop={1} alignItems={"center"}>
-																<Rating
-																	name="simple-controlled"
-																	sx={{ fontSize: "1.2em" }}
-																	precision={0.5}
-																	max={5}
-																// onChange={(event, newValue) => (this.setState({score: newValue, onChange: this.fetchAddRating(movie.id)}))}
-																/>
-															</Stack>
+            <Grid item xs={12}>
 
-															<Stack
-																spacing={1}
-																padding={1}
-																alignItems={"left"}
-															>
-																<Tooltip
-																	title={movie.title}
-																	placement="top-start"
-																>
-																	<Typography noWrap>{movie.title}</Typography>
-																</Tooltip>
+                <TextField
+                    label={"search"}
+                    fullWidth
+                    value={searchValue}
+                    data-testid={"search-bar"}
+                    inputProps={{"data-testid": "content-input"}}
+                    placeholder={"search for a movie"}
+                    onChange={(event) => {
+                        setSearchValue(event.target.value);
+                        openSearchAuto(event.target.value);
+                    }}
+                    InputProps={{
+                        endAdornment: (
+                            <TextButton
+                                text={openSearch ? "close" : "open"}
+                                onClick={toggleSearch}
+                                style={{textAlign: "right"}}
+                            />
+                        ),
+                    }}
+                />
 
-																<ThemeButton text={"watch"} />
-															</Stack>
-														</Card>
-													</Grid>
-												);
-											})}
-									</Grid>
-								</Grid>
-							</Grid>
-						</div>
-					</Collapse>
-				</Grid>
+                <Collapse in={openSearch}>
+                    <HomepageCard title={"search result"}>
+                        <Grid item xs={12}>
+                            <Stack direction={"row"}
+                                   spacing={2}
+                                   height={cardHeight}
+                                   sx={{overflowX: "scroll", overflowY: "hidden"}}
+                            >
 
-				<Grid item xs={12}>
-					<div className={"home-page-card-background"}>
-						<Grid container direction={"row"} padding={2} spacing={2}>
-							<Grid item xs={12}>
-								<h5 className={"home-page-card-title"}>club movies</h5>
-							</Grid>
+                                {moviesWithPoster.filter((movie) => {
+                                    if (movie.title
+                                        .toLowerCase()
+                                        .includes(searchValue.toLowerCase())
+                                    ) {
+                                        return movie;
+                                    }
+                                }).map((movie, index) => {
+                                    return (
+                                        <MovieCard
+                                            key={index}
+                                            clubMovie={false}
+                                            rateMovie={true}
+                                            movie={movie}
+                                            poster={moviePoster}
+                                        />
+                                    );
+                                })}
+                            </Stack>
+                        </Grid>
+                    </HomepageCard>
+                </Collapse>
+            </Grid>
 
-							<Grid item xs={12}>
-								<Stack direction={"row"} overflow={"auto"}>
-									{moviesWithPoster.map((movie) => {
-										return (
-											<MovieCard
-												isClubMovie={true}
-												movie={movie}
-												poster={moviePoster}
-											/>
-										);
-									})}
-								</Stack>
-							</Grid>
-						</Grid>
-					</div>
-				</Grid>
+            <Grid item xs={12}>
+                <HomepageCard title={"club movies"}>
+                    <Grid item xs={12}>
+                        <Stack direction={"row"}
+                               spacing={2}
+                               height={clubCardHeight}
+                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                        >
+                            {moviesWithPoster.map((movie, index) => {
+                                return (
+                                    <MovieCard
+                                        key={index}
+                                        clubMovie={true}
+                                        rateMovie={true}
+                                        movie={movie}
+                                        poster={moviePoster}
+                                    />
+                                );
+                            })}
+                        </Stack>
+                    </Grid>
 
-				<Grid item xs={12}>
-					<div className={"home-page-card-background"}>
-						<Grid container direction={"row"} padding={2} spacing={2}>
-							<Grid item xs={12}>
-								<h5 className={"home-page-card-title"}>recommended</h5>
-							</Grid>
+                </HomepageCard>
+            </Grid>
 
-							<Grid item xs={12}>
-								<Stack direction={"row"} overflow={"auto"}>
-									{moviesWithPoster.map((movie) => {
-										return (
-											<MovieCard
-												poster={moviePoster}
-												isClubMovie={false}
-												movie={movie}
-											/>
-										);
-									})}
-								</Stack>
-							</Grid>
+            <Grid item xs={12}>
+                <HomepageCard title={"recommended"}>
+                    <Grid item xs={12}>
+                        <Stack direction={"row"}
+                               spacing={2}
+                               height={rateCardHeight}
+                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                        >
+                            {moviesWithPoster.map((movie, index) => {
+                                return (
+                                    <MovieCard
+                                        key={index}
+                                        poster={moviePoster}
+                                        rateMovie={true}
+                                        clubMovie={false}
+                                        movie={movie}
+                                    />
+                                );
+                            })}
+                        </Stack>
+                    </Grid>
+                </HomepageCard>
+            </Grid>
 
-						</Grid>
-					</div>
-				</Grid>
-				<Grid item xs={12}>
-					<div className={"home-page-card-background"}>
-						<Grid container direction={"row"} padding={2} spacing={2}>
-							<Grid item xs={12}>
-								<h5 className={"home-page-card-title"}>watched</h5>
-							</Grid>
+            <Grid item xs={12}>
+                <HomepageCard title={"watched"}>
+                    <Grid item xs={12}>
+                        <Stack direction={"row"}
+                               spacing={2}
+                               height={cardHeight}
+                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                        >
+                            {moviesWithPoster.map((movie, index) => {
+                                return (
+                                    <MovieCard
+                                        key={index}
+                                        poster={moviePoster}
+                                        rateMovie={false}
+                                        clubMovie={false}
+                                        movie={movie}
+                                    />
+                                );
+                            })}
+                        </Stack>
+                    </Grid>
+                </HomepageCard>
+            </Grid>
 
-							<Grid item xs={12}>
-								<Stack direction={"row"} overflow={"auto"}>
-									{moviesWithPoster.map((movie) => {
-										return (
-											<MovieCard
-												poster={moviePoster}
-												isClubMovie={false}
-												movie={movie}
-											/>
-										);
-									})}
-								</Stack>
-							</Grid>
-
-						</Grid>
-					</div>
-				</Grid>
-
-				<Grid item xs={12}>
-					<Outlet />
-				</Grid>
-			</Grid>
-	);
+            <Grid item xs={12}>
+                <Outlet/>
+            </Grid>
+        </Grid>
+    );
 };
 
 export default Movies;

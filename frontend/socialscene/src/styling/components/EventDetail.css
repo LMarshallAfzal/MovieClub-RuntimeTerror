@@ -112,30 +112,25 @@ h6 {
   color: #FFFFFF;
 }
 
-.home-page-card-title {
-  color: #000000;
-  font-family: Helvetica-Bold, serif;
-  user-select: none;
-}
-
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
   user-select: none;
 }
 
-.home-page-title {
-  background-color: #5C5C5C;
-  user-select: none;
-  transition: all 0.3s ease-out;
-}
-
-.home-page-text {
+.show-event-title {
+  font-family: Helvetica-Light, serif;
   color: #FFFFFF;
-  font-family: Helvetica-Bold, serif;
-}
-.home-page-text-emphasise {
-  color: #FF0000;
 }
 
-/*# sourceMappingURL=HomepageTitle.css.map */
+.show-event-title-movie {
+  font-family: Helvetica, serif;
+  color: #000000;
+}
+
+.show-event-organiser-title {
+  font-family: Helvetica-Light, serif;
+  color: #FFFFFF;
+}
+
+/*# sourceMappingURL=EventDetail.css.map */

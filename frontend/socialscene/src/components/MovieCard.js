@@ -1,29 +1,58 @@
-import React, { useState } from "react";
-import { useParams } from "react-router";
-import { Typography, Tooltip, Rating, CardMedia, Card, ListItem, Avatar, AvatarGroup, Box, Chip, Grid, Stack } from "@mui/material";
-import icon5 from "../resources/images/example icons/icon5.jpeg"
-import icon2 from "../resources/images/example icons/icon2.jpeg"
-import icon3 from "../resources/images/example icons/icon3.jpeg"
-import icon4 from "../resources/images/example icons/icon4.jpeg"
-import "../styling/components/ClubCard.css";
-import RoundButton from "./core/RoundButton";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import {Card, CardMedia, Chip, Grid, Rating, Stack, Tooltip} from "@mui/material";
+import "../styling/components/MovieCard.css";
 import ThemeButton from "./core/ThemeButton";
+import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
+import LoadingSkeleton from "./helper/LoadingSkeleton";
+import placeholder from "../resources/images/empty_movie_poster.png";
+import {useNavigate} from "react-router";
 
 function MovieCard(props) {
-    // let { movieID } = useParams();
     const [watchedMovies, setWatchedMovies] = useState([]);
+    const [showPrompt, setShowPrompt] = useState(false);
+    const [promptData, setPromptData] = useState("");
+    const [cardWidth, setCardWidth] = useState(150);
+    const [cardBorder, setCardBorder] = useState("0px solid black");
+    const [loaded, setLoaded] = useState(true);
 
-    function MovieClub() {
-        if (props.isClubMovie === true) {
+    let moviePoster = props.poster && placeholder;
+
+
+    const closePrompt = () => {
+        setShowPrompt(false);
+    }
+
+    const navigate = useNavigate();
+
+    const HandleNavigate = (location) => {
+        return (
+            navigate(`${location}`, {replace: false})
+        )
+    }
+
+    //MovieCard is passed the movie object, all movie interactions occurs here
+
+    function ClubMovie() {
+        if (props.clubMovie === true) {
+            const toolText = `event: {event.title} 
+                            ${props.movie.deadline}
+                            at {eventtime}`;
             return (
                 <>
-                    <Tooltip title={`From ${props.movie.club}`} placement="top-start">
-                        <Typography fontSize="1" noWrap>{`From ${props.movie.club}`}</Typography>
-                    </Tooltip>
-
-                    <Tooltip title={`Due ${props.movie.deadline}`} placement="top-start">
-                        <Typography fontSize="1" noWrap>{`Due ${props.movie.deadline}`}</Typography>
+                    <Tooltip
+                        arrow
+                        placement={"right"}
+                        title={
+                            <>
+                                <p className={"movie-card-event"}>event</p>
+                                <h6>{props.movie.deadline}</h6>
+                                <h6>17:30</h6>
+                            </>
+                        }>
+                        <Chip
+                            label={props.movie.club}
+                            onClick={() => HandleNavigate("/home/discussion")}
+                        />
                     </Tooltip>
                 </>
             )
@@ -34,51 +63,95 @@ function MovieCard(props) {
         }
     }
 
-
-    return (
-        <ListItem sx={{ p: 1 }}>
-            <Card sx={{ width: 150 }}>
-                <CardMedia
-                    component="img"
-                    sx={{ height: "100%" }}
-                    image={props.poster}
-                    alt={props.movie.title}
-                />
-
-                <Stack paddingTop={1} alignItems={"center"}>
-
-                    <Rating
-                        name="simple-controlled"
-                        sx={{ fontSize: "1.2em" }}
-                        precision={0.5}
-                        max={5}
-                    // onChange={(event, newValue) =>
-                    //     setRating({
-                    //         score: newValue,
-                    //         onChange: AddRating(movie.id, newValue),
-                    //     })
-                    // }
-                    />
-                </Stack>
-
-                <Stack spacing={1} padding={1} alignItems={"left"}>
-                    <Tooltip title={props.movie.title} placement="top-start">
-                        <Typography noWrap>{props.movie.title}</Typography>
-                    </Tooltip>
-                    <MovieClub />
+    function RateMovie() {
+        if (props.rateMovie === true) {
+            return (
+                <>
+                    <MovieWatchRateDialog isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
                     <ThemeButton
                         text={"watch"}
-                    // onClick={() => {
-                    //     addToWatchedList(movie.id);
-                    // }}
-                    // onChange={() => {
-                    //     getRecommendedMovies();
-                    // }}
+                        style={"primary"}
+                        onClick={() => {
+                            setPromptData(props.movie);
+                            setShowPrompt(true);
+                        }}
                     />
-                    <clubInfo movie={props.movie} />
-                </Stack>
-            </Card>
-        </ListItem>
+                </>
+            )
+        } else {
+            return (
+                <></>
+            )
+        }
+    }
+
+    return (
+        <Grid item>
+            <LoadingSkeleton loading={loaded}>
+                <Card sx={{
+                    width: cardWidth,
+                    transition: "ease-out",
+                    transitionDuration: "0.2s",
+                    border: cardBorder
+                }}
+                      onMouseEnter={() => {
+                          setCardWidth(160)
+                          setCardBorder("2px solid red")
+                      }}
+                      onMouseLeave={() => {
+                          setCardWidth(150)
+                          setCardBorder("0px solid black")
+                      }}
+                      translate={"yes"}
+                >
+
+
+                    <CardMedia
+                        component={"img"}
+                        sx={{height: "100%"}}
+                        image={moviePoster}
+                        alt={props.movie.title}
+                    />
+
+                    <Tooltip
+                        arrow
+                        placement="right"
+                        title={
+                            <p className={"movie-card-event"}>{props.movie.rating} stars</p>
+                        }
+                    >
+                        <Stack paddingTop={1} alignItems={"center"}>
+
+                            <Rating
+                                readOnly
+                                sx={{fontSize: "1.2em"}}
+                                precision={0.5}
+                                name={"read-only"}
+                                value={props.movie.rating}
+                            />
+
+                        </Stack>
+                    </Tooltip>
+
+                    <Stack spacing={1} padding={1} alignItems={"left"}>
+                        <Tooltip
+                            arrow
+                            placement="right"
+                            title={
+                                <p className={"movie-card-event"}>{props.movie.title}</p>
+                            }
+                        >
+                            <h6 className={"movie-card-title"}>{props.movie.title}</h6>
+                        </Tooltip>
+
+                        <ClubMovie/>
+
+                        <RateMovie/>
+
+                    </Stack>
+                </Card>
+            </LoadingSkeleton>
+        </Grid>
     );
 }
 

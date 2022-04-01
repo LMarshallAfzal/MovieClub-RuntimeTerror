@@ -1,22 +1,19 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, {useContext, useState} from "react";
 import {
-    FormControlLabel,
-    Typography,
     Checkbox,
-    Box,
+    FormControl,
+    FormControlLabel,
     Grid,
-    Stack,
-    TextField,
-    Button,
+    InputAdornment,
     InputLabel,
-    OutlinedInput, InputAdornment, FormControl
+    OutlinedInput,
+    Stack
 } from "@mui/material";
 import "../../styling/pages/Options.css";
 import AuthContext from "../../components/helper/AuthContext";
 import ThemeButton from "../../components/core/ThemeButton";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import HomepageTitle from "../../components/HomepageTitle";
 import TextButton from "../../components/core/TextButton";
 
 const Options = () => {
@@ -28,7 +25,7 @@ const Options = () => {
         new_password_confirmation: '',
     })
 
-    let { authTokens } = useContext(AuthContext)
+    let {authTokens} = useContext(AuthContext)
 
     const [oldPasswordError, setOldPasswordError] = useState(false)
     const [newPasswordError, setNewPasswordError] = useState(false)
@@ -38,7 +35,7 @@ const Options = () => {
     const [errorNewPasswordConfirmationText, setNewPasswordConfirmationErrorText] = useState('')
 
     const onChange = (e) => {
-        setPasswordData(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }))
+        setPasswordData(fieldData => ({...fieldData, [e.target.name]: e.target.value}))
     };
 
     let resetErrorState = () => {
@@ -92,147 +89,142 @@ const Options = () => {
         if (response.status === 200) {
             setPasswordData(data);
             alert("You have successfully changed you password")
-        }
-        else {
+        } else {
             errorHandler(e, data)
         }
     }
 
 
-
     return (
-            <Grid container
-                direction={"row"}
-                spacing={2}
-                padding={2}
-            >
+        <Grid container
+              direction={"row"}
+              spacing={2}
+              padding={2}
+        >
 
-                <Grid item xs={6}>
+            <Grid item xs={6}>
 
-                    <form onSubmit={submitChangePasswordForm} className={"home-page-card-background"}>
-                        <Grid container padding={2} spacing={2}>
+                <form onSubmit={submitChangePasswordForm} className={"home-page-card-background"}>
+                    <Grid container padding={2} spacing={2}>
 
-                            <Grid item xs={12}>
-                                <h5 className={"home-page-card-title"}>change password:</h5>
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <Stack spacing={2} height={"100%"}>
-
-                                    <FormControl fullWidth variant={"outlined"}>
-                                        <InputLabel htmlFor={"outlined-adornment-password"}>current</InputLabel>
-                                        <OutlinedInput
-                                            error={oldPasswordError}
-                                            fullWidth
-                                            helperText={errorOldPasswordText}
-                                            placeholder={"your current password"}
-                                            required
-                                            autoComplete="none"
-                                            id={"outlined-adornment-password"}
-                                            label={"current"}
-                                            name={"old_password"}
-                                            type={passwordVisibility ? "text" : "password"}
-                                            value={passwordData.old_password}
-                                            onChange={e => onChange(e)}
-                                            endAdornment={
-                                            <InputAdornment position="end">
-                                                <TextButton
-                                                    onClick={() => togglePasswordVisibility(!passwordVisibility)}
-                                                    text={passwordVisibility ? "hide" : "show"}
-                                                    style={{marginTop: "-20px"}}
-                                                />
-                                            </InputAdornment>
-                                        }/>
-                                    </FormControl>
-
-                                    <FormControl fullWidth variant={"outlined"}>
-                                        <InputLabel htmlFor={"outlined-adornment-password"}>new</InputLabel>
-                                        <OutlinedInput
-                                            error={newPasswordError}
-                                            fullWidth
-                                            helperText={errorNewPasswordText}
-                                            placeholder={"choose a new password"}
-                                            required
-                                            autoComplete="new-password"
-                                            id={"outlined-adornment-password"}
-                                            label={"new"}
-                                            name={"new_password"}
-                                            type={passwordVisibility ? "text" : "password"}
-                                            value={passwordData.password_confirmation}
-                                            onChange={e => onChange(e)}
-                                            endAdornment={
-                                            <InputAdornment position="end">
-                                                <TextButton
-                                                    onClick={() => togglePasswordVisibility(!passwordVisibility)}
-                                                    text={passwordVisibility ? "hide" : "show"}
-                                                    style={{marginTop: "-20px"}}
-                                                />
-                                            </InputAdornment>
-                                        }/>
-                                    </FormControl>
-
-                                    <FormControl fullWidth variant={"outlined"}>
-                                        <InputLabel htmlFor={"outlined-adornment-password"}>confirm</InputLabel>
-                                        <OutlinedInput
-                                            error={newPasswordConfirmationError}
-                                            fullWidth
-                                            helperText={errorNewPasswordConfirmationText}
-                                            required
-                                            autoComplete="new-password"
-                                            placeholder={"re-enter your new password"}
-                                            id={"outlined-adornment-password"}
-                                            label={"confirm"}
-                                            name={"new_password_confirmation"}
-                                            type={passwordVisibility ? "text" : "password"}
-                                            value={passwordData.new_password_confirmation}
-                                            onChange={e => onChange(e)}
-                                            endAdornment={
-                                            <InputAdornment position="end">
-                                                <TextButton
-                                                    onClick={() => togglePasswordVisibility(!passwordVisibility)}
-                                                    text={passwordVisibility ? "hide" : "show"}
-                                                    style={{marginTop: "-20px"}}
-                                                />
-                                            </InputAdornment>
-                                        }/>
-                                    </FormControl>
-
-                                    <ThemeButton
-                                        text={"submit"}
-                                        onClick={submitChangePasswordForm}
-                                        type="submit"
-                                        style={"primary"}
-                                    />
-                                </Stack>
-                            </Grid>
+                        <Grid item xs={12}>
+                            <h5 className={"home-page-card-title"}>change password:</h5>
                         </Grid>
-                    </form>
 
+                        <Grid item xs={12}>
+                            <Stack spacing={2} height={"100%"}>
 
+                                <FormControl fullWidth variant={"outlined"}>
+                                    <InputLabel htmlFor={"outlined-adornment-password"}>current</InputLabel>
+                                    <OutlinedInput
+                                        error={oldPasswordError}
+                                        fullWidth
+                                        helperText={errorOldPasswordText}
+                                        placeholder={"your current password"}
+                                        required
+                                        autoComplete="none"
+                                        label={"current"}
+                                        name={"old_password"}
+                                        type={passwordVisibility ? "text" : "password"}
+                                        value={passwordData.old_password}
+                                        onChange={e => onChange(e)}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <TextButton
+                                                    onClick={() => togglePasswordVisibility(!passwordVisibility)}
+                                                    text={passwordVisibility ? "hide" : "show"}
+                                                    style={{marginTop: "-20px"}}
+                                                />
+                                            </InputAdornment>
+                                        }/>
+                                </FormControl>
 
-                </Grid>
+                                <FormControl fullWidth variant={"outlined"}>
+                                    <InputLabel htmlFor={"outlined-adornment-password"}>new</InputLabel>
+                                    <OutlinedInput
+                                        error={newPasswordError}
+                                        fullWidth
+                                        helperText={errorNewPasswordText}
+                                        placeholder={"choose a new password"}
+                                        required
+                                        autoComplete="new-password"
+                                        label={"new"}
+                                        name={"new_password"}
+                                        type={passwordVisibility ? "text" : "password"}
+                                        value={passwordData.password_confirmation}
+                                        onChange={e => onChange(e)}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <TextButton
+                                                    onClick={() => togglePasswordVisibility(!passwordVisibility)}
+                                                    text={passwordVisibility ? "hide" : "show"}
+                                                    style={{marginTop: "-20px"}}
+                                                />
+                                            </InputAdornment>
+                                        }/>
+                                </FormControl>
 
-                <Grid item xs={6}>
-                    <div className={"home-page-card-background"}>
+                                <FormControl fullWidth variant={"outlined"}>
+                                    <InputLabel htmlFor={"outlined-adornment-password"}>confirm</InputLabel>
+                                    <OutlinedInput
+                                        error={newPasswordConfirmationError}
+                                        fullWidth
+                                        helperText={errorNewPasswordConfirmationText}
+                                        required
+                                        autoComplete="new-password"
+                                        placeholder={"re-enter your new password"}
+                                        label={"confirm"}
+                                        name={"new_password_confirmation"}
+                                        type={passwordVisibility ? "text" : "password"}
+                                        value={passwordData.new_password_confirmation}
+                                        onChange={e => onChange(e)}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <TextButton
+                                                    onClick={() => togglePasswordVisibility(!passwordVisibility)}
+                                                    text={passwordVisibility ? "hide" : "show"}
+                                                    style={{marginTop: "-20px"}}
+                                                />
+                                            </InputAdornment>
+                                        }/>
+                                </FormControl>
 
-                        <Grid container padding={2} spacing={2}>
-
-                            <Grid item xs={12}>
-                                <h5 className={"home-page-card-title"}>notifications</h5>
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    value="end"
-                                    control={<Checkbox icon={<NotificationsNoneIcon />} checkedIcon={<NotificationsActiveIcon />} color="default" />}
-                                    label={<h6>email notifications</h6>}
-                                    labelPlacement="end"
+                                <ThemeButton
+                                    text={"submit"}
+                                    onClick={submitChangePasswordForm}
+                                    type="submit"
+                                    style={"primary"}
                                 />
-                            </Grid>
+                            </Stack>
                         </Grid>
-                    </div>
-                </Grid>
+                    </Grid>
+                </form>
+
+
             </Grid>
+
+            <Grid item xs={6}>
+                <div className={"home-page-card-background"}>
+
+                    <Grid container padding={2} spacing={2}>
+
+                        <Grid item xs={12}>
+                            <h5 className={"home-page-card-title"}>notifications</h5>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <FormControlLabel
+                                value="end"
+                                control={<Checkbox icon={<NotificationsNoneIcon/>}
+                                                   checkedIcon={<NotificationsActiveIcon/>} color="default"/>}
+                                label={<h6>email notifications</h6>}
+                                labelPlacement="end"
+                            />
+                        </Grid>
+                    </Grid>
+                </div>
+            </Grid>
+        </Grid>
     );
 }
 
