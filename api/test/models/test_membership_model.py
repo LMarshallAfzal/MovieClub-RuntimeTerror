@@ -33,6 +33,10 @@ class UserMembershipTestCase(APITestCase):
     def test_get_club_membership(self):
         self.assertEqual(self.membership.role,"M")
 
+    def test_get_role_name(self):
+        role = self.membership.get_role_name()
+        self.assertEqual(role, "Member")
+
     def _assert_membership_is_valid(self):
         try:
             self.membership.full_clean()

@@ -2,19 +2,23 @@
 
 from django.core.exceptions import ValidationError
 from rest_framework.test import APITestCase
-from api.models import Movie
+from api.models import Movie, Rating, User
 
 class MovieModelTestCase(APITestCase):
     """Unit tests for the User model."""
 
     fixtures = [
         'api/test/fixtures/default_movie.json',
+        'api/test/fixtures/default_user.json',
         'api/test/fixtures/other_movies.json',
+        'api/test/fixtures/other_users.json',
     ]
 
     def setUp(self):
         self.movie = Movie.objects.get(ml_id=1)
         self.second_movie = Movie.objects.get(ml_id=2)
+        self.user = User.objects.get(username='johndoe')
+        self.second_user = User.objects.get(username='janedoe')
 
     def test_valid_movie(self):
         self._assert_movie_is_valid()
@@ -58,6 +62,15 @@ class MovieModelTestCase(APITestCase):
     def test_genres_must_not_contain_more_than_100_characters(self):
         self.movie.genres = 'x' * 101
         self._assert_movie_is_invalid()
+
+    def test_get_rating_author(self):
+        rating = Rating.objects.create(user=self.user, movie=self.movie, score = 5.0)
+        author = self.movie.get_rating_author(self.user)
+        self.assertEqual(author, rating)
+
+    def test_get_movie_title(self):
+        title = self.movie.get_movie_title()
+        self.assertEqual(title, self.movie.title)
 
     def _assert_movie_is_valid(self):
         try:

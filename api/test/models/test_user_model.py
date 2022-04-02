@@ -2,7 +2,7 @@
 
 from django.core.exceptions import ValidationError
 from rest_framework.test import APITestCase
-from api.models import User, Membership, Club
+from api.models import User, Membership, Club, Movie, Rating
 
 
 class UserModelTestCase(APITestCase):
@@ -12,11 +12,15 @@ class UserModelTestCase(APITestCase):
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/other_users.json',
         'api/test/fixtures/default_club.json',
+        'api/test/fixtures/other_clubs.json',
+        'api/test/fixtures/default_movie.json',
+        'api/test/fixtures/other_movies.json',
     ]
 
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
         self.second_user = User.objects.get(username='janedoe')
+        self.third_user = User.objects.get(username='daviddoe')
 
     def test_valid_user(self):
         self._assert_user_is_valid()
@@ -125,14 +129,61 @@ class UserModelTestCase(APITestCase):
         self.user.preferences = 'x' * 101
         self._assert_user_is_invalid()
 
-    def test_get_user_clubs(self):
-        clubs = self.user.get_user_clubs()
-        self.assertEqual(len(clubs), 0)
-        club = Club.objects.get(club_name='Beatles')
-        Membership.objects.create(user=self.user, club=club)
-        clubs = self.user.get_user_clubs()
+    def test_toggle_follow_user(self):
+        self.assertFalse(self.user.is_following(self.second_user))
+        self.assertFalse(self.second_user.is_following(self.user))
+        self.user.toggle_follow(self.second_user)
+        self.assertTrue(self.user.is_following(self.second_user))
+        self.assertFalse(self.second_user.is_following(self.user))
+        self.user.toggle_follow(self.second_user)
+        self.assertFalse(self.user.is_following(self.second_user))
+        self.assertFalse(self.second_user.is_following(self.user))
 
-        self.assertEqual(len(clubs), 1)
+    def test_follow_counters(self):
+        self.user.toggle_follow(self.second_user)
+        self.user.toggle_follow(self.third_user)
+        self.second_user.toggle_follow(self.third_user)
+        self.third_user.toggle_follow(self.second_user)
+        self.assertEqual(self.user.follower_count(), 0)
+        self.assertEqual(self.user.followee_count(), 2)
+        self.assertEqual(self.second_user.follower_count(), 2)
+        self.assertEqual(self.second_user.followee_count(), 1)
+        self.assertEqual(self.third_user.follower_count(), 2)
+        self.assertEqual(self.third_user.followee_count(), 1)
+
+    def test_user_cannot_follow_self(self):
+        self.user.toggle_follow(self.user)
+        self.assertEqual(self.user.follower_count(), 0)
+        self.assertEqual(self.user.followee_count(), 0)
+
+    def test_full_name(self):
+        self.assertEqual(self.user.full_name(), self.user.first_name +' '+ self.user.last_name)
+
+    def test_get_user_clubs(self):
+        before = self.user.get_user_clubs()
+        club = Club.objects.get(club_name='Beatles')
+        other_club = Club.objects.get(club_name='Metallica')
+        Membership.objects.create(user=self.user, club=club, role = 'O')
+        Membership.objects.create(user=self.second_user, club=other_club, role = 'M')
+        after = self.user.get_user_clubs()
+        self.assertEqual(len(before) + 1, len(after))
+
+    def test_get_user_ratings(self):
+        before = self.user.get_user_ratings()
+        movie = Movie.objects.get(title='The Godfather')
+        Rating.objects.create(user=self.user, movie=movie, score = 5.0)
+        Rating.objects.create(user=self.second_user, movie=movie, score = 5.0)
+        after = self.user.get_user_ratings()
+        self.assertEqual(1, len(after))
+        self.assertIsNone(before)
+
+    def test_get_user_memberships(self):
+        club = Club.objects.get(club_name='Beatles')
+        other_club = Club.objects.get(club_name='Metallica')
+        Membership.objects.create(user=self.user, club=club)
+        Membership.objects.create(user=self.user, club=other_club)
+        memberships = self.user.get_user_memberships()
+        self.assertEqual(len(memberships), 2)
 
     def _assert_user_is_valid(self):
         try:

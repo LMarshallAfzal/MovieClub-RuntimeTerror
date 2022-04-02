@@ -81,8 +81,6 @@ class User(AbstractUser):
     def followee_count(self):
 
         return self.followees.count()
-    
-
 
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
@@ -300,8 +298,8 @@ class Movie(models.Model):
         else:
             return author
 
-    def get_movie_title(movie_id):
-        return Movie.objects.get(movie_id=movie_id).title
+    def get_movie_title(self):
+        return Movie.objects.get(id=self.id).title
 
     def get_movies_by_genre(genres):
         movies = []

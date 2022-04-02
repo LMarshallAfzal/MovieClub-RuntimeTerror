@@ -2,17 +2,21 @@
 
 from django.core.exceptions import ValidationError
 from rest_framework.test import APITestCase
-from api.models import Club
+from api.models import Club, User, Membership, Message
 
 class ClubModelTestCase(APITestCase):
     """Unit tests for the Club model."""
 
     fixtures = [
         'api/test/fixtures/default_club.json',
+        'api/test/fixtures/default_user.json',
+        'api/test/fixtures/other_users.json',
         'api/test/fixtures/other_clubs.json',
     ]
 
     def setUp(self):
+        self.user = User.objects.get(username='johndoe')
+        self.second_user = User.objects.get(username='janedoe')
         self.club = Club.objects.get(club_name = 'Beatles')
         self.second_club = Club.objects.get(club_name = 'KISS')
 
@@ -46,6 +50,22 @@ class ClubModelTestCase(APITestCase):
     def test_club_mission_statement_may_contain_500_characters_at_most(self):
         self.club.mission_statement = 'x' * 500
         self._assert_club_is_valid()
+
+    def test_get_all_users_in_club(self):
+        Membership.objects.create(user=self.user, club=self.club)
+        Membership.objects.create(user=self.second_user, club=self.club)
+        users = self.club.get_all_users_in_club()
+        self.assertEqual(2, len(users))
+
+    def test_get_organiser(self):
+        Membership.objects.create(user=self.user, club=self.club, is_organiser = True)
+        organiser = self.club.get_organiser()
+        self.assertEqual(organiser[0], self.user)
+    
+    # def test_get_club_messages(self):
+    #     Message.objects.create(sender = self.user, club = self.club, message = "Hello")
+    #     club_messages = self.club.get_club_messages()
+    #     self.assertEqual(len(club_messages), 1)
 
     def _assert_club_is_valid(self):
         try:
