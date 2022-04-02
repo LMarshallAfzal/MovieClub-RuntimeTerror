@@ -10,9 +10,9 @@ from .serializers import *
 from .models import *
 from .helpers import *
 from django.contrib.auth import logout
-from recommender.user_movie_recommender import train_movie_data_for_user, recommend_movies_for_user
-from recommender.meeting_movie_recommender import train_movie_data_for_meeting, recommend_movies_for_meeting
-from recommender.club_recommender import recommend_clubs
+from recommenders.user_movie.user_movie_recommender import train_movie_data_for_user, recommend_movies_for_user
+from recommenders.meeting_movie.meeting_movie_recommender import train_movie_data_for_meeting, recommend_movies_for_meeting
+from recommenders.user_club.club_recommender import recommend_clubs
 from .decorators import *
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer

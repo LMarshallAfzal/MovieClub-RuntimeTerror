@@ -10,8 +10,8 @@ from api.models import Club,Rating
 
 class MeetingMovieRecommenderData:
     def __init__(self):
-        self.meeting_rec_data_path = 'recommender/dataset-latest/meeting_movie_recommender_data.csv'
-        self.movie_lens_path = 'recommender/dataset-latest/ratings.csv'
+        self.meeting_rec_data_path = 'meeting_movie_recommender_data.csv'
+        self.movie_lens_path = 'recommenders/dataset-latest/ratings.csv'
 
     def load_movie_data_for_meeting(self):
         ratings_dataset = 0
