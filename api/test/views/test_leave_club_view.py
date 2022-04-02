@@ -6,11 +6,11 @@ from rest_framework.test import force_authenticate,APIClient
 class LeaveClubViewTestCase(APITestCase):
     
     fixtures = [
+        "api/test/fixtures/genres.json",
         "api/test/fixtures/default_user.json",
         "api/test/fixtures/default_club.json",
         "api/test/fixtures/other_users.json",
-
-        ]
+    ]
 
     def setUp(self):
         self.club = Club.objects.get(club_name='Beatles')

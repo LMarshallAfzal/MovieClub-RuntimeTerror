@@ -8,7 +8,7 @@
         "last_name": "Doe",
         "email": "johndoe@example.org",
         "bio": "Hello, I am John Doe.",
-        "preferences": "Horror,Action",
+        "preferences": [1,2],
         "password": "pbkdf2_sha256$320000$mR1o9ivLjeSdCeOfVreuD7$Z+U3AUVbi02NQ7aoFpcQOsUjibLNeUmOoSLU8mF7otM=",
         "is_active": true
       }

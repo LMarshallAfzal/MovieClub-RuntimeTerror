@@ -6,6 +6,7 @@ from rest_framework.test import force_authenticate,APIClient
 class RemoveWatchedMovieViewTestCase(APITestCase):
 
     fixtures = [
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/default_movie.json',
     ]
