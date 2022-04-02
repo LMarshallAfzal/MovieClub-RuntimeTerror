@@ -18,7 +18,7 @@ class SignUpViewTestCase(APITestCase):
             "last_name": "Doe",
             "email": "johndoe@example.org",
             "bio": "The quick brown fox jumps over the lazy dog.",
-            "preferences": [1, 2, 3, 4],
+            "preferences": ["Comedy", "War", "Western", "Animation"],
             "password": "Password123",
             "password_confirmation": "Password123",
         }
@@ -95,7 +95,7 @@ class SignUpViewTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_post_to_sign_up_endpoint_with_non_unique_preferences_returns_201_created(self):
-        other_preferences = self.second_user.preferences.all().values_list('id', flat=True)
+        other_preferences = self.second_user.preferences.all().values_list('name', flat=True)
         self.form_input['preferences'] = other_preferences
         response = self.client.post(self.url, self.form_input)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
