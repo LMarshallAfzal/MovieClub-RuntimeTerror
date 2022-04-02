@@ -167,15 +167,13 @@ def get_all_clubs(request):
     serializer = ClubSerializer(clubs, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-# @csrf_protect
 def create_club(request):
     serializer = CreateClubSerializer(data=request.data)
     if serializer.is_valid():
         club = serializer.save()
-        Membership.objects.create(user=request.user, club=club, role="C")
+        Membership.objects.create(user=request.user, club=club, role="O")
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         errors = serializer.errors

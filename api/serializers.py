@@ -269,7 +269,7 @@ class CreateClubSerializer(serializers.Serializer):
     )
 
     theme = serializers.SlugRelatedField(
-        many=True,
+        many=False,
         slug_field='name',
         queryset=Genre.objects.all()
     )
@@ -301,7 +301,7 @@ class UpdateClubSerializer(serializers.ModelSerializer):
         )
     
         theme = serializers.SlugRelatedField(
-        many=True,
+        many=False,
         slug_field='name',
         queryset=Genre.objects.all()
     )
