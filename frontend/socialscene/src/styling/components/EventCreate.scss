@@ -1,0 +1,7 @@
+@use "../core/base";
+
+.new-event-movie-text {
+  font-size: 1em;
+  overflow: auto;
+  font-family: base.$helvetica;
+}

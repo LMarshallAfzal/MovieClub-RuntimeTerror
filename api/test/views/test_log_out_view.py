@@ -7,7 +7,10 @@ from rest_framework.test import force_authenticate,APIClient
 
 class LogOutViewTestCase(TestCase):
 
-    fixtures = ["api/test/fixtures/default_user.json"]
+    fixtures = [
+        "api/test/fixtures/genres.json",
+        "api/test/fixtures/default_user.json"
+    ]
 
 
     def setUp(self):

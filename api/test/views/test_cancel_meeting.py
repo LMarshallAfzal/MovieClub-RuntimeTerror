@@ -3,9 +3,11 @@ from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import force_authenticate,APIClient
+
 class CancelMeetingViewTestCase(APITestCase):
 
     fixtures = [
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/other_users.json',
         'api/test/fixtures/default_club.json',
@@ -20,7 +22,7 @@ class CancelMeetingViewTestCase(APITestCase):
         self.club2 = Club.objects.get(club_name='Metallica')
         self.movie = Movie.objects.get(title='The Godfather')
         Membership.objects.create(user = self.meeting_organiser, club = self.club, role = 'M',is_organiser = True)
-        Membership.objects.create(user = self.non_organiser, club = self.club, role = 'M',is_organiser = False)
+        Membership.objects.create(user = self.non_organiser, club = self.club, role = 'M',is_organiser = False,notifications = True)
         self.url = reverse('cancel_meeting', kwargs={'club_id':self.club.id})
         self.meeting = Meeting.objects.create(
             club = self.club,

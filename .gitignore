@@ -191,7 +191,7 @@ Icon
 # Thumbnails
 ._*
 
-# Files that might appear in the root of a volume
+# Files that might appear in the core of a volume
 .DocumentRevisions-V100
 .fseventsd
 .Spotlight-V100
@@ -621,7 +621,7 @@ xcuserdata/
 
 # Thumbnails
 
-# Files that might appear in the root of a volume
+# Files that might appear in the core of a volume
 
 # Directories potentially created on remote AFP share
 

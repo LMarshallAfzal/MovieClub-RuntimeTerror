@@ -34,8 +34,10 @@ class UserSerializer(ModelSerializer):
         required=False, allow_blank=True
     )
 
-    preferences = serializers.CharField(
-        required=True
+    preferences = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',
+        queryset=Genre.objects.all()
     )
 
     class Meta:
@@ -55,7 +57,6 @@ class MovieSerializer(ModelSerializer):
         model = Movie
         fields = '__all__'
 
-
 class MembershipSerializer(ModelSerializer):
     class Meta:
         model = Membership
@@ -66,8 +67,6 @@ class RatingSerializer(ModelSerializer):
     class Meta:
         model = Rating
         fields = '__all__'
-
-
 class WatchMovieSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=User.objects.all())
@@ -108,8 +107,10 @@ class SignUpSerializer(serializers.Serializer):
         required=False, allow_blank=True
     )
 
-    preferences = serializers.CharField(
-        required=True
+    preferences = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',
+        queryset=Genre.objects.all()
     )
 
     password = serializers.CharField(
@@ -122,12 +123,16 @@ class SignUpSerializer(serializers.Serializer):
     password_confirmation = serializers.CharField(
         write_only=True, required=True)
 
+
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email',
                   'bio', 'preferences', 'password', 'password_confirmation']
 
     def validate(self, data):
+        if len(data['preferences']) == 0:
+            raise serializers.ValidationError(
+                {"preferences": "At least one genre must be selected"})
         if data['password'] != data['password_confirmation']:
             raise serializers.ValidationError(
                 {"password": "Passwords don't match."})
@@ -140,8 +145,9 @@ class SignUpSerializer(serializers.Serializer):
             last_name=validated_data['last_name'],
             email=validated_data['email'],
             bio=validated_data['bio'],
-            preferences=validated_data['preferences']
+            #preferences=validated_data['preferences']
         )
+        user.preferences.set(validated_data['preferences'])
         Token.objects.create(user=user)
 
         user.set_password(validated_data['password'])
@@ -174,14 +180,22 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         required=False, allow_blank=True
     )
 
-    preferences = serializers.CharField(
-        required=True
+    preferences = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',
+        queryset=Genre.objects.all()
     )
 
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name',
                   'email', 'bio', 'preferences']
+
+    def validate(self, data):
+        if len(data['preferences']) == 0:
+            raise serializers.ValidationError(
+                {"preferences": "At least one genre must be selected"})
+        return data
 
 
 class LoginSerializer(serializers.Serializer):
@@ -246,17 +260,18 @@ class ChangePasswordSerializer(serializers.Serializer):
 class CreateClubSerializer(serializers.Serializer):
     club_name = serializers.CharField(
         required=True,
-        validators=[MaxLengthValidator(50)]
+        validators=[UniqueValidator(queryset=Club.objects.all()),MaxLengthValidator(50)]
     )
 
     mission_statement = serializers.CharField(
-        required=False,
+        required=True,
         validators=[MaxLengthValidator(500)]
     )
 
-    theme = serializers.CharField(
-        required=True,
-        validators=[MaxLengthValidator(500)]
+    theme = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',
+        queryset=Genre.objects.all()
     )
 
     class Meta:
@@ -272,6 +287,28 @@ class CreateClubSerializer(serializers.Serializer):
         club.save()
 
         return club
+
+class UpdateClubSerializer(serializers.ModelSerializer):
+    
+        club_name = serializers.CharField(
+            required=True,
+            validators=[UniqueValidator(queryset=Club.objects.all()),MaxLengthValidator(50)]
+        )
+    
+        mission_statement = serializers.CharField(
+            required=True,
+            validators=[MaxLengthValidator(500)]
+        )
+    
+        theme = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',
+        queryset=Genre.objects.all()
+    )
+
+        class Meta:
+            model = Club
+            fields = ['club_name', 'mission_statement', 'theme']
 
 
 class CreateMeetingSerializer(serializers.Serializer):

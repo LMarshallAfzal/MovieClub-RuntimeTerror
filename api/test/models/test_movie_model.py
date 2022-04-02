@@ -8,6 +8,7 @@ class MovieModelTestCase(APITestCase):
     """Unit tests for the User model."""
 
     fixtures = [
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_movie.json',
         'api/test/fixtures/other_movies.json',
     ]
@@ -44,19 +45,12 @@ class MovieModelTestCase(APITestCase):
         self._assert_movie_is_valid()
     
     def test_genres_need_not_be_unique(self):
-        self.movie.genres = self.second_movie.genres
+        self.movie.genres.remove(*self.movie.genres.all())
+        self.movie.genres.set(self.second_movie.genres.all())
         self._assert_movie_is_valid()
 
     def test_genres_must_not_be_blank(self):
-        self.movie.genres = ''
-        self._assert_movie_is_invalid()
-
-    def test_genres_contain_100_characters_at_most(self):
-        self.movie.genres = 'x' * 100
-        self._assert_movie_is_valid()
-
-    def test_genres_must_not_contain_more_than_100_characters(self):
-        self.movie.genres = 'x' * 101
+        self.movie.genres.remove(*self.movie.genres.all())
         self._assert_movie_is_invalid()
 
     def _assert_movie_is_valid(self):

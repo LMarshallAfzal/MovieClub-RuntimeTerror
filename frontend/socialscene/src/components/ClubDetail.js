@@ -1,43 +1,83 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useParams, Outlet, useNavigate } from "react-router";
+import React, {useState, useEffect, useContext} from "react";
+import {Outlet, useNavigate, useParams} from "react-router";
 import {
-	Avatar,
-	Box,
-	Chip,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
-	Grid,
-	ListItem,
-	Stack,
-	TextField,
+    Autocomplete,
+    Avatar,
+    Box,
+    Chip,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Grid,
+    Stack,
+    TextField
 } from "@mui/material";
 import "../styling/components/ClubDetail.css";
-import FormButton from "./FormButton";
-import { DummyClubData } from "../pages/data/DummyClubsData";
-import ClubListing from "./ClubListing";
-import { DummyClubMemberData } from "../pages/data/DummyClubMemberData";
+import ThemeButton from "./core/ThemeButton";
+import {themes} from "../resources/data/MovieThemes"
 import AuthContext from "../components/helper/AuthContext";
 
+
 function ClubDetail() {
-	// const [open, setOpen] = React.useState(false);
+    const [showBannedMembers, setBannedMembers] = useState(false);
+    const [showBanDialog, setBanDialog] = useState(false);
+    const [showDeleteClubDialog, setDeleteClubDialog] = useState(false);
+    const [edit, setEdit] = useState(true);
+	const [isMember, setIsMember] = useState(false);
+	const [members, setMembers] = useState([]);
+	const [club, setClub] = useState([]);
+	const [myClubData, setMyClubData] = useState([]);
 
-	let { clubID } = useParams();
-	let { user, authTokens, useCallback } = useContext(AuthContext);
-	const [clubMembers, setClubMembers] = useState([]);
-	let [recommendedClubData, setRecommendedClubData] = useState([]);
-	let [myClubData, setMyClubData] = useState([]);
-	const [wantedClub, setWantedClub] = useState([]);
+    let {clubID} = useParams();
+	let {user, authTokens} = useContext(AuthContext);
 
-	const [showBannedMembers, setBannedMembers] = useState(false);
-	const [showBanDialog, setBanDialog] = useState(false);
-	const [showDeleteClubDialog, setDeleteClubDialog] = useState(false);
-	const [edit, setEdit] = useState(true);
+	const onChange = (e) => {
+		setClub((prevData) => ({
+			...prevData,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
+	const handleChange = (event, value) => {
+		setClub((fieldData) => ({
+			...fieldData,
+			theme: value,
+		}));
+	};
+
+	let getClub = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/club/" + clubID + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setClub(data);
+	};
+
+    let getClubMembers = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/club_members/" + clubID + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setMembers(data);
+	};
 
 	let getMembershipData = async (e) => {
-		// e.preventDefault()
 		let response = await fetch(
 			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
 			{
@@ -50,156 +90,6 @@ function ClubDetail() {
 		);
 		let data = await response.json();
 		setMyClubData(data);
-	};
-
-	let getRecommendedClubs = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000/rec_clubs/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		let data = await response.json();
-		setRecommendedClubData(data);
-	};
-
-	let banMember = async (e) => {
-		e.preventDefault();
-		let response = await fetch(
-			"http://127.0.0.1:8000/ban_member/" + clubID + "/" + user.user_id + "/",
-			{
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		console.log(data);
-	};
-
-	let unbanMember = async (e) => {
-		e.preventDefault();
-		let response = await fetch(
-			"http://127.0.0.1:8000/unban_member/" + clubID + "/" + user.user_id + "/",
-			{
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		console.log(data);
-	};
-
-	let getBannedMembers = async (e) => {
-		e.preventDefault();
-		let response = await fetch(
-			"http://127.0.0.1:8000/banned_member_list/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		console.log(data);
-	};
-
-	let getSpecifiedClub = async () => {
-		for (let i = 0; recommendedClubData.length > i; i++) {
-			if (recommendedClubData[i].id === clubID) {
-				setWantedClub(recommendedClubData[i].id);
-				// console.log("passed")
-			} else {
-				console.log("failed");
-			}
-		}
-		for (let i = 0; myClubData.length > i; i++) {
-			if (myClubData[i].id === clubID) {
-				setWantedClub(myClubData[i].id);
-				// console.log("passed")
-			} else {
-				console.log("failed");
-			}
-		}
-	};
-
-	const toggleEdit = () => {
-		setEdit(!edit);
-	};
-
-	const toggleBannedView = () => {
-		setBannedMembers(!showBannedMembers);
-	};
-
-	const openBanDialog = () => {
-		setBanDialog(true);
-	};
-
-	const closeBanDialog = () => {
-		setBanDialog(false);
-	};
-
-	const openDeleteClubDialog = () => {
-		setDeleteClubDialog(true);
-	};
-
-	const closeDeleteClubDialog = () => {
-		setDeleteClubDialog(false);
-	};
-
-	const handleClubDelete = () => {
-		closeDeleteClubDialog();
-		console.log("Club Deleted");
-	};
-
-	const handleRemoveUser = () => {
-		closeBanDialog();
-		console.log("User Removed");
-	};
-
-	const handleBan = () => {
-		handleRemoveUser();
-		console.log("User Banned");
-		// onClick={(e) => banMember(e)}
-	};
-
-	const handleUnBan = () => {
-		console.log("User Un-Banned");
-	};
-
-	// function HandleUserClick(props) {
-	//      const navigate = useNavigate();
-	//      return useCallback(() => navigate(`${props}`, {replace: false}), [props,navigate]);
-	// }
-
-	const handleBannedUserClick = () => {
-		console.log("User Clicked");
-	};
-
-	let getClubMembers = async () => {
-		console.log(clubID);
-		// getSpecifiedClub()
-		let response = await fetch(
-			"http://127.0.0.1:8000/club_members/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setClubMembers(data);
-		// console.log(clubMembers)
 	};
 
 	let joinClub = async () => {
@@ -230,214 +120,283 @@ function ClubDetail() {
 		let data = await response.json();
 	};
 
+	let editClub = async () => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/edit_club/" + clubID + "/",
+			{
+				method: "PUT",
+				body: JSON.stringify(club),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setClub(data)
+	};
+
 	useEffect(() => {
-		getSpecifiedClub();
-		getMembershipData();
-		getRecommendedClubs();
 		getClubMembers();
+		getMembershipData();
+		getClub();
+		myClubData.find(val => val.club_id === clubID) ? setIsMember(true) : setIsMember(false);
 	}, []);
 
-	function UserDisplay() {
-		if (showBannedMembers === false) {
-			return (
-				<>
-					{clubMembers.map((user) => {
-						return (
-							<Chip
-								label={user.username}
-								avatar={<Avatar src={user.iconImage} alt={user.username} />}
-								onDelete={openBanDialog}
-								// onClick={HandleUserClick(user.ID)}
-								sx={{ mr: 1, mt: 1 }}
-							/>
-						);
-					})}
-				</>
-			);
-		} else {
-			return (
-				<>
-					{clubMembers.map((user) => {
-						return (
-							<Chip
-								label={user.username}
-								avatar={<Avatar src={user.iconImage} alt={user.username} />}
-								onDelete={handleUnBan}
-								onClick={handleBannedUserClick}
-								sx={{ mr: 1, mt: 1 }}
-							/>
-						);
-					})}
-				</>
-			);
+    const toggleEdit = () => {
+        setEdit(!edit);
+		if(edit){
+			editClub();
 		}
-	}
+    }
 
-	return (
-		<Grid
-			container
-			justifyContent={"center"}
-			direction={"row"}
-			alignItems={"stretch"}
-			spacing={2}
-			maxHeight={290}
-		>
-			<Grid item xs={12}>
-				<h4 className={"home-page-sub-section-heading"}>
-					{wantedClub.club_name}
-				</h4>
-			</Grid>
+    const toggleBannedView = () => {
+        setBannedMembers(!showBannedMembers);
+    }
 
-			<Grid
-				item
-				xs={6}
-				maxHeight={"inherit"}
-				sx={{ display: "flex", flexDirection: "column" }}
-			>
-				<div className={"home-page-card-background"}>
-					<Grid container spacing={2} padding={2}>
-						<Grid item xs={12}>
-							<h5 className={"home-page-card-title"}>
-								{showBannedMembers ? "banned users" : "members"}
-							</h5>
-						</Grid>
+    const openBanDialog = () => {
+        setBanDialog(true);
+    }
 
-						<Grid item xs={12} overflow={"auto"}>
-							<UserDisplay style={{ overflow: "auto" }} />
-						</Grid>
-					</Grid>
-				</div>
-			</Grid>
+    const closeBanDialog = () => {
+        setBanDialog(false);
+    }
 
-			<Grid item xs={3} sx={{ display: "flex", flexDirection: "column" }}>
-				<Stack spacing={2} sx={{ height: "100%" }}>
-					<Dialog
-						open={showDeleteClubDialog}
-						onClose={closeDeleteClubDialog}
-						aria-labelledby="alert-dialog-title"
-						aria-describedby="alert-dialog-description"
-					>
-						<DialogTitle id="alert-dialog-title">
-							<h4>
-								delete this club<h4--emphasise>?</h4--emphasise>
-							</h4>
-						</DialogTitle>
+    const openDeleteClubDialog = () => {
+        setDeleteClubDialog(true);
+    }
 
-						<DialogContent>
-							<DialogContentText id="alert-dialog-description">
-								<h6>this club will be deleted and all associated data</h6>
-							</DialogContentText>
-						</DialogContent>
+    const closeDeleteClubDialog = () => {
+        setDeleteClubDialog(false);
+    }
 
-						<DialogActions>
-							<FormButton
-								onClick={handleClubDelete}
-								text={"delete"}
-								style={"primary"}
-							/>
-							<FormButton onClick={closeDeleteClubDialog} text={"cancel"} />
-						</DialogActions>
-					</Dialog>
+    const handleClubDelete = () => {
+        closeDeleteClubDialog()
+        console.log("Club Deleted");
+    }
 
-					<Dialog
-						open={showBanDialog}
-						onClose={closeBanDialog}
-						aria-labelledby="alert-dialog-title"
-						aria-describedby="alert-dialog-description"
-					>
-						<DialogTitle id="alert-dialog-title">
-							<h4>
-								also ban this user<h4--emphasise>?</h4--emphasise>
-							</h4>
-						</DialogTitle>
+    const handleRemoveUser = () => {
+        closeBanDialog();
+        console.log("User Removed");
+    }
 
-						<DialogContent>
-							<DialogContentText id="alert-dialog-description">
-								<h6>
-									decide whether this user will also be banned from the club or
-									just removed
-								</h6>
-							</DialogContentText>
-						</DialogContent>
+    const handleBan = () => {
+        handleRemoveUser();
+        console.log("User Banned");
+    }
 
-						<DialogActions>
-							<FormButton onClick={handleBan} text={"ban"} style={"primary"} />
-							<FormButton onClick={handleRemoveUser} text={"remove"} />
-						</DialogActions>
-					</Dialog>
+    const handleUnBan = () => {
+        console.log("User Un-Banned");
+    }
 
-					<FormButton
-						text={"join"}
-						style={wantedClub.isMember ? "disabled" : "primary"}
-						onClick={() => joinClub()}
-					/>
+    const navigate = useNavigate();
 
-					<FormButton
-						text={"leave"}
-						style={wantedClub.isMember ? "primary" : "disabled"}
-						onClick={() => leaveClub()}
-					/>
+    const handleUserClick = (ID) => {
+        navigate(`${ID}`, {replace: false});
+    }
 
-					<FormButton
-						text={"delete"}
-						style={wantedClub.isOrganiser ? "primary" : "disabled"}
-						onClick={openDeleteClubDialog}
-						// onClick={deleteClub(props.clubID)}
-					/>
+    const handleBannedUserClick = () => {
+        console.log("User Clicked");
+    }
 
-					<FormButton
-						text={showBannedMembers ? "members" : "banned"}
-						style={"normal"}
-						onClick={toggleBannedView}
-					/>
-				</Stack>
-			</Grid>
+    function UserDisplay() {
+        if (showBannedMembers === false) {
+            return (
+                <>
+                    {members.map((user, index) => {
+                        return (
+                            <Chip
+                                key={index}
+                                label={user.first_name + " " + user.last_name}
+                                avatar={
+                                    <Avatar
+                                        src={user.iconImage}
+                                        alt={user.first_name + " " + user.last_name}
+                                    />}
+                                onDelete={openBanDialog}
+                                onClick={() => handleUserClick(user.ID)}
+                                sx={{mr: 1, mt: 1}}
+                            />
 
-			<Grid item xs={3} sx={{ display: "flex", flexDirection: "column" }}>
-				<Stack spacing={2} sx={{ height: "100%" }}>
-					<TextField
-						id="outlined"
-						label="club name"
-						defaultValue={wantedClub.club_name}
-					/>
-					<TextField
-						id="outlined"
-						label="club description"
-						defaultValue={wantedClub.mission_statement}
-					/>
-					<TextField
-						id="outlined"
-						label="club theme"
-						defaultValue={wantedClub.theme}
-					/>
+                        )
+                    })}
+                </>)
+        } else {
+            return (
+                <>
+                    {members.map((user, index) => {
+                        return (
+                            <Chip
+                                key={index}
+                                label={user.first_name + " " + user.last_name}
+                                avatar={
+                                    <Avatar
+                                        src={user.iconImage}
+                                        alt={user.first_name + " " + user.last_name}
+                                    />}
+                                onDelete={handleUnBan}
+                                onClick={handleBannedUserClick}
+                                sx={{mr: 1, mt: 1}}
+                            />
 
-					<FormButton
-						text={edit ? "edit" : "save"}
-						style={edit ? "normal" : "primary"}
-						onClick={toggleEdit}
-					/>
-				</Stack>
-			</Grid>
-			<Grid item xs={3}>
-				<Stack spacing={2}>
-					<FormButton text={"create"} />
-					<FormButton text={"join"} onClick={joinClub(clubID)} />
-					<FormButton
-						text={"leave"}
-						// onClick={leaveClub(props.clubID)}
-					/>
-					<FormButton
-						text={"delete"}
-						// onClick={deleteClub(props.clubID)}
-					/>
-				</Stack>
+                        )
+                    })}
 
-				<Grid item xs={12}>
-					<Outlet />
-				</Grid>
-			</Grid>
-		</Grid>
-	);
+                </>)
+        }
+    }
+
+
+    return (
+        <Grid container
+              justifyContent={"center"}
+              direction={"row"}
+              alignItems={"stretch"}
+              spacing={2}
+              maxHeight={290}
+        >
+
+            <Grid item xs={12}>
+
+                <Box padding={1} className={"home-page-sub-title"}>
+                    <h4 className={"sub-title-text"}>{club.club_name}</h4>
+                </Box>
+            </Grid>
+
+            <Grid item xs={6} maxHeight={"inherit"} sx={{display: "flex", flexDirection: "column"}}>
+
+                <div className={"home-page-card-background"}>
+                    <Grid container padding={2}>
+
+                        <Grid item xs={12}>
+                            <h5 className={"home-page-card-title"}>{showBannedMembers ? "banned users" : "members"}</h5>
+                        </Grid>
+
+                        <Grid item xs={12} overflow={"auto"}>
+                            <UserDisplay style={{overflow: "auto"}}/>
+                        </Grid>
+                    </Grid>
+                </div>
+            </Grid>
+
+            <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
+
+                <Stack spacing={2} sx={{height: "100%"}}>
+                    <Dialog
+                        open={showDeleteClubDialog}
+                        onClose={closeDeleteClubDialog}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description">
+
+                        <DialogTitle id="alert-dialog-title">
+                            <h4>delete this club
+                                <h4--emphasise>?</h4--emphasise>
+                            </h4>
+                        </DialogTitle>
+
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                <h6>this club will be deleted and all associated data</h6>
+                            </DialogContentText>
+                        </DialogContent>
+
+                        <DialogActions>
+                            <ThemeButton
+                                onClick={handleClubDelete}
+                                text={"delete"}
+                                style={"primary"}
+                            />
+                            <ThemeButton onClick={closeDeleteClubDialog} text={"cancel"}/>
+                        </DialogActions>
+                    </Dialog>
+
+                    <Dialog
+                        open={showBanDialog}
+                        onClose={closeBanDialog}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description">
+
+                        <DialogTitle id="alert-dialog-title">
+                            <h4>also ban this user
+                                <h4--emphasise>?</h4--emphasise>
+                            </h4>
+                        </DialogTitle>
+
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                <h6>decide whether this user will also be banned from the club or just removed</h6>
+                            </DialogContentText>
+                        </DialogContent>
+
+                        <DialogActions>
+                            <ThemeButton onClick={handleBan} text={"ban"} style={"primary"}/>
+                            <ThemeButton onClick={handleRemoveUser} text={"remove"}/>
+                        </DialogActions>
+                    </Dialog>
+
+                    <ThemeButton text={"join"} style={isMember ? "disabled" : "primary"} onClick={() => joinClub()} />
+
+                    <ThemeButton text={"leave"} style={isMember ? "primary" : "disabled"} onClick={() => leaveClub()}/>
+
+                    <ThemeButton text={"delete"} style={club.isOrganiser ? "primary" : "disabled"}
+                                 onClick={openDeleteClubDialog}/>
+
+                    <ThemeButton text={showBannedMembers ? "members" : "banned"} style={"normal"}
+                                 onClick={toggleBannedView}/>
+                </Stack>
+            </Grid>
+
+            <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
+                <Stack spacing={2} sx={{height: "100%"}}>
+                    <TextField
+                        required
+                        label={"club name"}
+                        value={club.club_name}
+						onChange={(e) => onChange(e)}
+                    />
+
+                    <TextField
+                        required
+                        label={"club description"}
+                        value={club.mission_statement}
+						onChange={(e) => onChange(e)}
+                    />
+
+                    <Autocomplete
+                        multiple
+						required
+                        id="tags-standard"
+                        options={themes}
+                        getOptionLabel={(option) => option.theme}
+                        defaultValue={club.theme}
+						value={club.theme}
+						onChange={handleChange}
+						filterSelectedOptions
+                        disableCloseOnSelect
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                spacing={6}
+                                id={"outlined-basic"}
+                                label={"theme"}
+                                name={"theme"}
+                                type={"text"}
+                                variant={"outlined"}
+                                multiline
+                            />
+                        )}
+                    />
+
+                    <ThemeButton text={edit ? "edit" : "save"} style={edit ? "normal" : "primary"}
+                                 onClick={toggleEdit}/>
+                </Stack>
+            </Grid>
+
+            <Grid item xs={12}>
+                <Outlet/>
+            </Grid>
+        </Grid>
+    );
 }
 
 export default ClubDetail;

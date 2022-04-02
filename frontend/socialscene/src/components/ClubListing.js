@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Avatar, AvatarGroup, Box, Chip, Grid, Stack } from "@mui/material";
-import icon5 from "../styling/images/example icons/icon5.jpeg";
-import icon2 from "../styling/images/example icons/icon2.jpeg";
-import icon3 from "../styling/images/example icons/icon3.jpeg";
-import icon4 from "../styling/images/example icons/icon4.jpeg";
-import "../styling/components/ClubListing.css";
-import EnterButton from "./EnterButton";
+import icon5 from "../resources/images/example icons/icon5.jpeg";
+import icon2 from "../resources/images/example icons/icon2.jpeg";
+import icon3 from "../resources/images/example icons/icon3.jpeg";
+import icon4 from "../resources/images/example icons/icon4.jpeg";
+// import "../styling/components/ClubListing.css";
+import EnterButton from "./core/RoundButton";
 import { Link } from "react-router-dom";
 import AuthContext from "../components/helper/AuthContext";
 

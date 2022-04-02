@@ -8,6 +8,7 @@ class ClubModelTestCase(APITestCase):
     """Unit tests for the Club model."""
 
     fixtures = [
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_club.json',
         'api/test/fixtures/other_clubs.json',
     ]
@@ -35,9 +36,9 @@ class ClubModelTestCase(APITestCase):
         self.club.club_name = self.second_club.club_name
         self._assert_club_is_invalid()
 
-    def test_club_mission_statement_may_be_blank(self):
+    def test_club_mission_statement_may_not_be_blank(self):
         self.club.mission_statement = ''
-        self._assert_club_is_valid()
+        self._assert_club_is_invalid()
 
     def test_club_mission_statement_must_not_contain_more_than_500_characters(self):
         self.club.mission_statement = 'x' * 501

@@ -8,9 +8,12 @@ from api.models import User,Club,Membership
 class UnBanMemberViewTestCase(APITestCase):
     """Tests of the unban_member view."""
 
-    fixtures = ['api/test/fixtures/default_user.json',
-                'api/test/fixtures/default_club.json',
-                'api/test/fixtures/other_users.json']
+    fixtures = [
+        "api/test/fixtures/genres.json",
+        'api/test/fixtures/default_user.json',
+        'api/test/fixtures/default_club.json',
+        'api/test/fixtures/other_users.json'
+    ]
 
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
@@ -40,7 +43,7 @@ class UnBanMemberViewTestCase(APITestCase):
         self.assertEqual(before_banned,after_banned+1)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_unban_member_endpoint_with_invalid_user_returns_403_forbidden(self):
+    def test_unban_member_endpoint_with_invalid_user_returns_400_bad_request(self):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
         before = Membership.objects.all().filter(club=self.club,role='M').count()
@@ -50,7 +53,7 @@ class UnBanMemberViewTestCase(APITestCase):
         self.assertEqual(before,after)
         role = self.banned.membership_set.get(club=self.club)
         self.assertEqual('B',role.role)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_unban_member_endpoint_with_invalid_club_returns_404_not_found(self):
         self.client.force_authenticate(user=self.user)

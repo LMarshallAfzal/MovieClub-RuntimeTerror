@@ -5,8 +5,7 @@
       "fields": {
         "club_name":"ADCD",
         "mission_statement":"Movie and discussion.",
-        "theme" : "Horror"
-
+        "theme":2
       }
     },
 
@@ -16,8 +15,7 @@
         "fields": {
           "club_name":"KISS",
           "mission_statement":"Movie experts!",
-          "theme" : "Horror"
-
+          "theme":2
         }
       },
 
@@ -27,7 +25,7 @@
         "fields": {
           "club_name":"Metallica",
           "mission_statement":"Next level movie analysis.",
-          "theme" : "Horror"
+          "theme":2
         }
       }
 

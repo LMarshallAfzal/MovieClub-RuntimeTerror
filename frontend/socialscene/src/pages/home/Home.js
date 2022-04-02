@@ -1,12 +1,23 @@
-import React, {useContext} from 'react';
-import "../../styling/pages/Home.css";
-import { List, Paper, ListSubheader, Grid, TextField, Stack, Box, ListItemButton, ListItemText, Autocomplete, Button } from "@mui/material";
-import { DummyDashboardClubsData, meetings, movies } from '../data/DummyDashboardClubsData';
-import { useState, useEffect } from 'react'
-import AuthContext from "../../components/helper/AuthContext";
-import HomePageTitle from "../../components/HomePageTitle";
+import React, {useContext, useState} from 'react';
 
-const Home = () =>  {
+import "../../styling/pages/Home.css";
+import {Box, Grid, ImageList, ImageListItem, ListItem, Stack} from "@mui/material";
+import AuthContext from "../../components/helper/AuthContext";
+import moviePoster from '../../resources/images/empty_movie_poster.png';
+import placeHolder from '../../resources/images/empty_movie_poster.png';
+import {moviesWithPoster} from "../../resources/data/DummyMoviesData";
+import {DummyClubData} from "../../resources/data/DummyClubsData";
+import ClubCard from "../../components/ClubCard";
+import MovieQuote from "../../components/MovieQuote";
+import HomepageCard from "../../components/helper/HomepageCard";
+import MovieCard from "../../components/MovieCard";
+import TextButton from "../../components/core/TextButton";
+import {DummyRecommendedMovies} from "../../resources/data/DummyRecommendedMovies";
+import {MovieDataAPI} from "../../components/helper/MovieDataAPI";
+import LoadingSkeleton from "../../components/helper/LoadingSkeleton";
+
+
+const Home = () => {
     const [club_name, setClubName] = useState('');
     const [mission_statement, setMissionStatement] = useState('');
     const [themes, setTheme] = useState('');
@@ -14,166 +25,137 @@ const Home = () =>  {
     const [myClubData, setMyClubData] = useState([]);
     let {user, authTokens} = useContext(AuthContext)
 
-    useEffect(() => {
-    },[])
+    // useEffect(() => {
+    // }, [])
 
     let submitCreateClubForm = async (e) => {
         e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/create_club/',{
-            method:'POST',
-            body:JSON.stringify({
-                "club_name": e.target.club_name.value, 
-                "mission_statement": e.target.mission_statement.value, 
+        let response = await fetch('http://127.0.0.1:8000/create_club/', {
+            method: 'POST',
+            body: JSON.stringify({
+                "club_name": e.target.club_name.value,
+                "mission_statement": e.target.mission_statement.value,
                 "themes": e.target.themes.value
             }),
-            headers:{
+            headers: {
                 'Content-type': 'application/json; charset=UTF-8',
                 'Authorization': 'Bearer ' + String(authTokens.access),
                 // "X-CSRFToken": Cookies.get("csrftoken"),
             }
         })
         let data = await response.json()
-        if(response.status === 200) {
+        if (response.status === 200) {
             setClub(data)
         }
-        
+
     }
 
+    const cardHeight = 390;
+
     return (
-        <>
+        <Grid container
+              direction={"row"}
+              justifyContent="space-evenly"
+              spacing={2}
+              padding={2}
+        >
 
-            <HomePageTitle title={"home"}/>
 
-            <Grid style={{ borderSpacing: 0 }}>
+            <Grid item xs={12}>
+                <Grid container direction={'row'} spacing={2}>
 
-                <Grid container
-                      direction={"row"}
-                      justifyContent="space-evenly"
-                      alignItems="flex-start"
-                      spacing={2}
-                      padding={2}>
+
+                    <Grid item xs={9}>
+                        <MovieQuote/>
+                    </Grid>
+
+                    {/*<Grid item xs={3} overflow={"hidden"}>*/}
+                    {/*    <Box>*/}
+                    {/*        <ImageList cols={2} rowHeight={100}>*/}
+                    {/*            {DummyRecommendedMovies.map((item) => {*/}
+                    {/*                const movieData = MovieDataAPI(item.IMDB);*/}
+                    {/*                return (*/}
+
+                    {/*                    <LoadingSkeleton loading={movieData}>*/}
+                    {/*                        <ImageListItem key={item.poster}>*/}
+                    {/*                            <img*/}
+                    {/*                                src={`${movieData ? movieData.Poster : placeHolder}?w=100&h=100&fit=crop&auto=format`}*/}
+                    {/*                                srcSet={`${movieData ? movieData.Poster : placeHolder}?w=100&h=100&fit=crop&auto=format&dpr=2 2x`}*/}
+                    {/*                                alt={item.title}*/}
+                    {/*                                loading="lazy"*/}
+                    {/*                            />*/}
+                    {/*                        </ImageListItem>*/}
+                    {/*                    </LoadingSkeleton>*/}
+                    {/*                )*/}
+                    {/*            })}*/}
+                    {/*        </ImageList>*/}
+                    {/*    </Box>*/}
+                    {/*</Grid>*/}
 
                     <Grid item xs={12}>
-
-                        <Autocomplete
-                        freeSolo
-                        id="search"
-                        disableClearable
-                        options={DummyDashboardClubsData.map((movie) => movie.name)}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="🔎︎ Search Clubs"
-                                InputProps={{
-                                    ...params.InputProps,
-                                    type: 'search',
-                                }}
+                        <HomepageCard title={"recommended"} titleItem={
+                            <TextButton
+                                text={"view movies"}
+                                linkTo={"/home/movies"}
+                                style={{textAlign: "right"}}
                             />
-                        )}
-                    />
-                </Grid>
-                <Grid item xs={4}>
-                    <div style={{ paddingBottom: '20px' }} className='list-header-text'>
-                        My Clubs
-                    </div>
-                    <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
-                        {myClubData.map((val) => {
-                            return (
-                                <ListItemButton>
-                                    <ListItemText primary={val.club_name} />
-                                </ListItemButton>
-                            );
-                        })}
-                    </Paper>
-                </Grid>
-                <Grid item xs={4}>
-                    <div style={{ paddingBottom: '20px' }} className='list-header-text'>Clubs for You</div>
-                    <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
-                        {DummyDashboardClubsData.map((val) => {
-                            return <ListItemButton>
-                                <ListItemText primary={val.name} />
-                            </ListItemButton>
-                        })}
-                    </Paper>
-                </Grid>
-                <Grid item xs={4}>
-                    <Box container component="form" onSubmit={submitCreateClubForm}>
-                    <Stack spacing={3}>
-                        <div className='list-header-text'>Create new club:</div>
-                        <TextField 
-                            className='dashboard-text-box' 
-                            id="outlined-basic" 
-                            label="Name" 
-                            name="club_name"
-                            variant="outlined"
-                            // onChange={changeHandler()}
-                            // value={club_name} 
-                        />
-                        <TextField 
-                            className='dashboard-text-box' 
-                            id="outlined-basic" 
-                            label="Description" 
-                            name="mission_statement"
-                            variant="outlined" 
-                            // onChange={changeHandler()}
-                            // value={mission_statement} 
-                        />
-                        <TextField 
-                            className='dashboard-text-box' 
-                            id="outlined-basic" 
-                            label="Themes" 
-                            name="themes"
-                            variant="outlined"
-                            // onChange={this.changeHandler}
-                            // value={themes} 
-                        />
-                        {/* <div className={"single-button"}> */}
-                            {/* <Box component="form" onSubmit={submitCreateClubForm}
-                                sx={{
-                                    display: 'grid',
-                                    gridAutoColumns: '1fr',
-                                    gap: 1,
-                                }}
-                            > */}
-                                {/* <Box component="form" onSubmit={submitCreateClubForm} sx={{ gridRow: '1', gridColumn: 'span 1' }}> */}
-                                    <Button className="Button"
-                                        // text={"Create"}
-                                        type="submit"
-                                        // onClick={submitCreateClubForm()}
-                                        // onChange={getMembershipData()}
+                        }>
+                            <Grid item xs={12}>
+                                <Stack direction={"row"}
+                                       spacing={2}
+                                       height={cardHeight}
+                                       sx={{overflowX: "scroll", overflowY: "hidden"}}
+                                >
+                                    {moviesWithPoster.map((movie, index) => {
+                                        return (
+                                            <MovieCard
+                                                key={index}
+                                                poster={moviePoster}
+                                                clubMovie={false}
+                                                rateMovie={true}
+                                                movie={movie}
+                                            />
+                                        );
+                                    })}
+                                </Stack>
+                            </Grid>
+                        </HomepageCard>
+                    </Grid>
 
-                                    >
-                                        Create
-                                    </Button>    
-                                {/* </Box> */}
-                            {/* </Box> */}
-                        {/* </div> */}
-                    </Stack>
-                    </Box>
-                </Grid>
-                <Grid item xs={8}>
-                    <div style={{ paddingBottom: '20px' }} className='list-header-text'>Meetings</div>
-                    <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
-                        {meetings.map((val, key) => {
-                            return <ListItemButton>
-                                <ListItemText primary={`${val.name} | ${val.time} `} />
-                            </ListItemButton>
-                        })}
-                    </Paper>
-                </Grid>
-                <Grid item xs={4}>
-                    <div style={{ paddingBottom: '20px' }} className='list-header-text'>Watched Movies</div>
-                    <Paper style={{ maxHeight: 300, overflow: 'auto' }}>
-                        {movies.map((val, key) => {
-                            return <ListItemButton>
-                                <ListItemText primary={`${val.name} | ${val.ratings} `} />
-                            </ListItemButton>
-                        })}
-                    </Paper>
+                    <Grid item xs={12}>
+                        <HomepageCard title={"your clubs"} titleItem={
+                            <TextButton
+                                text={"view clubs"}
+                                linkTo={"/home/clubs"}
+                                style={{textAlign: "right"}}
+                            />
+                        }>
+                            <Grid item xs={12}>
+                                <Stack direction={"row"}
+                                       overflow={"auto"}>
+                                    {DummyClubData.map((club, index) => club.isMember === true && (
+                                        <ListItem key={index} sx={{width: 'auto', p: 1}}>
+
+                                            <ClubCard
+                                                clubName={club.clubName}
+                                                isMember={club.isMember}
+                                                iconImage={club.iconImage}
+                                                description={club.description}
+                                                isOrganiser={club.isOrganiser}
+                                                memberRole={club.memberRole}
+                                                clubTheme={club.clubTheme}
+                                                ID={club.ID}
+                                            />
+                                        </ListItem>
+                                    ))}
+                                </Stack>
+                            </Grid>
+                        </HomepageCard>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
-            </>
+
     );
 }
 

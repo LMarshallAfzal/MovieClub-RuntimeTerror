@@ -1,0 +1,16 @@
+@use "../core/base";
+
+.home-page-title {
+  background-color: base.$grey-1;
+  user-select: none;
+  transition: all 0.3s ease-out;
+}
+
+.home-page-text {
+  color: base.$primary-white;
+  font-family: base.$helvetica-bold;
+
+  &-emphasise {
+    color: base.$primary-red;
+  }
+}

@@ -1,0 +1,12 @@
+@use "../core/base";
+
+.home-page-card-title {
+  color: base.$primary-black;
+  font-family: base.$helvetica-bold;
+  user-select: none;
+
+  &-item {
+    @extend .home-page-card-title;
+    text-align: right;
+  }
+}
