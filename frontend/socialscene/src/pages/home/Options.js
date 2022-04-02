@@ -120,6 +120,7 @@ const Options = () => {
                                     <OutlinedInput
                                         error={oldPasswordError}
                                         fullWidth
+                                        data-testid={"old-password"}
                                         helperText={errorOldPasswordText}
                                         placeholder={"your current password"}
                                         required
@@ -145,6 +146,7 @@ const Options = () => {
                                     <OutlinedInput
                                         error={newPasswordError}
                                         fullWidth
+                                        data-testid={"new-password"}
                                         helperText={errorNewPasswordText}
                                         placeholder={"choose a new password"}
                                         required
@@ -170,6 +172,7 @@ const Options = () => {
                                     <OutlinedInput
                                         error={newPasswordConfirmationError}
                                         fullWidth
+                                        data-testid={"new-password-confirmation"}
                                         helperText={errorNewPasswordConfirmationText}
                                         required
                                         autoComplete="new-password"

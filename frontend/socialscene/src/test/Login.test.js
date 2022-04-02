@@ -1,4 +1,3 @@
-/* eslint-disable testing-library/prefer-screen-queries */
 import React from 'react';
 import {render, fireEvent,waitForNextUpdate} from "@testing-library/react";
 import "@testing-library/jest-dom";
@@ -77,12 +76,10 @@ describe('Login', () => {
   });
 
   test("Login button is clicked", async() => {
-    const loginButton = screen.getByRole('button',{name: /log in/i});
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
     fireEvent.change(usernameInput, { target: { value: "@johndoe" } });
     fireEvent.change(passwordInput, { target: { value: "Password123" } });
-    await userEvent.click(loginButton);    
     await Promise.resolve().then();
     await waitForNextUpdate;
   });
