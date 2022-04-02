@@ -25,6 +25,9 @@ const Profile = () => {
 	let { user, authTokens } = useContext(AuthContext);
 	let preferencesValues = [];
 
+    const [watchedMovies, setWatchedMovies] = useState([]);
+	const [userMemberships, setUserMemberships] = useState([]);
+
 	const [usernameError, setUsernameError] = useState(false);
 	const [firstNameError, setFirstNameError] = useState(false);
 	const [lastNameError, setLastNameError] = useState(false);
@@ -37,6 +40,7 @@ const Profile = () => {
 	const [errorEmailText, setEmailErrorText] = useState("");
 	const [errorBioText, setBioErrorText] = useState("");
 	const [errorPreferencesText, setPreferencesErrorText] = useState("");
+
 
 	const onChange = (e) => {
 		setUserData((prevData) => ({
@@ -99,6 +103,18 @@ const Profile = () => {
 		}
 	};
 
+	let getWatchedMovies = async () => {
+        let response = await fetch("http://127.0.0.1:8000/watched_list/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authTokens.access,
+            },
+        });
+        let data = await response.json();
+        setWatchedMovies(data);
+    };
+
 	let submitChangeProfileForm = async (e) => {
 		e.preventDefault();
 		resetErrorState();
@@ -147,8 +163,22 @@ const Profile = () => {
 		});
 	};
 
+	let getUserMemberships = async (e) => {
+		let response = await fetch("http://127.0.0.1:8000:memberships/" + user.user_id + "/", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		let data = await response.json();
+		setUserMemberships(data);
+	};
+
 	useEffect(() => {
 		getUserData();
+		getWatchedMovies();
+		getUserMemberships();
 	}, []);
 
 	const navigate = useNavigate();
@@ -337,7 +367,7 @@ const Profile = () => {
 								height={cardHeight}
 								sx={{ overflowX: "scroll", overflowY: "hidden" }}
 							>
-								{moviesWithPoster.slice(0, 5).map((movie, index) => {
+								{watchedMovies.slice(0, 5).map((movie, index) => {
 									return (
 										<MovieCard
 											key={index}
@@ -377,12 +407,12 @@ const Profile = () => {
 
 					<HomepageCard title={"clubs"} titleItemText={cardHeight}>
 						<Box maxHeight={cardHeight / 2} sx={{ overflowY: "scroll" }}>
-							{DummyClubData.map((club, index) => {
+							{userMemberships.map((club, index) => {
 								return (
 									<Chip
 										key={"index"}
-										label={club.clubName}
-										avatar={<Avatar src={club.iconImage} alt={club.clubName} />}
+										label={club.club_name}
+										avatar={<Avatar src={club.iconImage} alt={club.club_name} />}
 										onClick={() => handleChipClick("clubs", club.ID)}
 										sx={{ mr: 1, mt: 1 }}
 									/>
