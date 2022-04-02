@@ -2,7 +2,12 @@ import React from "react";
 import "@testing-library/jest-dom";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitForNextUpdate,
+} from "@testing-library/react";
 
 import Signup from "../pages/core/Signup";
 import AuthContext from "../components/helper/AuthContext";
@@ -30,23 +35,40 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("Sign up form", () => {
-  let fetchMock;
+  // This stubs a
+  // successful response
+  const responseOk = (status = 200, body = {}) =>
+    Promise.resolve({
+      ok: true,
+      status,
+      json: () => Promise.resolve(body),
+    });
+
+  // This stubs a
+  // client error response
+  const responseError = (status = 400, body = {}) =>
+    Promise.resolve({
+      ok: false,
+      status,
+      json: () => Promise.resolve(body),
+    });
+
+  let loginUser;
 
   beforeEach(() => {
     // This mocks the
     // fetch function
-    fetchMock = jest
-      .spyOn(window, "fetch")
-      .mockImplementation(() =>
-        Promise.resolve({ json: () => Promise.resolve([]) })
-      );
+    jest.spyOn(window, "fetch");
+    // This mocks the
+    // loginUser function
+    loginUser = jest.fn();
     // This loads the
     // sign up screen
     render(
       <AuthContext.Provider
         value={{
-          loginUser: jest.fn(),
-          logoutUser: jest.fn(),
+          loginUser,
+          setLoginCredentials: jest.fn(),
         }}
       >
         <BrowserRouter>
@@ -67,6 +89,28 @@ describe("Sign up form", () => {
     ).toBeInTheDocument();
   });
 
+  test("All other necessary fields exist", () => {
+    expect(
+      screen.getByRole("textbox", { name: /first.name/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("textbox", { name: /last.name/i })
+    ).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: /email/i })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: /bio/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("textbox", { name: /preference/i })
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/password.confirm/i)).toBeInTheDocument();
+  });
+
+  test("Sign up button exists", () => {
+    expect(
+      screen.getByRole("button", { name: /sign.up/i })
+    ).toBeInTheDocument();
+  });
+
   test("Username input is changed", () => {
     const usernameInput = screen.getByLabelText(/username/i);
     expect(usernameInput).toHaveValue(""); // before
@@ -74,24 +118,104 @@ describe("Sign up form", () => {
     expect(usernameInput).toHaveValue("@johndoe"); // after
   });
 
+  // TODO(1)
+  test("All other inputs are changed", () => {});
+
   // Do we care about HTML form validation
   // to ensure that the entered data
   // is in the proper format?
 
-  test.skip("Given invalid input data when sign up form is submitted then error message is shown", () => {
-    // Empty input...
+  test("Given empty input data when sign up form is submitted then empty request body is sent", () => {
+    // Empty input
+    // Mocked fetch function
+    // with stubbed server response
+    window.fetch.mockReturnValue(responseError());
 
     const submitButton = screen.getByRole("button", { name: /sign.up/i });
     userEvent.click(submitButton);
 
-    expect(fetchMock).toHaveBeenCalled();
-    expect(fetchMock).toHaveBeenCalledWith(
+    expect(window.fetch).toHaveBeenCalled();
+    expect(window.fetch).toHaveBeenCalledWith(
       "http://127.0.0.1:8000/sign_up/",
       expect.any(Object)
     );
-    waitFor(() => expect(screen.findByText(/error/i)).toBeInTheDocument());
+    expect(JSON.parse(window.fetch.mock.calls[0][1].body)).toMatchObject({
+      ["username"]: "",
+      ["first_name"]: "",
+      ["last_name"]: "",
+      ["email"]: "",
+      ["bio"]: "",
+      ["preferences"]: "",
+      ["password"]: "",
+      ["password_confirmation"]: "",
+    });
   });
 
+  test("Given empty input data when sign up form is submitted then user is not logged in", () => {
+    // Empty input
+    // Mocked fetch function
+    // with stubbed server response
+    window.fetch.mockReturnValue(responseError());
+
+    const submitButton = screen.getByRole("button", { name: /sign.up/i });
+    userEvent.click(submitButton);
+
+    expect(loginUser).not.toHaveBeenCalled();
+  });
+
+  // TODO(2): Remove:
+  // console.log
+  //   []
+  //   at submitSignupForm (src/pages/root/Signup.js:128:17)
+  // TODO(3): Resolve:
+  // console.error
+  //   Warning: An update to Signup inside a test was not wrapped in act(...).
+
+  //   When testing, code that causes React state updates should be wrapped into act(...):
+
+  //   act(() => {
+  //     /* fire events that update state */
+  //   });
+  //   /* assert on the output */
+
+  //   This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+  //       at Signup (MovieClub-RuntimeTerror/frontend/socialscene/src/pages/root/Signup.js:12:44)
+
+  //   73 |         if((Object.keys(data)).includes('username')) {
+  //   74 |             setUsernameError(true)
+  // > 75 |             setUsernameErrorText("Error:" + data.username)
+  //      |             ^
+  test("Given empty input data when sign up form is submitted then error message is shown", async () => {
+    // Empty input
+    // Mocked fetch
+    // function with
+    // stubbed server response
+    window.fetch.mockReturnValue(
+      responseError(469, {
+        username: "Error text...",
+        first_name: "Error text...",
+        last_name: "Error text...",
+        email: "Error text...",
+        bio: "Error text...",
+        preferences: "Error text...",
+        password: "Error text...",
+        password_confirmation: "Error text...",
+      })
+    );
+
+    const submitButton = screen.getByRole("button", { name: /sign.up/i });
+    await userEvent.click(submitButton);
+
+    await Promise.resolve().then();
+    await waitForNextUpdate;
+    // Be sure to use getByText
+    // instead of findByText to
+    // avoid overlapping act() calls
+    const errors = screen.getAllByText(/error/i);
+    expect(errors.length).toBeGreaterThanOrEqual(1); // or toHaveLength(8)
+  });
+
+  // TODO(4): Why is fetch request body not properly filled by change?
   test.skip("Given valid input data when sign up form is submitted then no error message is shown", () => {
     fireEvent.change(screen.getByLabelText(/username/i), {
       target: { value: "@janedoe" },
