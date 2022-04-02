@@ -23,7 +23,7 @@ class EditUserViewTestCase(APITestCase):
             "last_name": "Doe",
             "email": "johndoe@example.org",
             "bio": "The quick brown fox jumps over the lazy dog.",
-            "preferences": [1,2,3,4]
+            "preferences": ["Comedy", "War", "Western", "Animation"]
         }
 
     def test_put_to_edit_user_endpoint_with_valid_data_edits_current_user_returns_200_ok(self):
