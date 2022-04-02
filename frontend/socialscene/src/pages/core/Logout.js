@@ -27,6 +27,7 @@ function Logout() {
             >
 
                 <Stack className={"logout-form-stack"}
+
                        spacing={3}
                        alignItems={"center"}>
 
@@ -41,6 +42,7 @@ function Logout() {
                     <div className={"logout-row"}>
                         <ThemeButton
                             text={"login"}
+                            data-testid="login-button"
                             style={"primary"}
                             linkTo={"/login"}
                         />
