@@ -1,64 +1,83 @@
-import React, {useCallback, useState, useContext, useEffect} from "react";
-import {Box, Grid, List, ListItem, Paper, Stack, TextField} from "@mui/material";
-import {Outlet, useHistory} from "react-router-dom";
+import React, { useCallback, useState, useContext, useEffect } from "react";
+import {
+	Box,
+	Grid,
+	List,
+	ListItem,
+	Paper,
+	Stack,
+	TextField,
+} from "@mui/material";
+import { Outlet, useHistory } from "react-router-dom";
 import "../../styling/pages/Clubs.css";
 import FormButton from "../../components/FormButton";
 import ClubListing from "../../components/ClubListing";
-import {DummyClubData} from "../data/DummyClubsData";
-import {useNavigate} from "react-router";
+import { DummyClubData } from "../data/DummyClubsData";
+import { useNavigate } from "react-router";
 import AuthContext from "../../components/helper/AuthContext";
-
-
+import HomePageTitle from "../../components/HomePageTitle";
 
 function Clubs() {
+	const navigate = useNavigate();
+	const createNewClub = useCallback(
+		() => navigate("clubs/new", { replace: false }),
+		[navigate]
+	);
+	const [myClubData, setMyClubData] = useState([]);
+	const [userMembershipData, setUserMembershipData] = useState([]);
+	const [recommendedClubData, setRecommendedClubData] = useState([]);
+	let { user, authTokens } = useContext(AuthContext);
 
-    const navigate = useNavigate();
-    const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
-    const [myClubData, setMyClubData] = useState([]);
-    const [userMembershipData, setUserMembershipData] = useState([]);
-    const [recommendedClubData, setRecommendedClubData] = useState([]);
-    let {user, authTokens} = useContext(AuthContext);
+	let getMembershipData = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setMyClubData(data);
+	};
 
-    let getMembershipData = async (e) => {
-        let response = await fetch('http://127.0.0.1:8000/memberships/' + user.user_id +'/', {
-            method:'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + String(authTokens.access)
-            }
-        })
-        let data = await response.json()
-        console.log(data)
-        setMyClubData(data)
-    }
+	let getMemData = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/mem/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setUserMembershipData(data);
+		
+	};
 
-    let getMemData = async (e) => {
-        // e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/mem/' + user.user_id +'/', {
-            method:'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + String(authTokens.access)
-            }
-        })
-        let data = await response.json()
-        setUserMembershipData(data)
-        console.log(userMembershipData)
-    }
+	let getRecommendedClubs = async (e) => {
+		let response = await fetch("http://127.0.0.1:8000/rec_clubs/", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		let data = await response.json();
+		setRecommendedClubData(data);
+	};
 
-    
+	useEffect((e) => {
+		getMembershipData();
+		getMemData();
+		getRecommendedClubs();
+	}, []);
 
-    let getRecommendedClubs = async (e) => {
-        let response = await fetch('http://127.0.0.1:8000/rec/clubs', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + String(authTokens.access)
-            }
-        })
-        let data = await response.json()
-        setRecommendedClubData(data)
-    }
+    console.log(userMembershipData);
 
 
     useEffect((e) => { 

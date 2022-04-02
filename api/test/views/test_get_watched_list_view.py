@@ -18,6 +18,7 @@ class WatchListTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
         self.url = reverse('get_watched_movies')
+    
 
 
     def test_watched_list_url(self):
