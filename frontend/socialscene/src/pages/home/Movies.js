@@ -264,7 +264,7 @@ const Movies = () => {
                                height={rateCardHeight}
                                sx={{overflowX: "scroll", overflowY: "hidden"}}
                         >
-                            {moviesWithPoster.map((movie, index) => {
+                            {recommendedMovies.map((movie, index) => {
                                 return (
                                     <MovieCard
                                         key={index}
@@ -288,7 +288,7 @@ const Movies = () => {
                                height={cardHeight}
                                sx={{overflowX: "scroll", overflowY: "hidden"}}
                         >
-                            {moviesWithPoster.map((movie, index) => {
+                            {watchedMovies.map((movie, index) => {
                                 return (
                                     <MovieCard
                                         key={index}
