@@ -2,6 +2,7 @@ from surprise import KNNBasic
 from .club_rec_data import ClubRecommenderData as Data
 import heapq as pq
 from api.models import Rating
+from api.helpers import get_initial_recommendations_for_clubs
 
 
 data = Data()
@@ -13,9 +14,12 @@ def recommend_clubs(target):
     trainSet = dataset.build_full_trainset()
     model = KNNBasic(sim_options={'name': 'cosine', 'user_based': False})
     model.fit(trainSet)
-    user_inner_id = trainSet.to_inner_uid(str(target.id))
+    try:
+        user_inner_id = trainSet.to_inner_uid(str(target.id))
+        target_ratings = trainSet.ur[user_inner_id]
+    except:
+        return get_initial_recommendations_for_clubs(target)
 
-    target_ratings = trainSet.ur[user_inner_id]
     k_neighbours = pq.nlargest(
         number_of_recommendations, target_ratings, key=lambda t: t[1])
 

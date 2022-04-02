@@ -82,16 +82,19 @@ def is_in_club(view_function):
     return modified_view_function
 
 
-def is_organiser(view_function):
+def is_management(view_function):
     @wraps(view_function)
     def modified_view_function(request, club_id, *args, **kwargs):
         club = Club.objects.get(id=club_id)
         member = Membership.objects.get(user=request.user, club=club)
-        if member.is_organiser:
+        if member.role == 'O':
             return view_function(request, club_id, *args, **kwargs)
         else:
-            error_serializer = MembershipSerializer(member, many=False)
-            return Response(error_serializer.data, status=status.HTTP_403_FORBIDDEN)
+            if member.is_organiser:
+                return view_function(request, club_id, *args, **kwargs)
+            else:
+                error_serializer = MembershipSerializer(member, many=False)
+                return Response(error_serializer.data, status=status.HTTP_403_FORBIDDEN)
     return modified_view_function
 
 

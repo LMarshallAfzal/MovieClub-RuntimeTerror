@@ -11,7 +11,6 @@ from datetime import datetime
 from libgravatar import Gravatar
 
 
-
 class User(AbstractUser):
 
     username = models.CharField(
@@ -90,7 +89,8 @@ class User(AbstractUser):
     def gravatar(self, size=120):
         """Return a URL to the user's gravatar."""
         gravatar_object = Gravatar(self.email)
-        gravatar_url = gravatar_object.get_image(size=size, default='identicon')
+        gravatar_url = gravatar_object.get_image(
+            size=size, default='identicon')
         return gravatar_url
 
     def get_user_clubs(self):
@@ -234,6 +234,7 @@ class Club(models.Model):
     def __unicode__(self):
         return '%d: %s' % (self.club_name)
 
+
 class Membership(models.Model):
     """
     Membership is an intermediate model that connects Users to Clubs.
@@ -286,7 +287,7 @@ class Movie(models.Model):
         default=0,
     )
 
-    imdb_id = models.CharField(max_length=10,unique = True) 
+    imdb_id = models.CharField(max_length=10, unique=True)
 
     title = models.CharField(
         max_length=100,
@@ -329,7 +330,8 @@ class Movie(models.Model):
     def get_movies_by_club_theme(theme):
         theme = [theme.get_genre_id(theme.name)]
         return Movie.objects.filter(genres__id__in=theme)
-    
+
+
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
