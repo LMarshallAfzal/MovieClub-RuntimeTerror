@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
 		username: "",
 		password: "",
 	});
+	
 	const navigate = useNavigate();
 
 	const [usernameError, setUsernameError] = useState(false);

@@ -23,6 +23,8 @@ import Discussion from "../home/Discussion";
 import EventCreate from "../../components/EventCreate";
 import ClubDiscussion from "../../components/ClubDiscussion";
 import EventDetail from "../../components/EventDetail";
+import { useNavigate } from "react-router-dom";
+
 
 function App() {
   return (

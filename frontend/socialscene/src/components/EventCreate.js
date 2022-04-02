@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Card, CardActionArea, CardMedia, Grid, Rating, Stack, TextField, Tooltip,} from "@mui/material";
-import {useParams} from "react-router";
+import React, { useContext, useEffect, useState } from "react";
+import { Card, CardActionArea, CardMedia, Grid, Rating, Stack, TextField, Tooltip, } from "@mui/material";
+import { useParams } from "react-router";
 import "../styling/components/EventCreate.css";
 import ThemeButton from "./core/ThemeButton";
 import moviePoster from "../resources/images/empty_movie_poster.png";
@@ -10,7 +10,7 @@ function EventCreate() {
     let day = new Date();
     let nextDay = new Date(day);
     let tomorrow = nextDay.setDate(day.getDate() + 2);
-    let {user, authTokens} = useContext(AuthContext);
+    let { user, authTokens } = useContext(AuthContext);
 
     const [recommendedMovies, setRecommendedMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState("");
@@ -26,12 +26,12 @@ function EventCreate() {
         meeting_link: "",
     });
 
-    const {club, movie, organiser, meeting_title, date, start_time, end_time, description, meeting_link} = meetingData;
+    const { club, movie, organiser, meeting_title, date, start_time, end_time, description, meeting_link } = meetingData;
 
-    let {clubID} = useParams();
+    let { clubID } = useParams();
 
     const onChange = (e) => {
-        setMeetingData(fieldData => ({...fieldData, [e.target.name]: e.target.value}));
+        setMeetingData(fieldData => ({ ...fieldData, [e.target.name]: e.target.value }));
     };
 
     let trainMeetingRecommendation = async () => {
@@ -43,6 +43,7 @@ function EventCreate() {
             },
         });
         await response.json();
+        
     };
 
     let getRecommendedMovies = async () => {
@@ -82,8 +83,10 @@ function EventCreate() {
             },
         });
         let data = await response.json();
-        setMeetingData(data);
-    };
+        if (response.status === 200) {
+            setMeetingData(data);
+        }
+        };
 
 
     useEffect(() => {
@@ -100,16 +103,16 @@ function EventCreate() {
 
                 <Grid item xs={12}>
                     <Grid container
-                          direction="row"
-                          justifyContent="space-evenly"
-                          alignItems="stretch">
+                        direction="row"
+                        justifyContent="space-evenly"
+                        alignItems="stretch">
 
                         {recommendedMovies.map((movie) => {
                             return (
                                 <Grid item xs={2}>
-                                    <Card sx={{flexDirection: "column", height: "100%"}}>
+                                    <Card sx={{ flexDirection: "column", height: "100%" }}>
                                         <CardActionArea
-                                            sx={{flexDirection: "column", height: "100%"}}
+                                            sx={{ flexDirection: "column", height: "100%" }}
                                             onClick={() => setSelectedMovie(movie.id)}>
 
                                             <CardMedia
@@ -119,14 +122,14 @@ function EventCreate() {
                                             />
 
                                             <Grid container
-                                                  direction={"column"}
-                                                  alignItems={"center"}
-                                                  textAlign={"center"}>
+                                                direction={"column"}
+                                                alignItems={"center"}
+                                                textAlign={"center"}>
 
                                                 <Rating readOnly
-                                                        sx={{fontSize: "1.2em"}}
-                                                        name={"read-only"}
-                                                        value={movie.rating}/>
+                                                    sx={{ fontSize: "1.2em" }}
+                                                    name={"read-only"}
+                                                    value={movie.rating} />
 
                                                 <Tooltip title={movie.title} placement="top-start">
                                                     <h6 className={"new-event-movie-text"}>
@@ -148,6 +151,7 @@ function EventCreate() {
                         <TextField
                             fullWidth
                             required
+                            data-testid={"meeting-title-input"}
                             placeholder={"event title"}
                             label={"title"}
                             name={"meeting_title"}
@@ -158,6 +162,7 @@ function EventCreate() {
                         <TextField
                             fullWidth
                             required
+                            data-testid={"meeting-description-input"}
                             placeholder={"short event description"}
                             label={"description"}
                             name={"description"}
@@ -168,7 +173,7 @@ function EventCreate() {
                         <TextField
                             fullWidth
                             disabled
-                            required
+                            data-testid={"meeting-movie-input"}
                             label={"movie"}
                             name={"movie"}
                             value={selectedMovie}
@@ -183,37 +188,53 @@ function EventCreate() {
                         <TextField
                             fullWidth
                             required
+                            data-testid={"meeting-date-input"}
                             label={"date"}
                             type={"date"}
                             name={"date"}
                             value={date}
                             defaultValue={tomorrow}
                             onChange={e => onChange(e)}
-                            InputLabelProps={{shrink: true,}}
+                            InputLabelProps={{ shrink: true, }}
                         />
 
                         <TextField
                             fullWidth
+                            required
+                            data-testid={"meeting-start-time-input"}
                             label={"start"}
                             type={"time"}
                             name={"start_time"}
                             value={start_time}
                             defaultValue={"17:00"}
                             onChange={e => onChange(e)}
-                            InputLabelProps={{shrink: true,}}
-                            inputProps={{step: 300,}}
+                            InputLabelProps={{ shrink: true, }}
+                            inputProps={{ step: 300, }}
                         />
 
                         <TextField
                             fullWidth
+                            required
+                            data-testid={"meeting-end-time-input"}
                             label={"end"}
                             type={"time"}
                             name={"end_time"}
                             value={end_time}
                             defaultValue={"18:00"}
                             onChange={e => onChange(e)}
-                            InputLabelProps={{shrink: true,}}
-                            inputProps={{step: 300,}}
+                            InputLabelProps={{ shrink: true, }}
+                            inputProps={{ step: 300, }}
+                        />
+
+                        <TextField
+                                  fullWidth
+                                  required
+                                data-testid={"meeting-link-input"}
+                                  placeholder={"event link"}
+                                  label={"link"}
+                                  name={"event_link"}
+                                  value={meeting_title}
+                                  onChange={e => onChange(e)}
                         />
                     </Stack>
                 </Grid>
