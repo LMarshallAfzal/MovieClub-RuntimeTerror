@@ -39,65 +39,6 @@ const Movies = () => {
         setWatchedMovies(data);
     };
 
-    let addToWatchedList = async (id) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/add_watched_movie/" + id + "/",
-            {
-                method: "POST",
-                body: JSON.stringify({movie: id, user: user.user_id}),
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + authTokens.access,
-                },
-            }
-        );
-    };
-
-    let editRating = async (id) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/edit_rating/" + id + "/",
-            {
-                method: "PUT",
-                body: JSON.stringify({
-                    user: user.user_id,
-                    movie: id,
-                    score: rating.score,
-                }),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data = await response.json();
-        if (response.status === 200) {
-            setRating(data);
-        } else {
-            setRating({user: user.user_id, movie: id, score: 0.0});
-            console.log(rating.score);
-        }
-    };
-
-    let getRating = async (id) => {
-        let response = await fetch("http://127.0.0.1:8000/get_rating/" + id + "/", {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-                Authorization: "Bearer " + String(authTokens.access),
-            },
-        });
-        let data = await response.json();
-        if (response.status === 200) {
-            setRating(data);
-        } else if (response.status === 400) {
-            setRating({user: user.user_id, movie: id, score: 0.0});
-            console.log(rating.score);
-        } else {
-            setRating({user: user.user_id, movie: id, score: 0.0});
-            console.log(rating.score);
-        }
-    };
-
     let getRecommendedMovies = async () => {
         let response = await fetch("http://127.0.0.1:8000/rec_movies/", {
             method: "GET",
@@ -114,42 +55,6 @@ const Movies = () => {
         } else {
             alert("Something went wrong");
         }
-    };
-
-    let AddRating = async (id, ratingScore) => {
-        let response1 = await fetch(
-            "http://127.0.0.1:8000/add_rating/" + id + "/",
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    user: user.user_id,
-                    movie: id,
-                    score: ratingScore,
-                }),
-                headers: {
-                    "Content-Type": "application/json; charset=UTF-8",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data1 = await response1.json();
-        setRating(data1);
-        let response2 = await fetch("http://127.0.0.1:8000/train/movie/", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8",
-                Authorization: "Bearer " + String(authTokens.access),
-            },
-        });
-        await response2.json();
-        let response3 = await fetch("http://127.0.0.1:8000/train/meeting/", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8",
-                Authorization: "Bearer " + String(authTokens.access),
-            },
-        });
-        await response3.json();
     };
 
     const [openSearch, setOpenSearch] = useState(false);

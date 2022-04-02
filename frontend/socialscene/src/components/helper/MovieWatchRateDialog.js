@@ -27,7 +27,7 @@ function MovieWatchRateDialog(props) {
     }, []);
 
     const handleClose = () => {
-        console.log(`${movie.title} set as watched`) // substitute for watch logic
+        addToWatchedList(movie.id) // substitute for watch logic
         props.onClose();
     }
 
@@ -115,6 +115,20 @@ function MovieWatchRateDialog(props) {
             setRating(data);
             setScore(data.score)
         }
+    };
+
+    let addToWatchedList = async (id) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/add_watched_movie/" + id + "/",
+            {
+                method: "POST",
+                body: JSON.stringify({movie: id, user: user.user_id}),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + authTokens.access,
+                },
+            }
+        );
     };
 
     return (
