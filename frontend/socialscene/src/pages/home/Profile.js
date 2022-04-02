@@ -13,6 +13,7 @@ import { DummyClubMemberData } from "../../pages/data/DummyClubMemberData";
 const Profile = () => {
     const [userData, setUserData] = useState('')
     let { user, authTokens } = useContext(AuthContext)
+    let preferencesValues = []
 
     const [usernameError, setUsernameError] = useState(false)
     const [firstNameError, setFirstNameError] = useState(false)
@@ -20,18 +21,27 @@ const Profile = () => {
     const [emailError, setEmailError] = useState(false)
     const [bioError, setBioError] = useState(false)
     const [preferencesError, setPreferencesError] = useState(false)
-
     const [errorUsernameText, setUsernameErrorText] = useState('')
     const [errorFirstNameText, setFirstNameErrorText] = useState('')
     const [errorLastNameText, setLastNameErrorText] = useState('')
     const [errorEmailText, setEmailErrorText] = useState('')
     const [errorBioText, setBioErrorText] = useState('')
     const [errorPreferencesText, setPreferencesErrorText] = useState('')
-    const [errorPasswordText, setPasswordErrorText] = useState('')
 
     const onChange = (e) => {
         setUserData(prevData => ({ ...prevData, [e.target.name]: e.target.value }))
     };
+
+    const handleChange = (event, value) => {
+        let array = [];
+        value.map(val => {
+            array.push(val.theme)
+        })
+        setUserData((fieldData) => ({
+            ...fieldData,
+            preferences: array,
+        }));
+      };
 
     let resetErrorState = () => {
         setUsernameError(false);
@@ -40,7 +50,6 @@ const Profile = () => {
         setEmailError(false);
         setBioError(false);
         setPreferencesError(false);
-
         setUsernameErrorText('');
         setFirstNameErrorText('');
         setLastNameErrorText('');
@@ -115,11 +124,16 @@ const Profile = () => {
         })
         let data = await response.json()
         setUserData(data)
+        let themes2 = themes.map(theme => theme.theme)
+        let preferences = data.preferences.map(preference => themes2.find(theme => theme === preference))
+        preferences.map(preference => {
+            preferencesValues.push({ theme: preference })
+        })
     }
 
     useEffect(() => {
         getUserData();
-        // console.log(user)
+        
     }, [])
 
     return (
@@ -223,17 +237,19 @@ const Profile = () => {
                                                 />
                                                 <Autocomplete
                                                     multiple
+                                                    required
                                                     id="tags-standard"
                                                     options={themes}
                                                     getOptionLabel={(option) => option.theme}
-                                                    defaultValue={[themes[0]]}
+                                                    defaultValue={preferencesValues}
+                                                    value={userData.preferences}
+                                                    onChange={handleChange}
                                                     filterSelectedOptions
                                                     renderInput={(params) => (
                                                         <TextField
                                                             {...params}
                                                             error={preferencesError}
                                                             helperText={errorPreferencesText}
-                                                            required
                                                             spacing={6}
                                                             id={"outlined-multiline-static"}
                                                             label={"preferences"}
@@ -241,8 +257,6 @@ const Profile = () => {
                                                             type={"text"}
                                                             variant={"outlined"}
                                                             multiline
-                                                            value={userData.preferences}
-                                                            onChange={e => onChange(e)}
                                                         />
                                                     )}
                                                 />

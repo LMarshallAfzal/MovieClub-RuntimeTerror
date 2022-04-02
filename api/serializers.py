@@ -34,7 +34,11 @@ class UserSerializer(ModelSerializer):
         required=False, allow_blank=True
     )
 
-    preferences = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True, required=True)
+    preferences = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',
+        queryset=Genre.objects.all()
+    )
 
     class Meta:
         model = User
@@ -175,7 +179,11 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         required=False, allow_blank=True
     )
 
-    preferences = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True, required=True)
+    preferences = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',
+        queryset=Genre.objects.all()
+    )
 
     class Meta:
         model = User
