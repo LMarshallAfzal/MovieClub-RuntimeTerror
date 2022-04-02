@@ -7,6 +7,9 @@ import AuthContext from "../components/helper/AuthContext";
 import {screen} from '@testing-library/dom'
 import { act } from 'react-dom/test-utils';
 import userEvent from "@testing-library/user-event";
+import {MemoryRouter} from 'react-router-dom'
+
+
 
 
 jest.mock("../components/helper/CsrfToken", () => {
@@ -34,7 +37,11 @@ describe('Login', () => {
       refreshToken: 'refreshToken'
     }
     render(<AuthContext.Provider value={{authTokens, loginCredentials,setLoginCredentials: jest.fn()}}>
+            <MemoryRouter>
+
     <Login />
+    </MemoryRouter>
+
   </AuthContext.Provider>)
       
   });
