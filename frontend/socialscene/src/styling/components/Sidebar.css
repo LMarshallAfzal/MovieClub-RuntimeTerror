@@ -175,8 +175,9 @@ h6 {
   font-size: 1.5rem;
   display: flex;
   align-items: center;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   font-family: inherit;
-}
-
-/*# sourceMappingURL=Sidebar.css.map */
+}/*# sourceMappingURL=Sidebar.css.map */

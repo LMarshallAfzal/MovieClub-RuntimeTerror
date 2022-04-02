@@ -259,19 +259,7 @@ export const Signup = () => {
 							value={bio}
 							onChange={(e) => onChange(e)}
 						/>
-						{/* <TextField
-								error={preferencesError}
-								className={"signup-form-row"}
-								helperText={errorPreferencesText}
-								required
-								id={"outlined-basic"}
-								label={"preferences"}
-								name={"preferences"}
-								type={"text"}
-								variant={"outlined"}
-								value={preferences}
-								onChange={e => onChange(e)}
-							/> */}
+						
 						<Autocomplete
 							multiple
 							required

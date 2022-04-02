@@ -59,7 +59,6 @@ def get_initial_recommendations_for_clubs(user, user_preferences):
     recommendations = random.sample(clubs, number_of_recomendations)
     return recommendations
 
-
 def update_upcoming_meetings():
     meetings = Club.objects.all().filter(club_meetings__completed=False)
     for meeting in meetings:

@@ -268,9 +268,10 @@ class CreateClubSerializer(serializers.Serializer):
         validators=[MaxLengthValidator(500)]
     )
 
-    theme = serializers.PrimaryKeyRelatedField(
-        required  = True,
-        queryset = Genre.objects.all()
+    theme = serializers.SlugRelatedField(
+        many=False,
+        slug_field='name',
+        queryset=Genre.objects.all()
     )
 
     class Meta:
@@ -299,10 +300,11 @@ class UpdateClubSerializer(serializers.ModelSerializer):
             validators=[MaxLengthValidator(500)]
         )
     
-        theme = serializers.PrimaryKeyRelatedField(
-            required  = True,
-            queryset = Genre.objects.all()
-        )
+        theme = serializers.SlugRelatedField(
+        many=False,
+        slug_field='name',
+        queryset=Genre.objects.all()
+    )
 
         class Meta:
             model = Club
