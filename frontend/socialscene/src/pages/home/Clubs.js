@@ -1,17 +1,12 @@
-import React, {useCallback} from "react";
+import React from "react";
 import {Grid, ListItem, Stack, TextField} from "@mui/material";
 import {Outlet} from "react-router-dom";
 import "../../styling/pages/Clubs.css";
 import ThemeButton from "../../components/core/ThemeButton";
 import ClubCard from "../../components/ClubCard";
 import {DummyClubData} from "../../resources/data/DummyClubsData";
-import {useNavigate} from "react-router";
-import HomepageTitle from "../../components/HomepageTitle";
 
 function Clubs() {
-
-    const navigate = useNavigate();
-    const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
 
     return (
         <Grid container
@@ -25,7 +20,7 @@ function Clubs() {
                 <TextField className={"search-bar"}
                            id={"outlined-basic"}
                            data-testid={"search-bar"}
-                           inputProps={{ "data-testid": "content-input" }}
+                           inputProps={{"data-testid": "content-input"}}
                            label={"search"}
                            variant={"outlined"}/>
             </Grid>
@@ -33,7 +28,7 @@ function Clubs() {
             <Grid item xs={2}>
                 <ThemeButton className={"create-button"}
                              text={"create"}
-                             onClick={createNewClub}
+                             linkTo={"clubs/new"}
                 />
             </Grid>
 
@@ -49,8 +44,8 @@ function Clubs() {
                             <Stack direction={"row"}
                                    overflow={"auto"}
                             >
-                                {DummyClubData.map((club) => club.isMember === true && (
-                                    <ListItem sx={{width: 'auto',p:1}}>
+                                {DummyClubData.map((club, index) => club.isMember === true && (
+                                    <ListItem key={index} sx={{width: 'auto', p: 1}}>
 
                                         <ClubCard
                                             clubName={club.clubName}
@@ -81,8 +76,8 @@ function Clubs() {
                         <Grid item xs={12}>
                             <Stack direction={"row"}
                                    overflow={"auto"}>
-                                {DummyClubData.map((club) => club.isMember === false && (
-                                    <ListItem sx={{width: 'auto',p: 1}}>
+                                {DummyClubData.map((club, index) => club.isMember === false && (
+                                    <ListItem key={index} sx={{width: 'auto', p: 1}}>
 
                                         <ClubCard
                                             clubName={club.clubName}

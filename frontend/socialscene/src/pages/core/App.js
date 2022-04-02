@@ -25,7 +25,6 @@ import ClubDiscussion from "../../components/ClubDiscussion";
 import EventDetail from "../../components/EventDetail";
 
 function App() {
-
   return (
     <Router>
         <AuthProvider>

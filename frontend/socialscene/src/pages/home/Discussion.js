@@ -3,18 +3,17 @@ import {Grid} from "@mui/material";
 import "../../styling/pages/Discussion.css";
 import ClubSelector from "../../components/ClubSelector";
 import {Outlet} from "react-router-dom";
-import HomepageTitle from "../../components/HomepageTitle";
 
 function Discussion() {
     return (
         <Grid container spacing={2} padding={2}>
 
             <Grid item xs={12}>
-                <ClubSelector />
+                <ClubSelector/>
             </Grid>
 
             <Grid item xs={12}>
-                <Outlet />
+                <Outlet/>
             </Grid>
         </Grid>
     );

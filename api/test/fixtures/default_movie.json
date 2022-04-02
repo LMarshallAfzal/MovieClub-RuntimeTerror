@@ -7,7 +7,7 @@
       "imdb_id": "1",
       "title": "The Godfather",
       "year": 1972,
-      "genres": "Action"
+      "genres": [6]
     }
   }
 ]

@@ -10,6 +10,7 @@ from rest_framework.test import force_authenticate,APIClient
 class CreateMeetingViewTestCase(APITestCase):
 
     fixtures = [
+        "api/test/fixtures/genres.json",
         "api/test/fixtures/default_movie.json",
         "api/test/fixtures/default_club.json",
         "api/test/fixtures/default_user.json",

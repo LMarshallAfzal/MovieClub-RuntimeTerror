@@ -1,4 +1,4 @@
-from api.models import Club, User, Membership
+from api.models import Club, User, Membership, Genre
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
@@ -8,6 +8,7 @@ from rest_framework.test import force_authenticate,APIClient
 class EditClubViewTestCase(APITestCase):
     
     fixtures = [
+        "api/test/fixtures/genres.json",
         "api/test/fixtures/default_club.json",
         "api/test/fixtures/default_user.json",
         "api/test/fixtures/other_users.json",
@@ -26,7 +27,7 @@ class EditClubViewTestCase(APITestCase):
         self.form_input = {
             "club_name": "The best club",
             "mission_statement": "Stay the best",
-            "theme": "action"
+            "theme": 2
         }
 
     def test_put_to_edit_club_endpoint_with_valid_data_edits_club_returns_200_ok(self):

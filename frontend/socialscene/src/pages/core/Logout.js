@@ -1,20 +1,10 @@
-import React, {useCallback} from "react";
+import React from "react";
 import "../../styling/pages/Logout.css";
-import {useNavigate} from "react-router";
 import {Grid, Stack} from "@mui/material";
 import HeadingCircle from "../../components/HeadingCircle";
 import ThemeButton from "../../components/core/ThemeButton";
 
 function Logout() {
-    // let {logoutUser} = useContext(AuthContext)
-    //
-    // useEffect(() => {
-    //     logoutUser()
-    // }, [])
-
-    const navigate = useNavigate();
-    const goHome = useCallback(() => navigate('/', {replace: false}), [navigate]);
-    const goLogin = useCallback(() => navigate('/login', {replace: false}), [navigate]);
 
     return (
         <Grid container
@@ -28,7 +18,7 @@ function Logout() {
                   className={"logout-grid-child"}
             >
 
-                <HeadingCircle title={"logged out"} />
+                <HeadingCircle title={"logged out"}/>
             </Grid>
 
             <Grid item
@@ -37,22 +27,22 @@ function Logout() {
             >
 
                 <Stack className={"logout-form-stack"}
-                           spacing={3}
-                           alignItems={"center"}>
+                       spacing={3}
+                       alignItems={"center"}>
 
                     <div className={"logout-row"}>
                         <ThemeButton
-                        text={"home"}
-                        style={"normal"}
-                        onClick={goHome}
+                            text={"home"}
+                            style={"normal"}
+                            linkTo={"/"}
                         />
                     </div>
 
                     <div className={"logout-row"}>
                         <ThemeButton
-                        text={"login"}
-                        style={"primary"}
-                        onClick={goLogin}
+                            text={"login"}
+                            style={"primary"}
+                            linkTo={"/login"}
                         />
                     </div>
                 </Stack>

@@ -328,6 +328,10 @@ def train_movie_data(request):
     train_movie_data_for_user()
     return Response(status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def get_random_movies(request,num_movies):
+    serializer = MovieSerializer(get_random_movies(num_movies),many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -356,7 +360,7 @@ def recommend_club(request):
     recommendations = recommend_clubs(request.user)
     serializer = ClubSerializer(recommendations, many=True)
     return Response(serializer.data)
-    pass
+    
 
 
 @api_view(['GET'])

@@ -8,6 +8,7 @@ from recommender.user_movie_rec_data import MoviesForUserRecommenderData as Data
 class RecommendMovieUserTestCase(APITestCase):
 
     fixtures = [
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/default_movie.json',
         'api/test/fixtures/other_movies.json',

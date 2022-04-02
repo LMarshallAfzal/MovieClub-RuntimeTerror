@@ -9,6 +9,7 @@ from rest_framework.test import force_authenticate,APIClient
 class GetClubMembersViewTestCase(APITestCase):
 
     fixtures = [
+        "api/test/fixtures/genres.json",
         'api/test/fixtures/other_users.json',
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/default_club.json',
@@ -52,6 +53,7 @@ class GetClubMembersViewTestCase(APITestCase):
                 email=f'user{user_id}@test.org',
                 password='Password123',
                 bio=f'Bio {user_id}',
-                preferences='Horror,Action',
+                # preferences='Horror,Action',
             )
+            user.preferences.set([1, 2])
             self.club.club_members.add(user, through_defaults={'role': 'M'})

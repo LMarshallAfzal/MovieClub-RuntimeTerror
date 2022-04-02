@@ -1,24 +1,24 @@
-import React, {useCallback, useState} from "react";
-import {useParams, Outlet, useNavigate} from "react-router";
+import React, {useState} from "react";
+import {Outlet, useNavigate, useParams} from "react-router";
 import {
+    Autocomplete,
     Avatar,
     Box,
     Chip,
-    Dialog, DialogActions,
+    Dialog,
+    DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
     Grid,
-    ListItem,
     Stack,
-    TextField,
-    Autocomplete
+    TextField
 } from "@mui/material";
 import "../styling/components/ClubDetail.css";
 import ThemeButton from "./core/ThemeButton";
-import { DummyClubData } from "../resources/data/DummyClubsData";
-import { DummyClubMemberData } from "../resources/data/DummyClubMemberData";
-import { themes } from "../resources/data/MovieThemes"
+import {DummyClubData} from "../resources/data/DummyClubsData";
+import {DummyClubMemberData} from "../resources/data/DummyClubMemberData";
+import {themes} from "../resources/data/MovieThemes"
 
 
 function ClubDetail() {
@@ -27,7 +27,7 @@ function ClubDetail() {
     const [showDeleteClubDialog, setDeleteClubDialog] = useState(false);
     const [edit, setEdit] = useState(true);
 
-    let { clubID } = useParams();
+    let {clubID} = useParams();
     let club = DummyClubData.find(obj => obj.ID === clubID);
 
     
@@ -36,7 +36,7 @@ function ClubDetail() {
         setEdit(!edit);
     }
 
-     const toggleBannedView = () => {
+    const toggleBannedView = () => {
         setBannedMembers(!showBannedMembers);
     }
 
@@ -75,9 +75,10 @@ function ClubDetail() {
         console.log("User Un-Banned");
     }
 
-    function HandleUserClick(props) {
-         const navigate = useNavigate();
-         return useCallback(() => navigate(`${props}`, {replace: false}), [navigate]);
+    const navigate = useNavigate();
+
+    const handleUserClick = (ID) => {
+        navigate(`${ID}`, {replace: false});
     }
 
     const handleBannedUserClick = () => {
@@ -87,43 +88,45 @@ function ClubDetail() {
     function UserDisplay() {
         if (showBannedMembers === false) {
             return (
-                    <>
-                        {DummyClubMemberData.map((user) => {
-                            return (
-                                <Chip
+                <>
+                    {DummyClubMemberData.map((user, index) => {
+                        return (
+                            <Chip
+                                key={index}
                                 label={user.firstName + " " + user.lastName}
                                 avatar={
-                                <Avatar
-                                    src={user.iconImage}
-                                    alt={user.firstName + " " + user.lastName}
-                                />}
+                                    <Avatar
+                                        src={user.iconImage}
+                                        alt={user.firstName + " " + user.lastName}
+                                    />}
                                 onDelete={openBanDialog}
-                                onClick={HandleUserClick(user.ID)}
-                                sx={ {mr: 1, mt: 1}}
-                                />
+                                onClick={() => handleUserClick(user.ID)}
+                                sx={{mr: 1, mt: 1}}
+                            />
 
-                            )
-                        })}
+                        )
+                    })}
                 </>)
         } else {
             return (
-                    <>
-                        {DummyClubMemberData.map((user) => {
-                            return (
-                                <Chip
-                                    label={user.firstName + " " + user.lastName}
-                                    avatar={
-                                        <Avatar
-                                            src={user.iconImage}
-                                            alt={user.firstName + " " + user.lastName}
-                                        />}
-                                    onDelete={handleUnBan}
-                                    onClick={handleBannedUserClick}
-                                    sx={{ mr: 1, mt: 1 }}
-                                />
+                <>
+                    {DummyClubMemberData.map((user, index) => {
+                        return (
+                            <Chip
+                                key={index}
+                                label={user.firstName + " " + user.lastName}
+                                avatar={
+                                    <Avatar
+                                        src={user.iconImage}
+                                        alt={user.firstName + " " + user.lastName}
+                                    />}
+                                onDelete={handleUnBan}
+                                onClick={handleBannedUserClick}
+                                sx={{mr: 1, mt: 1}}
+                            />
 
-                            )
-                        })}
+                        )
+                    })}
 
                 </>)
         }
@@ -146,25 +149,25 @@ function ClubDetail() {
                 </Box>
             </Grid>
 
-            <Grid item xs={6} maxHeight={"inherit"} sx={{ display: "flex", flexDirection: "column" }}>
+            <Grid item xs={6} maxHeight={"inherit"} sx={{display: "flex", flexDirection: "column"}}>
 
-                    <div className={"home-page-card-background"}>
-                        <Grid container padding={2}>
+                <div className={"home-page-card-background"}>
+                    <Grid container padding={2}>
 
-                            <Grid item xs={12}>
-                                <h5 className={"home-page-card-title"}>{showBannedMembers ? "banned users" : "members"}</h5>
-                            </Grid>
-
-                            <Grid item xs={12} overflow={"auto"}>
-                                    <UserDisplay style={{overflow: "auto"}}/>
-                            </Grid>
+                        <Grid item xs={12}>
+                            <h5 className={"home-page-card-title"}>{showBannedMembers ? "banned users" : "members"}</h5>
                         </Grid>
-                    </div>
+
+                        <Grid item xs={12} overflow={"auto"}>
+                            <UserDisplay style={{overflow: "auto"}}/>
+                        </Grid>
+                    </Grid>
+                </div>
             </Grid>
 
-            <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" }}>
+            <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
 
-                <Stack spacing={2} sx={{ height: "100%" }}>
+                <Stack spacing={2} sx={{height: "100%"}}>
                     <Dialog
                         open={showDeleteClubDialog}
                         onClose={closeDeleteClubDialog}
@@ -172,7 +175,9 @@ function ClubDetail() {
                         aria-describedby="alert-dialog-description">
 
                         <DialogTitle id="alert-dialog-title">
-                            <h4>delete this club<h4--emphasise>?</h4--emphasise></h4>
+                            <h4>delete this club
+                                <h4--emphasise>?</h4--emphasise>
+                            </h4>
                         </DialogTitle>
 
                         <DialogContent>
@@ -187,7 +192,7 @@ function ClubDetail() {
                                 text={"delete"}
                                 style={"primary"}
                             />
-                            <ThemeButton onClick={closeDeleteClubDialog} text={"cancel"} />
+                            <ThemeButton onClick={closeDeleteClubDialog} text={"cancel"}/>
                         </DialogActions>
                     </Dialog>
 
@@ -198,7 +203,9 @@ function ClubDetail() {
                         aria-describedby="alert-dialog-description">
 
                         <DialogTitle id="alert-dialog-title">
-                            <h4>also ban this user<h4--emphasise>?</h4--emphasise></h4>
+                            <h4>also ban this user
+                                <h4--emphasise>?</h4--emphasise>
+                            </h4>
                         </DialogTitle>
 
                         <DialogContent>
@@ -209,22 +216,24 @@ function ClubDetail() {
 
                         <DialogActions>
                             <ThemeButton onClick={handleBan} text={"ban"} style={"primary"}/>
-                            <ThemeButton onClick={handleRemoveUser} text={"remove"} />
+                            <ThemeButton onClick={handleRemoveUser} text={"remove"}/>
                         </DialogActions>
                     </Dialog>
 
-                    <ThemeButton text={"join"} style={club.isMember ? "disabled" : "primary"} />
+                    <ThemeButton text={"join"} style={club.isMember ? "disabled" : "primary"}/>
 
-                    <ThemeButton text={"leave"} style={club.isMember ? "primary" : "disabled"} />
+                    <ThemeButton text={"leave"} style={club.isMember ? "primary" : "disabled"}/>
 
-                    <ThemeButton text={"delete"} style={club.isOrganiser ? "primary" : "disabled"} onClick={openDeleteClubDialog} />
+                    <ThemeButton text={"delete"} style={club.isOrganiser ? "primary" : "disabled"}
+                                 onClick={openDeleteClubDialog}/>
 
-                    <ThemeButton text={showBannedMembers ? "members" : "banned"} style={"normal"} onClick={toggleBannedView} />
+                    <ThemeButton text={showBannedMembers ? "members" : "banned"} style={"normal"}
+                                 onClick={toggleBannedView}/>
                 </Stack>
             </Grid>
 
-            <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" }}>
-                <Stack spacing={2} sx={{ height: "100%" }}>
+            <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
+                <Stack spacing={2} sx={{height: "100%"}}>
                     <TextField
                         required
                         label={"club name"}
@@ -262,18 +271,19 @@ function ClubDetail() {
                                 type={"text"}
                                 variant={"outlined"}
                                 multiline
-                            // value={userData.preferences}
-                            // onChange={e => onChange(e)}
+                                // value={userData.preferences}
+                                // onChange={e => onChange(e)}
                             />
                         )}
                     />
 
-                    <ThemeButton text={edit ? "edit" : "save"} style={edit ? "normal" : "primary"} onClick={toggleEdit}/>
+                    <ThemeButton text={edit ? "edit" : "save"} style={edit ? "normal" : "primary"}
+                                 onClick={toggleEdit}/>
                 </Stack>
             </Grid>
 
             <Grid item xs={12}>
-                <Outlet />
+                <Outlet/>
             </Grid>
         </Grid>
     );

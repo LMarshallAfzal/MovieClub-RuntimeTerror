@@ -6,6 +6,7 @@ from rest_framework import status
 class GetFollowersTestCase(APITestCase):
 
     fixtures = [
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/other_users.json'
     ]

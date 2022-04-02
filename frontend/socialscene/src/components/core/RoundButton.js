@@ -1,14 +1,22 @@
-import React, {useCallback} from "react";
-import "../../styling/components/EnterButton.css";
+import React from "react";
+import "../../styling/components/RoundButton.css";
 import {useNavigate} from "react-router";
 
 function RoundButton(props) {
 
     const navigate = useNavigate();
-    const onCLickNavigate = useCallback(() => navigate(`${props.linkTo}`, {replace: false}), [navigate]);
+
+    const HandleNavigate = (location) => {
+        return (
+            navigate(`${location}`, {replace: false})
+        )
+    }
 
     return (
-        <button className={"enter-button"} onClick={props.onClick || onCLickNavigate}>{props.text}</button>
+        <button className={"enter-button"}
+                onClick={props.onClick || (props.linkTo ? () => HandleNavigate(props.linkTo) : "")}>
+            {props.text}
+        </button>
     );
 }
 

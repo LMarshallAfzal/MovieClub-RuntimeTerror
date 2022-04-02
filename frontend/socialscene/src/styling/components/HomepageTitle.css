@@ -112,70 +112,24 @@ h6 {
   color: #FFFFFF;
 }
 
-.home-page-card-title {
-  color: #000000;
-  font-family: Helvetica-Bold, serif;
-  user-select: none;
-}
-
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
   user-select: none;
 }
 
-.others-profile-info-text {
-  height: 100%;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  -webkit-user-select: none;
+.home-page-title {
+  background-color: #5C5C5C;
   user-select: none;
+  transition: all 0.3s ease-out;
+}
+
+.home-page-text {
+  color: #FFFFFF;
   font-family: Helvetica-Bold, serif;
-  width: 100%;
-  text-align: center;
+}
+.home-page-text-emphasise {
+  color: #FF0000;
 }
 
-.text-field {
-  text-align: left;
-  vertical-align: top;
-}
-
-.others-profile-table {
-  width: 100%;
-  border-collapse: separate;
-  width: 100%;
-}
-
-.others-profile-grid {
-  height: calc(100% - 90px);
-  justify-content: center;
-}
-.others-profile-grid-left {
-  align-self: center;
-}
-.others-profile-grid-right {
-  margin: 0;
-  align-self: center;
-}
-
-.form-stack {
-  margin-top: 20px;
-}
-
-.profile-text-box {
-  background-color: #D8D8D8;
-}
-
-.profile-image {
-  align-self: center;
-  width: 100px;
-  padding: 20px;
-}
-
-.card-content {
-  border: 20px;
-  background-color: #C4C4C4;
-}
-
-/*# sourceMappingURL=UserDetail.css.map */
+/*# sourceMappingURL=HomepageTitle.css.map */
