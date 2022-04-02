@@ -3,7 +3,7 @@ from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import force_authenticate,APIClient
-from recommender.user_movie_rec_data import MoviesForUserRecommenderData as Data
+from recommenders.user_movie.user_movie_rec_data import MoviesForUserRecommenderData as Data
 
 class RecommendMovieUserTestCase(APITestCase):
 

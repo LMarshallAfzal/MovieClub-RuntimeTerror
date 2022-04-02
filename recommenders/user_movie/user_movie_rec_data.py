@@ -10,8 +10,8 @@ from api.models import Rating
 class MoviesForUserRecommenderData:
 
     def __init__(self):
-        self.movie_rec_data_path = 'recommender/dataset-latest/user_movie_recommender_data.csv'
-        self.movie_lens_path = 'recommender/dataset-latest/ratings.csv' 
+        self.movie_rec_data_path = 'user_movie_recommender_data.csv'
+        self.movie_lens_path = 'recommenders/dataset-latest/ratings.csv' 
 
     def load_movie_data_for_user(self):
         self.clean()
