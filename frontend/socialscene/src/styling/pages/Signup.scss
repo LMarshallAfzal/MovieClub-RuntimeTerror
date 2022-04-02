@@ -1,25 +1,19 @@
-@use "../base";
+@use "../core/base";
 
 .signup-grid {
   height: base.$height;
 }
 
-.signup-grid-child {
-  height: 100%;
-}
-
 .signup-form {
   height: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .signup-form-stack {
-
   height: 100%;
   align-items: center;
   justify-content: center;
 }
 
-.signup-form-row {
-  width: 100%;
-  max-width: 60%;
-}

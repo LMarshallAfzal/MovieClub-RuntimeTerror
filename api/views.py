@@ -134,7 +134,6 @@ def get_other_user(request, user_id):
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_current_user(request):
@@ -329,6 +328,10 @@ def train_movie_data(request):
     train_movie_data_for_user()
     return Response(status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def get_random_movies(request,num_movies):
+    serializer = MovieSerializer(get_random_movies(num_movies),many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -357,7 +360,7 @@ def recommend_club(request):
     recommendations = recommend_clubs(request.user)
     serializer = ClubSerializer(recommendations, many=True)
     return Response(serializer.data)
-    pass
+    
 
 
 @api_view(['GET'])
@@ -429,6 +432,7 @@ def edit_meeting(request, club_id):
     serializer = UpdateMeetingSerializer(meeting, data=request.data)
     if serializer.is_valid():
         serializer.save()
+        ClubEmail(club).send_meeting_update_notification()
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
@@ -491,6 +495,7 @@ def check_upcoming_meetings(request):
 def cancel_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
     meeting = club.get_upcoming_meeting()
+    ClubEmail(club).send_meeting_cancellation_notification()
     meeting.delete()
     return Response(status=status.HTTP_200_OK)
 

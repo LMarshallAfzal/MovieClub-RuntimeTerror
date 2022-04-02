@@ -123,6 +123,7 @@ class SignUpSerializer(serializers.Serializer):
     password_confirmation = serializers.CharField(
         write_only=True, required=True)
 
+
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email',

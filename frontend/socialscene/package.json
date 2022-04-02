@@ -15,6 +15,7 @@
     "express": "4.17.1",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
+    "popular-movie-quotes": "^1.2.4",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.2",
     "react-dom": "^17.0.2",
@@ -23,6 +24,7 @@
     "react-router": "^6.0.0-beta.8",
     "react-router-dom": "^6.0.0-beta.8",
     "react-scripts": "5.0.0",
+    "react-test-renderer": "^17.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

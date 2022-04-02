@@ -1,0 +1,23 @@
+@use "../core/base";
+
+.club-listing {
+    width: 26rem;
+    background-color: base.$grey-4;
+    transition: all 0.3s ease-out;
+    user-select: none;
+    cursor: pointer;
+}
+
+.club-listing:hover {
+    background-color: base.$grey-5;
+}
+
+.club-listing-club-name {
+    color: base.$primary-black;
+    font-family: base.$helvetica;
+}
+
+.club-listing-avatars {
+    align-self: flex-start;
+}
+

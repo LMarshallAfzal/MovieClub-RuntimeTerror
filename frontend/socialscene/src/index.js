@@ -1,101 +1,122 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './pages/helper/App';
-import "./styling/fonts/Helvetica.ttf";
-import "./styling/fonts/Helvetica-Light.ttf";
-import "./styling/fonts/Helvetica-Oblique.ttf";
-import "./styling/fonts/Helvetica-Bold.ttf";
-import "./styling/fonts/Helvetica-BoldOblique.ttf";
+import App from './pages/core/App';
+import "./styling/core/base.css";
+import Helvetica from "./resources/newfonts/Helvetica.ttf";
 import {createTheme, ThemeProvider} from "@mui/material";
-import {hover} from "@testing-library/user-event/dist/hover";
 
 const theme = createTheme({
-  palette: {
-      primary: {
-          main: '#FF0000',
-      },
+    palette: {
+        primary: {
+            main: '#FF0000',
+        },
+        text: {}
     },
 
     components: {
-      MuiButtonBase: {
-          defaultProps: {
-              disableRipple: true,
-          },
-          styleOverrides: {
-              root: {
-                   borderRadius: "0rem !important",
-              },
-          },
-      },
+        MuiButtonBase: {
+            defaultProps: {
+                disableRipple: true,
+            },
+            styleOverrides: {
+                root: {
+                    // borderRadius: "0rem !important",
+                },
+            },
+        },
         MuiOutlinedInput: {
-              styleOverrides: {
-                  root: {
-                      borderRadius: "0rem",
-                  },
-                  notchedOutline: {
-                      borderColor: "#000000",
-                  },
-              },
-      },
+            styleOverrides: {
+                root: {
+                    borderRadius: "0rem",
+                },
+                notchedOutline: {
+                    borderColor: "#000000",
+                },
+            },
+        },
         MuiRating: {
-          styleOverrides:{
-              root:{
-                  color: "#FF0000",
-              }
-          }
+            styleOverrides: {
+                root: {
+                    color: "#FF0000",
+                }
+            }
 
         },
         MuiCard: {
-          styleOverrides: {
-              root:{
-                  borderRadius: "0rem !important",
+            styleOverrides: {
+                root: {
+                    borderRadius: "0rem !important",
 
 
-              }
-          }
+                }
+            }
         },
 
         MuiCardActionArea: {
-          styleOverrides: {
-              root: {
-                  borderRadius: "0rem !important",
-                  //  border: "2px solid black",
-                  // borderColor: "#FF0000",
-                  // borderWidth: "thin"
-              },
-          }
+            styleOverrides: {
+                root: {
+                    borderRadius: "0rem !important",
+                    //  border: "2px solid black",
+                    // borderColor: "#FF0000",
+                    // borderWidth: "thin"
+                },
+            }
         },
 
-      MuiInputLabel: {
-          styleOverrides: {
-              root:{
-                  fontWeight: "bold",
-              }
-          }
-      }
-  },
+        MuiChip: {
+            styleOverrides: {
+                root: {
+                    fontFamily: 'Helvetica',
+                    // borderRadius: "0rem !important",
+
+                },
+            }
+
+        },
+
+        MuiTooltip: {
+            styleOverrides: {
+                root: {}
+            }
+        },
+
+        MuiInputLabel: {
+            styleOverrides: {
+                root: {
+                    fontFamily: 'Helvetica-Bold',
+                },
+            }
+        },
+        MuiInputBase: {
+            styleOverrides: {}
+        }
+    },
 
     typography: {
-       typography: {
-           fontFamily: [
-               '-apple-system',
-               'BlinkMacSystemFont',
-               '"Segoe UI"',
-               'Roboto',
-               '"Helvetica Neue"',
-               'Arial',
-               'sans-serif',
-               '"Apple Color Emoji"',
-               '"Segoe UI Emoji"',
-               '"Segoe UI Symbol"',
-           ].join(',')
-       },
+        typography: {
+            fontFamily: [
+                'Helvetica',
+                'Helvetica-Italic',
+                'Helvetica-Light',
+                'Helvetica-Light-Italic',
+                'Helvetica-Bold',
+                'helvetica-Bold-Italic',
+                '-apple-system',
+                'BlinkMacSystemFont',
+                '"Segoe UI"',
+                '"Helvetica Neue"',
+                'sans-serif',
+                '"Apple Color Emoji"',
+                '"Segoe UI Emoji"',
+                '"Segoe UI Symbol"',
+            ].join(',')
+        },
     }
 });
 
 ReactDOM.render(
-    <ThemeProvider theme={theme}>  
-      <App/>
+    <ThemeProvider theme={theme}>
+        <App/>
     </ThemeProvider>,
-  document.getElementById('root')
+    document.getElementById('root')
 );

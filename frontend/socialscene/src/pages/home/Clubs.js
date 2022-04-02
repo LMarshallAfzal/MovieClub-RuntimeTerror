@@ -1,40 +1,34 @@
-import React, {useCallback} from "react";
+import React from "react";
 import {Grid, ListItem, Stack, TextField} from "@mui/material";
 import {Outlet} from "react-router-dom";
 import "../../styling/pages/Clubs.css";
-import FormButton from "../../components/FormButton";
-import ClubListing from "../../components/ClubListing";
-import {DummyClubData} from "../data/DummyClubsData";
-import {useNavigate} from "react-router";
-import HomePageTitle from "../../components/HomePageTitle";
+import ThemeButton from "../../components/core/ThemeButton";
+import ClubCard from "../../components/ClubCard";
+import {DummyClubData} from "../../resources/data/DummyClubsData";
 
 function Clubs() {
 
-    const navigate = useNavigate();
-    const createNewClub = useCallback(() => navigate('clubs/new', {replace: false}), [navigate]);
-
     return (
-        <>
-            <HomePageTitle title={"clubs"}/>
-
-            <Grid container
-            justifyContent={"center"}
-            direction={"row"}
-            alignItems={"flex-start"}
+        <Grid container
+              justifyContent={"center"}
+              direction={"row"}
+              alignItems={"flex-start"}
               padding={2}
-            spacing={2}>
+              spacing={2}>
 
             <Grid item xs={10}>
                 <TextField className={"search-bar"}
-                    id={"outlined-basic"}
-                    label={"search"}
-                    variant={"outlined"}/>
+                           id={"outlined-basic"}
+                           data-testid={"search-bar"}
+                           inputProps={{"data-testid": "content-input"}}
+                           label={"search"}
+                           variant={"outlined"}/>
             </Grid>
 
             <Grid item xs={2}>
-                <FormButton className={"create-button"}
-                    text={"create"}
-                    onClick={createNewClub}
+                <ThemeButton className={"create-button"}
+                             text={"create"}
+                             linkTo={"clubs/new"}
                 />
             </Grid>
 
@@ -48,11 +42,12 @@ function Clubs() {
 
                         <Grid item xs={12}>
                             <Stack direction={"row"}
-                                   overflow={"auto"}>
-                                {DummyClubData.map((club) => club.isMember === true && (
-                                    <ListItem sx={{width: 'auto',p:1}}>
+                                   overflow={"auto"}
+                            >
+                                {DummyClubData.map((club, index) => club.isMember === true && (
+                                    <ListItem key={index} sx={{width: 'auto', p: 1}}>
 
-                                        <ClubListing
+                                        <ClubCard
                                             clubName={club.clubName}
                                             isMember={club.isMember}
                                             iconImage={club.iconImage}
@@ -81,10 +76,10 @@ function Clubs() {
                         <Grid item xs={12}>
                             <Stack direction={"row"}
                                    overflow={"auto"}>
-                                {DummyClubData.map((club) => club.isMember === false && (
-                                    <ListItem sx={{width: 'auto',p: 1}}>
+                                {DummyClubData.map((club, index) => club.isMember === false && (
+                                    <ListItem key={index} sx={{width: 'auto', p: 1}}>
 
-                                        <ClubListing
+                                        <ClubCard
                                             clubName={club.clubName}
                                             isMember={club.isMember}
                                             iconImage={club.iconImage}
@@ -107,7 +102,6 @@ function Clubs() {
                 <Outlet/>
             </Grid>
         </Grid>
-        </>
     );
 }
 
