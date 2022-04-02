@@ -13,6 +13,7 @@
     "axios": "^0.26.0",
     "cors": "2.8.5",
     "express": "4.17.1",
+    "func-utils": "^0.0.1",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "popular-movie-quotes": "^1.2.4",
@@ -54,6 +55,7 @@
   "devDependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "jest-fetch-mock": "^3.0.3",
     "sass": "^1.47.0"
   }
 }

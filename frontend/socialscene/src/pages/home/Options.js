@@ -86,6 +86,7 @@ const Options = () => {
             },
         })
         let data = await response.json()
+        console.log(data)
         if (response.status === 200) {
             setPasswordData(data);
             alert("You have successfully changed you password")
@@ -182,6 +183,7 @@ const Options = () => {
                                             <InputAdornment position="end">
                                                 <TextButton
                                                     onClick={() => togglePasswordVisibility(!passwordVisibility)}
+                                                    data-testid={"password-visibility"}
                                                     text={passwordVisibility ? "hide" : "show"}
                                                     style={{marginTop: "-20px"}}
                                                 />
