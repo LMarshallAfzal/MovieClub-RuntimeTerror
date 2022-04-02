@@ -262,7 +262,6 @@ const Profile = () => {
 												{...params}
 												error={preferencesError}
 												helperText={errorPreferencesText}
-												required
 												spacing={6}
 												placeholder={"select or change themes"}
 												label={"preferences"}

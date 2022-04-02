@@ -14,6 +14,7 @@ function MovieCard(props) {
     const [cardWidth, setCardWidth] = useState(150);
     const [cardBorder, setCardBorder] = useState("0px solid black");
     const [loaded, setLoaded] = useState(true);
+    
 
     let moviePoster = props.poster && placeholder;
 
@@ -67,7 +68,7 @@ function MovieCard(props) {
         if (props.rateMovie === true) {
             return (
                 <>
-                    <MovieWatchRateDialog isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
+                    <MovieWatchRateDialog movie={props.movie} isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
                     <ThemeButton
                         text={"watch"}
                         style={"primary"}

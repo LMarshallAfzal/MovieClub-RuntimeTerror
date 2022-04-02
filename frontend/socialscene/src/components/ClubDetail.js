@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {Outlet, useNavigate, useParams} from "react-router";
 import {
     Autocomplete,
@@ -16,9 +16,8 @@ import {
 } from "@mui/material";
 import "../styling/components/ClubDetail.css";
 import ThemeButton from "./core/ThemeButton";
-import {DummyClubData} from "../resources/data/DummyClubsData";
-import {DummyClubMemberData} from "../resources/data/DummyClubMemberData";
 import {themes} from "../resources/data/MovieThemes"
+import AuthContext from "../components/helper/AuthContext";
 
 
 function ClubDetail() {
@@ -26,14 +25,129 @@ function ClubDetail() {
     const [showBanDialog, setBanDialog] = useState(false);
     const [showDeleteClubDialog, setDeleteClubDialog] = useState(false);
     const [edit, setEdit] = useState(true);
+	const [isMember, setIsMember] = useState(false);
+	const [members, setMembers] = useState([]);
+	const [club, setClub] = useState([]);
+	const [myClubData, setMyClubData] = useState([]);
 
     let {clubID} = useParams();
-    let club = DummyClubData.find(obj => obj.ID === clubID);
+	let {user, authTokens} = useContext(AuthContext);
 
-    
+	const onChange = (e) => {
+		setClub((prevData) => ({
+			...prevData,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
+	const handleChange = (event, value) => {
+		setClub((fieldData) => ({
+			...fieldData,
+			theme: value,
+		}));
+	};
+
+	let getClub = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/club/" + clubID + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setClub(data);
+	};
+
+    let getClubMembers = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/club_members/" + clubID + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setMembers(data);
+	};
+
+	let getMembershipData = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setMyClubData(data);
+	};
+
+	let joinClub = async () => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/join_club/" + clubID + "/",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+	};
+
+	let leaveClub = async () => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/leave_club/" + clubID + "/",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+	};
+
+	let editClub = async () => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/edit_club/" + clubID + "/",
+			{
+				method: "PUT",
+				body: JSON.stringify(club),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setClub(data)
+	};
+
+	useEffect(() => {
+		getClubMembers();
+		getMembershipData();
+		getClub();
+		myClubData.find(val => val.club_id === clubID) ? setIsMember(true) : setIsMember(false);
+	}, []);
 
     const toggleEdit = () => {
         setEdit(!edit);
+		if(edit){
+			editClub();
+		}
     }
 
     const toggleBannedView = () => {
@@ -89,15 +203,15 @@ function ClubDetail() {
         if (showBannedMembers === false) {
             return (
                 <>
-                    {DummyClubMemberData.map((user, index) => {
+                    {members.map((user, index) => {
                         return (
                             <Chip
                                 key={index}
-                                label={user.firstName + " " + user.lastName}
+                                label={user.first_name + " " + user.last_name}
                                 avatar={
                                     <Avatar
                                         src={user.iconImage}
-                                        alt={user.firstName + " " + user.lastName}
+                                        alt={user.first_name + " " + user.last_name}
                                     />}
                                 onDelete={openBanDialog}
                                 onClick={() => handleUserClick(user.ID)}
@@ -110,15 +224,15 @@ function ClubDetail() {
         } else {
             return (
                 <>
-                    {DummyClubMemberData.map((user, index) => {
+                    {members.map((user, index) => {
                         return (
                             <Chip
                                 key={index}
-                                label={user.firstName + " " + user.lastName}
+                                label={user.first_name + " " + user.last_name}
                                 avatar={
                                     <Avatar
                                         src={user.iconImage}
-                                        alt={user.firstName + " " + user.lastName}
+                                        alt={user.first_name + " " + user.last_name}
                                     />}
                                 onDelete={handleUnBan}
                                 onClick={handleBannedUserClick}
@@ -145,7 +259,7 @@ function ClubDetail() {
             <Grid item xs={12}>
 
                 <Box padding={1} className={"home-page-sub-title"}>
-                    <h4 className={"sub-title-text"}>{club.clubName}</h4>
+                    <h4 className={"sub-title-text"}>{club.club_name}</h4>
                 </Box>
             </Grid>
 
@@ -220,9 +334,9 @@ function ClubDetail() {
                         </DialogActions>
                     </Dialog>
 
-                    <ThemeButton text={"join"} style={club.isMember ? "disabled" : "primary"}/>
+                    <ThemeButton text={"join"} style={isMember ? "disabled" : "primary"} onClick={() => joinClub()} />
 
-                    <ThemeButton text={"leave"} style={club.isMember ? "primary" : "disabled"}/>
+                    <ThemeButton text={"leave"} style={isMember ? "primary" : "disabled"} onClick={() => leaveClub()}/>
 
                     <ThemeButton text={"delete"} style={club.isOrganiser ? "primary" : "disabled"}
                                  onClick={openDeleteClubDialog}/>
@@ -237,42 +351,38 @@ function ClubDetail() {
                     <TextField
                         required
                         label={"club name"}
-                        defaultValue={club.clubName}
+                        value={club.club_name}
+						onChange={(e) => onChange(e)}
                     />
 
                     <TextField
                         required
                         label={"club description"}
-                        defaultValue={club.description}
+                        value={club.mission_statement}
+						onChange={(e) => onChange(e)}
                     />
 
-                    {/* <TextField
-                        id="outlined"
-                        label="theme:"
-                        defaultValue={club.clubTheme}
-                    /> */}
                     <Autocomplete
-                        // multiple
+                        multiple
+						required
                         id="tags-standard"
                         options={themes}
                         getOptionLabel={(option) => option.theme}
-                        // defaultValue={club.clubTheme}
+                        defaultValue={club.theme}
+						value={club.theme}
+						onChange={handleChange}
+						filterSelectedOptions
                         disableCloseOnSelect
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                // error={preferencesError}
-                                // helperText={errorPreferencesText}
-                                // required
                                 spacing={6}
                                 id={"outlined-basic"}
                                 label={"theme"}
-                                name={"preferences"}
+                                name={"theme"}
                                 type={"text"}
                                 variant={"outlined"}
                                 multiline
-                                // value={userData.preferences}
-                                // onChange={e => onChange(e)}
                             />
                         )}
                     />

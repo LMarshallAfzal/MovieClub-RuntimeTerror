@@ -21,7 +21,7 @@ class CreateClubViewTestCase(APITestCase,LogInTester):
         self.form_input = {
             "club_name": "Sharknado Appreciation Society",
             "mission_statement": "We are a club dedicated to making the world a better place through the power of sharknado",
-            "theme": Genre.objects.all()[0].id,
+            "theme": Genre.objects.get(name="Animation"),
         }
         self.client = APIClient()
     
@@ -38,9 +38,9 @@ class CreateClubViewTestCase(APITestCase,LogInTester):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
         self.client.post(self.url, self.form_input)
-        club = Club.objects.last()
+        club = Club.objects.get(club_name="Sharknado Appreciation Society")
         owner = club.get_club_membership(self.user)
-        self.assertEqual(owner, "C")
+        self.assertEqual(owner, "O")
 
     def test_create_club_endpoint_with_empty_club_name_returns_400_bad_request(self):
         self.client.force_authenticate(user=self.user)

@@ -125,7 +125,9 @@ h6 {
   display: flex;
   align-items: center;
   -webkit-user-select: none;
-  user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
   font-family: Helvetica-Bold, serif;
   width: 100%;
   text-align: center;

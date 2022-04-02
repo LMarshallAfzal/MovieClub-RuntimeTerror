@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {useParams} from "react-router";
 import {Avatar, AvatarGroup, Chip, Grid, Stack} from "@mui/material";
 import icon5 from "../resources/images/example icons/icon5.jpeg"
@@ -8,30 +8,71 @@ import icon4 from "../resources/images/example icons/icon4.jpeg"
 import "../styling/components/ClubCard.css";
 import RoundButton from "./core/RoundButton";
 import {Link} from "react-router-dom";
+import AuthContext from "../components/helper/AuthContext";
 
 function ClubCard(props) {
     let {clubID} = useParams();
+    let {user, authTokens} = useContext(AuthContext);
+    const [clubData, setClubData] = useState([]);
+    const [members, setMembers] = useState([]);
+
+    let getMembershipData = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setClubData(data);
+	};
+
+    let getClubMembers = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/club_members/" + props.ID + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setMembers(data);
+	};
+
+    useEffect(() => {
+        getMembershipData();
+        getClubMembers();
+    }, []);
 
     function ClubButton() {
-        if (props.isMember === true) {
+        // if (props.isMember === true) {
             return (
                 <RoundButton
                     text={"info"}
-                    linkTo={`/home/clubs/${props.ID}`}/>
+                    linkTo={`/home/clubs/${props.ID}`}
+                    // onClick={getClubMembers}
+                />
             )
-        } else {
-            return (
-                <RoundButton
-                    text={"join"}
-                    linkTo={`/home/clubs/${props.ID}`}/>
-            )
-        }
+        // } else {
+            // return (
+            //     <RoundButton
+            //         text={"join"}
+            //         linkTo={`/home/clubs/${props.ID}`}/>
+            // )
+        // }
     }
 
     function ClubChip() {
-        if (props.isMember === true) {
+        if (props.isMember === "M") {
             
-            if (props.isOrganiser === true) {
+            if (props.isOrganiser === "O") {
                 return (
                     <RoundButton text={"create meeting"} linkTo={"/home/discussion"}/>
                 )
@@ -75,14 +116,9 @@ function ClubCard(props) {
                         <ClubChip/>
 
                         <AvatarGroup max={4} className={"club-listing-avatars"}>
-                            {/*for (users in club) map {*/}
-                            {/*   <Avatar alt="Club Name" src={club.icon}*/}
-                            {/*}*/}
-                            <Avatar alt="Remy Sharp" src={icon5}/>
-                            <Avatar alt="Travis Howard" src={icon2}/>
-                            <Avatar alt="Cindy Baker" src={icon3}/>
-                            <Avatar alt="Agnes Walker" src={icon4}/>
-                            <Avatar alt="Trevor Henderson" src=""/>
+                            {members.map((user) => {
+								return <Avatar alt={user.username} src={icon5} />;
+							})}
                         </AvatarGroup>
                     </Stack>
                 </Grid>
@@ -92,4 +128,3 @@ function ClubCard(props) {
 }
 
 export default ClubCard;
-

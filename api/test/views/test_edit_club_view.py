@@ -27,7 +27,7 @@ class EditClubViewTestCase(APITestCase):
         self.form_input = {
             "club_name": "The best club",
             "mission_statement": "Stay the best",
-            "theme": 2
+            "theme": "Comedy"
         }
 
     def test_put_to_edit_club_endpoint_with_valid_data_edits_club_returns_200_ok(self):
