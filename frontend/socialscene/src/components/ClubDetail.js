@@ -43,9 +43,14 @@ function ClubDetail() {
 	};
 
 	const handleChange = (event, value) => {
+        let array = [];
+		value.map((val) => {
+			array.push(val.theme);
+		});
+        console.log(club);
 		setClub((fieldData) => ({
 			...fieldData,
-			theme: value,
+			theme: array[0],
 		}));
 	};
 
@@ -161,12 +166,12 @@ function ClubDetail() {
 		myClubData.find(val => val.club_id === clubID) ? setIsMember(true) : setIsMember(false);
 	}, []);
 
-    const toggleEdit = () => {
-        setEdit(!edit);
-		if(edit){
-			editClub();
-		}
-    }
+    // const toggleEdit = () => {
+    //     setEdit(!edit);
+	// 	if(edit){
+	// 		editClub();
+	// 	}
+    // }
 
     const toggleBannedView = () => {
         setBannedMembers(!showBannedMembers);
@@ -380,6 +385,7 @@ function ClubDetail() {
                 <Stack spacing={2} sx={{height: "100%"}}>
                     <TextField
                         required
+                        name={"club_name"}
                         label={"club name"}
                         value={club.club_name}
 						onChange={(e) => onChange(e)}
@@ -387,13 +393,13 @@ function ClubDetail() {
 
                     <TextField
                         required
+                        name={"mission_statement"}
                         label={"club description"}
                         value={club.mission_statement}
 						onChange={(e) => onChange(e)}
                     />
 
                     <Autocomplete
-                        multiple
 						required
                         id="tags-standard"
                         options={themes}
@@ -417,8 +423,8 @@ function ClubDetail() {
                         )}
                     />
 
-                    <ThemeButton text={edit ? "edit" : "save"} style={edit ? "normal" : "primary"}
-                                 onClick={toggleEdit}/>
+                    <ThemeButton text={"edit"}
+                                 onClick={editClub}/>
                 </Stack>
             </Grid>
 
