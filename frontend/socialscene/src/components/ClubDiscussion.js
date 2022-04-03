@@ -77,7 +77,7 @@ function ClubDiscussion() {
             method: 'POST',
             body: JSON.stringify({
                 "sender": user.username,
-                "club": club,
+                "club": myClub.id,
                 "message": message.message,
                 "timestamp": dateTime,
             }),
@@ -181,7 +181,7 @@ function ClubDiscussion() {
                                     InputProps={{
                                         endAdornment:
                                             <TextButton
-                                                // onClick={sendClubMessages(clubID)}
+                                                onClick={() => sendClubMessages(clubID)}
                                                 text={"send"}/>
                                     }}
                                 />
