@@ -137,8 +137,10 @@ def get_other_user(request, user_id):
 
 @api_view([ 'GET'])
 @permission_classes([IsAuthenticated])
-def get_favourite_movies(request):
-    favourite_movies = request.user.get_favourite_movies()
+@user_exists
+def get_favourite_movies(request,user_id):
+    user = User.objects.get(id=user_id)
+    favourite_movies = user.get_favourite_movies()
     serializer = MovieSerializer(favourite_movies, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
