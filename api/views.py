@@ -135,6 +135,13 @@ def get_other_user(request, user_id):
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+@api_view([ 'GET'])
+@permission_classes([IsAuthenticated])
+def get_favourite_movies(request):
+    favourite_movies = request.user.get_favourite_movies()
+    serializer = MovieSerializer(favourite_movies, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_current_user(request):
