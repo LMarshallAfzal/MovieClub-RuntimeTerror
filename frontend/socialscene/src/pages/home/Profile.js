@@ -170,6 +170,7 @@ const Profile = () => {
 									<TextField
 										error={usernameError}
 										helperText={errorUsernameText}
+										data-testid={"username-input"}
 										placeholder={"choose a different username"}
 										required
 										fullWidth
@@ -189,6 +190,7 @@ const Profile = () => {
 										helperText={errorFirstNameText}
 										required
 										placeholder={"your first name"}
+										data-testid={"first-name-input"}
 										label={"first name"}
 										name={"first_name"}
 										type={"text"}
@@ -205,6 +207,7 @@ const Profile = () => {
 										helperText={errorLastNameText}
 										required
 										placeholder={"your last name"}
+										data-testid={"last-name-input"}
 										label={"last name"}
 										name={"last_name"}
 										type={"text"}
@@ -222,6 +225,7 @@ const Profile = () => {
 										helperText={errorEmailText}
 										required
 										placeholder={"example@socialscene.co.uk"}
+										data-testid={"email-input"}
 										label={"email"}
 										name={"email"}
 										type={"email"}
@@ -237,6 +241,7 @@ const Profile = () => {
 										error={bioError}
 										helperText={errorBioText}
 										placeholder={"short personal description"}
+										data-testid={"bio-input"}
 										label={"bio"}
 										name={"bio"}
 										multiline
@@ -265,6 +270,7 @@ const Profile = () => {
 												required
 												spacing={6}
 												placeholder={"select or change themes"}
+												data-testid={"preferences-input"}
 												label={"preferences"}
 												name={"preferences"}
 												type={"text"}
