@@ -388,7 +388,10 @@ function ClubDetail() {
                         name={"club_name"}
                         label={"club name"}
                         value={club.club_name}
-						onChange={(e) => onChange(e)}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        onChange={(e) => onChange(e)}
                     />
 
                     <TextField
@@ -396,7 +399,10 @@ function ClubDetail() {
                         name={"mission_statement"}
                         label={"club description"}
                         value={club.mission_statement}
-						onChange={(e) => onChange(e)}
+						InputLabelProps={{
+                            shrink: true,
+                        }}
+                        onChange={(e) => onChange(e)}
                     />
 
                     <Autocomplete
@@ -406,7 +412,10 @@ function ClubDetail() {
                         getOptionLabel={(option) => option.theme}
                         defaultValue={club.theme}
 						value={club.theme}
-						onChange={handleChange}
+						InputLabelProps={{
+                            shrink: true,
+                        }}
+                        onChange={(e) => onChange(e)}
 						filterSelectedOptions
                         disableCloseOnSelect
                         renderInput={(params) => (
