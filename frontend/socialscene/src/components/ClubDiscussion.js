@@ -18,6 +18,7 @@ function ClubDiscussion() {
     const [dateTime, setDateTime] = useState(new Date(Date.now()));
     const [myClubData, setMyClubData] = useState([]);
     const [messages, setMessages] = useState([]);
+    const [myClub, setClub] = useState([]);
 
     let {clubID} = useParams();
 
@@ -25,6 +26,7 @@ function ClubDiscussion() {
     useEffect(() => {
         getClubMessages()
         getMembershipData()
+        getClub()
 
     }, [])
 
@@ -90,11 +92,26 @@ function ClubDiscussion() {
         console.log(message)
     }
 
+    let getClub = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/club/" + clubID + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setClub(data);
+	};
+
     return (
         <Grid container spacing={2}>
 
             <Grid item xs={10}>
-                <h4 className={"home-page-sub-section-heading"}>{'club.club_name'}</h4>
+                <h4 className={"home-page-sub-section-heading"}>{myClub.club_name}</h4>
             </Grid>
 
             <Grid item xs={2}>
