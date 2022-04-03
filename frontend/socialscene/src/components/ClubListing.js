@@ -89,7 +89,7 @@ function ClubListing(props) {
 				return (
 					<EnterButton
 						text={"create meeting"}
-						linkTo={`/home/discussion/${props.ID}/new`}
+						linkTo={`/home//${props.ID}/new`}
 					/>
 				);
 			} else {
