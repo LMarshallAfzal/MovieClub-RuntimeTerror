@@ -269,7 +269,7 @@ function ClubDetail() {
                             key={index}
                             label={user.first_name + " " + user.last_name + " "} 
                             icon ={<FaCrown/>}
-                            onClick={() => handleUserClick(user.ID)}
+                            onClick={() => handleUserClick(user.id)}
                             sx={{mr: 1, mt: 1}}
                         />
                     
