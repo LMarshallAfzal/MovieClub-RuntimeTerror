@@ -75,6 +75,12 @@ def login(request):
         data['response'] = 'You have entered an invalid username or password'
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def update_gravatars(request):
+    for user in User.objects.all():
+        user.gravavatar_link = user.get_gravatar(user.email)
+        user.save()
+    return Response(status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])

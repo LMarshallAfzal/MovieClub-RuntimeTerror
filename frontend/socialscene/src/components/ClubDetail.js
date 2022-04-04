@@ -14,6 +14,7 @@ import {
     Stack,
     TextField
 } from "@mui/material";
+import { FaCrown } from 'react-icons/fa';
 import "../styling/components/ClubDetail.css";
 import ThemeButton from "./core/ThemeButton";
 import {themes} from "../resources/data/MovieThemes"
@@ -27,6 +28,7 @@ function ClubDetail() {
     const [edit, setEdit] = useState(true);
 	const [isMember, setIsMember] = useState(false);
 	const [members, setMembers] = useState([]);
+    const [owner,setOwner] = useState([])
 	const [club, setClub] = useState([]);
 	const [myClubData, setMyClubData] = useState([]);
 
@@ -76,6 +78,21 @@ function ClubDetail() {
 		let data = await response.json();
 		setMembers(data);
 	};
+
+    let getClubOwner = async (e) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/club_owner/" + clubID + "/",
+        {method : "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + String(authTokens.access),
+    },
+}
+        );
+        let data = await response.json();
+        setOwner(data);
+};
+
 
 	let getMembershipData = async (e) => {
 		let response = await fetch(
@@ -138,6 +155,7 @@ function ClubDetail() {
 
 	useEffect(() => {
 		getClubMembers();
+        getClubOwner();
 		getMembershipData();
 		getClub();
 		myClubData.find(val => val.club_id === clubID) ? setIsMember(true) : setIsMember(false);
@@ -203,11 +221,23 @@ function ClubDetail() {
         if (showBannedMembers === false) {
             return (
                 <>
+                {owner.map((user,index)=> {
+                    return (
+                        <Chip
+                            key={index}
+                            label={user.first_name + " " + user.last_name + " "} 
+                            icon ={<FaCrown/>}
+                            onClick={() => handleUserClick(user.ID)}
+                            sx={{mr: 1, mt: 1}}
+                        />
+                    
+                )})}
+                
                     {members.map((user, index) => {
                         return (
                             <Chip
                                 key={index}
-                                label={user.first_name + " " + user.last_name}
+                                label={user.first_name + " " + user.last_name + " " }
                                 avatar={
                                     <Avatar
                                         src={user.iconImage}
