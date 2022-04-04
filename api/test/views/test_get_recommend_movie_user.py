@@ -39,7 +39,7 @@ class RecommendMovieUserTestCase(APITestCase):
         train_response = self.client.get(self.train_url)
         self.assertEqual(train_response.status_code,status.HTTP_200_OK)
         response = self.client.get(self.url)
-        self.assertEqual(len(response.data), 5)
+        self.assertTrue(len(response.data) > 5)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.data.clean()
     

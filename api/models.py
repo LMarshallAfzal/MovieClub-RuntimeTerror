@@ -51,7 +51,7 @@ class User(AbstractUser):
     followers = models.ManyToManyField(
         'self', symmetrical=False, related_name='followees'
     )
-
+    
     def toggle_follow(self, followee):
 
         if followee == self:
@@ -297,8 +297,6 @@ class Movie(models.Model):
 
     viewers = models.ManyToManyField(
         User, through='Watch', related_name='viewers')
-
-    cover_link = models.CharField(max_length=500, blank=True)
 
     class Meta:
         ordering = ['title']

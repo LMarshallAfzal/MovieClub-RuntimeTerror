@@ -1,5 +1,5 @@
 from .models import Movie, Club, Rating, Watch, Membership
-from .helpers import get_initial_recommendations_for_clubs, get_initial_recommendations_for_movies,get_initial_recommendations_for_meeting_movies
+from .helpers import recommendations_based_on_preferences_for_clubs, recommendations_based_on_preferences_for_user_movies,recommendations_based_on_theme_for_meeting_movies
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework import status
@@ -158,7 +158,7 @@ def has_ratings_for_movie_recommendations(view_function):
         if Rating.objects.filter(user=request.user.id):
             return view_function(request, *args, **kwargs)
         else:
-            recommendations = get_initial_recommendations_for_movies(
+            recommendations = recommendations_based_on_preferences_for_user_movies(
             request.user, request.user.get_user_preferences()) # this was the whole string before
             serializer = MovieSerializer(recommendations, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -182,7 +182,7 @@ def has_ratings_for_club_recommendations(view_function):
         if Rating.objects.filter(user=request.user.id):
             return view_function(request, *args, **kwargs)
         else:
-            recommendations = get_initial_recommendations_for_clubs(
+            recommendations = recommendations_based_on_preferences_for_clubs(
             request.user, request.user.get_user_preferences()) # this was the prefernces string split(',')
             serializer = ClubSerializer(recommendations, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -197,7 +197,7 @@ def members_have_ratings_for_meeting_movie_recommendations(view_function):
             if Rating.objects.filter(user=member):
                 ratings.append(Rating.objects.filter(user=member))
         if not ratings:
-            recommendations = get_initial_recommendations_for_meeting_movies(club)
+            recommendations = recommendations_based_on_theme_for_meeting_movies(club)
             serializer = MovieSerializer(recommendations, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
