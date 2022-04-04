@@ -1,11 +1,11 @@
-"""Unit tests for the Membership model."""
+"""Unit tests for the Meeting model."""
 
 from django.core.exceptions import ValidationError
 from rest_framework.test import APITestCase
 from api.models import User, Club, Meeting, Movie
 
 class MeetingTestCase(APITestCase):
-    """Unit tests for the Membership model."""
+    """Unit tests for the Meeting model."""
 
     fixtures = [
         'api/test/fixtures/default_user.json',
@@ -13,12 +13,13 @@ class MeetingTestCase(APITestCase):
         'api/test/fixtures/default_club.json',
         'api/test/fixtures/other_clubs.json',
         "api/test/fixtures/default_movie.json",
+        "api/test/fixtures/genres.json",
     ]
 
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
         self.club = Club.objects.get(club_name='Beatles')
-        self.movie = Movie.objects.get(id=1)
+        self.movie = Movie.objects.get(title = "The Godfather")
         self.meeting = Meeting.objects.create(
             club = self.club, 
             movie = self.movie, 

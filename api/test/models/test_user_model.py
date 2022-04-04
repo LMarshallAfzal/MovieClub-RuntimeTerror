@@ -16,6 +16,7 @@ class UserModelTestCase(APITestCase):
         'api/test/fixtures/other_clubs.json',
         'api/test/fixtures/default_movie.json',
         'api/test/fixtures/other_movies.json',
+        "api/test/fixtures/genres.json",
     ]
 
     def setUp(self):
@@ -127,14 +128,6 @@ class UserModelTestCase(APITestCase):
         self.user.preferences.set(self.second_user.preferences.all())
         self._assert_user_is_valid()
 
-    def test_preferences_may_contain_up_to_100_characters(self):
-        self.user.preferences = 'x' * 100
-        self._assert_user_is_valid()
-
-    def test_preferences_must_not_contain_more_than_100_characters(self):
-        self.user.preferences = 'x' * 101
-        self._assert_user_is_invalid()
-
     def test_mini_gravatar(self):
         gravatar_mini = self.user.mini_gravatar()
         self.assertTrue("size=60" in gravatar_mini)
@@ -176,6 +169,10 @@ class UserModelTestCase(APITestCase):
     def test_get_user_clubs(self):
         clubs = self.user.get_user_clubs()
         self.assertEqual(len(clubs), 1)
+
+    def test_get_user_preferences(self):
+        preferences = self.user.get_user_preferences()
+        self.assertEqual(len(preferences), 2)
 
     def test_get_user_ratings(self):
         before = self.user.get_user_ratings()
