@@ -31,10 +31,7 @@ const Profile = () => {
 	const[followerCount,setFollowerCount] = useState(null);
 	const[followingCount,setFollowingCount] = useState(null);
 	const [userMemberships, setUserMemberships] = useState([]);
-<<<<<<< HEAD
 	const [favouriteMovies,setFavouriteMovies] = useState([]);
-=======
->>>>>>> 768be97 (Show followers/followees.)
 	const [usernameError, setUsernameError] = useState(false);
 	const [firstNameError, setFirstNameError] = useState(false);
 	const [lastNameError, setLastNameError] = useState(false);
@@ -230,12 +227,9 @@ const Profile = () => {
 		getUserData();
 		getWatchedMovies();
 		getUserMemberships();
-<<<<<<< HEAD
 		getFavourites();
-=======
 		getFollowers();
 		getFollowing();
->>>>>>> 768be97 (Show followers/followees.)
 	}, []);
 
 	const navigate = useNavigate();
