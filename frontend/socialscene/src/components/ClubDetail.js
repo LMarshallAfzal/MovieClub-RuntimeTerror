@@ -23,7 +23,6 @@ import AuthContext from "../components/helper/AuthContext";
 
 function ClubDetail() {
     const [showBannedMembers, setBannedMembers] = useState(false);
-    const [showBanDialog, setBanDialog] = useState(false);
     const [showDeleteClubDialog, setDeleteClubDialog] = useState(false);
     const [edit, setEdit] = useState(true);
 	const [isMember, setIsMember] = useState(false);
@@ -184,6 +183,7 @@ function ClubDetail() {
 	};
 
     let banMember = async (memberID) => {
+        console.log(memberID);
         let response = await fetch("http://127.0.0.1:8000/ban_member/" + clubID + "/" + memberID + "/", {
             method: "PUT",
             body: JSON.stringify(user1),
@@ -240,13 +240,6 @@ function ClubDetail() {
         setBannedMembers(!showBannedMembers);
     }
 
-    const openBanDialog = () => {
-        setBanDialog(true);
-    }
-
-    const closeBanDialog = () => {
-        setBanDialog(false);
-    }
 
     const openDeleteClubDialog = () => {
         setDeleteClubDialog(true);
@@ -261,19 +254,14 @@ function ClubDetail() {
         deleteClub()
     }
 
-    const handleRemoveUser = () => {
-        closeBanDialog();
-        console.log("User Removed");
+
+    const handleBan = (id) => {
+        banMember(id)
     }
 
-    const handleBan = () => {
-        handleRemoveUser();
-        // banMember(id)
-    }
-
-    const handleUnBan = () => {
+    const handleUnBan = (id) => {
         console.log("User Un-Banned");
-        // unbanMember(id)
+        unbanMember(id)
     }
 
     const navigate = useNavigate();
@@ -282,8 +270,9 @@ function ClubDetail() {
         navigate(`${ID}`, {replace: false});
     }
 
-    const handleBannedUserClick = () => {
+    const handleBannedUserClick = (id) => {
         console.log("User Clicked");
+        
     }
 
     function UserDisplay() {
@@ -312,7 +301,7 @@ function ClubDetail() {
                                         src={user.iconImage}
                                         alt={user.first_name + " " + user.last_name}
                                     />}
-                                onDelete={openBanDialog}
+                                onDelete={() => handleBan(user.id)}
                                 onClick={() => handleUserClick(user.id)}
                                 sx={{mr: 1, mt: 1}}
                             />
@@ -333,8 +322,8 @@ function ClubDetail() {
                                         src={user.iconImage}
                                         alt={user.first_name + " " + user.last_name}
                                     />}
-                                onDelete={handleUnBan}
-                                onClick={handleBannedUserClick}
+                                onDelete={() => handleUnBan(user.id)}
+                                onClick={handleBannedUserClick(user.id)}
                                 sx={{mr: 1, mt: 1}}
                             />
 
@@ -409,29 +398,6 @@ function ClubDetail() {
                         </DialogActions>
                     </Dialog>
 
-                    <Dialog
-                        open={showBanDialog}
-                        onClose={closeBanDialog}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description">
-
-                        <DialogTitle id="alert-dialog-title">
-                            <h4>also ban this user
-                                <h4--emphasise>?</h4--emphasise>
-                            </h4>
-                        </DialogTitle>
-
-                        <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
-                                <h6>decide whether this user will also be banned from the club or just removed</h6>
-                            </DialogContentText>
-                        </DialogContent>
-
-                        <DialogActions>
-                            <ThemeButton onClick={handleBan} text={"ban"} style={"primary"}/>
-                            <ThemeButton onClick={handleRemoveUser} text={"remove"}/>
-                        </DialogActions>
-                    </Dialog>
 
                     <ThemeButton text={"join"} style={isMember ? "disabled" : "primary"} onClick={() => joinClub()} />
 
