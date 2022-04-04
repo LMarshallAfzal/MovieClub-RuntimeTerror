@@ -26,6 +26,10 @@ const Profile = () => {
 	let preferencesValues = [];
 
     const [watchedMovies, setWatchedMovies] = useState([]);
+	const[followers,setFollowers] = useState([]);
+	const[following,setFollowing] = useState([]);
+	const[followerCount,setFollowerCount] = useState(null);
+	const[followingCount,setFollowingCount] = useState(null);
 	const [userMemberships, setUserMemberships] = useState([]);
 	const [favouriteMovies,setFavouriteMovies] = useState([]);
 	const [usernameError, setUsernameError] = useState(false);
@@ -102,6 +106,8 @@ const Profile = () => {
 			setPreferencesErrorText(data.preferences);
 		}
 	};
+
+
 
 	let getWatchedMovies = async () => {
         let response = await fetch("http://127.0.0.1:8000/watched_list/", {
@@ -189,11 +195,41 @@ const Profile = () => {
 		setUserMemberships(data);
 	};
 
+	let getFollowers = async (e) => {
+		let response = await fetch("http://127.0.0.1:8000/followers/",{
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		let data = await response.json();
+
+		setFollowers(data);
+		setFollowerCount(data.length);
+	}
+
+	let getFollowing = async (e) => {
+		let response = await fetch("http://127.0.0.1:8000/following/",{
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		let data = await response.json();
+
+		setFollowing(data);
+		setFollowingCount(data.length);
+	}
+
 	useEffect(() => {
 		getUserData();
 		getWatchedMovies();
 		getUserMemberships();
 		getFavourites();
+		getFollowers();
+		getFollowing();
 	}, []);
 
 	const navigate = useNavigate();
@@ -327,20 +363,20 @@ const Profile = () => {
 						</Grid>
 					</HomepageCard>
 
-					<HomepageCard title={"following"} titleItemText={cardHeight}>
-						<Box maxHeight={cardHeight / 2} sx={{ overflowY: "scroll" }}>
-							{DummyClubMemberData.map((user, index) => {
+					<HomepageCard title={"following"} titleItemText={followingCount}>
+						<Box maxHeight={followingCount*100} sx={{ overflowY: "scroll" }}>
+							{following.map((user, index) => {
 								return (
 									<Chip
 										key={index}
-										label={user.firstName + " " + user.lastName}
+										label={user.first_name + " " + user.last_name}
 										avatar={
 											<Avatar
 												src={user.iconImage}
-												alt={user.firstName + " " + user.lastName}
+												alt={user.first_name + " " + user.last_name}
 											/>
 										}
-										onClick={() => handleChipClick("profile", user.ID)}
+										onClick={() => handleChipClick("profile", user.id)}
 										sx={{ mr: 1, mt: 1 }}
 									/>
 								);
@@ -348,20 +384,20 @@ const Profile = () => {
 						</Box>
 					</HomepageCard>
 
-					<HomepageCard title={"followers"} titleItemText={cardHeight}>
-						<Box maxHeight={cardHeight / 2} sx={{ overflowY: "scroll" }}>
-							{DummyClubMemberData.map((user, index) => {
+					<HomepageCard title={"followers"} titleItemText={followerCount}>
+						<Box maxHeight={followerCount*100} sx={{ overflowY: "scroll" }}>
+							{followers.map((user, index) => {
 								return (
 									<Chip
 										key={"index"}
-										label={user.firstName + " " + user.lastName}
+										label={user.first_name + " " + user.last_name}
 										avatar={
 											<Avatar
 												src={user.iconImage}
-												alt={user.firstName + " " + user.lastName}
+												alt={user.first_name + " " + user.last_name}
 											/>
 										}
-										onClick={() => handleChipClick("profile", user.ID)}
+										onClick={() => handleChipClick("profile", user.id)}
 										sx={{ mr: 1, mt: 1 }}
 									/>
 								);
