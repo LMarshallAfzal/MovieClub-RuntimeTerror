@@ -158,6 +158,19 @@ function ClubDetail() {
 		setClub(data)
 	};
 
+    let deleteClub = async () => {
+        let response = await fetch("http://127.0.0.1:8000/delete_club/" + clubID + "/",
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+    };
+
 	useEffect(() => {
 		getClubMembers();
         getClubOwner();
@@ -195,7 +208,7 @@ function ClubDetail() {
 
     const handleClubDelete = () => {
         closeDeleteClubDialog()
-        console.log("Club Deleted");
+        deleteClub()
     }
 
     const handleRemoveUser = () => {
