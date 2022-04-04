@@ -93,12 +93,6 @@ class User(AbstractUser):
             size=size, default='identicon')
         return gravatar_url
 
-    def get_user_clubs(self):
-        return Club.objects.all().filter(
-            club_members__username=self.username, role__club_role='M') | Club.objects.all().filter(
-            club_members__username=self.username, role__club_role='O') | Club.objects.all().filter(
-            club_members__username=self.username, role__club_role='C')
-
     def get_user_ratings(self):
         ratings = Rating.objects.filter(user=self)
         if not ratings:
@@ -316,13 +310,10 @@ class Movie(models.Model):
 
     def get_rating_author(self, user):
         author = Rating.objects.get(user=user.id, movie=self.id)
-        if not user:
-            return None
-        else:
-            return author
+        return author
 
-    def get_movie_title(movie_id):
-        return Movie.objects.get(movie_id=movie_id).title
+    def get_movie_title(self):
+        return Movie.objects.get(id=self.id).title
 
     def get_movies_by_genre(genres):
         return Movie.objects.filter(genres__id__in=genres)
