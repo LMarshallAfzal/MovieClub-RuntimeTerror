@@ -27,7 +27,7 @@ const Profile = () => {
 
     const [watchedMovies, setWatchedMovies] = useState([]);
 	const [userMemberships, setUserMemberships] = useState([]);
-
+	const [favouriteMovies,setFavouriteMovies] = useState([]);
 	const [usernameError, setUsernameError] = useState(false);
 	const [firstNameError, setFirstNameError] = useState(false);
 	const [lastNameError, setLastNameError] = useState(false);
@@ -115,6 +115,20 @@ const Profile = () => {
         setWatchedMovies(data);
     };
 
+	let getFavourites = async (e) => {
+        let response = await fetch("http://127.0.0.1:8000/favourite_movies/" + user.user_id, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authTokens.access,
+            },
+        });
+        let data = await response.json();
+        setFavouriteMovies(data);
+    };
+
+	
+
 	let submitChangeProfileForm = async (e) => {
 		e.preventDefault();
 		resetErrorState();
@@ -179,6 +193,7 @@ const Profile = () => {
 		getUserData();
 		getWatchedMovies();
 		getUserMemberships();
+		getFavourites();
 	}, []);
 
 	const navigate = useNavigate();
@@ -389,7 +404,7 @@ const Profile = () => {
 								height={cardHeight}
 								sx={{ overflowX: "scroll", overflowY: "hidden" }}
 							>
-								{moviesWithPoster.slice(0, 5).map((movie, index) => {
+								{favouriteMovies.slice(0, 5).map((movie, index) => {
 									return (
 										<MovieCard
 											key={index}
