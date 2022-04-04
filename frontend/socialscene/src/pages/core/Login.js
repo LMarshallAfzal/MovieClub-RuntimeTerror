@@ -82,6 +82,7 @@ export function Login() {
                             id={"outlined-adornment-password"}
                             label={"password"}
                             name={"password"}
+                            data-testid="password-field"
                             type={passwordVisibility ? "text" : "password"}
                             value={password}
                             onChange={e => onChange(e)}

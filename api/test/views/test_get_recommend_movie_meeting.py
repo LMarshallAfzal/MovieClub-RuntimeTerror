@@ -10,6 +10,7 @@ from recommender.meeting_movie_rec_data import MeetingMovieRecommenderData as Da
 class RecommendMovieMeetingTestCase(APITestCase):
 
     fixtures = [
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/other_users.json',
         'api/test/fixtures/default_club.json',

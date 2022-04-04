@@ -31,7 +31,7 @@ def get_initial_recommendations_for_meeting_movies(club):
     for member in club.club_members.all():
         for movie in member.watched_movies.all():
             watched_movies.add(movie)
-    query = Movie.get_movies_by_genre(club.theme)
+    query = Movie.get_movies_by_club_theme(club.theme)
     movies = set()
     for movie in query:
         if not movie in watched_movies:
@@ -58,7 +58,6 @@ def get_initial_recommendations_for_clubs(user, user_preferences):
         number_of_recomendations = len(clubs)
     recommendations = random.sample(clubs, number_of_recomendations)
     return recommendations
-
 
 def update_upcoming_meetings():
     meetings = Club.objects.all().filter(club_meetings__completed=False)

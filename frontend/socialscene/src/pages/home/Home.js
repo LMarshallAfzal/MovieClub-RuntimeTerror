@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import "../../styling/pages/Home.css";
 import {Box, Grid, ImageList, ImageListItem, ListItem, Stack} from "@mui/material";
@@ -23,34 +23,47 @@ const Home = () => {
     const [themes, setTheme] = useState('');
     const [club, setClub] = useState('');
     const [myClubData, setMyClubData] = useState([]);
+    const [recommendedMovies, setRecommendedMovies] = useState([]);
     let {user, authTokens} = useContext(AuthContext)
 
-    // useEffect(() => {
-    // }, [])
-
-    let submitCreateClubForm = async (e) => {
-        e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/create_club/', {
-            method: 'POST',
-            body: JSON.stringify({
-                "club_name": e.target.club_name.value,
-                "mission_statement": e.target.mission_statement.value,
-                "themes": e.target.themes.value
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-                'Authorization': 'Bearer ' + String(authTokens.access),
-                // "X-CSRFToken": Cookies.get("csrftoken"),
-            }
-        })
-        let data = await response.json()
-        if (response.status === 200) {
-            setClub(data)
-        }
-
-    }
-
     const cardHeight = 390;
+
+    useEffect(() => {
+        getRecommendedMovies();
+        getMembershipData();
+    },[])
+
+    let getRecommendedMovies = async () => {
+        let response = await fetch("http://127.0.0.1:8000/rec_movies/", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        let data = await response.json();
+        console.log(data);
+        if (response.status === 200) {
+            setRecommendedMovies(data);
+        } else {
+            alert("Something went wrong");
+        }
+    };
+
+    let getMembershipData = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setMyClubData(data);
+	};
 
     return (
         <Grid container
@@ -106,7 +119,7 @@ const Home = () => {
                                        height={cardHeight}
                                        sx={{overflowX: "scroll", overflowY: "hidden"}}
                                 >
-                                    {moviesWithPoster.map((movie, index) => {
+                                    {recommendedMovies.map((movie, index) => {
                                         return (
                                             <MovieCard
                                                 key={index}
@@ -133,17 +146,17 @@ const Home = () => {
                             <Grid item xs={12}>
                                 <Stack direction={"row"}
                                        overflow={"auto"}>
-                                    {DummyClubData.map((club, index) => club.isMember === true && (
+                                    {myClubData.map((club, index) => (
                                         <ListItem key={index} sx={{width: 'auto', p: 1}}>
 
                                             <ClubCard
-                                                clubName={club.clubName}
-                                                isMember={club.isMember}
+                                                clubName={club.club_name}
+                                                isMember={"M"}
                                                 iconImage={club.iconImage}
-                                                description={club.description}
+                                                description={club.mission_statement}
                                                 isOrganiser={club.isOrganiser}
-                                                memberRole={club.memberRole}
-                                                clubTheme={club.clubTheme}
+                                                // memberRole={club.memberRole}
+                                                clubTheme={club.theme}
                                                 ID={club.ID}
                                             />
                                         </ListItem>

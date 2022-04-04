@@ -1,0 +1,101 @@
+[
+    {
+        "model": "api.Genre",
+        "pk": 1,
+        "fields": {
+        "name":"Comedy"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 2,
+        "fields": {
+        "name":"War"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 3,
+        "fields": {
+        "name":"Western"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 4,
+        "fields": {
+        "name":"Documentary"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 5,
+        "fields": {
+        "name":"Animation"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 6,
+        "fields": {
+        "name":"Crime"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 7,
+        "fields": {
+        "name":"Thriller"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 8,
+        "fields": {
+        "name":"Adventure"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 9,
+        "fields": {
+        "name":"Mystery"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 10,
+        "fields": {
+        "name":"Romance"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 11,
+        "fields": {
+        "name":"Musical"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 12,
+        "fields": {
+        "name":"Film-Noir"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 13,
+        "fields": {
+        "name":"Sci-Fi"
+        }
+    },
+    {
+        "model": "api.Genre",
+        "pk": 14,
+        "fields": {
+        "name":"Children"
+        }
+    }
+]
+  

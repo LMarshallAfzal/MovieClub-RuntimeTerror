@@ -20,13 +20,46 @@ const Movies = () => {
     });
     const [recommendedMovies, setRecommendedMovies] = useState([]);
     const [watchedMovies, setWatchedMovies] = useState([]);
+    const [clubMovies, setClubMovies] = useState([]);
 
     useEffect(() => {
         getRecommendedMovies();
         getWatchedMovies();
-
+        getClubMovies();
+        console.log(clubMovies)
     }, []);
 
+    let getMovie = async (e, id) => {
+        let response = await fetch("http://127.0.0.1:8000/watched_list/get_movie/" + id + "/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authTokens.access,
+            },
+        });
+        await response.json();
+    }
+
+
+    let getClubMovies = async (e) => {
+        let response = await fetch("http://127.0.0.1:8000/get_user_attending_meetings/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authTokens.access,
+            },
+        });
+        let data = await response.json();
+        console.log(data)
+        if(response.status === 200) {
+            let array = [];
+            data.map((val) => {
+                array.push(getMovie(e, val.movie));
+            });
+            setClubMovies(array);
+        }
+    };
+    
     let getWatchedMovies = async () => {
         let response = await fetch("http://127.0.0.1:8000/watched_list/", {
             method: "GET",
@@ -37,65 +70,6 @@ const Movies = () => {
         });
         let data = await response.json();
         setWatchedMovies(data);
-    };
-
-    let addToWatchedList = async (id) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/add_watched_movie/" + id + "/",
-            {
-                method: "POST",
-                body: JSON.stringify({movie: id, user: user.user_id}),
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + authTokens.access,
-                },
-            }
-        );
-    };
-
-    let editRating = async (id) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/edit_rating/" + id + "/",
-            {
-                method: "PUT",
-                body: JSON.stringify({
-                    user: user.user_id,
-                    movie: id,
-                    score: rating.score,
-                }),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data = await response.json();
-        if (response.status === 200) {
-            setRating(data);
-        } else {
-            setRating({user: user.user_id, movie: id, score: 0.0});
-            console.log(rating.score);
-        }
-    };
-
-    let getRating = async (id) => {
-        let response = await fetch("http://127.0.0.1:8000/get_rating/" + id + "/", {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-                Authorization: "Bearer " + String(authTokens.access),
-            },
-        });
-        let data = await response.json();
-        if (response.status === 200) {
-            setRating(data);
-        } else if (response.status === 400) {
-            setRating({user: user.user_id, movie: id, score: 0.0});
-            console.log(rating.score);
-        } else {
-            setRating({user: user.user_id, movie: id, score: 0.0});
-            console.log(rating.score);
-        }
     };
 
     let getRecommendedMovies = async () => {
@@ -114,42 +88,6 @@ const Movies = () => {
         } else {
             alert("Something went wrong");
         }
-    };
-
-    let AddRating = async (id, ratingScore) => {
-        let response1 = await fetch(
-            "http://127.0.0.1:8000/add_rating/" + id + "/",
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    user: user.user_id,
-                    movie: id,
-                    score: ratingScore,
-                }),
-                headers: {
-                    "Content-Type": "application/json; charset=UTF-8",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data1 = await response1.json();
-        setRating(data1);
-        let response2 = await fetch("http://127.0.0.1:8000/train/movie/", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8",
-                Authorization: "Bearer " + String(authTokens.access),
-            },
-        });
-        await response2.json();
-        let response3 = await fetch("http://127.0.0.1:8000/train/meeting/", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8",
-                Authorization: "Bearer " + String(authTokens.access),
-            },
-        });
-        await response3.json();
     };
 
     const [openSearch, setOpenSearch] = useState(false);
@@ -239,7 +177,7 @@ const Movies = () => {
                                height={clubCardHeight}
                                sx={{overflowX: "scroll", overflowY: "hidden"}}
                         >
-                            {moviesWithPoster.map((movie, index) => {
+                            {clubMovies.map((movie, index) => {
                                 return (
                                     <MovieCard
                                         key={index}
@@ -264,7 +202,7 @@ const Movies = () => {
                                height={rateCardHeight}
                                sx={{overflowX: "scroll", overflowY: "hidden"}}
                         >
-                            {moviesWithPoster.map((movie, index) => {
+                            {recommendedMovies.map((movie, index) => {
                                 return (
                                     <MovieCard
                                         key={index}
@@ -288,7 +226,7 @@ const Movies = () => {
                                height={cardHeight}
                                sx={{overflowX: "scroll", overflowY: "hidden"}}
                         >
-                            {moviesWithPoster.map((movie, index) => {
+                            {watchedMovies.map((movie, index) => {
                                 return (
                                     <MovieCard
                                         key={index}

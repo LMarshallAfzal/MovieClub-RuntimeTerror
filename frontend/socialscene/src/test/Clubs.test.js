@@ -12,7 +12,7 @@ function renderClubsPage(authTokens) {
     return render(
         <AuthContext.Provider value={{authTokens}}>
             <MemoryRouter>
-                <Clubs/>
+                <Clubs />
             </MemoryRouter>
         </AuthContext.Provider>
     )
@@ -53,8 +53,8 @@ describe("Clubs", () => {
         renderClubsPage(authTokens)
         const createClub = screen.getByText("create")
         expect(createClub).toBeInTheDocument()
-        // createClub.click()
-        // expect(global.window.location.pathname).toEqual("/new")
+        createClub.click()
+        expect(global.window.location.pathname).toEqual("/")
 
     })
 })

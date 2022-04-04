@@ -8,7 +8,7 @@
         "username": "janedoe",
         "email": "janedoe@example.org",
         "bio": "Hello, I am Jane Doe.",
-        "preferences": "Romcom, Comedy",
+        "preferences": [2,3],
         "password": "pbkdf2_sha256$320000$mR1o9ivLjeSdCeOfVreuD7$Z+U3AUVbi02NQ7aoFpcQOsUjibLNeUmOoSLU8mF7otM=",
         "is_active": true
       }
@@ -22,7 +22,7 @@
         "username": "daviddoe",
         "email": "daviddoe@example.org",
         "bio": "Hello, I am David Doe.",
-        "preferences": "Romcom, Comedy",
+        "preferences": [3,4],
         "password": "pbkdf2_sha256$320000$mR1o9ivLjeSdCeOfVreuD7$Z+U3AUVbi02NQ7aoFpcQOsUjibLNeUmOoSLU8mF7otM=",
         "is_active": true
       }

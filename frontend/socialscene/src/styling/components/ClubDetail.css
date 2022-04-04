@@ -122,7 +122,10 @@ h6 {
   padding: 10px;
   color: #FFFFFF;
   background-color: #C4C4C4;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .club-member-heading {

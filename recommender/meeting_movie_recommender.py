@@ -4,6 +4,8 @@ import heapq as pq
 from collections import defaultdict
 from operator import itemgetter
 from api.models import Movie, User, Rating
+from api.helpers import  get_initial_recommendations_for_meeting_movies
+
 
 
 data = Data()
@@ -21,11 +23,15 @@ def train_movie_data_for_meeting():
     dict['matrix'] = matrix
 
 def recommend_movies_for_meeting(club):
-    trainSet = dict['trainSet']
-    matrix = dict['matrix']
-    user_inner_id = trainSet.to_inner_uid(str(club.id))
+    try:
+        trainSet = dict['trainSet']
+        matrix = dict['matrix']
+        user_inner_id = trainSet.to_inner_uid(str(club.id))
+        target_ratings = trainSet.ur[user_inner_id]
+    except:
+         return get_initial_recommendations_for_meeting_movies(club)
+        
 
-    target_ratings = trainSet.ur[user_inner_id]
     k_neighbours = pq.nlargest(
         number_of_recommendations, target_ratings, key=lambda t: t[1])
 

@@ -8,6 +8,7 @@ class UserMembershipTestCase(APITestCase):
     """Unit tests for the Membership model."""
 
     fixtures = [
+        'api/test/fixtures/genres.json',
         'api/test/fixtures/default_user.json',
         'api/test/fixtures/other_users.json',
         'api/test/fixtures/default_club.json',

@@ -119,6 +119,7 @@ h6 {
 }
 
 .navbar {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100%;
@@ -133,14 +134,20 @@ h6 {
   font-size: 1.2rem;
   overflow: auto;
   width: 100%;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .navbar-red {
   height: 10px;
   display: flex;
   background: #FF0000;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .logo-social {
@@ -166,7 +173,10 @@ h6 {
   text-decoration: none;
   font-size: 2rem;
   padding-top: 20px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .navbar-enter-button {
@@ -176,6 +186,4 @@ h6 {
   padding-right: 20px;
   padding-top: 20px;
   text-decoration: none;
-}
-
-/*# sourceMappingURL=Navbar.css.map */
+}/*# sourceMappingURL=Navbar.css.map */

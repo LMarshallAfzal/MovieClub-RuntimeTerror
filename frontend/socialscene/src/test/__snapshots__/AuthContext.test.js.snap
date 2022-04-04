@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthProvider should fetch user data if jwt is present and is valid 1`] = `
+<div>
+  test
+</div>
+`;
+
+exports[`AuthProvider should render without crashing 1`] = `
+<div>
+  test
+</div>
+`;
+
+exports[`AuthProvider should render without crashing with authTokens 1`] = `
+<div>
+  test
+</div>
+`;
+
+exports[`AuthProvider should render without crashing with authTokens and error 1`] = `
+<div>
+  test
+</div>
+`;
+
+exports[`AuthProvider should render without crashing with authTokens and error and errorMessage 1`] = `
+<div>
+  test
+</div>
+`;

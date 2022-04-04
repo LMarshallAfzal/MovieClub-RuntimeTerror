@@ -39,12 +39,14 @@ function NavbarButton() {
 
             <RoundButton
                 text={"enter"}
+                data-testid="enter-button"
                 linkTo={"/home"}
             />
         )} else {return (
 
             <RoundButton
                 text={"enter"}
+                data-testid="login-button"
                 linkTo={"/login"}
             />
         )}
@@ -53,6 +55,7 @@ function NavbarButton() {
 
             <RoundButton
                 text={"sign up"}
+                data-testid="signup-button"
                 linkTo={"/signup"}
             />
         )
@@ -61,6 +64,7 @@ function NavbarButton() {
 
             <RoundButton
                 text={"log out"}
+                data-testid="logout-button"
                 onClick={logoutUser}
             />
         )} else {return (

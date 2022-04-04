@@ -120,7 +120,10 @@ h6 {
 
 .search-bar {
   width: 100%;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .create-button {
@@ -129,6 +132,4 @@ h6 {
 
 .club-card-list-item {
   width: auto;
-}
-
-/*# sourceMappingURL=Clubs.css.map */
+}/*# sourceMappingURL=Clubs.css.map */

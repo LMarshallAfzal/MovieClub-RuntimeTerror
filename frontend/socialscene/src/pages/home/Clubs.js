@@ -1,12 +1,52 @@
-import React from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {Grid, ListItem, Stack, TextField} from "@mui/material";
 import {Outlet} from "react-router-dom";
 import "../../styling/pages/Clubs.css";
 import ThemeButton from "../../components/core/ThemeButton";
 import ClubCard from "../../components/ClubCard";
 import {DummyClubData} from "../../resources/data/DummyClubsData";
+import AuthContext from "../../components/helper/AuthContext";
 
 function Clubs() {
+
+	let {user, authTokens} = useContext(AuthContext);
+
+	const [myClubData, setMyClubData] = useState([]);
+	const [recommendedClubs, setRecommendedClubs] = useState([]);
+
+	let getMembershipData = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setMyClubData(data);
+	};
+
+	let getRecommendedClubs = async (e) => {
+		let response = await fetch("http://127.0.0.1:8000/rec_clubs/", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		let data = await response.json();
+		setRecommendedClubs(data);
+	};
+
+	useEffect(() => {
+		getMembershipData();
+		getRecommendedClubs();
+	}, []);
+
+
 
     return (
         <Grid container
@@ -44,18 +84,16 @@ function Clubs() {
                             <Stack direction={"row"}
                                    overflow={"auto"}
                             >
-                                {DummyClubData.map((club, index) => club.isMember === true && (
+                                {myClubData.map((club, index) =>  (
                                     <ListItem key={index} sx={{width: 'auto', p: 1}}>
 
                                         <ClubCard
-                                            clubName={club.clubName}
-                                            isMember={club.isMember}
+                                            clubName={club.club_name}
+                                            isMember={"M"}
                                             iconImage={club.iconImage}
-                                            description={club.description}
-                                            isOrganiser={club.isOrganiser}
-                                            memberRole={club.memberRole}
-                                            clubTheme={club.clubTheme}
-                                            ID={club.ID}
+                                            description={club.mission_statement}
+                                            clubTheme={club.theme}
+                                            ID={club.id}
                                         />
                                     </ListItem>
                                 ))}
@@ -76,18 +114,18 @@ function Clubs() {
                         <Grid item xs={12}>
                             <Stack direction={"row"}
                                    overflow={"auto"}>
-                                {DummyClubData.map((club, index) => club.isMember === false && (
+                                {recommendedClubs.map((club, index) => (
                                     <ListItem key={index} sx={{width: 'auto', p: 1}}>
-
+										{console.log(club.club_name)}
                                         <ClubCard
-                                            clubName={club.clubName}
-                                            isMember={club.isMember}
+                                            clubName={club.club_name}
+                                            // isMember={"N"}
                                             iconImage={club.iconImage}
-                                            description={club.description}
-                                            isOrganiser={club.isOrganiser}
-                                            memberRole={club.memberRole}
-                                            clubTheme={club.clubTheme}
-                                            ID={club.ID}
+                                            description={club.mission_statement}
+                                            // isOrganiser={club.isOrganiser}
+                                            // memberRole={club.memberRole}
+                                            clubTheme={club.theme}
+                                            ID={club.id}
                                         />
                                     </ListItem>
                                 ))}

@@ -34,8 +34,10 @@ class UserSerializer(ModelSerializer):
         required=False, allow_blank=True
     )
 
-    preferences = serializers.CharField(
-        required=True
+    preferences = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',
+        queryset=Genre.objects.all()
     )
 
     class Meta:
@@ -105,8 +107,10 @@ class SignUpSerializer(serializers.Serializer):
         required=False, allow_blank=True
     )
 
-    preferences = serializers.CharField(
-        required=True
+    preferences = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',
+        queryset=Genre.objects.all()
     )
 
     password = serializers.CharField(
@@ -126,6 +130,9 @@ class SignUpSerializer(serializers.Serializer):
                   'bio', 'preferences', 'password', 'password_confirmation']
 
     def validate(self, data):
+        if len(data['preferences']) == 0:
+            raise serializers.ValidationError(
+                {"preferences": "At least one genre must be selected"})
         if data['password'] != data['password_confirmation']:
             raise serializers.ValidationError(
                 {"password": "Passwords don't match."})
@@ -138,8 +145,9 @@ class SignUpSerializer(serializers.Serializer):
             last_name=validated_data['last_name'],
             email=validated_data['email'],
             bio=validated_data['bio'],
-            preferences=validated_data['preferences']
+            #preferences=validated_data['preferences']
         )
+        user.preferences.set(validated_data['preferences'])
         Token.objects.create(user=user)
 
         user.set_password(validated_data['password'])
@@ -172,14 +180,22 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         required=False, allow_blank=True
     )
 
-    preferences = serializers.CharField(
-        required=True
+    preferences = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',
+        queryset=Genre.objects.all()
     )
 
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name',
                   'email', 'bio', 'preferences']
+
+    def validate(self, data):
+        if len(data['preferences']) == 0:
+            raise serializers.ValidationError(
+                {"preferences": "At least one genre must be selected"})
+        return data
 
 
 class LoginSerializer(serializers.Serializer):
@@ -252,9 +268,10 @@ class CreateClubSerializer(serializers.Serializer):
         validators=[MaxLengthValidator(500)]
     )
 
-    theme = serializers.CharField(
-        required=True,
-        validators=[MaxLengthValidator(500)]
+    theme = serializers.SlugRelatedField(
+        many=False,
+        slug_field='name',
+        queryset=Genre.objects.all()
     )
 
     class Meta:
@@ -283,10 +300,12 @@ class UpdateClubSerializer(serializers.ModelSerializer):
             validators=[MaxLengthValidator(500)]
         )
     
-        theme = serializers.CharField(
-            required=True,
-            validators=[MaxLengthValidator(500)]
-        )
+        theme = serializers.SlugRelatedField(
+        many=False,
+        slug_field='name',
+        queryset=Genre.objects.all()
+    )
+
         class Meta:
             model = Club
             fields = ['club_name', 'mission_statement', 'theme']

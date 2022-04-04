@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import React from 'react';
-import { render, screen } from "@testing-library/react";
+import { getByTestId,render, screen } from "@testing-library/react";
 import RoundButton from "../components/core/RoundButton";
 import '@testing-library/jest-dom/extend-expect';
 import App from "../pages/core/App"
@@ -9,7 +9,7 @@ import Navbar from '../components/core/Navbar';
 import AuthContext from "../components/helper/AuthContext";
 import { MemoryRouter } from 'react-router';
 
-function renderHomePage(authTokens) {
+function renderNavbar(authTokens) {
     return render(
         <AuthContext.Provider value={{ authTokens }}>
             <MemoryRouter>
@@ -18,6 +18,7 @@ function renderHomePage(authTokens) {
         </AuthContext.Provider>
     )
 }
+
 
 
 describe('RoundButton', () => {
@@ -29,27 +30,34 @@ describe('RoundButton', () => {
         }
     })
 
-    test("Round button has text enter on home page", () => {
-        render(<App />)
-        const button = screen.getByText(/enter/i)
-        expect(button).toHaveTextContent('enter')
-        expect(button).toHaveClass('enter-button')
+    it("Round button has text enter on home page", () => {
+        renderNavbar(authTokens)
+        const roundButton = screen.getByText(/enter/i)
+        expect(roundButton).toBeTruthy()
+        expect(roundButton).toHaveTextContent('enter')
+        expect(roundButton).toHaveClass('enter-button')
     })
 
     test("Round button has text sign up on login page", () => {
-        render(<App />)
+        renderNavbar(authTokens)
         const roundButton = screen.getByText(/enter/i)
         roundButton.click()
-        expect(roundButton).toHaveTextContent('sign up')
-        expect(roundButton).toHaveClass('enter-button')
+        const signUpButton = screen.getByText(/sign up/i)
+        expect(signUpButton).toBeTruthy()
+        expect(signUpButton).toHaveTextContent('sign up')
+        expect(signUpButton).toHaveClass('enter-button')
     })
 
-    skip("Round button has text logout in every other page", () => {
-        render(<App />)
-        const roundButton = screen.getByText(/enter/i)
-        roundButton.click()
-        expect(roundButton).toHaveTextContent('logout')
-        expect(roundButton).toHaveClass('enter-button')
-    })
+    // test("Round button has text logout in every other page", () => {
+    //     renderNavbar(authTokens)
+    //     const roundButton = screen.getByText(/enter/i)
+    //     roundButton.click()
+    //     expect(roundButton).toHaveTextContent('sign up')
+    //     roundButton.click()
+    //     renderNavbar(authTokens)
+    //     const roundButton2 = screen.getByText(/enter/i)
+    //     expect(roundButton2).toHaveTextContent('log out')
+    //     expect(roundButton).toHaveClass('enter-button')
+    // })
 
 })
