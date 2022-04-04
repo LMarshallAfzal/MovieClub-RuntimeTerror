@@ -146,7 +146,7 @@ describe("Sign up form", () => {
     expect(preferencesInput).toBeVisible();
 
     preferencesInput.focus();
-    userEvent.type(document.activeElement, "Foobar69");
+    userEvent.paste(document.activeElement, "Foobar69");
 
     expect(screen.queryByRole(/option/i)).not.toBeInTheDocument();
   });
@@ -158,7 +158,7 @@ describe("Sign up form", () => {
     expect(preferencesInput).toBeVisible();
 
     preferencesInput.focus();
-    userEvent.type(document.activeElement, "roma"); // autoComplete is case-insensitive
+    userEvent.paste(document.activeElement, "roma"); // autoComplete is case-insensitive
 
     const options = screen.getAllByRole(/option/i);
     expect(options).toHaveLength(1);
