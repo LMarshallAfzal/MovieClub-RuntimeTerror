@@ -401,3 +401,6 @@ class Watch(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     time_watched = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('time_watched',)
