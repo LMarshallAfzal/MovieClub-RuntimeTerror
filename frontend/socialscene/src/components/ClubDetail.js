@@ -232,13 +232,6 @@ function ClubDetail() {
         myClubData.find(val => val.club_id === clubID && val.is_organiser === true) ? setIsOrganiser(true) : setIsOrganiser(false);
 	}, []);
 
-    // const toggleEdit = () => {
-    //     setEdit(!edit);
-	// 	if(edit){
-	// 		editClub();
-	// 	}
-    // }
-
     const toggleBannedView = () => {
         setBannedMembers(!showBannedMembers);
     }
@@ -304,8 +297,6 @@ function ClubDetail() {
                                         src={user.iconImage}
                                         alt={user.first_name + " " + user.last_name}
                                     />}
-                                // onDelete={() => handleBan(user.id)}
-                                // {...(!isOwner ? {onDelete: () => handleBan(user.id)} : {})}
                                 onDelete={isOwner ? () => handleBan(user.id) : undefined}
                                 onClick={() => handleUserClick(user.id)}
                                 sx={{mr: 1, mt: 1}}
@@ -414,8 +405,7 @@ function ClubDetail() {
 
                 </Stack>
             </Grid>
-
-            <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
+            {isOwner && <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
                 <Stack spacing={2} sx={{height: "100%"}}>
                     <TextField
                         required
@@ -469,7 +459,8 @@ function ClubDetail() {
                     <ThemeButton text={"edit"}
                                  onClick={editClub}/>
                 </Stack>
-            </Grid>
+            </Grid>}
+            
 
             <Grid item xs={12}>
                 <Outlet/>
