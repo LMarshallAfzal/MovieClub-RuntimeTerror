@@ -45,6 +45,7 @@ function ClubListing(props) {
 		let data = await response.json();
 		setClubMembers(data);
 	};
+	
 
     let joinClub = async (event, id) => {
         let response = await fetch('http://127.0.0.1:8000/join_club/' + id +'/', {
@@ -89,7 +90,7 @@ function ClubListing(props) {
 				return (
 					<EnterButton
 						text={"create meeting"}
-						linkTo={`/home/discussion/${props.ID}/new`}
+						linkTo={`/home//${props.ID}/new`}
 					/>
 				);
 			} else {
