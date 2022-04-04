@@ -399,7 +399,7 @@ function ClubDetail() {
                     </Dialog>
 
 
-                    <ThemeButton text={"join"} style={isMember ? "disabled" : "primary"} onClick={() => joinClub()} />
+                    <ThemeButton text={"join"} style={isMember ? "hidden" : "primary"} onClick={() => joinClub()} />
 
                     <ThemeButton text={"leave"} style={isMember ? "primary" : "disabled"} onClick={() => leaveClub()}/>
 
