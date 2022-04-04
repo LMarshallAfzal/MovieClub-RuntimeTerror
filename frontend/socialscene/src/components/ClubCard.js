@@ -70,6 +70,7 @@ function ClubCard(props) {
     }
 
     function ClubChip() {
+        console.log(props)
         if (props.isMember === "M") {
             
             if (props.isOrganiser === "O") {
@@ -97,7 +98,7 @@ function ClubCard(props) {
                     <Stack spacing={2} alignItems={"center"} justifyContent={"center"}>
                         <Avatar
                             alt={props.clubName}
-                            src={props.iconImage}
+                            src={require("../resources/images/club icons/" + props.clubTheme + ".png")}
                             sx={{width: 1, height: 1}}
                         />
                         <ClubButton/>
