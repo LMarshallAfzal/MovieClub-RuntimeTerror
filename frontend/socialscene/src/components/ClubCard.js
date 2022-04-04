@@ -72,7 +72,7 @@ function ClubCard(props) {
     function ClubChip() {
         if (props.isMember === "M") {
             
-            if (props.isOrganiser === "O") {
+            if (props.isOrganiser) {
                 return (
                     <RoundButton text={"create meeting"} linkTo={"/home/discussion"}/>
                 )

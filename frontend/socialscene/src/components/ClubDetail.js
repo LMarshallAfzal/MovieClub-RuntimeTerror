@@ -26,9 +26,12 @@ function ClubDetail() {
     const [showDeleteClubDialog, setDeleteClubDialog] = useState(false);
     const [edit, setEdit] = useState(true);
 	const [isMember, setIsMember] = useState(false);
+    const [isOrganiser, setIsOrganiser] = useState(false);
 	const [members, setMembers] = useState([]);
 	const [club, setClub] = useState([]);
 	const [myClubData, setMyClubData] = useState([]);
+    const [banned, setBanned] = useState([]);
+    const [user1, setUser1] = useState('');
 
     let {clubID} = useParams();
 	let {user, authTokens} = useContext(AuthContext);
@@ -75,6 +78,7 @@ function ClubDetail() {
 		);
 		let data = await response.json();
 		setMembers(data);
+        members.find(member => member.id === user.user_id) ? setIsMember(true) : setIsMember(false);
 	};
 
 	let getMembershipData = async (e) => {
@@ -92,6 +96,18 @@ function ClubDetail() {
 		setMyClubData(data);
 	};
 
+    let getBannedMembers = async (e) => {
+        let response = await fetch("http://127.0.0.1:8000/banned_member_list/" + clubID + "/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        let data = await response.json();
+        setBanned(data);
+    };
+
 	let joinClub = async () => {
 		let response = await fetch(
 			"http://127.0.0.1:8000/join_club/" + clubID + "/",
@@ -103,7 +119,12 @@ function ClubDetail() {
 				},
 			}
 		);
-		let data = await response.json();
+		await response.json();
+        if (response.status === 200) {
+            setIsMember(true);
+            getClubMembers();
+            getMembershipData();
+        }
 	};
 
 	let leaveClub = async () => {
@@ -117,7 +138,11 @@ function ClubDetail() {
 				},
 			}
 		);
-		let data = await response.json();
+		await response.json();
+        if(response.status === 200) {
+            setIsMember(false);
+            alert("You have left this club!");
+        }
 	};
 
 	let editClub = async () => {
@@ -136,11 +161,38 @@ function ClubDetail() {
 		setClub(data)
 	};
 
+    let banMember = async (memberID) => {
+        let response = await fetch("http://127.0.0.1:8000/ban_member/" + clubID + "/" + memberID + "/", {
+            method: "PUT",
+            body: JSON.stringify(user1),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        let data = await response.json();
+    }
+
+    let unbanMember = async (memberID) => {
+        let response = await fetch("http://127.0.0.1:8000/unban_member/" + clubID + "/" + memberID + "/", {
+            method: "PUT",
+            body: JSON.stringify(user1),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        let data = await response.json();
+    }
+
+
+
 	useEffect(() => {
 		getClubMembers();
 		getMembershipData();
+        getBannedMembers();
 		getClub();
-		myClubData.find(val => val.club_id === clubID) ? setIsMember(true) : setIsMember(false);
+        myClubData.find(val => val.club_id === clubID && val.is_organiser === true) ? setIsOrganiser(true) : setIsOrganiser(false);
 	}, []);
 
     const toggleEdit = () => {
@@ -182,11 +234,12 @@ function ClubDetail() {
 
     const handleBan = () => {
         handleRemoveUser();
-        console.log("User Banned");
+        // banMember(id)
     }
 
     const handleUnBan = () => {
         console.log("User Un-Banned");
+        // unbanMember(id)
     }
 
     const navigate = useNavigate();
@@ -214,7 +267,7 @@ function ClubDetail() {
                                         alt={user.first_name + " " + user.last_name}
                                     />}
                                 onDelete={openBanDialog}
-                                onClick={() => handleUserClick(user.ID)}
+                                onClick={() => handleUserClick(user.id)}
                                 sx={{mr: 1, mt: 1}}
                             />
 
@@ -224,7 +277,7 @@ function ClubDetail() {
         } else {
             return (
                 <>
-                    {members.map((user, index) => {
+                    {banned.map((user, index) => {
                         return (
                             <Chip
                                 key={index}
@@ -363,7 +416,6 @@ function ClubDetail() {
                     />
 
                     <Autocomplete
-                        multiple
 						required
                         id="tags-standard"
                         options={themes}

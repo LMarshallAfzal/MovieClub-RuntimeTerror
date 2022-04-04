@@ -29,6 +29,7 @@ def recommend_clubs(target):
         already_joined_clubs.append(club)
     recommendations = []
     for key in k_neighbours:
+        print(trainSet.to_inner_iid(key[0]))
         neighbour = Rating.objects.get(id=key[0]).user
         for club in neighbour.get_user_clubs():
             if not club in already_joined_clubs:

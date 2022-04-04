@@ -180,6 +180,7 @@ def has_ratings_for_club_recommendations(view_function):
     @wraps(view_function)
     def modified_view_function(request, *args, **kwargs):
         if Rating.objects.filter(user=request.user.id):
+            print("User has ratings")
             return view_function(request, *args, **kwargs)
         else:
             recommendations = get_initial_recommendations_for_clubs(
