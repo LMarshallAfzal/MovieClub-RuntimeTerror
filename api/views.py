@@ -337,7 +337,7 @@ def get_random_movies(request,num_movies):
 @permission_classes([IsAuthenticated])
 @club_exists
 @is_in_club
-@is_organiser
+@is_management
 @members_have_ratings_for_meeting_movie_recommendations
 def recommend_movie_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
@@ -431,7 +431,7 @@ def message_forum(request, club_id):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 @club_exists
-@is_organiser
+@is_management
 @club_has_upcoming_meeting
 def edit_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
@@ -497,7 +497,7 @@ def check_upcoming_meetings(request):
 @api_view(['DELETE'])
 @club_exists
 @is_in_club
-@is_organiser
+@is_management
 @permission_classes([IsAuthenticated])
 def cancel_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
