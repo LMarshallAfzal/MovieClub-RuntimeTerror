@@ -62,10 +62,11 @@ class ClubModelTestCase(APITestCase):
         organiser = self.club.get_organiser()
         self.assertEqual(organiser[0], self.user)
     
-    # def test_get_club_messages(self):
-    #     Message.objects.create(sender = self.user, club = self.club, message = "Hello")
-    #     club_messages = self.club.get_club_messages()
-    #     self.assertEqual(len(club_messages), 1)
+    def test_get_club_messages(self):
+        message = Message.objects.create(sender = self.user, club = self.club, message = "Hello")
+        self.club.club_messages.add(message)
+        club_messages = self.club.get_club_messages()
+        self.assertEqual(len(club_messages), 1)
 
     def _assert_club_is_valid(self):
         try:

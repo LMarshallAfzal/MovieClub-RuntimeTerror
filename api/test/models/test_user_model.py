@@ -3,7 +3,7 @@
 from django.core.exceptions import ValidationError
 from rest_framework.test import APITestCase
 from api.models import User, Membership, Club, Movie, Rating
-
+from libgravatar import Gravatar
 
 class UserModelTestCase(APITestCase):
     """Unit tests for the User model."""
@@ -21,6 +21,10 @@ class UserModelTestCase(APITestCase):
         self.user = User.objects.get(username='johndoe')
         self.second_user = User.objects.get(username='janedoe')
         self.third_user = User.objects.get(username='daviddoe')
+        self.club = Club.objects.get(club_name='Beatles')
+        self.other_club = Club.objects.get(club_name='Metallica')
+        Membership.objects.create(user=self.user, club=self.club)
+        Membership.objects.create(user=self.user, club=self.other_club, role = 'B')
 
     def test_valid_user(self):
         self._assert_user_is_valid()
@@ -129,6 +133,14 @@ class UserModelTestCase(APITestCase):
         self.user.preferences = 'x' * 101
         self._assert_user_is_invalid()
 
+    def test_mini_gravatar(self):
+        gravatar_mini = self.user.mini_gravatar()
+        self.assertTrue("size=60" in gravatar_mini)
+
+    def test_gravatar(self):
+        gravatar = self.user.gravatar()
+        self.assertTrue("size=120" in gravatar)
+
     def test_toggle_follow_user(self):
         self.assertFalse(self.user.is_following(self.second_user))
         self.assertFalse(self.second_user.is_following(self.user))
@@ -160,13 +172,8 @@ class UserModelTestCase(APITestCase):
         self.assertEqual(self.user.full_name(), self.user.first_name +' '+ self.user.last_name)
 
     def test_get_user_clubs(self):
-        before = self.user.get_user_clubs()
-        club = Club.objects.get(club_name='Beatles')
-        other_club = Club.objects.get(club_name='Metallica')
-        Membership.objects.create(user=self.user, club=club, role = 'O')
-        Membership.objects.create(user=self.second_user, club=other_club, role = 'M')
-        after = self.user.get_user_clubs()
-        self.assertEqual(len(before) + 1, len(after))
+        clubs = self.user.get_user_clubs()
+        self.assertEqual(len(clubs), 1)
 
     def test_get_user_ratings(self):
         before = self.user.get_user_ratings()
@@ -178,12 +185,8 @@ class UserModelTestCase(APITestCase):
         self.assertIsNone(before)
 
     def test_get_user_memberships(self):
-        club = Club.objects.get(club_name='Beatles')
-        other_club = Club.objects.get(club_name='Metallica')
-        Membership.objects.create(user=self.user, club=club)
-        Membership.objects.create(user=self.user, club=other_club)
         memberships = self.user.get_user_memberships()
-        self.assertEqual(len(memberships), 2)
+        self.assertEqual(len(memberships), 1)
 
     def _assert_user_is_valid(self):
         try:

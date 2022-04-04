@@ -72,6 +72,11 @@ class MovieModelTestCase(APITestCase):
         title = self.movie.get_movie_title()
         self.assertEqual(title, self.movie.title)
 
+    # def test_get_movies_by_genre(self):
+    #     genre = self.second_movie.genres
+    #     movies = self.second_movie.get_movies_by_genre('Horror')
+    #     print(movies)
+
     def _assert_movie_is_valid(self):
         try:
             self.movie.full_clean()

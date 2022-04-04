@@ -17,7 +17,7 @@ class UserMembershipTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
         self.club = Club.objects.get(club_name='Beatles')
-        self.membership = Membership(user = self.user, club = self.club, role = "M")
+        self.membership = Membership.objects.create(user = self.user, club = self.club, role = "M", is_organiser = False)
 
     def test_valid_membership(self):
         self._assert_membership_is_valid()
@@ -29,6 +29,13 @@ class UserMembershipTestCase(APITestCase):
     def test_club_may_not_be_blank(self):
         self.membership.club = None
         self._assert_membership_is_invalid()
+
+    def test_toggle_organiser(self):
+        organiserBefore = self.membership.is_organiser
+        self.membership.toggle_organiser()
+        organiserAfter = self.membership.is_organiser
+        self.assertFalse(organiserBefore)
+        self.assertTrue(organiserAfter)
 
     def test_get_club_membership(self):
         self.assertEqual(self.membership.role,"M")
