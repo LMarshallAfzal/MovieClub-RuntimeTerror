@@ -52,6 +52,8 @@ class User(AbstractUser):
         'self', symmetrical=False, related_name='followees'
     )
 
+    gravatar = models.CharField(max_length=255, blank=True)
+
     def toggle_follow(self, followee):
 
         if followee == self:
