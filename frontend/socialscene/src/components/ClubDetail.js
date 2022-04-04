@@ -84,9 +84,9 @@ function ClubDetail() {
 		);
 		let data = await response.json();
 		setMembers(data);
-        members.find(member => member.id === user.user_id) ? setIsMember(true) : setIsMember(false);
+        data.find(member => member.username === user.username) ? setIsMember(true) : setIsMember(false);
 	};
-
+    
     let getClubOwner = async (e) => {
         let response = await fetch(
             "http://127.0.0.1:8000/club_owner/" + clubID + "/",
@@ -114,6 +114,7 @@ function ClubDetail() {
 			}
 		);
 		let data = await response.json();
+        console.log(data)
 		setMyClubData(data);
 	};
 
@@ -399,7 +400,7 @@ function ClubDetail() {
                     </Dialog>
 
 
-                    <ThemeButton text={"join"} style={isMember ? "hidden" : "primary"} onClick={() => joinClub()} />
+                    {!isMember && <ThemeButton text={"join"} style={"primary"} onClick={() => joinClub()} />}
 
                     <ThemeButton text={"leave"} style={isMember ? "primary" : "disabled"} onClick={() => leaveClub()}/>
 
