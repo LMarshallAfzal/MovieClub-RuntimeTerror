@@ -51,7 +51,7 @@ class User(AbstractUser):
     followers = models.ManyToManyField(
         'self', symmetrical=False, related_name='followees'
     )
-
+    
     def toggle_follow(self, followee):
 
         if followee == self:
@@ -92,12 +92,6 @@ class User(AbstractUser):
         gravatar_url = gravatar_object.get_image(
             size=size, default='identicon')
         return gravatar_url
-
-    def get_user_clubs(self):
-        return Club.objects.all().filter(
-            club_members__username=self.username, role__club_role='M') | Club.objects.all().filter(
-            club_members__username=self.username, role__club_role='O') | Club.objects.all().filter(
-            club_members__username=self.username, role__club_role='C')
 
     def get_user_ratings(self):
         ratings = Rating.objects.filter(user=self)
@@ -141,7 +135,15 @@ class User(AbstractUser):
     def get_watched_movies(self):
         movies = self.watched_movies.all()
         return movies
-
+    
+    def get_favourite_movies(self):
+        favourites = []
+        movies_rated = Rating.objects.filter(user=self)
+        for rating in movies_rated:
+            if rating.score == 5:
+                favourites.append(rating.movie)
+        return favourites
+                                
     def clean(self):
         if self.preferences.count() == 0:
             raise ValidationError(_('You must have at least one preference'))
@@ -304,8 +306,6 @@ class Movie(models.Model):
     viewers = models.ManyToManyField(
         User, through='Watch', related_name='viewers')
 
-    cover_link = models.CharField(max_length=500, blank=True)
-
     class Meta:
         ordering = ['title']
 
@@ -316,13 +316,10 @@ class Movie(models.Model):
 
     def get_rating_author(self, user):
         author = Rating.objects.get(user=user.id, movie=self.id)
-        if not user:
-            return None
-        else:
-            return author
+        return author
 
-    def get_movie_title(movie_id):
-        return Movie.objects.get(movie_id=movie_id).title
+    def get_movie_title(self):
+        return Movie.objects.get(id=self.id).title
 
     def get_movies_by_genre(genres):
         return Movie.objects.filter(genres__id__in=genres)
@@ -404,3 +401,6 @@ class Watch(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     time_watched = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('time_watched',)

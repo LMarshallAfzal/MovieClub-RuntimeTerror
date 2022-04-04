@@ -3,6 +3,7 @@ import "../../styling/components/MovieWatchRateDialog.css";
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Rating, Stack} from "@mui/material";
 import ThemeButton from "../core/ThemeButton";
 import AuthContext from "../../components/helper/AuthContext";
+import {DummyRecommendedMovies} from '../../resources/data/DummyRecommendedMovies';
 
 
 function MovieWatchRateDialog(props) {

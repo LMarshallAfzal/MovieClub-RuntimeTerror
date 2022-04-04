@@ -501,7 +501,8 @@ function EventDetail() {
                     <Grid container spacing={2}>
 
                         <Grid item xs={3}>
-                            <MovieWatchRateDialog isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
+                            <MovieWatchRateDialog movie={specificMovie} isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
+                            {/* <MovieWatchRateDialog movie={props.movie} isOpen={showPrompt} onClose={closePrompt} data={promptData}/> */}
 
                             <ThemeButton text={"watch"} style={"primary"} onClick={() => {
                                 setPromptData(specificMovie);

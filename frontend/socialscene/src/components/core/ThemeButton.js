@@ -16,7 +16,7 @@ function ThemeButton(props) {
         <button className={"form-button"}
                 type={props.type}
                 id={props.style || "normal"}
-                onClick={(props.style === "disabled") ? "" : (props.onClick || (props.linkTo ? () => HandleNavigate(props.linkTo) : ""))}>
+                onClick={(props.style === "disabled") ? "" : (props.onClick || (props.linkTo ? () => HandleNavigate(props.linkTo) : null))}>
             {props.text}
         </button>
     );

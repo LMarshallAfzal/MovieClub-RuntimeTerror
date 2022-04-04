@@ -20,13 +20,46 @@ const Movies = () => {
     });
     const [recommendedMovies, setRecommendedMovies] = useState([]);
     const [watchedMovies, setWatchedMovies] = useState([]);
+    const [clubMovies, setClubMovies] = useState([]);
 
     useEffect(() => {
         getRecommendedMovies();
         getWatchedMovies();
-
+        getClubMovies();
+        console.log(clubMovies)
     }, []);
 
+    let getMovie = async (e, id) => {
+        let response = await fetch("http://127.0.0.1:8000/watched_list/get_movie/" + id + "/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authTokens.access,
+            },
+        });
+        await response.json();
+    }
+
+
+    let getClubMovies = async (e) => {
+        let response = await fetch("http://127.0.0.1:8000/get_user_attending_meetings/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authTokens.access,
+            },
+        });
+        let data = await response.json();
+        console.log(data)
+        if(response.status === 200) {
+            let array = [];
+            data.map((val) => {
+                array.push(getMovie(e, val.movie));
+            });
+            setClubMovies(array);
+        }
+    };
+    
     let getWatchedMovies = async () => {
         let response = await fetch("http://127.0.0.1:8000/watched_list/", {
             method: "GET",
@@ -144,7 +177,7 @@ const Movies = () => {
                                height={clubCardHeight}
                                sx={{overflowX: "scroll", overflowY: "hidden"}}
                         >
-                            {moviesWithPoster.map((movie, index) => {
+                            {clubMovies.map((movie, index) => {
                                 return (
                                     <MovieCard
                                         key={index}
