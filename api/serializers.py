@@ -47,6 +47,11 @@ class UserSerializer(ModelSerializer):
 
 
 class ClubSerializer(ModelSerializer):
+    theme = serializers.SlugRelatedField(
+        many=False,
+        slug_field='name',
+        queryset=Genre.objects.all()
+    )
     class Meta:
         model = Club
         fields = '__all__'
