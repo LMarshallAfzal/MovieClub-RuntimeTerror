@@ -137,9 +137,13 @@ class User(AbstractUser):
         return movies
     
     def get_favourite_movies(self):
-        movies_rated = Rating.objects.filter(user=self).order_by('-score')
-        return movies_rated
-                    
+        favourites = []
+        movies_rated = Rating.objects.filter(user=self)
+        for rating in movies_rated:
+            if rating.score == 5:
+                favourites.append(rating.movie)
+        return favourites
+                                
     def clean(self):
         if self.preferences.count() == 0:
             raise ValidationError(_('You must have at least one preference'))
