@@ -1,5 +1,7 @@
 import React from "react";
 import "@testing-library/jest-dom";
+import { act } from "react-dom/test-utils";
+import { within } from "@testing-library/dom";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import {
@@ -125,8 +127,85 @@ describe("Sign up form", () => {
     expect(preferencesInput).toHaveValue("Romance"); // after
   });
 
-  // TODO(1)
-  test("All other inputs are changed", () => {});
+  test("Given blank preferences input when autocomplete menu pops up then number of options shown is 18", () => {
+    const autoComplete = screen.getByTestId(/auto?complete/i);
+    expect(autoComplete).toBeVisible();
+    const preferencesInput = screen.getByTestId(/preference/i);
+    expect(preferencesInput).toBeVisible();
+
+    within(autoComplete).getByLabelText("Open").click();
+
+    const options = screen.getAllByRole(/option/i);
+    expect(options).toHaveLength(18);
+  });
+
+  test("Given preferences input when invalid text is typed then autocomplete menu shows no options", () => {
+    const autoComplete = screen.getByTestId(/auto?complete/i);
+    expect(autoComplete).toBeVisible();
+    const preferencesInput = screen.getByTestId(/preference/i);
+    expect(preferencesInput).toBeVisible();
+
+    preferencesInput.focus();
+    userEvent.type(document.activeElement, "Foobar69");
+
+    expect(screen.queryByRole(/option/i)).not.toBeInTheDocument();
+  });
+
+  test("Given preferences input when valid text is typed then autocomplete menu shows 1 option", () => {
+    const autoComplete = screen.getByTestId(/auto?complete/i);
+    expect(autoComplete).toBeVisible();
+    const preferencesInput = screen.getByTestId(/preference/i);
+    expect(preferencesInput).toBeVisible();
+
+    preferencesInput.focus();
+    userEvent.type(document.activeElement, "roma"); // autoComplete is case-insensitive
+
+    const options = screen.getAllByRole(/option/i);
+    expect(options).toHaveLength(1);
+  });
+
+  test("All other inputs are changed", () => {
+    const firstNameInput = screen.getByTestId(/first.name/i);
+    const lastNameInput = screen.getByTestId(/last.name/i);
+    const emailInput = screen.getByTestId(/email/i);
+    const bioInput = screen.getByTestId(/bio/i);
+    const passwordInput = screen.getByTestId(/^password$/i);
+    const passwordConfirmationInput = screen.getByTestId(/password.confirm/i);
+    expect(firstNameInput).toHaveValue("");
+    expect(lastNameInput).toHaveValue("");
+    expect(emailInput).toHaveValue("");
+    expect(bioInput).toHaveValue("");
+    expect(passwordInput).toHaveValue("");
+    expect(passwordConfirmationInput).toHaveValue("");
+
+    fireEvent.change(firstNameInput, {
+      target: { value: "Jane" },
+    });
+    fireEvent.change(lastNameInput, {
+      target: { value: "Doe" },
+    });
+    fireEvent.change(emailInput, {
+      target: { value: "janedoe@example.org" },
+    });
+    fireEvent.change(bioInput, {
+      target: { value: "The quick brown fox jumps over the lazy dog." },
+    });
+    fireEvent.change(passwordInput, {
+      target: { value: "Password123" },
+    });
+    fireEvent.change(passwordConfirmationInput, {
+      target: { value: "Password123" },
+    });
+
+    expect(screen.getByTestId(/first.name/i)).toHaveValue("Jane");
+    expect(screen.getByTestId(/last.name/i)).toHaveValue("Doe");
+    expect(screen.getByTestId(/email/i)).toHaveValue("janedoe@example.org");
+    expect(screen.getByTestId(/bio/i)).toHaveValue(
+      "The quick brown fox jumps over the lazy dog."
+    );
+    expect(screen.getByTestId(/^password$/i)).toHaveValue("Password123");
+    expect(screen.getByTestId(/password.confirm/i)).toHaveValue("Password123");
+  });
 
   // Do we care about HTML form validation
   // to ensure that the entered data
