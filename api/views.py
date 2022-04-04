@@ -75,12 +75,12 @@ def login(request):
         data['response'] = 'You have entered an invalid username or password'
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
-def update_gravatars(request):
-    for user in User.objects.all():
-        user.gravavatar_link = user.get_gravatar(user.email)
-        user.save()
-    return Response(status=status.HTTP_200_OK)
+# @api_view(['GET'])
+# def update_gravatars(request):
+#     for user in User.objects.all():
+#         user.gravavatar_link = user.get_gravatar(user.email)
+#         user.save()
+#     return Response(status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -324,6 +324,10 @@ def get_rating(request,movie_id):
 def recommend_movie_user(request):
     recommendations = []
     recommendations = recommend_movies_for_user(request.user)
+    recommendations_based_on_genre = recommendations_based_on_preferences_for_user_movies(request.user, request.user.get_user_preferences())
+    for movie in recommendations_based_on_genre:
+        if not movie in recommendations:
+            recommendations.append(movie)
     serializer = MovieSerializer(recommendations, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -349,6 +353,11 @@ def recommend_movie_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
     recommendations = []
     recommendations = recommend_movies_for_meeting(club)
+    recommendations_based_on_theme = recommendations_based_on_theme_for_meeting_movies(club)
+    if len(recommendations) != 5:
+        for movie in recommendations_based_on_theme:
+            if not movie in recommendations:
+                recommendations.append(movie)
     serializer = MovieSerializer(recommendations, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -364,6 +373,10 @@ def train_meeting_data(request):
 @has_ratings_for_club_recommendations
 def recommend_club(request):
     recommendations = recommend_clubs(request.user)
+    recommendation_based_on_preferences = recommendations_based_on_preferences_for_clubs(request.user, request.user.get_user_preferences())
+    for club in recommendation_based_on_preferences:
+            if not club in recommendations:
+                recommendations.add(club)
     serializer = ClubSerializer(recommendations, many=True)
     return Response(serializer.data)
     
