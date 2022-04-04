@@ -51,9 +51,7 @@ class User(AbstractUser):
     followers = models.ManyToManyField(
         'self', symmetrical=False, related_name='followees'
     )
-
-    gravatar_link = models.CharField(max_length=255, blank=True)
-
+    
     def toggle_follow(self, followee):
 
         if followee == self:
@@ -137,7 +135,15 @@ class User(AbstractUser):
     def get_watched_movies(self):
         movies = self.watched_movies.all()
         return movies
-
+    
+    def get_favourite_movies(self):
+        favourites = []
+        movies_rated = Rating.objects.filter(user=self)
+        for rating in movies_rated:
+            if rating.score == 5:
+                favourites.append(rating.movie)
+        return favourites
+                                
     def clean(self):
         if self.preferences.count() == 0:
             raise ValidationError(_('You must have at least one preference'))
@@ -395,3 +401,6 @@ class Watch(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     time_watched = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('time_watched',)

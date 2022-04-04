@@ -2,7 +2,7 @@ import csv
 from csv import writer
 from surprise import Dataset,Reader
 from collections import defaultdict
-from api.models import Rating
+from api.models import Rating,Membership
 
 
 class ClubRecommenderData:
@@ -23,7 +23,8 @@ class ClubRecommenderData:
         writer.writerow(['userID','movieID','rating'])
         ratings = Rating.objects.all()
         for rating in ratings:
-            writer.writerow([rating.user.id,rating.movie.ml_id,rating.score])
+            if Membership.objects.filter(user=rating.user).exists():
+                writer.writerow([rating.user.id,rating.movie.ml_id,rating.score])
         data.close()
     
     def clean(self):

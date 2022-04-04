@@ -12,7 +12,7 @@ def get_random_movies(num_movies):
     movies = random.sample(query,num_movies)
     return movies
     
-def get_initial_recommendations_for_movies(user, user_preferences):
+def recommendations_based_on_preferences_for_user_movies(user, user_preferences):
     query = Movie.get_movies_by_genre(user_preferences)
     watched_movies = user.get_watched_movies()
     movies = set()
@@ -26,7 +26,7 @@ def get_initial_recommendations_for_movies(user, user_preferences):
     recommendations = random.sample(movies, number_of_recomendations)
     return recommendations
 
-def get_initial_recommendations_for_meeting_movies(club):
+def recommendations_based_on_theme_for_meeting_movies(club):
     watched_movies = set()
     for member in club.club_members.all():
         for movie in member.watched_movies.all():
@@ -44,7 +44,7 @@ def get_initial_recommendations_for_meeting_movies(club):
     return recommendations
 
 
-def get_initial_recommendations_for_clubs(user, user_preferences):
+def recommendations_based_on_preferences_for_clubs(user, user_preferences):
     querysets = []
     querysets = Club.get_clubs_by_theme(user_preferences)
     clubs = set()
