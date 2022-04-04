@@ -33,6 +33,7 @@ function ClubDetail() {
 	const [myClubData, setMyClubData] = useState([]);
     const [banned, setBanned] = useState([]);
     const [user1, setUser1] = useState('');
+    const [isOwner,setIsOwner] = useState(false);
 
     let {clubID} = useParams();
 	let {user, authTokens} = useContext(AuthContext);
@@ -98,6 +99,7 @@ function ClubDetail() {
 }
         );
         let data = await response.json();
+        data.find(owner => owner.username === user.username) ? setIsOwner(true) : setIsOwner(false);
         setOwner(data);
 };
 
@@ -302,7 +304,9 @@ function ClubDetail() {
                                         src={user.iconImage}
                                         alt={user.first_name + " " + user.last_name}
                                     />}
-                                onDelete={() => handleBan(user.id)}
+                                // onDelete={() => handleBan(user.id)}
+                                // {...(!isOwner ? {onDelete: () => handleBan(user.id)} : {})}
+                                onDelete={isOwner ? () => handleBan(user.id) : undefined}
                                 onClick={() => handleUserClick(user.id)}
                                 sx={{mr: 1, mt: 1}}
                             />
@@ -400,15 +404,14 @@ function ClubDetail() {
                     </Dialog>
 
 
-                    {!isMember && <ThemeButton text={"join"} style={"primary"} onClick={() => joinClub()} />}
+                    {(!isMember && !isOwner) && <ThemeButton text={"join"} style={"primary"} onClick={() => joinClub()} />}
 
-                    <ThemeButton text={"leave"} style={isMember ? "primary" : "disabled"} onClick={() => leaveClub()}/>
+                    {(isMember && !isOwner) && <ThemeButton text={"leave"} style={"primary"} onClick={() => leaveClub()}/>}
 
-                    <ThemeButton text={"delete"} style={club.isOrganiser ? "primary" : "disabled"}
-                                 onClick={openDeleteClubDialog}/>
+                    {isOwner && <ThemeButton text={"delete"} style={"primary"} onClick={openDeleteClubDialog}/>}
 
-                    <ThemeButton text={showBannedMembers ? "members" : "banned"} style={"normal"}
-                                 onClick={toggleBannedView}/>
+                    {isOwner && <ThemeButton text={showBannedMembers ? "members" : "banned"} style={"normal"} onClick={toggleBannedView}/>}
+
                 </Stack>
             </Grid>
 
