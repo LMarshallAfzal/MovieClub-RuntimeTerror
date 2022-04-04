@@ -14,6 +14,7 @@ function EventCreate() {
 
     const [recommendedMovies, setRecommendedMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState("");
+    const [selectedMovieTitle, setSelectedMovieTitle] = useState("");
     const [meetingData, setMeetingData] = useState({
         club: "",
         movie: "",
@@ -85,6 +86,21 @@ function EventCreate() {
         setMeetingData(data);
     };
 
+    let getMovieTitle = async (id) => {
+        let response = await fetch("http://127.0.0.1:8000/get_movie/" + id + "/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authTokens.access,
+            },
+        });
+        let data = await response.json()
+        console.log(data)
+        console.log(data.title)
+        setSelectedMovie(id)
+        setSelectedMovieTitle(data.title)
+    }
+
 
     useEffect(() => {
         getRecommendedMovies();
@@ -110,7 +126,7 @@ function EventCreate() {
                                     <Card sx={{flexDirection: "column", height: "100%"}}>
                                         <CardActionArea
                                             sx={{flexDirection: "column", height: "100%"}}
-                                            onClick={() => setSelectedMovie(movie.id)}>
+                                            onClick={() => getMovieTitle(movie.id)}>
 
                                             <CardMedia
                                                 component={"img"}
@@ -171,7 +187,7 @@ function EventCreate() {
                             required
                             label={"movie"}
                             name={"movie"}
-                            value={selectedMovie}
+                            value={selectedMovieTitle}
                             onChange={e => onChange(e)}
                         />
                     </Stack>
