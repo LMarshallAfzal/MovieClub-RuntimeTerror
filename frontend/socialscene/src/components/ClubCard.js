@@ -52,27 +52,20 @@ function ClubCard(props) {
     }, []);
 
     function ClubButton() {
-        // if (props.isMember === true) {
             return (
                 <RoundButton
                     text={"info"}
                     linkTo={`/home/clubs/${props.ID}`}
-                    // onClick={getClubMembers}
+                    onClick={getClubMembers}
                 />
             )
-        // } else {
-            // return (
-            //     <RoundButton
-            //         text={"join"}
-            //         linkTo={`/home/clubs/${props.ID}`}/>
-            // )
-        // }
     }
 
     function ClubChip() {
+        console.log(props)
         if (props.isMember === "M") {
             
-            if (props.isOrganiser === "O") {
+            if (props.isOrganiser) {
                 return (
                     <RoundButton text={"create meeting"} linkTo={"/home/discussion"}/>
                 )
@@ -97,7 +90,7 @@ function ClubCard(props) {
                     <Stack spacing={2} alignItems={"center"} justifyContent={"center"}>
                         <Avatar
                             alt={props.clubName}
-                            src={props.iconImage}
+                            src={require("../resources/images/club icons/" + props.clubTheme + ".png")}
                             sx={{width: 1, height: 1}}
                         />
                         <ClubButton/>

@@ -8,6 +8,7 @@ import TextButton from "../../components/core/TextButton";
 import {Outlet} from "react-router";
 import MovieCard from "../../components/MovieCard";
 import HomepageCard from "../../components/helper/HomepageCard";
+import { MovieDataAPI } from "../../components/helper/MovieDataAPI";
 
 
 const Movies = () => {
@@ -61,7 +62,7 @@ const Movies = () => {
     };
     
     let getWatchedMovies = async () => {
-        let response = await fetch("http://127.0.0.1:8000/watched_list/", {
+        let response = await fetch("http://127.0.0.1:8000/watched_list/" + user.user_id + "/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -230,7 +231,7 @@ const Movies = () => {
                                 return (
                                     <MovieCard
                                         key={index}
-                                        poster={moviePoster}
+                                        // poster={moviePoster}
                                         rateMovie={false}
                                         clubMovie={false}
                                         movie={movie}

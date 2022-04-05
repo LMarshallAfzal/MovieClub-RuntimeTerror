@@ -133,6 +133,7 @@ def get_club_owner(request, club_id):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@user_exists
 def get_other_user(request, user_id):
     try:
         user = User.objects.get(id=user_id)
@@ -309,6 +310,9 @@ def add_rating(request, movie_id):
 @user_has_rated_movie
 def change_rating(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
+    rating = Rating.objects.get(user=request.user, movie=movie)
+    rating.score = request.data['score']
+    rating.save()
     serializer = ChangeRatingSerializer(movie, data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -436,9 +440,11 @@ def get_movie(request, movie_id):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_watched_list(request):
-    if request.user.is_authenticated:
-        movies = request.user.get_watched_movies()
+@user_exists
+def get_watched_list(request,user_id):
+    user = User.objects.get(id=user_id)
+    if user.is_authenticated:
+        movies = user.get_watched_movies()
         serializer = MovieSerializer(movies, many=True)
     else:
         return Response(status=status.HTTP_403_FORBIDDEN)
@@ -625,21 +631,24 @@ def banned_member_list(request, club_id):
 def toggle_follow(request, user_id):
     followee = User.objects.get(id=user_id)
     request.user.toggle_follow(followee)
-    followers = request.user.followers.all()
     serializer = UserSerializer(followee, many=False) 
     return Response(serializer.data, status = status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_followers(request):
-    followers = request.user.followers.all()
+@user_exists
+def get_followers(request, user_id):
+    user = User.objects.get(id=user_id)
+    followers = user.followers.all()
     serializer = UserSerializer(followers, many=True) 
     return Response(serializer.data, status = status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_following(request):
-    following = request.user.followees.all()
+@user_exists
+def get_following(request,user_id):
+    user = User.objects.get(id=user_id)
+    following = user.followees.all()
     serializer = UserSerializer(following, many=True) 
     return Response(serializer.data, status = status.HTTP_200_OK)
 

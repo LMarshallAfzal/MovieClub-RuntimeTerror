@@ -10,6 +10,7 @@ class ClubRecommenderData:
         self.club_rec_data_path = 'recommender/dataset-latest/club_recommender_data.csv'
 
     def load_movie_data_for_club_recommender(self):
+        self.clean()
         ratings_dataset = 0
         self.get_db_user_ratings() #stays for club
         reader = Reader(line_format='user item rating', sep=',', skip_lines=1)

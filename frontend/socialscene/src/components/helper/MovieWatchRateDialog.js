@@ -3,8 +3,6 @@ import "../../styling/components/MovieWatchRateDialog.css";
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Rating, Stack} from "@mui/material";
 import ThemeButton from "../core/ThemeButton";
 import AuthContext from "../../components/helper/AuthContext";
-import {DummyRecommendedMovies} from '../../resources/data/DummyRecommendedMovies';
-
 
 function MovieWatchRateDialog(props) {
     let {user, authTokens} = useContext(AuthContext);
@@ -15,20 +13,17 @@ function MovieWatchRateDialog(props) {
         score: null,
     });
 
-    // NOAH DATASET
-    // let movie = (props.data && DummyRecommendedMovies.find(obj => obj.ID === props.data.ID)); // substitute for movie logic
-    // let movieTitle = (props.data && movie.title);
-
-    // ALESSIO DATASET
     let movie = (props.movie);
     let movieTitle = (movie.title);
 
     useEffect(() => {
-        getRating(movie.id);
+        if(props.isOpen) {
+            getRating(movie.id);
+        }
     }, []);
 
     const handleClose = () => {
-        addToWatchedList(movie.id) // substitute for watch logic
+        addToWatchedList(movie.id)
         props.onClose();
     }
 
@@ -80,7 +75,7 @@ function MovieWatchRateDialog(props) {
         // await response3.json();
     };
 
-    let editRating = async (id) => {
+    let editRating = async (id, ratingScore) => {
         let response = await fetch(
             "http://127.0.0.1:8000/edit_rating/" + id + "/",
             {
@@ -88,7 +83,7 @@ function MovieWatchRateDialog(props) {
                 body: JSON.stringify({
                     user: user.user_id,
                     movie: id,
-                    score: rating.score,
+                    score: ratingScore,
                 }),
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
@@ -130,6 +125,7 @@ function MovieWatchRateDialog(props) {
                 },
             }
         );
+        await response.json();
     };
 
     return (

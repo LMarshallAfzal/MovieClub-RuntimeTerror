@@ -14,10 +14,10 @@ class GetFollowersTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
         self.other_user = User.objects.get(username='janedoe')
-        self.url = reverse('get_followers')
+        self.url = reverse('get_followers',kwargs={'user_id':self.user.id})
 
     def test_get_followers_url(self):
-        self.assertEqual(self.url,f'/followers/')
+        self.assertEqual(self.url,f'/followers/{self.user.id}/')
 
     def test_get_followers_endpoint_returns_200_ok(self):
         self.client.force_authenticate(user=self.user)

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../styling/pages/App.css";
 import Navbar from "../../components/core/Navbar";
 import HomePage from "./Homepage";
@@ -25,6 +25,13 @@ import ClubDiscussion from "../../components/ClubDiscussion";
 import EventDetail from "../../components/EventDetail";
 
 function App() {
+    
+
+    useEffect(() => {
+        console.log("App loaded");
+    }, []);
+
+
   return (
     <Router>
         <AuthProvider>
