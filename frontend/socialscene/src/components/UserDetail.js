@@ -128,12 +128,32 @@ function UserDetail() {
     setRecentlyWatched(data);
   };
 
+  const [userMemberships, setUserMemberships] = useState([]);
+  const [userMembershipCount, setUserMembershipCount] = useState(null);
+
+  let getUserMemberships = async (e) => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/memberships/" + userID + "/",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    let data = await response.json();
+    setUserMemberships(data);
+    setUserMembershipCount(data.length);
+  };
+
   useEffect(() => {
     getOtherUser();
     getFollowers();
     getFollowees();
     getFavourites();
     getRecentlyWatched();
+    getUserMemberships();
   }, []);
 
   return (
@@ -276,14 +296,19 @@ function UserDetail() {
             </Grid>
           </HomepageCard>
 
-          <HomepageCard title={"clubs"} titleItemText={cardHeight}>
-            <Box maxHeight={cardHeight / 2} sx={{ overflowY: "scroll" }}>
-              {DummyClubData.map((club, index) => {
+          <HomepageCard title={"clubs"} titleItemText={userMembershipCount}>
+            <Box
+              maxHeight={userMembershipCount * 100}
+              sx={{ overflowY: "scroll" }}
+            >
+              {userMemberships.map((club, index) => {
                 return (
                   <Chip
                     key={"index"}
-                    label={club.clubName}
-                    avatar={<Avatar src={club.iconImage} alt={club.clubName} />}
+                    label={club.club_name}
+                    avatar={
+                      <Avatar src={club.iconImage} alt={club.club_name} />
+                    }
                     onClick={() => handleChipClick("clubs", club.id)}
                     sx={{ mr: 1, mt: 1 }}
                   />
