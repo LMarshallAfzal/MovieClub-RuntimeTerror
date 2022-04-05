@@ -506,7 +506,7 @@ class ChangeRatingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rating
-        fields = ['score']
+        fields = '__all__'
 
 
 class MessageSerializer(serializers.ModelSerializer):
