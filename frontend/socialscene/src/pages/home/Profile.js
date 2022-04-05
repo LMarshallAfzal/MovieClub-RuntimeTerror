@@ -111,7 +111,7 @@ const Profile = () => {
 
 
 	let getWatchedMovies = async () => {
-        let response = await fetch("http://127.0.0.1:8000/watched_list/", {
+        let response = await fetch("http://127.0.0.1:8000/watched_list/" + user.user_id, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -198,7 +198,7 @@ const Profile = () => {
 	};
 
 	let getFollowers = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000/followers/",{
+		let response = await fetch("http://127.0.0.1:8000/followers/" + user.user_id + "/",{
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -211,7 +211,7 @@ const Profile = () => {
 	}
 
 	let getFollowing = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000/following/",{
+		let response = await fetch("http://127.0.0.1:8000/following/" + user.user_id + "/",{
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",

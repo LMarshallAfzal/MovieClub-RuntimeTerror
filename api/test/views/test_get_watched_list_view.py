@@ -18,12 +18,12 @@ class WatchListTestCase(APITestCase):
 
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
-        self.url = reverse('get_watched_movies')
+        self.url = reverse('get_watched_movies',kwargs={'user_id':self.user.id})
     
 
 
     def test_watched_list_url(self):
-        self.assertEqual(self.url, f'/watched_list/')
+        self.assertEqual(self.url, f'/watched_list/{self.user.id}/')
 
     def test_get_to_retrieve_watched_movies_endpoint_retrieves_watched_movies_returns_200_ok(self):
         self.client.force_authenticate(user=self.user)
