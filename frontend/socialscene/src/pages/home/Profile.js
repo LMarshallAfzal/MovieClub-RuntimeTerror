@@ -31,6 +31,7 @@ const Profile = () => {
 	const[followerCount,setFollowerCount] = useState(null);
 	const[followingCount,setFollowingCount] = useState(null);
 	const [userMemberships, setUserMemberships] = useState([]);
+	const [userMembershipCount, setUserMembershipCount] = useState(null);
 	const [favouriteMovies,setFavouriteMovies] = useState([]);
 	const [usernameError, setUsernameError] = useState(false);
 	const [firstNameError, setFirstNameError] = useState(false);
@@ -184,7 +185,7 @@ const Profile = () => {
 	};
 
 	let getUserMemberships = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000:memberships/" + user.user_id + "/", {
+		let response = await fetch("http://127.0.0.1:8000/memberships/" + user.user_id + "/", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -193,6 +194,7 @@ const Profile = () => {
 		});
 		let data = await response.json();
 		setUserMemberships(data);
+		setUserMembershipCount(data.length);
 	};
 
 	let getFollowers = async (e) => {
@@ -204,7 +206,6 @@ const Profile = () => {
 			},
 		});
 		let data = await response.json();
-
 		setFollowers(data);
 		setFollowerCount(data.length);
 	}
@@ -230,6 +231,7 @@ const Profile = () => {
 		getFavourites();
 		getFollowers();
 		getFollowing();
+		getUserMemberships();
 	}, []);
 
 	const navigate = useNavigate();
@@ -239,6 +241,7 @@ const Profile = () => {
 	const handleChipClick = (type, id) => {
 		navigate(`/home/${type}/${id}`, { replace: false });
 	};
+
 
 	return (
 		<Grid container spacing={2} padding={2} direction={"row"}>
@@ -455,15 +458,15 @@ const Profile = () => {
 						</Grid>
 					</HomepageCard>
 
-					<HomepageCard title={"clubs"} titleItemText={cardHeight}>
-						<Box maxHeight={cardHeight / 2} sx={{ overflowY: "scroll" }}>
+					<HomepageCard title={"clubs"} titleItemText={userMembershipCount}>
+						<Box maxHeight={userMembershipCount*100} sx={{ overflowY: "scroll" }}>
 							{userMemberships.map((club, index) => {
 								return (
 									<Chip
 										key={"index"}
 										label={club.club_name}
 										avatar={<Avatar src={club.iconImage} alt={club.club_name} />}
-										onClick={() => handleChipClick("clubs", club.ID)}
+										// onClick={() => handleChipClick("clubs", club.ID)}
 										sx={{ mr: 1, mt: 1 }}
 									/>
 								);
