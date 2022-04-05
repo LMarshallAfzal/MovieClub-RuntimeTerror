@@ -32,7 +32,7 @@ const Home = () => {
     useEffect(() => {
         getRecommendedMovies();
         getMembershipData();
-    },[])
+    }, [])
 
     let getRecommendedMovies = async () => {
         let response = await fetch("http://127.0.0.1:8000/rec_movies/", {
@@ -66,7 +66,6 @@ const Home = () => {
         console.log(data.theme)
 		setMyClubData(data);
 	};
-
 
     return (
         <Grid container
@@ -130,6 +129,7 @@ const Home = () => {
                                                 clubMovie={false}
                                                 rateMovie={true}
                                                 movie={movie}
+                                                animated={true}
                                             />
                                         );
                                     })}
@@ -154,8 +154,11 @@ const Home = () => {
 
                                             <ClubCard
                                                 clubName={club.club_name}
+                                                isMember={"M"}
                                                 iconImage={club.iconImage}
                                                 description={club.mission_statement}
+                                                isOrganiser={club.isOrganiser}
+                                                // memberRole={club.memberRole}
                                                 clubTheme={club.theme}
                                                 ID={club.ID}
                                             />

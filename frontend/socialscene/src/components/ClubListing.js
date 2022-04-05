@@ -1,20 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router";
-import { Avatar, AvatarGroup, Box, Chip, Grid, Stack } from "@mui/material";
+import React, {useContext, useEffect, useState} from "react";
+import {useParams} from "react-router";
+import {Avatar, AvatarGroup, Chip, Grid, Stack} from "@mui/material";
 import icon5 from "../resources/images/example icons/icon5.jpeg";
-import icon2 from "../resources/images/example icons/icon2.jpeg";
-import icon3 from "../resources/images/example icons/icon3.jpeg";
-import icon4 from "../resources/images/example icons/icon4.jpeg";
-// import "../styling/components/ClubListing.css";
+import "../styling/components/ClubListing.css";
 import EnterButton from "./core/RoundButton";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import AuthContext from "../components/helper/AuthContext";
 
 function ClubListing(props) {
-	let { clubID } = useParams();
-	let { user, authTokens } = useContext(AuthContext);
-	const [myClubData, setMyClubData] = useState([]);
-	const [clubMembers, setClubMembers] = useState([]);
+    let {clubID} = useParams();
+    let {user, authTokens} = useContext(AuthContext);
+    const [myClubData, setMyClubData] = useState([]);
+    const [clubMembers, setClubMembers] = useState([]);
 
 	let getMembershipData = async (e) => {
 		let response = await fetch(
@@ -31,25 +28,25 @@ function ClubListing(props) {
 		setMyClubData(data);
 	};
 
-	let getClubMembers = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/club_members/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setClubMembers(data);
-	};
-	
+    let getClubMembers = async (e) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/club_members/" + clubID + "/",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        setClubMembers(data);
+    };
+
 
     let joinClub = async (event, id) => {
-        let response = await fetch('http://127.0.0.1:8000/join_club/' + id +'/', {
-            method:'POST',
+        let response = await fetch('http://127.0.0.1:8000/join_club/' + id + '/', {
+            method: 'POST',
             body: JSON.stringify(user.user_id, props.clubID),
             headers: {
                 'Content-Type': 'application/json',
@@ -61,7 +58,7 @@ function ClubListing(props) {
 
     }
 
-	function ClubButton() {
+    function ClubButton() {
         // console.table(props)
         if (props.isMember === "M") {
             return (
@@ -92,49 +89,52 @@ function ClubListing(props) {
                 else if (props.memberRole === "O") {
                     return <Chip label={"Owner"} />;
                 }
-			
+
 		} else {
 			return <Chip label={props.clubTheme} />;
 		}
 	}
 
-	return (
-		<Link className={"club-listing"} to={`/home/clubs/${props.ID}`}>
-			<Grid container spacing={1} padding={1}>
-				<Grid item xs={4}>
-					<Stack spacing={1} alignItems={"center"} justifyContent={"center"}>
-						<Avatar
-							alt={props.clubName}
-							src={props.iconImage}
-							sx={{ width: 1, height: 1 }}
-						/>
+    return (
+        <Link className={"club-listing"} to={`/home/clubs/${props.ID}`}>
+            <Grid container spacing={1} padding={1}>
+                <Grid item xs={4}>
+                    <Stack spacing={1} alignItems={"center"} justifyContent={"center"}>
+                        <Avatar
+                            alt={props.clubName}
+                            src={props.iconImage}
+                            sx={{width: 1, height: 1}}
+                        />
 
-    
-						<ClubButton />
-					</Stack>
-				</Grid>
 
-				<Grid item xs={8}>
-					<Stack spacing={1}>
-						<h4 className={"club-listing-club-name"}>
-							{props.clubName}
-							<h4--emphasise>.</h4--emphasise>
-						</h4>
+                        <ClubButton/>
+                    </Stack>
+                </Grid>
 
-						<h6>{props.description}</h6>
+                <Grid item xs={8}>
+                    <Stack spacing={1}>
+                        <h4 className={"club-listing-club-name"}>
+                            {props.clubName}
+                            <h4--emphasise>.</h4--emphasise>
+                        </h4>
 
-						<ClubChip />
+                        <h6 style={{
+                            whiteSpace: "nowrap",
+                            overflow: "hidden"
+                        }}>{props.description}</h6>
 
-						<AvatarGroup max={4} className={"club-listing-avatars"}>
-							{clubMembers.map((user) => {
-								return <Avatar alt={user.username} src={icon5} />;
-							})}
-						</AvatarGroup>
-					</Stack>
-				</Grid>
-			</Grid>
-		</Link>
-	);
+                        <ClubChip/>
+
+                        <AvatarGroup max={4} className={"club-listing-avatars"}>
+                            {clubMembers.map((user) => {
+                                return <Avatar alt={user.username} src={icon5}/>;
+                            })}
+                        </AvatarGroup>
+                    </Stack>
+                </Grid>
+            </Grid>
+        </Link>
+    );
 }
 
 export default ClubListing;

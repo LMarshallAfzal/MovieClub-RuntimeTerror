@@ -1,12 +1,12 @@
 @use "../core/base";
 
 .show-event-title {
-  font-family: base.$helvetica-light;
+  font-family: base.$helvetica-light-oblique;
   color: base.$primary-white;
 }
 
 .show-event-title-movie {
-  font-family: base.$helvetica;
+  font-family: base.$helvetica-bold;
   color: base.$primary-black
 
 }

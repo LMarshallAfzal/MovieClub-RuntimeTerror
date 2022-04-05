@@ -128,12 +128,12 @@ h6 {
 }
 
 .show-event-title {
-  font-family: Helvetica-Light, serif;
+  font-family: Helvetica-Light-Italic, serif;
   color: #FFFFFF;
 }
 
 .show-event-title-movie {
-  font-family: Helvetica, serif;
+  font-family: Helvetica-Bold, serif;
   color: #000000;
 }
 
