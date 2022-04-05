@@ -133,6 +133,7 @@ def get_club_owner(request, club_id):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@user_exists
 def get_other_user(request, user_id):
     try:
         user = User.objects.get(id=user_id)
