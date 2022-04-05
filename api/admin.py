@@ -48,6 +48,12 @@ class MessageAdmin(admin.ModelAdmin):
     list_display = [
         'id','sender','message']
 
+@admin.register(Watch)
+class WatchAdmin(admin.ModelAdmin):
+    '''Configuration of the administrative interface for messages'''
+    list_display = [
+        'user','movie']
+
 
 
 
