@@ -33,7 +33,7 @@ function Logout() {
                     <div className={"logout-row"}>
                         <ThemeButton
                             text={"home"}
-                            style={"disabled"}
+                            style={"normal"}
                             linkTo={"/"}
                         />
                     </div>
