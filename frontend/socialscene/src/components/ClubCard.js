@@ -52,21 +52,13 @@ function ClubCard(props) {
     }, []);
 
     function ClubButton() {
-        // if (props.isMember === true) {
             return (
                 <RoundButton
                     text={"info"}
                     linkTo={`/home/clubs/${props.ID}`}
-                    // onClick={getClubMembers}
+                    onClick={getClubMembers}
                 />
             )
-        // } else {
-            // return (
-            //     <RoundButton
-            //         text={"join"}
-            //         linkTo={`/home/clubs/${props.ID}`}/>
-            // )
-        // }
     }
 
     function ClubChip() {

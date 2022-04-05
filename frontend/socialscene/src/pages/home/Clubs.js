@@ -25,6 +25,7 @@ function Clubs() {
 			}
 		);
 		let data = await response.json();
+		console.log(data)
 		setMyClubData(data);
 	};
 
@@ -37,6 +38,7 @@ function Clubs() {
 			},
 		});
 		let data = await response.json();
+		console.log(data)
 		setRecommendedClubs(data);
 	};
 
@@ -83,11 +85,14 @@ function Clubs() {
 							<Stack direction={"row"} overflow={"auto"}>
 								{myClubData.map((club, index) => (
 									<ListItem key={index} sx={{ width: "auto", p: 1 }}>
+										{console.log(club.club_name)}
 										<ClubCard
 											clubName={club.club_name}
-											isMember={"M"}
+											// isMember={"N"}
 											iconImage={club.iconImage}
 											description={club.mission_statement}
+											// isOrganiser={club.isOrganiser}
+											// memberRole={club.memberRole}
 											clubTheme={club.theme}
 											ID={club.id}
 										/>

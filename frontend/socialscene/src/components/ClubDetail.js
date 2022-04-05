@@ -365,8 +365,8 @@ function ClubDetail() {
             </Grid>
 
             <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
-                
-                <Stack spacing={2} sx={{height: "27%"}}>
+
+                <Stack spacing={2} sx={{height: "100%"}}>
                     <Dialog
                         open={showDeleteClubDialog}
                         onClose={closeDeleteClubDialog}
