@@ -28,12 +28,6 @@ class BannedMembersViewTestCase(APITestCase):
     def test_get_banned_users_url(self):
         self.assertEqual(self.url, f'/banned_member_list/{self.club.id}/')
 
-    def test_get_banned_members_endpoint_with_no_banned_members_returns_validation_error(self):
-        self.client.force_authenticate(user=self.user)
-        self.assertTrue(self.user.is_authenticated)
-        response = self.client.get(self.url)
-        self.assertEqual(response.data[0], "There are no banned members.")
-
     def test_get_banned_members_endpoint_gets_banned_members_returns_200_ok(self):
         self.client.force_authenticate(user=self.user)
         self.assertTrue(self.user.is_authenticated)
