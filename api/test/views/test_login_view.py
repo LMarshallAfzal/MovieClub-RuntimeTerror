@@ -1,9 +1,11 @@
+"""Tests of the log_in view."""
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from django.urls import reverse
 from api.models import User
 
 class LoginViewTestcase(APITestCase):
+    """Tests of the log_in view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',

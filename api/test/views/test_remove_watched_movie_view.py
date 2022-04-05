@@ -1,9 +1,12 @@
+"""Tests of the remove_watched_movie view."""
 from api.models import User, Movie, Watch
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import force_authenticate,APIClient
+
 class RemoveWatchedMovieViewTestCase(APITestCase):
+    """Tests of the remove_watched_movie view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',

@@ -1,15 +1,11 @@
+"""Tests of the get_club_upcoming_meeting view."""
 from api.models import Club, Movie, User, Meeting
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-import datetime
-from api.serializers import MeetingSerializer
-
-from rest_framework.test import force_authenticate,APIClient
-
-
 
 class ClubUpcomingMeetingTestCase(APITestCase):
+    """Tests of the get_club_upcoming_meeting view."""
 
     fixtures = [
         "api/test/fixtures/genres.json",

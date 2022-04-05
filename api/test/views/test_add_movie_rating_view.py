@@ -1,3 +1,4 @@
+"""Tests of the add_rating view."""
 from api.models import User, Movie, Rating
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -7,6 +8,7 @@ from rest_framework.test import force_authenticate,APIClient
 
 
 class AddMovieRatingViewTestCase(APITestCase):
+    """Tests of the add_rating view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',
@@ -56,7 +58,7 @@ class AddMovieRatingViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_post_to_add_rating_endpoint_with_user_not_logged_in_not_create_new_rating(self):
+    def test_post_to_add_rating_endpoint_with_user_not_logged_in_not_create_new_rating_returns_401_unauthorized(self):
         before = Rating.objects.count()
         response = self.client.post(self.url, self.form_input)
         after = Rating.objects.count()

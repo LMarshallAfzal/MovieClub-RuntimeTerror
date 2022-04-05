@@ -1,9 +1,11 @@
-from api.models import Club, Movie, User, Meeting
+"""Tests of the toggle_follow view."""
+from api.models import User
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 
 class ToggleFollowUserTestCase(APITestCase):
+    """Tests of the toggle_follow view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',

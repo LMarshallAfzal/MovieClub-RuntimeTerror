@@ -1,3 +1,4 @@
+"""Tests of the recommend_movie_meeting view."""
 from api.models import Rating, User, Movie, Membership, Club
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -8,6 +9,7 @@ from recommender.meeting_movie_rec_data import MeetingMovieRecommenderData as Da
 
 
 class RecommendMovieMeetingTestCase(APITestCase):
+    """Tests of the recommend_movie_meeting view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',
