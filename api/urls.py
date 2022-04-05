@@ -21,6 +21,7 @@ urlpatterns = [
     path("user/",views.get_current_user, name = "get_current_user"),
     path("user/<int:user_id>/",views.get_other_user, name = "get_other_user"),
     path("user_image/", views.get_user_image, name = "get_user_image"),
+    path("other_user_image/<int:user_id>/", views.get_other_user_image, name = "get_other_user_image"),
     # path('update_user_images/', views.update_gravatars, name = 'update_user_images'),
     path("clubs/",views.get_all_clubs, name = "get_all_clubs"),
     path("club/<int:club_id>/",views.get_club, name = "get_club"),

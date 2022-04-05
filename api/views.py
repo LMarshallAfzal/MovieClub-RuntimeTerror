@@ -163,6 +163,16 @@ def get_user_image(request):
     image = user.gravatar()
     return Response(image,status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_other_user_image(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+        image = user.gravatar()
+        return Response(image, status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def edit_profile(request, user_id):

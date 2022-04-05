@@ -258,7 +258,8 @@ function ClubDetail() {
                                 label={user.first_name + " " + user.last_name + " " }
                                 avatar={
                                     <Avatar
-                                        src={user.iconImage}
+                                        src={require}
+                                        //src={require("../resources/images/club icons/" + "War" + ".png")}
                                         alt={user.first_name + " " + user.last_name}
                                     />}
                                 onDelete={openBanDialog}
@@ -279,8 +280,10 @@ function ClubDetail() {
                                 label={user.first_name + " " + user.last_name}
                                 avatar={
                                     <Avatar
-                                        src={user.iconImage}
+                                        //src={user.iconImage}
+                                        src={require("../resources/images/club icons/" + "War" + ".png")}
                                         alt={user.first_name + " " + user.last_name}
+                                        sx={{width: 1, height: 1}}
                                     />}
                                 onDelete={handleUnBan}
                                 onClick={handleBannedUserClick}
