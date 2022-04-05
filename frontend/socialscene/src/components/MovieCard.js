@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Card, CardMedia, Chip, Grid, Rating, Stack, Tooltip} from "@mui/material";
 import "../styling/components/MovieCard.css";
 import ThemeButton from "./core/ThemeButton";
 import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
 import LoadingSkeleton from "./helper/LoadingSkeleton";
-import placeholder from "../resources/images/empty_movie_poster.png";
 import {useNavigate} from "react-router";
-import axios from "axios"
+import {MovieDataAPI} from "./helper/MovieDataAPI";
+import placeHolder from '../resources/images/empty_movie_poster.png';
 
 function MovieCard(props) {
     const [watchedMovies, setWatchedMovies] = useState([]);
@@ -14,24 +14,10 @@ function MovieCard(props) {
     const [promptData, setPromptData] = useState("");
     const [cardWidth, setCardWidth] = useState(150);
     const [cardBorder, setCardBorder] = useState("0px solid black");
-    const [loaded, setLoaded] = useState(true);
-    const [movie, setMovie] = useState('');
+    const [movie, setMovie] = useState();
 
-    useEffect(() => {
-        getImage();
-    }, []);
 
-    const url = 'http://www.omdbapi.com/?i=tt'+props.movie.imdb_id+'&apikey=d938f360'
-
-    const getImage = () => {
-        axios.get(`${url}`)
-        .then ((response) => {
-            const image = response.data.Poster
-            setMovie(image)
-        })
-    }
-
-    let moviePoster = movie;
+    const movieAPIData = MovieDataAPI(props.movie.imdb_id);
 
     const closePrompt = () => {
         setShowPrompt(false);
@@ -44,8 +30,6 @@ function MovieCard(props) {
             navigate(`${location}`, {replace: false})
         )
     }
-
-    //MovieCard is passed the movie object, all movie interactions occurs here
 
     function ClubMovie() {
         if (props.clubMovie === true) {
@@ -82,7 +66,8 @@ function MovieCard(props) {
         if (props.rateMovie === true) {
             return (
                 <>
-                    <MovieWatchRateDialog movie={props.movie} isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
+                    <MovieWatchRateDialog movie={props.movie} isOpen={showPrompt} onClose={closePrompt}
+                                          data={promptData}/>
                     <ThemeButton
                         text={"watch"}
                         style={"primary"}
@@ -102,7 +87,7 @@ function MovieCard(props) {
 
     return (
         <Grid item>
-            <LoadingSkeleton loading={loaded}>
+            <LoadingSkeleton loading={movieAPIData}>
                 <Card sx={{
                     width: cardWidth,
                     transition: "ease-out",
@@ -124,7 +109,7 @@ function MovieCard(props) {
                     <CardMedia
                         component={"img"}
                         sx={{height: "100%"}}
-                        image={moviePoster}
+                        image={movieAPIData ? movieAPIData.Poster : placeHolder}
                         alt={props.movie.title}
                     />
 

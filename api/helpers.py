@@ -1,16 +1,21 @@
-from .models import Movie, Club
-import random
 import datetime
+import random
 from datetime import datetime
-from django.core.mail import send_mass_mail, send_mail
-from backend.settings import EMAIL_HOST_USER
-from django.template.loader import render_to_string
+
+from .models import Movie, Club
 
 
-def get_random_movies(num_movies):
-    query = Movie.objects.all()
+def get_random_movies_helper(num_movies):
+    query = []
+    for movie in Movie.objects.all():
+        query.append(movie.id)
     movies = random.sample(query,num_movies)
-    return movies
+    output = []
+    for randomId in query:
+        output.append(Movie.objects.get(id=randomId))
+
+
+    return output
     
 def recommendations_based_on_preferences_for_user_movies(user, user_preferences):
     query = Movie.get_movies_by_genre(user_preferences)

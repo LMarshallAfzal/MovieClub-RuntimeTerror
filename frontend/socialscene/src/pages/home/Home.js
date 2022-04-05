@@ -1,20 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
 
 import "../../styling/pages/Home.css";
-import {Box, Grid, ImageList, ImageListItem, ListItem, Stack} from "@mui/material";
+import {Grid, ListItem, Stack} from "@mui/material";
 import AuthContext from "../../components/helper/AuthContext";
 import moviePoster from '../../resources/images/empty_movie_poster.png';
-import placeHolder from '../../resources/images/empty_movie_poster.png';
-import {moviesWithPoster} from "../../resources/data/DummyMoviesData";
-import {DummyClubData} from "../../resources/data/DummyClubsData";
 import ClubCard from "../../components/ClubCard";
 import MovieQuote from "../../components/MovieQuote";
 import HomepageCard from "../../components/helper/HomepageCard";
 import MovieCard from "../../components/MovieCard";
 import TextButton from "../../components/core/TextButton";
-import {DummyRecommendedMovies} from "../../resources/data/DummyRecommendedMovies";
-import {MovieDataAPI} from "../../components/helper/MovieDataAPI";
-import LoadingSkeleton from "../../components/helper/LoadingSkeleton";
 
 
 const Home = () => {
@@ -31,7 +25,7 @@ const Home = () => {
     useEffect(() => {
         getRecommendedMovies();
         getMembershipData();
-    },[])
+    }, [])
 
     let getRecommendedMovies = async () => {
         let response = await fetch("http://127.0.0.1:8000/rec_movies/", {
@@ -51,19 +45,19 @@ const Home = () => {
     };
 
     let getMembershipData = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setMyClubData(data);
-	};
+        let response = await fetch(
+            "http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        setMyClubData(data);
+    };
 
     return (
         <Grid container
