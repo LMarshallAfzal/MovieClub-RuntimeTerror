@@ -1,7 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 
 import "../../styling/pages/Home.css";
-import {Grid, ListItem, Stack} from "@mui/material";
+import {Outlet, useParams} from "react-router";
+import {Box, Grid, ImageList, ImageListItem, ListItem, Stack} from "@mui/material";
 import AuthContext from "../../components/helper/AuthContext";
 import moviePoster from '../../resources/images/empty_movie_poster.png';
 import ClubCard from "../../components/ClubCard";
@@ -45,19 +46,20 @@ const Home = () => {
     };
 
     let getMembershipData = async (e) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/memberships/" + user.user_id + "/",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data = await response.json();
-        setMyClubData(data);
-    };
+		let response = await fetch(
+			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+        console.log(data.theme)
+		setMyClubData(data);
+	};
 
     return (
         <Grid container
@@ -146,11 +148,8 @@ const Home = () => {
 
                                             <ClubCard
                                                 clubName={club.club_name}
-                                                isMember={"M"}
                                                 iconImage={club.iconImage}
                                                 description={club.mission_statement}
-                                                isOrganiser={club.isOrganiser}
-                                                // memberRole={club.memberRole}
                                                 clubTheme={club.theme}
                                                 ID={club.ID}
                                             />

@@ -16,19 +16,19 @@ function ClubCard(props) {
     const [members, setMembers] = useState([]);
 
     let getMembershipData = async (e) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/memberships/" + user.user_id + "/",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data = await response.json();
-        setClubData(data);
-    };
+		let response = await fetch(
+			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setClubData(data);
+	};
 
     let getClubMembers = async (e) => {
         let response = await fetch(
@@ -51,13 +51,15 @@ function ClubCard(props) {
     }, []);
 
     function ClubButton() {
-        return (
-            <RoundButton
-                text={"info"}
-                linkTo={`/home/clubs/${props.ID}`}
-                onClick={getClubMembers}
-            />
-        )
+            return (
+                <RoundButton
+                    text={"info"}
+                    linkTo={`/home/clubs/${props.ID}`}
+                    onClick={getClubMembers}
+                    // {...window.location.reload(false)}
+                />
+
+            )
     }
 
     function ClubChip() {

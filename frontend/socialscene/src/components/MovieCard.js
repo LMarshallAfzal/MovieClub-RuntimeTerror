@@ -1,5 +1,14 @@
-import React, {useState} from "react";
-import {Card, CardMedia, Chip, Grid, Rating, Stack, Tooltip} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  CardActionArea,
+  CardMedia,
+  Chip,
+  Grid,
+  Rating,
+  Stack,
+  Tooltip,
+} from "@mui/material";
 import "../styling/components/MovieCard.css";
 import ThemeButton from "./core/ThemeButton";
 import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
@@ -7,6 +16,7 @@ import LoadingSkeleton from "./helper/LoadingSkeleton";
 import {useNavigate} from "react-router";
 import {MovieDataAPI} from "./helper/MovieDataAPI";
 import placeHolder from '../resources/images/empty_movie_poster.png';
+import axios from "axios";
 
 function MovieCard(props) {
     const [watchedMovies, setWatchedMovies] = useState([]);
@@ -107,6 +117,7 @@ function MovieCard(props) {
                 >
 
 
+                    <CardActionArea onClick={() => HandleNavigate(props.movie.id)}>
                     <CardMedia
                         component={"img"}
                         sx={{height: "100%"}}
@@ -147,13 +158,13 @@ function MovieCard(props) {
 
                         <ClubMovie/>
 
-                        <RateMovie/>
-
-                    </Stack>
-                </Card>
-            </LoadingSkeleton>
-        </Grid>
-    );
+              <RateMovie />
+            </Stack>
+          </CardActionArea>
+        </Card>
+      </LoadingSkeleton>
+    </Grid>
+  );
 }
 
 export default MovieCard;
