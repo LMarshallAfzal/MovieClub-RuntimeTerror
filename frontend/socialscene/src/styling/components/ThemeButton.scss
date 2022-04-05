@@ -16,8 +16,17 @@
   transition: all 0.3s ease-in-out;
   border-left: 0 solid base.$primary-black;
   user-select: none;
-
 }
+
+.form-button#disabled {
+  color: base.$grey-2;
+  background-color: base.$grey-1;
+  font-family: base.$helvetica-bold;
+  border-left: 0 solid base.$primary-black;
+  cursor: not-allowed;
+}
+
+
 .form-button#normal:hover {
   cursor: pointer;
   background-color: base.$grey-4;
