@@ -13,6 +13,8 @@
 }
 
 .club-listing-club-name {
+    white-space: nowrap;
+    overflow: hidden;
     color: base.$primary-black;
     font-family: base.$helvetica;
 }

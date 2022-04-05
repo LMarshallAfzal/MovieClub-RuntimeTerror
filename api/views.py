@@ -1,24 +1,15 @@
-from ast import Is, IsNot
-from math import perm
-from re import S
-from django import views
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework import status
-from .serializers import *
-from .models import *
-from .helpers import *
-from django.contrib.auth import logout
-from recommender.user_movie_recommender import train_movie_data_for_user, recommend_movies_for_user
-from recommender.meeting_movie_recommender import train_movie_data_for_meeting, recommend_movies_for_meeting
-from recommender.club_recommender import recommend_clubs
-from .decorators import *
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from django.core.exceptions import ObjectDoesNotExist
-from .communication.club_emails import ClubEmail 
+
+from recommender.club_recommender import recommend_clubs
+from recommender.meeting_movie_recommender import train_movie_data_for_meeting, recommend_movies_for_meeting
+from recommender.user_movie_recommender import train_movie_data_for_user, recommend_movies_for_user
+from .communication.club_emails import ClubEmail
+from .decorators import *
+from .helpers import *
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -340,8 +331,9 @@ def train_movie_data(request):
     return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-def get_random_movies(request,num_movies):
-    serializer = MovieSerializer(get_random_movies(num_movies),many=True)
+def get_random_movies(request):
+    random_movie = Movie.objects.order_by('?')[0]
+    serializer = MovieSerializer(random_movie,many=False)
     return Response(serializer.data,status=status.HTTP_200_OK)
 
 @api_view(['GET'])

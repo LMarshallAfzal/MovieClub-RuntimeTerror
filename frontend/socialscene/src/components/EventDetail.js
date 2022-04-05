@@ -388,7 +388,7 @@ function EventDetail() {
 
                 <Grid item xs={10}>
                     <h5 className={"show-event-title"}>coming up:
-                        <span className={"show-event-title-movie"}>{myMeetingData.meeting_title}</span>
+                        <span className={"show-event-title-movie"}> {myMeetingData.meeting_title}</span>
                     </h5>
                 </Grid>
 
@@ -501,7 +501,8 @@ function EventDetail() {
                     <Grid container spacing={2}>
 
                         <Grid item xs={3}>
-                            <MovieWatchRateDialog movie={specificMovie} isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
+                            <MovieWatchRateDialog movie={specificMovie} isOpen={showPrompt} onClose={closePrompt}
+                                                  data={promptData}/>
                             {/* <MovieWatchRateDialog movie={props.movie} isOpen={showPrompt} onClose={closePrompt} data={promptData}/> */}
 
                             <ThemeButton text={"watch"} style={"primary"} onClick={() => {

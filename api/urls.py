@@ -1,11 +1,10 @@
 from django.urls import path
-from . import views
-from .views import MyTokenObtainPairView
-
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from . import views
+from .views import MyTokenObtainPairView
 
 urlpatterns = [
     path('csrf/', views.csrf_token, name = 'csrf_token'),
@@ -42,7 +41,7 @@ urlpatterns = [
     path("add_watched_movie/<int:movie_id>/",views.add_watched_movie,name = "add_watched_movie"),
     path("remove_watched_movie/<int:movie_id>/",views.remove_watched_movie,name = "remove_watched_movie"),
     path("get_movie/<int:movie_id>/", views.get_movie, name = "get_movie"),
-    path("random_movie/<int:movie_num>/", views.get_random_movies, name = "get_random_movies"),
+    path("random_movie/", views.get_random_movies, name = "get_random_movies"),
     path("watched_list/<int:user_id>/", views.get_watched_list, name = "get_watched_movies"),
     path("get_all_movies/", views.get_all_movies, name = "all_movies"),
     path("train/movie/", views.train_movie_data, name = "train"),
