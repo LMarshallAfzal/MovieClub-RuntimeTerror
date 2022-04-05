@@ -25,7 +25,7 @@ function Clubs() {
 			}
 		);
 		let data = await response.json();
-		console.log(data)
+		console.log(data.theme)
 		setMyClubData(data);
 	};
 

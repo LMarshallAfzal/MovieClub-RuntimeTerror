@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 
 import "../../styling/pages/Home.css";
+import {Outlet, useParams} from "react-router";
 import {Box, Grid, ImageList, ImageListItem, ListItem, Stack} from "@mui/material";
 import AuthContext from "../../components/helper/AuthContext";
 import moviePoster from '../../resources/images/empty_movie_poster.png';
@@ -62,8 +63,10 @@ const Home = () => {
 			}
 		);
 		let data = await response.json();
+        console.log(data.theme)
 		setMyClubData(data);
 	};
+
 
     return (
         <Grid container
@@ -151,12 +154,12 @@ const Home = () => {
 
                                             <ClubCard
                                                 clubName={club.club_name}
-                                                isMember={"M"}
+                                                // isMember={"M"}
                                                 iconImage={club.iconImage}
                                                 description={club.mission_statement}
-                                                isOrganiser={club.isOrganiser}
+                                                // isOrganiser={club.isOrganiser}
                                                 // memberRole={club.memberRole}
-                                                clubTheme={club.theme}
+                                                clubTheme={"Horror"}
                                                 ID={club.ID}
                                             />
                                         </ListItem>

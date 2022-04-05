@@ -21,6 +21,8 @@ import moviePoster from '../resources/images/empty_movie_poster.png';
 function MovieDetail() {
     let {movieID} = useParams();
 
+   
+
     return (
         <Grid container
               spacing={2}

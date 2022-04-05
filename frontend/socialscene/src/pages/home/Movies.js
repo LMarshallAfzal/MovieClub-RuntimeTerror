@@ -1,18 +1,18 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Collapse, Grid, Stack, TextField,} from "@mui/material";
-import {moviesWithPoster} from "../../resources/data/DummyMoviesData";
+import React, { useContext, useEffect, useState } from "react";
+import { Collapse, Grid, Stack, TextField, } from "@mui/material";
+import { moviesWithPoster } from "../../resources/data/DummyMoviesData";
 import "../../styling/pages/Movies.css";
 import moviePoster from "../../resources/images/empty_movie_poster.png";
 import AuthContext from "../../components/helper/AuthContext";
 import TextButton from "../../components/core/TextButton";
-import {Outlet} from "react-router";
+import { Outlet,useNavigate} from "react-router";
 import MovieCard from "../../components/MovieCard";
 import HomepageCard from "../../components/helper/HomepageCard";
 import { MovieDataAPI } from "../../components/helper/MovieDataAPI";
 
 
 const Movies = () => {
-    let {user, authTokens} = useContext(AuthContext);
+    let { user, authTokens } = useContext(AuthContext);
     const [movie, setMovie] = useState("");
     const [rating, setRating] = useState({
         user: user.user_id,
@@ -22,16 +22,18 @@ const Movies = () => {
     const [recommendedMovies, setRecommendedMovies] = useState([]);
     const [watchedMovies, setWatchedMovies] = useState([]);
     const [clubMovies, setClubMovies] = useState([]);
+    const [allMovies,setAllMovies] = useState([]);
 
     useEffect(() => {
         getRecommendedMovies();
         getWatchedMovies();
         getClubMovies();
+        // getAllMovies();
         console.log(clubMovies)
     }, []);
 
     let getMovie = async (e, id) => {
-        let response = await fetch("http://127.0.0.1:8000/watched_list/get_movie/" + id + "/", {
+        let response = await fetch("http://127.0.0.1:8000/get_movie/" + id + "/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -41,6 +43,19 @@ const Movies = () => {
         await response.json();
     }
 
+    let getAllMovies = async () => {
+        let response = await fetch("http://127.0.0.1:8000/get_all_movies/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authTokens.access,
+            },
+        });
+        let data = await response.json();
+        setAllMovies(data);
+    }
+
+    
 
     let getClubMovies = async (e) => {
         let response = await fetch("http://127.0.0.1:8000/get_user_attending_meetings/", {
@@ -52,7 +67,7 @@ const Movies = () => {
         });
         let data = await response.json();
         console.log(data)
-        if(response.status === 200) {
+        if (response.status === 200) {
             let array = [];
             data.map((val) => {
                 array.push(getMovie(e, val.movie));
@@ -60,9 +75,9 @@ const Movies = () => {
             setClubMovies(array);
         }
     };
-    
+
     let getWatchedMovies = async () => {
-        let response = await fetch("http://127.0.0.1:8000/watched_list/", {
+        let response = await fetch("http://127.0.0.1:8000/watched_list/" + user.user_id + "/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -101,17 +116,20 @@ const Movies = () => {
         (text === "") ? setOpenSearch(false) : setOpenSearch(true);
     };
 
-
+    const navigate = useNavigate();
+    const handleUserClick = (ID) => {
+        navigate(`${ID}`, { replace: false });
+    }
     const [searchValue, setSearchValue] = useState("");
-
+    
     const cardHeight = 325;
     const rateCardHeight = cardHeight + 65;
     const clubCardHeight = rateCardHeight + 40;
 
     return (
         <Grid container
-              spacing={2}
-              padding={2}>
+            spacing={2}
+            padding={2}>
 
             <Grid item xs={12}>
 
@@ -120,7 +138,7 @@ const Movies = () => {
                     fullWidth
                     value={searchValue}
                     data-testid={"search-bar"}
-                    inputProps={{"data-testid": "content-input"}}
+                    inputProps={{ "data-testid": "content-input" }}
                     placeholder={"search for a movie"}
                     onChange={(event) => {
                         setSearchValue(event.target.value);
@@ -131,7 +149,7 @@ const Movies = () => {
                             <TextButton
                                 text={openSearch ? "close" : "open"}
                                 onClick={toggleSearch}
-                                style={{textAlign: "right"}}
+                                style={{ textAlign: "right" }}
                             />
                         ),
                     }}
@@ -141,12 +159,12 @@ const Movies = () => {
                     <HomepageCard title={"search result"}>
                         <Grid item xs={12}>
                             <Stack direction={"row"}
-                                   spacing={2}
-                                   height={cardHeight}
-                                   sx={{overflowX: "scroll", overflowY: "hidden"}}
+                                spacing={2}
+                                height={cardHeight}
+                                sx={{ overflowX: "scroll", overflowY: "hidden" }}
                             >
 
-                                {moviesWithPoster.filter((movie) => {
+                                {allMovies.filter((movie) => {
                                     if (movie.title
                                         .toLowerCase()
                                         .includes(searchValue.toLowerCase())
@@ -160,6 +178,7 @@ const Movies = () => {
                                             clubMovie={false}
                                             rateMovie={true}
                                             movie={movie}
+                                            onClick={() => handleUserClick(movie.id)}
                                             poster={moviePoster}
                                         />
                                     );
@@ -174,9 +193,9 @@ const Movies = () => {
                 <HomepageCard title={"club movies"}>
                     <Grid item xs={12}>
                         <Stack direction={"row"}
-                               spacing={2}
-                               height={clubCardHeight}
-                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                            spacing={2}
+                            height={clubCardHeight}
+                            sx={{ overflowX: "scroll", overflowY: "hidden" }}
                         >
                             {clubMovies.map((movie, index) => {
                                 return (
@@ -199,9 +218,9 @@ const Movies = () => {
                 <HomepageCard title={"recommended"}>
                     <Grid item xs={12}>
                         <Stack direction={"row"}
-                               spacing={2}
-                               height={rateCardHeight}
-                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                            spacing={2}
+                            height={rateCardHeight}
+                            sx={{ overflowX: "scroll", overflowY: "hidden" }}
                         >
                             {recommendedMovies.map((movie, index) => {
                                 return (
@@ -209,6 +228,7 @@ const Movies = () => {
                                         key={index}
                                         poster={moviePoster}
                                         rateMovie={true}
+                                        onClick={() => handleUserClick(movie.id)}
                                         clubMovie={false}
                                         movie={movie}
                                     />
@@ -223,15 +243,15 @@ const Movies = () => {
                 <HomepageCard title={"watched"}>
                     <Grid item xs={12}>
                         <Stack direction={"row"}
-                               spacing={2}
-                               height={cardHeight}
-                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                            spacing={2}
+                            height={cardHeight}
+                            sx={{ overflowX: "scroll", overflowY: "hidden" }}
                         >
                             {watchedMovies.map((movie, index) => {
                                 return (
                                     <MovieCard
                                         key={index}
-                                        // poster={moviePoster}
+                                        poster={moviePoster}
                                         rateMovie={false}
                                         clubMovie={false}
                                         movie={movie}
@@ -244,7 +264,7 @@ const Movies = () => {
             </Grid>
 
             <Grid item xs={12}>
-                <Outlet/>
+                <Outlet />
             </Grid>
         </Grid>
     );

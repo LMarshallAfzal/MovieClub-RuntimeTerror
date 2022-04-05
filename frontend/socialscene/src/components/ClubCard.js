@@ -57,7 +57,9 @@ function ClubCard(props) {
                     text={"info"}
                     linkTo={`/home/clubs/${props.ID}`}
                     onClick={getClubMembers}
+                    // {...window.location.reload(false)}
                 />
+                
             )
     }
 
