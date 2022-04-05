@@ -36,16 +36,16 @@ function ClubDetail() {
     const [isOwner, setIsOwner] = useState(false);
 
     const [clubNameError, setClubNameError] = useState(false);
-	const [clubDescriptionError, setClubDescriptionError] = useState(false);
-	const [clubThemeError, setClubThemeError] = useState(false);
+    const [clubDescriptionError, setClubDescriptionError] = useState(false);
+    const [clubThemeError, setClubThemeError] = useState(false);
 
-	const [clubNameErrorText, setClubNameErrorText] = useState("");
-	const [clubDescriptionErrorText, setClubDescriptionErrorText] = useState("");
-	const [clubThemeErrorText, setClubThemeErrorText] = useState("");
+    const [clubNameErrorText, setClubNameErrorText] = useState("");
+    const [clubDescriptionErrorText, setClubDescriptionErrorText] = useState("");
+    const [clubThemeErrorText, setClubThemeErrorText] = useState("");
 
 
-	let { clubID } = useParams();
-	let { user, authTokens } = useContext(AuthContext);
+    let {clubID} = useParams();
+    let {user, authTokens} = useContext(AuthContext);
 
     const onChange = (e) => {
         setClub((prevData) => ({
@@ -54,139 +54,139 @@ function ClubDetail() {
         }));
     };
 
-	const handleChange = (event, value) => {
-		let array = [];
-		value.map((val) => {
-			array.push(val.theme);
-		});
-		console.log(club);
-		setClub((fieldData) => ({
-			...fieldData,
-			theme: array[0],
-		}));
-	};
+    const handleChange = (event, value) => {
+        let array = [];
+        value.map((val) => {
+            array.push(val.theme);
+        });
+        console.log(club);
+        setClub((fieldData) => ({
+            ...fieldData,
+            theme: array[0],
+        }));
+    };
 
     let resetErrorState = () => {
-		setClubNameError(false);
-		setClubDescriptionError(false);
-		setClubThemeError(false);
-	};
+        setClubNameError(false);
+        setClubDescriptionError(false);
+        setClubThemeError(false);
+    };
 
     let errorHandler = (e, data) => {
-		e.preventDefault();
-		if (Object.keys(data).includes("club_name")) {
-			setClubNameError(true);
-			setClubNameErrorText("Error:" + data.club_name);
-		}
-		if (Object.keys(data).includes("mission_statement")) {
-			setClubDescriptionError(true);
-			setClubDescriptionErrorText("Error:" + data.mission_statement);
-		}
-		if (Object.keys(data).includes("theme")) {
-			setClubThemeError(true);
-			setClubThemeErrorText("Error:" + data.theme);
-		}
-	};
+        e.preventDefault();
+        if (Object.keys(data).includes("club_name")) {
+            setClubNameError(true);
+            setClubNameErrorText("Error:" + data.club_name);
+        }
+        if (Object.keys(data).includes("mission_statement")) {
+            setClubDescriptionError(true);
+            setClubDescriptionErrorText("Error:" + data.mission_statement);
+        }
+        if (Object.keys(data).includes("theme")) {
+            setClubThemeError(true);
+            setClubThemeErrorText("Error:" + data.theme);
+        }
+    };
 
-	let getClub = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000/club/" + clubID + "/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		let data = await response.json();
-		setClub(data);
-	};
+    let getClub = async (e) => {
+        let response = await fetch("http://127.0.0.1:8000/club/" + clubID + "/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        let data = await response.json();
+        setClub(data);
+    };
 
-	let getClubMembers = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/club_members/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-        if(response.status === 200){
+    let getClubMembers = async (e) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/club_members/" + clubID + "/",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        if (response.status === 200) {
             setMembers(data);
             data.find((member) => member.username === user.username)
                 ? setIsMember(true)
                 : setIsMember(false);
         }
-	};
+    };
 
-	let getClubOwner = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/club_owner/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		data.find((owner) => owner.username === user.username)
-			? setIsOwner(true)
-			: setIsOwner(false);
-		setOwner(data);
-	};
+    let getClubOwner = async (e) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/club_owner/" + clubID + "/",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        data.find((owner) => owner.username === user.username)
+            ? setIsOwner(true)
+            : setIsOwner(false);
+        setOwner(data);
+    };
 
-	let getMembershipData = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		console.log(data);
-		setMyClubData(data);
-	};
+    let getMembershipData = async (e) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        console.log(data);
+        setMyClubData(data);
+    };
 
-	let getBannedMembers = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/banned_member_list/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setBanned(data);
-	};
+    let getBannedMembers = async (e) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/banned_member_list/" + clubID + "/",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        setBanned(data);
+    };
 
-	let joinClub = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/join_club/" + clubID + "/",
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		await response.json();
-		if (response.status === 200) {
-			setIsMember(true);
-			getClubMembers();
-			getMembershipData();
-		}
-	};
+    let joinClub = async () => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/join_club/" + clubID + "/",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        await response.json();
+        if (response.status === 200) {
+            setIsMember(true);
+            getClubMembers();
+            getMembershipData();
+        }
+    };
 
     let leaveClub = async () => {
         let response = await fetch(
@@ -206,89 +206,89 @@ function ClubDetail() {
         }
     };
 
-	let saveClub = async (e) => {
+    let saveClub = async (e) => {
         e.preventDefault();
         resetErrorState();
-		let response = await fetch(
-			"http://127.0.0.1:8000/edit_club/" + clubID + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify(club),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
+        let response = await fetch(
+            "http://127.0.0.1:8000/edit_club/" + clubID + "/",
+            {
+                method: "PUT",
+                body: JSON.stringify(club),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
         if (response.status === 200) {
-		setClub(data);
+            setClub(data);
         } else {
             errorHandler(e, data);
         }
-	};
+    };
 
-	let banMember = async (memberID) => {
-		console.log(memberID);
-		let response = await fetch(
-			"http://127.0.0.1:8000/ban_member/" + clubID + "/" + memberID + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify(user1),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-	};
+    let banMember = async (memberID) => {
+        console.log(memberID);
+        let response = await fetch(
+            "http://127.0.0.1:8000/ban_member/" + clubID + "/" + memberID + "/",
+            {
+                method: "PUT",
+                body: JSON.stringify(user1),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+    };
 
-	let unbanMember = async (memberID) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/unban_member/" + clubID + "/" + memberID + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify(user1),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		await response.json();
-	};
+    let unbanMember = async (memberID) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/unban_member/" + clubID + "/" + memberID + "/",
+            {
+                method: "PUT",
+                body: JSON.stringify(user1),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        await response.json();
+    };
 
-	let deleteClub = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/delete_club/" + clubID + "/",
-			{
-				method: "DELETE",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		await response.json();
-	};
+    let deleteClub = async () => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/delete_club/" + clubID + "/",
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        await response.json();
+    };
 
-	useEffect(() => {
-		getClubMembers();
-		getClubOwner();
-		getMembershipData();
-		getBannedMembers();
-		getClub();
-		myClubData.find(
-			(val) => val.club_id === clubID && val.is_organiser === true
-		)
-			? setIsOrganiser(true)
-			: setIsOrganiser(false);
-	}, []);
+    useEffect(() => {
+        getClubMembers();
+        getClubOwner();
+        getMembershipData();
+        getBannedMembers();
+        getClub();
+        myClubData.find(
+            (val) => val.club_id === clubID && val.is_organiser === true
+        )
+            ? setIsOrganiser(true)
+            : setIsOrganiser(false);
+    }, []);
 
-	const toggleBannedView = () => {
-		setBannedMembers(!showBannedMembers);
-	};
+    const toggleBannedView = () => {
+        setBannedMembers(!showBannedMembers);
+    };
 
     const openDeleteClubDialog = () => {
         setDeleteClubDialog(true);
@@ -298,34 +298,29 @@ function ClubDetail() {
         setDeleteClubDialog(false);
     }
 
-	const handleClubDelete = () => {
-		closeDeleteClubDialog();
-		deleteClub();
-	};
+    const handleClubDelete = () => {
+        closeDeleteClubDialog();
+        deleteClub();
+    };
 
-	const handleBan = (id) => {
-		banMember(id);
-	};
+    const handleBan = (id) => {
+        banMember(id);
+    };
 
-	const handleUnBan = (id) => {
-		console.log("User Un-Banned");
-		unbanMember(id);
-	};
+    const handleUnBan = (id) => {
+        console.log("User Un-Banned");
+        unbanMember(id);
+    };
 
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
-	const handleUserClick = (ID) => {
-		navigate(`${ID}`, { replace: false });
-	};
+    const handleUserClick = (ID) => {
+        navigate(`${ID}`, {replace: false});
+    };
 
-	const handleBannedUserClick = (id) => {
-		console.log("User Clicked");
-	};
     const handleBannedUserClick = (id) => {
         console.log("User Clicked");
-
-
-    }
+    };
 
     function UserDisplay() {
         if (showBannedMembers === false) {
@@ -532,7 +527,7 @@ function ClubDetail() {
             <Grid item xs={6} height={cardHeight}>
                 <HomepageCard title={showBannedMembers ? "banned users" : "members"}>
 
-                    <Box maxHeight={cardHeight} overflow={"auto"}>
+                    <Box maxHeight={cardHeight - 80} overflow={"auto"}>
                         <UserDisplay/>
                     </Box>
                 </HomepageCard>
@@ -553,21 +548,21 @@ function ClubDetail() {
                             </h4>
                         </DialogTitle>
 
-						<DialogContent>
-							<DialogContentText id="alert-dialog-description">
-								<h6>this club will be deleted and all associated data</h6>
-							</DialogContentText>
-						</DialogContent>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                <h6>this club will be deleted and all associated data</h6>
+                            </DialogContentText>
+                        </DialogContent>
 
-						<DialogActions>
-							<ThemeButton
-								onClick={handleClubDelete}
-								text={"delete"}
-								style={"primary"}
-							/>
-							<ThemeButton onClick={closeDeleteClubDialog} text={"cancel"} />
-						</DialogActions>
-					</Dialog>
+                        <DialogActions>
+                            <ThemeButton
+                                onClick={handleClubDelete}
+                                text={"delete"}
+                                style={"primary"}
+                            />
+                            <ThemeButton onClick={closeDeleteClubDialog} text={"cancel"}/>
+                        </DialogActions>
+                    </Dialog>
 
 
                     <ThemeButton text={"join"} style={!isMember && !isOwner ? "primary" : "disabled"}
