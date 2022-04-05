@@ -18,7 +18,7 @@ function ClubCard(props) {
 
     let getMembershipData = async (e) => {
 		let response = await fetch(
-			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
 			{
 				method: "GET",
 				headers: {
@@ -57,7 +57,9 @@ function ClubCard(props) {
                     text={"info"}
                     linkTo={`/home/clubs/${props.ID}`}
                     onClick={getClubMembers}
+                    // {...window.location.reload(false)}
                 />
+                
             )
     }
 

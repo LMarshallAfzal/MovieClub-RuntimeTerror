@@ -18,7 +18,7 @@ function ClubListing(props) {
 
 	let getMembershipData = async (e) => {
 		let response = await fetch(
-			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			"http://127.0.0.1:8000/get_user_joined_clubs//" + user.user_id + "/",
 			{
 				method: "GET",
 				headers: {
@@ -86,22 +86,13 @@ function ClubListing(props) {
     },[])
 	function ClubChip() {
 		if (props.isMember) {
-			if (props.isOrganiser) {
-				return (
-					<EnterButton
-						text={"create meeting"}
-						linkTo={`/home//${props.ID}/new`}
-					/>
-				);
-			} else {
                 if (props.memberRole === "M") {
                     return <Chip label={"Member"} />;
                 }
                 else if (props.memberRole === "O") {
-                    return <Chip label={"Organiser"} />;
+                    return <Chip label={"Owner"} />;
                 }
-				return <Chip label={"Banned member"} />;
-			}
+			
 		} else {
 			return <Chip label={props.clubTheme} />;
 		}

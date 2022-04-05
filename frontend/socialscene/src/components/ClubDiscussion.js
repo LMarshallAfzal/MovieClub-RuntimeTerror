@@ -3,7 +3,6 @@ import "../styling/components/ClubDiscussion.css";
 import {useParams} from "react-router";
 import {Avatar, Divider, FormControl, Grid, TextField, Typography} from "@mui/material";
 import ThemeButton from "./core/ThemeButton";
-import iconImage from "../resources/images/testIconPic.jpg";
 import TextButton from "./core/TextButton";
 import {Outlet} from "react-router-dom";
 import AuthContext from "./helper/AuthContext";
@@ -41,7 +40,7 @@ function ClubDiscussion() {
 
     let getMembershipData = async () => {
         let response = await fetch(
-            "http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+            "http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
             {
                 method: "GET",
                 headers: {
@@ -144,7 +143,7 @@ function ClubDiscussion() {
                                                     <div style={{alignSelf: "center", width: "40px", padding: "10px"}}>
                                                         <Avatar
                                                             alt={userData.first_name}
-                                                            src={iconImage}
+                                                            src={user.iconImage}
                                                             sx={{width: "100%", height: "100%"}}
                                                         />
                                                     </div>
