@@ -244,6 +244,18 @@ function EventCreate() {
                 </Grid>
 
                 <Grid item xs={12}>
+                    <TextField
+                            fullWidth
+                            required
+                            placeholder={"the event meeting date"}
+                            label={"link"}
+                            name={"link"}
+                            value={link}
+                            onChange={e => onChange(e)}
+                        />
+                </Grid>
+
+                <Grid item xs={12}>
                     <ThemeButton
                         text={"create"}
                         style={"primary"}
