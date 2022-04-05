@@ -62,7 +62,7 @@ const Movies = () => {
     };
     
     let getWatchedMovies = async () => {
-        let response = await fetch("http://127.0.0.1:8000/watched_list/", {
+        let response = await fetch("http://127.0.0.1:8000/watched_list/" + user.user_id + "/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

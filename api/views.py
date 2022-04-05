@@ -310,6 +310,9 @@ def add_rating(request, movie_id):
 @user_has_rated_movie
 def change_rating(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
+    rating = Rating.objects.get(user=request.user, movie=movie)
+    rating.score = request.data['score']
+    rating.save()
     serializer = ChangeRatingSerializer(movie, data=request.data)
     if serializer.is_valid():
         serializer.save()
