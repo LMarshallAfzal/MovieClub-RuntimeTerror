@@ -66,12 +66,13 @@ def login(request):
         data['response'] = 'You have entered an invalid username or password'
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
-# @api_view(['GET'])
-# def update_gravatars(request):
-#     for user in User.objects.all():
-#         user.gravavatar_link = user.get_gravatar(user.email)
-#         user.save()
-#     return Response(status=status.HTTP_200_OK)
+@api_view(['GET'])
+@user_exists
+def get_gravatar_for_other_user(request,user_id):
+    user = User.objects.get(id=user_id)
+    user.gravatar = user.gravatar()
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data,status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -586,7 +587,7 @@ def banned_member_list(request, club_id):
     club = Club.objects.get(id=club_id)
     banned = club.get_banned_members()
     if len(banned) == 0:
-        raise serializers.ValidationError("There are no banned members.")
+        return Response(status=status.HTTP_200_OK)
     else:
         serializer = UserSerializer(banned, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

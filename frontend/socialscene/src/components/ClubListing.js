@@ -13,20 +13,20 @@ function ClubListing(props) {
     const [myClubData, setMyClubData] = useState([]);
     const [clubMembers, setClubMembers] = useState([]);
 
-    let getMembershipData = async (e) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/memberships/" + user.user_id + "/",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data = await response.json();
-        setMyClubData(data);
-    };
+	let getMembershipData = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/get_user_joined_clubs//" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		setMyClubData(data);
+	};
 
     let getClubMembers = async (e) => {
         let response = await fetch(
@@ -54,7 +54,7 @@ function ClubListing(props) {
             }
         })
         let data = await response.json()
-
+        
 
     }
 
@@ -68,41 +68,32 @@ function ClubListing(props) {
                 />
             )
         } else {
-            return (
-                <EnterButton
-                    text={"join"}
-                    onClick={joinClub(props.clubID)}
-                />
-            )
+                return (
+                    <EnterButton
+                        text={"join"}
+                        onClick={joinClub(props.clubID)}
+                    />
+                )
+            }
         }
-    }
 
     useEffect((e) => {
         getMembershipData()
         getClubMembers(e, props.clubID)
-    }, [])
-
-    function ClubChip() {
-        if (props.isMember) {
-            if (props.isOrganiser) {
-                return (
-                    <EnterButton
-                        text={"create meeting"}
-                        linkTo={`/home//${props.ID}/new`}
-                    />
-                );
-            } else {
+    },[])
+	function ClubChip() {
+		if (props.isMember) {
                 if (props.memberRole === "M") {
-                    return <Chip label={"Member"}/>;
-                } else if (props.memberRole === "O") {
-                    return <Chip label={"Organiser"}/>;
+                    return <Chip label={"Member"} />;
                 }
-                return <Chip label={"Banned member"}/>;
-            }
-        } else {
-            return <Chip label={props.clubTheme}/>;
-        }
-    }
+                else if (props.memberRole === "O") {
+                    return <Chip label={"Owner"} />;
+                }
+
+		} else {
+			return <Chip label={props.clubTheme} />;
+		}
+	}
 
     return (
         <Link className={"club-listing"} to={`/home/clubs/${props.ID}`}>

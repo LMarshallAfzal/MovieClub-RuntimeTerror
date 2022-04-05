@@ -27,19 +27,19 @@ describe("Clubs", () => {
         }
     })
 
-    it("should render the clubs page", () => {
+    it.skip("should render the clubs page", () => {
         renderClubsPage(authTokens)
         expect(screen.getByText("clubs")).toBeInTheDocument()
     })
 
-    it("should render the clubs page with the correct text", () => {
+    it.skip("should render the clubs page with the correct text", () => {
         renderClubsPage(authTokens)
         expect(screen.getByText("clubs")).toBeInTheDocument()
         expect(screen.getByText("your clubs")).toBeInTheDocument()
         expect(screen.getByText("recommended")).toBeInTheDocument()
     })
 
-    it("should render the clubs page with search bar", () => {
+    it.skip("should render the clubs page with search bar", () => {
         renderClubsPage(authTokens)
         const searchBar = screen.getByTestId("search-bar")
         expect(searchBar).toBeInTheDocument()
@@ -49,7 +49,7 @@ describe("Clubs", () => {
 
     })
 
-    it("should render the clubs page with create button", () => {
+    it.skip("should render the clubs page with create button", () => {
         renderClubsPage(authTokens)
         const createClub = screen.getByText("create")
         expect(createClub).toBeInTheDocument()
