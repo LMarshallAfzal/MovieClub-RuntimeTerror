@@ -53,7 +53,7 @@ const Home = () => {
 
     let getMembershipData = async (e) => {
 		let response = await fetch(
-			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
 			{
 				method: "GET",
 				headers: {
@@ -154,12 +154,9 @@ const Home = () => {
 
                                             <ClubCard
                                                 clubName={club.club_name}
-                                                // isMember={"M"}
                                                 iconImage={club.iconImage}
                                                 description={club.mission_statement}
-                                                // isOrganiser={club.isOrganiser}
-                                                // memberRole={club.memberRole}
-                                                clubTheme={"Horror"}
+                                                clubTheme={club.theme}
                                                 ID={club.ID}
                                             />
                                         </ListItem>

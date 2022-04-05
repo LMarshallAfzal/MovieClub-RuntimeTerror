@@ -57,7 +57,7 @@ function UserDetail() {
   };
 
   const [following, setFollowing] = useState(false);
-
+  const [userIcon,setUserIcon] = useState(null)
   const [followers, setFollowers] = useState([]);
   const [followees, setFollowees] = useState([]);
   const [followerCount, setFollowerCount] = useState(null);
@@ -98,6 +98,21 @@ function UserDetail() {
   const [favourites, setFavourites] = useState([]);
   const [recentlyWatched, setRecentlyWatched] = useState([]);
 
+  let toggleFollow = async (e) => {
+    let response = await fetch("http://127.0.0.1:8000/toggle_follow/" + userID + "/", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    });
+    let data = await response.json();
+    console.log(data);
+    setFollowing(!following)
+  };
+
+
+    
   let getFavourites = async (e) => {
     let response = await fetch(
       "http://127.0.0.1:8000/favourite_movies/" + userID + "/",
@@ -133,7 +148,7 @@ function UserDetail() {
 
   let getUserMemberships = async (e) => {
     let response = await fetch(
-      "http://127.0.0.1:8000/memberships/" + userID + "/",
+      "http://127.0.0.1:8000/get_user_joined_clubs/" + userID + "/",
       {
         method: "GET",
         headers: {
@@ -147,13 +162,33 @@ function UserDetail() {
     setUserMembershipCount(data.length);
   };
 
+  let getUserIcon = async (e) => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/other_user_gravatars/" + userID + "/",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    let data = await response.json();
+    console.log(data);
+    setUserIcon(data.gravatar);
+  };
+
+
+
   useEffect(() => {
+    getUserIcon();
     getOtherUser();
     getFollowers();
     getFollowees();
     getFavourites();
     getRecentlyWatched();
     getUserMemberships();
+    
   }, []);
 
   return (
@@ -165,7 +200,7 @@ function UserDetail() {
             titleItem={
               <TextButton
                 text={following ? "following" : "follow"}
-                onClick={() => setFollowing(!following)}
+                onClick={() => toggleFollow()}
                 style={{ textAlign: "right" }}
               />
             }
@@ -173,7 +208,7 @@ function UserDetail() {
             <Grid item xs={4}>
               <Avatar
                 alt={otherUser.first_name + " " + otherUser.last_name}
-                src={otherUser.iconImage}
+                src={userIcon}
                 sx={{ width: 1, height: 1 }}
               />
             </Grid>
@@ -213,7 +248,7 @@ function UserDetail() {
                     label={user.first_name + " " + user.last_name}
                     avatar={
                       <Avatar
-                        src={user.iconImage}
+                        src={userIcon}
                         alt={user.first_name + " " + user.last_name}
                       />
                     }

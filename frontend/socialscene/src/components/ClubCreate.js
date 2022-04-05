@@ -102,7 +102,6 @@ function ClubCreate() {
                         filterSelectedOptions
                         value={club.theme}
                         onChange={handleChange}
-                        // disableCloseOnSelect
                         renderInput={(params) => (
                             <TextField
                                 {...params}
