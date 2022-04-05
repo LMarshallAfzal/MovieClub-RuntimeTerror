@@ -32,6 +32,7 @@ function UserDetail() {
   let { authTokens } = useContext(AuthContext);
   let { userID } = useParams();
   const [otherUser, setOtherUser] = useState([]);
+  const [otherPreferences, setOtherPreferences] = useState([]);
   let getOtherUser = async (e) => {
     let response = await fetch("http://127.0.0.1:8000/user/" + userID + "/", {
       method: "GET",
@@ -44,6 +45,7 @@ function UserDetail() {
     console.log(data);
     console.log(data.id);
     setOtherUser(data);
+    setOtherPreferences(data.preferences);
   };
 
   const navigate = useNavigate();
@@ -56,8 +58,82 @@ function UserDetail() {
 
   const [following, setFollowing] = useState(false);
 
+  const [followers, setFollowers] = useState([]);
+  const [followees, setFollowees] = useState([]);
+  const [followerCount, setFollowerCount] = useState(null);
+  const [followeeCount, setFolloweeCount] = useState(null);
+
+  let getFollowers = async (e) => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/followers/" + userID + "/",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    let data = await response.json();
+    setFollowers(data);
+    setFollowerCount(data.length);
+  };
+
+  let getFollowees = async (e) => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/following/" + userID + "/",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    let data = await response.json();
+    setFollowees(data);
+    setFolloweeCount(data.length);
+  };
+
+  const [favourites, setFavourites] = useState([]);
+  const [recentlyWatched, setRecentlyWatched] = useState([]);
+
+  let getFavourites = async (e) => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/favourite_movies/" + userID + "/",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    let data = await response.json();
+    setFavourites(data);
+  };
+
+  let getRecentlyWatched = async (e) => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/watched_list/" + userID + "/",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    let data = await response.json();
+    setRecentlyWatched(data);
+  };
+
   useEffect(() => {
     getOtherUser();
+    getFollowers();
+    getFollowees();
+    getFavourites();
+    getRecentlyWatched();
   }, []);
 
   return (
@@ -99,52 +175,54 @@ function UserDetail() {
                 <Stack>
                   <h6 className={"user-detail-heading"}>preferences</h6>
                   <Box maxHeight={cardHeight / 2} sx={{ overflowY: "scroll" }}>
-                      
-                    {/* <Chip label={"Horror"} sx={{ mr: 1, mt: 1 }} />
-                    <Chip label={"Fantasy"} sx={{ mr: 1, mt: 1 }} />
-                    <Chip label={"Porn"} sx={{ mr: 1, mt: 1 }} />
-                    <Chip label={"Kids"} sx={{ mr: 1, mt: 1 }} />
-                    <Chip label={"Action"} sx={{ mr: 1, mt: 1 }} />
-                    <Chip label={"Classic"} sx={{ mr: 1, mt: 1 }} /> */}
+                    {otherPreferences.map((e, index) => (
+                      <Chip label={e} sx={{ mr: 1, mt: 1 }} />
+                    ))}
                   </Box>
                 </Stack>
               </Stack>
             </Grid>
           </HomepageCard>
 
-          <HomepageCard title={"following"} titleItemText={cardHeight}>
-            <Box maxHeight={cardHeight / 2} sx={{ overflowY: "scroll" }}>
-              return (
-              <Chip
-                label={otherUser.first_name + " " + otherUser.last_name}
-                avatar={
-                  <Avatar
-                    src={otherUser.iconImage}
-                    alt={otherUser.first_name + " " + otherUser.last_name}
+          <HomepageCard title={"following"} titleItemText={followeeCount}>
+            <Box maxHeight={followeeCount * 100} sx={{ overflowY: "scroll" }}>
+              {followees.map((user, index) => {
+                return (
+                  <Chip
+                    key={index}
+                    label={user.first_name + " " + user.last_name}
+                    avatar={
+                      <Avatar
+                        src={user.iconImage}
+                        alt={user.first_name + " " + user.last_name}
+                      />
+                    }
+                    onClick={() => handleChipClick("profile", user.id)}
+                    sx={{ mr: 1, mt: 1 }}
                   />
-                }
-                onClick={() => handleChipClick("profile", otherUser.id)}
-                sx={{ mr: 1, mt: 1 }}
-              />
-              );
+                );
+              })}
             </Box>
           </HomepageCard>
 
-          <HomepageCard title={"followers"} titleItemText={cardHeight}>
-            <Box maxHeight={cardHeight / 2} sx={{ overflowY: "scroll" }}>
-              return (
-              <Chip
-                label={otherUser.first_name + " " + otherUser.last_name}
-                avatar={
-                  <Avatar
-                    src={otherUser.iconImage}
-                    alt={otherUser.first_name + " " + otherUser.last_name}
+          <HomepageCard title={"followers"} titleItemText={followerCount}>
+            <Box maxHeight={followerCount * 100} sx={{ overflowY: "scroll" }}>
+              {followers.map((user, index) => {
+                return (
+                  <Chip
+                    key={"index"}
+                    label={user.first_name + " " + user.last_name}
+                    avatar={
+                      <Avatar
+                        src={user.iconImage}
+                        alt={user.first_name + " " + user.last_name}
+                      />
+                    }
+                    onClick={() => handleChipClick("profile", user.id)}
+                    sx={{ mr: 1, mt: 1 }}
                   />
-                }
-                onClick={() => handleChipClick("profile", otherUser.id)}
-                sx={{ mr: 1, mt: 1 }}
-              />
-              );
+                );
+              })}
             </Box>
           </HomepageCard>
         </Stack>
@@ -160,7 +238,7 @@ function UserDetail() {
                 height={cardHeight}
                 sx={{ overflowX: "scroll", overflowY: "hidden" }}
               >
-                {moviesWithPoster.slice(0, 5).map((movie, index) => {
+                {recentlyWatched.slice(0, 5).map((movie, index) => {
                   return (
                     <MovieCard
                       key={index}
@@ -183,7 +261,7 @@ function UserDetail() {
                 height={cardHeight}
                 sx={{ overflowX: "scroll", overflowY: "hidden" }}
               >
-                {moviesWithPoster.slice(0, 5).map((movie, index) => {
+                {favourites.slice(0, 5).map((movie, index) => {
                   return (
                     <MovieCard
                       key={index}
