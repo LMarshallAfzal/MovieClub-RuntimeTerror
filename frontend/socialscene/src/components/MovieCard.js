@@ -89,19 +89,20 @@ function MovieCard(props) {
         <Grid item>
             <LoadingSkeleton loading={movieAPIData}>
                 <Card sx={{
-                    width: cardWidth,
+                    width: props.animated ? cardWidth : "100%",
                     transition: "ease-out",
                     transitionDuration: "0.2s",
                     border: cardBorder
                 }}
-                      onMouseEnter={() => {
+
+                      onMouseEnter={props.animated ? (() => {
                           setCardWidth(160)
                           setCardBorder("2px solid red")
-                      }}
-                      onMouseLeave={() => {
+                      }) : null}
+                      onMouseLeave={props.animated ? (() => {
                           setCardWidth(150)
                           setCardBorder("0px solid black")
-                      }}
+                      }) : null}
                       translate={"yes"}
                 >
 

@@ -75,13 +75,13 @@ function ClubSelector() {
                                     <ListItem sx={{width: "auto", p: 1}}>
                                         <div className={"club-selector-listing"}>
                                             <Grid container padding={2} spacing={1} alignItems={"center"}>
-                                                <Grid item xs={8}>
+                                                <Grid item xs={9}>
                                                     <h4 style={{
                                                         whiteSpace: "nowrap",
                                                         overflow: "hidden"
                                                     }}>{club.club_name}</h4>
                                                 </Grid>
-                                                <Grid item xs={4}>
+                                                <Grid item xs={3}>
                                                     <RoundButton
                                                         text={"view"}
                                                         onClick={() =>

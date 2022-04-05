@@ -121,6 +121,7 @@ const Home = () => {
                                                 clubMovie={false}
                                                 rateMovie={true}
                                                 movie={movie}
+                                                animated={true}
                                             />
                                         );
                                     })}

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Outlet, useNavigate, useParams} from "react-router";
 import {
     Autocomplete,
@@ -14,111 +14,112 @@ import {
     Stack,
     TextField
 } from "@mui/material";
-import { FaCrown } from 'react-icons/fa';
+import {FaCrown} from 'react-icons/fa';
 import "../styling/components/ClubDetail.css";
 import ThemeButton from "./core/ThemeButton";
 import {themes} from "../resources/data/MovieThemes"
 import AuthContext from "../components/helper/AuthContext";
+import HomepageCard from "./helper/HomepageCard";
 
 
 function ClubDetail() {
     const [showBannedMembers, setBannedMembers] = useState(false);
     const [showDeleteClubDialog, setDeleteClubDialog] = useState(false);
-    const [edit, setEdit] = useState(true);
-	const [isMember, setIsMember] = useState(false);
+    const [isMember, setIsMember] = useState(false);
     const [isOrganiser, setIsOrganiser] = useState(false);
-	const [members, setMembers] = useState([]);
-    const [owner,setOwner] = useState([])
-	const [club, setClub] = useState([]);
-	const [myClubData, setMyClubData] = useState([]);
+    const [members, setMembers] = useState([]);
+    const [owner, setOwner] = useState([])
+    const [club, setClub] = useState([]);
+    const [myClubData, setMyClubData] = useState([]);
     const [banned, setBanned] = useState([]);
     const [user1, setUser1] = useState('');
-    const [isOwner,setIsOwner] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
 
     let {clubID} = useParams();
-	let {user, authTokens} = useContext(AuthContext);
+    let {user, authTokens} = useContext(AuthContext);
 
-	const onChange = (e) => {
-		setClub((prevData) => ({
-			...prevData,
-			[e.target.name]: e.target.value,
-		}));
-	};
+    const onChange = (e) => {
+        setClub((prevData) => ({
+            ...prevData,
+            [e.target.name]: e.target.value,
+        }));
+    };
 
-	const handleChange = (event, value) => {
+    const handleChange = (event, value) => {
         let array = [];
-		value.map((val) => {
-			array.push(val.theme);
-		});
+        value.map((val) => {
+            array.push(val.theme);
+        });
         console.log(club);
-		setClub((fieldData) => ({
-			...fieldData,
-			theme: array[0],
-		}));
-	};
+        setClub((fieldData) => ({
+            ...fieldData,
+            theme: array[0],
+        }));
+    };
 
-	let getClub = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/club/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setClub(data);
-	};
+    let getClub = async (e) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/club/" + clubID + "/",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        setClub(data);
+    };
 
     let getClubMembers = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/club_members/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setMembers(data);
+        let response = await fetch(
+            "http://127.0.0.1:8000/club_members/" + clubID + "/",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        setMembers(data);
         data.find(member => member.username === user.username) ? setIsMember(true) : setIsMember(false);
-	};
-    
+    };
+
     let getClubOwner = async (e) => {
         let response = await fetch(
             "http://127.0.0.1:8000/club_owner/" + clubID + "/",
-        {method : "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + String(authTokens.access),
-    },
-}
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
         );
         let data = await response.json();
         data.find(owner => owner.username === user.username) ? setIsOwner(true) : setIsOwner(false);
         setOwner(data);
-};
+    };
 
 
-	let getMembershipData = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
+    let getMembershipData = async (e) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
         console.log(data)
-		setMyClubData(data);
-	};
+        setMyClubData(data);
+    };
 
     let getBannedMembers = async (e) => {
         let response = await fetch("http://127.0.0.1:8000/banned_member_list/" + clubID + "/", {
@@ -132,58 +133,58 @@ function ClubDetail() {
         setBanned(data);
     };
 
-	let joinClub = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/join_club/" + clubID + "/",
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		await response.json();
+    let joinClub = async () => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/join_club/" + clubID + "/",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        await response.json();
         if (response.status === 200) {
             setIsMember(true);
             getClubMembers();
             getMembershipData();
         }
-	};
+    };
 
-	let leaveClub = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/leave_club/" + clubID + "/",
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		await response.json();
-        if(response.status === 200) {
+    let leaveClub = async () => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/leave_club/" + clubID + "/",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        await response.json();
+        if (response.status === 200) {
             setIsMember(false);
             alert("You have left this club!");
         }
-	};
+    };
 
-	let editClub = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/edit_club/" + clubID + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify(club),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setClub(data)
-	};
+    let saveClub = async () => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/edit_club/" + clubID + "/",
+            {
+                method: "PUT",
+                body: JSON.stringify(club),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        setClub(data)
+    };
 
     let banMember = async (memberID) => {
         console.log(memberID);
@@ -223,14 +224,14 @@ function ClubDetail() {
         let data = await response.json();
     };
 
-	useEffect(() => {
-		getClubMembers();
+    useEffect(() => {
+        getClubMembers();
         getClubOwner();
-		getMembershipData();
+        getMembershipData();
         getBannedMembers();
-		getClub();
+        getClub();
         myClubData.find(val => val.club_id === clubID && val.is_organiser === true) ? setIsOrganiser(true) : setIsOrganiser(false);
-	}, []);
+    }, []);
 
     const toggleBannedView = () => {
         setBannedMembers(!showBannedMembers);
@@ -268,31 +269,34 @@ function ClubDetail() {
 
     const handleBannedUserClick = (id) => {
         console.log("User Clicked");
-        
-        
+
+
     }
 
     function UserDisplay() {
         if (showBannedMembers === false) {
             return (
                 <>
-                {owner.map((user,index)=> {
-                    return (
-                        <Chip
-                            key={index}
-                            label={user.first_name + " " + user.last_name + " "} 
-                            icon ={<FaCrown/>}
-                            onClick={() => handleUserClick(user.id)}
-                            sx={{mr: 1, mt: 1}}
-                        />
-                    
-                )})}
-                
+
+                    {owner.map((user, index) => {
+                        return (
+                            <Chip
+                                key={index}
+                                label={user.first_name + " " + user.last_name + " "}
+                                icon={<FaCrown/>}
+                                onClick={() => handleUserClick(user.id)}
+                                sx={{mr: 1, mt: 1}}
+                            />
+
+                        )
+                    })
+                    }
+
                     {members.map((user, index) => {
                         return (
                             <Chip
                                 key={index}
-                                label={user.first_name + " " + user.last_name + " " }
+                                label={user.first_name + " " + user.last_name + " "}
                                 avatar={
                                     <Avatar
                                         src={user.iconImage}
@@ -304,32 +308,155 @@ function ClubDetail() {
                             />
 
                         )
-                    })}
-                </>)
+                    })
+                    }
+                </>
+            )
+        } else {
+            {
+                return (
+                    banned.map((user, index) => {
+                            return (
+                                <Chip
+                                    key={index}
+                                    label={user.first_name + " " + user.last_name}
+                                    avatar={
+                                        <Avatar
+                                            src={user.iconImage}
+                                            alt={user.first_name + " " + user.last_name}
+                                        />}
+                                    onDelete={() => handleUnBan(user.id)}
+                                    onClick={handleBannedUserClick(user.id)}
+                                    sx={{mr: 1, mt: 1}}
+                                />
+
+                            )
+                        }
+                    )
+                )
+            }
+        }
+    }
+
+    const [edit, setEdit] = useState(false);
+
+    const handleSaveClub = () => {
+        saveClub()
+        setEdit(false);
+    }
+
+    const handleEditClub = () => {
+        setEdit(true)
+    }
+
+
+    function ClubEdit() {
+        if (edit === true && isOwner) {
+            return (
+                <>
+                    <TextField
+                        required
+                        name={"club_name"}
+                        label={"club name"}
+                        value={club.club_name}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        onChange={(e) => onChange(e)}
+                    />
+
+                    <TextField
+                        required
+                        name={"mission_statement"}
+                        label={"club description"}
+                        value={club.mission_statement}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        onChange={(e) => onChange(e)}
+                    />
+
+                    <Autocomplete
+                        required
+                        id="tags-standard"
+                        options={themes}
+                        getOptionLabel={(option) => option.theme}
+                        defaultValue={club.theme}
+                        value={club.theme}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        onChange={(e) => onChange(e)}
+                        filterSelectedOptions
+                        disableCloseOnSelect
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                spacing={6}
+                                id={"outlined-basic"}
+                                label={"theme"}
+                                name={"theme"}
+                                type={"text"}
+                                variant={"outlined"}
+                                multiline
+                            />
+                        )}
+                    />
+                </>
+            )
         } else {
             return (
                 <>
-                    {banned.map((user, index) => {
-                        return (
-                            <Chip
-                                key={index}
-                                label={user.first_name + " " + user.last_name}
-                                avatar={
-                                    <Avatar
-                                        src={user.iconImage}
-                                        alt={user.first_name + " " + user.last_name}
-                                    />}
-                                onDelete={() => handleUnBan(user.id)}
-                                onClick={handleBannedUserClick(user.id)}
-                                sx={{mr: 1, mt: 1}}
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"club name"}
+                        value={club.club_name}
+                        InputProps={{readOnly: true}}
+                    />
+
+                    <TextField
+                        fullWidth
+                        disabled
+                        label={"club description"}
+                        value={club.mission_statement}
+                        InputProps={{readOnly: true}}
+                    />
+
+                    <Autocomplete
+                        disabled
+                        options={themes}
+                        getOptionLabel={(option) => option.theme}
+                        defaultValue={club.theme}
+                        value={club.theme}
+                        InputProps={{readOnly: true}}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        onChange={(e) => onChange(e)}
+                        filterSelectedOptions
+                        disableCloseOnSelect
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                spacing={6}
+                                id={"outlined-basic"}
+                                label={"theme"}
+                                name={"theme"}
+                                type={"text"}
+                                variant={"outlined"}
+                                multiline
+                                disabled
                             />
-
-                        )
-                    })}
-
-                </>)
+                        )}
+                    />
+                </>
+            )
         }
+
     }
+
+    const cardHeight = 325;
 
 
     return (
@@ -348,24 +475,17 @@ function ClubDetail() {
                 </Box>
             </Grid>
 
-            <Grid item xs={6} maxHeight={"inherit"} sx={{display: "flex", flexDirection: "column"}}>
+            <Grid item xs={6} height={cardHeight}>
+                <HomepageCard title={showBannedMembers ? "banned users" : "members"}>
 
-                <div className={"home-page-card-background"}>
-                    <Grid container padding={2}>
-
-                        <Grid item xs={12}>
-                            <h5 className={"home-page-card-title"}>{showBannedMembers ? "banned users" : "members"}</h5>
-                        </Grid>
-
-                        <Grid item xs={12} overflow={"auto"}>
-                            <UserDisplay style={{overflow: "auto"}}/>
-                        </Grid>
-                    </Grid>
-                </div>
+                    <Box maxHeight={cardHeight} overflow={"auto"}>
+                        <UserDisplay/>
+                    </Box>
+                </HomepageCard>
             </Grid>
 
-            <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
-                
+            <Grid item xs={3} height={cardHeight}>
+
                 <Stack spacing={2} sx={{height: "27%"}}>
                     <Dialog
                         open={showDeleteClubDialog}
@@ -396,72 +516,39 @@ function ClubDetail() {
                     </Dialog>
 
 
-                    {(!isMember && !isOwner) && <ThemeButton text={"join"} style={"primary"} onClick={() => joinClub()} />}
+                    <ThemeButton text={"join"} style={!isMember && !isOwner ? "primary" : "disabled"}
+                                 onClick={() => joinClub()}/>
 
-                    {(isMember && !isOwner) && <ThemeButton text={"leave"} style={"primary"} onClick={() => leaveClub()}/>}
+                    <ThemeButton text={"leave"} style={isMember && !isOwner ? "primary" : "disabled"}
+                                 onClick={() => leaveClub()}/>
 
-                    {isOwner && <ThemeButton text={"delete"} style={"primary"} onClick={openDeleteClubDialog}/>}
+                    <ThemeButton text={"delete"} style={isOwner ? "primary" : "disabled"}
+                                 onClick={openDeleteClubDialog}/>
 
-                    {isOwner && <ThemeButton text={showBannedMembers ? "members" : "banned"} style={"normal"} onClick={toggleBannedView}/>}
+                    <ThemeButton text={showBannedMembers ? "members" : "banned"} style={isOwner ? "normal" : "disabled"}
+                                 onClick={toggleBannedView}/>
 
                 </Stack>
             </Grid>
-            {isOwner && <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
+
+            <Grid item xs={3} height={cardHeight}>
+
                 <Stack spacing={2} sx={{height: "100%"}}>
-                    <TextField
-                        required
-                        name={"club_name"}
-                        label={"club name"}
-                        value={club.club_name}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        onChange={(e) => onChange(e)}
-                    />
 
-                    <TextField
-                        required
-                        name={"mission_statement"}
-                        label={"club description"}
-                        value={club.mission_statement}
-						InputLabelProps={{
-                            shrink: true,
-                        }}
-                        onChange={(e) => onChange(e)}
-                    />
+                    <ClubEdit/>
 
-                    <Autocomplete
-						required
-                        id="tags-standard"
-                        options={themes}
-                        getOptionLabel={(option) => option.theme}
-                        defaultValue={club.theme}
-						value={club.theme}
-						InputLabelProps={{
-                            shrink: true,
-                        }}
-                        onChange={(e) => onChange(e)}
-						filterSelectedOptions
-                        disableCloseOnSelect
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                spacing={6}
-                                id={"outlined-basic"}
-                                label={"theme"}
-                                name={"theme"}
-                                type={"text"}
-                                variant={"outlined"}
-                                multiline
-                            />
-                        )}
-                    />
+                    {(isOwner) ? <ThemeButton text={edit ? "save" : "edit"}
+                                              onClick={edit ? handleSaveClub : handleEditClub}
+                                              style={edit ? "primary" : "normal"}/>
+                        :
+                        <ThemeButton
+                            text={"edit"}
+                            style={"disabled"}/>
+                    }
 
-                    <ThemeButton text={"edit"}
-                                 onClick={editClub}/>
                 </Stack>
-            </Grid>}
-            
+            </Grid>
+
 
             <Grid item xs={12}>
                 <Outlet/>

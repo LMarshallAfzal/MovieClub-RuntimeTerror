@@ -8,7 +8,6 @@ import TextButton from "../../components/core/TextButton";
 import {Outlet} from "react-router";
 import MovieCard from "../../components/MovieCard";
 import HomepageCard from "../../components/helper/HomepageCard";
-import { MovieDataAPI } from "../../components/helper/MovieDataAPI";
 
 
 const Movies = () => {
@@ -52,7 +51,7 @@ const Movies = () => {
         });
         let data = await response.json();
         console.log(data)
-        if(response.status === 200) {
+        if (response.status === 200) {
             let array = [];
             data.map((val) => {
                 array.push(getMovie(e, val.movie));
@@ -60,7 +59,7 @@ const Movies = () => {
             setClubMovies(array);
         }
     };
-    
+
     let getWatchedMovies = async () => {
         let response = await fetch("http://127.0.0.1:8000/watched_list/" + user.user_id + "/", {
             method: "GET",
@@ -161,6 +160,7 @@ const Movies = () => {
                                             rateMovie={true}
                                             movie={movie}
                                             poster={moviePoster}
+                                            animated={true}
                                         />
                                     );
                                 })}
@@ -186,6 +186,7 @@ const Movies = () => {
                                         rateMovie={true}
                                         movie={movie}
                                         poster={moviePoster}
+                                        animated={true}
                                     />
                                 );
                             })}
@@ -211,6 +212,7 @@ const Movies = () => {
                                         rateMovie={true}
                                         clubMovie={false}
                                         movie={movie}
+                                        animated={true}
                                     />
                                 );
                             })}
@@ -235,6 +237,7 @@ const Movies = () => {
                                         rateMovie={false}
                                         clubMovie={false}
                                         movie={movie}
+                                        animated={true}
                                     />
                                 );
                             })}

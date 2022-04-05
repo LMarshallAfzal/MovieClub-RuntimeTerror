@@ -122,10 +122,7 @@ h6 {
   width: 26rem;
   background-color: #D8D8D8;
   transition: all 0.3s ease-out;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   cursor: pointer;
 }
 
@@ -134,6 +131,8 @@ h6 {
 }
 
 .club-listing-club-name {
+  white-space: nowrap;
+  overflow: hidden;
   color: #000000;
   font-family: Helvetica, serif;
 }
