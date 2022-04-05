@@ -1,12 +1,13 @@
+"""Tests of the edit_meeting view."""
 from api.models import Club, Movie, User, Meeting, Membership
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 import json
 import datetime
-from rest_framework.test import force_authenticate,APIClient
 
 class EditMeetingViewTestCase(APITestCase):
+    """Tests of the edit_meeting view."""
     
     fixtures = [
         'api/test/fixtures/genres.json',

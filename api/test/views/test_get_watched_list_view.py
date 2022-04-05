@@ -1,13 +1,12 @@
+"""Tests of the get_watched_movies view."""
 from api.models import User, Movie, Watch
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 from api.serializers import MovieSerializer
-from rest_framework.test import force_authenticate,APIClient
-
-
 
 class WatchListTestCase(APITestCase):
+    """Tests of the get_watched_movies view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',
@@ -44,7 +43,7 @@ class WatchListTestCase(APITestCase):
         self.assertEqual(response.data,serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_get_to_retrieve_watched_movies_endpoint_cannot_get_watched_movie_while_logged_out_returns_403_forbidden(self):
+    def test_get_to_retrieve_watched_movies_endpoint_cannot_get_watched_movie_while_logged_out_returns_401_unauthorized(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 

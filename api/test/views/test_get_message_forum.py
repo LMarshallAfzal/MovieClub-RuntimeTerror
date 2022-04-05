@@ -1,3 +1,4 @@
+"""Tests of the message_forum view."""
 from api.models import User, Club, Message
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -6,10 +7,8 @@ from api.test.helpers import LogInTester
 from api.serializers import MessageSerializer
 from rest_framework.test import force_authenticate,APIClient
 
-
-
-
 class MessageForumTestCase(APITestCase, LogInTester):
+    """Tests of the message_forum view."""
 
     fixtures = [
         "api/test/fixtures/genres.json",
