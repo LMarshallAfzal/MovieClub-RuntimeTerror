@@ -23,14 +23,17 @@ import AuthContext from "../components/helper/AuthContext";
 
 function ClubDetail() {
     const [showBannedMembers, setBannedMembers] = useState(false);
-    const [showBanDialog, setBanDialog] = useState(false);
     const [showDeleteClubDialog, setDeleteClubDialog] = useState(false);
     const [edit, setEdit] = useState(true);
 	const [isMember, setIsMember] = useState(false);
+    const [isOrganiser, setIsOrganiser] = useState(false);
 	const [members, setMembers] = useState([]);
     const [owner,setOwner] = useState([])
 	const [club, setClub] = useState([]);
 	const [myClubData, setMyClubData] = useState([]);
+    const [banned, setBanned] = useState([]);
+    const [user1, setUser1] = useState('');
+    const [isOwner,setIsOwner] = useState(false);
 
     let {clubID} = useParams();
 	let {user, authTokens} = useContext(AuthContext);
@@ -82,8 +85,9 @@ function ClubDetail() {
 		);
 		let data = await response.json();
 		setMembers(data);
+        data.find(member => member.username === user.username) ? setIsMember(true) : setIsMember(false);
 	};
-
+    
     let getClubOwner = async (e) => {
         let response = await fetch(
             "http://127.0.0.1:8000/club_owner/" + clubID + "/",
@@ -95,6 +99,7 @@ function ClubDetail() {
 }
         );
         let data = await response.json();
+        data.find(owner => owner.username === user.username) ? setIsOwner(true) : setIsOwner(false);
         setOwner(data);
 };
 
@@ -111,8 +116,21 @@ function ClubDetail() {
 			}
 		);
 		let data = await response.json();
+        console.log(data)
 		setMyClubData(data);
 	};
+
+    let getBannedMembers = async (e) => {
+        let response = await fetch("http://127.0.0.1:8000/banned_member_list/" + clubID + "/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        let data = await response.json();
+        setBanned(data);
+    };
 
 	let joinClub = async () => {
 		let response = await fetch(
@@ -125,7 +143,12 @@ function ClubDetail() {
 				},
 			}
 		);
-		let data = await response.json();
+		await response.json();
+        if (response.status === 200) {
+            setIsMember(true);
+            getClubMembers();
+            getMembershipData();
+        }
 	};
 
 	let leaveClub = async () => {
@@ -139,7 +162,11 @@ function ClubDetail() {
 				},
 			}
 		);
-		let data = await response.json();
+		await response.json();
+        if(response.status === 200) {
+            setIsMember(false);
+            alert("You have left this club!");
+        }
 	};
 
 	let editClub = async () => {
@@ -158,6 +185,31 @@ function ClubDetail() {
 		setClub(data)
 	};
 
+    let banMember = async (memberID) => {
+        console.log(memberID);
+        let response = await fetch("http://127.0.0.1:8000/ban_member/" + clubID + "/" + memberID + "/", {
+            method: "PUT",
+            body: JSON.stringify(user1),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        let data = await response.json();
+    }
+
+    let unbanMember = async (memberID) => {
+        let response = await fetch("http://127.0.0.1:8000/unban_member/" + clubID + "/" + memberID + "/", {
+            method: "PUT",
+            body: JSON.stringify(user1),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        let data = await response.json();
+    }
+
     let deleteClub = async () => {
         let response = await fetch("http://127.0.0.1:8000/delete_club/" + clubID + "/",
             {
@@ -175,28 +227,15 @@ function ClubDetail() {
 		getClubMembers();
         getClubOwner();
 		getMembershipData();
+        getBannedMembers();
 		getClub();
-		myClubData.find(val => val.club_id === clubID) ? setIsMember(true) : setIsMember(false);
+        myClubData.find(val => val.club_id === clubID && val.is_organiser === true) ? setIsOrganiser(true) : setIsOrganiser(false);
 	}, []);
-
-    // const toggleEdit = () => {
-    //     setEdit(!edit);
-	// 	if(edit){
-	// 		editClub();
-	// 	}
-    // }
 
     const toggleBannedView = () => {
         setBannedMembers(!showBannedMembers);
     }
 
-    const openBanDialog = () => {
-        setBanDialog(true);
-    }
-
-    const closeBanDialog = () => {
-        setBanDialog(false);
-    }
 
     const openDeleteClubDialog = () => {
         setDeleteClubDialog(true);
@@ -211,18 +250,14 @@ function ClubDetail() {
         deleteClub()
     }
 
-    const handleRemoveUser = () => {
-        closeBanDialog();
-        console.log("User Removed");
+
+    const handleBan = (id) => {
+        banMember(id)
     }
 
-    const handleBan = () => {
-        handleRemoveUser();
-        console.log("User Banned");
-    }
-
-    const handleUnBan = () => {
+    const handleUnBan = (id) => {
         console.log("User Un-Banned");
+        unbanMember(id)
     }
 
     const navigate = useNavigate();
@@ -231,8 +266,10 @@ function ClubDetail() {
         navigate(`${ID}`, {replace: false});
     }
 
-    const handleBannedUserClick = () => {
+    const handleBannedUserClick = (id) => {
         console.log("User Clicked");
+        
+        
     }
 
     function UserDisplay() {
@@ -245,7 +282,7 @@ function ClubDetail() {
                             key={index}
                             label={user.first_name + " " + user.last_name + " "} 
                             icon ={<FaCrown/>}
-                            onClick={() => handleUserClick(user.ID)}
+                            onClick={() => handleUserClick(user.id)}
                             sx={{mr: 1, mt: 1}}
                         />
                     
@@ -261,8 +298,8 @@ function ClubDetail() {
                                         src={user.iconImage}
                                         alt={user.first_name + " " + user.last_name}
                                     />}
-                                onDelete={openBanDialog}
-                                onClick={() => handleUserClick(user.ID)}
+                                onDelete={isOwner ? () => handleBan(user.id) : undefined}
+                                onClick={() => handleUserClick(user.id)}
                                 sx={{mr: 1, mt: 1}}
                             />
 
@@ -272,7 +309,7 @@ function ClubDetail() {
         } else {
             return (
                 <>
-                    {members.map((user, index) => {
+                    {banned.map((user, index) => {
                         return (
                             <Chip
                                 key={index}
@@ -282,8 +319,8 @@ function ClubDetail() {
                                         src={user.iconImage}
                                         alt={user.first_name + " " + user.last_name}
                                     />}
-                                onDelete={handleUnBan}
-                                onClick={handleBannedUserClick}
+                                onDelete={() => handleUnBan(user.id)}
+                                onClick={handleBannedUserClick(user.id)}
                                 sx={{mr: 1, mt: 1}}
                             />
 
@@ -328,8 +365,8 @@ function ClubDetail() {
             </Grid>
 
             <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
-
-                <Stack spacing={2} sx={{height: "100%"}}>
+                
+                <Stack spacing={2} sx={{height: "27%"}}>
                     <Dialog
                         open={showDeleteClubDialog}
                         onClose={closeDeleteClubDialog}
@@ -358,43 +395,18 @@ function ClubDetail() {
                         </DialogActions>
                     </Dialog>
 
-                    <Dialog
-                        open={showBanDialog}
-                        onClose={closeBanDialog}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description">
 
-                        <DialogTitle id="alert-dialog-title">
-                            <h4>also ban this user
-                                <h4--emphasise>?</h4--emphasise>
-                            </h4>
-                        </DialogTitle>
+                    {(!isMember && !isOwner) && <ThemeButton text={"join"} style={"primary"} onClick={() => joinClub()} />}
 
-                        <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
-                                <h6>decide whether this user will also be banned from the club or just removed</h6>
-                            </DialogContentText>
-                        </DialogContent>
+                    {(isMember && !isOwner) && <ThemeButton text={"leave"} style={"primary"} onClick={() => leaveClub()}/>}
 
-                        <DialogActions>
-                            <ThemeButton onClick={handleBan} text={"ban"} style={"primary"}/>
-                            <ThemeButton onClick={handleRemoveUser} text={"remove"}/>
-                        </DialogActions>
-                    </Dialog>
+                    {isOwner && <ThemeButton text={"delete"} style={"primary"} onClick={openDeleteClubDialog}/>}
 
-                    <ThemeButton text={"join"} style={isMember ? "disabled" : "primary"} onClick={() => joinClub()} />
+                    {isOwner && <ThemeButton text={showBannedMembers ? "members" : "banned"} style={"normal"} onClick={toggleBannedView}/>}
 
-                    <ThemeButton text={"leave"} style={isMember ? "primary" : "disabled"} onClick={() => leaveClub()}/>
-
-                    <ThemeButton text={"delete"} style={club.isOrganiser ? "primary" : "disabled"}
-                                 onClick={openDeleteClubDialog}/>
-
-                    <ThemeButton text={showBannedMembers ? "members" : "banned"} style={"normal"}
-                                 onClick={toggleBannedView}/>
                 </Stack>
             </Grid>
-
-            <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
+            {isOwner && <Grid item xs={3} sx={{display: "flex", flexDirection: "column"}}>
                 <Stack spacing={2} sx={{height: "100%"}}>
                     <TextField
                         required
@@ -448,7 +460,8 @@ function ClubDetail() {
                     <ThemeButton text={"edit"}
                                  onClick={editClub}/>
                 </Stack>
-            </Grid>
+            </Grid>}
+            
 
             <Grid item xs={12}>
                 <Outlet/>

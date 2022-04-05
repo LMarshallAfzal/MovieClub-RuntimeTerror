@@ -26,7 +26,12 @@ const Profile = () => {
 	let preferencesValues = [];
 
     const [watchedMovies, setWatchedMovies] = useState([]);
+	const[followers,setFollowers] = useState([]);
+	const[following,setFollowing] = useState([]);
+	const[followerCount,setFollowerCount] = useState(null);
+	const[followingCount,setFollowingCount] = useState(null);
 	const [userMemberships, setUserMemberships] = useState([]);
+	const [userMembershipCount, setUserMembershipCount] = useState(null);
 	const [favouriteMovies,setFavouriteMovies] = useState([]);
 	const [usernameError, setUsernameError] = useState(false);
 	const [firstNameError, setFirstNameError] = useState(false);
@@ -103,8 +108,10 @@ const Profile = () => {
 		}
 	};
 
+
+
 	let getWatchedMovies = async () => {
-        let response = await fetch("http://127.0.0.1:8000/watched_list/", {
+        let response = await fetch("http://127.0.0.1:8000/watched_list/" + user.user_id, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -178,7 +185,7 @@ const Profile = () => {
 	};
 
 	let getUserMemberships = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000:memberships/" + user.user_id + "/", {
+		let response = await fetch("http://127.0.0.1:8000/memberships/" + user.user_id + "/", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -187,13 +194,44 @@ const Profile = () => {
 		});
 		let data = await response.json();
 		setUserMemberships(data);
+		setUserMembershipCount(data.length);
 	};
+
+	let getFollowers = async (e) => {
+		let response = await fetch("http://127.0.0.1:8000/followers/" + user.user_id + "/",{
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		let data = await response.json();
+		setFollowers(data);
+		setFollowerCount(data.length);
+	}
+
+	let getFollowing = async (e) => {
+		let response = await fetch("http://127.0.0.1:8000/following/" + user.user_id + "/",{
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + String(authTokens.access),
+			},
+		});
+		let data = await response.json();
+
+		setFollowing(data);
+		setFollowingCount(data.length);
+	}
 
 	useEffect(() => {
 		getUserData();
 		getWatchedMovies();
 		getUserMemberships();
 		getFavourites();
+		getFollowers();
+		getFollowing();
+		getUserMemberships();
 	}, []);
 
 	const navigate = useNavigate();
@@ -203,6 +241,7 @@ const Profile = () => {
 	const handleChipClick = (type, id) => {
 		navigate(`/home/${type}/${id}`, { replace: false });
 	};
+
 
 	return (
 		<Grid container spacing={2} padding={2} direction={"row"}>
@@ -327,20 +366,20 @@ const Profile = () => {
 						</Grid>
 					</HomepageCard>
 
-					<HomepageCard title={"following"} titleItemText={cardHeight}>
-						<Box maxHeight={cardHeight / 2} sx={{ overflowY: "scroll" }}>
-							{DummyClubMemberData.map((user, index) => {
+					<HomepageCard title={"following"} titleItemText={followingCount}>
+						<Box maxHeight={followingCount*100} sx={{ overflowY: "scroll" }}>
+							{following.map((user, index) => {
 								return (
 									<Chip
 										key={index}
-										label={user.firstName + " " + user.lastName}
+										label={user.first_name + " " + user.last_name}
 										avatar={
 											<Avatar
 												src={user.iconImage}
-												alt={user.firstName + " " + user.lastName}
+												alt={user.first_name + " " + user.last_name}
 											/>
 										}
-										onClick={() => handleChipClick("profile", user.ID)}
+										onClick={() => handleChipClick("profile", user.id)}
 										sx={{ mr: 1, mt: 1 }}
 									/>
 								);
@@ -348,20 +387,20 @@ const Profile = () => {
 						</Box>
 					</HomepageCard>
 
-					<HomepageCard title={"followers"} titleItemText={cardHeight}>
-						<Box maxHeight={cardHeight / 2} sx={{ overflowY: "scroll" }}>
-							{DummyClubMemberData.map((user, index) => {
+					<HomepageCard title={"followers"} titleItemText={followerCount}>
+						<Box maxHeight={followerCount*100} sx={{ overflowY: "scroll" }}>
+							{followers.map((user, index) => {
 								return (
 									<Chip
 										key={"index"}
-										label={user.firstName + " " + user.lastName}
+										label={user.first_name + " " + user.last_name}
 										avatar={
 											<Avatar
 												src={user.iconImage}
-												alt={user.firstName + " " + user.lastName}
+												alt={user.first_name + " " + user.last_name}
 											/>
 										}
-										onClick={() => handleChipClick("profile", user.ID)}
+										onClick={() => handleChipClick("profile", user.id)}
 										sx={{ mr: 1, mt: 1 }}
 									/>
 								);
@@ -419,15 +458,15 @@ const Profile = () => {
 						</Grid>
 					</HomepageCard>
 
-					<HomepageCard title={"clubs"} titleItemText={cardHeight}>
-						<Box maxHeight={cardHeight / 2} sx={{ overflowY: "scroll" }}>
+					<HomepageCard title={"clubs"} titleItemText={userMembershipCount}>
+						<Box maxHeight={userMembershipCount*100} sx={{ overflowY: "scroll" }}>
 							{userMemberships.map((club, index) => {
 								return (
 									<Chip
 										key={"index"}
 										label={club.club_name}
 										avatar={<Avatar src={club.iconImage} alt={club.club_name} />}
-										onClick={() => handleChipClick("clubs", club.ID)}
+										// onClick={() => handleChipClick("clubs", club.ID)}
 										sx={{ mr: 1, mt: 1 }}
 									/>
 								);
