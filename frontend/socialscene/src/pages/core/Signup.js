@@ -141,7 +141,6 @@ export const Signup = () => {
 	};
 
 	let submitSignupForm = async (e) => {
-		console.log("preferences");
 		e.preventDefault();
 		resetErrorState();
 		let response = await fetch("http://127.0.0.1:8000/sign_up/", {

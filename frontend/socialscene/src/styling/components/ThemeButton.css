@@ -97,13 +97,19 @@ h6 {
 
 .home-page-title {
   background-color: #5C5C5C;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-sub-title {
   background-color: #999999;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
 }
 
@@ -115,7 +121,10 @@ h6 {
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .form-button {
@@ -133,7 +142,10 @@ h6 {
   font-family: Helvetica-Bold, serif;
   transition: all 0.3s ease-in-out;
   border-left: 0 solid #000000;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .form-button#normal:hover {
@@ -151,6 +163,4 @@ h6 {
 
 .form-button#disabled:hover {
   cursor: not-allowed;
-}
-
-/*# sourceMappingURL=ThemeButton.css.map */
+}/*# sourceMappingURL=ThemeButton.css.map */

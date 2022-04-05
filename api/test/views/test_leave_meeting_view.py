@@ -1,3 +1,4 @@
+"""Tests of the leave_meeting view."""
 from api.models import Club, User, Movie,Membership,Meeting
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -6,6 +7,7 @@ from rest_framework.test import force_authenticate, APIClient
 
 
 class LeaveMeetingViewTestCase(APITestCase):
+    """Tests of the leave_meeting view."""
 
     fixtures = [
         "api/test/fixtures/genres.json",

@@ -1,12 +1,13 @@
+"""Tests of the club_members view."""
 from api.models import User, Club
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-from api.serializers import UserSerializer
 from rest_framework.test import force_authenticate,APIClient
 
 
 class GetClubMembersViewTestCase(APITestCase):
+    """Tests of the club_members view."""
 
     fixtures = [
         "api/test/fixtures/genres.json",
@@ -40,7 +41,7 @@ class GetClubMembersViewTestCase(APITestCase):
         response = self.client.get(invalid_url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_get_club_members_endpoint_cannot_get_club_members_when_logged_out_returns_403_forbidden(self):
+    def test_get_club_members_endpoint_cannot_get_club_members_when_logged_out_returns_401_unauthorized(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 

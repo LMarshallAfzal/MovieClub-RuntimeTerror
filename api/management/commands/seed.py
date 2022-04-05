@@ -1,9 +1,16 @@
 from django.core.management.base import BaseCommand
-from api.models import User, Club,Genre
+from api.models import User, Club, Genre, Movie, Rating
 from django.db import IntegrityError
 from faker import Faker
+import pandas as pd
 import random
 
+def get_genre_id(genre_name):
+    try:
+        return Genre.objects.get(name=genre_name).id
+    except Genre.DoesNotExist:
+        new_genre = Genre.objects.create(name=genre_name)
+        return new_genre.id
 
 class Command(BaseCommand):
     PASSWORD = "C0mpl3xPa$$w0rd"
@@ -15,6 +22,30 @@ class Command(BaseCommand):
         self.faker = Faker('en_GB')
 
     def handle(self, *args, **options):
+        self.seed_movies()
+        self.seed_users()
+        self.seed_ratings()
+
+    def seed_movies(self):
+        file = pd.read_csv("recommender/dataset-latest/movies.csv",dtype = str,encoding='latin-1')
+        movie_count = 0
+        for index,row in file.iterrows():
+            print(f'Seeding movie {movie_count}',  end='\r')
+
+            genres = [get_genre_id(genre) for genre in row['genres'].split('|')]
+            
+            movie = Movie.objects.create(
+                ml_id = int(row['movieId']),
+                imdb_id = row['imdb_id'],
+                title = row['title'],
+                year = int(row['year']),
+            )
+            movie.genres.set(genres)
+            movie_count+=1
+        print('Movie seeding complete')
+        print(f'Seeded {movie_count} movies')
+
+    def seed_users(self):
         user_count = 0
         club_count = 0
 
@@ -36,6 +67,13 @@ class Command(BaseCommand):
             club_count += 1
 
         print('Club seeding complete')
+
+    def seed_ratings(self):
+        movies = Movie.objects.all()
+        for club in Club.objects.all():
+            for member in club.club_members.all():
+                Rating.objects.create(user=member, movie = random.choice(movies),score = random.randint(1,5))
+        
 
     def _create_user(self):
         first_name = self.faker.first_name()

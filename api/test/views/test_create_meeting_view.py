@@ -1,4 +1,5 @@
-from api.models import Club, Movie, User, Meeting,Membership
+"""Tests of the create_meeting view."""
+from api.models import Club, Movie, User, Meeting
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
@@ -8,6 +9,7 @@ from rest_framework.test import force_authenticate,APIClient
 
 
 class CreateMeetingViewTestCase(APITestCase):
+    """Tests of the create_meeting view."""
 
     fixtures = [
         "api/test/fixtures/genres.json",
@@ -267,7 +269,7 @@ class CreateMeetingViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_unauthenticated_request_returns_unauthorised(self):
+    def test_unauthenticated_request_returns_401_unauthorized(self):
         before = Meeting.objects.count()
         response = self.client.post(self.url, self.form_input)
         after = Meeting.objects.count()
