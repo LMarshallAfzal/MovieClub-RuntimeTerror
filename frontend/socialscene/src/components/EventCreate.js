@@ -5,7 +5,6 @@ import "../styling/components/EventCreate.css";
 import ThemeButton from "./core/ThemeButton";
 import AuthContext from "./helper/AuthContext";
 import placeHolder from "../resources/images/empty_movie_poster.png";
-import {MovieDataAPI} from "./helper/MovieDataAPI";
 
 function EventCreate() {
     let day = new Date();
@@ -125,8 +124,8 @@ function EventCreate() {
                           alignItems="stretch">
 
                         {recommendedMovies.map((movie) => {
-                            // const movieAPIData = false;
-                            const movieAPIData = MovieDataAPI(movie.imdb_id);
+                            const movieAPIData = false;
+                            // const movieAPIData = MovieDataAPI(movie.imdb_id);
                             return (
                                 // <Grid item xs={2}>
                                 //     <MovieCard
