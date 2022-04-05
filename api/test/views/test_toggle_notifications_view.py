@@ -1,9 +1,11 @@
+"""Tests of the toggle_notifications view."""
 from api.models import Club, Membership, User
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 
 class ToggleNotificationsTestCase(APITestCase):
+    """Tests of the toggle_notifications view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',

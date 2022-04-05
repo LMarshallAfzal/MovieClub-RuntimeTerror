@@ -1,3 +1,4 @@
+"""Tests of the cancel_meeting view."""
 from api.models import User, Club, Meeting, Movie, Membership
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -5,6 +6,7 @@ from rest_framework import status
 from rest_framework.test import force_authenticate,APIClient
 
 class CancelMeetingViewTestCase(APITestCase):
+    """Tests of the cancel_meeting view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',
@@ -67,7 +69,7 @@ class CancelMeetingViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_delete_cancel_meeting_endpoint_with_user_not_logged_in_does_not_cancel_meeting(self):
+    def test_delete_cancel_meeting_endpoint_with_user_not_logged_in_does_not_cancel_meeting_returns_401_unauthorized(self):
         before = Meeting.objects.count()
         response = self.client.delete(self.url)
         after = Meeting.objects.count()

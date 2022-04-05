@@ -1,11 +1,12 @@
+"""Tests of the edit_profile view."""
 from api.models import User
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 import json
-from rest_framework.test import force_authenticate,APIClient
 
 class EditUserViewTestCase(APITestCase):
+    """Tests of the edit_profile view."""
     
     fixtures = [
         'api/test/fixtures/genres.json',

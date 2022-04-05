@@ -1,3 +1,4 @@
+"""Tests of the get_other_user view."""
 from api.models import User
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -6,6 +7,7 @@ from api.serializers import UserSerializer
 from rest_framework.test import force_authenticate,APIClient
 
 class GetOtherUserViewTestCase(APITestCase):
+    """Tests of the get_other_user view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',

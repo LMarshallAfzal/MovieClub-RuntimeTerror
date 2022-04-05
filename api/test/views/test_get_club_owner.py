@@ -1,12 +1,13 @@
+"""Tests of the get_club_owner view."""
 from api.models import User, Club
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-from api.serializers import UserSerializer
 from rest_framework.test import force_authenticate,APIClient
 
 
 class GetClubOwnerViewTestCase(APITestCase):
+    """Tests of the get_club_owner view."""
 
     fixtures = [
         "api/test/fixtures/genres.json",
