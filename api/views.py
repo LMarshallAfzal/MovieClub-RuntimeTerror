@@ -337,7 +337,6 @@ def recommend_movie_user(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def train_movie_data(request):
     train_movie_data_for_user()
     return Response(status=status.HTTP_200_OK)

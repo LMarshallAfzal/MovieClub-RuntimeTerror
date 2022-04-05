@@ -97,13 +97,19 @@ h6 {
 
 .home-page-title {
   background-color: #5C5C5C;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-sub-title {
   background-color: #999999;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
 }
 
@@ -115,7 +121,10 @@ h6 {
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .club-listing {
@@ -127,7 +136,7 @@ h6 {
 }
 
 .club-listing:hover {
-  background-color: #EBEBEBEB;
+  background-color: rgba(235, 235, 235, 0.9215686275);
 }
 
 .club-listing-club-name {
@@ -139,6 +148,4 @@ h6 {
 
 .club-listing-avatars {
   align-self: flex-start;
-}
-
-/*# sourceMappingURL=ClubCard.css.map */
+}/*# sourceMappingURL=ClubCard.css.map */

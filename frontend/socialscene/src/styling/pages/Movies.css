@@ -97,13 +97,19 @@ h6 {
 
 .home-page-title {
   background-color: #5C5C5C;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-sub-title {
   background-color: #999999;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: all 0.3s ease-out;
 }
 
@@ -115,11 +121,12 @@ h6 {
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .movie-card-background {
   background-color: #D8D8D8;
-}
-
-/*# sourceMappingURL=Movies.css.map */
+}/*# sourceMappingURL=Movies.css.map */
