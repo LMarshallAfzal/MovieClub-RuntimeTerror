@@ -8,6 +8,7 @@ import TextButton from "../../components/core/TextButton";
 import {Outlet} from "react-router";
 import MovieCard from "../../components/MovieCard";
 import HomepageCard from "../../components/helper/HomepageCard";
+import { MovieDataAPI } from "../../components/helper/MovieDataAPI";
 
 
 const Movies = () => {
@@ -230,7 +231,7 @@ const Movies = () => {
                                 return (
                                     <MovieCard
                                         key={index}
-                                        poster={moviePoster}
+                                        // poster={moviePoster}
                                         rateMovie={false}
                                         clubMovie={false}
                                         movie={movie}

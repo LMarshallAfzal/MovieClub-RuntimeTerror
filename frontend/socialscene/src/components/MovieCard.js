@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Card, CardMedia, Chip, Grid, Rating, Stack, Tooltip} from "@mui/material";
 import "../styling/components/MovieCard.css";
 import ThemeButton from "./core/ThemeButton";
@@ -6,6 +6,7 @@ import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
 import LoadingSkeleton from "./helper/LoadingSkeleton";
 import placeholder from "../resources/images/empty_movie_poster.png";
 import {useNavigate} from "react-router";
+import axios from "axios"
 
 function MovieCard(props) {
     const [watchedMovies, setWatchedMovies] = useState([]);
@@ -14,10 +15,23 @@ function MovieCard(props) {
     const [cardWidth, setCardWidth] = useState(150);
     const [cardBorder, setCardBorder] = useState("0px solid black");
     const [loaded, setLoaded] = useState(true);
-    
+    const [movie, setMovie] = useState('');
 
-    let moviePoster = props.poster && placeholder;
+    useEffect(() => {
+        getImage();
+    }, []);
 
+    const url = 'http://www.omdbapi.com/?i=tt'+props.movie.imdb_id+'&apikey=d938f360'
+
+    const getImage = () => {
+        axios.get(`${url}`)
+        .then ((response) => {
+            const image = response.data.Poster
+            setMovie(image)
+        })
+    }
+
+    let moviePoster = movie;
 
     const closePrompt = () => {
         setShowPrompt(false);
