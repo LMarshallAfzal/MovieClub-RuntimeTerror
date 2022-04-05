@@ -1,3 +1,4 @@
+"""Tests of the banned_member_list view."""
 from api.models import User, Club
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -7,6 +8,7 @@ from rest_framework.test import force_authenticate,APIClient
 
 
 class BannedMembersViewTestCase(APITestCase):
+    """Tests of the banned_member_list view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',

@@ -27,6 +27,8 @@ class UserModelTestCase(APITestCase):
         self.other_club = Club.objects.get(club_name='Metallica')
         Membership.objects.create(user=self.user, club=self.club)
         Membership.objects.create(user=self.user, club=self.other_club, role = 'B')
+        self.movie = Movie.objects.get(title='The Godfather')
+        self.second_movie = Movie.objects.get(title='Annabelle')
 
     def test_valid_user(self):
         self._assert_user_is_valid()
@@ -176,12 +178,18 @@ class UserModelTestCase(APITestCase):
 
     def test_get_user_ratings(self):
         before = self.user.get_user_ratings()
-        movie = Movie.objects.get(title='The Godfather')
-        Rating.objects.create(user=self.user, movie=movie, score = 5.0)
-        Rating.objects.create(user=self.second_user, movie=movie, score = 5.0)
+        Rating.objects.create(user = self.user, movie = self.movie, score = 5.0)
+        Rating.objects.create(user = self.second_user, movie = self.movie, score = 5.0)
         after = self.user.get_user_ratings()
         self.assertEqual(1, len(after))
         self.assertIsNone(before)
+
+    def test_get_favourite_movies(self):
+        before = self.user.get_favourite_movies()
+        Rating.objects.create(user = self.user, movie = self.movie, score = 5.0)
+        Rating.objects.create(user = self.user, movie = self.second_movie, score = 2.0)
+        after = self.user.get_favourite_movies()
+        self.assertEqual(len(before) + 1, len(after))
 
     def test_get_user_memberships(self):
         memberships = self.user.get_user_memberships()

@@ -1,11 +1,11 @@
-"""Unit tests for the Viewer model."""
+"""Unit tests for the Watch model."""
 
 from django.core.exceptions import ValidationError
 from rest_framework.test import APITestCase
 from api.models import User, Movie, Watch
 
 class WatchModelTestCase(APITestCase):
-    """Unit tests for the Viewer model."""
+    """Unit tests for the Watch model."""
 
     fixtures = [
         'api/test/fixtures/genres.json',

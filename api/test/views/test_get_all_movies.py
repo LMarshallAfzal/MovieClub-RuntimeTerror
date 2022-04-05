@@ -1,13 +1,12 @@
+"""Tests of the all_movies view."""
 from api.models import User, Movie
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 from api.serializers import MovieSerializer
-from rest_framework.test import force_authenticate,APIClient
 
-
-
-class WatchListTestCase(APITestCase):
+class AllMoviesTestCase(APITestCase):
+    """Tests of the all_movies view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',

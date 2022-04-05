@@ -1,3 +1,4 @@
+"""Tests of the get_current_user view."""
 from api.models import User,Club
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -6,7 +7,8 @@ from api.serializers import UserSerializer
 from rest_framework.test import force_authenticate,APIClient
 
 
-class GetClubMembersViewTestCase(APITestCase):
+class GetCurrentUserViewTestCase(APITestCase):
+    """Tests of the get_current_user view."""
 
     fixtures = [
         "api/test/fixtures/genres.json",
@@ -32,7 +34,7 @@ class GetClubMembersViewTestCase(APITestCase):
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_logged_out_user_endpoint_cannot_view_current_user_returns_403_forbidden(self):
+    def test_logged_out_user_endpoint_cannot_view_current_user_returns_401_unauthorized(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
     

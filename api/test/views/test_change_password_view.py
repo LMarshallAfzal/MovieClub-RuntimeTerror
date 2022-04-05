@@ -1,3 +1,4 @@
+"""Tests of the change_password view."""
 from api.models import User
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -7,6 +8,7 @@ from rest_framework.test import force_authenticate,APIClient
 
 
 class ChangePasswordViewTestCase(APITestCase):
+    """Tests of the change_password view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',

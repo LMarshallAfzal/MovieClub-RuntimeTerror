@@ -1,9 +1,11 @@
+"""Tests of the sign_up view."""
 from api.models import User
 from rest_framework.test import APITestCase,APIClient
 from django.urls import reverse
 from rest_framework import status
 
 class SignUpViewTestCase(APITestCase):
+    """Tests of the sign_up view."""
     
     fixtures = [
         'api/test/fixtures/genres.json',

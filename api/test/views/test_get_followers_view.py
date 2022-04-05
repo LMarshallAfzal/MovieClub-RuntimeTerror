@@ -1,9 +1,11 @@
-from api.models import Club, Movie, User, Meeting
+"""Tests of the get_followers view."""
+from api.models import User
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 
 class GetFollowersTestCase(APITestCase):
+    """Tests of the get_followers view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',
@@ -37,7 +39,7 @@ class GetFollowersTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
-    def test_get_followers_endpoint_with_user_not_logged_in_does_not_follow(self):
+    def test_get_followers_endpoint_with_user_not_logged_in_does_not_follow_returns_401_unauthorized(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         

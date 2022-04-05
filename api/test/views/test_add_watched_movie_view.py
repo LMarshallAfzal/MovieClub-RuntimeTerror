@@ -1,3 +1,4 @@
+"""Tests of the add_watched_movie view."""
 from api.models import User, Movie, Watch
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -5,6 +6,7 @@ from rest_framework import status
 from rest_framework.test import force_authenticate,APIClient
 
 class AddWatchedMovieViewTestCase(APITestCase):
+    """Tests of the add_watched_movie view."""
 
     fixtures = [
         'api/test/fixtures/genres.json',
@@ -63,7 +65,7 @@ class AddWatchedMovieViewTestCase(APITestCase):
         self.assertEqual(after, before)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_post_to_add_watched_movie_endpoint_with_user_not_logged_in_does_not_add_to_watched(self):
+    def test_post_to_add_watched_movie_endpoint_with_user_not_logged_in_does_not_add_to_watched_returns_401_unauthorized(self):
         before = Watch.objects.count()
         response = self.client.post(self.url)
         after = Watch.objects.count()
