@@ -514,10 +514,10 @@ function ClubDetail() {
 							name={"theme"}
 							options={themes}
 							getOptionLabel={(option) => option.theme || ""}
-							value={theme}
-							// InputLabelProps={{
-							// 	shrink: true,
-							// }}
+							value={club.theme}
+							InputLabelProps={{
+								shrink: true,
+							}}
 							onChange={handleChange}
 							filterSelectedOptions
 							renderInput={(params) => (
