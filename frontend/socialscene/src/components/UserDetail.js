@@ -133,7 +133,7 @@ function UserDetail() {
 
   let getUserMemberships = async (e) => {
     let response = await fetch(
-      "http://127.0.0.1:8000/memberships/" + userID + "/",
+      "http://127.0.0.1:8000/get_user_joined_clubs/" + userID + "/",
       {
         method: "GET",
         headers: {

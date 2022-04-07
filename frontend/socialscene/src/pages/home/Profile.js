@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import ThemeButton from "../../components/core/ThemeButton";
 import AuthContext from "../../components/helper/AuthContext";
+import UserContext from "../../components/helper/UserContext";
 import { themes } from "../../resources/data/MovieThemes";
 import { moviesWithPoster } from "../../resources/data/DummyMoviesData";
 import moviePoster from "../../resources/images/empty_movie_poster.png";
@@ -19,20 +20,22 @@ import HomepageCard from "../../components/helper/HomepageCard";
 import { DummyClubMemberData } from "../../resources/data/DummyClubMemberData";
 import { DummyClubData } from "../../resources/data/DummyClubsData";
 import { useNavigate } from "react-router";
+import useFetch from "../../components/helper/useFetch";
 
 const Profile = () => {
 	const [userData, setUserData] = useState("");
 	let { user, authTokens } = useContext(AuthContext);
+
 	let preferencesValues = [];
 
-    const [watchedMovies, setWatchedMovies] = useState([]);
-	const[followers,setFollowers] = useState([]);
-	const[following,setFollowing] = useState([]);
-	const[followerCount,setFollowerCount] = useState(null);
-	const[followingCount,setFollowingCount] = useState(null);
+	const [watchedMovies, setWatchedMovies] = useState([]);
+	const [followers, setFollowers] = useState([]);
+	const [following, setFollowing] = useState([]);
+	const [followerCount, setFollowerCount] = useState(null);
+	const [followingCount, setFollowingCount] = useState(null);
 	const [userMemberships, setUserMemberships] = useState([]);
 	const [userMembershipCount, setUserMembershipCount] = useState(null);
-	const [favouriteMovies,setFavouriteMovies] = useState([]);
+	const [favouriteMovies, setFavouriteMovies] = useState([]);
 	const [usernameError, setUsernameError] = useState(false);
 	const [firstNameError, setFirstNameError] = useState(false);
 	const [lastNameError, setLastNameError] = useState(false);
@@ -45,7 +48,6 @@ const Profile = () => {
 	const [errorEmailText, setEmailErrorText] = useState("");
 	const [errorBioText, setBioErrorText] = useState("");
 	const [errorPreferencesText, setPreferencesErrorText] = useState("");
-
 
 	const onChange = (e) => {
 		setUserData((prevData) => ({
@@ -108,33 +110,35 @@ const Profile = () => {
 		}
 	};
 
-
-
 	let getWatchedMovies = async () => {
-        let response = await fetch("http://127.0.0.1:8000/watched_list/" + user.user_id, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + authTokens.access,
-            },
-        });
-        let data = await response.json();
-        setWatchedMovies(data);
-    };
+		let response = await fetch(
+			"http://127.0.0.1:8000/watched_list/" + user.user_id,
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + authTokens.access,
+				},
+			}
+		);
+		let data = await response.json();
+		setWatchedMovies(data);
+	};
 
 	let getFavourites = async (e) => {
-        let response = await fetch("http://127.0.0.1:8000/favourite_movies/" + user.user_id, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + authTokens.access,
-            },
-        });
-        let data = await response.json();
-        setFavouriteMovies(data);
-    };
-
-	
+		let response = await fetch(
+			"http://127.0.0.1:8000/favourite_movies/" + user.user_id,
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + authTokens.access,
+				},
+			}
+		);
+		let data = await response.json();
+		setFavouriteMovies(data);
+	};
 
 	let submitChangeProfileForm = async (e) => {
 		e.preventDefault();
@@ -185,44 +189,53 @@ const Profile = () => {
 	};
 
 	let getUserMemberships = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000/memberships/" + user.user_id + "/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
+		let response = await fetch(
+			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
 		let data = await response.json();
 		setUserMemberships(data);
 		setUserMembershipCount(data.length);
 	};
 
 	let getFollowers = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000/followers/" + user.user_id + "/",{
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
+		let response = await fetch(
+			"http://127.0.0.1:8000/followers/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
 		let data = await response.json();
 		setFollowers(data);
 		setFollowerCount(data.length);
-	}
+	};
 
 	let getFollowing = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000/following/" + user.user_id + "/",{
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
+		let response = await fetch(
+			"http://127.0.0.1:8000/following/" + user.user_id + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
 		let data = await response.json();
 
 		setFollowing(data);
 		setFollowingCount(data.length);
-	}
+	};
 
 	useEffect(() => {
 		getUserData();
@@ -242,14 +255,13 @@ const Profile = () => {
 		navigate(`/home/${type}/${id}`, { replace: false });
 	};
 
-
 	return (
 		<Grid container spacing={2} padding={2} direction={"row"}>
 			<Grid item xs={6}>
 				<Stack spacing={2}>
 					<HomepageCard title={"details"}>
 						<Grid item xs={12}>
-							<form onSubmit={submitChangeProfileForm}>
+							<form onSubmit={(e) => submitChangeProfileForm(e)}>
 								<Stack spacing={2}>
 									<TextField
 										error={usernameError}
@@ -367,7 +379,7 @@ const Profile = () => {
 					</HomepageCard>
 
 					<HomepageCard title={"following"} titleItemText={followingCount}>
-						<Box maxHeight={followingCount*100} sx={{ overflowY: "scroll" }}>
+						<Box maxHeight={followingCount * 100} sx={{ overflowY: "scroll" }}>
 							{following.map((user, index) => {
 								return (
 									<Chip
@@ -388,7 +400,7 @@ const Profile = () => {
 					</HomepageCard>
 
 					<HomepageCard title={"followers"} titleItemText={followerCount}>
-						<Box maxHeight={followerCount*100} sx={{ overflowY: "scroll" }}>
+						<Box maxHeight={followerCount * 100} sx={{ overflowY: "scroll" }}>
 							{followers.map((user, index) => {
 								return (
 									<Chip
@@ -459,13 +471,18 @@ const Profile = () => {
 					</HomepageCard>
 
 					<HomepageCard title={"clubs"} titleItemText={userMembershipCount}>
-						<Box maxHeight={userMembershipCount*100} sx={{ overflowY: "scroll" }}>
+						<Box
+							maxHeight={userMembershipCount * 100}
+							sx={{ overflowY: "scroll" }}
+						>
 							{userMemberships.map((club, index) => {
 								return (
 									<Chip
 										key={"index"}
 										label={club.club_name}
-										avatar={<Avatar src={club.iconImage} alt={club.club_name} />}
+										avatar={
+											<Avatar src={club.iconImage} alt={club.club_name} />
+										}
 										// onClick={() => handleChipClick("clubs", club.ID)}
 										sx={{ mr: 1, mt: 1 }}
 									/>

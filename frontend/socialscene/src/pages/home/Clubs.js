@@ -4,7 +4,6 @@ import { Outlet } from "react-router-dom";
 import "../../styling/pages/Clubs.css";
 import ThemeButton from "../../components/core/ThemeButton";
 import ClubCard from "../../components/ClubCard";
-import { DummyClubData } from "../../resources/data/DummyClubsData";
 import AuthContext from "../../components/helper/AuthContext";
 
 function Clubs() {
@@ -15,7 +14,7 @@ function Clubs() {
 
 	let getMembershipData = async (e) => {
 		let response = await fetch(
-			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
 			{
 				method: "GET",
 				headers: {
@@ -85,7 +84,6 @@ function Clubs() {
 							<Stack direction={"row"} overflow={"auto"}>
 								{myClubData.map((club, index) => (
 									<ListItem key={index} sx={{ width: "auto", p: 1 }}>
-										{console.log(club.club_name)}
 										<ClubCard
 											clubName={club.club_name}
 											// isMember={"N"}
@@ -115,7 +113,6 @@ function Clubs() {
 							<Stack direction={"row"} overflow={"auto"}>
 								{recommendedClubs.map((club, index) => (
 									<ListItem key={index} sx={{ width: "auto", p: 1 }}>
-										{console.log(club.club_name)}
 										<ClubCard
 											clubName={club.club_name}
 											// isMember={"N"}

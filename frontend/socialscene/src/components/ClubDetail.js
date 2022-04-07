@@ -139,7 +139,7 @@ function ClubDetail() {
 
 	let getMembershipData = async (e) => {
 		let response = await fetch(
-			"http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
 			{
 				method: "GET",
 				headers: {
@@ -519,7 +519,7 @@ function ClubDetail() {
 							InputLabelProps={{
 								shrink: true,
 							}}
-							onChange={handleChange()}
+							onChange={() => handleChange()}
 							filterSelectedOptions
 							disableCloseOnSelect
 							renderInput={(params) => (

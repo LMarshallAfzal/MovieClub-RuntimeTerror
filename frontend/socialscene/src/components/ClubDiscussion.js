@@ -41,7 +41,7 @@ function ClubDiscussion() {
 
     let getMembershipData = async () => {
         let response = await fetch(
-            "http://127.0.0.1:8000/memberships/" + user.user_id + "/",
+            "http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
             {
                 method: "GET",
                 headers: {
