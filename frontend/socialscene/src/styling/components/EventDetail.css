@@ -97,19 +97,13 @@ h6 {
 
 .home-page-title {
   background-color: #5C5C5C;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-sub-title {
   background-color: #999999;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
 }
 
@@ -121,10 +115,7 @@ h6 {
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .show-event-title {
@@ -140,4 +131,6 @@ h6 {
 .show-event-organiser-title {
   font-family: Helvetica-Light, serif;
   color: #FFFFFF;
-}/*# sourceMappingURL=EventDetail.css.map */
+}
+
+/*# sourceMappingURL=EventDetail.css.map */

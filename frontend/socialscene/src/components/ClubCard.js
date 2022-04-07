@@ -51,13 +51,14 @@ function ClubCard(props) {
     }, []);
 
     function ClubButton() {
-        return (
-            <RoundButton
-                text={"info"}
-                linkTo={`/home/clubs/${props.ID}`}
-                onClick={getClubMembers}
-            />
-        )
+            return (
+                <RoundButton
+                    text={"info"}
+                    linkTo={`/home/clubs/${props.ID}`}
+                    onClick={getClubMembers}
+                />
+
+            )
     }
 
     function ClubChip() {
