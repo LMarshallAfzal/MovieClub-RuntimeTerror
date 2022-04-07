@@ -282,7 +282,7 @@ function ClubDetail() {
 		)
 			? setIsOrganiser(true)
 			: setIsOrganiser(false);
-	}, []);
+	}, [clubID]);
 
 	const toggleBannedView = () => {
 		setBannedMembers(!showBannedMembers);
