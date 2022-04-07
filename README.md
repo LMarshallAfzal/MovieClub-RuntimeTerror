@@ -16,6 +16,7 @@ The members of the team are:
 
 ## Deployed version of the application
 
+**TBA
 
 ## Installation instructions
 To install the software and use it in your local development environment, you must first set up and activate a local development environment.  From the root of the project:
@@ -25,11 +26,16 @@ $ virtualenv venv
 $ source venv/bin/activate
 ```
 
-Install all required packages:
+Install all backend required packages:
 
 ```
 $ pip3 install -r backend-requirements.txt
 ```
+
+Install all required frontend packages:
+ ```
+ $ npm install
+ ```
 
 Migrate the database:
 
@@ -43,15 +49,21 @@ Seed the development database with:
 $ python3 manage.py seed
 ```
 
-Run all tests with:
+Run all backend tests with:
 ```
 $ python3 manage.py test
+```
+
+Run all frontend tests with:
+cd into frontend/socialscene
+```
+$ python npm test
+
 ```
 
 *The above instructions should work in your version of the application.  If there are deviations, declare those here in bold.  Otherwise, remove this line.*
 
 
 ## Sources
-The packages used by this application are specified in `requirements.txt`
+The packages used by this application are specified in `requirements.txt` and `packages.json`
 
-*Declare are other sources here.*

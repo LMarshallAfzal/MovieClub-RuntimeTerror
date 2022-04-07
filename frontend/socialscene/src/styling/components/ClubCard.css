@@ -97,19 +97,13 @@ h6 {
 
 .home-page-title {
   background-color: #5C5C5C;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-sub-title {
   background-color: #999999;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
 }
 
@@ -121,32 +115,30 @@ h6 {
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .club-listing {
   width: 26rem;
   background-color: #D8D8D8;
   transition: all 0.3s ease-out;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   cursor: pointer;
 }
 
 .club-listing:hover {
-  background-color: rgba(235, 235, 235, 0.9215686275);
+  background-color: #EBEBEBEB;
 }
 
 .club-listing-club-name {
+  white-space: nowrap;
+  overflow: hidden;
   color: #000000;
   font-family: Helvetica, serif;
 }
 
 .club-listing-avatars {
   align-self: flex-start;
-}/*# sourceMappingURL=ClubCard.css.map */
+}
+
+/*# sourceMappingURL=ClubCard.css.map */

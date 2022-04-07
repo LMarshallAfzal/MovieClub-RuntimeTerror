@@ -1,8 +1,6 @@
 import React from 'react'
 import "../styling/components/NameHeader.css";
 import {Avatar, Box, Grid, Stack} from "@mui/material";
-import iconImage from "../resources/images/testIconPic.jpg";
-import {DummyClubData} from "../resources/data/DummyClubsData";
 
 
 function NameHeader(props) {

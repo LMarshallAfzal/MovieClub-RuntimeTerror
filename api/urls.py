@@ -1,11 +1,10 @@
 from django.urls import path
-from . import views
-from .views import MyTokenObtainPairView
-
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from . import views
+from .views import MyTokenObtainPairView
 
 urlpatterns = [
     path('csrf/', views.csrf_token, name = 'csrf_token'),
@@ -20,7 +19,7 @@ urlpatterns = [
     path("user/",views.get_current_user, name = "get_current_user"),
     path("user/<int:user_id>/",views.get_other_user, name = "get_other_user"),
     path("user_image/", views.get_user_image, name = "get_user_image"),
-    # path('update_user_images/', views.update_gravatars, name = 'update_user_images'),
+    path('other_user_gravatars/<int:user_id>/', views.get_gravatar_for_other_user, name = 'other_user_gravatars'),
     path("clubs/",views.get_all_clubs, name = "get_all_clubs"),
     path("club/<int:club_id>/",views.get_club, name = "get_club"),
     path("create_club/",views.create_club, name = "create_club"),
@@ -42,7 +41,7 @@ urlpatterns = [
     path("add_watched_movie/<int:movie_id>/",views.add_watched_movie,name = "add_watched_movie"),
     path("remove_watched_movie/<int:movie_id>/",views.remove_watched_movie,name = "remove_watched_movie"),
     path("get_movie/<int:movie_id>/", views.get_movie, name = "get_movie"),
-    path("random_movie/<int:movie_num>/", views.get_random_movies, name = "get_random_movies"),
+    path("random_movie/", views.get_random_movies, name = "get_random_movies"),
     path("watched_list/<int:user_id>/", views.get_watched_list, name = "get_watched_movies"),
     path("get_all_movies/", views.get_all_movies, name = "all_movies"),
     path("train/movie/", views.train_movie_data, name = "train"),

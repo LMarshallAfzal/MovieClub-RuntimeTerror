@@ -1,9 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import "../styling/components/ClubDiscussion.css";
 import {useParams} from "react-router";
-import {Avatar, Divider, FormControl, Grid, TextField, Typography} from "@mui/material";
+import {Avatar, Box, Divider, FormControl, Grid, TextField, Typography} from "@mui/material";
 import ThemeButton from "./core/ThemeButton";
-import iconImage from "../resources/images/testIconPic.jpg";
 import TextButton from "./core/TextButton";
 import {Outlet} from "react-router-dom";
 import AuthContext from "./helper/AuthContext";
@@ -93,25 +92,27 @@ function ClubDiscussion() {
     }
 
     let getClub = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/club/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setClub(data);
-	};
+        let response = await fetch(
+            "http://127.0.0.1:8000/club/" + clubID + "/",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        setClub(data);
+    };
 
     return (
         <Grid container spacing={2}>
 
             <Grid item xs={10}>
-                <h4 className={"home-page-sub-section-heading"}>{myClub.club_name}</h4>
+                <Box padding={1} className={"home-page-sub-title"}>
+                    <h4 className={"sub-title-text"}>{myClub.club_name}</h4>
+                </Box>
             </Grid>
 
             <Grid item xs={2}>
@@ -144,7 +145,7 @@ function ClubDiscussion() {
                                                     <div style={{alignSelf: "center", width: "40px", padding: "10px"}}>
                                                         <Avatar
                                                             alt={userData.first_name}
-                                                            src={iconImage}
+                                                            src={user.iconImage}
                                                             sx={{width: "100%", height: "100%"}}
                                                         />
                                                     </div>
@@ -182,7 +183,9 @@ function ClubDiscussion() {
                                         endAdornment:
                                             <TextButton
                                                 onClick={() => sendClubMessages(clubID)}
-                                                text={"send"}/>
+                                                text={"send"}
+                                                style={{textAlign: "right"}}
+                                            />
                                     }}
                                 />
                             </FormControl>

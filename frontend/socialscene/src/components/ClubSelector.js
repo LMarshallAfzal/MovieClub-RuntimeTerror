@@ -70,15 +70,18 @@ function ClubSelector() {
                     </Grid>
                     <Grid item xs={12}>
                         <Collapse in={showClubs}>
-                            <Stack direction={"row"} className={"club-card-list-frame"}>
+                            <Stack direction={"row"} overflow={"auto"}>
                                 {myClubData.map((club) => (
                                     <ListItem sx={{width: "auto", p: 1}}>
                                         <div className={"club-selector-listing"}>
-                                            <Grid container padding={2} alignItems={"center"}>
-                                                <Grid item xs={8}>
-                                                    <h4>{club.club_name}</h4>
+                                            <Grid container padding={2} spacing={1} alignItems={"center"}>
+                                                <Grid item xs={9}>
+                                                    <h4 style={{
+                                                        whiteSpace: "nowrap",
+                                                        overflow: "hidden"
+                                                    }}>{club.club_name}</h4>
                                                 </Grid>
-                                                <Grid item xs={4}>
+                                                <Grid item xs={3}>
                                                     <RoundButton
                                                         text={"view"}
                                                         onClick={() =>

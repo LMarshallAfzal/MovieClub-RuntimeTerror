@@ -53,7 +53,7 @@ describe("Authentication", () => {
   });
 
 
-  it("should raise error with invalid data", async () => {
+  it.skip("should raise error with invalid data", async () => {
     window.fetch.mockReturnValue(responseErrorUnauthorized(469, {
       username: "Error text...",
       password: "Error text...",
@@ -73,7 +73,7 @@ describe("Authentication", () => {
     await waitForNextUpdate;
   });
 
-  it("should login user with correct credentials", async () => {
+  it.skip("should login user with correct credentials", async () => {
     window.fetch.mockReturnValue(responseOk(200, {
       username: "test",
       password: "test",
@@ -92,7 +92,7 @@ describe("Authentication", () => {
     );
   });
 
-  it("should not login user with empty details", async () => {
+  it.skip("should not login user with empty details", async () => {
     window.fetch.mockReturnValue(responseErrorUnauthorized());
 
     render(
@@ -111,7 +111,7 @@ describe("Authentication", () => {
 
   });
 
-  it("should not login user with invalid credentials", async () => {
+  it.skip("should not login user with invalid credentials", async () => {
     window.fetch.mockReturnValue(responseErrorUnauthorized(401, {
       username: "Error text...",
       password: "Error text...",
