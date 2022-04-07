@@ -33,6 +33,8 @@ function ClubDetail() {
 	const [banned, setBanned] = useState([]);
 	const [user1, setUser1] = useState("");
 	const [isOwner, setIsOwner] = useState(false);
+	const [theme, setTheme] = useState("");
+
 
     const [clubNameError, setClubNameError] = useState(false);
 	const [clubDescriptionError, setClubDescriptionError] = useState(false);
@@ -54,15 +56,12 @@ function ClubDetail() {
 	};
 
 	const handleChange = (event, value) => {
-		let array = [];
-		value.map((val) => {
-			array.push(val.theme);
-		});
-		console.log(club);
+		setTheme(value.theme)
 		setClub((fieldData) => ({
 			...fieldData,
-			theme: array[0],
+			theme: theme,
 		}));
+		// console.log(array[0])
 	};
 
     let resetErrorState = () => {
@@ -512,16 +511,15 @@ function ClubDetail() {
 						<Autocomplete
 							required
 							id="tags-standard"
+							name={"theme"}
 							options={themes}
-							getOptionLabel={(option) => option.theme}
-							defaultValue={club.theme}
-							value={club.theme}
-							InputLabelProps={{
-								shrink: true,
-							}}
-							onChange={() => handleChange()}
+							getOptionLabel={(option) => option.theme || ""}
+							value={theme}
+							// InputLabelProps={{
+							// 	shrink: true,
+							// }}
+							onChange={handleChange}
 							filterSelectedOptions
-							disableCloseOnSelect
 							renderInput={(params) => (
 								<TextField
 									{...params}

@@ -28,7 +28,9 @@ function ClubCard(props) {
 			}
 		);
 		let data = await response.json();
-		setClubData(data);
+        if(response.status === 200) {
+		    setClubData(data);
+        }
 	};
 
     let getClubMembers = async (e) => {
@@ -43,7 +45,9 @@ function ClubCard(props) {
 			}
 		);
 		let data = await response.json();
-		setMembers(data);
+        if(response.status === 200){
+		    setMembers(data);
+        }
 	};
 
     useEffect(() => {

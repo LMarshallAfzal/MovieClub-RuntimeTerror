@@ -2,10 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Avatar, AvatarGroup, Box, Chip, Grid, Stack } from "@mui/material";
 import icon5 from "../resources/images/example icons/icon5.jpeg";
-import icon2 from "../resources/images/example icons/icon2.jpeg";
-import icon3 from "../resources/images/example icons/icon3.jpeg";
-import icon4 from "../resources/images/example icons/icon4.jpeg";
-// import "../styling/components/ClubListing.css";
+import "../styling/components/ClubListing.css";
 import EnterButton from "./core/RoundButton";
 import { Link } from "react-router-dom";
 import AuthContext from "../components/helper/AuthContext";
@@ -28,7 +25,9 @@ function ClubListing(props) {
 			}
 		);
 		let data = await response.json();
-		setMyClubData(data);
+		if(response.status === 200) {
+			setMyClubData(data);
+		}
 	};
 
 	let getClubMembers = async (e) => {
@@ -43,9 +42,10 @@ function ClubListing(props) {
 			}
 		);
 		let data = await response.json();
-		setClubMembers(data);
+		if(response.status === 200){
+			setClubMembers(data);
+		}
 	};
-	
 
     let joinClub = async (event, id) => {
         let response = await fetch('http://127.0.0.1:8000/join_club/' + id +'/', {
@@ -57,12 +57,9 @@ function ClubListing(props) {
             }
         })
         let data = await response.json()
-        
-
     }
 
 	function ClubButton() {
-        // console.table(props)
         if (props.isMember === "M") {
             return (
                 <EnterButton
@@ -84,6 +81,7 @@ function ClubListing(props) {
         getMembershipData()
         getClubMembers(e, props.clubID)
     },[])
+
 	function ClubChip() {
 		if (props.isMember) {
 			if (props.isOrganiser) {
@@ -117,23 +115,17 @@ function ClubListing(props) {
 							src={props.iconImage}
 							sx={{ width: 1, height: 1 }}
 						/>
-
-    
 						<ClubButton />
 					</Stack>
 				</Grid>
-
 				<Grid item xs={8}>
 					<Stack spacing={1}>
 						<h4 className={"club-listing-club-name"}>
 							{props.clubName}
 							<h4--emphasise>.</h4--emphasise>
 						</h4>
-
 						<h6>{props.description}</h6>
-
 						<ClubChip />
-
 						<AvatarGroup max={4} className={"club-listing-avatars"}>
 							{clubMembers.map((user) => {
 								return <Avatar alt={user.username} src={icon5} />;
