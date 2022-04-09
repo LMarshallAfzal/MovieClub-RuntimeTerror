@@ -1,12 +1,22 @@
-import React, {useEffect, useState} from "react";
-import {Card, CardMedia, Chip, Grid, Rating, Stack, Tooltip} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  CardActionArea,
+  CardMedia,
+  Chip,
+  Grid,
+  Rating,
+  Stack,
+  Tooltip,
+} from "@mui/material";
 import "../styling/components/MovieCard.css";
 import ThemeButton from "./core/ThemeButton";
 import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
 import LoadingSkeleton from "./helper/LoadingSkeleton";
-import placeholder from "../resources/images/empty_movie_poster.png";
 import {useNavigate} from "react-router";
-import axios from "axios"
+import {MovieDataAPI} from "./helper/MovieDataAPI";
+import placeHolder from '../resources/images/empty_movie_poster.png';
+import axios from "axios";
 
 function MovieCard(props) {
     const [watchedMovies, setWatchedMovies] = useState([]);
@@ -14,24 +24,10 @@ function MovieCard(props) {
     const [promptData, setPromptData] = useState("");
     const [cardWidth, setCardWidth] = useState(150);
     const [cardBorder, setCardBorder] = useState("0px solid black");
-    const [loaded, setLoaded] = useState(true);
-    const [movie, setMovie] = useState('');
+    const [movie, setMovie] = useState();
 
-    useEffect(() => {
-        getImage();
-    }, []);
 
-    const url = 'http://www.omdbapi.com/?i=tt'+props.movie.imdb_id+'&apikey=d938f360'
-
-    const getImage = () => {
-        axios.get(`${url}`)
-        .then ((response) => {
-            const image = response.data.Poster
-            setMovie(image)
-        })
-    }
-
-    let moviePoster = movie;
+    const movieAPIData = MovieDataAPI(props.movie.imdb_id);
 
     const closePrompt = () => {
         setShowPrompt(false);
@@ -44,8 +40,6 @@ function MovieCard(props) {
             navigate(`${location}`, {replace: false})
         )
     }
-
-    //MovieCard is passed the movie object, all movie interactions occurs here
 
     function ClubMovie() {
         if (props.clubMovie === true) {
@@ -82,15 +76,21 @@ function MovieCard(props) {
         if (props.rateMovie === true) {
             return (
                 <>
-                    <MovieWatchRateDialog movie={props.movie} isOpen={showPrompt} onClose={closePrompt} data={promptData}/>
-                    <ThemeButton
-                        text={"watch"}
-                        style={"primary"}
-                        onClick={() => {
-                            setPromptData(props.movie);
-                            setShowPrompt(true);
-                        }}
-                    />
+                    <Tooltip
+                        arrow
+                        placement={"right"}
+                        title={
+                            <>
+                                <p className={"movie-card-event"}>event</p>
+                                <h6>{props.movie.deadline}</h6>
+                                <h6>17:30</h6>
+                            </>
+                        }>
+                        <Chip
+                            label={props.movie.club}
+                            onClick={() => HandleNavigate("/home/discussion")}
+                        />
+                    </Tooltip>
                 </>
             )
         } else {
@@ -102,29 +102,31 @@ function MovieCard(props) {
 
     return (
         <Grid item>
-            <LoadingSkeleton loading={loaded}>
+            <LoadingSkeleton loading={movieAPIData}>
                 <Card sx={{
-                    width: cardWidth,
+                    width: props.animated ? cardWidth : "100%",
                     transition: "ease-out",
                     transitionDuration: "0.2s",
                     border: cardBorder
                 }}
-                      onMouseEnter={() => {
+
+                      onMouseEnter={props.animated ? (() => {
                           setCardWidth(160)
                           setCardBorder("2px solid red")
-                      }}
-                      onMouseLeave={() => {
+                      }) : null}
+                      onMouseLeave={props.animated ? (() => {
                           setCardWidth(150)
                           setCardBorder("0px solid black")
-                      }}
+                      }) : null}
                       translate={"yes"}
                 >
 
 
+                    <CardActionArea onClick={() => HandleNavigate(props.movie.id)}>
                     <CardMedia
                         component={"img"}
                         sx={{height: "100%"}}
-                        image={moviePoster}
+                        image={movieAPIData ? movieAPIData.Poster : placeHolder}
                         alt={props.movie.title}
                     />
 
@@ -161,13 +163,13 @@ function MovieCard(props) {
 
                         <ClubMovie/>
 
-                        <RateMovie/>
-
-                    </Stack>
-                </Card>
-            </LoadingSkeleton>
-        </Grid>
-    );
+              <RateMovie />
+            </Stack>
+          </CardActionArea>
+        </Card>
+      </LoadingSkeleton>
+    </Grid>
+  );
 }
 
 export default MovieCard;

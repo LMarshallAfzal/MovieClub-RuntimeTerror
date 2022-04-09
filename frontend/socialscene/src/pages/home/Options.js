@@ -218,7 +218,7 @@ const Options = () => {
                             <FormControlLabel
                                 value="end"
                                 control={<Checkbox icon={<NotificationsNoneIcon/>}
-                                                   checkedIcon={<NotificationsActiveIcon/>} color="default"/>}
+                                                   checkedIcon={<NotificationsActiveIcon/>} color="primary"/>}
                                 label={<h6>email notifications</h6>}
                                 labelPlacement="end"
                             />

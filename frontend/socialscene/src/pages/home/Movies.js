@@ -8,7 +8,7 @@ import TextButton from "../../components/core/TextButton";
 import { Outlet } from "react-router";
 import MovieCard from "../../components/MovieCard";
 import HomepageCard from "../../components/helper/HomepageCard";
-import { MovieDataAPI } from "../../components/helper/MovieDataAPI";
+
 
 const Movies = () => {
 	var date = new Date().toLocaleDateString();
@@ -144,116 +144,115 @@ const Movies = () => {
 					}}
 				/>
 
-				<Collapse in={openSearch}>
-					<HomepageCard title={"search result"}>
-						<Grid item xs={12}>
-							<Stack
-								direction={"row"}
-								spacing={2}
-								height={cardHeight}
-								sx={{ overflowX: "scroll", overflowY: "hidden" }}
-							>
-								{moviesWithPoster
-									.filter((movie) => {
-										if (
-											movie.title
-												.toLowerCase()
-												.includes(searchValue.toLowerCase())
-										) {
-											return movie;
-										}
-									})
-									.map((movie, index) => {
-										return (
-											<MovieCard
-												key={index}
-												clubMovie={false}
-												rateMovie={true}
-												movie={movie}
-												poster={moviePoster}
-											/>
-										);
-									})}
-							</Stack>
-						</Grid>
-					</HomepageCard>
-				</Collapse>
-			</Grid>
+                <Collapse in={openSearch}>
+                    <HomepageCard title={"search result"}>
+                        <Grid item xs={12}>
+                            <Stack direction={"row"}
+                                   spacing={2}
+                                   height={cardHeight}
+                                   sx={{overflowX: "scroll", overflowY: "hidden"}}
+                            >
 
-			<Grid item xs={12}>
-				<HomepageCard title={"club movies"}>
-					<Grid item xs={12}>
-						<Stack
-							direction={"row"}
-							spacing={2}
-							height={clubCardHeight}
-							sx={{ overflowX: "scroll", overflowY: "hidden" }}
-						>
-							{clubMovies.map((movie, index) => {
-								return (
-									<MovieCard
-										key={index}
-										clubMovie={true}
-										rateMovie={true}
-										movie={movie}
-										poster={moviePoster}
-									/>
-								);
-							})}
-						</Stack>
-					</Grid>
-				</HomepageCard>
-			</Grid>
+                                {moviesWithPoster.filter((movie) => {
+                                    if (movie.title
+                                        .toLowerCase()
+                                        .includes(searchValue.toLowerCase())
+                                    ) {
+                                        return movie;
+                                    }
+                                }).map((movie, index) => {
+                                    return (
+                                        <MovieCard
+                                            key={index}
+                                            clubMovie={false}
+                                            rateMovie={true}
+                                            movie={movie}
+                                            poster={moviePoster}
+                                            animated={true}
+                                        />
+                                    );
+                                })}
+                            </Stack>
+                        </Grid>
+                    </HomepageCard>
+                </Collapse>
+            </Grid>
 
-			<Grid item xs={12}>
-				<HomepageCard title={"recommended"}>
-					<Grid item xs={12}>
-						<Stack
-							direction={"row"}
-							spacing={2}
-							height={rateCardHeight}
-							sx={{ overflowX: "scroll", overflowY: "hidden" }}
-						>
-							{recommendedMovies.map((movie, index) => {
-								return (
-									<MovieCard
-										key={index}
-										poster={moviePoster}
-										rateMovie={true}
-										clubMovie={false}
-										movie={movie}
-									/>
-								);
-							})}
-						</Stack>
-					</Grid>
-				</HomepageCard>
-			</Grid>
+            <Grid item xs={12}>
+                <HomepageCard title={"club movies"}>
+                    <Grid item xs={12}>
+                        <Stack direction={"row"}
+                               spacing={2}
+                               height={clubCardHeight}
+                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                        >
+                            {clubMovies.map((movie, index) => {
+                                return (
+                                    <MovieCard
+                                        key={index}
+                                        clubMovie={true}
+                                        rateMovie={true}
+                                        movie={movie}
+                                        poster={moviePoster}
+                                        animated={true}
+                                    />
+                                );
+                            })}
+                        </Stack>
+                    </Grid>
 
-			<Grid item xs={12}>
-				<HomepageCard title={"watched"}>
-					<Grid item xs={12}>
-						<Stack
-							direction={"row"}
-							spacing={2}
-							height={cardHeight}
-							sx={{ overflowX: "scroll", overflowY: "hidden" }}
-						>
-							{watchedMovies.map((movie, index) => {
-								return (
-									<MovieCard
-										key={index}
-										// poster={moviePoster}
-										rateMovie={false}
-										clubMovie={false}
-										movie={movie}
-									/>
-								);
-							})}
-						</Stack>
-					</Grid>
-				</HomepageCard>
-			</Grid>
+                </HomepageCard>
+            </Grid>
+
+            <Grid item xs={12}>
+                <HomepageCard title={"recommended"}>
+                    <Grid item xs={12}>
+                        <Stack direction={"row"}
+                               spacing={2}
+                               height={rateCardHeight}
+                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                        >
+                            {recommendedMovies.map((movie, index) => {
+                                return (
+                                    <MovieCard
+                                        key={index}
+                                        poster={moviePoster}
+                                        rateMovie={true}
+                                        clubMovie={false}
+                                        movie={movie}
+                                        animated={true}
+                                    />
+                                );
+                            })}
+                        </Stack>
+                    </Grid>
+                </HomepageCard>
+            </Grid>
+
+            <Grid item xs={12}>
+                <HomepageCard title={"watched"}>
+                    <Grid item xs={12}>
+                        <Stack direction={"row"}
+                               spacing={2}
+                               height={cardHeight}
+                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                        >
+                            {watchedMovies.map((movie, index) => {
+                                return (
+                                    <MovieCard
+                                        key={index}
+                                        // poster={moviePoster}
+                                        rateMovie={false}
+                                        clubMovie={false}
+                                        movie={movie}
+                                        animated={true}
+                                    />
+                                );
+                            })}
+                        </Stack>
+                    </Grid>
+                </HomepageCard>
+            </Grid>
 
 			<Grid item xs={12}>
 				<Outlet />

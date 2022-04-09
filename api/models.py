@@ -51,6 +51,9 @@ class User(AbstractUser):
     followers = models.ManyToManyField(
         'self', symmetrical=False, related_name='followees'
     )
+
+    gravatar = models.CharField(max_length=100, blank=True)
+
     
     def toggle_follow(self, followee):
 

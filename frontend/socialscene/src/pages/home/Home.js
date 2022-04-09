@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 
 import "../../styling/pages/Home.css";
+import {Outlet, useParams} from "react-router";
 import {Box, Grid, ImageList, ImageListItem, ListItem, Stack} from "@mui/material";
 import AuthContext from "../../components/helper/AuthContext";
 import moviePoster from '../../resources/images/empty_movie_poster.png';
@@ -31,7 +32,7 @@ const Home = () => {
     useEffect(() => {
         getRecommendedMovies();
         getMembershipData();
-    },[])
+    }, [])
 
     let getRecommendedMovies = async () => {
         let response = await fetch("http://127.0.0.1:8000/rec_movies/", {
@@ -62,6 +63,7 @@ const Home = () => {
 			}
 		);
 		let data = await response.json();
+        console.log(data.theme)
 		setMyClubData(data);
 	};
 
@@ -127,6 +129,7 @@ const Home = () => {
                                                 clubMovie={false}
                                                 rateMovie={true}
                                                 movie={movie}
+                                                animated={true}
                                             />
                                         );
                                     })}

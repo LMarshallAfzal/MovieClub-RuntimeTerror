@@ -1,17 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router";
-import { Avatar, AvatarGroup, Box, Chip, Grid, Stack } from "@mui/material";
+import React, {useContext, useEffect, useState} from "react";
+import {useParams} from "react-router";
+import {Avatar, AvatarGroup, Chip, Grid, Stack} from "@mui/material";
 import icon5 from "../resources/images/example icons/icon5.jpeg";
 import "../styling/components/ClubListing.css";
 import EnterButton from "./core/RoundButton";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import AuthContext from "../components/helper/AuthContext";
 
 function ClubListing(props) {
-	let { clubID } = useParams();
-	let { user, authTokens } = useContext(AuthContext);
-	const [myClubData, setMyClubData] = useState([]);
-	const [clubMembers, setClubMembers] = useState([]);
+    let {clubID} = useParams();
+    let {user, authTokens} = useContext(AuthContext);
+    const [myClubData, setMyClubData] = useState([]);
+    const [clubMembers, setClubMembers] = useState([]);
 
 	let getMembershipData = async (e) => {
 		let response = await fetch(
@@ -48,8 +48,8 @@ function ClubListing(props) {
 	};
 
     let joinClub = async (event, id) => {
-        let response = await fetch('http://127.0.0.1:8000/join_club/' + id +'/', {
-            method:'POST',
+        let response = await fetch('http://127.0.0.1:8000/join_club/' + id + '/', {
+            method: 'POST',
             body: JSON.stringify(user.user_id, props.clubID),
             headers: {
                 'Content-Type': 'application/json',
@@ -84,22 +84,13 @@ function ClubListing(props) {
 
 	function ClubChip() {
 		if (props.isMember) {
-			if (props.isOrganiser) {
-				return (
-					<EnterButton
-						text={"create meeting"}
-						linkTo={`/home//${props.ID}/new`}
-					/>
-				);
-			} else {
                 if (props.memberRole === "M") {
                     return <Chip label={"Member"} />;
                 }
                 else if (props.memberRole === "O") {
-                    return <Chip label={"Organiser"} />;
+                    return <Chip label={"Owner"} />;
                 }
-				return <Chip label={"Banned member"} />;
-			}
+
 		} else {
 			return <Chip label={props.clubTheme} />;
 		}
