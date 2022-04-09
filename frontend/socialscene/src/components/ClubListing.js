@@ -25,24 +25,27 @@ function ClubListing(props) {
 			}
 		);
 		let data = await response.json();
-		setMyClubData(data);
+		if(response.status === 200) {
+			setMyClubData(data);
+		}
 	};
 
-    let getClubMembers = async (e) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/club_members/" + clubID + "/",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data = await response.json();
-        setClubMembers(data);
-    };
-
+	let getClubMembers = async (e) => {
+		let response = await fetch(
+			"http://127.0.0.1:8000/club_members/" + clubID + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		if(response.status === 200){
+			setClubMembers(data);
+		}
+	};
 
     let joinClub = async (event, id) => {
         let response = await fetch('http://127.0.0.1:8000/join_club/' + id + '/', {
@@ -54,12 +57,9 @@ function ClubListing(props) {
             }
         })
         let data = await response.json()
-        
-
     }
 
-    function ClubButton() {
-        // console.table(props)
+	function ClubButton() {
         if (props.isMember === "M") {
             return (
                 <EnterButton
@@ -81,6 +81,7 @@ function ClubListing(props) {
         getMembershipData()
         getClubMembers(e, props.clubID)
     },[])
+
 	function ClubChip() {
 		if (props.isMember) {
                 if (props.memberRole === "M") {
@@ -95,46 +96,37 @@ function ClubListing(props) {
 		}
 	}
 
-    return (
-        <Link className={"club-listing"} to={`/home/clubs/${props.ID}`}>
-            <Grid container spacing={1} padding={1}>
-                <Grid item xs={4}>
-                    <Stack spacing={1} alignItems={"center"} justifyContent={"center"}>
-                        <Avatar
-                            alt={props.clubName}
-                            src={props.iconImage}
-                            sx={{width: 1, height: 1}}
-                        />
-
-
-                        <ClubButton/>
-                    </Stack>
-                </Grid>
-
-                <Grid item xs={8}>
-                    <Stack spacing={1}>
-                        <h4 className={"club-listing-club-name"}>
-                            {props.clubName}
-                            <h4--emphasise>.</h4--emphasise>
-                        </h4>
-
-                        <h6 style={{
-                            whiteSpace: "nowrap",
-                            overflow: "hidden"
-                        }}>{props.description}</h6>
-
-                        <ClubChip/>
-
-                        <AvatarGroup max={4} className={"club-listing-avatars"}>
-                            {clubMembers.map((user) => {
-                                return <Avatar alt={user.username} src={icon5}/>;
-                            })}
-                        </AvatarGroup>
-                    </Stack>
-                </Grid>
-            </Grid>
-        </Link>
-    );
+	return (
+		<Link className={"club-listing"} to={`/home/clubs/${props.ID}`}>
+			<Grid container spacing={1} padding={1}>
+				<Grid item xs={4}>
+					<Stack spacing={1} alignItems={"center"} justifyContent={"center"}>
+						<Avatar
+							alt={props.clubName}
+							src={props.iconImage}
+							sx={{ width: 1, height: 1 }}
+						/>
+						<ClubButton />
+					</Stack>
+				</Grid>
+				<Grid item xs={8}>
+					<Stack spacing={1}>
+						<h4 className={"club-listing-club-name"}>
+							{props.clubName}
+							<h4--emphasise>.</h4--emphasise>
+						</h4>
+						<h6>{props.description}</h6>
+						<ClubChip />
+						<AvatarGroup max={4} className={"club-listing-avatars"}>
+							{clubMembers.map((user) => {
+								return <Avatar alt={user.username} src={icon5} />;
+							})}
+						</AvatarGroup>
+					</Stack>
+				</Grid>
+			</Grid>
+		</Link>
+	);
 }
 
 export default ClubListing;

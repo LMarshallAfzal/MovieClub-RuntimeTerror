@@ -13,7 +13,9 @@ import {
 	Grid,
 	Stack,
 	TextField,
+	Alert,
 } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
 import { FaCrown } from "react-icons/fa";
 import "../styling/components/ClubDetail.css";
 import ThemeButton from "./core/ThemeButton";
@@ -33,6 +35,8 @@ function ClubDetail() {
 	const [banned, setBanned] = useState([]);
 	const [user1, setUser1] = useState("");
 	const [isOwner, setIsOwner] = useState(false);
+	const [theme, setTheme] = useState("");
+	const [alert, setAlert] = useState(false);
 
 	const [clubNameError, setClubNameError] = useState(false);
 	const [clubDescriptionError, setClubDescriptionError] = useState(false);
@@ -53,16 +57,14 @@ function ClubDetail() {
 	};
 
 	const handleChange = (event, value) => {
-		let array = [];
-		value.map((val) => {
-			array.push(val.theme);
-		});
-		console.log(club);
+		let edit = themes.find((theme) => theme.theme === value.theme);
+		setTheme(edit);
 		setClub((fieldData) => ({
 			...fieldData,
-			theme: array[0],
+			theme: value.theme,
 		}));
 	};
+
 
 	let resetErrorState = () => {
 		setClubNameError(false);
@@ -71,7 +73,6 @@ function ClubDetail() {
 	};
 
 	let errorHandler = (e, data) => {
-		e.preventDefault();
 		if (Object.keys(data).includes("club_name")) {
 			setClubNameError(true);
 			setClubNameErrorText("Error:" + data.club_name);
@@ -96,6 +97,7 @@ function ClubDetail() {
 		});
 		let data = await response.json();
 		setClub(data);
+		setTheme(themes.find((theme) => theme.theme === data.theme));
 	};
 
 	let getClubMembers = async (e) => {
@@ -148,7 +150,6 @@ function ClubDetail() {
 			}
 		);
 		let data = await response.json();
-		console.log(data);
 		setMyClubData(data);
 	};
 
@@ -204,30 +205,7 @@ function ClubDetail() {
 		}
 	};
 
-	let saveClub = async (e) => {
-		e.preventDefault();
-		resetErrorState();
-		let response = await fetch(
-			"http://127.0.0.1:8000/edit_club/" + clubID + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify(club),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		if (response.status === 200) {
-			setClub(data);
-		} else {
-			errorHandler(e, data);
-		}
-	};
-
 	let banMember = async (memberID) => {
-		console.log(memberID);
 		let response = await fetch(
 			"http://127.0.0.1:8000/ban_member/" + clubID + "/" + memberID + "/",
 			{
@@ -271,12 +249,36 @@ function ClubDetail() {
 		await response.json();
 	};
 
+	let editClub = async (e) => {
+		// e.preventDefault();
+		resetErrorState();
+		let response = await fetch(
+			"http://127.0.0.1:8000/edit_club/" + clubID + "/",
+			{
+				method: "PUT",
+				body: JSON.stringify(club),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		if (response.status === 200) {
+			setClub(data);
+			setAlert(true)
+		} else {
+			errorHandler(e, data);
+		}
+	};
+
 	useEffect(() => {
 		getClubMembers();
 		getClubOwner();
 		getMembershipData();
 		getBannedMembers();
 		getClub();
+		setAlert(false);
 		myClubData.find(
 			(val) => val.club_id === clubID && val.is_organiser === true
 		)
@@ -306,7 +308,6 @@ function ClubDetail() {
 	};
 
 	const handleUnBan = (id) => {
-		console.log("User Un-Banned");
 		unbanMember(id);
 	};
 
@@ -316,9 +317,7 @@ function ClubDetail() {
 		navigate(`${ID}`, { replace: false });
 	};
 
-	const handleBannedUserClick = (id) => {
-		console.log("User Clicked");
-	};
+	const handleBannedUserClick = (id) => {};
 
 	function UserDisplay() {
 		if (showBannedMembers === false) {
@@ -356,43 +355,43 @@ function ClubDetail() {
 				</>
 			);
 		} else {
-			{
-				return banned.map((user, index) => {
-					return (
-						<Chip
-							key={index}
-							label={user.first_name + " " + user.last_name}
-							avatar={
-								<Avatar
-									src={user.iconImage}
-									alt={user.first_name + " " + user.last_name}
-								/>
-							}
-							onDelete={() => handleUnBan(user.id)}
-							onClick={handleBannedUserClick(user.id)}
-							sx={{ mr: 1, mt: 1 }}
-						/>
-					);
-				});
-			}
+			return banned.map((user, index) => {
+				return (
+					<Chip
+						key={index}
+						label={user.first_name + " " + user.last_name}
+						avatar={
+							<Avatar
+								src={user.iconImage}
+								alt={user.first_name + " " + user.last_name}
+							/>
+						}
+						onDelete={() => handleUnBan(user.id)}
+						onClick={handleBannedUserClick(user.id)}
+						sx={{ mr: 1, mt: 1 }}
+					/>
+				);
+			});
 		}
 	}
 
 	const [edit, setEdit] = useState(false);
 
-	const handleSaveClub = () => {
-		saveClub();
-		setEdit(false);
-	};
-
 	const handleEditClub = () => {
-		setEdit(true);
+		editClub();
 	};
 
 	function ClubEdit() {
-		if (edit === true && isOwner) {
+		if (isOwner) {
 			return (
 				<>
+					{alert ? (
+						<Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+							Successfully edited {club.club_name}!
+						</Alert>
+					) : (
+						<></>
+					)}
 					<TextField
 						required
 						name={"club_name"}
@@ -418,16 +417,15 @@ function ClubDetail() {
 					<Autocomplete
 						required
 						id="tags-standard"
+						name={"theme"}
 						options={themes}
 						getOptionLabel={(option) => option.theme || ""}
-						defaultValue={club.theme}
-						value={club.theme}
-						InputLabelProps={{
-							shrink: true,
-						}}
-						onChange={(e) => onChange(e)}
 						filterSelectedOptions
-						disableCloseOnSelect
+						value={theme}
+						// InputLabelProps={{
+						// 	shrink: true,
+						// }}
+						onChange={(event, value) => handleChange(event, value)}
 						renderInput={(params) => (
 							<TextField
 								{...params}
@@ -437,7 +435,7 @@ function ClubDetail() {
 								name={"theme"}
 								type={"text"}
 								variant={"outlined"}
-								multiline
+								// multiline
 							/>
 						)}
 					/>
@@ -465,7 +463,7 @@ function ClubDetail() {
 					<Autocomplete
 						disabled
 						options={themes}
-						getOptionLabel={(option) => option.theme}
+						getOptionLabel={(option) => option.theme || ""}
 						defaultValue={club.theme}
 						value={club.theme}
 						InputProps={{ readOnly: true }}
@@ -581,11 +579,7 @@ function ClubDetail() {
 					<ClubEdit />
 
 					{isOwner ? (
-						<ThemeButton
-							text={edit ? "save" : "edit"}
-							onClick={edit ? handleSaveClub : handleEditClub}
-							style={edit ? "primary" : "normal"}
-						/>
+						<ThemeButton text={"edit"} onClick={handleEditClub} />
 					) : (
 						<ThemeButton text={"edit"} style={"disabled"} />
 					)}
