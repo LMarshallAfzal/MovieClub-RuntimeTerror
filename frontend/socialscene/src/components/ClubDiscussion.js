@@ -14,10 +14,12 @@ import ThemeButton from "./core/ThemeButton";
 import TextButton from "./core/TextButton";
 import { Outlet } from "react-router-dom";
 import AuthContext from "./helper/AuthContext";
+import useFetch from "./helper/useFetch";
 
 function ClubDiscussion() {
 	let { user, authTokens } = useContext(AuthContext);
 	let [message, setMessage] = useState("");
+	let api = useFetch();
 
 	const [defaultMessage, setDefaultMessage] = useState("");
 	const [userData, setUserData] = useState([]);
@@ -46,72 +48,37 @@ function ClubDiscussion() {
 	};
 
 	let getMembershipData = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		console.log(data);
-		setMyClubData(data);
+		let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
+		if (response.status === 200) {
+			setMyClubData(data);
+		}
 	};
 
-	let club = myClubData.find((obj) => obj.id === clubID);
-
 	let getClubMessages = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/message_forum/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setMessages(data);
-		let sender_data = data.sender;
+		let {response, data} = await api(`/message_forum/${clubID}/`, "GET");
+		if (response.status === 200) {
+			setMessages(data);
+		}
 	};
 
 	let sendClubMessages = async (id) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/write_message/" + id + "/",
-			{
-				method: "POST",
-				body: JSON.stringify({
-					sender: user.username,
-					club: myClub.id,
-					message: message.message,
-					timestamp: dateTime,
-				}),
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		await response.json();
-		getClubMessages(clubID);
-		message.message = "";
-		console.log(message);
+		let {response} = await api(`/write_message/${id}/`, "POST", {
+			sender: user.username,
+			club: myClub.id,
+			message: message.message,
+			timestamp: dateTime,
+		});
+		if(response.status === 200) {
+			getClubMessages(clubID);
+			message.message = "";
+		}
 	};
 
 	let getClub = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000/club/" + clubID + "/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		let data = await response.json();
-		setClub(data);
+		let {response, data} = await api(`/club/${clubID}/`, "GET");
+		if (response.status === 200) {
+			setClub(data);
+		}
 	};
 
 	return (

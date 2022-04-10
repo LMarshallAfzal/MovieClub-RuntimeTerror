@@ -12,9 +12,11 @@ import ThemeButton from "./core/ThemeButton";
 import "../styling/components/ClubCreate.css";
 import { themes } from "../resources/data/MovieThemes";
 import AuthContext from "../components/helper/AuthContext";
+import useFetch from "../components/helper/useFetch";
 
 function ClubCreate() {
 	let { authTokens } = useContext(AuthContext);
+	let api = useFetch();
 
 	const [club, setClub] = useState("");
 	const [alert, setAlert] = useState(false);
@@ -67,19 +69,11 @@ function ClubCreate() {
 	let submitCreateClubForm = async (e) => {
 		e.preventDefault();
 		resetErrorState();
-		let response = await fetch("http://127.0.0.1:8000/create_club/", {
-			method: "POST",
-			body: JSON.stringify({
-				club_name: club.club_name,
-				mission_statement: club.mission_statement,
-				theme: club.theme,
-			}),
-			headers: {
-				"Content-type": "application/json; charset=UTF-8",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
+		let {response, data} = await api("/create_club/", "POST", {
+			club_name: club.club_name,
+			mission_statement: club.mission_statement,
+			theme: club.theme,
 		});
-		let data = await response.json();
 		if (response.status === 201) {
 			setClub(data);
 			setAlert(true);
