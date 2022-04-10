@@ -43,7 +43,6 @@ const Home = () => {
             },
         });
         let data = await response.json();
-        console.log(data);
         if (response.status === 200) {
             setRecommendedMovies(data);
         } else {
@@ -63,7 +62,6 @@ const Home = () => {
 			}
 		);
 		let data = await response.json();
-        console.log(data.theme)
 		setMyClubData(data);
 	};
 
@@ -155,12 +153,9 @@ const Home = () => {
                                             <ClubCard
                                                 clubName={club.club_name}
                                                 isMember={"M"}
-                                                iconImage={club.iconImage}
                                                 description={club.mission_statement}
-                                                isOrganiser={club.isOrganiser}
-                                                // memberRole={club.memberRole}
                                                 clubTheme={club.theme}
-                                                ID={club.ID}
+                                                ID={club.id}
                                             />
                                         </ListItem>
                                     ))}

@@ -72,16 +72,11 @@ function ClubCard(props) {
                 return (
                     <RoundButton text={"create meeting"} linkTo={"/home/discussion"}/>
                 )
-            } else {
-                return (
-                    <Chip label={props.memberRole}/>
-                )
             }
-        } else {
-            return (
-                <Chip label={props.clubTheme}/>
-            )
         }
+        return (
+            <Chip label={props.clubTheme}/>
+        )
     }
 
 

@@ -115,12 +115,12 @@ const Profile = () => {
 
 	let getWatchedMovies = async () => {
 		let response = await fetch(
-			"http://127.0.0.1:8000/watched_list/" + user.user_id,
+			"http://127.0.0.1:8000/watched_list/" + user.user_id + "/",
 			{
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: "Bearer " + authTokens.access,
+					Authorization: "Bearer " + String(authTokens.access),
 				},
 			}
 		);
@@ -130,12 +130,12 @@ const Profile = () => {
 
 	let getFavourites = async (e) => {
 		let response = await fetch(
-			"http://127.0.0.1:8000/favourite_movies/" + user.user_id,
+			"http://127.0.0.1:8000/favourite_movies/" + user.user_id + "/",
 			{
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: "Bearer " + authTokens.access,
+					Authorization: "Bearer " + String(authTokens.access),
 				},
 			}
 		);

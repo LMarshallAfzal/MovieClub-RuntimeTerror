@@ -290,7 +290,6 @@ export const Signup = () => {
 								/>
 							)}
 						/>
-						;
 						<FormControl fullWidth variant={"outlined"}>
 							<InputLabel htmlFor={"outlined-adornment-password"}>
 								password
