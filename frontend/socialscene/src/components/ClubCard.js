@@ -74,13 +74,9 @@ function ClubCard(props) {
                 )
             } else {
                 return (
-                    <Chip label={props.memberRole}/>
+                    <Chip label={props.clubTheme}/>
                 )
             }
-        } else {
-            return (
-                <Chip label={props.clubTheme}/>
-            )
         }
     }
 
