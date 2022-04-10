@@ -27,6 +27,7 @@ import useFetch from "../../components/helper/useFetch";
 const Profile = () => {
 	const [userData, setUserData] = useState("");
 	const [alert, setAlert] = useState(false);
+	let api = useFetch();
 	let { user, authTokens } = useContext(AuthContext);
 
 	let preferencesValues = [];
@@ -114,57 +115,30 @@ const Profile = () => {
 	};
 
 	let getWatchedMovies = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/watched_list/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setWatchedMovies(data);
+		let {data, response} = await api(`/watched_list/${user.user_id}/`, "GET");
+		if (response.status === 200) {
+			setWatchedMovies(data);
+		}
 	};
 
 	let getFavourites = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/favourite_movies/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setFavouriteMovies(data);
+		let {response, data} = await api(`/favourite_movies/${user.user_id}/`, "GET");
+		if (response.status === 200) {
+			setFavouriteMovies(data);
+		}
 	};
 
 	let submitChangeProfileForm = async (e) => {
 		e.preventDefault();
 		resetErrorState();
-		let response = await fetch(
-			"http://127.0.0.1:8000/edit_profile/" + user.user_id + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify({
-					username: userData.username,
-					first_name: userData.first_name,
-					last_name: userData.last_name,
-					email: userData.email,
-					bio: userData.bio,
-					preferences: userData.preferences,
-				}),
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
+		let {response, data} = await api(`/edit_profile/${user.user_id}/`, "PUT", {
+			username: userData.username,
+			first_name: userData.first_name,
+			last_name: userData.last_name,
+			email: userData.email,
+			bio: userData.bio,
+			preferences: userData.preferences,
+		});
 		if (response.status === 200) {
 			setUserData(data);
 			setAlert(true);
@@ -174,71 +148,41 @@ const Profile = () => {
 	};
 
 	let getUserData = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000/user/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		let data = await response.json();
-		setUserData(data);
-		let themes2 = themes.map((theme) => theme.theme);
-		let preferences = data.preferences.map((preference) =>
-			themes2.find((theme) => theme === preference)
-		);
-		preferences.map((preference) => {
-			preferencesValues.push({ theme: preference });
-		});
+		let {response, data} = await api(`/user/${user.user_id}/`, "GET");
+		if (response.status === 200) {
+			setUserData(data);
+			let themes2 = themes.map((theme) => theme.theme);
+			let preferences = data.preferences.map((preference) =>
+				themes2.find((theme) => theme === preference)
+			);
+			preferences.map((preference) => {
+				preferencesValues.push({ theme: preference });
+			});
+		}
 	};
 
 	let getUserMemberships = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setUserMemberships(data);
-		setUserMembershipCount(data.length);
+		let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
+		if (response.status === 200) {
+			setUserMemberships(data);
+			setUserMembershipCount(data.length);
+		}
 	};
 
 	let getFollowers = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/followers/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setFollowers(data);
-		setFollowerCount(data.length);
+		let {response, data} = await api(`/followers/${user.user_id}/`, "GET");
+		if (response.status === 200) {
+			setFollowers(data);
+			setFollowerCount(data.length);
+		}
 	};
 
 	let getFollowing = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/following/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-
-		setFollowing(data);
-		setFollowingCount(data.length);
+		let {response, data} = await api(`/following/${user.user_id}/`, "GET");
+		if (response.status === 200) {
+			setFollowing(data);
+			setFollowingCount(data.length);
+		}
 	};
 
 	useEffect(() => {
