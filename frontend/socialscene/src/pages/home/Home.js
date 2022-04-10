@@ -43,7 +43,6 @@ const Home = () => {
             },
         });
         let data = await response.json();
-        console.log(data);
         if (response.status === 200) {
             setRecommendedMovies(data);
         } else {
@@ -63,7 +62,6 @@ const Home = () => {
 			}
 		);
 		let data = await response.json();
-        console.log(data.theme)
 		setMyClubData(data);
 	};
 
