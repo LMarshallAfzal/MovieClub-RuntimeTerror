@@ -22,6 +22,7 @@ import ThemeButton from "./core/ThemeButton";
 import { themes } from "../resources/data/MovieThemes";
 import AuthContext from "../components/helper/AuthContext";
 import HomepageCard from "./helper/HomepageCard";
+import useFetch from "../components/helper/useFetch";
 
 function ClubDetail() {
 	const [showBannedMembers, setBannedMembers] = useState(false);
@@ -47,6 +48,7 @@ function ClubDetail() {
 	const [clubThemeErrorText, setClubThemeErrorText] = useState("");
 
 	let { clubID } = useParams();
+	let api = useFetch();
 	let { user, authTokens } = useContext(AuthContext);
 
 	const onChange = (e) => {
@@ -88,183 +90,83 @@ function ClubDetail() {
 	};
 
 	let getClub = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000/club/" + clubID + "/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		let data = await response.json();
-		setClub(data);
-		setTheme(themes.find((theme) => theme.theme === data.theme));
-	};
+		let {response, data} = await api(`/club/${clubID}/`, "GET");
+		if(response.status === 200) {
+			setClub(data);
+			setTheme(themes.find((theme) => theme.theme === data.theme));
+		}
+	}
 
 	let getClubMembers = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/club_members/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		if (response.status === 200) {
+		let {response, data} = await api(`/club_members/${clubID}/`, "GET");
+		if(response.status === 200) {
 			setMembers(data);
 			data.find((member) => member.username === user.username)
 				? setIsMember(true)
 				: setIsMember(false);
 		}
-	};
+	}
 
 	let getClubOwner = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/club_owner/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		data.find((owner) => owner.username === user.username)
-			? setIsOwner(true)
-			: setIsOwner(false);
-		setOwner(data);
-	};
+		let {response, data} = await api(`/club_owner/${clubID}/`, "GET");
+		if(response.status === 200) {
+			data.find((owner) => owner.username === user.username)
+				? setIsOwner(true)
+				: setIsOwner(false);
+			setOwner(data);
+		}
+	}
 
 	let getMembershipData = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setMyClubData(data);
-	};
+		let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}`, "GET");
+		if(response.status === 200) {
+			setMyClubData(data);
+		}
+	}
 
 	let getBannedMembers = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/banned_member_list/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		setBanned(data);
-	};
+		let {response, data} = await api(`/banned_member_list/${clubID}/`, "GET");
+		if(response.status === 200) {
+			setBanned(data);
+		}
+	}
 
 	let joinClub = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/join_club/" + clubID + "/",
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		await response.json();
-		if (response.status === 200) {
+		let {response} = await api(`/join_club/${clubID}/`, "POST");
+		if(response.status === 201) {
 			setIsMember(true);
 			getClubMembers();
 			getMembershipData();
 		}
-	};
+	}
 
 	let leaveClub = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/leave_club/" + clubID + "/",
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		await response.json();
-		if (response.status === 200) {
+		let {response} = await api(`/leave_club/${clubID}/`, "POST");
+		if(response.status === 201) {
 			setIsMember(false);
 			alert("You have left this club!");
 		}
-	};
+	}
 
 	let banMember = async (memberID) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/ban_member/" + clubID + "/" + memberID + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify(user1),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-	};
+		let {response, data} = await api(`/ban_member/${clubID}/${memberID}/`, "PUT", {user1});
+		if(response.status === 200) {
+			setBanned(data);
+		}
+	}
 
 	let unbanMember = async (memberID) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/unban_member/" + clubID + "/" + memberID + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify(user1),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		await response.json();
+		await api(`/unban_member/${clubID}/${memberID}/`, "PUT", {user1});
 	};
 
 	let deleteClub = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/delete_club/" + clubID + "/",
-			{
-				method: "DELETE",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		await response.json();
+		await api(`/delete_club/${clubID}/`, "DELETE");
 	};
 
 	let editClub = async (e) => {
-		// e.preventDefault();
 		resetErrorState();
-		let response = await fetch(
-			"http://127.0.0.1:8000/edit_club/" + clubID + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify(club),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		if (response.status === 200) {
+		let {response, data} = await api(`/edit_club/${clubID}/`, "PUT", {club});
+		if(response.status === 200) {
 			setClub(data);
 			setAlert(true)
 		} else {
