@@ -18,31 +18,29 @@ import ThemeButton from "./core/ThemeButton";
 import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
 import moviePoster from "../resources/images/empty_movie_poster.png";
 import AuthContext from "./helper/AuthContext";
+import useFetch from "./helper/useFetch";
 
 function EventDetail() {
 	let { user, authTokens } = useContext(AuthContext);
+	let api = useFetch();
+	let { clubID } = useParams();
+
 	const [myClubData, setMyClubData] = useState([]);
 	const [myMeetingData, setMyMeetingData] = useState({});
 	const [specificMovie, setSpecificMovie] = useState("");
 	const [organiser, setOrganiser] = useState("");
 	const [isOrganiser, setIsOrganiser] = useState(false);
 	const [attendees, setAttendees] = useState([]);
-	let { clubID } = useParams();
 
 	let getUser = useCallback(
 		async (id) => {
-			let response = await fetch("http://127.0.0.1:8000/user/" + id + "/", {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			});
-			let data = await response.json();
-			setOrganiser(data);
-			return data;
+			let {response, data} = await api(`/user/${id}/`, "GET");
+			if(response.status === 200) {
+				setOrganiser(data);
+				return data;
+			}
 		},
-		[authTokens]
+		[api]
 	);
 
 	useEffect(() => {
@@ -51,10 +49,9 @@ function EventDetail() {
 		console.log(myMeetingData.movie);
 		//getMovie(myMeetingData.movie);
 		console.log(myMeetingData.organiser);
-		// console.log("attendees", attendee)
 		//getUser(myMeetingData.organiser);
 		// getRecommendedMovies()
-	}, []);
+	}, [clubID]);
 
 	useEffect(() => {
 		async function fetchAttendees() {
@@ -64,7 +61,7 @@ function EventDetail() {
 		}
 
 		fetchAttendees();
-	}, [myMeetingData, getUser]);
+	}, [myMeetingData, getUser, clubID]);
 
 	const onChange = (e) => {
 		setMyMeetingData((fieldData) => ({
@@ -73,129 +70,57 @@ function EventDetail() {
 		}));
 	};
 
-	let getMembershipData = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
+	let getMembershipData = async (e) => {
+        let {response, data} = api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
+        if (response.status === 200) {
+			setMyClubData(data);
+			if (data.is_organiser) {
+				setIsOrganiser(true);
 			}
-		);
-		let data = await response.json();
-		setMyClubData(data);
-		if (data.is_organiser) {
-			setIsOrganiser(true);
-		}
-	};
+        }
+    };
 
 	let addToWatchedList = async (id) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/add_watched_movie/" + id + "/",
-			{
-				method: "POST",
-				body: JSON.stringify({ movie: id, user: user.user_id }),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + authTokens.access,
-				},
-			}
-		);
-	};
+		await api(`/add_watched_movie/${id}/`, "POST", {
+			movie: id,
+			user: user.user_id,
+		});
+	};	
 
 	let deleteMeeting = async (id) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/cancel_meeting/" + id + "/",
-			{
-				method: "DELETE",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + authTokens.access,
-				},
-			}
-		);
-		let data = await response.json();
+		let {response, data} = await api(`/cancel_meeting/${id}/`, "DELETE");
 		if (response.status === 200) {
 			return data;
-		} else {
 		}
 	};
 
-	// let getAttendees = () => {
-	// 	setAttendees(myMeetingData.attendees?.map(getUser) ?? []);
-	// 	console.log(attendees)
-	//   };
-
 	let getMeetingData = async (id) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/get_club_upcoming_meeting/" + id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		console.log(data);
-		setMyMeetingData(data);
-		getMovie(data.movie);
-		getUser(data.organiser);
-		// getAttendees();
+		let {response, data} = await api(`/get_club_upcoming_meeting/${id}/`, "GET");
+		if (response.status === 200) {
+			setMyMeetingData(data);
+			getMovie(data.movie);
+			getUser(data.organiser);
+		}
 	};
 
-	// let getUser = async (id) => {
-	// 	let response = await fetch("http://127.0.0.1:8000/user/" + id + "/", {
-	// 		method: "GET",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Authorization: "Bearer " + String(authTokens.access),
-	// 		},
-	// 	});
-	// 	let data = await response.json();
-	// 	// console.log(data);
-	// 	setOrganiser(data);
-	// };
-
 	let getMovie = async (id) => {
-		let response = await fetch("http://127.0.0.1:8000/get_movie/" + id + "/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		let data = await response.json();
-		// console.log(data);
-		setSpecificMovie(data);
+		let {response, data} = await api(`/get_movie/${id}/`, "GET");
+		if (response.status === 200) {
+			setSpecificMovie(data);
+		}
 	};
 
 	let editMeeting = async (e) => {
 		e.preventDefault();
-		let response = await fetch(
-			"http://127.0.0.1:8000/edit_meeting/" + clubID + "/",
-			{
-				method: "PUT",
-				body: JSON.stringify({
-					meeting_title: e.target.meeting_title.value,
-					description: e.target.description.value,
-					date: e.target.date.value,
-					start_time: e.target.end_time.value,
-					end_time: e.target.end_time.value,
-					meeting_link: "placeholder",
-				}),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
+		let {response, data} = await api(`/edit_meeting/${clubID}/`, "PUT", {
+			meeting_title: e.target.meeting_title.value,
+			description: e.target.description.value,
+			date: e.target.date.value,
+			start_time: e.target.start_time.value,
+			end_time: e.target.end_time.value,
+			meeting_link: "placeholder",
+		});
 		if (response.status === 200) {
-			// console.log(data);
 			setMyMeetingData(data);
 		}
 	};
@@ -205,10 +130,6 @@ function EventDetail() {
 	console.log(specificMovie);
 
 	let club = myClubData.find((obj) => obj.id === clubID);
-	// let event = myMeetingData.find(obj => obj.id === club.id);
-	// let movie = recommendedMovies.find(obj => obj.id === myMeetingData.movie);
-	// console.log(movie)
-	// let organiser = DummyClubMemberData.find(obj => obj.ID === event.organiserID);
 
 	const [edit, setEdit] = useState(false);
 
