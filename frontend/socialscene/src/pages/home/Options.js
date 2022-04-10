@@ -17,6 +17,7 @@ import ThemeButton from "../../components/core/ThemeButton";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import TextButton from "../../components/core/TextButton";
+import useFetch from "../../components/helper/useFetch";
 
 const Options = () => {
 	const [passwordVisibility, togglePasswordVisibility] = useState(false);
@@ -27,7 +28,7 @@ const Options = () => {
 		new_password_confirmation: "",
 	});
 
-	let { authTokens } = useContext(AuthContext);
+	let api = useFetch();
 
 	const [oldPasswordError, setOldPasswordError] = useState(false);
 	const [newPasswordError, setNewPasswordError] = useState(false);
@@ -86,23 +87,14 @@ const Options = () => {
 	let submitChangePasswordForm = async (e) => {
 		e.preventDefault();
 		resetErrorState();
-		let response = await fetch("http://127.0.0.1:8000/change_password/", {
-			method: "PUT",
-			body: JSON.stringify({
-				old_password: passwordData.old_password,
-				new_password: passwordData.new_password,
-				new_password_confirmation: passwordData.new_password_confirmation,
-			}),
-			headers: {
-				"Content-type": "application/json; charset=UTF-8",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
+		let {data, response} = await api("/change_password/", "PUT", {
+			old_password: passwordData.old_password,
+			new_password: passwordData.new_password,
+			new_password_confirmation: passwordData.new_password_confirmation,
 		});
-		let data = await response.json();
-		console.log(data);
 		if (response.status === 200) {
 			setPasswordData(data);
-            setAlert(true);
+			setAlert(true);
 		} else {
 			errorHandler(e, data);
 		}
