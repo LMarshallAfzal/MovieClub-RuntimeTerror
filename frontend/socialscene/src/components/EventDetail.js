@@ -512,7 +512,7 @@ function EventDetail() {
                         </Grid>
 
                         <Grid item xs={3}>
-                            <ThemeButton text={"rate"}/>
+                            <ThemeButton text={"join"}/>
                         </Grid>
 
                         <Grid item xs={3}>

@@ -35,19 +35,19 @@ function EventCreate() {
         setMeetingData(fieldData => ({...fieldData, [e.target.name]: e.target.value}));
     };
 
-    let trainMeetingRecommendation = async () => {
-        let response = await fetch("http://127.0.0.1:8000/train/meeting/", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8",
-                Authorization: "Bearer " + String(authTokens.access),
-            },
-        });
-        await response.json();
-    };
+    // let trainMeetingRecommendation = async () => {
+    //     let response = await fetch("http://127.0.0.1:8000/train/meeting/", {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json; charset=UTF-8",
+    //             Authorization: "Bearer " + String(authTokens.access),
+    //         },
+    //     });
+    //     await response.json();
+    // };
 
     let getRecommendedMovies = async () => {
-        trainMeetingRecommendation();
+        // trainMeetingRecommendation();
         let response = await fetch(
             "http://127.0.0.1:8000/rec_meeting/" + clubID + "/",
             {
@@ -75,7 +75,7 @@ function EventCreate() {
                 "start_time": meetingData.start_time,
                 "end_time": meetingData.end_time,
                 "description": meetingData.description,
-                "meeting_link": "placeholder link",
+                "meeting_link": meetingData.meeting_link,
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
@@ -247,10 +247,10 @@ function EventCreate() {
                     <TextField
                             fullWidth
                             required
-                            placeholder={"the event meeting date"}
+                            placeholder={"the event link"}
                             label={"link"}
                             name={"link"}
-                            value={link}
+                            value={meeting_link}
                             onChange={e => onChange(e)}
                         />
                 </Grid>

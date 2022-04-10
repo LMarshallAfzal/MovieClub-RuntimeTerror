@@ -34,7 +34,7 @@ class ClubEmail:
             to = recipients,
             )
         email.content_subtype = "html"
-        email.attach_file('event.ics')
+        email.attach_file('calendar.ics')
         email.send()
 
     def send_meeting_update_notification(self):
@@ -59,7 +59,7 @@ class ClubEmail:
             to = recipients,
             )
         email.content_subtype = "html"
-        email.attach_file('event.ics')
+        email.attach_file('calendar.ics')
         email.send()
 
     def send_meeting_cancellation_notification(self):
