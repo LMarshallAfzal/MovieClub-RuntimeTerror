@@ -340,6 +340,7 @@ def get_random_movies(request):
 @permission_classes([IsAuthenticated])
 @club_exists
 @is_in_club
+@is_management
 @members_have_ratings_for_meeting_movie_recommendations
 def recommend_movie_meeting(request, club_id):
     club = Club.objects.get(id=club_id)
