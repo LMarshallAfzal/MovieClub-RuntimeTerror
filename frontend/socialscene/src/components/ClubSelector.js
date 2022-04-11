@@ -33,8 +33,9 @@ function ClubSelector() {
     };
 
     let getMembershipData = async (e) => {
-        let {response, data} = api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
+        let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
         if (response.status === 200) {
+            console.log(response)
             setMyClubData(data);
         } else {
             errorHandler(data);

@@ -254,7 +254,7 @@ function EventCreate() {
                             required
                             placeholder={"the event link"}
                             label={"link"}
-                            name={"link"}
+                            name={"meeting_link"}
                             value={meeting_link}
                             onChange={e => onChange(e)}
                         />
