@@ -11,7 +11,12 @@ import {
 	Stack,
 	TextField,
 	Tooltip,
+	Checkbox,
+	FormControlLabel
+
 } from "@mui/material";
+import { Link } from 'react-router-dom'
+
 import "../styling/components/EventDetail.css";
 import { useParams } from "react-router";
 import ThemeButton from "./core/ThemeButton";
@@ -19,6 +24,8 @@ import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
 import moviePoster from "../resources/images/empty_movie_poster.png";
 import AuthContext from "./helper/AuthContext";
 import useFetch from "./helper/useFetch";
+import {MovieDataAPI} from "./helper/MovieDataAPI";
+
 
 function EventDetail() {
 	let { user, authTokens } = useContext(AuthContext);
@@ -31,11 +38,14 @@ function EventDetail() {
 	const [organiser, setOrganiser] = useState("");
 	const [isOrganiser, setIsOrganiser] = useState(false);
 	const [attendees, setAttendees] = useState([]);
+	const [isAttending, setIsAttending] = useState(false);
+
+	
 
 	let getUser = useCallback(
 		async (id) => {
-			let {response, data} = await api(`/user/${id}/`, "GET");
-			if(response.status === 200) {
+			let { response, data } = await api(`/user/${id}/`, "GET");
+			if (response.status === 200) {
 				setOrganiser(data);
 				return data;
 			}
@@ -53,15 +63,15 @@ function EventDetail() {
 		// getRecommendedMovies()
 	}, [clubID]);
 
-	useEffect(() => {
-		async function fetchAttendees() {
-			if (myMeetingData.attendees) {
-				setAttendees(await Promise.all(myMeetingData.attendees.map(getUser)));
-			}
-		}
+	// useEffect(() => {
+	// 	async function fetchAttendees() {
+	// 		if (myMeetingData.attendees) {
+	// 			setAttendees(await Promise.all(myMeetingData.attendees.map(getUser)));
+	// 		}
+	// 	}
 
-		fetchAttendees();
-	}, [myMeetingData, getUser, clubID]);
+	// 	fetchAttendees();
+	// }, [myMeetingData, getUser, clubID]);
 
 	const onChange = (e) => {
 		setMyMeetingData((fieldData) => ({
@@ -71,40 +81,52 @@ function EventDetail() {
 	};
 
 	let getMembershipData = async (e) => {
-        let {response, data} = api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
-        if (response.status === 200) {
+		let { response, data } = await api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
+		if (response.status === 200) {
 			setMyClubData(data);
 			if (data.is_organiser) {
 				setIsOrganiser(true);
 			}
-        }
-    };
+		}
+	};
+
+	const movieAPIData = MovieDataAPI(specificMovie.imdb_id);
 
 	let addToWatchedList = async (id) => {
 		await api(`/add_watched_movie/${id}/`, "POST", {
 			movie: id,
 			user: user.user_id,
 		});
-	};	
+	};
 
 	let deleteMeeting = async (id) => {
-		let {response, data} = await api(`/cancel_meeting/${id}/`, "DELETE");
+		let { response, data } = await api(`/cancel_meeting/${id}/`, "DELETE");
 		if (response.status === 200) {
 			return data;
 		}
 	};
 
 	let getMeetingData = async (id) => {
-		let {response, data} = await api(`/get_club_upcoming_meeting/${id}/`, "GET");
+		let { response, data } = await api(`/get_club_upcoming_meeting/${id}/`, "GET");
 		if (response.status === 200) {
+			console.log(data.meeting_link)
 			setMyMeetingData(data);
 			getMovie(data.movie);
 			getUser(data.organiser);
+			console.log(data.attendees);
+			for (const element of data.attendees) {
+				if (element === user.user_id) {
+					setIsAttending(true);
+				}
+			}
+
 		}
+
 	};
 
+
 	let getMovie = async (id) => {
-		let {response, data} = await api(`/get_movie/${id}/`, "GET");
+		let { response, data } = await api(`/get_movie/${id}/`, "GET");
 		if (response.status === 200) {
 			setSpecificMovie(data);
 		}
@@ -112,7 +134,7 @@ function EventDetail() {
 
 	let editMeeting = async (e) => {
 		e.preventDefault();
-		let {response, data} = await api(`/edit_meeting/${clubID}/`, "PUT", {
+		let { response, data } = await api(`/edit_meeting/${clubID}/`, "PUT", {
 			meeting_title: e.target.meeting_title.value,
 			description: e.target.description.value,
 			date: e.target.date.value,
@@ -123,6 +145,35 @@ function EventDetail() {
 		if (response.status === 200) {
 			setMyMeetingData(data);
 		}
+	};
+
+	let attendMeeting = async () => {
+		let { response, data } = await api(`/attend_meeting/${clubID}/`, "PUT", {
+			user: user.user_id,
+			meeting: myMeetingData.meeting_id,
+		});
+		if (response.status === 200) {
+			setIsAttending(true);
+		}
+	}
+
+	let leaveMeeting = async () => {
+		let { response, data } = await api(`/leave_meeting/${clubID}/`, "PUT", {
+			user: user.user_id,
+			meeting: myMeetingData.meeting_id,
+		});
+		if (response.status === 200) {
+			setIsAttending(false);
+		}
+	}
+
+	function toggleAttending() {
+		if (isAttending === true) {
+			leaveMeeting();
+		} else {
+			attendMeeting();
+		}
+
 	};
 
 	console.log(myClubData);
@@ -181,6 +232,8 @@ function EventDetail() {
 		}
 	}
 
+
+
 	function EventFields() {
 		if (edit === false) {
 			return (
@@ -230,6 +283,13 @@ function EventDetail() {
 						InputProps={{ readOnly: true }}
 						InputLabelProps={{ shrink: true }}
 					/>
+
+					<FormControlLabel control={<Checkbox
+						checked={isAttending}
+						onChange={(e) => toggleAttending()}
+
+
+					/>} label="Mark as attending" />
 				</Stack>
 			);
 		} else {
@@ -326,7 +386,7 @@ function EventDetail() {
 										<CardMedia
 											component={"img"}
 											alt={specificMovie.title}
-											image={moviePoster}
+											image={movieAPIData.Poster ? movieAPIData.Poster : moviePoster}
 										/>
 
 										<Stack spacing={1} padding={1} alignItems={"center"}>
@@ -335,7 +395,7 @@ function EventDetail() {
 												sx={{ fontSize: "1.2em" }}
 												precision={0.5}
 												name={"read-only"}
-												// value={movie.rating}
+											// value={movie.rating}
 											/>
 
 											<Tooltip
@@ -372,6 +432,7 @@ function EventDetail() {
 										/>
 									</Grid>
 									<Grid item xs={8}>
+
 										<h6 className={"show-event-organiser-title"}>organiser</h6>
 										<h5>{organiser.first_name}</h5>
 										<h5>{organiser.last_name}</h5>
@@ -431,7 +492,10 @@ function EventDetail() {
 						</Grid>
 
 						<Grid item xs={3}>
-							<ThemeButton text={"rate"} />
+							<ThemeButton text={"join"} onClick={(e) => {
+								e.preventDefault();
+								window.location.href = myMeetingData.meeting_link;
+							}} />
 						</Grid>
 
 						<Grid item xs={3}>

@@ -16,6 +16,6 @@ class ICSGenerator:
         self.event.location = self.meeting.meeting_link
         self.cal.events.add(self.event)
         self.cal.events
-        with open('event.ics', 'w') as my_file:
+        with open('calendar.ics', 'w') as my_file:
             my_file.writelines(self.cal)
         my_file.close()

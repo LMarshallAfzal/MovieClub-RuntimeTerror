@@ -16,7 +16,7 @@ import LoadingSkeleton from "./helper/LoadingSkeleton";
 import {useNavigate} from "react-router";
 import {MovieDataAPI} from "./helper/MovieDataAPI";
 import placeHolder from '../resources/images/empty_movie_poster.png';
-import axios from "axios";
+import moviePoster from '../resources/images/empty_movie_poster.png';
 
 function MovieCard(props) {
     const [watchedMovies, setWatchedMovies] = useState([]);
