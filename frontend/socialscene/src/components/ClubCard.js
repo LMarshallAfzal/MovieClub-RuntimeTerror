@@ -27,7 +27,9 @@ function ClubCard(props) {
 			}
 		);
 		let data = await response.json();
-		setClubData(data);
+        if(response.status === 200) {
+		    setClubData(data);
+        }
 	};
 
     let getClubMembers = async (e) => {
@@ -42,7 +44,9 @@ function ClubCard(props) {
 			}
 		);
 		let data = await response.json();
-		setMembers(data);
+        if(response.status === 200){
+		    setMembers(data);
+        }
 	};
 
     useEffect(() => {
@@ -51,33 +55,28 @@ function ClubCard(props) {
     }, []);
 
     function ClubButton() {
-        return (
-            <RoundButton
-                text={"info"}
-                linkTo={`/home/clubs/${props.ID}`}
-                onClick={getClubMembers}
-            />
-        )
+            return (
+                <RoundButton
+                    text={"info"}
+                    linkTo={`/home/clubs/${props.ID}`}
+                    onClick={getClubMembers}
+                />
+
+            )
     }
 
     function ClubChip() {
-        console.log(props)
         if (props.isMember === "M") {
 
             if (props.isOrganiser) {
                 return (
                     <RoundButton text={"create meeting"} linkTo={"/home/discussion"}/>
                 )
-            } else {
-                return (
-                    <Chip label={props.memberRole}/>
-                )
             }
-        } else {
-            return (
-                <Chip label={props.clubTheme}/>
-            )
         }
+        return (
+            <Chip label={props.clubTheme}/>
+        )
     }
 
 
@@ -89,7 +88,7 @@ function ClubCard(props) {
                     <Stack spacing={2} alignItems={"center"} justifyContent={"center"}>
                         <Avatar
                             alt={props.clubName}
-                            src={require("../resources/images/club icons/" + props.clubTheme + ".png")}
+                            src={require("../resources/images/club icons/" + props.clubTheme + ".png")} //Add error handling to this
                             sx={{width: 1, height: 1}}
                         />
                         <ClubButton/>

@@ -5,9 +5,11 @@ import "../styling/components/ClubSelector.css";
 import TextButton from "./core/TextButton";
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../components/helper/AuthContext";
+import useFetch from "../components/helper/useFetch";
 
 function ClubSelector() {
     let {user, authTokens} = useContext(AuthContext);
+    let api = useFetch();
     const navigate = useNavigate();
     const [showClubs, setShowClubs] = useState(true);
     const [myClubData, setMyClubData] = useState([]);
@@ -30,19 +32,8 @@ function ClubSelector() {
         }
     };
 
-    let getMembershipData = async () => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data = await response.json();
-        console.log(data);
+    let getMembershipData = async (e) => {
+        let {response, data} = api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
         if (response.status === 200) {
             setMyClubData(data);
         } else {

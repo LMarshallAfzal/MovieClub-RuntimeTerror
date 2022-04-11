@@ -4,42 +4,28 @@ import { Outlet } from "react-router-dom";
 import "../../styling/pages/Clubs.css";
 import ThemeButton from "../../components/core/ThemeButton";
 import ClubCard from "../../components/ClubCard";
-import { DummyClubData } from "../../resources/data/DummyClubsData";
 import AuthContext from "../../components/helper/AuthContext";
+import useFetch from "../../components/helper/useFetch";
 
 function Clubs() {
 	let { user, authTokens } = useContext(AuthContext);
+	let api = useFetch();
 
 	const [myClubData, setMyClubData] = useState([]);
 	const [recommendedClubs, setRecommendedClubs] = useState([]);
 
 	let getMembershipData = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		console.log(data.theme)
-		setMyClubData(data);
+		let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}`, "GET");
+		if (response.status === 200) {
+			setMyClubData(data);
+		}
 	};
 
 	let getRecommendedClubs = async (e) => {
-		let response = await fetch("http://127.0.0.1:8000/rec_clubs/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		let data = await response.json();
-		console.log(data)
-		setRecommendedClubs(data);
+		let {response, data} = await api(`/rec_clubs/`, "GET");
+		if (response.status === 200) {
+			setRecommendedClubs(data);
+		}
 	};
 
 	useEffect(() => {
@@ -85,7 +71,6 @@ function Clubs() {
 							<Stack direction={"row"} overflow={"auto"}>
 								{myClubData.map((club, index) => (
 									<ListItem key={index} sx={{ width: "auto", p: 1 }}>
-										{console.log(club.club_name)}
 										<ClubCard
 											clubName={club.club_name}
 											// isMember={"N"}
@@ -115,7 +100,6 @@ function Clubs() {
 							<Stack direction={"row"} overflow={"auto"}>
 								{recommendedClubs.map((club, index) => (
 									<ListItem key={index} sx={{ width: "auto", p: 1 }}>
-										{console.log(club.club_name)}
 										<ClubCard
 											clubName={club.club_name}
 											// isMember={"N"}

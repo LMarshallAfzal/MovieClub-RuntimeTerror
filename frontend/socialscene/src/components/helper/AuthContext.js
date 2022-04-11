@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }) => {
 			setPasswordErrorText(data.detail);
 		}
 	};
+	
 
 	let loginUser = async (e) => {
 		e.preventDefault();
@@ -60,7 +61,6 @@ export const AuthProvider = ({ children }) => {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				// "X-CSRFToken": Cookies.get("csrftoken"),
 			},
 			body: JSON.stringify({
 				username: loginCredentials.username,

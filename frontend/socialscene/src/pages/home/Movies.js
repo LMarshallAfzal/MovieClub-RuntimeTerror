@@ -8,13 +8,12 @@ import TextButton from "../../components/core/TextButton";
 import { Outlet } from "react-router";
 import MovieCard from "../../components/MovieCard";
 import HomepageCard from "../../components/helper/HomepageCard";
-
+import useFetch from "../../components/helper/useFetch";
 
 const Movies = () => {
-	var date = new Date().toLocaleDateString();
-	let { user, authTokens } = useContext(AuthContext);
+	let { user } = useContext(AuthContext);
+	let api = useFetch()
 
-	const [movie, setMovie] = useState("");
 	const [rating, setRating] = useState({
 		user: user.user_id,
 		movie: 0,
@@ -31,33 +30,12 @@ const Movies = () => {
 		console.log(clubMovies);
 	}, []);
 
-	let getMovie = async (e, id) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/watched_list/get_movie/" + id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + authTokens.access,
-				},
-			}
-		);
-		await response.json();
-	};
+	let getMovie = async (id) => {
+		await api(`/watched_list/get_movie/${id}/`, "GET");
+	}
 
 	let getClubMovies = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/get_user_attending_meetings/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + authTokens.access,
-				},
-			}
-		);
-		let data = await response.json();
-		console.log(data);
+		let {response, data} = await api(`/get_user_attending_meetings/`, "GET");
 		if (response.status === 200) {
 			let array = [];
 			data.map((val) => {
@@ -68,39 +46,17 @@ const Movies = () => {
 	};
 
 	let getWatchedMovies = async () => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/watched_list/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + authTokens.access,
-				},
-			}
-		);
-		let data = await response.json();
-		setWatchedMovies(data);
+		let {response, data} = await api(`/watched_list/${user.user_id}/`, "GET");
+		if (response.status === 200) {
+			setWatchedMovies(data);
+		}
 	};
 
 	let getRecommendedMovies = async () => {
-		// let currentDate;
-		let response = await fetch("http://127.0.0.1:8000/rec_movies/", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json; charset=UTF-8",
-				Authorization: "Bearer " + String(authTokens.access),
-			},
-		});
-		let data = await response.json();
-		console.log(data);
-		// if (currentDate !== date || currentDate === undefined) {
-            // currentDate = date;
-			if (response.status === 200) {
-				setRecommendedMovies(data);
-			} else {
-				alert("Something went wrong");
-			}
-		// }
+		let {response, data} = await api(`/rec_movies/`, "GET");
+		if (response.status === 200) {
+			setRecommendedMovies(data);
+		}
 	};
 
 	const [openSearch, setOpenSearch] = useState(false);

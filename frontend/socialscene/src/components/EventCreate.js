@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Grid, Stack, TextField,} from "@mui/material";
+import {Card, CardActionArea, CardMedia, Grid, Rating, Stack, TextField, Tooltip,} from "@mui/material";
 import {useParams} from "react-router";
 import "../styling/components/EventCreate.css";
 import ThemeButton from "./core/ThemeButton";
 import AuthContext from "./helper/AuthContext";
-import MovieCard from "./MovieCard";
+import placeHolder from "../resources/images/empty_movie_poster.png";
 
 function EventCreate() {
     let day = new Date();
@@ -106,6 +106,9 @@ function EventCreate() {
         getRecommendedMovies();
     }, []);
 
+
+    // const movieAPIData = MovieDataAPI(movie.imdb_id);
+
     return (
         <div className={"home-page-card-background"}>
             <Grid container padding={2} spacing={2}>
@@ -121,47 +124,49 @@ function EventCreate() {
                           alignItems="stretch">
 
                         {recommendedMovies.map((movie) => {
+                            const movieAPIData = false;
+                            // const movieAPIData = MovieDataAPI(movie.imdb_id);
                             return (
-                                <Grid item xs={2}>
-                                    <MovieCard
-                                        clubMovie={false}
-                                        rateMovie={false}
-                                        movie={movie}
-                                        animated={false}
-                                    />
-                                </Grid>
-
                                 // <Grid item xs={2}>
-                                //     <Card sx={{flexDirection: "column", height: "100%"}}>
-                                //         <CardActionArea
-                                //             sx={{flexDirection: "column", height: "100%"}}
-                                //             onClick={() => getMovieTitle(movie.id)}>
-                                //
-                                //             <CardMedia
-                                //                 component={"img"}
-                                //                 alt={movie.title}
-                                //                 image={moviePoster}
-                                //             />
-                                //
-                                //             <Grid container
-                                //                   direction={"column"}
-                                //                   alignItems={"center"}
-                                //                   textAlign={"center"}>
-                                //
-                                //                 <Rating readOnly
-                                //                         sx={{fontSize: "1.2em"}}
-                                //                         name={"read-only"}
-                                //                         value={movie.rating}/>
-                                //
-                                //                 <Tooltip title={movie.title} placement="top-start">
-                                //                     <h6 className={"new-event-movie-text"}>
-                                //                         {movie.title}
-                                //                     </h6>
-                                //                 </Tooltip>
-                                //             </Grid>
-                                //         </CardActionArea>
-                                //     </Card>
+                                //     <MovieCard
+                                //         clubMovie={false}
+                                //         rateMovie={false}
+                                //         movie={movie}
+                                //         animated={false}
+                                //     />
                                 // </Grid>
+
+                                <Grid item xs={2}>
+                                    <Card sx={{flexDirection: "column", height: "100%"}}>
+                                        <CardActionArea
+                                            sx={{flexDirection: "column", height: "100%"}}
+                                            onClick={() => getMovieTitle(movie.id)}>
+
+                                            <CardMedia
+                                                component={"img"}
+                                                alt={movie.title}
+                                                image={movieAPIData ? movieAPIData.Poster : placeHolder}
+                                            />
+
+                                            <Grid container
+                                                  direction={"column"}
+                                                  alignItems={"center"}
+                                                  textAlign={"center"}>
+
+                                                <Rating readOnly
+                                                        sx={{fontSize: "1.2em"}}
+                                                        name={"read-only"}
+                                                        value={movie.rating}/>
+
+                                                <Tooltip title={movie.title} placement="top-start">
+                                                    <h6 className={"new-event-movie-text"}>
+                                                        {movie.title}
+                                                    </h6>
+                                                </Tooltip>
+                                            </Grid>
+                                        </CardActionArea>
+                                    </Card>
+                                </Grid>
                             );
                         })}
                     </Grid>
