@@ -149,14 +149,14 @@ function ClubDetail() {
 	}
 
 	let banMember = async (memberID) => {
-		let {response, data} = await api(`/ban_member/${clubID}/${memberID}/`, "PUT", {user1});
+		let {response, data} = await api(`/ban_member/${clubID}/${memberID}/`, "PUT", user1);
 		if(response.status === 200) {
 			setBanned(data);
 		}
 	}
 
 	let unbanMember = async (memberID) => {
-		await api(`/unban_member/${clubID}/${memberID}/`, "PUT", {user1});
+		await api(`/unban_member/${clubID}/${memberID}/`, "PUT", user1);
 	};
 
 	let deleteClub = async () => {
@@ -165,7 +165,7 @@ function ClubDetail() {
 
 	let editClub = async (e) => {
 		resetErrorState();
-		let {response, data} = await api(`/edit_club/${clubID}/`, "PUT", {club});
+		let {response, data} = await api(`/edit_club/${clubID}/`, "PUT", club);
 		if(response.status === 200) {
 			setClub(data);
 			setAlert(true)
