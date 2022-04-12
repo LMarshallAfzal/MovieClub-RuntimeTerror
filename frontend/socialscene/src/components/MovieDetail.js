@@ -23,9 +23,11 @@ import LoadingSkeleton from "./helper/LoadingSkeleton";
 function MovieDetail() {
     let {movieID} = useParams();
     const [movie, setMovie] = useState("");
+
+
     let {user, authTokens} = useContext(AuthContext);
 
-    let getMovie = async (e) => {
+    let getMovie = async () => {
         let response = await fetch(
             "http://127.0.0.1:8000/get_movie/" + movieID + "/",
             {
@@ -38,15 +40,19 @@ function MovieDetail() {
         );
         let data = await response.json();
         setMovie(data);
-
+        console.log(data);
+        
     };
 
-    const movieAPIData = MovieDataAPI(movie.imdb_id);
-    console.log(movieAPIData);
 
+
+ 
     useEffect(() => {
         getMovie();
+
     }, []);
+
+    const movieAPIData = MovieDataAPI(movie.imdb_id);
 
 
     return (
@@ -57,7 +63,6 @@ function MovieDetail() {
 
             <Grid item xs={12} style={{paddingTop: '20px'}}>
                 <div className={"home-page-card-background"} style={{padding: '20px'}}>
-                    {/* SUBSTITUTE WITH FIRST NAME AND LAST NAME */}
                     <h4 className={"home-page-card-title"}>{movie.title}
                         <h4--emphasise>.</h4--emphasise>
                     </h4>
@@ -93,14 +98,14 @@ function MovieDetail() {
                                 <Card>
                                     <CardContent>
                                         <h5>Year: </h5><span>{movieAPIData.Year}</span>
-                                        <h5>Released: </h5><span>{movieAPIData.Released}</span>
+                                        {/* <h5>Released: </h5><span>{movieAPIData.Released}</span>
                                         <h5>Runtime: </h5><span>{movieAPIData.Runtime}</span>
                                         <h5>Genre: </h5><span>{movieAPIData.Genre}</span>
                                         <h5>Director: </h5><span>{movieAPIData.Director}</span>
                                         <h5>Writer: </h5><span>{movieAPIData.Writer}</span>
                                         <h5>Actors: </h5><span>{movieAPIData.Actors}</span>
                                         <h5>Plot: </h5><span>{movieAPIData.Plot}</span>
-                                        <h5>Awards: </h5><span>{movieAPIData.Awards}</span>
+                                        <h5>Awards: </h5><span>{movieAPIData.Awards}</span> */}
                                     </CardContent>
                                 </Card>
 

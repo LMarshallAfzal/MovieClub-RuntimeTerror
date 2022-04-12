@@ -629,3 +629,13 @@ def toggle_notifications(request, club_id):
     membership.toggle_notifications()
     serializer = MembershipSerializer(membership, many=False) 
     return Response(serializer.data, status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@club_exists
+@is_in_club
+def get_notifications_status(request,club_id):
+    club = Club.objects.get(id=club_id)
+    notifications_status = Membership.objects.get(user = request.user, club = club).notifications
+    print("HI")
+    return Response({'notifications':notifications_status}, status = status.HTTP_200_OK)

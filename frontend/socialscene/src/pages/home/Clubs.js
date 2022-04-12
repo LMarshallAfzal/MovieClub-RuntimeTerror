@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Grid, ListItem, Stack, TextField } from "@mui/material";
+import { Collapse,Grid, ListItem, Stack, TextField } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import "../../styling/pages/Clubs.css";
 import ThemeButton from "../../components/core/ThemeButton";
 import ClubCard from "../../components/ClubCard";
 import AuthContext from "../../components/helper/AuthContext";
 import useFetch from "../../components/helper/useFetch";
+import TextButton from "../../components/core/TextButton";
+import HomepageCard from "../../components/helper/HomepageCard";
+
+
 
 function Clubs() {
 	let { user, authTokens } = useContext(AuthContext);
@@ -13,25 +17,49 @@ function Clubs() {
 
 	const [myClubData, setMyClubData] = useState([]);
 	const [recommendedClubs, setRecommendedClubs] = useState([]);
+	const [allClubs, setAllClubs] = useState([]);
 
 	let getMembershipData = async (e) => {
-		let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}`, "GET");
+		let { response, data } = await api(`/get_user_joined_clubs/${user.user_id}`, "GET");
 		if (response.status === 200) {
 			setMyClubData(data);
 		}
 	};
 
 	let getRecommendedClubs = async (e) => {
-		let {response, data} = await api(`/rec_clubs/`, "GET");
+		let { response, data } = await api(`/rec_clubs/`, "GET");
 		if (response.status === 200) {
 			setRecommendedClubs(data);
 		}
 	};
 
+	let getAllClubs = async () => {
+		let { response, data } = await api(`/clubs/`, "GET");
+		if (response.status === 200) {
+			setAllClubs(data);
+		}
+	}
+
+	const [openSearch, setOpenSearch] = useState(false);
+
+	const toggleSearch = () => {
+		setOpenSearch(!openSearch);
+	};
+
+	const openSearchAuto = (text) => {
+		text === "" ? setOpenSearch(false) : setOpenSearch(true);
+	};
+
+	const [searchValue, setSearchValue] = useState("");
+
 	useEffect(() => {
 		getMembershipData();
 		getRecommendedClubs();
+		getAllClubs();
 	}, []);
+
+	const cardHeight = 325;
+
 
 	return (
 		<Grid
@@ -50,7 +78,54 @@ function Clubs() {
 					inputProps={{ "data-testid": "content-input" }}
 					label={"search"}
 					variant={"outlined"}
+					onChange={(event) => {
+						setSearchValue(event.target.value);
+						openSearchAuto(event.target.value);
+					}}
+					InputProps={{
+						endAdornment: (
+							<TextButton
+								text={openSearch ? "close" : "open"}
+								onClick={toggleSearch}
+								style={{ textAlign: "right" }}
+							/>
+						),
+					}}
 				/>
+				<Collapse in={openSearch}>
+					<HomepageCard title={"search result"}>
+						<Grid item xs={30}>
+							<Stack direction={"row"}
+								spacing={2}
+								height={200}
+								sx={{ overflowX: "scroll", overflowY: "hidden" }}
+							>
+
+								{allClubs.filter((club) => {
+									if (club.club_name
+										.toLowerCase()
+										.includes(searchValue.toLowerCase())
+									) {
+										return club;
+									}
+								}).map((club, index) => {
+									return (
+										<ClubCard
+										clubName={club.club_name}
+										// isMember={"N"}
+										iconImage={club.iconImage}
+										description={club.mission_statement}
+										// isOrganiser={club.isOrganiser}
+										// memberRole={club.memberRole}
+										clubTheme={club.theme}
+										ID={club.id}
+										/>
+									);
+								})}
+							</Stack>
+						</Grid>
+					</HomepageCard>
+				</Collapse>
 			</Grid>
 
 			<Grid item xs={2}>

@@ -62,4 +62,5 @@ urlpatterns = [
     path("followers/<int:user_id>/", views.get_followers, name = "get_followers"),
     path("following/<int:user_id>/", views.get_following, name="get_following"),
     path("toggle_notifications/<int:club_id>/", views.toggle_notifications, name = "toggle_notifications"),
+    path("get_notifications_status/<int:club_id>/", views.get_notifications_status, name = "get_notifications_status"),
 ]

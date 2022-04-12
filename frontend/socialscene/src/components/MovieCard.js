@@ -25,8 +25,6 @@ function MovieCard(props) {
     const [cardWidth, setCardWidth] = useState(150);
     const [cardBorder, setCardBorder] = useState("0px solid black");
     const [movie, setMovie] = useState();
-
-
     const movieAPIData = MovieDataAPI(props.movie.imdb_id);
 
     const closePrompt = () => {
