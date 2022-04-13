@@ -13,7 +13,7 @@ import ThemeButton from "./core/ThemeButton";
 import AuthContext from "../components/helper/AuthContext";
 
 function UserDetail() {
-    let {authTokens} = useContext(AuthContext);
+    let {user,authTokens} = useContext(AuthContext);
     let {userID} = useParams();
     const [otherUser, setOtherUser] = useState([]);
     const [otherPreferences, setOtherPreferences] = useState([]);
@@ -46,7 +46,13 @@ function UserDetail() {
   const [followees, setFollowees] = useState([]);
   const [followerCount, setFollowerCount] = useState(null);
   const [followeeCount, setFolloweeCount] = useState(null);
+  const [isCurrentUser, setIsCurrentUser] = useState(false);
 
+    function checkCurrentUser(){
+      if (otherUser.username === user.username){
+        setIsCurrentUser(true);
+      }
+    }
     let getFollowers = async (e) => {
         let response = await fetch(
             "http://127.0.0.1:8000/followers/" + userID + "/",
@@ -95,7 +101,19 @@ function UserDetail() {
     setFollowing(!following)
   };
 
+  let getIsFollowing = async (e) => {
+    let response = await fetch("http://127.0.0.1:8000/is_following/" + userID + "/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+  }
+    });
+    let data = await response.json();
+    setFollowing(data.is_following);
+    console.log(data.is_following);
 
+  }
 
   let getFavourites = async (e) => {
     let response = await fetch(
@@ -167,13 +185,14 @@ function UserDetail() {
   useEffect(() => {
     getUserIcon();
     getOtherUser();
+    checkCurrentUser();
     getFollowers();
     getFollowees();
     getFavourites();
     getRecentlyWatched();
     getUserMemberships();
-
-  }, []);
+    getIsFollowing();
+  }, [otherUser]);
 
   return (
     <Grid container spacing={2} padding={2} direction={"row"}>
@@ -182,11 +201,16 @@ function UserDetail() {
           <HomepageCard
             title={`${otherUser.first_name} ${otherUser.last_name}`}
             titleItem={
+              !isCurrentUser ? 
               <TextButton
-                text={following ? "following" : "follow"}
+                text={following ? "unfollow" : "follow"}
                 onClick={() => toggleFollow()}
                 style={{ textAlign: "right" }}
               />
+              :
+              <>
+              </>
+              
             }
           >
             <Grid item xs={4}>

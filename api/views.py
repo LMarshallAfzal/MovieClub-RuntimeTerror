@@ -402,6 +402,7 @@ def get_memberships_of_user(request, user_id):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@movie_exists
 def get_movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     serializer = MovieSerializer(movie, many=False)
@@ -618,6 +619,17 @@ def get_following(request,user_id):
     following = user.followees.all()
     serializer = UserSerializer(following, many=True) 
     return Response(serializer.data, status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@user_exists
+def is_following(request,user_id):
+    user = User.objects.get(id=user_id)
+    followers = user.followers.all()
+    if request.user in followers:
+        return Response({'is_following':True},status=status.HTTP_200_OK)
+    else:
+        return Response({'is_following':False},status=status.HTTP_200_OK)
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])

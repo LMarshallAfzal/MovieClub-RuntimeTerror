@@ -61,7 +61,7 @@ function EventDetail(props) {
 		console.log(myMeetingData.organiser);
 		//getUser(myMeetingData.organiser);
 		// getRecommendedMovies()
-	}, [props]);
+	}, [props,clubID]);
 
 	// useEffect(() => {
 	// 	async function fetchAttendees() {
