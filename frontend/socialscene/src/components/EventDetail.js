@@ -27,7 +27,7 @@ import useFetch from "./helper/useFetch";
 import {MovieDataAPI} from "./helper/MovieDataAPI";
 
 
-function EventDetail() {
+function EventDetail(props) {
 	let { user, authTokens } = useContext(AuthContext);
 	let api = useFetch();
 	let { clubID } = useParams();
@@ -61,7 +61,7 @@ function EventDetail() {
 		console.log(myMeetingData.organiser);
 		//getUser(myMeetingData.organiser);
 		// getRecommendedMovies()
-	}, [clubID]);
+	}, [props,clubID]);
 
 	useEffect(() => {
 		async function fetchAttendees() {
@@ -372,11 +372,6 @@ function EventDetail() {
 						</span>
 					</h5>
 				</Grid>
-
-				<Grid item xs={2}>
-					{/*<RoundButton text={event.hasStarted ? "attend" : "join"} linkTo={"/https://zoom.us"}/>*/}
-				</Grid>
-
 				<Grid item xs={12}>
 					<Grid container spacing={2}>
 						<Grid item xs={6}>

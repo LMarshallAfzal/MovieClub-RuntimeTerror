@@ -402,6 +402,7 @@ def get_memberships_of_user(request, user_id):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@movie_exists
 def get_movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     serializer = MovieSerializer(movie, many=False)
@@ -619,6 +620,17 @@ def get_following(request,user_id):
     serializer = UserSerializer(following, many=True) 
     return Response(serializer.data, status = status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@user_exists
+def is_following(request,user_id):
+    user = User.objects.get(id=user_id)
+    followers = user.followers.all()
+    if request.user in followers:
+        return Response({'is_following':True},status=status.HTTP_200_OK)
+    else:
+        return Response({'is_following':False},status=status.HTTP_200_OK)
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 @club_exists
@@ -629,3 +641,13 @@ def toggle_notifications(request, club_id):
     membership.toggle_notifications()
     serializer = MembershipSerializer(membership, many=False) 
     return Response(serializer.data, status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@club_exists
+@is_in_club
+def get_notifications_status(request,club_id):
+    club = Club.objects.get(id=club_id)
+    notifications_status = Membership.objects.get(user = request.user, club = club).notifications
+    print("HI")
+    return Response({'notifications':notifications_status}, status = status.HTTP_200_OK)

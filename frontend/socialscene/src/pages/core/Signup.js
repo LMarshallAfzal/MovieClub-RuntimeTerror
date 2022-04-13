@@ -188,7 +188,7 @@ export const Signup = () => {
 						spacing={2}
 					>
 						<TextField
-              inputProps={{ "data-testid": "username" }}
+							inputProps={{ "data-testid": "username" }}
 							error={usernameError}
 							fullWidth
 							required
@@ -202,7 +202,7 @@ export const Signup = () => {
 							onChange={(e) => onChange(e)}
 						/>
 						<TextField
-              inputProps={{ "data-testid": "first_name" }}
+							inputProps={{ "data-testid": "first_name" }}
 							error={firstNameError}
 							fullWidth
 							required
@@ -216,7 +216,7 @@ export const Signup = () => {
 							onChange={(e) => onChange(e)}
 						/>
 						<TextField
-              inputProps={{ "data-testid": "last_name" }}
+							inputProps={{ "data-testid": "last_name" }}
 							error={lastNameError}
 							fullWidth
 							required
@@ -230,7 +230,7 @@ export const Signup = () => {
 							onChange={(e) => onChange(e)}
 						/>
 						<TextField
-              inputProps={{ "data-testid": "email" }}
+							inputProps={{ "data-testid": "email" }}
 							error={emailError}
 							fullWidth
 							required
@@ -244,7 +244,7 @@ export const Signup = () => {
 							onChange={(e) => onChange(e)}
 						/>
 						<TextField
-              inputProps={{ "data-testid": "bio" }}
+							inputProps={{ "data-testid": "bio" }}
 							error={bioError}
 							fullWidth
 							helperText={errorBioText}
@@ -258,11 +258,11 @@ export const Signup = () => {
 							value={bio}
 							onChange={(e) => onChange(e)}
 						/>
-						
+
 						<Autocomplete
 							multiple
 							required
-              data-testid="autocomplete"
+							data-testid="autocomplete"
 							id="tags-standard"
 							options={themes}
 							getOptionLabel={(option) => option.theme}
@@ -273,10 +273,10 @@ export const Signup = () => {
 							renderInput={(params) => (
 								<TextField
 									{...params}
-                  inputProps={{
-                    ...params.inputProps,
-                    "data-testid": "preferences"
-                  }}
+									inputProps={{
+										...params.inputProps,
+										"data-testid": "preferences"
+									}}
 									error={preferencesError}
 									fullWidth
 									helperText={errorPreferencesText}
@@ -285,8 +285,6 @@ export const Signup = () => {
 									label={"preferences"}
 									name={"preferences"}
 									type={"text"}
-									value={preferences}
-                  onChange={(e) => onChange(e)}
 								/>
 							)}
 						/>
@@ -295,7 +293,7 @@ export const Signup = () => {
 								password
 							</InputLabel>
 							<OutlinedInput
-                inputProps={{ "data-testid": "password" }}
+								inputProps={{ "data-testid": "password" }}
 								error={passwordError}
 								fullWidth
 								helperText={errorPasswordText}
@@ -325,7 +323,7 @@ export const Signup = () => {
 								confirm
 							</InputLabel>
 							<OutlinedInput
-                inputProps={{ "data-testid": "password_confirmation" }}
+								inputProps={{ "data-testid": "password_confirmation" }}
 								error={passwordConfirmationError}
 								fullWidth
 								helperText={errorPasswordConfirmationText}

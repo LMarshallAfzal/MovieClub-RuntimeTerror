@@ -149,7 +149,6 @@ const Home = () => {
                                        overflow={"auto"}>
                                     {myClubData.map((club, index) => (
                                         <ListItem key={index} sx={{width: 'auto', p: 1}}>
-
                                             <ClubCard
                                                 clubName={club.club_name}
                                                 isMember={"M"}

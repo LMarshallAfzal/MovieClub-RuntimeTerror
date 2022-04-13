@@ -12,7 +12,7 @@ export const MovieDataAPI = (props) => {
             .then((res) => {
                 setMovie(res.data)
             })
-    }, [])
+    }, [movieID])
 
     // const getMovieObjectFromAPI = async imdbID => {
     //     return await axios.get('path/to/get')

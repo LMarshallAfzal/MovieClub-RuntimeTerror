@@ -22,16 +22,17 @@ const Movies = () => {
 	const [recommendedMovies, setRecommendedMovies] = useState([]);
 	const [watchedMovies, setWatchedMovies] = useState([]);
 	const [clubMovies, setClubMovies] = useState([]);
+    const [specificClubMovie, setSpecificClubMovie] = useState("");
 
 	useEffect(() => {
 		getRecommendedMovies();
 		getWatchedMovies();
 		getClubMovies();
-		console.log(clubMovies);
 	}, []);
 
 	let getMovie = async (id) => {
-		await api(`/watched_list/get_movie/${id}/`, "GET");
+		await api(`/get_movie/${id}/`, "GET");
+        
 	}
 
 	let getClubMovies = async (e) => {
@@ -42,6 +43,7 @@ const Movies = () => {
 				array.push(getMovie(e, val.movie));
 			});
 			setClubMovies(array);
+            console.log(array)
 		}
 	};
 
@@ -173,6 +175,7 @@ const Movies = () => {
                                     <MovieCard
                                         key={index}
                                         poster={moviePoster}
+                                        watchMovie = {true}
                                         rateMovie={true}
                                         clubMovie={false}
                                         movie={movie}

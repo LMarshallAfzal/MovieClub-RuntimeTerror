@@ -16,7 +16,8 @@ import LoadingSkeleton from "./helper/LoadingSkeleton";
 import {useNavigate} from "react-router";
 import {MovieDataAPI} from "./helper/MovieDataAPI";
 import placeHolder from '../resources/images/empty_movie_poster.png';
-import moviePoster from '../resources/images/empty_movie_poster.png';
+import { Link } from "react-router-dom";
+
 
 function MovieCard(props) {
     const [watchedMovies, setWatchedMovies] = useState([]);
@@ -25,8 +26,6 @@ function MovieCard(props) {
     const [cardWidth, setCardWidth] = useState(150);
     const [cardBorder, setCardBorder] = useState("0px solid black");
     const [movie, setMovie] = useState();
-
-
     const movieAPIData = MovieDataAPI(props.movie.imdb_id);
 
     const closePrompt = () => {
@@ -76,24 +75,19 @@ function MovieCard(props) {
         if (props.rateMovie === true) {
             return (
                 <>
-                    <Tooltip
-                        arrow
-                        placement={"right"}
-                        title={
-                            <>
-                                <p className={"movie-card-event"}>event</p>
-                                <h6>{props.movie.deadline}</h6>
-                                <h6>17:30</h6>
-                            </>
-                        }>
-                        <Chip
-                            label={props.movie.club}
-                            onClick={() => HandleNavigate("/home/discussion")}
-                        />
-                    </Tooltip>
+                    <MovieWatchRateDialog movie={props.movie} isOpen={showPrompt} onClose={closePrompt}
+                                          data={promptData}/>
+                    <ThemeButton
+                        text={"watch"}
+                        style={"primary"}
+                        onClick={() => {
+                            setPromptData(props.movie);
+                            setShowPrompt(true);
+                        }}
+                    />
                 </>
             )
-        } else {
+        }else {
             return (
                 <></>
             )
@@ -101,6 +95,8 @@ function MovieCard(props) {
     }
 
     return (
+        <Link to={`/home/movies/${props.movie.id}`}>
+
         <Grid item>
             <LoadingSkeleton loading={movieAPIData}>
                 <Card sx={{
@@ -169,6 +165,7 @@ function MovieCard(props) {
         </Card>
       </LoadingSkeleton>
     </Grid>
+    </Link>
   );
 }
 
