@@ -50,7 +50,7 @@ function EventDetail() {
 				return data;
 			}
 		},
-		[api]
+		[]
 	);
 
 	useEffect(() => {
@@ -63,15 +63,15 @@ function EventDetail() {
 		// getRecommendedMovies()
 	}, [clubID]);
 
-	// useEffect(() => {
-	// 	async function fetchAttendees() {
-	// 		if (myMeetingData.attendees) {
-	// 			setAttendees(await Promise.all(myMeetingData.attendees.map(getUser)));
-	// 		}
-	// 	}
+	useEffect(() => {
+		async function fetchAttendees() {
+			if (myMeetingData.attendees) {
+				setAttendees(await Promise.all(myMeetingData.attendees.map(getUser)));
+			}
+		}
 
-	// 	fetchAttendees();
-	// }, [myMeetingData, getUser, clubID]);
+		fetchAttendees();
+	}, [myMeetingData, getUser]);
 
 	const onChange = (e) => {
 		setMyMeetingData((fieldData) => ({
@@ -386,7 +386,7 @@ function EventDetail() {
 										<CardMedia
 											component={"img"}
 											alt={specificMovie.title}
-											image={movieAPIData.Poster ? movieAPIData.Poster : moviePoster}
+											image={movieAPIData ? movieAPIData.Poster : moviePoster}
 										/>
 
 										<Stack spacing={1} padding={1} alignItems={"center"}>

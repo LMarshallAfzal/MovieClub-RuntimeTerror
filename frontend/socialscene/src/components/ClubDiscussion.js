@@ -54,23 +54,28 @@ function ClubDiscussion() {
 		}
 	};
 
-	let getClubMessages = async (e) => {
+	let getClubMessages = async () => {
 		let {response, data} = await api(`/message_forum/${clubID}/`, "GET");
 		if (response.status === 200) {
 			setMessages(data);
 		}
 	};
 
-	let sendClubMessages = async (id) => {
-		let {response} = await api(`/write_message/${id}/`, "POST", {
+	let handleMessage = async () => {
+		getClubMessages();
+	}
+
+	let sendClubMessages = async (e) => {
+		e.preventDefault();
+		let {response} = await api(`/write_message/${clubID}/`, "POST", {
 			sender: user.username,
 			club: myClub.id,
 			message: message.message,
 			timestamp: dateTime,
 		});
-		if(response.status === 200) {
-			getClubMessages(clubID);
+		if(response.status === 201) {
 			message.message = "";
+			handleMessage();
 		}
 	};
 
@@ -171,7 +176,7 @@ function ClubDiscussion() {
 									InputProps={{
 										endAdornment: (
 											<TextButton
-												onClick={() => sendClubMessages(clubID)}
+												onClick={(e) => sendClubMessages(e)}
 												text={"send"}
 												style={{ textAlign: "right" }}
 											/>
