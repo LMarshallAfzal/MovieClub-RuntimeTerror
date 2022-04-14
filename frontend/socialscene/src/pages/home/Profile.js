@@ -345,7 +345,7 @@ const Profile = () => {
 										label={user.first_name + " " + user.last_name}
 										avatar={
 											<Avatar
-												src={user.iconImage}
+												src={user.gravatar}
 												alt={user.first_name + " " + user.last_name}
 											/>
 										}
@@ -366,7 +366,7 @@ const Profile = () => {
 										label={user.first_name + " " + user.last_name}
 										avatar={
 											<Avatar
-												src={user.iconImage}
+												src={user.gravatar}
 												alt={user.first_name + " " + user.last_name}
 											/>
 										}
@@ -440,10 +440,8 @@ const Profile = () => {
 									<Chip
 										key={"index"}
 										label={club.club_name}
-										avatar={
-											<Avatar src={club.iconImage} alt={club.club_name} />
-										}
-										// onClick={() => handleChipClick("clubs", club.ID)}
+
+										onClick={() => handleChipClick("clubs", club.id)}
 										sx={{ mr: 1, mt: 1 }}
 									/>
 								);

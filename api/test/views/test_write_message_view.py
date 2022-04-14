@@ -24,7 +24,7 @@ class WriteMessageViewTestCase(APITestCase):
         self.club.club_members.add(self.user,through_defaults={'role': 'M'})
         self.other_club.club_members.add(self.user,through_defaults={'role': 'M'})
         self.form_input = {
-            "sender": self.user.username,
+            "sender": self.user,
             "club" : self.club.id,
             "message": 'Hello, everyone!',
         }

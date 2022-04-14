@@ -82,6 +82,7 @@ h4--emphasise {
 
 h5 {
   font-family: Helvetica, serif;
+  font-weight: normal;
   font-size: 1.8rem;
   margin: 0;
 }
@@ -91,25 +92,20 @@ h5--emphasise {
 
 h6 {
   font-family: Helvetica-Light, serif;
+  font-weight: normal;
   margin: 0;
   font-size: 1.1rem;
 }
 
 .home-page-title {
   background-color: #5C5C5C;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-sub-title {
   background-color: #999999;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
 }
 
@@ -121,33 +117,26 @@ h6 {
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .club-selector-heading {
   padding-top: 10px;
   padding-left: 10px;
   color: #FFFFFF;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .club-selector-listing {
   width: 26rem;
   background-color: #D8D8D8;
   transition: all 0.3s ease-out;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   cursor: pointer;
 }
 
 .club-selector-listing:hover {
-  background-color: rgba(235, 235, 235, 0.9215686275);
-}/*# sourceMappingURL=ClubSelector.css.map */
+  background-color: #EBEBEBEB;
+}
+
+/*# sourceMappingURL=ClubSelector.css.map */

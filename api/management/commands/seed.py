@@ -93,6 +93,7 @@ class Command(BaseCommand):
             
         )
         user.preferences.set([3,4])
+        user.gravatar = user.gravatar()
 
     def _email(self, first_name, last_name):
         email = f'{first_name}.{last_name}.{random.randint(100,999)}@example.org'

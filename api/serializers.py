@@ -40,10 +40,14 @@ class UserSerializer(ModelSerializer):
         queryset=Genre.objects.all()
     )
 
+    gravatar = serializers.CharField(
+        required=False, allow_blank=True
+    )
+
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email',
-                  'bio', 'preferences']
+                  'bio', 'preferences','gravatar']
 
 
 class ClubSerializer(ModelSerializer):
@@ -52,6 +56,7 @@ class ClubSerializer(ModelSerializer):
         slug_field='name',
         queryset=Genre.objects.all()
     )
+
     class Meta:
         model = Club
         fields = '__all__'
@@ -61,6 +66,7 @@ class MovieSerializer(ModelSerializer):
     class Meta:
         model = Movie
         fields = '__all__'
+
 
 class MembershipSerializer(ModelSerializer):
     class Meta:
@@ -72,6 +78,8 @@ class RatingSerializer(ModelSerializer):
     class Meta:
         model = Rating
         fields = '__all__'
+
+
 class WatchMovieSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=User.objects.all())
@@ -128,7 +136,6 @@ class SignUpSerializer(serializers.Serializer):
     password_confirmation = serializers.CharField(
         write_only=True, required=True)
 
-
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email',
@@ -150,7 +157,7 @@ class SignUpSerializer(serializers.Serializer):
             last_name=validated_data['last_name'],
             email=validated_data['email'],
             bio=validated_data['bio'],
-            #preferences=validated_data['preferences']
+            # preferences=validated_data['preferences']
         )
         user.preferences.set(validated_data['preferences'])
         Token.objects.create(user=user)
@@ -265,7 +272,8 @@ class ChangePasswordSerializer(serializers.Serializer):
 class CreateClubSerializer(serializers.Serializer):
     club_name = serializers.CharField(
         required=True,
-        validators=[UniqueValidator(queryset=Club.objects.all()),MaxLengthValidator(50)]
+        validators=[UniqueValidator(
+            queryset=Club.objects.all()), MaxLengthValidator(50)]
     )
 
     mission_statement = serializers.CharField(
@@ -293,27 +301,29 @@ class CreateClubSerializer(serializers.Serializer):
 
         return club
 
+
 class UpdateClubSerializer(serializers.ModelSerializer):
-    
-        club_name = serializers.CharField(
-            required=True,
-            validators=[UniqueValidator(queryset=Club.objects.all()),MaxLengthValidator(50)]
-        )
-    
-        mission_statement = serializers.CharField(
-            required=True,
-            validators=[MaxLengthValidator(500)]
-        )
-    
-        theme = serializers.SlugRelatedField(
+
+    club_name = serializers.CharField(
+        required=True,
+        validators=[UniqueValidator(
+            queryset=Club.objects.all()), MaxLengthValidator(50)]
+    )
+
+    mission_statement = serializers.CharField(
+        required=True,
+        validators=[MaxLengthValidator(500)]
+    )
+
+    theme = serializers.SlugRelatedField(
         many=False,
         slug_field='name',
         queryset=Genre.objects.all()
     )
 
-        class Meta:
-            model = Club
-            fields = ['club_name', 'mission_statement', 'theme']
+    class Meta:
+        model = Club
+        fields = ['club_name', 'mission_statement', 'theme']
 
 
 class CreateMeetingSerializer(serializers.Serializer):
@@ -412,25 +422,25 @@ class CreateMeetingSerializer(serializers.Serializer):
 
 class UpdateMeetingSerializer(serializers.ModelSerializer):
     meeting_title = serializers.CharField(
-            required=True,
-            validators=[MaxLengthValidator(100)]
-        )
+        required=True,
+        validators=[MaxLengthValidator(100)]
+    )
 
     date = serializers.DateField(
-            format="%d-%m-%Y",
-            input_formats=['%d-%m-%Y', 'iso-8601']
-        )
+        format="%d-%m-%Y",
+        input_formats=['%d-%m-%Y', 'iso-8601']
+    )
     start_time = serializers.TimeField(
-            format="%H:%M",
-            input_formats=["%H:%M", 'iso-8601'],
-            required=True
-        )
+        format="%H:%M",
+        input_formats=["%H:%M", 'iso-8601'],
+        required=True
+    )
 
     end_time = serializers.TimeField(
-            format="%H:%M",
-            input_formats=["%H:%M", 'iso-8601'],
-            required=True
-        )
+        format="%H:%M",
+        input_formats=["%H:%M", 'iso-8601'],
+        required=True
+    )
 
     description = serializers.CharField(
         required=True,
@@ -482,7 +492,8 @@ class UpdateMeetingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Meeting
-        fields = ['meeting_title', 'start_time', 'end_time','meeting_link','date','description']
+        fields = ['meeting_title', 'start_time', 'end_time',
+                  'meeting_link', 'date', 'description']
 
 
 class AddRatingSerializer(serializers.ModelSerializer):
@@ -512,7 +523,7 @@ class ChangeRatingSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ['sender', 'club', 'message', 'timestamp']
+        fields = ['sender', 'club', 'message', 'timestamp','sender_gravatar']
 
 
 class WriteMessageSerializer(serializers.ModelSerializer):
@@ -530,6 +541,15 @@ class WriteMessageSerializer(serializers.ModelSerializer):
         required=True, allow_blank=False
     )
 
+    sender_gravatar = serializers.CharField(required = False,allow_blank=True)
+
     class Meta:
         model = Message
-        fields = ['sender', 'club', 'message', 'timestamp']
+        fields = ['sender', 'club', 'message', 'timestamp','sender_gravatar']
+
+    def create(self, validated_data):
+        message = Message.objects.create(**validated_data)
+        user = User.objects.get(username = validated_data['sender'])
+        message.sender_gravatar = user.gravatar()
+        message.save()
+        return message

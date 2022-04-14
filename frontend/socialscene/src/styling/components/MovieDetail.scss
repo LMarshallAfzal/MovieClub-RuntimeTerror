@@ -1,1 +1,13 @@
 @use "../core/base";
+
+.movie-detail-heading {
+  color: base.$grey-1;
+  font-family: base.$helvetica-light;
+}
+
+.movie-detail-content {
+  font-family: base.$helvetica;
+  font-size: 1.3rem;
+  font-weight: normal;
+
+}

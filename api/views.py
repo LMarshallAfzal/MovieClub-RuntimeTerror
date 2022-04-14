@@ -71,8 +71,7 @@ def login(request):
 def get_gravatar_for_other_user(request,user_id):
     user = User.objects.get(id=user_id)
     user.gravatar = user.gravatar()
-    serializer = UserSerializer(user, many=False)
-    return Response(serializer.data,status=status.HTTP_200_OK)
+    return Response({"gravatar":user.gravatar},status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -103,6 +102,12 @@ def get_club_members(request, club_id):
     serializer = UserSerializer(members, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view([ 'GET'])
+@permission_classes([IsAuthenticated])
+def get_user_by_username(request, username):
+    user = User.objects.get(username=username)
+    serializer = UserSerializer(user)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

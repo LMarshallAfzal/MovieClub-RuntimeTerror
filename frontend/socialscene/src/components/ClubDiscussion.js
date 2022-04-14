@@ -22,11 +22,12 @@ function ClubDiscussion() {
 	let api = useFetch();
 
 	const [defaultMessage, setDefaultMessage] = useState("");
-	const [userData, setUserData] = useState([]);
+	const [userData, setUserData] = useState("");
 	const [dateTime, setDateTime] = useState(new Date(Date.now()));
 	const [myClubData, setMyClubData] = useState([]);
 	const [messages, setMessages] = useState([]);
 	const [myClub, setClub] = useState([]);
+	
 
 	let { clubID } = useParams();
 
@@ -34,9 +35,11 @@ function ClubDiscussion() {
 		getClubMessages();
 		getMembershipData();
 		getClub();
-	}, [clubID]);
+	}, [clubID,messages]);
+
 
 	console.log(myClubData);
+	
 
 	const onChange = (e, newDateTime) => {
 		e.preventDefault();
@@ -58,6 +61,7 @@ function ClubDiscussion() {
 		let {response, data} = await api(`/message_forum/${clubID}/`, "GET");
 		if (response.status === 200) {
 			setMessages(data);
+			console.log(data)
 		}
 	};
 
@@ -85,6 +89,7 @@ function ClubDiscussion() {
 			setClub(data);
 		}
 	};
+	
 
 	return (
 		<Grid container spacing={2}>
@@ -115,7 +120,8 @@ function ClubDiscussion() {
 
 						<Grid item xs={12}>
 							{messages.map((val) => {
-								return (
+								
+																return (
 									<>
 										<Divider variant="middle">{val.time}</Divider>
 										<div style={{ padding: "10px" }}>
@@ -129,8 +135,9 @@ function ClubDiscussion() {
 														}}
 													>
 														<Avatar
-															alt={userData.first_name}
-															src={user.iconImage}
+															src={val.sender_gravatar}
+														
+															
 															sx={{ width: "100%", height: "100%" }}
 														/>
 													</div>

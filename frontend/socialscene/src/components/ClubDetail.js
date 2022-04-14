@@ -244,7 +244,7 @@ function ClubDetail() {
 								label={user.first_name + " " + user.last_name + " "}
 								avatar={
 									<Avatar
-										src={user.iconImage}
+										src={user.gravatar}
 										alt={user.first_name + " " + user.last_name}
 									/>
 								}

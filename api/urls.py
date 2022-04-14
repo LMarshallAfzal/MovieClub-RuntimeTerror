@@ -22,6 +22,7 @@ urlpatterns = [
     path('other_user_gravatars/<int:user_id>/', views.get_gravatar_for_other_user, name = 'other_user_gravatars'),
     path("clubs/",views.get_all_clubs, name = "get_all_clubs"),
     path("club/<int:club_id>/",views.get_club, name = "get_club"),
+    path("user_username/<str:username>/",views.get_user_by_username, name = "get_user_by_username"),
     path("create_club/",views.create_club, name = "create_club"),
     path("edit_club/<int:club_id>/",views.edit_club, name = "edit_club"),
     path("delete_club/<int:club_id>/",views.delete_club, name = "delete_club"),
