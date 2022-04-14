@@ -66,6 +66,7 @@ function UserDetail() {
         );
         let data = await response.json();
         setFollowers(data);
+        console.log(data)
         setFollowerCount(data.length);
     };
 
@@ -176,7 +177,6 @@ function UserDetail() {
       }
     );
     let data = await response.json();
-    console.log(data);
     setUserIcon(data.gravatar);
   };
 
@@ -192,8 +192,9 @@ function UserDetail() {
     getRecentlyWatched();
     getUserMemberships();
     getIsFollowing();
-  }, [otherUser]);
+  }, [otherUser.id,userID]);
 
+  console.log(userIcon)
   return (
     <Grid container spacing={2} padding={2} direction={"row"}>
       <Grid item xs={6}>
@@ -256,7 +257,7 @@ function UserDetail() {
                     label={user.first_name + " " + user.last_name}
                     avatar={
                       <Avatar
-                        src={userIcon}
+                        src={user.gravatar}
                         alt={user.first_name + " " + user.last_name}
                       />
                     }
@@ -277,7 +278,7 @@ function UserDetail() {
                                         label={user.first_name + " " + user.last_name}
                                         avatar={
                                             <Avatar
-                                                src={user.iconImage}
+                                                src={user.gravatar}
                                                 alt={user.first_name + " " + user.last_name}
                                             />
                                         }
@@ -351,9 +352,6 @@ function UserDetail() {
                                     <Chip
                                         key={"index"}
                                         label={club.club_name}
-                                        avatar={
-                                            <Avatar src={club.iconImage} alt={club.club_name}/>
-                                        }
                                         onClick={() => handleChipClick("clubs", club.id)}
                                         sx={{mr: 1, mt: 1}}
                                     />

@@ -53,12 +53,11 @@ function MovieDetail() {
         getMovie();
         getMovieAPIData();
         console.log(movieID);
-    }, [movie.imdb_id,movieID]);
+    }, [movie.imdb_id,movieID,movieAPIData.Poster]);
     console.log(movie);
     console.log(movie.imdb_id);
     console.log(movieAPIData);
 
-    JSON.stringify(movie)
     let getMovieAPIData = async () => {
         axios
         .get(`http://www.omdbapi.com/?i=tt${movie.imdb_id}&apikey=88945c5e`)
