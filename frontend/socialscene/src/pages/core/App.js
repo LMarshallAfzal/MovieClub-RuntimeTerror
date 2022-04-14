@@ -29,16 +29,16 @@ import API from "fetch-worker";
 function App() {
 	
 
-	useEffect(() => {
-		setInterval(() => {
-			train();
-		}, 1000 * 60 * 60);
-	}, []);
+	// useEffect(() => {
+	// 	setInterval(() => {
+	// 		train();
+	// 	}, 1000 * 60 * 60);
+	// }, []);
 
-	let train = () => {
-		API.fetch("http://127.0.0.1:8000/train/movie/", {method: "GET"})
-		API.fetch("http://127.0.0.1:8000/train/meeting/", {method: "GET"})
-	}																	
+	// let train = () => {
+	// 	API.fetch("http://127.0.0.1:8000/train/movie/", {method: "GET"})
+	// 	API.fetch("http://127.0.0.1:8000/train/meeting/", {method: "GET"})
+	// }																	
 
 	
 
