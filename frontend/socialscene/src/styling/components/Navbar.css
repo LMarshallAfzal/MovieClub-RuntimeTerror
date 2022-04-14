@@ -82,6 +82,7 @@ h4--emphasise {
 
 h5 {
   font-family: Helvetica, serif;
+  font-weight: normal;
   font-size: 1.8rem;
   margin: 0;
 }
@@ -91,25 +92,20 @@ h5--emphasise {
 
 h6 {
   font-family: Helvetica-Light, serif;
+  font-weight: normal;
   margin: 0;
   font-size: 1.1rem;
 }
 
 .home-page-title {
   background-color: #5C5C5C;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-sub-title {
   background-color: #999999;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
 }
 
@@ -121,14 +117,10 @@ h6 {
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100%;
@@ -143,20 +135,14 @@ h6 {
   font-size: 1.2rem;
   overflow: auto;
   width: 100%;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar-red {
   height: 10px;
   display: flex;
   background: #FF0000;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .logo-social {
@@ -182,10 +168,7 @@ h6 {
   text-decoration: none;
   font-size: 2rem;
   padding-top: 20px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .navbar-enter-button {
@@ -195,4 +178,6 @@ h6 {
   padding-right: 20px;
   padding-top: 20px;
   text-decoration: none;
-}/*# sourceMappingURL=Navbar.css.map */
+}
+
+/*# sourceMappingURL=Navbar.css.map */

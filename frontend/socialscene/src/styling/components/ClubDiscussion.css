@@ -82,6 +82,7 @@ h4--emphasise {
 
 h5 {
   font-family: Helvetica, serif;
+  font-weight: normal;
   font-size: 1.8rem;
   margin: 0;
 }
@@ -91,25 +92,20 @@ h5--emphasise {
 
 h6 {
   font-family: Helvetica-Light, serif;
+  font-weight: normal;
   margin: 0;
   font-size: 1.1rem;
 }
 
 .home-page-title {
   background-color: #5C5C5C;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
 }
 
 .home-page-sub-title {
   background-color: #999999;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: all 0.3s ease-out;
 }
 
@@ -121,8 +117,7 @@ h6 {
 .home-page-card-background {
   background-color: #C4C4C4;
   overflow: hidden;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}/*# sourceMappingURL=ClubDiscussion.css.map */
+  user-select: none;
+}
+
+/*# sourceMappingURL=ClubDiscussion.css.map */
