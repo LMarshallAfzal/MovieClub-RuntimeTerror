@@ -82,6 +82,7 @@ h4--emphasise {
 
 h5 {
   font-family: Helvetica, serif;
+  font-weight: normal;
   font-size: 1.8rem;
   margin: 0;
 }
@@ -91,6 +92,7 @@ h5--emphasise {
 
 h6 {
   font-family: Helvetica-Light, serif;
+  font-weight: normal;
   margin: 0;
   font-size: 1.1rem;
 }
