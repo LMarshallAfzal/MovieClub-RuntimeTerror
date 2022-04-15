@@ -27,7 +27,6 @@ function ClubDiscussion() {
 	const [myClubData, setMyClubData] = useState([]);
 	const [messages, setMessages] = useState([]);
 	const [myClub, setClub] = useState([]);
-	
 
 	let { clubID } = useParams();
 
@@ -35,11 +34,9 @@ function ClubDiscussion() {
 		getClubMessages();
 		getMembershipData();
 		getClub();
-	}, [clubID,messages]);
-
+	}, [clubID, messages]);
 
 	console.log(myClubData);
-	
 
 	const onChange = (e, newDateTime) => {
 		e.preventDefault();
@@ -51,45 +48,47 @@ function ClubDiscussion() {
 	};
 
 	let getMembershipData = async () => {
-		let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
+		let { response, data } = await api(
+			`/get_user_joined_clubs/${user.user_id}/`,
+			"GET"
+		);
 		if (response.status === 200) {
 			setMyClubData(data);
 		}
 	};
 
 	let getClubMessages = async () => {
-		let {response, data} = await api(`/message_forum/${clubID}/`, "GET");
+		let { response, data } = await api(`/message_forum/${clubID}/`, "GET");
 		if (response.status === 200) {
 			setMessages(data);
-			console.log(data)
+			console.log(data);
 		}
 	};
 
 	let handleMessage = async () => {
 		getClubMessages();
-	}
+	};
 
 	let sendClubMessages = async (e) => {
 		e.preventDefault();
-		let {response} = await api(`/write_message/${clubID}/`, "POST", {
+		let { response } = await api(`/write_message/${clubID}/`, "POST", {
 			sender: user.username,
 			club: myClub.id,
 			message: message.message,
 			timestamp: dateTime,
 		});
-		if(response.status === 201) {
+		if (response.status === 201) {
 			message.message = "";
 			handleMessage();
 		}
 	};
 
 	let getClub = async (e) => {
-		let {response, data} = await api(`/club/${clubID}/`, "GET");
+		let { response, data } = await api(`/club/${clubID}/`, "GET");
 		if (response.status === 200) {
 			setClub(data);
 		}
 	};
-	
 
 	return (
 		<Grid container spacing={2}>
@@ -118,10 +117,9 @@ function ClubDiscussion() {
 							<h5 className={"home-page-card-title"}>messages</h5>
 						</Grid>
 
-						<Grid item xs={12}>
+						<Grid item xs={12} maxHeight={420} overflow={"auto"}>
 							{messages.map((val) => {
-								
-																return (
+								return (
 									<>
 										<Divider variant="middle">{val.time}</Divider>
 										<div style={{ padding: "10px" }}>
@@ -136,8 +134,6 @@ function ClubDiscussion() {
 													>
 														<Avatar
 															src={val.sender_gravatar}
-														
-															
 															sx={{ width: "100%", height: "100%" }}
 														/>
 													</div>
