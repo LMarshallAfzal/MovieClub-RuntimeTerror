@@ -227,6 +227,11 @@ function EventCreate() {
 
 								<Grid item xs={2}>
 									<Card sx={{ flexDirection: "column", height: "100%" }}>
+									<CardMedia
+        component="img"
+        height="140"
+        image={"https://img.omdbapi.com/?i=tt" + movie.imdb_id + "&h=600&apikey=199b93be"}
+      />
 										<CardActionArea
 											sx={{ flexDirection: "column", height: "100%" }}
 											onClick={() => getMovieTitle(movie.id)}

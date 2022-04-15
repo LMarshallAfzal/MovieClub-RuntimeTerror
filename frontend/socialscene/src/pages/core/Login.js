@@ -112,10 +112,6 @@ export function Login() {
 										style={"primary"}
 									/>
 								</Grid>
-
-								<Grid item xs={8}>
-									<ThemeButton type="submit" text={"forgot password"} />
-								</Grid>
 							</Grid>
 						</div>
 					</Stack>

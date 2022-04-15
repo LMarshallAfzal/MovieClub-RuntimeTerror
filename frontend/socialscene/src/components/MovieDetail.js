@@ -101,7 +101,7 @@ function MovieDetail() {
 
   let getMovieAPIData = async () => {
     axios
-      .get(`http://www.omdbapi.com/?i=tt${movie.imdb_id}&apikey=199b93be`)
+      .get(`https://www.omdbapi.com/?i=tt${movie.imdb_id}&apikey=199b93be`)
       .then((res) => {
         console.log(res.data);
         setMovieAPIData(res.data);

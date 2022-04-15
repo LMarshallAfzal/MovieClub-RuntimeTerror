@@ -8,7 +8,7 @@ export const MovieDataAPI = (props) => {
 
     useEffect(() => {
         axios
-            .get(`http://www.omdbapi.com/?i=${movieID}&apikey=${apiKey}`)
+            .get(`https://www.omdbapi.com/?i=${movieID}&apikey=${apiKey}`)
             .then((res) => {
                 setMovie(res.data)
             })
