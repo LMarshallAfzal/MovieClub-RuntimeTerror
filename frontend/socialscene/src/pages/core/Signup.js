@@ -139,23 +139,30 @@ export const Signup = () => {
 	let submitSignupForm = async (e) => {
 		e.preventDefault();
 		resetErrorState();
-		let { response, data } = await api(`/sign_up/`, "POST", {
-			username: signupCredentials.username,
-			first_name: signupCredentials.first_name,
-			last_name: signupCredentials.last_name,
-			email: signupCredentials.email,
-			bio: signupCredentials.bio,
-			preferences: signupCredentials.preferences,
-			password: signupCredentials.password,
-			password_confirmation: signupCredentials.password_confirmation,
+		let response = await fetch("http://127.0.0.1:8000/sign_up/", {
+			method: "POST",
+			body: JSON.stringify({
+				username: signupCredentials.username,
+				first_name: signupCredentials.first_name,
+				last_name: signupCredentials.last_name,
+				email: signupCredentials.email,
+				bio: signupCredentials.bio,
+				preferences: signupCredentials.preferences,
+				password: signupCredentials.password,
+				password_confirmation: signupCredentials.password_confirmation,
+			}),
+			headers: {
+				"Content-Type": "application/json",
+			},
 		});
+		let data = await response.json();
 		if (response.status === 201) {
 			navigate("/login/");
 		} else {
 			errorHandler(e, data);
 		}
 	};
-
+	
 	return (
 		<Grid container direction={"row"} className={"signup-grid"} spacing={2}>
 			<CsrfToken />
