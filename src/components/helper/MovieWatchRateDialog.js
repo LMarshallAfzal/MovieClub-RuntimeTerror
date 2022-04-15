@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import "../../styling/components/MovieWatchRateDialog.css";
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Rating, Stack} from "@mui/material";
 import ThemeButton from "../core/ThemeButton";
-import AuthContext from "../../components/helper/AuthContext";
+import AuthContext from "./AuthContext";
 
 function MovieWatchRateDialog(props) {
     let {user, authTokens} = useContext(AuthContext);

@@ -6,8 +6,8 @@ import moviePoster from "../resources/images/empty_movie_poster.png";
 import HomepageCard from "./helper/HomepageCard";
 import MovieCard from "./MovieCard";
 import TextButton from "./core/TextButton";
-import AuthContext from "../components/helper/AuthContext";
-import useFetch from "../components/helper/useFetch";
+import AuthContext from "./helper/AuthContext";
+import useFetch from "./helper/useFetch";
 
 function UserDetail() {
 	let { user } = useContext(AuthContext);

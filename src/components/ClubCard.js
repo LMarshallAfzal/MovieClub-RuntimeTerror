@@ -5,12 +5,12 @@ import icon5 from "../resources/images/example icons/icon5.jpeg"
 import "../styling/components/ClubCard.css";
 import RoundButton from "./core/RoundButton";
 import { Link } from "react-router-dom";
-import AuthContext from "../components/helper/AuthContext";
+import AuthContext from "./helper/AuthContext";
 import NotificationsAddIcon from "@mui/icons-material/NotificationAdd";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import CheckIcon from "@mui/icons-material/Check";
 import { FaCrown } from "react-icons/fa";
-import useFetch from "../components/helper/useFetch";
+import useFetch from "./helper/useFetch";
 
 
 

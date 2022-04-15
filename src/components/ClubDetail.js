@@ -20,9 +20,9 @@ import { FaCrown } from "react-icons/fa";
 import "../styling/components/ClubDetail.css";
 import ThemeButton from "./core/ThemeButton";
 import { themes } from "../resources/data/MovieThemes";
-import AuthContext from "../components/helper/AuthContext";
+import AuthContext from "./helper/AuthContext";
 import HomepageCard from "./helper/HomepageCard";
-import useFetch from "../components/helper/useFetch";
+import useFetch from "./helper/useFetch";
 
 function ClubDetail() {
 	const [showBannedMembers, setBannedMembers] = useState(false);

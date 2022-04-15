@@ -4,8 +4,8 @@ import RoundButton from "./core/RoundButton";
 import "../styling/components/ClubSelector.css";
 import TextButton from "./core/TextButton";
 import {useNavigate} from "react-router-dom";
-import AuthContext from "../components/helper/AuthContext";
-import useFetch from "../components/helper/useFetch";
+import AuthContext from "./helper/AuthContext";
+import useFetch from "./helper/useFetch";
 
 function ClubSelector() {
     let {user, authTokens} = useContext(AuthContext);

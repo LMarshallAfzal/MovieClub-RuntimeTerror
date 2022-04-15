@@ -11,8 +11,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import ThemeButton from "./core/ThemeButton";
 import "../styling/components/ClubCreate.css";
 import { themes } from "../resources/data/MovieThemes";
-import AuthContext from "../components/helper/AuthContext";
-import useFetch from "../components/helper/useFetch";
+import AuthContext from "./helper/AuthContext";
+import useFetch from "./helper/useFetch";
 
 function ClubCreate() {
 	let { authTokens } = useContext(AuthContext);
