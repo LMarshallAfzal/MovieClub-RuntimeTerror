@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Collapse, Grid, Stack, TextField } from "@mui/material";
-import { moviesWithPoster } from "../../resources/data/DummyMoviesData";
+import React, {useContext, useEffect, useState} from "react";
+import {Collapse, Grid, Stack, TextField} from "@mui/material";
+import {moviesWithPoster} from "../../resources/data/DummyMoviesData";
 import "../../styling/pages/Movies.css";
 import moviePoster from "../../resources/images/empty_movie_poster.png";
 import movie_queryset from "../../resources/data/movie_queryset.json";
 import AuthContext from "../../components/helper/AuthContext";
 import TextButton from "../../components/core/TextButton";
-import { Outlet } from "react-router";
+import {Outlet} from "react-router";
 import MovieCard from "../../components/MovieCard";
 import HomepageCard from "../../components/helper/HomepageCard";
 import useFetch from "../../components/helper/useFetch";
 
 
 const Movies = () => {
-	let { user } = useContext(AuthContext);
-	let api = useFetch()
+    let {user} = useContext(AuthContext);
+    let api = useFetch()
 
 	const [rating, setRating] = useState({
 		user: user.user_id,
@@ -34,29 +34,29 @@ const Movies = () => {
         getAllMovies();
 	}, []);
 
-	let getMovie = async (id) => {
-		await api(`/get_movie/${id}/`, "GET");
-        
-	}
+    let getMovie = async (id) => {
+        await api(`/get_movie/${id}/`, "GET");
 
-	let getClubMovies = async (e) => {
-		let {response, data} = await api(`/get_user_attending_meetings/`, "GET");
-		if (response.status === 200) {
-			let array = [];
-			data.map((val) => {
-				array.push(getMovie(e, val.movie));
-			});
-			setClubMovies(array);
+    }
+
+    let getClubMovies = async (e) => {
+        let {response, data} = await api(`/get_user_attending_meetings/`, "GET");
+        if (response.status === 200) {
+            let array = [];
+            data.map((val) => {
+                array.push(getMovie(e, val.movie));
+            });
+            setClubMovies(array);
             console.log(array)
-		}
-	};
+        }
+    };
 
-	let getWatchedMovies = async () => {
-		let {response, data} = await api(`/watched_list/${user.user_id}/`, "GET");
-		if (response.status === 200) {
-			setWatchedMovies(data);
-		}
-	};
+    let getWatchedMovies = async () => {
+        let {response, data} = await api(`/watched_list/${user.user_id}/`, "GET");
+        if (response.status === 200) {
+            setWatchedMovies(data);
+        }
+    };
 
     let getAllMovies = async () => {
         let {response, data} = await api(`/get_all_movies/`, "GET");
@@ -75,9 +75,9 @@ const Movies = () => {
 
 	const [openSearch, setOpenSearch] = useState(false);
 
-	const toggleSearch = () => {
-		setOpenSearch(!openSearch);
-	};
+    const toggleSearch = () => {
+        setOpenSearch(!openSearch);
+    };
 
 	const openSearchAuto = (text) => {
 		text === "" ? setOpenSearch(false) : setOpenSearch(true);
@@ -86,7 +86,7 @@ const Movies = () => {
 
 
 
-	const [searchValue, setSearchValue] = useState("");
+    const [searchValue, setSearchValue] = useState("");
 
 	const cardHeight = 393;
 	const rateCardHeight = cardHeight + 65;
@@ -123,10 +123,9 @@ const Movies = () => {
                         <Grid item xs={12}>
                             <Stack direction={"row"}
                                    spacing={2}
-                                   height={cardHeight}
-                                   sx={{overflowX: "scroll", overflowY: "hidden"}}
+                                   maxHeight={cardHeight}
+                                   sx={{overflowX: "auto", overflowY: "hidden"}}
                             >
-                                
 
                                 {allMovies.filter((movie) => {
                                     if(searchValue.length > 2){
@@ -160,8 +159,8 @@ const Movies = () => {
                     <Grid item xs={12}>
                         <Stack direction={"row"}
                                spacing={2}
-                               height={clubCardHeight}
-                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                               maxHeight={clubCardHeight}
+                               sx={{overflowX: "auto", overflowY: "hidden"}}
                         >
                             {clubMovies.map((movie, index) => {
                                 return (
@@ -186,15 +185,15 @@ const Movies = () => {
                     <Grid item xs={12}>
                         <Stack direction={"row"}
                                spacing={2}
-                               height={rateCardHeight}
-                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                               maxHeight={rateCardHeight}
+                               sx={{overflowX: "auto", overflowY: "hidden"}}
                         >
                             {recommendedMovies.map((movie, index) => {
                                 return (
                                     <MovieCard
                                         key={index}
                                         poster={moviePoster}
-                                        watchMovie = {true}
+                                        watchMovie={true}
                                         rateMovie={true}
                                         clubMovie={false}
                                         movie={movie}
@@ -212,8 +211,8 @@ const Movies = () => {
                     <Grid item xs={12}>
                         <Stack direction={"row"}
                                spacing={2}
-                               height={cardHeight}
-                               sx={{overflowX: "scroll", overflowY: "hidden"}}
+                               maxHeight={cardHeight}
+                               sx={{overflowX: "auto", overflowY: "hidden"}}
                         >
                             {watchedMovies.map((movie, index) => {
                                 return (
@@ -232,11 +231,11 @@ const Movies = () => {
                 </HomepageCard>
             </Grid>
 
-			<Grid item xs={12}>
-				<Outlet />
-			</Grid>
-		</Grid>
-	);
+            <Grid item xs={12}>
+                <Outlet/>
+            </Grid>
+        </Grid>
+    );
 };
 
 export default Movies;
