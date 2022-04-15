@@ -118,7 +118,7 @@ function ClubDetail() {
 	}
 
 	let getMembershipData = async (e) => {
-		let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}`, "GET");
+		let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
 		if(response.status === 200) {
 			setMyClubData(data);
 		}
@@ -244,7 +244,7 @@ function ClubDetail() {
 								label={user.first_name + " " + user.last_name + " "}
 								avatar={
 									<Avatar
-										src={user.iconImage}
+										src={user.gravatar}
 										alt={user.first_name + " " + user.last_name}
 									/>
 								}

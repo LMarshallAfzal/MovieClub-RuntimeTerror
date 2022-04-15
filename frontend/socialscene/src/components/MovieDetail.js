@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from "react";
-import {useParams} from "react-router";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router";
 import axios from "axios";
-import {Box, Card, CardMedia, Grid, Rating, Stack} from "@mui/material";
+import { Box, Card, CardMedia, Grid, Rating, Stack } from "@mui/material";
 import "../styling/components/MovieDetail.css";
 import moviePoster from '../resources/images/empty_movie_poster.png';
 import AuthContext from "./helper/AuthContext";
@@ -11,14 +11,17 @@ import HomepageCard from "./helper/HomepageCard";
 
 function MovieDetail() {
     const params = useParams();
-    let {movieID} = useParams();
+    let { movieID } = useParams();
     console.log(params)
     console.log(movieID)
     console.log(params, Object.keys(params), params.movieID, typeof params.movieID);
     const [movie, setMovie] = useState("");
     const [movieAPIData, setMovieAPIData] = useState("");
+    const [rating, setRating] = useState("");
+    const [hasRated, setHasRated] = useState(false);
+    const [score, setScore] = useState(0)
 
-    let {user, authTokens} = useContext(AuthContext);
+    let { user, authTokens } = useContext(AuthContext);
 
 
     useEffect(() => {
@@ -39,28 +42,115 @@ function MovieDetail() {
 
         };
         getMovie();
+        let getRating = async () => {
+            let response = await fetch("http://127.0.0.1:8000/get_rating/" + movieID + "/",
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json; charset=UTF-8",
+                        Authorization: "Bearer " + String(authTokens.access),
+                    },
+                });
+            let data = await response.json();
+            if (response.status === 200) {
+                setHasRated(true);
+                console.log(data)
+                setRating(data);
+                setScore(data.score);
+                console.log(rating)
+            }
+        };
+        getRating();
+       
         getMovieAPIData();
+        
+
+
         console.log(movieID);
-    }, [movie.imdb_id, movieID]);
+        console.log(rating)
+    }, [movie.imdb_id, movieID, movieAPIData.Poster, rating.movie, rating.score]);
     console.log(movie);
-    console.log(movie.imdb_id);
+    console.log(rating.score)
     console.log(movieAPIData);
 
-    JSON.stringify(movie)
     let getMovieAPIData = async () => {
         axios
-            .get(`http://www.omdbapi.com/?i=tt${movie.imdb_id}&apikey=88945c5e`)
+            .get(`http://www.omdbapi.com/?i=tt${movie.imdb_id}&apikey=199b93be`)
             .then((res) => {
                 console.log(res.data);
                 setMovieAPIData(res.data)
             })
     }
 
+    console.log(movieAPIData);
+
+
+    let addRating = async (e) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/add_rating/" + movieID + "/",
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    user: user.user_id,
+                    movie: movieID,
+                    score: score,
+                }),
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        if (response.status === 200) {
+            setRating(data);
+        }
+    }
+
+    let editRating = async (e) => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/edit_rating/" + movieID + "/",
+            {
+                method: "PUT",
+                body: JSON.stringify({
+                    user: user.user_id,
+                    movie: movieID,
+                    score: score,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    Authorization: "Bearer " + String(authTokens.access),
+                },
+            }
+        );
+        let data = await response.json();
+        console.log(data)
+        if (response.status === 200) {
+            setRating(data);
+        }
+    };
+
+    
+
+    const handleRateMovie = (event,newValue) => {
+        console.log(newValue)
+        setScore(newValue);
+        console.log(score)
+        if (hasRated) {
+            editRating();
+        }
+        else {
+            addRating();
+            setHasRated(true);
+        }
+    }
+
+
 
     return (
         <Grid container
-              spacing={2}
-              direction={"row"}
+            spacing={2}
+            direction={"row"}
         >
             <Grid item xs={12}>
                 <Box padding={1} className={"home-page-sub-title"}>
@@ -69,8 +159,8 @@ function MovieDetail() {
             </Grid>
             <Grid item xs={4}>
                 <Stack alignContent={"center"} alignItems={"center"} justifyContent={"center"}
-                       justifyItems={"center"}>
-                    <Card sx={{width: "100%"}}>
+                    justifyItems={"center"}>
+                    <Card sx={{ width: "100%" }}>
                         <LoadingSkeleton loading={movieAPIData}>
                             <CardMedia
                                 component="img"
@@ -148,10 +238,12 @@ function MovieDetail() {
                         <Grid item xs={12}>
                             <h6 className={"movie-detail-heading"}>your rating</h6>
                             <Rating
+                                value={score}
                                 name="simple-controlled"
-                                sx={{width: "100%"}}
+                                sx={{ width: "100%" }}
                                 precision={0.5}
                                 max={5}
+                                onChange={(event, newValue) => {handleRateMovie(event,newValue);}}
                             />
                         </Grid>
                     </Grid>

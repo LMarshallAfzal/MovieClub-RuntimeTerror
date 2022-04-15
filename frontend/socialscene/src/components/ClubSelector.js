@@ -37,6 +37,7 @@ function ClubSelector() {
         if (response.status === 200) {
             console.log(response)
             setMyClubData(data);
+            console.log(myClubData)
         } else {
             errorHandler(data);
         }

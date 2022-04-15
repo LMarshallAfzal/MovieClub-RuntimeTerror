@@ -63,6 +63,7 @@ function UserDetail() {
         );
         let data = await response.json();
         setFollowers(data);
+        console.log(data)
         setFollowerCount(data.length);
     };
 
@@ -161,61 +162,62 @@ function UserDetail() {
         setUserMembershipCount(data.length);
     };
 
-    let getUserIcon = async (e) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/other_user_gravatars/" + userID + "/",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
+  let getUserIcon = async (e) => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/other_user_gravatars/" + userID + "/",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    let data = await response.json();
+    setUserIcon(data.gravatar);
+  };
+
+
+
+  useEffect(() => {
+    getUserIcon();
+    getOtherUser();
+    checkCurrentUser();
+    getFollowers();
+    getFollowees();
+    getFavourites();
+    getRecentlyWatched();
+    getUserMemberships();
+    getIsFollowing();
+  }, [otherUser.id,userID]);
+
+  console.log(userIcon)
+  return (
+    <Grid container spacing={2} padding={2} direction={"row"}>
+      <Grid item xs={6}>
+        <Stack spacing={2}>
+          <HomepageCard
+            title={`${otherUser.first_name} ${otherUser.last_name}`}
+            titleItem={
+              !isCurrentUser ? 
+              <TextButton
+                text={following ? "unfollow" : "follow"}
+                onClick={() => toggleFollow()}
+                style={{ textAlign: "right" }}
+              />
+              :
+              <>
+              </>
+              
             }
-        );
-        let data = await response.json();
-        console.log(data);
-        setUserIcon(data.gravatar);
-    };
-
-
-    useEffect(() => {
-        getUserIcon();
-        getOtherUser();
-        checkCurrentUser();
-        getFollowers();
-        getFollowees();
-        getFavourites();
-        getRecentlyWatched();
-        getUserMemberships();
-        getIsFollowing();
-    }, [otherUser]);
-
-    return (
-        <Grid container spacing={2} padding={2} direction={"row"}>
-            <Grid item xs={6}>
-                <Stack spacing={2}>
-                    <HomepageCard
-                        title={`${otherUser.first_name} ${otherUser.last_name}`}
-                        titleItem={
-                            !isCurrentUser ?
-                                <TextButton
-                                    text={following ? "unfollow" : "follow"}
-                                    onClick={() => toggleFollow()}
-                                    style={{textAlign: "right"}}
-                                />
-                                :
-                                <>
-                                </>
-
-                        }
-                    >
-                        <Grid item xs={4}>
-                            <Avatar
-                                alt={otherUser.first_name + " " + otherUser.last_name}
-                                src={userIcon}
-                                sx={{width: 1, height: 1}}
-                            />
-                        </Grid>
+          >
+            <Grid item xs={4}>
+              <Avatar
+                alt={otherUser.first_name + " " + otherUser.last_name}
+                src={userIcon}
+                sx={{ width: 1, height: 1 }}
+              />
+            </Grid>
 
                         <Grid item xs={8}>
                             <Stack direction={"column"} justifyContent={"center"} height={1}>
@@ -243,26 +245,26 @@ function UserDetail() {
                         </Grid>
                     </HomepageCard>
 
-                    <HomepageCard title={"following"} titleItemText={followeeCount}>
-                        <Box maxHeight={followeeCount * 100} sx={{overflowY: "auto"}}>
-                            {followees.map((user, index) => {
-                                return (
-                                    <Chip
-                                        key={index}
-                                        label={user.first_name + " " + user.last_name}
-                                        avatar={
-                                            <Avatar
-                                                src={userIcon}
-                                                alt={user.first_name + " " + user.last_name}
-                                            />
-                                        }
-                                        onClick={() => handleChipClick("profile", user.id)}
-                                        sx={{mr: 1, mt: 1}}
-                                    />
-                                );
-                            })}
-                        </Box>
-                    </HomepageCard>
+          <HomepageCard title={"following"} titleItemText={followeeCount}>
+            <Box maxHeight={followeeCount * 100} sx={{ overflowY: "auto" }}>
+              {followees.map((user, index) => {
+                return (
+                  <Chip
+                    key={index}
+                    label={user.first_name + " " + user.last_name}
+                    avatar={
+                      <Avatar
+                        src={user.gravatar}
+                        alt={user.first_name + " " + user.last_name}
+                      />
+                    }
+                    onClick={() => handleChipClick("profile", user.id)}
+                    sx={{ mr: 1, mt: 1 }}
+                  />
+                );
+              })}
+            </Box>
+          </HomepageCard>
 
                     <HomepageCard title={"followers"} titleItemText={followerCount}>
                         <Box maxHeight={followerCount * 100} sx={{overflowY: "auto"}}>
@@ -273,7 +275,7 @@ function UserDetail() {
                                         label={user.first_name + " " + user.last_name}
                                         avatar={
                                             <Avatar
-                                                src={user.iconImage}
+                                                src={user.gravatar}
                                                 alt={user.first_name + " " + user.last_name}
                                             />
                                         }
@@ -347,9 +349,6 @@ function UserDetail() {
                                     <Chip
                                         key={"index"}
                                         label={club.club_name}
-                                        avatar={
-                                            <Avatar src={club.iconImage} alt={club.club_name}/>
-                                        }
                                         onClick={() => handleChipClick("clubs", club.id)}
                                         sx={{mr: 1, mt: 1}}
                                     />

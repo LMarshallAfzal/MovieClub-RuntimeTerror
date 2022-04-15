@@ -44,6 +44,8 @@ function ClubCard(props) {
         if (response.status === 200) {
             setClubData(data);
             console.log(data)
+            userInClub();
+
         }
     };
 
@@ -155,12 +157,12 @@ function ClubCard(props) {
         getMembershipData();
         getNotificationStatus();
         
-    }, [props.id]);
+    }, [clubID,members]);
 
     useEffect(() => {
         getClubOwner();
         getClubMembers();
-    },[props])
+    },[props,props.clubTheme]);
     return (
         
         <Link className={"club-listing"} to={`/home/clubs/${props.ID}`}>
@@ -205,12 +207,12 @@ function ClubCard(props) {
                             <Grid item xs={10} alignItems={"flex-start"}>
                                 <AvatarGroup max={4} className={"club-listing-avatars"}>
                                     {members.map((user) => {
-                                        return <Avatar alt={user.username} src={icon5} />;
+                                        return <Avatar alt={user.username} src={user.gravatar} />;
                                     })}
                                 </AvatarGroup>
                             </Grid>
                             <Grid item xs={2}>
-                                {isMember ? (
+                                {clubData && isMember ? (
                                 <FormControlLabel
                                     control={<Checkbox checked = {notifications}
                                     icon={<NotificationsAddIcon />}
