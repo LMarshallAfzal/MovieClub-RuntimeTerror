@@ -1,14 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styling/pages/Signup.css";
 import HeadingCircle from "../../components/HeadingCircle";
 import {
   Autocomplete,
-  Box,
   Grid,
   Stack,
   TextField,
-  Button,
   InputAdornment,
   OutlinedInput,
   FormControl,
@@ -77,7 +75,6 @@ export const Signup = () => {
     value.map((val) => {
       array.push(val.theme);
     });
-    console.log(array);
     setSignupCredentials((fieldData) => ({
       ...fieldData,
       preferences: array,
