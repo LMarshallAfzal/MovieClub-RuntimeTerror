@@ -142,6 +142,8 @@ const Profile = () => {
 		if (response.status === 200) {
 			setUserData(data);
 			setAlert(true);
+			window.location.reload(false);
+
 		} else {
 			errorHandler(e, data);
 		}

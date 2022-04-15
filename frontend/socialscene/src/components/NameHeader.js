@@ -27,7 +27,6 @@ function NameHeader(props) {
     let currentMessage = messages.find(obj => obj.timeID === getTimePeriod());
 
 
-
   return (
       <div className={"name-header"}>
           <Grid container spacing={2}

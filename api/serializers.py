@@ -513,7 +513,7 @@ class AddRatingSerializer(serializers.ModelSerializer):
 
 class ChangeRatingSerializer(serializers.ModelSerializer):
     score = serializers.FloatField(required=True, validators=[
-                                   MinValueValidator(1.0), MaxValueValidator(5.0)])
+                                   MinValueValidator(0.0), MaxValueValidator(5.0)])
 
     class Meta:
         model = Rating

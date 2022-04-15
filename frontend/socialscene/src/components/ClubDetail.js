@@ -27,7 +27,7 @@ import useFetch from "../components/helper/useFetch";
 function ClubDetail() {
 	const [showBannedMembers, setBannedMembers] = useState(false);
 	const [showDeleteClubDialog, setDeleteClubDialog] = useState(false);
-	const [isMember, setIsMember] = useState(false);
+	const [isMember, setIsMember] = useState(0);
 	const [isOrganiser, setIsOrganiser] = useState(false);
 	const [members, setMembers] = useState([]);
 	const [owner, setOwner] = useState([]);
@@ -102,8 +102,8 @@ function ClubDetail() {
 		if(response.status === 200) {
 			setMembers(data);
 			data.find((member) => member.username === user.username)
-				? setIsMember(true)
-				: setIsMember(false);
+				? setIsMember(1)
+				: setIsMember(2);
 		}
 	}
 
@@ -133,18 +133,20 @@ function ClubDetail() {
 
 	let joinClub = async () => {
 		let {response} = await api(`/join_club/${clubID}/`, "POST");
-		if(response.status === 201) {
-			setIsMember(true);
+		if(response.status === 200) {
+			setIsMember(1);
 			getClubMembers();
 			getMembershipData();
+
 		}
 	}
 
 	let leaveClub = async () => {
 		let {response} = await api(`/leave_club/${clubID}/`, "POST");
-		if(response.status === 201) {
-			setIsMember(false);
+		if(response.status === 200) {
+			setIsMember(2);
 			alert("You have left this club!");
+
 		}
 	}
 
@@ -186,7 +188,7 @@ function ClubDetail() {
 		)
 			? setIsOrganiser(true)
 			: setIsOrganiser(false);
-	}, [clubID]);
+	}, [clubID,isMember,]);
 
 	const toggleBannedView = () => {
 		setBannedMembers(!showBannedMembers);
@@ -452,13 +454,13 @@ function ClubDetail() {
 
 					<ThemeButton
 						text={"join"}
-						style={!isMember && !isOwner ? "primary" : "disabled"}
+						style={isMember == 2 && !isOwner ? "primary" : "disabled"}
 						onClick={() => joinClub()}
 					/>
 
 					<ThemeButton
 						text={"leave"}
-						style={isMember && !isOwner ? "primary" : "disabled"}
+						style={isMember == 1 && !isOwner ? "primary" : "disabled"}
 						onClick={() => leaveClub()}
 					/>
 

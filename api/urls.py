@@ -44,6 +44,7 @@ urlpatterns = [
     path("get_movie/<int:movie_id>/", views.get_movie, name = "get_movie"),
     path("random_movie/", views.get_random_movies, name = "get_random_movies"),
     path("watched_list/<int:user_id>/", views.get_watched_list, name = "get_watched_movies"),
+    path("has_watched/<int:movie_id>/", views.has_watched, name = "has_watched"),
     path("get_all_movies/", views.get_all_movies, name = "all_movies"),
     path("train/movie/", views.train_movie_data, name = "train"),
     path("train/meeting/", views.train_meeting_data, name = "train_meeting_data"),

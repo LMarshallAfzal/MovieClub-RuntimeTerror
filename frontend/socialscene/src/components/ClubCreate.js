@@ -77,6 +77,8 @@ function ClubCreate() {
 		if (response.status === 201) {
 			setClub(data);
 			setAlert(true);
+			window.location.reload(false);
+
 		} else {
 			errorHandler(e, data);
 		}

@@ -15,7 +15,7 @@ function HomeRouter() {
     const [userData, setUserData] = useState('')
 
     let getCurrentUser = async () => {
-        let response = await fetch("http://127.0.0.1:8000/user_image/", {
+        let response = await fetch("http://127.0.0.1:8000/user/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -54,10 +54,10 @@ function HomeRouter() {
                 <Grid className={"home-grid-L-sidebar"} item xs={3}>
 
                     <NameHeader
-                        firstName={user.first_name || "error"}
-                        lastName={user.last_name || "error"}
-                        username={user.username || "error"}
-                        iconImage={userData}
+                        firstName={userData.first_name || "error"}
+                        lastName={userData.last_name || "error"}
+                        username={userData.username || "error"}
+                        iconImage={userData.gravatar}
                     />
 
                     <Sidebar

@@ -7,6 +7,8 @@ import moviePoster from '../resources/images/empty_movie_poster.png';
 import AuthContext from "./helper/AuthContext";
 import LoadingSkeleton from "./helper/LoadingSkeleton";
 import HomepageCard from "./helper/HomepageCard";
+import ThemeButton from "./core/ThemeButton";
+
 
 
 function MovieDetail() {
@@ -20,6 +22,7 @@ function MovieDetail() {
     const [rating, setRating] = useState("");
     const [hasRated, setHasRated] = useState(false);
     const [score, setScore] = useState(0)
+    const [hasWatched,setHasWatched] = useState(0);
 
     let { user, authTokens } = useContext(AuthContext);
 
@@ -42,6 +45,8 @@ function MovieDetail() {
 
         };
         getMovie();
+        getHasWatched();
+
         let getRating = async () => {
             let response = await fetch("http://127.0.0.1:8000/get_rating/" + movieID + "/",
                 {
@@ -50,7 +55,7 @@ function MovieDetail() {
                         "Content-Type": "application/json; charset=UTF-8",
                         Authorization: "Bearer " + String(authTokens.access),
                     },
-                });
+              });
             let data = await response.json();
             if (response.status === 200) {
                 setHasRated(true);
@@ -61,14 +66,10 @@ function MovieDetail() {
             }
         };
         getRating();
-       
         getMovieAPIData();
-        
-
-
         console.log(movieID);
         console.log(rating)
-    }, [movie.imdb_id, movieID, movieAPIData.Poster, rating.movie, rating.score]);
+    }, [movie.imdb_id, movieID, movieAPIData.Poster,hasWatched]);
     console.log(movie);
     console.log(rating.score)
     console.log(movieAPIData);
@@ -130,9 +131,9 @@ function MovieDetail() {
         }
     };
 
-    
 
-    const handleRateMovie = (event,newValue) => {
+
+    const handleRateMovie = (event, newValue) => {
         console.log(newValue)
         setScore(newValue);
         console.log(score)
@@ -143,6 +144,59 @@ function MovieDetail() {
             addRating();
             setHasRated(true);
         }
+    }
+
+    let addToWatchedList = async () => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/add_watched_movie/" + movieID + "/",
+            {
+                method: "POST",
+                body: JSON.stringify({movie: movieID, user: user.user_id}),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + authTokens.access,
+                },
+            }
+        );
+        await response.json();
+        setHasWatched(1);
+
+    };
+
+    let removeFromWatchList = async () => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/remove_watched_movie/" + movieID + "/",
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + authTokens.access,
+                },
+            }
+        );
+        setHasWatched(2);
+
+    };
+
+    let getHasWatched = async () => {
+        let response = await fetch(
+            "http://127.0.0.1:8000/has_watched/" + movieID + "/",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + authTokens.access,
+                },
+            });
+        let data = await response.json();
+        if (data.watched){
+            setHasWatched(1)
+        }
+        else {
+            setHasWatched(2)
+        }
+
+            
     }
 
 
@@ -173,6 +227,7 @@ function MovieDetail() {
                 </Stack>
 
             </Grid>
+
 
             <Grid item xs={8}>
                 <HomepageCard title={"details"}>
@@ -235,7 +290,7 @@ function MovieDetail() {
                             </Stack>
                         </Stack>
 
-                        <Grid item xs={12}>
+                        <Grid item xs={2}>
                             <h6 className={"movie-detail-heading"}>your rating</h6>
                             <Rating
                                 value={score}
@@ -243,7 +298,14 @@ function MovieDetail() {
                                 sx={{ width: "100%" }}
                                 precision={0.5}
                                 max={5}
-                                onChange={(event, newValue) => {handleRateMovie(event,newValue);}}
+                                onChange={(event, newValue) => { handleRateMovie(event, newValue); }}
+                            />
+
+                            <ThemeButton
+
+                                onClick={() => {hasWatched  == 2 ? addToWatchedList() : removeFromWatchList()}}
+                                text={hasWatched == 2 ? "watch" : "unwatch"}
+                                style={"primary"}
                             />
                         </Grid>
                     </Grid>

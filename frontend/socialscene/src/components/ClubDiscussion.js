@@ -82,7 +82,7 @@ setTimeout(() => {
 			message: message.message,
 			timestamp: dateTime,
 		});
-		if(response.status === 200) {
+		if(response.status === 201) {
 			getClubMessages();
 		}
 	};
