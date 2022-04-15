@@ -133,6 +133,8 @@ function MovieDetail() {
     );
     let data = await response.json();
     if (response.status === 200) {
+      setScore(data.score);
+      setHasRated(1);
     } else {
       setHasRated(2);
     }
