@@ -30,7 +30,7 @@ function MovieDetail() {
   }, [hasWatched, movieID, movie.imdb_id, movieAPIData.Poster, hasRated]);
 
   let addToWatchedList = async () => {
-    let {response} = await api(`/add_watched_movie/${movieID}/`, "POST", {
+    let { response } = await api(`/add_watched_movie/${movieID}/`, "POST", {
       user: user.user_id,
       movie: movieID,
     });
@@ -40,50 +40,64 @@ function MovieDetail() {
   };
 
   let removeFromWatchList = async () => {
-    let {response} = await api(`/remove_watched_movie/${movieID}/`, "DELETE");
+    let { response } = await api(`/remove_watched_movie/${movieID}/`, "DELETE");
     if (response.status === 200) {
       setHasWatched(2);
     }
   };
 
   let getHasWatched = async () => {
-    let {response} = await api(`/has_watched/${movieID}/`, "GET");
+    let { response, data } = await api(`/has_watched/${movieID}/`, "GET");
     if (response.status === 200) {
-      setHasWatched(1);
-    } else {
-      setHasWatched(2);
+      if (data.watched) {
+        setHasWatched(1);
+      } else {
+        setHasWatched(2);
+      }
     }
   };
 
   let getMovie = async () => {
-    let {response, data} = await api(`/get_movie/${movieID}/`, "GET");
+    let { response, data } = await api(`/get_movie/${movieID}/`, "GET");
     if (response.status === 200) {
       setMovie(data);
       if (data.ratings && data.ratings.length) {
         if (data.ratings.includes(user.user_id)) {
           setHasRated(1);
+          console.log("User " + user.user_id + " has rated movie " + movieID);
         } else {
           setHasRated(2);
         }
       } else {
         setHasRated(2);
+        console.log(
+          "User " + user.user_id + " has yet to rate movie " + movieID
+        );
       }
     }
   };
 
-
-  
-
   let getRating = async () => {
-    let {response, data} = await api(`/get_rating/${movieID}/`, "GET");
+    let { response, data } = await api(`/get_rating/${movieID}/`, "GET");
     if (response.status === 200) {
+      console.log(
+        "User " +
+          user.user_id +
+          " rated movie " +
+          movieID +
+          " with score " +
+          data.score
+      );
       setScore(data.score);
       setHasRated(1);
     } else {
       setHasRated(2);
+      setScore(0);
+      console.log(
+        "No rating for movie " + movieID + " from user " + user.user_id
+      );
     }
   };
-
 
   let getMovieAPIData = async () => {
     axios
@@ -116,7 +130,7 @@ function MovieDetail() {
   };
 
   let addRating = async (newValue) => {
-    let {response, data} = await api(`/add_rating/${movieID}/`, "POST", {
+    let { response, data } = await api(`/add_rating/${movieID}/`, "POST", {
       user: user.user_id,
       movie: movieID,
       score: newValue,
@@ -128,7 +142,6 @@ function MovieDetail() {
       setHasRated(2);
     }
   };
-
 
   return (
     <Grid container spacing={2} direction={"row"}>
