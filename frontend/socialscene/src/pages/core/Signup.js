@@ -1,29 +1,27 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styling/pages/Signup.css";
 import HeadingCircle from "../../components/HeadingCircle";
 import {
 	Autocomplete,
-	Box,
 	Grid,
 	Stack,
 	TextField,
-	Button,
 	InputAdornment,
 	OutlinedInput,
 	FormControl,
 	InputLabel,
 } from "@mui/material";
 import ThemeButton from "../../components/core/ThemeButton";
-// import AuthContext from "../../components/helper/AuthContext";
 import CsrfToken from "../../components/helper/CsrfToken";
 import { themes } from "../../resources/data/MovieThemes";
 import TextButton from "../../components/core/TextButton";
+import useFetch from "../../components/helper/useFetch";
 
 export const Signup = () => {
 	const [passwordVisibility, togglePasswordVisibility] = useState(false);
 	const navigate = useNavigate();
-	// let { loginUser, setLoginCredentials, loginCredentials } = useContext(AuthContext);
+	let api = useFetch();
 	let [signupCredentials, setSignupCredentials] = useState({
 		username: "",
 		first_name: "",
@@ -77,7 +75,6 @@ export const Signup = () => {
 		value.map((val) => {
 			array.push(val.theme);
 		});
-		console.log(array);
 		setSignupCredentials((fieldData) => ({
 			...fieldData,
 			preferences: array,
@@ -142,26 +139,18 @@ export const Signup = () => {
 	let submitSignupForm = async (e) => {
 		e.preventDefault();
 		resetErrorState();
-		let response = await fetch("http://127.0.0.1:8000/sign_up/", {
-			method: "POST",
-			body: JSON.stringify({
-				username: signupCredentials.username,
-				first_name: signupCredentials.first_name,
-				last_name: signupCredentials.last_name,
-				email: signupCredentials.email,
-				bio: signupCredentials.bio,
-				preferences: signupCredentials.preferences,
-				password: signupCredentials.password,
-				password_confirmation: signupCredentials.password_confirmation,
-			}),
-			headers: {
-				"Content-Type": "application/json",
-			},
+		let { response, data } = await api(`/sign_up/`, "POST", {
+			username: signupCredentials.username,
+			first_name: signupCredentials.first_name,
+			last_name: signupCredentials.last_name,
+			email: signupCredentials.email,
+			bio: signupCredentials.bio,
+			preferences: signupCredentials.preferences,
+			password: signupCredentials.password,
+			password_confirmation: signupCredentials.password_confirmation,
 		});
-		let data = await response.json();
 		if (response.status === 201) {
-			navigate("/login/")
-
+			navigate("/login/");
 		} else {
 			errorHandler(e, data);
 		}
@@ -270,7 +259,7 @@ export const Signup = () => {
 									{...params}
 									inputProps={{
 										...params.inputProps,
-										"data-testid": "preferences"
+										"data-testid": "preferences",
 									}}
 									error={preferencesError}
 									fullWidth

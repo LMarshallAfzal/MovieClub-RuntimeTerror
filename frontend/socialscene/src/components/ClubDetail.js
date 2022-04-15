@@ -326,9 +326,6 @@ function ClubDetail() {
 						getOptionLabel={(option) => option.theme || ""}
 						filterSelectedOptions
 						value={theme}
-						// InputLabelProps={{
-						// 	shrink: true,
-						// }}
 						onChange={(event, value) => handleChange(event, value)}
 						renderInput={(params) => (
 							<TextField
@@ -339,7 +336,6 @@ function ClubDetail() {
 								name={"theme"}
 								type={"text"}
 								variant={"outlined"}
-								// multiline
 							/>
 						)}
 					/>

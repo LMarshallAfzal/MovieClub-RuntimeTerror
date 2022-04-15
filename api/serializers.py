@@ -379,16 +379,10 @@ class CreateMeetingSerializer(serializers.Serializer):
         end_time = data['end_time']
 
         if meeting_date < datetime.date.today():
-            raise serializers.ValidationError(
-                "No past date allowed.")
-
-        if meeting_date == datetime.date.today():
-            raise serializers.ValidationError(
-                "Date must be in the future.")
+            raise serializers.ValidationError({"date": "Date must be in the future"})
 
         if (meeting_date - datetime.date.today()).days < 3:
-            raise serializers.ValidationError(
-                "Date must be minimum 3 days from now.")
+            raise serializers.ValidationError({"meeting_date": "Date must be at least 3 days in the future."})
 
         start_time_delta = timedelta(hours=int(start_time.strftime(
             "%H")), minutes=int(start_time.strftime("%M")))
@@ -396,17 +390,15 @@ class CreateMeetingSerializer(serializers.Serializer):
             "%H")), minutes=int(end_time.strftime("%M")))
 
         if start_time > end_time:
-            raise serializers.ValidationError(
-                "Start time should be before end time."
-            )
+            raise serializers.ValidationError({"start_time": "Start time must be before end time."})
+            
 
         if (end_time_delta-start_time_delta).total_seconds() < 3600:
-            raise serializers.ValidationError(
-                "Meeting should be minimum 1 hour long.")
+            raise serializers.ValidationError({"duration": "Duration must be at least 1 hour."})
 
         if start_time == end_time:
-            raise serializers.ValidationError(
-                "Start and End times cannot be the same."
+            raise serializers.ValidationError({"end_time": 
+                "Start and End times cannot be the same."}
             )
 
         return data

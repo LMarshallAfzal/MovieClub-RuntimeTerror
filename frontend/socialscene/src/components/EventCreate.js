@@ -117,6 +117,14 @@ function EventCreate() {
 			setMeetingLinkError(true);
 			setMeetingLinkErrorText(data.meeting_link);
 		}
+		if (Object.keys(data).includes("duration")) {
+			setStartTimeError(true);
+			setStartTimeErrorText("Duration of meeting must be greater than 1 hour!");
+			setEndTimeError(true);
+			setEndTimeErrorText("Duration of meeting must be greater than 1 hour!")
+		}
+		
+
 	};
 
     let getRecommendedMovies = async () => {
