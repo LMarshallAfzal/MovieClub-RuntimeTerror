@@ -25,7 +25,6 @@ function MovieCard(props) {
     const [promptData, setPromptData] = useState("");
     const [cardWidth, setCardWidth] = useState(150);
     const [cardBorder, setCardBorder] = useState("0px solid black");
-    const [movie, setMovie] = useState();
     const movieAPIData = MovieDataAPI(props.movie.imdb_id);
 
     const closePrompt = () => {
@@ -39,7 +38,7 @@ function MovieCard(props) {
             navigate(`${location}`, {replace: false})
         )
     }
-
+   
     function ClubMovie() {
         if (props.clubMovie === true) {
             const toolText = `event: {event.title} 
@@ -70,6 +69,10 @@ function MovieCard(props) {
             )
         }
     }
+
+        
+
+
 
     function RateMovie() {
         if (props.rateMovie === true) {
@@ -140,7 +143,7 @@ function MovieCard(props) {
                                 sx={{fontSize: "1.2em"}}
                                 precision={0.5}
                                 name={"read-only"}
-                                value={props.movie.rating}
+                                value={movieAPIData ? parseFloat(movieAPIData.imdbRating)/2 : 0}
                             />
 
                         </Stack>

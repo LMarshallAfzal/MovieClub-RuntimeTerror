@@ -226,31 +226,6 @@ const Options = () => {
 					</Grid>
 				</form>
 			</Grid>
-
-			<Grid item xs={6}>
-				<div className={"home-page-card-background"}>
-					<Grid container padding={2} spacing={2}>
-						<Grid item xs={12}>
-							<h5 className={"home-page-card-title"}>notifications</h5>
-						</Grid>
-
-						<Grid item xs={12}>
-							<FormControlLabel
-								value="end"
-								control={
-									<Checkbox
-										icon={<NotificationsNoneIcon />}
-										checkedIcon={<NotificationsActiveIcon />}
-										color="primary"
-									/>
-								}
-								label={<h6>email notifications</h6>}
-								labelPlacement="end"
-							/>
-						</Grid>
-					</Grid>
-				</div>
-			</Grid>
 		</Grid>
 	);
 };

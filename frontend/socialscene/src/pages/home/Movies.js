@@ -3,12 +3,14 @@ import { Collapse, Grid, Stack, TextField } from "@mui/material";
 import { moviesWithPoster } from "../../resources/data/DummyMoviesData";
 import "../../styling/pages/Movies.css";
 import moviePoster from "../../resources/images/empty_movie_poster.png";
+import movie_queryset from "../../resources/data/movie_queryset.json";
 import AuthContext from "../../components/helper/AuthContext";
 import TextButton from "../../components/core/TextButton";
 import { Outlet } from "react-router";
 import MovieCard from "../../components/MovieCard";
 import HomepageCard from "../../components/helper/HomepageCard";
 import useFetch from "../../components/helper/useFetch";
+
 
 const Movies = () => {
 	let { user } = useContext(AuthContext);
@@ -22,12 +24,14 @@ const Movies = () => {
 	const [recommendedMovies, setRecommendedMovies] = useState([]);
 	const [watchedMovies, setWatchedMovies] = useState([]);
 	const [clubMovies, setClubMovies] = useState([]);
+    const [allMovies, setAllMovies] = useState([]);
     const [specificClubMovie, setSpecificClubMovie] = useState("");
 
 	useEffect(() => {
 		getRecommendedMovies();
 		getWatchedMovies();
 		getClubMovies();
+        getAllMovies();
 	}, []);
 
 	let getMovie = async (id) => {
@@ -54,12 +58,20 @@ const Movies = () => {
 		}
 	};
 
+    let getAllMovies = async () => {
+        let {response, data} = await api(`/get_all_movies/`, "GET");
+        if (response.status === 200) {
+            setAllMovies(data);
+        }
+    }
+
 	let getRecommendedMovies = async () => {
 		let {response, data} = await api(`/rec_movies/`, "GET");
 		if (response.status === 200) {
 			setRecommendedMovies(data);
 		}
 	};
+
 
 	const [openSearch, setOpenSearch] = useState(false);
 
@@ -69,11 +81,14 @@ const Movies = () => {
 
 	const openSearchAuto = (text) => {
 		text === "" ? setOpenSearch(false) : setOpenSearch(true);
+        text.length < 3 ? setOpenSearch(false) : setOpenSearch(true); 
 	};
+
+
 
 	const [searchValue, setSearchValue] = useState("");
 
-	const cardHeight = 325;
+	const cardHeight = 393;
 	const rateCardHeight = cardHeight + 65;
 	const clubCardHeight = rateCardHeight + 40;
 
@@ -88,9 +103,10 @@ const Movies = () => {
 					inputProps={{ "data-testid": "content-input" }}
 					placeholder={"search for a movie"}
 					onChange={(event) => {
-						setSearchValue(event.target.value);
+                        setSearchValue(event.target.value);
+                        if(event.target.value.length > 2){
 						openSearchAuto(event.target.value);
-					}}
+					}}}
 					InputProps={{
 						endAdornment: (
 							<TextButton
@@ -110,15 +126,17 @@ const Movies = () => {
                                    height={cardHeight}
                                    sx={{overflowX: "scroll", overflowY: "hidden"}}
                             >
+                                
 
-                                {moviesWithPoster.filter((movie) => {
+                                {allMovies.filter((movie) => {
+                                    if(searchValue.length > 2){
                                     if (movie.title
                                         .toLowerCase()
                                         .includes(searchValue.toLowerCase())
                                     ) {
                                         return movie;
                                     }
-                                }).map((movie, index) => {
+                                }}).map((movie, index) => {
                                     return (
                                         <MovieCard
                                             key={index}
@@ -128,6 +146,7 @@ const Movies = () => {
                                             poster={moviePoster}
                                             animated={true}
                                         />
+                            
                                     );
                                 })}
                             </Stack>

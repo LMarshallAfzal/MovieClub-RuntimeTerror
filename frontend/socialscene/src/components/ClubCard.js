@@ -44,6 +44,8 @@ function ClubCard(props) {
         if (response.status === 200) {
             setClubData(data);
             console.log(data)
+            userInClub();
+
         }
     };
 
@@ -155,7 +157,7 @@ function ClubCard(props) {
         getMembershipData();
         getNotificationStatus();
         
-    }, [clubID,props.club]);
+    }, [clubID,members]);
 
     useEffect(() => {
         getClubOwner();
@@ -210,7 +212,7 @@ function ClubCard(props) {
                                 </AvatarGroup>
                             </Grid>
                             <Grid item xs={2}>
-                                {isMember ? (
+                                {clubData && isMember ? (
                                 <FormControlLabel
                                     control={<Checkbox checked = {notifications}
                                     icon={<NotificationsAddIcon />}

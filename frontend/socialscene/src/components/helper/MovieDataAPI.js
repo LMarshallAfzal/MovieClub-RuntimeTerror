@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const MovieDataAPI = (props) => {
     const [movie, setMovie] = useState();
-    const apiKey = "88945c5e";
+    const apiKey = "199b93be";
     const movieID = "tt" + props
 
     useEffect(() => {

@@ -27,14 +27,23 @@ function ClubDiscussion() {
 	const [myClubData, setMyClubData] = useState([]);
 	const [messages, setMessages] = useState([]);
 	const [myClub, setClub] = useState([]);
+	const [timeInterval, setTimeInterval] = useState(0);
+	
+setTimeout(() => {
+  setTimeInterval(timeInterval + 1);
+}, 5000);
 
 	let { clubID } = useParams();
+
 
 	useEffect(() => {
 		getClubMessages();
 		getMembershipData();
 		getClub();
-	}, [clubID, messages]);
+		
+	}, [timeInterval]);
+
+
 
 	console.log(myClubData);
 
@@ -61,25 +70,22 @@ function ClubDiscussion() {
 		let { response, data } = await api(`/message_forum/${clubID}/`, "GET");
 		if (response.status === 200) {
 			setMessages(data);
-			console.log(data);
+			console.log(data)
+			
+
 		}
 	};
 
-	let handleMessage = async () => {
-		getClubMessages();
-	};
-
-	let sendClubMessages = async (e) => {
-		e.preventDefault();
-		let { response } = await api(`/write_message/${clubID}/`, "POST", {
+	
+	let sendClubMessages = async (id) => {
+		let {response} = await api(`/write_message/${id}/`, "POST", {
 			sender: user.username,
 			club: myClub.id,
 			message: message.message,
 			timestamp: dateTime,
 		});
-		if (response.status === 201) {
-			message.message = "";
-			handleMessage();
+		if(response.status === 201) {
+			getClubMessages();
 		}
 	};
 
@@ -149,7 +155,6 @@ function ClubDiscussion() {
 														{val.message}
 													</Typography>
 													<Typography sx={{ fontSize: 15 }} variant="body2">
-														{/* {val.timestamp.slice(11,16) + " " + val.timestamp.slice(0,10) } */}
 														{val.timestamp.slice(11, 16) +
 															" | " +
 															val.timestamp.slice(8, 10) +
@@ -179,7 +184,7 @@ function ClubDiscussion() {
 									InputProps={{
 										endAdornment: (
 											<TextButton
-												onClick={(e) => sendClubMessages(e)}
+												onClick={() => {sendClubMessages(clubID);message.message = ""}}
 												text={"send"}
 												style={{ textAlign: "right" }}
 											/>

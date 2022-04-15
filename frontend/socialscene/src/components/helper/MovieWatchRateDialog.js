@@ -20,7 +20,7 @@ function MovieWatchRateDialog(props) {
         if(props.isOpen) {
             getRating(movie.id);
         }
-    }, [props,movie]);
+    }, []);
 
     const handleClose = () => {
         addToWatchedList(movie.id)
@@ -57,7 +57,22 @@ function MovieWatchRateDialog(props) {
         if (response1.status === 200) {
             setRating(data1);
         }
-        
+        // let response2 = await fetch("http://127.0.0.1:8000/train/movie/", {
+        //     method: "GET",
+        //     headers: {
+        //         "Content-Type": "application/json; charset=UTF-8",
+        //         Authorization: "Bearer " + String(authTokens.access),
+        //     },
+        // });
+        // await response2.json();
+        // let response3 = await fetch("http://127.0.0.1:8000/train/meeting/", {
+        //     method: "GET",
+        //     headers: {
+        //         "Content-Type": "application/json; charset=UTF-8",
+        //         Authorization: "Bearer " + String(authTokens.access),
+        //     },
+        // });
+        // await response3.json();
     };
 
     let editRating = async (id, ratingScore) => {
