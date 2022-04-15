@@ -605,6 +605,8 @@ function EventDetail(props) {
 						<Grid item xs={3}>
 							
 							<ThemeButton
+															style={"primary"}
+
 								text={"join"}
 								onClick={(e) => {
 									e.preventDefault();

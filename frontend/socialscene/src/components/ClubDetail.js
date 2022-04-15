@@ -171,6 +171,8 @@ function ClubDetail() {
 		if(response.status === 200) {
 			setClub(data);
 			setAlert(true)
+			window.location.reload(false);
+
 		} else {
 			errorHandler(e, data);
 		}
@@ -188,7 +190,7 @@ function ClubDetail() {
 		)
 			? setIsOrganiser(true)
 			: setIsOrganiser(false);
-	}, [clubID,isMember,]);
+	}, [clubID,isMember]);
 
 	const toggleBannedView = () => {
 		setBannedMembers(!showBannedMembers);
@@ -266,7 +268,7 @@ function ClubDetail() {
 						label={user.first_name + " " + user.last_name}
 						avatar={
 							<Avatar
-								src={user.iconImage}
+								src={user.gravatar}
 								alt={user.first_name + " " + user.last_name}
 							/>
 						}
@@ -279,7 +281,6 @@ function ClubDetail() {
 		}
 	}
 
-	const [edit, setEdit] = useState(false);
 
 	const handleEditClub = () => {
 		editClub();

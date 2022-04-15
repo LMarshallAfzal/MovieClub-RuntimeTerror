@@ -16,7 +16,7 @@ class ClubEmail:
             recipients.append(member.email)
         meeting = self.club.get_upcoming_meeting()
         html = render_to_string('new_meeting_email.html',
-        {'cover_url':f'http://img.omdbapi.com/?i=tt{meeting.movie.imdb_id}&apikey=d938f360',
+        {'cover_url':f'http://img.omdbapi.com/?i=tt{meeting.movie.imdb_id}&apikey=199b93be',
         'meeting_title':meeting.meeting_title,
         'meeting_description':meeting.description,
         'meeting_date':meeting.date,
@@ -66,6 +66,7 @@ class ClubEmail:
         recipients = []
         for member in self.club.club_members.filter(membership__notifications=True):
             recipients.append(member.email)
+        print(recipients)
         meeting = self.club.get_upcoming_meeting()
         html = render_to_string('meeting_cancelled_email.html',{
             'meeting_title':meeting.meeting_title,

@@ -23,14 +23,11 @@ const Movies = () => {
 	});
 	const [recommendedMovies, setRecommendedMovies] = useState([]);
 	const [watchedMovies, setWatchedMovies] = useState([]);
-	const [clubMovies, setClubMovies] = useState([]);
     const [allMovies, setAllMovies] = useState([]);
-    const [specificClubMovie, setSpecificClubMovie] = useState("");
 
 	useEffect(() => {
 		getRecommendedMovies();
 		getWatchedMovies();
-		getClubMovies();
         getAllMovies();
 	}, []);
 
@@ -38,18 +35,6 @@ const Movies = () => {
         await api(`/get_movie/${id}/`, "GET");
 
     }
-
-    let getClubMovies = async (e) => {
-        let {response, data} = await api(`/get_user_attending_meetings/`, "GET");
-        if (response.status === 200) {
-            let array = [];
-            data.map((val) => {
-                array.push(getMovie(e, val.movie));
-            });
-            setClubMovies(array);
-            console.log(array)
-        }
-    };
 
     let getWatchedMovies = async () => {
         let {response, data} = await api(`/watched_list/${user.user_id}/`, "GET");
@@ -139,8 +124,6 @@ const Movies = () => {
                                     return (
                                         <MovieCard
                                             key={index}
-                                            clubMovie={false}
-                                            rateMovie={true}
                                             movie={movie}
                                             poster={moviePoster}
                                             animated={true}
@@ -154,32 +137,7 @@ const Movies = () => {
                 </Collapse>
             </Grid>
 
-            <Grid item xs={12}>
-                <HomepageCard title={"club movies"}>
-                    <Grid item xs={12}>
-                        <Stack direction={"row"}
-                               spacing={2}
-                               maxHeight={clubCardHeight}
-                               sx={{overflowX: "auto", overflowY: "hidden"}}
-                        >
-                            {clubMovies.map((movie, index) => {
-                                return (
-                                    <MovieCard
-                                        key={index}
-                                        clubMovie={true}
-                                        rateMovie={true}
-                                        movie={movie}
-                                        poster={moviePoster}
-                                        animated={true}
-                                    />
-                                );
-                            })}
-                        </Stack>
-                    </Grid>
-
-                </HomepageCard>
-            </Grid>
-
+    
             <Grid item xs={12}>
                 <HomepageCard title={"recommended"}>
                     <Grid item xs={12}>
@@ -195,7 +153,6 @@ const Movies = () => {
                                         poster={moviePoster}
                                         watchMovie={true}
                                         rateMovie={true}
-                                        clubMovie={false}
                                         movie={movie}
                                         animated={true}
                                     />
@@ -220,7 +177,6 @@ const Movies = () => {
                                         key={index}
                                         // poster={moviePoster}
                                         rateMovie={false}
-                                        clubMovie={false}
                                         movie={movie}
                                         animated={true}
                                     />

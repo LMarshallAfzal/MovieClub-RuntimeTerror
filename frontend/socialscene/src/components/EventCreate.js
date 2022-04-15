@@ -15,6 +15,9 @@ import ThemeButton from "./core/ThemeButton";
 import AuthContext from "./helper/AuthContext";
 import placeHolder from "../resources/images/empty_movie_poster.png";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+
 
 
 function EventCreate() {
@@ -149,7 +152,13 @@ function EventCreate() {
 			}
 		);
 		let data = await response.json();
+		for (let index = 0; index < data.length; ++index) {
+			let movie = data[index];
+			movie["poster"] = getMovieAPIData(movie).Poster
+			console.log(movie.poster)
+		}
 		setRecommendedMovies(data);
+		console.log(recommendedMovies)
 	};
 
 	let createMeeting = async (e) => {
@@ -200,11 +209,19 @@ function EventCreate() {
 		setSelectedMovieTitle(data.title);
 	};
 
+	let getMovieAPIData = async (movie) => {
+		axios
+		  .get(`http://www.omdbapi.com/?i=tt${movie.imdb_id}&apikey=199b93be`)
+		  .then((res) => {
+			return res.data;
+		  });
+	  };
+	
+
 	useEffect(() => {
 		getRecommendedMovies();
 	}, []);
 
-	// const movieAPIData = MovieDataAPI(movie.imdb_id);
 
 	return (
 		<div className={"home-page-card-background"}>
@@ -221,17 +238,9 @@ function EventCreate() {
 						alignItems="stretch"
 					>
 						{recommendedMovies.map((movie) => {
-							const movieAPIData = false;
-							// const movieAPIData = MovieDataAPI(movie.imdb_id);
+
 							return (
-								// <Grid item xs={2}>
-								//     <MovieCard
-								//         clubMovie={false}
-								//         rateMovie={false}
-								//         movie={movie}
-								//         animated={false}
-								//     />
-								// </Grid>
+								
 
 								<Grid item xs={2}>
 									<Card sx={{ flexDirection: "column", height: "100%" }}>
@@ -239,11 +248,6 @@ function EventCreate() {
 											sx={{ flexDirection: "column", height: "100%" }}
 											onClick={() => getMovieTitle(movie.id)}
 										>
-											<CardMedia
-												component={"img"}
-												alt={movie.title}
-												image={movieAPIData ? movieAPIData.Poster : placeHolder}
-											/>
 
 											<Grid
 												container
@@ -251,12 +255,7 @@ function EventCreate() {
 												alignItems={"center"}
 												textAlign={"center"}
 											>
-												<Rating
-													readOnly
-													sx={{ fontSize: "1.2em" }}
-													name={"read-only"}
-													value={movie.rating}
-												/>
+
 
 												<Tooltip title={movie.title} placement="top-start">
 													<h6 className={"new-event-movie-text"}>

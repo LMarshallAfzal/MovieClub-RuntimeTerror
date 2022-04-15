@@ -72,7 +72,6 @@ def update_upcoming_meetings():
             meeting.completed = True
             meeting.save()
 
-# schedule.every(1).minutes.do(update_upcoming_meetings())
 
 
 
