@@ -549,7 +549,7 @@ function EventDetail(props) {
 										) : (
 											<></>
 										)}
-										<EventFields />
+                    {EventFields()}
 									</Grid>
 								</Grid>
 							</Stack>
@@ -616,11 +616,11 @@ function EventDetail(props) {
 						</Grid>
 
 						<Grid item xs={3}>
-							<EventEditButton />
+              {EventEditButton()}
 						</Grid>
 
 						<Grid item xs={3}>
-							<EventDeleteButton />
+              {EventDeleteButton()}
 						</Grid>
 					</Grid>
 				</Grid>
