@@ -52,7 +52,7 @@ class EditMovieRatingViewTestCase(APITestCase):
         self.assertTrue(self.user.is_authenticated)
         before = Rating.objects.count()
         input = self.form_input
-        input['score'] = 0.0
+        input['score'] = -1
         response = self.client.put(self.url, input)
         after = Rating.objects.count()
         self.assertEqual(after, before)
