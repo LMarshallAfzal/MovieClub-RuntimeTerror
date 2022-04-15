@@ -65,7 +65,7 @@ const Homepage = () => {
                 </h2>
             </div>
             <img className={'cover-image'}
-                 src={fallBack}
+                //  src={fallBack}
                  alt="blurred movie poster"
             />
             <div className={"welcome-poster"}/>
