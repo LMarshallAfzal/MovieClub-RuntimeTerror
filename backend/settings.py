@@ -187,12 +187,14 @@ CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:3000",
     "http://localhost:3000",
     "http://localhost.localdomain:3000",
+    "https://social-scene.herokuapp.com"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:3000",
     "http://localhost.localdomain:3000",
+    "https://social-scene.herokuapp.com"
 ]
 
 CSRF_COOKIE_HTTPONLY = False
