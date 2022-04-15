@@ -415,7 +415,7 @@ function ClubDetail() {
 			<Grid item xs={6} height={cardHeight}>
 				<HomepageCard title={showBannedMembers ? "banned users" : "members"}>
 					<Box maxHeight={cardHeight - 80} overflow={"auto"}>
-						<UserDisplay />
+            {UserDisplay()}
 					</Box>
 				</HomepageCard>
 			</Grid>
@@ -479,7 +479,7 @@ function ClubDetail() {
 
 			<Grid item xs={3} height={cardHeight}>
 				<Stack spacing={2} sx={{ height: "100%" }}>
-					<ClubEdit />
+          {ClubEdit()}
 
 					{isOwner === 1 ? (
 						<ThemeButton text={"edit"} onClick={handleEditClub} />
