@@ -10,6 +10,7 @@ from recommender.user_movie_recommender import train_movie_data_for_user, recomm
 from .communication.club_emails import ClubEmail
 from .decorators import *
 from .helpers import *
+import asyncio
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -365,6 +366,8 @@ def train_meeting_data(request):
     train_movie_data_for_meeting()
     return Response(status=status.HTTP_200_OK)
 
+# async def train_meeting_data():
+#     train_movie_data_for_meeting()
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

@@ -15,8 +15,7 @@ import {
 	InputLabel,
 } from "@mui/material";
 import ThemeButton from "../../components/core/ThemeButton";
-import Cookies from "js-cookie";
-import AuthContext from "../../components/helper/AuthContext";
+// import AuthContext from "../../components/helper/AuthContext";
 import CsrfToken from "../../components/helper/CsrfToken";
 import { themes } from "../../resources/data/MovieThemes";
 import TextButton from "../../components/core/TextButton";
@@ -24,7 +23,7 @@ import TextButton from "../../components/core/TextButton";
 export const Signup = () => {
 	const [passwordVisibility, togglePasswordVisibility] = useState(false);
 	const navigate = useNavigate();
-	let { loginUser, setLoginCredentials, loginCredentials } = useContext(AuthContext);
+	// let { loginUser, setLoginCredentials, loginCredentials } = useContext(AuthContext);
 	let [signupCredentials, setSignupCredentials] = useState({
 		username: "",
 		first_name: "",
@@ -308,6 +307,7 @@ export const Signup = () => {
 												togglePasswordVisibility(!passwordVisibility)
 											}
 											text={passwordVisibility ? "hide" : "show"}
+											type={"button"}
 											style={{ marginTop: "-20px" }}
 										/>
 									</InputAdornment>
