@@ -8,7 +8,7 @@ let useFetch = () => {
 
     let {authTokens, setAuthTokens, setUser} = useContext(AuthContext)
 
-    let baseURL = 'http://https://social-scene.herokuapp.com';
+    let baseURL = 'https://social-scene.herokuapp.com';
 
     let originalRequest = async (url, config, options) => {
         url = `${baseURL}${url}`
