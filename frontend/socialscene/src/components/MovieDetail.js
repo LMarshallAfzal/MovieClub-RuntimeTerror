@@ -11,7 +11,6 @@ import HomepageCard from "./helper/HomepageCard";
 import ThemeButton from "./core/ThemeButton";
 
 function MovieDetail() {
-  const params = useParams();
   let { movieID } = useParams();
   const [movie, setMovie] = useState("");
   const [movieAPIData, setMovieAPIData] = useState("");
@@ -19,7 +18,7 @@ function MovieDetail() {
   const [score, setScore] = useState(0);
   const [hasWatched, setHasWatched] = useState(0);
 
-  let { user, authTokens } = useContext(AuthContext);
+  let { user } = useContext(AuthContext);
   let api = useFetch();
 
   useEffect(() => {
@@ -256,9 +255,9 @@ function MovieDetail() {
               />
               <ThemeButton
                 onClick={() => {
-                  hasWatched == 2 ? addToWatchedList() : removeFromWatchList();
+                  hasWatched === 2 ? addToWatchedList() : removeFromWatchList();
                 }}
-                text={hasWatched == 2 ? "watch" : "unwatch"}
+                text={hasWatched === 2 ? "watch" : "unwatch"}
                 style={"primary"}
               />
             </Grid>
