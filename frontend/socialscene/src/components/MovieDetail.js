@@ -204,6 +204,8 @@ function MovieDetail() {
     let data = await response.json();
     // console.log(data);
     if (response.status === 200) {
+      setScore(data.score);
+      setHasRated(1);
     } else {
       setHasRated(2);
       // console.log(
