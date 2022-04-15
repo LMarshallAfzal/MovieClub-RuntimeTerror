@@ -6,6 +6,7 @@ import "../styling/components/ClubListing.css";
 import EnterButton from "./core/RoundButton";
 import {Link} from "react-router-dom";
 import AuthContext from "../components/helper/AuthContext";
+import useFetch from "./helper/useFetch";
 
 function ClubListing(props) {
     let {clubID} = useParams();
@@ -13,51 +14,29 @@ function ClubListing(props) {
     const [myClubData, setMyClubData] = useState([]);
     const [clubMembers, setClubMembers] = useState([]);
 
-	let getMembershipData = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		if(response.status === 200) {
+	let api = useFetch();
+
+
+	let getMembershipData = async () => {
+		let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
+		if (response.status === 200) {
 			setMyClubData(data);
 		}
 	};
 
-	let getClubMembers = async (e) => {
-		let response = await fetch(
-			"http://127.0.0.1:8000/club_members/" + clubID + "/",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + String(authTokens.access),
-				},
-			}
-		);
-		let data = await response.json();
-		if(response.status === 200){
-			setClubMembers(data);
+	let getClubMembers = async () => {
+		let response = await api(`/club_members/${clubID}/`, "GET");
+		if (response.status === 200) {
+			setClubMembers(response.data);
 		}
 	};
 
-    let joinClub = async (event, id) => {
-        let response = await fetch('http://127.0.0.1:8000/join_club/' + id + '/', {
-            method: 'POST',
-            body: JSON.stringify(user.user_id, props.clubID),
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + String(authTokens.access)
-            }
-        })
-        let data = await response.json()
-    }
+	let joinClub = async (event, id) => {
+		let {response, data} = await api(`/join_club/${id}/`, "POST", {user_id: user.user_id});
+		if (response.status === 201) {
+			setMyClubData(data);
+		}
+	};
 
 	function ClubButton() {
         if (props.isMember === "M") {
