@@ -15,6 +15,9 @@ import ThemeButton from "./core/ThemeButton";
 import AuthContext from "./helper/AuthContext";
 import placeHolder from "../resources/images/empty_movie_poster.png";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+
 import useFetch from "./helper/useFetch";
 
 
@@ -127,28 +130,54 @@ function EventCreate() {
 
 	};
 
-    let getRecommendedMovies = async () => {
-        let {response, data} = await api(`/rec_meeting/${clubID}/`, "GET");
-        if (response.status === 200) {
-            setRecommendedMovies(data);
-        }
-    };
+	let getRecommendedMovies = async () => {
+		// trainMeetingRecommendation();
+		let response = await fetch(
+			"http://127.0.0.1:8000/rec_meeting/" + clubID + "/",
+			{
+				method: "GET",
+				headers: {
+					"Content-type": "application/json; charset=UTF-8",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+		let data = await response.json();
+		for (let index = 0; index < data.length; ++index) {
+			let movie = data[index];
+			movie["poster"] = getMovieAPIData(movie).Poster
+			console.log(movie.poster)
+		}
+		setRecommendedMovies(data);
+		console.log(recommendedMovies)
+	};
 
-    let createMeeting = async (e) => {
-        e.preventDefault();
-        let response = await api(`/create_meeting/${clubID}/`, "POST", {
-            club: clubID,
-            movie: selectedMovie,
-            organiser: user.user_id,
-            meeting_title: meetingData.meeting_title,
-            date: meetingData.date,
-            start_time: meetingData.start_time,
-            end_time: meetingData.end_time,
-            description: meetingData.description,
-            meeting_link: meetingData.meeting_link,
-        });
-        if (response.status === 201) {
-            setMeetingData(response.data);
+	let createMeeting = async (e) => {
+		e.preventDefault();
+		let response = await fetch(
+			"http://127.0.0.1:8000/create_meeting/" + clubID + "/",
+			{
+				method: "POST",
+				body: JSON.stringify({
+					club: clubID,
+					movie: selectedMovie,
+					organiser: user.user_id,
+					meeting_title: meetingData.meeting_title,
+					date: meetingData.date,
+					start_time: meetingData.start_time,
+					end_time: meetingData.end_time,
+					description: meetingData.description,
+					meeting_link: meetingData.meeting_link,
+				}),
+				headers: {
+					"Content-type": "application/json; charset=UTF-8",
+					Authorization: "Bearer " + String(authTokens.access),
+				},
+			}
+		);
+        let data = await response.json();
+		if (response.status === 201) {
+			setMeetingData(data);
             navigate(`/home/discussion/${clubID}`);
         } else {
             errorHandler(response.data);
@@ -162,6 +191,15 @@ function EventCreate() {
             setSelectedMovieTitle(data.title);
         }
     };
+
+	let getMovieAPIData = async (movie) => {
+		axios
+		  .get(`http://www.omdbapi.com/?i=tt${movie.imdb_id}&apikey=199b93be`)
+		  .then((res) => {
+			return res.data;
+		  });
+	  };
+	
 
 	useEffect(() => {
 		getRecommendedMovies();
@@ -183,29 +221,21 @@ function EventCreate() {
 						alignItems="stretch"
 					>
 						{recommendedMovies.map((movie) => {
-							const movieAPIData = false;
-							// const movieAPIData = MovieDataAPI(movie.imdb_id);
+
 							return (
-								// <Grid item xs={2}>
-								//     <MovieCard
-								//         clubMovie={false}
-								//         rateMovie={false}
-								//         movie={movie}
-								//         animated={false}
-								//     />
-								// </Grid>
+								
 
 								<Grid item xs={2}>
 									<Card sx={{ flexDirection: "column", height: "100%" }}>
+									<CardMedia
+        component="img"
+        height="140"
+        image={"https://img.omdbapi.com/?i=tt" + movie.imdb_id + "&h=600&apikey=199b93be"}
+      />
 										<CardActionArea
 											sx={{ flexDirection: "column", height: "100%" }}
 											onClick={() => getMovieTitle(movie.id)}
 										>
-											<CardMedia
-												component={"img"}
-												alt={movie.title}
-												image={movieAPIData ? movieAPIData.Poster : placeHolder}
-											/>
 
 											<Grid
 												container
@@ -213,12 +243,7 @@ function EventCreate() {
 												alignItems={"center"}
 												textAlign={"center"}
 											>
-												<Rating
-													readOnly
-													sx={{ fontSize: "1.2em" }}
-													name={"read-only"}
-													value={movie.rating}
-												/>
+
 
 												<Tooltip title={movie.title} placement="top-start">
 													<h6 className={"new-event-movie-text"}>

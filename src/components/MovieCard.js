@@ -14,7 +14,7 @@ import ThemeButton from "./core/ThemeButton";
 import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
 import LoadingSkeleton from "./helper/LoadingSkeleton";
 import {useNavigate} from "react-router";
-import {MovieDataAPI} from "./helper/MovieDataAPI";
+import { MovieDataAPI } from "./helper/MovieDataAPI";
 import placeHolder from '../resources/images/empty_movie_poster.png';
 import { Link } from "react-router-dom";
 
@@ -39,64 +39,7 @@ function MovieCard(props) {
         )
     }
    
-    function ClubMovie() {
-        if (props.clubMovie === true) {
-            const toolText = `event: {event.title} 
-                            ${props.movie.deadline}
-                            at {eventtime}`;
-            return (
-                <>
-                    <Tooltip
-                        arrow
-                        placement={"right"}
-                        title={
-                            <>
-                                <p className={"movie-card-event"}>event</p>
-                                <h6>{props.movie.deadline}</h6>
-                                <h6>17:30</h6>
-                            </>
-                        }>
-                        <Chip
-                            label={props.movie.club}
-                            onClick={() => HandleNavigate("/home/discussion")}
-                        />
-                    </Tooltip>
-                </>
-            )
-        } else {
-            return (
-                <></>
-            )
-        }
-    }
-
-        
-
-
-
-    function RateMovie() {
-        if (props.rateMovie === true) {
-            return (
-                <>
-                    <MovieWatchRateDialog movie={props.movie} isOpen={showPrompt} onClose={closePrompt}
-                                          data={promptData}/>
-                    <ThemeButton
-                        text={"watch"}
-                        style={"primary"}
-                        onClick={() => {
-                            setPromptData(props.movie);
-                            setShowPrompt(true);
-                        }}
-                    />
-                </>
-            )
-        }else {
-            return (
-                <></>
-            )
-        }
-    }
-
+    
     return (
         <Link to={`/home/movies/${props.movie.id}`}>
 
@@ -160,9 +103,7 @@ function MovieCard(props) {
                             <h6 className={"movie-card-title"}>{props.movie.title}</h6>
                         </Tooltip>
 
-                        <ClubMovie/>
 
-              <RateMovie />
             </Stack>
           </CardActionArea>
         </Card>

@@ -29,6 +29,7 @@ function ClubDiscussion() {
 	const [myClub, setClub] = useState([]);
 	const [timeInterval, setTimeInterval] = useState(0);
 	const [isOwner,setIsOwner] = useState(false);
+	const [hasMeeting,setHasMeeting] = useState(false)
 
 	setTimeout(() => {
 		setTimeInterval(timeInterval + 1);
@@ -41,7 +42,9 @@ function ClubDiscussion() {
 		getClubMessages();
 		getMembershipData();
 		getClub();
-		getClubOwner()
+		getClubOwner();
+		getUpcomingMeeting();
+		updateMeeting();
 
 	}, [timeInterval]);
 
@@ -105,6 +108,21 @@ function ClubDiscussion() {
 		}
 	};
 
+	let getUpcomingMeeting = async (e) => {
+		let { response, data } = await api(`/get_club_upcoming_meeting/${clubID}/`, "GET");
+		if (response.status === 200) {
+			setHasMeeting(true)}
+		}
+
+	let updateMeeting = async () => {
+		let { response } = await api(`/set_meeting_complete/${clubID}/`, "GET");
+		if (response.status === 200) {
+			setHasMeeting(false)
+		}
+		}
+	
+
+
 
 	return (
 		<Grid container spacing={2}>
@@ -119,7 +137,7 @@ function ClubDiscussion() {
 					className={"create-button"}
 					text={"create"}
 					linkTo={"new"}
-					style={!isOwner? "disabled":"primary"}
+					style={!isOwner || hasMeeting ? "disabled":"primary"}
 				/>
 			</Grid>
 

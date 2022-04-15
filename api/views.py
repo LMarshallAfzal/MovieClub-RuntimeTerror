@@ -11,6 +11,8 @@ from .communication.club_emails import ClubEmail
 from .decorators import *
 from .helpers import *
 import asyncio
+import datetime
+from datetime import datetime
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -243,6 +245,16 @@ def leave_club(request, club_id):
     serializer = UserSerializer(request.user,many=False)
     return Response(serializer.data,status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def has_watched(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    watched_list = request.user.watched_movies.filter(user=request.user, id=movie.id)
+    if(len(watched_list) > 0):
+        return Response({"watched": True}, status=status.HTTP_200_OK)
+    else:
+        return Response({"watched": False}, status=status.HTTP_200_OK)
+
 @api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
 @club_exists
@@ -270,7 +282,6 @@ def add_watched_movie(request, movie_id):
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 @movie_exists
-@has_watched
 def remove_watched_movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     Watch.objects.get(user=request.user, movie=movie).delete()
@@ -532,7 +543,15 @@ def get_club(request, club_id):
     serializer = ClubSerializer(club, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-
+@api_view([ 'GET'])
+@permission_classes([IsAuthenticated])
+def mark_meeting_complete(request,club_id):
+    club = Club.objects.get(id=club_id)
+    meeting = club.get_upcoming_meeting()
+    if meeting.date <= datetime.now().date() and meeting.end_time <= datetime.now().time():
+            meeting.completed = True
+            meeting.save()
+    return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

@@ -158,9 +158,7 @@ function EventDetail(props) {
 
 	let deleteMeeting = async (id) => {
 		let { response, data } = await api(`/cancel_meeting/${id}/`, "DELETE");
-		if (response.status === 200) {
-			return data;
-		}
+		
 	};
 
 	let getMeetingData = async (id) => {
@@ -284,7 +282,7 @@ function EventDetail(props) {
 				<ThemeButton
 					text={"delete"}
 					onClick={() => {
-						deleteMeeting(clubID);
+						deleteMeeting(clubID);window.location.reload(false);
 					}}
 					style={"primary"}
 				/>
@@ -549,7 +547,7 @@ function EventDetail(props) {
 										) : (
 											<></>
 										)}
-										<EventFields />
+                    {EventFields()}
 									</Grid>
 								</Grid>
 							</Stack>
@@ -585,26 +583,10 @@ function EventDetail(props) {
 				<Grid item xs={12}>
 					<Grid container spacing={2}>
 						<Grid item xs={3}>
-							<MovieWatchRateDialog
-								movie={specificMovie}
-								isOpen={showPrompt}
-								onClose={closePrompt}
-								data={promptData}
-							/>
-							{/* <MovieWatchRateDialog movie={props.movie} isOpen={showPrompt} onClose={closePrompt} data={promptData}/> */}
-							<ThemeButton
-								text={"watch"}
-								style={"primary"}
-								onClick={() => {
-									setPromptData(specificMovie);
-									setShowPrompt(true);
-								}}
-							/>
-						</Grid>
-
-						<Grid item xs={3}>
 							
 							<ThemeButton
+															style={"primary"}
+
 								text={"join"}
 								onClick={(e) => {
 									e.preventDefault();
@@ -614,11 +596,11 @@ function EventDetail(props) {
 						</Grid>
 
 						<Grid item xs={3}>
-							<EventEditButton />
+              {EventEditButton()}
 						</Grid>
 
 						<Grid item xs={3}>
-							<EventDeleteButton />
+              {EventDeleteButton()}
 						</Grid>
 					</Grid>
 				</Grid>

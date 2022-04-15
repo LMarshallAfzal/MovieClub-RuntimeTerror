@@ -66,4 +66,5 @@ urlpatterns = [
     path("is_following/<int:user_id>/", views.is_following, name = "is_following"),
     path("toggle_notifications/<int:club_id>/", views.toggle_notifications, name = "toggle_notifications"),
     path("get_notifications_status/<int:club_id>/", views.get_notifications_status, name = "get_notifications_status"),
+    path("set_meeting_complete/<int:club_id>/", views.mark_meeting_complete, name = "set_meeting_complete"),
 ]

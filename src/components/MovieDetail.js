@@ -11,7 +11,6 @@ import HomepageCard from "./helper/HomepageCard";
 import ThemeButton from "./core/ThemeButton";
 
 function MovieDetail() {
-  const params = useParams();
   let { movieID } = useParams();
   const [movie, setMovie] = useState("");
   const [movieAPIData, setMovieAPIData] = useState("");
@@ -19,18 +18,19 @@ function MovieDetail() {
   const [score, setScore] = useState(0);
   const [hasWatched, setHasWatched] = useState(0);
 
-  let { user, authTokens } = useContext(AuthContext);
+  let { user } = useContext(AuthContext);
   let api = useFetch();
 
   useEffect(() => {
-    getHasWatched();
     getMovie();
     getRating();
     getMovieAPIData();
-  }, [hasWatched, movieID, movie.imdb_id, movieAPIData.Poster, hasRated]);
+    getHasWatched();
+
+  }, [hasWatched, movieID, movieAPIData.Poster, movie.imdb_id, hasRated]);
 
   let addToWatchedList = async () => {
-    let {response} = await api(`/add_watched_movie/${movieID}/`, "POST", {
+    let { response } = await api(`/add_watched_movie/${movieID}/`, "POST", {
       user: user.user_id,
       movie: movieID,
     });
@@ -40,56 +40,70 @@ function MovieDetail() {
   };
 
   let removeFromWatchList = async () => {
-    let {response} = await api(`/remove_watched_movie/${movieID}/`, "DELETE");
+    let { response } = await api(`/remove_watched_movie/${movieID}/`, "DELETE");
     if (response.status === 200) {
       setHasWatched(2);
     }
   };
 
   let getHasWatched = async () => {
-    let {response} = await api(`/has_watched/${movieID}/`, "GET");
+    let { response, data } = await api(`/has_watched/${movieID}/`, "GET");
     if (response.status === 200) {
-      setHasWatched(1);
-    } else {
-      setHasWatched(2);
+      if (data.watched) {
+        setHasWatched(1);
+      } else {
+        setHasWatched(2);
+      }
     }
   };
 
   let getMovie = async () => {
-    let {response, data} = await api(`/get_movie/${movieID}/`, "GET");
+    let { response, data } = await api(`/get_movie/${movieID}/`, "GET");
     if (response.status === 200) {
       setMovie(data);
       if (data.ratings && data.ratings.length) {
         if (data.ratings.includes(user.user_id)) {
           setHasRated(1);
+          
+          console.log("User " + user.user_id + " has rated movie " + movieID);
         } else {
-          setHasRated(2);
-        }
+          setHasRated(2);        }
       } else {
         setHasRated(2);
+        console.log(
+          "User " + user.user_id + " has yet to rate movie " + movieID
+        );
       }
     }
   };
 
-
-  
-
   let getRating = async () => {
-    let {response, data} = await api(`/get_rating/${movieID}/`, "GET");
+    let { response, data } = await api(`/get_rating/${movieID}/`, "GET");
     if (response.status === 200) {
+      console.log(
+        "User " +
+          user.user_id +
+          " rated movie " +
+          movieID +
+          " with score " +
+          data.score
+      );
       setScore(data.score);
       setHasRated(1);
     } else {
       setHasRated(2);
+      setScore(0);
+      console.log(
+        "No rating for movie " + movieID + " from user " + user.user_id
+      );
     }
   };
-
 
   let getMovieAPIData = async () => {
     axios
       .get(`https://www.omdbapi.com/?i=tt${movie.imdb_id}&apikey=199b93be`)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setMovieAPIData(res.data);
       });
   };
@@ -116,7 +130,7 @@ function MovieDetail() {
   };
 
   let addRating = async (newValue) => {
-    let {response, data} = await api(`/add_rating/${movieID}/`, "POST", {
+    let { response, data } = await api(`/add_rating/${movieID}/`, "POST", {
       user: user.user_id,
       movie: movieID,
       score: newValue,
@@ -128,7 +142,6 @@ function MovieDetail() {
       setHasRated(2);
     }
   };
-
 
   return (
     <Grid container spacing={2} direction={"row"}>
@@ -243,9 +256,9 @@ function MovieDetail() {
               />
               <ThemeButton
                 onClick={() => {
-                  hasWatched == 2 ? addToWatchedList() : removeFromWatchList();
+                  hasWatched == 2 ? addToWatchedList() : removeFromWatchList();window.location.reload(false);
                 }}
-                text={hasWatched == 2 ? "watch" : "unwatch"}
+                text={hasWatched === 2 ? "watch" : "unwatch"}
                 style={"primary"}
               />
             </Grid>
