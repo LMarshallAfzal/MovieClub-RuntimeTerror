@@ -13,14 +13,10 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 import ThemeButton from "../../components/core/ThemeButton";
 import AuthContext from "../../components/helper/AuthContext";
-import UserContext from "../../components/helper/UserContext";
 import { themes } from "../../resources/data/MovieThemes";
-import { moviesWithPoster } from "../../resources/data/DummyMoviesData";
 import moviePoster from "../../resources/images/empty_movie_poster.png";
 import MovieCard from "../../components/MovieCard";
 import HomepageCard from "../../components/helper/HomepageCard";
-import { DummyClubMemberData } from "../../resources/data/DummyClubMemberData";
-import { DummyClubData } from "../../resources/data/DummyClubsData";
 import { useNavigate } from "react-router";
 import useFetch from "../../components/helper/useFetch";
 

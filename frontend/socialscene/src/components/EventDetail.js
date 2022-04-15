@@ -13,10 +13,11 @@ import {
 	Tooltip,
 	Checkbox,
 	FormControlLabel,
-	Typography
-
+	Typography,
+	Alert,
 } from "@mui/material";
-import { Link } from 'react-router-dom'
+import CheckIcon from "@mui/icons-material/Check";
+import { Link } from "react-router-dom";
 
 import "../styling/components/EventDetail.css";
 import { useParams } from "react-router";
@@ -25,8 +26,7 @@ import MovieWatchRateDialog from "./helper/MovieWatchRateDialog";
 import moviePoster from "../resources/images/empty_movie_poster.png";
 import AuthContext from "./helper/AuthContext";
 import useFetch from "./helper/useFetch";
-import {MovieDataAPI} from "./helper/MovieDataAPI";
-
+import { MovieDataAPI } from "./helper/MovieDataAPI";
 
 function EventDetail(props) {
 	let { user, authTokens } = useContext(AuthContext);
@@ -40,33 +40,90 @@ function EventDetail(props) {
 	const [isOrganiser, setIsOrganiser] = useState(false);
 	const [attendees, setAttendees] = useState([]);
 	const [isAttending, setIsAttending] = useState(false);
+	const [alert, setAlert] = useState(false);
 	const [error, setError] = useState(false);
 	const [errorText, setErrorText] = useState("");
 
+	const [titleError, setTitleError] = useState(false);
+	const [titleErrorText, setTitleErrorText] = useState("");
+	const [descriptionError, setDescriptionError] = useState(false);
+	const [descriptionErrorText, setDescriptionErrorText] = useState("");
+	const [dateError, setDateError] = useState(false);
+	const [dateErrorText, setDateErrorText] = useState("");
+	const [startTimeError, setStartTimeError] = useState(false);
+	const [startTimeErrorText, setStartTimeErrorText] = useState("");
+	const [endTimeError, setEndTimeError] = useState(false);
+	const [endTimeErrorText, setEndTimeErrorText] = useState("");
+	const [meetingLinkError, setMeetingLinkError] = useState(false);
+	const [meetingLinkErrorText, setMeetingLinkErrorText] = useState("");
+
+	let resetErrorState = () => {
+		setTitleError(false);
+		setTitleErrorText("");
+		setDescriptionError(false);
+		setDescriptionErrorText("");
+		setDateError(false);
+		setDateErrorText("");
+		setStartTimeError(false);
+		setStartTimeErrorText("");
+		setEndTimeError(false);
+		setEndTimeErrorText("");
+		setMeetingLinkError(false);
+		setMeetingLinkErrorText("");
+	};
+
 	let errorHandler = (data) => {
-		if(Object.keys(data).includes("club_has_no_upcoming_meeting")) {
+		if (Object.keys(data).includes("meeting_title")) {
+			setTitleError(true);
+			setTitleErrorText(data.meeting_title);
+		}
+		if (Object.keys(data).includes("description")) {
+			setDescriptionError(true);
+			setDescriptionErrorText(data.description);
+		}
+		if (Object.keys(data).includes("date")) {
+			setDateError(true);
+			setDateErrorText(data.date);
+		}
+		if (Object.keys(data).includes("start_time")) {
+			setStartTimeError(true);
+			setStartTimeErrorText(data.start_time);
+		}
+		if (Object.keys(data).includes("end_time")) {
+			setEndTimeError(true);
+			setEndTimeErrorText(data.end_time);
+		}
+		if (Object.keys(data).includes("meeting_link")) {
+			setMeetingLinkError(true);
+			setMeetingLinkErrorText(data.meeting_link);
+		}
+		if (Object.keys(data).includes("club_has_no_upcoming_meeting")) {
 			setError(true);
 			setErrorText("No upcoming meeting!");
 		}
-	}
+	};
 
-	let getUser = useCallback(
-		async (id) => {
-			let { response, data } = await api(`/user/${id}/`, "GET");
-			if (response.status === 200) {
-				setOrganiser(data);
-				return data;
-			}
-		},
-		[]
-	);
+	let getUser = useCallback(async (id) => {
+		let { response, data } = await api(`/user/${id}/`, "GET");
+		if (response.status === 200) {
+			return data;
+		}
+	}, []);
+
+	let getOwner = async () => {
+		let { response, data } = await api(`/club_owner/${clubID}`, "GET");
+		if (response.status === 200) {
+			setOrganiser(data[0]);
+		}
+	};
 
 	useEffect(() => {
+		getOwner();
 		getMembershipData();
 		getMeetingData(clubID);
 		console.log(myMeetingData.movie);
 		console.log(myMeetingData.organiser);
-	}, [props,clubID]);
+	}, [props, clubID]);
 
 	useEffect(() => {
 		async function fetchAttendees() {
@@ -86,7 +143,10 @@ function EventDetail(props) {
 	};
 
 	let getMembershipData = async (e) => {
-		let { response, data } = await api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
+		let { response, data } = await api(
+			`/get_user_joined_clubs/${user.user_id}/`,
+			"GET"
+		);
 		if (response.status === 200) {
 			setMyClubData(data);
 			if (data.is_organiser) {
@@ -112,9 +172,12 @@ function EventDetail(props) {
 	};
 
 	let getMeetingData = async (id) => {
-		let { response, data } = await api(`/get_club_upcoming_meeting/${id}/`, "GET");
+		let { response, data } = await api(
+			`/get_club_upcoming_meeting/${id}/`,
+			"GET"
+		);
 		if (response.status === 200) {
-			console.log(data.meeting_link)
+			console.log(data.meeting_link);
 			setMyMeetingData(data);
 			getMovie(data.movie);
 			getUser(data.organiser);
@@ -124,14 +187,10 @@ function EventDetail(props) {
 					setIsAttending(true);
 				}
 			}
-
-		}
-		else {
+		} else {
 			errorHandler(data);
 		}
-
 	};
-
 
 	let getMovie = async (id) => {
 		let { response, data } = await api(`/get_movie/${id}/`, "GET");
@@ -142,16 +201,20 @@ function EventDetail(props) {
 
 	let editMeeting = async (e) => {
 		e.preventDefault();
+		resetErrorState();
 		let { response, data } = await api(`/edit_meeting/${clubID}/`, "PUT", {
-			meeting_title: e.target.meeting_title.value,
-			description: e.target.description.value,
-			date: e.target.date.value,
-			start_time: e.target.start_time.value,
-			end_time: e.target.end_time.value,
-			meeting_link: "placeholder",
+			meeting_title: myMeetingData.meeting_title,
+			date: myMeetingData.date,
+			start_time: myMeetingData.start_time,
+			end_time: myMeetingData.end_time,
+			description: myMeetingData.description,
+			meeting_link: myMeetingData.meeting_link,
 		});
 		if (response.status === 200) {
 			setMyMeetingData(data);
+			setAlert(true);
+		} else {
+			errorHandler(data);
 		}
 	};
 
@@ -163,7 +226,7 @@ function EventDetail(props) {
 		if (response.status === 200) {
 			setIsAttending(true);
 		}
-	}
+	};
 
 	let leaveMeeting = async () => {
 		let { response, data } = await api(`/leave_meeting/${clubID}/`, "PUT", {
@@ -173,7 +236,7 @@ function EventDetail(props) {
 		if (response.status === 200) {
 			setIsAttending(false);
 		}
-	}
+	};
 
 	function toggleAttending() {
 		if (isAttending === true) {
@@ -181,8 +244,7 @@ function EventDetail(props) {
 		} else {
 			attendMeeting();
 		}
-
-	};
+	}
 
 	console.log(myClubData);
 	console.log(myMeetingData);
@@ -209,13 +271,13 @@ function EventDetail(props) {
 	};
 
 	function EventEditButton() {
-		if (organiser === user) {
-			// replace with organiser condition
+		console.log("organiser", organiser);
+		if (organiser.id === user.user_id) {
 			return (
 				<ThemeButton
-					text={edit ? "save" : "edit"}
-					style={edit ? "primary" : "normal"}
-					onClick={edit ? handleSave : openEdit}
+					text={"edit"}
+					style={"primary"}
+					onClick={(e) => editMeeting(e)}
 				/>
 			);
 		} else {
@@ -224,7 +286,7 @@ function EventDetail(props) {
 	}
 
 	function EventDeleteButton() {
-		if (organiser === user) {
+		if (organiser.id === user.user_id) {
 			// replace with organiser condition
 			return (
 				<ThemeButton
@@ -240,10 +302,8 @@ function EventDetail(props) {
 		}
 	}
 
-
-
 	function EventFields() {
-		if (edit === false) {
+		if (!organiser.id === user.user_id) {
 			return (
 				<Stack spacing={2}>
 					<TextField
@@ -292,19 +352,23 @@ function EventDetail(props) {
 						InputLabelProps={{ shrink: true }}
 					/>
 
-					<FormControlLabel control={<Checkbox
-						checked={isAttending}
-						onChange={(e) => toggleAttending()}
-
-
-					/>} label="Mark as attending" />
+					<FormControlLabel
+						control={
+							<Checkbox
+								checked={isAttending}
+								onChange={(e) => toggleAttending()}
+							/>
+						}
+						label="Mark as attending"
+					/>
 				</Stack>
 			);
 		} else {
 			return (
 				<Stack spacing={2}>
-
 					<TextField
+						error={titleError}
+						helperText={titleErrorText}
 						fullWidth
 						required
 						placeholder={"event title"}
@@ -316,6 +380,8 @@ function EventDetail(props) {
 					/>
 
 					<TextField
+						error={descriptionError}
+						helperText={descriptionErrorText}
 						fullWidth
 						required
 						placeholder={"short event description"}
@@ -327,6 +393,8 @@ function EventDetail(props) {
 					/>
 
 					<TextField
+						error={dateError}
+						helperText={dateErrorText}
 						fullWidth
 						required
 						label={"date"}
@@ -339,6 +407,8 @@ function EventDetail(props) {
 					/>
 
 					<TextField
+						error={startTimeError}
+						helperText={startTimeErrorText}
 						fullWidth
 						required
 						label={"start"}
@@ -352,6 +422,8 @@ function EventDetail(props) {
 					/>
 
 					<TextField
+						error={endTimeError}
+						helperText={endTimeErrorText}
 						fullWidth
 						required
 						label={"end"}
@@ -363,6 +435,30 @@ function EventDetail(props) {
 						InputLabelProps={{ shrink: true }}
 						inputProps={{ step: 300 }}
 					/>
+
+					<TextField
+						error={meetingLinkError}
+						helperText={meetingLinkErrorText}
+						fullWidth
+						required
+						label={"link"}
+						type={"text"}
+						name={"meeting_link"}
+						value={myMeetingData.meeting_link}
+						defaultValue={myMeetingData.meeting_link}
+						onChange={(e) => onChange(e)}
+						InputLabelProps={{ shrink: true }}
+					/>
+
+					<FormControlLabel
+						control={
+							<Checkbox
+								checked={isAttending}
+								onChange={(e) => toggleAttending()}
+							/>
+						}
+						label="Mark as attending"
+					/>
 				</Stack>
 			);
 		}
@@ -370,16 +466,15 @@ function EventDetail(props) {
 	if (error) {
 		return (
 			<div className={"home-page-card-background"}>
-			<Grid container padding={2} spacing={2} >
-				<Grid item xs={12}>
-					<Typography variant="h4" align="center">
-						{errorText}
-					</Typography>
+				<Grid container padding={2} spacing={2}>
+					<Grid item xs={12}>
+						<Typography variant="h4" align="center">
+							{errorText}
+						</Typography>
+					</Grid>
 				</Grid>
-				
-			</Grid>
-		</div>
-	);
+			</div>
+		);
 	}
 	return (
 		<div className={"home-page-card-background"}>
@@ -411,7 +506,7 @@ function EventDetail(props) {
 												sx={{ fontSize: "1.2em" }}
 												precision={0.5}
 												name={"read-only"}
-											// value={movie.rating}
+												// value={movie.rating}
 											/>
 
 											<Tooltip
@@ -448,13 +543,22 @@ function EventDetail(props) {
 										/>
 									</Grid>
 									<Grid item xs={8}>
-
 										<h6 className={"show-event-organiser-title"}>organiser</h6>
 										<h5>{organiser.first_name}</h5>
 										<h5>{organiser.last_name}</h5>
 									</Grid>
 									<Grid item xs={12}>
-										 <EventFields />
+										{alert ? (
+											<Alert
+												icon={<CheckIcon fontSize="inherit" />}
+												severity="success"
+											>
+												Successfully edited meeting!
+											</Alert>
+										) : (
+											<></>
+										)}
+										<EventFields />
 									</Grid>
 								</Grid>
 							</Stack>
@@ -508,10 +612,13 @@ function EventDetail(props) {
 						</Grid>
 
 						<Grid item xs={3}>
-							<ThemeButton text={"join"} onClick={(e) => {
-								e.preventDefault();
-								window.location.href = myMeetingData.meeting_link;
-							}} />
+							<ThemeButton
+								text={"join"}
+								onClick={(e) => {
+									e.preventDefault();
+									window.location.href = myMeetingData.meeting_link;
+								}}
+							/>
 						</Grid>
 
 						<Grid item xs={3}>
