@@ -98,6 +98,5 @@ wcwidth==0.2.5
 Werkzeug==2.0.3
 wrapt==1.13.3
 zipp==3.7.0
-gunicorn==20.0.4
 whitenoise==5.0.0
-"""
+gunicorn==20.0.4
