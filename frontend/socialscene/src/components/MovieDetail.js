@@ -116,38 +116,16 @@ function MovieDetail() {
   };
 
   let addRating = async (newValue) => {
-    let response = await fetch(
-      "http://127.0.0.1:8000/add_rating/" + movieID + "/",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          user: user.user_id,
-          movie: movieID,
-          score: newValue,
-        }),
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-      }
-    );
-    let data = await response.json();
-    if (response.status === 200) {
-      setScore(data.score);
-      setHasRated(1);
-    } else {
-      setHasRated(2);
-    }
-  };
-
-  let addRating = async (newValue) => {
-    let response = await api(`/add_rating/${movieID}/`, "POST", {
+    let {response, data} = await api(`/add_rating/${movieID}/`, "POST", {
       user: user.user_id,
       movie: movieID,
       score: newValue,
     });
     if (response.status === 200) {
-      setScore(newValue);
+      setScore(data.score);
+      setHasRated(1);
+    } else {
+      setHasRated(2);
     }
   };
 

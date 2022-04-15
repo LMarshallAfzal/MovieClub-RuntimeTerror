@@ -1,15 +1,5 @@
 import React from 'react'
 
-function get_club_membership() { 
-    
-    const userData = localStorage.getItem('user')
-    fetch('http://127.0.0.1:8000/get_user_joined_clubs/' + userData.username + '/', {})
-    .then(data => data.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error))
-    
-}
-
 export const DummyDashboardClubsData = [
     {
         name: 'club1',

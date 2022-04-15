@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
 		password: "",
 	});
 	const navigate = useNavigate();
+	const baseUrl = "http://localhost:8000";
 
 	const [usernameError, setUsernameError] = useState(false);
 	const [passwordError, setPasswordError] = useState(false);
@@ -57,7 +58,7 @@ export const AuthProvider = ({ children }) => {
 		e.preventDefault();
 		resetErrorState();
 		console.log("Form submitted", e);
-		let response = await fetch("http://127.0.0.1:8000/token/", {
+		let response = await fetch(`${baseUrl}/token/`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -86,7 +87,7 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	let updateToken = async () => {
-		let response = await fetch("http://127.0.0.1:8000/token/refresh/", {
+		let response = await fetch(`${baseUrl}/token/refresh/`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
