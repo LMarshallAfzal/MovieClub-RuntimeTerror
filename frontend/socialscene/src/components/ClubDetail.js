@@ -35,7 +35,7 @@ function ClubDetail() {
 	const [myClubData, setMyClubData] = useState([]);
 	const [banned, setBanned] = useState([]);
 	const [user1, setUser1] = useState("");
-	const [isOwner, setIsOwner] = useState(false);
+	const [isOwner, setIsOwner] = useState(0);
 	const [theme, setTheme] = useState("");
 	const [alert, setAlert] = useState(false);
 
@@ -111,8 +111,8 @@ function ClubDetail() {
 		let {response, data} = await api(`/club_owner/${clubID}/`, "GET");
 		if(response.status === 200) {
 			data.find((owner) => owner.username === user.username)
-				? setIsOwner(true)
-				: setIsOwner(false);
+				? setIsOwner(1)
+				: setIsOwner(2);
 			setOwner(data);
 		}
 	}
@@ -188,11 +188,12 @@ function ClubDetail() {
 		myClubData.find(
 			(val) => val.club_id === clubID && val.is_organiser === true
 		)
-			? setIsOrganiser(true)
-			: setIsOrganiser(false);
-	}, [clubID,isMember]);
+			? setIsOrganiser(1)
+			: setIsOrganiser(2);
+	}, [clubID,isMember,isOwner,club.members]);
 
 	const toggleBannedView = () => {
+		window.location.reload(false);
 		setBannedMembers(!showBannedMembers);
 	};
 
@@ -207,6 +208,7 @@ function ClubDetail() {
 	const handleClubDelete = () => {
 		closeDeleteClubDialog();
 		deleteClub();
+		window.location.reload(false);
 	};
 
 	const handleBan = (id) => {
@@ -252,7 +254,7 @@ function ClubDetail() {
 										alt={user.first_name + " " + user.last_name}
 									/>
 								}
-								onDelete={isOwner ? () => handleBan(user.id) : undefined}
+								onDelete={isOwner === 1 ? () => handleBan(user.id) : undefined}
 								onClick={() => handleUserClick(user.id)}
 								sx={{ mr: 1, mt: 1 }}
 							/>
@@ -287,7 +289,7 @@ function ClubDetail() {
 	};
 
 	function ClubEdit() {
-		if (isOwner) {
+		if (isOwner === 1) {
 			return (
 				<>
 					{alert ? (
@@ -451,25 +453,25 @@ function ClubDetail() {
 
 					<ThemeButton
 						text={"join"}
-						style={isMember == 2 && !isOwner ? "primary" : "disabled"}
+						style={isMember == 2 && isOwner === 2 ? "primary" : "disabled"}
 						onClick={() => joinClub()}
 					/>
 
 					<ThemeButton
 						text={"leave"}
-						style={isMember == 1 && !isOwner ? "primary" : "disabled"}
+						style={isMember == 1 && isOwner === 2 ? "primary" : "disabled"}
 						onClick={() => leaveClub()}
 					/>
 
 					<ThemeButton
 						text={"delete"}
-						style={isOwner ? "primary" : "disabled"}
+						style={isOwner===1 ? "primary" : "disabled"}
 						onClick={openDeleteClubDialog}
 					/>
 
 					<ThemeButton
 						text={showBannedMembers ? "members" : "banned"}
-						style={isOwner ? "normal" : "disabled"}
+						style={isOwner === 1 ? "normal" : "disabled"}
 						onClick={toggleBannedView}
 					/>
 				</Stack>
@@ -479,7 +481,7 @@ function ClubDetail() {
 				<Stack spacing={2} sx={{ height: "100%" }}>
 					<ClubEdit />
 
-					{isOwner ? (
+					{isOwner === 1 ? (
 						<ThemeButton text={"edit"} onClick={handleEditClub} />
 					) : (
 						<ThemeButton text={"edit"} style={"disabled"} />

@@ -11,6 +11,8 @@ from .communication.club_emails import ClubEmail
 from .decorators import *
 from .helpers import *
 import asyncio
+import datetime
+from datetime import datetime
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -541,7 +543,15 @@ def get_club(request, club_id):
     serializer = ClubSerializer(club, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-
+@api_view([ 'GET'])
+@permission_classes([IsAuthenticated])
+def mark_meeting_complete(request,club_id):
+    club = Club.objects.get(id=club_id)
+    meeting = club.get_upcoming_meeting()
+    if meeting.date <= datetime.now().date() and meeting.end_time <= datetime.now().time():
+            meeting.completed = True
+            meeting.save()
+    return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

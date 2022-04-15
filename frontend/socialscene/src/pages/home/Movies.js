@@ -10,6 +10,8 @@ import {Outlet} from "react-router";
 import MovieCard from "../../components/MovieCard";
 import HomepageCard from "../../components/helper/HomepageCard";
 import useFetch from "../../components/helper/useFetch";
+import LinearProgress from '@mui/material/LinearProgress';
+
 
 
 const Movies = () => {
@@ -24,6 +26,7 @@ const Movies = () => {
 	const [recommendedMovies, setRecommendedMovies] = useState([]);
 	const [watchedMovies, setWatchedMovies] = useState([]);
     const [allMovies, setAllMovies] = useState([]);
+    const [loading,setLoading] = useState(false)
 
 	useEffect(() => {
 		getRecommendedMovies();
@@ -51,9 +54,11 @@ const Movies = () => {
     }
 
 	let getRecommendedMovies = async () => {
+        setLoading(true);
 		let {response, data} = await api(`/rec_movies/`, "GET");
 		if (response.status === 200) {
 			setRecommendedMovies(data);
+            setLoading(false);
 		}
 	};
 
@@ -140,6 +145,7 @@ const Movies = () => {
     
             <Grid item xs={12}>
                 <HomepageCard title={"recommended"}>
+
                     <Grid item xs={12}>
                         <Stack direction={"row"}
                                spacing={2}

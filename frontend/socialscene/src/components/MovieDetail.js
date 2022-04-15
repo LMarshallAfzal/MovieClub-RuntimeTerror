@@ -23,11 +23,12 @@ function MovieDetail() {
   let api = useFetch();
 
   useEffect(() => {
-    getHasWatched();
     getMovie();
     getRating();
     getMovieAPIData();
-  }, [hasWatched, movieID, movie.imdb_id, movieAPIData.Poster, hasRated]);
+    getHasWatched();
+
+  }, [hasWatched, movieID, movieAPIData.Poster, movie.imdb_id, hasRated]);
 
   let addToWatchedList = async () => {
     let { response } = await api(`/add_watched_movie/${movieID}/`, "POST", {
@@ -64,10 +65,10 @@ function MovieDetail() {
       if (data.ratings && data.ratings.length) {
         if (data.ratings.includes(user.user_id)) {
           setHasRated(1);
+          
           console.log("User " + user.user_id + " has rated movie " + movieID);
         } else {
-          setHasRated(2);
-        }
+          setHasRated(2);        }
       } else {
         setHasRated(2);
         console.log(
@@ -103,7 +104,7 @@ function MovieDetail() {
     axios
       .get(`http://www.omdbapi.com/?i=tt${movie.imdb_id}&apikey=199b93be`)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setMovieAPIData(res.data);
       });
   };
@@ -256,7 +257,7 @@ function MovieDetail() {
               />
               <ThemeButton
                 onClick={() => {
-                  hasWatched == 2 ? addToWatchedList() : removeFromWatchList();
+                  hasWatched == 2 ? addToWatchedList() : removeFromWatchList();window.location.reload(false);
                 }}
                 text={hasWatched == 2 ? "watch" : "unwatch"}
                 style={"primary"}
