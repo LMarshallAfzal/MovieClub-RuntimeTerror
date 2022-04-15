@@ -24,7 +24,7 @@ const Homepage = () => {
 
     // const getRandomMovie = async () => {
 
-    //     let response = await fetch("http://127.0.0.1:8000/random_movie/", {
+    //     let response = await fetch("http://https://social-scene.herokuapp.com/random_movie/", {
     //         method: "GET",
     //         headers: {
     //             "Content-Type": "application/json",

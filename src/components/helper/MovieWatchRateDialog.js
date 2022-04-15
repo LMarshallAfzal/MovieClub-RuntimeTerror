@@ -39,7 +39,7 @@ function MovieWatchRateDialog(props) {
 
     let addRating = async (id, ratingScore) => {
         let response1 = await fetch(
-            "http://127.0.0.1:8000/add_rating/" + id + "/",
+            "http://https://social-scene.herokuapp.com/add_rating/" + id + "/",
             {
                 method: "POST",
                 body: JSON.stringify({
@@ -57,7 +57,7 @@ function MovieWatchRateDialog(props) {
         if (response1.status === 200) {
             setRating(data1);
         }
-        // let response2 = await fetch("http://127.0.0.1:8000/train/movie/", {
+        // let response2 = await fetch("http://https://social-scene.herokuapp.com/train/movie/", {
         //     method: "GET",
         //     headers: {
         //         "Content-Type": "application/json; charset=UTF-8",
@@ -65,7 +65,7 @@ function MovieWatchRateDialog(props) {
         //     },
         // });
         // await response2.json();
-        // let response3 = await fetch("http://127.0.0.1:8000/train/meeting/", {
+        // let response3 = await fetch("http://https://social-scene.herokuapp.com/train/meeting/", {
         //     method: "GET",
         //     headers: {
         //         "Content-Type": "application/json; charset=UTF-8",
@@ -77,7 +77,7 @@ function MovieWatchRateDialog(props) {
 
     let editRating = async (id, ratingScore) => {
         let response = await fetch(
-            "http://127.0.0.1:8000/edit_rating/" + id + "/",
+            "http://https://social-scene.herokuapp.com/edit_rating/" + id + "/",
             {
                 method: "PUT",
                 body: JSON.stringify({
@@ -98,7 +98,7 @@ function MovieWatchRateDialog(props) {
     };
 
     let getRating = async (id) => {
-        let response = await fetch("http://127.0.0.1:8000/get_rating/" + id + "/",
+        let response = await fetch("http://https://social-scene.herokuapp.com/get_rating/" + id + "/",
             {
                 method: "GET",
                 headers: {
@@ -115,7 +115,7 @@ function MovieWatchRateDialog(props) {
 
     let addToWatchedList = async (id) => {
         let response = await fetch(
-            "http://127.0.0.1:8000/add_watched_movie/" + id + "/",
+            "http://https://social-scene.herokuapp.com/add_watched_movie/" + id + "/",
             {
                 method: "POST",
                 body: JSON.stringify({movie: id, user: user.user_id}),

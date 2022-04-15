@@ -139,7 +139,7 @@ export const Signup = () => {
 	let submitSignupForm = async (e) => {
 		e.preventDefault();
 		resetErrorState();
-		let response = await fetch("http://127.0.0.1:8000/sign_up/", {
+		let response = await fetch("http://https://social-scene.herokuapp.com/sign_up/", {
 			method: "POST",
 			body: JSON.stringify({
 				username: signupCredentials.username,

@@ -17,7 +17,7 @@ function NewClub() {
     
     let submitCreateClubForm = async (e) => {
         e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/create_club/',{
+        let response = await fetch('http://https://social-scene.herokuapp.com/create_club/',{
             method:'POST',
             body:JSON.stringify({
                 "club_name": club.club_name, 

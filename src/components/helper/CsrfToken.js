@@ -22,7 +22,7 @@ const CsrfToken = () => {
   };
 
   const fetchCsrf = useCallback(async () => {
-    fetch("http://127.0.0.1:8000/csrf/", {
+    fetch("https://social-scene.herokuapp.com/csrf/", {
       mode: "cors",
       cache: "no-cache",
       credentials: "include",
