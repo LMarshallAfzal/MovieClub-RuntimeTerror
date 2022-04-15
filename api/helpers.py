@@ -1,7 +1,8 @@
 import datetime
 import random
 from datetime import datetime
-
+import schedule
+import time
 from .models import Movie, Club
 
 
@@ -70,3 +71,8 @@ def update_upcoming_meetings():
         if meeting.date <= datetime.date.today() and meeting.end_time <= datetime.now().time():
             meeting.completed = True
             meeting.save()
+
+# schedule.every(1).minutes.do(update_upcoming_meetings())
+
+
+

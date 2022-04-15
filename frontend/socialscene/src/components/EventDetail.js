@@ -43,7 +43,6 @@ function EventDetail(props) {
 	const [alert, setAlert] = useState(false);
 	const [error, setError] = useState(false);
 	const [errorText, setErrorText] = useState("");
-
 	const [titleError, setTitleError] = useState(false);
 	const [titleErrorText, setTitleErrorText] = useState("");
 	const [descriptionError, setDescriptionError] = useState(false);
@@ -156,13 +155,6 @@ function EventDetail(props) {
 	};
 
 	const movieAPIData = MovieDataAPI(specificMovie.imdb_id);
-
-	let addToWatchedList = async (id) => {
-		await api(`/add_watched_movie/${id}/`, "POST", {
-			movie: id,
-			user: user.user_id,
-		});
-	};
 
 	let deleteMeeting = async (id) => {
 		let { response, data } = await api(`/cancel_meeting/${id}/`, "DELETE");
@@ -506,7 +498,7 @@ function EventDetail(props) {
 												sx={{ fontSize: "1.2em" }}
 												precision={0.5}
 												name={"read-only"}
-												// value={movie.rating}
+											    value={movieAPIData ? parseFloat(movieAPIData.imdbRating)/2 : 0}
 											/>
 
 											<Tooltip
@@ -531,7 +523,6 @@ function EventDetail(props) {
 									<Grid item xs={12}>
 										<Divider>
 											<Chip
-												// label={club.clubName} // get club name
 												sx={{ mr: 1, mt: 1 }}
 											/>
 										</Divider>
@@ -539,7 +530,7 @@ function EventDetail(props) {
 									<Grid item xs={4}>
 										<Avatar
 											sx={{ width: 1, height: 1 }}
-											src={organiser.iconImage}
+											src={organiser.gravatar}
 										/>
 									</Grid>
 									<Grid item xs={8}>
@@ -579,7 +570,7 @@ function EventDetail(props) {
 									label={user.first_name + " " + user.last_name}
 									avatar={
 										<Avatar
-											src={user.iconImage}
+											src={user.gravatar}
 											alt={user.first_name + " " + user.last_name}
 										/>
 									}
@@ -612,11 +603,12 @@ function EventDetail(props) {
 						</Grid>
 
 						<Grid item xs={3}>
+							
 							<ThemeButton
 								text={"join"}
 								onClick={(e) => {
 									e.preventDefault();
-									window.location.href = myMeetingData.meeting_link;
+									window.open(myMeetingData.meeting_link, '_blank');
 								}}
 							/>
 						</Grid>

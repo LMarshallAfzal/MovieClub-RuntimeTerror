@@ -534,6 +534,7 @@ def remove_user_from_club(request, club_id, user_id):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def check_upcoming_meetings(request):
     update_upcoming_meetings()
     return Response(status=status.HTTP_200_OK)
