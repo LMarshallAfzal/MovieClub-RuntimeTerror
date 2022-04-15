@@ -10,15 +10,13 @@ import AuthContext from "../components/helper/AuthContext";
 import useFetch from "../components/helper/useFetch";
 
 function UserDetail() {
-  let { user, authTokens } = useContext(AuthContext);
+  let { user } = useContext(AuthContext);
   let { userID } = useParams();
   const [otherUser, setOtherUser] = useState([]);
   const [otherPreferences, setOtherPreferences] = useState([]);
   let api = useFetch();
   let getOtherUser = async (e) => {
-    let { response, data } = await api(`/user/${userID}/`, "GET");
-    console.log(data);
-    console.log(data.id);
+    let { data } = await api(`/user/${userID}/`, "GET");
     setOtherUser(data);
     setOtherPreferences(data.preferences);
   };
@@ -46,14 +44,13 @@ function UserDetail() {
   }
 
   let getFollowers = async (e) => {
-    let { response, data } = await api(`/followers/${userID}/`, "GET");
+    let { data } = await api(`/followers/${userID}/`, "GET");
     setFollowers(data);
-    console.log(data);
     setFollowerCount(data.length);
   };
 
   let getFollowees = async (e) => {
-    let { response, data } = await api(`/following/${userID}/`, "GET");
+    let { data } = await api(`/following/${userID}/`, "GET");
     setFollowees(data);
     setFolloweeCount(data.length);
   };
@@ -62,24 +59,22 @@ function UserDetail() {
   const [recentlyWatched, setRecentlyWatched] = useState([]);
 
   let toggleFollow = async (e) => {
-    let { response, data } = await api(`/toggle_follow/${userID}/`, "PUT");
-    console.log(data);
+    let { data } = await api(`/toggle_follow/${userID}/`, "PUT");
     setFollowing(!following);
   };
 
   let getIsFollowing = async (e) => {
-    let { response, data } = await api(`/is_following/${userID}/`, "GET");
+    let { data } = await api(`/is_following/${userID}/`, "GET");
     setFollowing(data.is_following);
-    console.log(data.is_following);
   };
 
   let getFavourites = async (e) => {
-    let { response, data } = await api(`/favourite_movies/${userID}/`, "GET");
+    let { data } = await api(`/favourite_movies/${userID}/`, "GET");
     setFavourites(data);
   };
 
   let getRecentlyWatched = async (e) => {
-    let { response, data } = await api(`/watched_list/${userID}/`, "GET");
+    let { data } = await api(`/watched_list/${userID}/`, "GET");
     setRecentlyWatched(data);
   };
 
@@ -87,19 +82,13 @@ function UserDetail() {
   const [userMembershipCount, setUserMembershipCount] = useState(null);
 
   let getUserMemberships = async (e) => {
-    let { response, data } = await api(
-      `/get_user_joined_clubs/${userID}/`,
-      "GET"
-    );
+    let { data } = await api(`/get_user_joined_clubs/${userID}/`, "GET");
     setUserMemberships(data);
     setUserMembershipCount(data.length);
   };
 
   let getUserIcon = async (e) => {
-    let { response, data } = await api(
-      `/other_user_gravatars/${userID}/`,
-      "GET"
-    );
+    let { data } = await api(`/other_user_gravatars/${userID}/`, "GET");
     setUserIcon(data.gravatar);
   };
 
@@ -115,7 +104,6 @@ function UserDetail() {
     getIsFollowing();
   }, [otherUser.id, userID]);
 
-  console.log(userIcon);
   return (
     <Grid container spacing={2} padding={2} direction={"row"}>
       <Grid item xs={6}>
