@@ -9,6 +9,7 @@ import MovieQuote from "../../components/MovieQuote";
 import HomepageCard from "../../components/helper/HomepageCard";
 import MovieCard from "../../components/MovieCard";
 import TextButton from "../../components/core/TextButton";
+import useFetch from "../../components/helper/useFetch";
 
 
 const Home = () => {
@@ -19,6 +20,7 @@ const Home = () => {
     const [myClubData, setMyClubData] = useState([]);
     const [recommendedMovies, setRecommendedMovies] = useState([]);
     let {user, authTokens} = useContext(AuthContext)
+    let api = useFetch();
 
     const cardHeight = 390;
 
@@ -28,34 +30,17 @@ const Home = () => {
     }, [])
 
     let getRecommendedMovies = async () => {
-        let response = await fetch("http://127.0.0.1:8000/rec_movies/", {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-                Authorization: "Bearer " + String(authTokens.access),
-            },
-        });
-        let data = await response.json();
+        let {response, data} = await api(`/rec_movies/`, "GET");
         if (response.status === 200) {
             setRecommendedMovies(data);
-        } else {
-            alert("Something went wrong");
         }
     };
 
-    let getMembershipData = async (e) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data = await response.json();
-        setMyClubData(data);
+    let getMembershipData = async () => {
+        let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
+        if (response.status === 200) {
+            setMyClubData(data);
+        }
     };
 
     return (

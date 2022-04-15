@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
+import useFetch from "./helper/useFetch";
 
 
 function EventCreate() {
@@ -25,6 +26,7 @@ function EventCreate() {
 	let nextDay = new Date(day);
 	let tomorrow = nextDay.setDate(day.getDate() + 2);
 	let { user, authTokens } = useContext(AuthContext);
+    let api = useFetch();
 
 	const [titleError, setTitleError] = useState(false);
 	const [titleErrorText, setTitleErrorText] = useState("");
@@ -77,17 +79,6 @@ function EventCreate() {
 			[e.target.name]: e.target.value,
 		}));
 	};
-
-	// let trainMeetingRecommendation = async () => {
-	//     let response = await fetch("http://127.0.0.1:8000/train/meeting/", {
-	//         method: "GET",
-	//         headers: {
-	//             "Content-Type": "application/json; charset=UTF-8",
-	//             Authorization: "Bearer " + String(authTokens.access),
-	//         },
-	//     });
-	//     await response.json();
-	// };
 
 	let resetErrorState = () => {
 		setTitleError(false);
@@ -188,26 +179,18 @@ function EventCreate() {
 		if (response.status === 201) {
 			setMeetingData(data);
             navigate(`/home/discussion/${clubID}`);
-		} else {
-            errorHandler(data);
+        } else {
+            errorHandler(response.data);
         }
+    };
 
-	};
-
-	let getMovieTitle = async (id) => {
-		let response = await fetch("http://127.0.0.1:8000/get_movie/" + id + "/", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + authTokens.access,
-			},
-		});
-		let data = await response.json();
-		console.log(data);
-		console.log(data.title);
-		setSelectedMovie(id);
-		setSelectedMovieTitle(data.title);
-	};
+    let getMovieTitle = async (id) => {
+        let {response, data} = await api(`/get_movie/${id}/`, "GET");
+        if (response.status === 200) {
+            setSelectedMovie(id);
+            setSelectedMovieTitle(data.title);
+        }
+    };
 
 	let getMovieAPIData = async (movie) => {
 		axios

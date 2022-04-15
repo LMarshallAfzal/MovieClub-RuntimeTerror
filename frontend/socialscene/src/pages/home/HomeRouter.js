@@ -4,29 +4,22 @@ import {Outlet, useLocation} from "react-router-dom";
 import Sidebar from "../../components/core/Sidebar";
 import NameHeader from "../../components/NameHeader";
 import {Grid} from "@mui/material";
-import CsrfToken from "../../components/helper/CsrfToken";
 import AuthContext from "../../components/helper/AuthContext";
+import useFetch from "../../components/helper/useFetch";
 import HomepageTitle from "../../components/helper/HomepageTitle";
 
 
 function HomeRouter() {
 
     let {authTokens, user} = useContext(AuthContext);
+    let api = useFetch();
     const [userData, setUserData] = useState('')
 
     let getCurrentUser = async () => {
-        let response = await fetch("http://127.0.0.1:8000/user/", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + authTokens.access,
-            },
-        });
-
-        let data = await response.json();
-        console.log(data)
-        setUserData(data);
+        let {response, data} = await api ("/user/", "GET");
+            setUserData(data);
     };
+    
 
     useEffect(() => {
         getCurrentUser();
@@ -47,7 +40,6 @@ function HomeRouter() {
 
     return (
         <>
-            <CsrfToken/>
             <Grid className={"home-grid"} container>
 
 

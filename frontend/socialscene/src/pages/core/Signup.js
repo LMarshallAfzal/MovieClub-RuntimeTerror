@@ -1,29 +1,27 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styling/pages/Signup.css";
 import HeadingCircle from "../../components/HeadingCircle";
 import {
 	Autocomplete,
-	Box,
 	Grid,
 	Stack,
 	TextField,
-	Button,
 	InputAdornment,
 	OutlinedInput,
 	FormControl,
 	InputLabel,
 } from "@mui/material";
 import ThemeButton from "../../components/core/ThemeButton";
-// import AuthContext from "../../components/helper/AuthContext";
 import CsrfToken from "../../components/helper/CsrfToken";
 import { themes } from "../../resources/data/MovieThemes";
 import TextButton from "../../components/core/TextButton";
+import useFetch from "../../components/helper/useFetch";
 
 export const Signup = () => {
 	const [passwordVisibility, togglePasswordVisibility] = useState(false);
 	const navigate = useNavigate();
-	// let { loginUser, setLoginCredentials, loginCredentials } = useContext(AuthContext);
+	let api = useFetch();
 	let [signupCredentials, setSignupCredentials] = useState({
 		username: "",
 		first_name: "",
@@ -77,7 +75,6 @@ export const Signup = () => {
 		value.map((val) => {
 			array.push(val.theme);
 		});
-		console.log(array);
 		setSignupCredentials((fieldData) => ({
 			...fieldData,
 			preferences: array,
@@ -160,13 +157,12 @@ export const Signup = () => {
 		});
 		let data = await response.json();
 		if (response.status === 201) {
-			navigate("/login/")
-
+			navigate("/login/");
 		} else {
 			errorHandler(e, data);
 		}
 	};
-
+	
 	return (
 		<Grid container direction={"row"} className={"signup-grid"} spacing={2}>
 			<CsrfToken />
@@ -270,7 +266,7 @@ export const Signup = () => {
 									{...params}
 									inputProps={{
 										...params.inputProps,
-										"data-testid": "preferences"
+										"data-testid": "preferences",
 									}}
 									error={preferencesError}
 									fullWidth

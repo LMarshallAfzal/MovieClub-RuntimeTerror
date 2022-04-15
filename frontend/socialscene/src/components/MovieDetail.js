@@ -5,6 +5,7 @@ import { Box, Card, CardMedia, Grid, Rating, Stack } from "@mui/material";
 import "../styling/components/MovieDetail.css";
 import moviePoster from "../resources/images/empty_movie_poster.png";
 import AuthContext from "./helper/AuthContext";
+import useFetch from "./helper/useFetch";
 import LoadingSkeleton from "./helper/LoadingSkeleton";
 import HomepageCard from "./helper/HomepageCard";
 import ThemeButton from "./core/ThemeButton";
@@ -19,6 +20,7 @@ function MovieDetail() {
   const [hasWatched, setHasWatched] = useState(0);
 
   let { user, authTokens } = useContext(AuthContext);
+  let api = useFetch();
 
   useEffect(() => {
     getHasWatched();
@@ -28,98 +30,56 @@ function MovieDetail() {
   }, [hasWatched, movieID, movie.imdb_id, movieAPIData.Poster, hasRated]);
 
   let addToWatchedList = async () => {
-    let response = await fetch(
-      "http://127.0.0.1:8000/add_watched_movie/" + movieID + "/",
-      {
-        method: "POST",
-        body: JSON.stringify({ movie: movieID, user: user.user_id }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + authTokens.access,
-        },
-      }
-    );
-    await response.json();
-    setHasWatched(1);
+    let { response } = await api(`/add_watched_movie/${movieID}/`, "POST", {
+      user: user.user_id,
+      movie: movieID,
+    });
+    if (response.status === 201) {
+      setHasWatched(1);
+    }
   };
 
   let removeFromWatchList = async () => {
-    let response = await fetch(
-      "http://127.0.0.1:8000/remove_watched_movie/" + movieID + "/",
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + authTokens.access,
-        },
-      }
-    );
-    setHasWatched(2);
-  };
-
-  let getHasWatched = async () => {
-    let response = await fetch(
-      "http://127.0.0.1:8000/has_watched/" + movieID + "/",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + authTokens.access,
-        },
-      }
-    );
-    let data = await response.json();
-    if (data.watched) {
-      setHasWatched(1);
-    } else {
+    let { response } = await api(`/remove_watched_movie/${movieID}/`, "DELETE");
+    if (response.status === 200) {
       setHasWatched(2);
     }
   };
 
-  let getMovie = async () => {
-    let response = await fetch(
-      "http://127.0.0.1:8000/get_movie/" + movieID + "/",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
+  let getHasWatched = async () => {
+    let { response, data } = await api(`/has_watched/${movieID}/`, "GET");
+    if (response.status === 200) {
+      if (data.watched) {
+        setHasWatched(1);
+      } else {
+        setHasWatched(2);
       }
-    );
-    let data = await response.json();
-    // console.log(data);
-    setMovie(data);
-    if (data.ratings && data.ratings.length) {
-      if (data.ratings.includes(user.user_id)) {
-        setHasRated(1);
-        // console.log(data.ratings);
-        console.log("User " + user.user_id + " has rated movie " + movieID);
+    }
+  };
+
+  let getMovie = async () => {
+    let { response, data } = await api(`/get_movie/${movieID}/`, "GET");
+    if (response.status === 200) {
+      setMovie(data);
+      if (data.ratings && data.ratings.length) {
+        if (data.ratings.includes(user.user_id)) {
+          setHasRated(1);
+          console.log("User " + user.user_id + " has rated movie " + movieID);
+        } else {
+          setHasRated(2);
+        }
       } else {
         setHasRated(2);
+        console.log(
+          "User " + user.user_id + " has yet to rate movie " + movieID
+        );
       }
-    } else {
-      setHasRated(2);
-      // console.log("ratings: [] (0)");
-      console.log("User " + user.user_id + " has yet to rate movie " + movieID);
     }
   };
 
   let getRating = async () => {
-    let response = await fetch(
-      "http://127.0.0.1:8000/get_rating/" + movieID + "/",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-      }
-    );
-    let data = await response.json();
-    // console.log(data);
+    let { response, data } = await api(`/get_rating/${movieID}/`, "GET");
     if (response.status === 200) {
-      // console.log(data.score);
       console.log(
         "User " +
           user.user_id +
@@ -132,10 +92,10 @@ function MovieDetail() {
       setHasRated(1);
     } else {
       setHasRated(2);
+      setScore(0);
       console.log(
         "No rating for movie " + movieID + " from user " + user.user_id
       );
-      // console.log('{movie_not_rated: "User has not rated this movie"}');
     }
   };
 
@@ -159,58 +119,27 @@ function MovieDetail() {
   };
 
   let editRating = async (newValue) => {
-    let response = await fetch(
-      "http://127.0.0.1:8000/edit_rating/" + movieID + "/",
-      {
-        method: "PUT",
-        body: JSON.stringify({
-          user: user.user_id,
-          movie: movieID,
-          score: newValue,
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-      }
-    );
-    let data = await response.json();
-    // console.log(data);
+    let response = await api(`/edit_rating/${movieID}/`, "PUT", {
+      user: user.user_id,
+      movie: movieID,
+      score: newValue,
+    });
     if (response.status === 200) {
-      setScore(data.score);
-    } else {
-      // console.log(
-      //   '{score: ["Ensure this value is greater than or equal to 1.0."]}'
-      // );
+      setScore(newValue);
     }
   };
 
   let addRating = async (newValue) => {
-    let response = await fetch(
-      "http://127.0.0.1:8000/add_rating/" + movieID + "/",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          user: user.user_id,
-          movie: movieID,
-          score: newValue,
-        }),
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-      }
-    );
-    let data = await response.json();
-    // console.log(data);
+    let { response, data } = await api(`/add_rating/${movieID}/`, "POST", {
+      user: user.user_id,
+      movie: movieID,
+      score: newValue,
+    });
     if (response.status === 200) {
       setScore(data.score);
       setHasRated(1);
     } else {
       setHasRated(2);
-      // console.log(
-      //   '{score: ["Ensure this value is greater than or equal to 1.0."]}'
-      // );
     }
   };
 

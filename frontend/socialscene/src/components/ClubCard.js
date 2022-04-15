@@ -27,82 +27,42 @@ function ClubCard(props) {
     const [isMember, setIsMember] = useState(false);
 	let api = useFetch();
 
-
-
-    let getMembershipData = async (e) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/get_user_joined_clubs/" + user.user_id + "/",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data = await response.json();
+    let getMembershipData = async () => {
+        let {response, data} = await api(`/get_user_joined_clubs/${user.user_id}/`, "GET");
         if (response.status === 200) {
             setClubData(data);
             console.log(data)
             userInClub();
-
         }
     };
 
-    let toggleNotifications = async (e) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/toggle_notifications/" + props.ID + "/",
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
+    let toggleNotifications = async () => {
+        let {response, data} = await api(`/toggle_notifications/${props.ID}/`, "PUT");
+        if (response.status === 200) {
+            if (notifications === false) {
+                setNotifications(true);
+                setAlert(true)
             }
-        );
-        let data = await response.json();
-        if (notifications === false) {
-            setNotifications(true);
-            setAlert(true)
-        }
-        else {
-            setNotifications(false);
-            setAlert(false)
+            else {
+                setNotifications(false);
+                setAlert(false)
+            }
         }
     };
 
-    let getNotificationStatus = async (e) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/get_notifications_status/" + props.ID + "/",{
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data = await response.json();
-        setNotifications(data.notifications);
-        notifications = data.notifications
-    }
+    let getNotificationStatus = async () => {
+        let {response, data} = await api(`/get_notifications_status/${props.ID}/`, "GET");
+        if (response.status === 200) {
+            setNotifications(data.notifications);
+            notifications = data.notifications
+        }
+    };
 
-
-    let getClubMembers = async (e) => {
-        let response = await fetch(
-            "http://127.0.0.1:8000/club_members/" + props.ID + "/",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + String(authTokens.access),
-                },
-            }
-        );
-        let data = await response.json();
+    let getClubMembers = async () => {
+        let {response, data} = await api(`/club_members/${props.ID}/`, "GET");
         if (response.status === 200) {
             setMembers(data);
             userInClub();
-
         }
     };
 
@@ -115,7 +75,7 @@ function ClubCard(props) {
 		}
 	}
 
-   
+
 
     function ClubButton() {
         return (

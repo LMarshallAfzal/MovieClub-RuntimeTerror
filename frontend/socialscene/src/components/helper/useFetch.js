@@ -14,12 +14,11 @@ let useFetch = () => {
         url = `${baseURL}${url}`
         let response = await fetch(url, config, options);
         let data = await response.json();
-        console.log('REQUESTING:', data);
         return {response, data}; 
     }
 
     let refreshToken = async (authTokens) => {
-        let response = await fetch('http://127.0.0.1:8000/token/refresh/', {
+        let response = await fetch(`${baseURL}/token/refresh/`, {
             method: 'POST',
             headers: {
                 'Content-type':'application/json'
