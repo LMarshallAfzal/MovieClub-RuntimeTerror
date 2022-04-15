@@ -27,15 +27,22 @@ function ClubDiscussion() {
 	const [myClubData, setMyClubData] = useState([]);
 	const [messages, setMessages] = useState([]);
 	const [myClub, setClub] = useState([]);
+	const [timeInterval, setTimeInterval] = useState(0);
 	
+setTimeout(() => {
+  setTimeInterval(timeInterval + 1);
+}, 5000);
 
 	let { clubID } = useParams();
+
 
 	useEffect(() => {
 		getClubMessages();
 		getMembershipData();
 		getClub();
-	}, [clubID,messages]);
+		
+	}, [timeInterval]);
+
 
 
 	console.log(myClubData);
@@ -62,20 +69,21 @@ function ClubDiscussion() {
 		if (response.status === 200) {
 			setMessages(data);
 			console.log(data)
+			
+
 		}
 	};
 
 	
 	let sendClubMessages = async (id) => {
-		let {response} = api(`/write_message/${id}/`, "POST", {
+		let {response} = await api(`/write_message/${id}/`, "POST", {
 			sender: user.username,
 			club: myClub.id,
 			message: message.message,
 			timestamp: dateTime,
 		});
 		if(response.status === 200) {
-			getClubMessages(clubID);
-			message.message = "";
+			getClubMessages();
 		}
 	};
 
@@ -132,8 +140,6 @@ function ClubDiscussion() {
 													>
 														<Avatar
 															src={val.sender_gravatar}
-														
-															
 															sx={{ width: "100%", height: "100%" }}
 														/>
 													</div>
@@ -149,7 +155,6 @@ function ClubDiscussion() {
 														{val.message}
 													</Typography>
 													<Typography sx={{ fontSize: 15 }} variant="body2">
-														{/* {val.timestamp.slice(11,16) + " " + val.timestamp.slice(0,10) } */}
 														{val.timestamp.slice(11, 16) +
 															" | " +
 															val.timestamp.slice(8, 10) +
@@ -179,7 +184,7 @@ function ClubDiscussion() {
 									InputProps={{
 										endAdornment: (
 											<TextButton
-												onClick={() => sendClubMessages(clubID)}
+												onClick={() => {sendClubMessages(clubID);message.message = ""}}
 												text={"send"}
 												style={{ textAlign: "right" }}
 											/>

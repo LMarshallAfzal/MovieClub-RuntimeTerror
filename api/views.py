@@ -434,7 +434,6 @@ def message_forum(request, club_id):
     serializer = MessageSerializer(messages, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 @club_exists
