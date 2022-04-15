@@ -12,7 +12,8 @@ import {
 	TextField,
 	Tooltip,
 	Checkbox,
-	FormControlLabel
+	FormControlLabel,
+	Typography
 
 } from "@mui/material";
 import { Link } from 'react-router-dom'
@@ -39,8 +40,15 @@ function EventDetail(props) {
 	const [isOrganiser, setIsOrganiser] = useState(false);
 	const [attendees, setAttendees] = useState([]);
 	const [isAttending, setIsAttending] = useState(false);
+	const [error, setError] = useState(false);
+	const [errorText, setErrorText] = useState("");
 
-	
+	let errorHandler = (data) => {
+		if(Object.keys(data).includes("club_has_no_upcoming_meeting")) {
+			setError(true);
+			setErrorText("No upcoming meeting!");
+		}
+	}
 
 	let getUser = useCallback(
 		async (id) => {
@@ -50,28 +58,25 @@ function EventDetail(props) {
 				return data;
 			}
 		},
-		[api]
+		[]
 	);
 
 	useEffect(() => {
 		getMembershipData();
 		getMeetingData(clubID);
 		console.log(myMeetingData.movie);
-		//getMovie(myMeetingData.movie);
 		console.log(myMeetingData.organiser);
-		//getUser(myMeetingData.organiser);
-		// getRecommendedMovies()
 	}, [props,clubID]);
 
-	// useEffect(() => {
-	// 	async function fetchAttendees() {
-	// 		if (myMeetingData.attendees) {
-	// 			setAttendees(await Promise.all(myMeetingData.attendees.map(getUser)));
-	// 		}
-	// 	}
+	useEffect(() => {
+		async function fetchAttendees() {
+			if (myMeetingData.attendees) {
+				setAttendees(await Promise.all(myMeetingData.attendees.map(getUser)));
+			}
+		}
 
-	// 	fetchAttendees();
-	// }, [myMeetingData, getUser, clubID]);
+		fetchAttendees();
+	}, [myMeetingData, getUser]);
 
 	const onChange = (e) => {
 		setMyMeetingData((fieldData) => ({
@@ -120,6 +125,9 @@ function EventDetail(props) {
 				}
 			}
 
+		}
+		else {
+			errorHandler(data);
 		}
 
 	};
@@ -359,7 +367,20 @@ function EventDetail(props) {
 			);
 		}
 	}
-
+	if (error) {
+		return (
+			<div className={"home-page-card-background"}>
+			<Grid container padding={2} spacing={2} >
+				<Grid item xs={12}>
+					<Typography variant="h4" align="center">
+						{errorText}
+					</Typography>
+				</Grid>
+				
+			</Grid>
+		</div>
+	);
+	}
 	return (
 		<div className={"home-page-card-background"}>
 			<Grid container padding={2} spacing={2}>
@@ -433,7 +454,7 @@ function EventDetail(props) {
 										<h5>{organiser.last_name}</h5>
 									</Grid>
 									<Grid item xs={12}>
-										<EventFields />
+										 <EventFields />
 									</Grid>
 								</Grid>
 							</Stack>

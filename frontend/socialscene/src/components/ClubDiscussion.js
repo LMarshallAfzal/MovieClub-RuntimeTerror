@@ -64,7 +64,7 @@ setTimeout(() => {
 		}
 	};
 
-	let getClubMessages = async (e) => {
+	let getClubMessages = async () => {
 		let {response, data} = await api(`/message_forum/${clubID}/`, "GET");
 		if (response.status === 200) {
 			setMessages(data);

@@ -14,6 +14,7 @@
     "cors": "2.8.5",
     "dayjs": "^1.11.0",
     "express": "4.17.1",
+    "fetch-worker": "^1.0.7",
     "func-utils": "^0.0.1",
     "history": "^5.3.0",
     "http": "^0.0.1-security",
@@ -35,7 +36,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cat src/custom-service-worker.js .> build/service-worker.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

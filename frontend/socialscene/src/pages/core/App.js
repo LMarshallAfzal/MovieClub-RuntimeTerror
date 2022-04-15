@@ -26,28 +26,6 @@ import ClubDiscussion from "../../components/ClubDiscussion";
 import EventDetail from "../../components/EventDetail";
 
 function App() {
-	// useEffect(() => {
-	// 	let interval = setInterval(() => {
-	// 		train();
-	// 	}, 1000 * 60 * 60);
-	// }, []);
-
-	// let train = async () => {
-	// 	let response2 = await fetch("http://127.0.0.1:8000/train/movie/", {
-	// 		method: "GET",
-	// 		headers: {
-	// 			"Content-Type": "application/json; charset=UTF-8",
-	// 		},
-	// 	});
-	// 	await response2.json();
-	// 	let response3 = await fetch("http://127.0.0.1:8000/train/meeting/", {
-	// 		method: "GET",
-	// 		headers: {
-	// 			"Content-Type": "application/json; charset=UTF-8",
-	// 		},
-	// 	});
-	// 	await response3.json();
-	// };
 
 	return (
 		<Router>
