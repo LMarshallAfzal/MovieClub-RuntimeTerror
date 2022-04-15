@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
 		password: "",
 	});
 	const navigate = useNavigate();
-	const baseUrl = "http://localhost:8000";
+	const baseUrl = "https://social-scene.herokuapp.com";
 
 	const [usernameError, setUsernameError] = useState(false);
 	const [passwordError, setPasswordError] = useState(false);
