@@ -243,6 +243,16 @@ def leave_club(request, club_id):
     serializer = UserSerializer(request.user,many=False)
     return Response(serializer.data,status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def has_watched(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    watched_list = request.user.watched_movies.filter(user=request.user, id=movie.id)
+    if(len(watched_list) > 0):
+        return Response({"watched": True}, status=status.HTTP_200_OK)
+    else:
+        return Response({"watched": False}, status=status.HTTP_200_OK)
+
 @api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
 @club_exists
@@ -270,7 +280,6 @@ def add_watched_movie(request, movie_id):
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 @movie_exists
-@has_watched
 def remove_watched_movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     Watch.objects.get(user=request.user, movie=movie).delete()
