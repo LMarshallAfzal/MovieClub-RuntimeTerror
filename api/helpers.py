@@ -1,7 +1,6 @@
 import datetime
 import random
 from datetime import datetime
-import schedule
 import time
 from .models import Movie, Club
 
