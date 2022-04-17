@@ -193,7 +193,6 @@ function ClubDetail() {
 	}, [clubID,isMember,isOwner,club.members]);
 
 	const toggleBannedView = () => {
-		window.location.reload(false);
 		setBannedMembers(!showBannedMembers);
 	};
 

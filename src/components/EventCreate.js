@@ -126,9 +126,9 @@ function EventCreate() {
 	};
 
 	let getRecommendedMovies = async () => {
-		// trainMeetingRecommendation();
+
 		let response = await fetch(
-			"http://127.0.0.1:8000/rec_meeting/" + clubID + "/",
+			"https://social-scene.herokuapp.com/rec_meeting/" + clubID + "/",
 			{
 				method: "GET",
 				headers: {
@@ -149,8 +149,9 @@ function EventCreate() {
 
 	let createMeeting = async (e) => {
 		e.preventDefault();
+		resetErrorState();
 		let response = await fetch(
-			"http://127.0.0.1:8000/create_meeting/" + clubID + "/",
+			"https://social-scene.herokuapp.com/create_meeting/" + clubID + "/",
 			{
 				method: "POST",
 				body: JSON.stringify({

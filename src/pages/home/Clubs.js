@@ -10,7 +10,7 @@ import TextButton from "../../components/core/TextButton";
 import HomepageCard from "../../components/helper/HomepageCard";
 
 function Clubs() {
-	let { user} = useContext(AuthContext);
+	let {user} = useContext(AuthContext);
 	let api = useFetch();
 
 	const [myClubData, setMyClubData] = useState([]);
@@ -58,7 +58,7 @@ function Clubs() {
 		getMembershipData();
 		getRecommendedClubs();
 		getAllClubs();
-	}, []);
+	}, [user.user_id]);
 
 
 	return (

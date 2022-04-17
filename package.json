@@ -1,5 +1,6 @@
 {
   "name": "socialscene",
+  "proxy": "https://social-scene.herokuapp.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

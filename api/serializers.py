@@ -377,6 +377,7 @@ class CreateMeetingSerializer(serializers.Serializer):
         meeting_date = data['date']
         start_time = data['start_time']
         end_time = data['end_time']
+        link = data['meeting_link']
 
         if meeting_date < datetime.date.today():
             raise serializers.ValidationError({"date": "Date must be in the future"})
@@ -400,6 +401,9 @@ class CreateMeetingSerializer(serializers.Serializer):
             raise serializers.ValidationError({"end_time": 
                 "Start and End times cannot be the same."}
             )
+
+        if not link.startswith("https://"):
+            raise serializers.ValidationError({"meeting_link": "Link must start with https://"})
 
         return data
 
