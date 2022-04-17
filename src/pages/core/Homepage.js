@@ -18,8 +18,6 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 const Homepage = () => {
-	let api = useFetch();
-
 	const [randomMovie, setRandomMovie] = useState();
 
 	useEffect(() => {
@@ -42,14 +40,6 @@ const Homepage = () => {
 			setRandomMovie(data.imdb_id);
 		}
 	};
-
-	// console.log(`test ${randomMovie}`)
-
-	// const movieIMDB = "0972785";
-	// const movieIMDB = getRandomMovie();
-	// console.log(movieIMDB);
-
-	// console.log(`movie: ${movieAPIData}`)
 
 	return (
 		<>

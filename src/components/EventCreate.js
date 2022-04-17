@@ -17,16 +17,14 @@ import placeHolder from "../resources/images/empty_movie_poster.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 import useFetch from "./helper/useFetch";
-
 
 function EventCreate() {
 	let day = new Date();
 	let nextDay = new Date(day);
 	let tomorrow = nextDay.setDate(day.getDate() + 2);
 	let { user, authTokens } = useContext(AuthContext);
-    let api = useFetch();
+	let api = useFetch();
 
 	const [titleError, setTitleError] = useState(false);
 	const [titleErrorText, setTitleErrorText] = useState("");
@@ -57,7 +55,6 @@ function EventCreate() {
 	});
 
 	const navigate = useNavigate();
-
 
 	const {
 		club,
@@ -124,10 +121,8 @@ function EventCreate() {
 			setStartTimeError(true);
 			setStartTimeErrorText("Duration of meeting must be greater than 1 hour!");
 			setEndTimeError(true);
-			setEndTimeErrorText("Duration of meeting must be greater than 1 hour!")
+			setEndTimeErrorText("Duration of meeting must be greater than 1 hour!");
 		}
-		
-
 	};
 
 	let getRecommendedMovies = async () => {
@@ -145,11 +140,11 @@ function EventCreate() {
 		let data = await response.json();
 		for (let index = 0; index < data.length; ++index) {
 			let movie = data[index];
-			movie["poster"] = getMovieAPIData(movie).Poster
-			console.log(movie.poster)
+			movie["poster"] = getMovieAPIData(movie).Poster;
+			console.log(movie.poster);
 		}
 		setRecommendedMovies(data);
-		console.log(recommendedMovies)
+		console.log(recommendedMovies);
 	};
 
 	let createMeeting = async (e) => {
@@ -175,36 +170,34 @@ function EventCreate() {
 				},
 			}
 		);
-        let data = await response.json();
+		let data = await response.json();
 		if (response.status === 201) {
 			setMeetingData(data);
-            navigate(`/home/discussion/${clubID}`);
-        } else {
-            errorHandler(response.data);
-        }
-    };
+			navigate(`/home/discussion/${clubID}`);
+		} else {
+			errorHandler(response.data);
+		}
+	};
 
-    let getMovieTitle = async (id) => {
-        let {response, data} = await api(`/get_movie/${id}/`, "GET");
-        if (response.status === 200) {
-            setSelectedMovie(id);
-            setSelectedMovieTitle(data.title);
-        }
-    };
+	let getMovieTitle = async (id) => {
+		let { response, data } = await api(`/get_movie/${id}/`, "GET");
+		if (response.status === 200) {
+			setSelectedMovie(id);
+			setSelectedMovieTitle(data.title);
+		}
+	};
 
 	let getMovieAPIData = async (movie) => {
 		axios
-		  .get(`http://www.omdbapi.com/?i=tt${movie.imdb_id}&apikey=199b93be`)
-		  .then((res) => {
-			return res.data;
-		  });
-	  };
-	
+			.get(`http://www.omdbapi.com/?i=tt${movie.imdb_id}&apikey=199b93be`)
+			.then((res) => {
+				return res.data;
+			});
+	};
 
 	useEffect(() => {
 		getRecommendedMovies();
 	}, []);
-
 
 	return (
 		<div className={"home-page-card-background"}>
@@ -221,30 +214,28 @@ function EventCreate() {
 						alignItems="stretch"
 					>
 						{recommendedMovies.map((movie) => {
-
 							return (
-								
-
 								<Grid item xs={2}>
 									<Card sx={{ flexDirection: "column", height: "100%" }}>
-									<CardMedia
-        component="img"
-        height="140"
-        image={"https://img.omdbapi.com/?i=tt" + movie.imdb_id + "&h=600&apikey=199b93be"}
-      />
+										<CardMedia
+											component="img"
+											height="140"
+											image={
+												"https://img.omdbapi.com/?i=tt" +
+												movie.imdb_id +
+												"&h=600&apikey=199b93be"
+											}
+										/>
 										<CardActionArea
 											sx={{ flexDirection: "column", height: "100%" }}
 											onClick={() => getMovieTitle(movie.id)}
 										>
-
 											<Grid
 												container
 												direction={"column"}
 												alignItems={"center"}
 												textAlign={"center"}
 											>
-
-
 												<Tooltip title={movie.title} placement="top-start">
 													<h6 className={"new-event-movie-text"}>
 														{movie.title}
@@ -262,8 +253,8 @@ function EventCreate() {
 				<Grid item xs={6}>
 					<Stack spacing={2}>
 						<TextField
-                            error={titleError}
-                            helperText={titleErrorText}
+							error={titleError}
+							helperText={titleErrorText}
 							fullWidth
 							required
 							placeholder={"event title"}
@@ -274,8 +265,8 @@ function EventCreate() {
 						/>
 
 						<TextField
-                            error={descriptionError}
-                            helperText={descriptionErrorText}
+							error={descriptionError}
+							helperText={descriptionErrorText}
 							fullWidth
 							required
 							placeholder={"short event description"}
@@ -300,8 +291,8 @@ function EventCreate() {
 				<Grid item xs={6}>
 					<Stack spacing={2}>
 						<TextField
-                            error={dateError}
-                            helperText={dateErrorText}
+							error={dateError}
+							helperText={dateErrorText}
 							fullWidth
 							required
 							label={"date"}
@@ -314,8 +305,8 @@ function EventCreate() {
 						/>
 
 						<TextField
-                            error={startTimeError}
-                            helperText={startTimeErrorText}
+							error={startTimeError}
+							helperText={startTimeErrorText}
 							fullWidth
 							label={"start"}
 							type={"time"}
@@ -328,8 +319,8 @@ function EventCreate() {
 						/>
 
 						<TextField
-                            error={endTimeError}
-                            helperText={endTimeErrorText}
+							error={endTimeError}
+							helperText={endTimeErrorText}
 							fullWidth
 							label={"end"}
 							type={"time"}
@@ -345,8 +336,8 @@ function EventCreate() {
 
 				<Grid item xs={12}>
 					<TextField
-                        error={meetingLinkError}
-                        helperText={meetingLinkErrorText}
+						error={meetingLinkError}
+						helperText={meetingLinkErrorText}
 						fullWidth
 						required
 						placeholder={"the event link"}

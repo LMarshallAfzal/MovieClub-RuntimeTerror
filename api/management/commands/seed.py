@@ -104,7 +104,7 @@ class Command(BaseCommand):
         return username
 
     def _create_club(self):
-        themes = Genre.objects.all()
+        themes = Genre.objects.all().exclude(name="null")
         club_name = self.faker.word().capitalize() + "Movie Club"
         mission_statement = 'Best movie club in town!'
         new_club = Club.objects.create(
@@ -120,7 +120,7 @@ class Command(BaseCommand):
         club_meeting_organiser = random.choice(User.objects.all())
         club.club_members.add(club_owner, through_defaults={'role': 'C'})
         club.club_members.add(club_meeting_organiser,
-                              through_defaults={'role': 'O'})
+            through_defaults={'role': 'O'})
 
         for i in range(1, int(self.USER_COUNT/5)):
             current_user = random.choice(
