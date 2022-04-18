@@ -97,6 +97,10 @@ function EventDetail(props) {
 			setMeetingLinkError(true);
 			setMeetingLinkErrorText(data.meeting_link);
 		}
+		if (Object.keys(data).includes("non_field_errors")) {
+			setDateError(true);
+			setDateErrorText(data.non_field_errors);
+		}
 		if (Object.keys(data).includes("club_has_no_upcoming_meeting")) {
 			setError(true);
 			setErrorText("No upcoming meeting!");
@@ -158,7 +162,7 @@ function EventDetail(props) {
 	const movieAPIData = MovieDataAPI(specificMovie.imdb_id);
 
 	let deleteMeeting = async (id) => {
-		let { response, data } = await api(`/cancel_meeting/${id}/`, "DELETE");
+		await api(`/cancel_meeting/${id}/`, "DELETE");
 	};
 
 	let getMeetingData = async (id) => {

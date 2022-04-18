@@ -106,6 +106,10 @@ function EventCreate() {
 			setDateError(true);
 			setDateErrorText(data.date);
 		}
+		if (Object.keys(data).includes("meeting_date")) {
+			setDateError(true);
+			setDateErrorText(data.meeting_date);
+		}
 		if (Object.keys(data).includes("start_time")) {
 			setStartTimeError(true);
 			setStartTimeErrorText(data.start_time);
@@ -117,6 +121,10 @@ function EventCreate() {
 		if (Object.keys(data).includes("meeting_link")) {
 			setMeetingLinkError(true);
 			setMeetingLinkErrorText(data.meeting_link);
+		}
+		if (Object.keys(data).includes("non_field_errors")) {
+			setDateError(true);
+			setDateErrorText(data.non_field_errors);
 		}
 		if (Object.keys(data).includes("duration")) {
 			setStartTimeError(true);
@@ -176,7 +184,7 @@ function EventCreate() {
 			setMeetingData(data);
 			navigate(`/home/discussion/${clubID}`);
 		} else {
-			errorHandler(e, data);
+			errorHandler(data);
 		}
 	};
 
