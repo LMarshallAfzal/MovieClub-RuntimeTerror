@@ -126,7 +126,6 @@ function EventCreate() {
 	};
 
 	let getRecommendedMovies = async () => {
-
 		let response = await fetch(
 			"https://social-scene.herokuapp.com/rec_meeting/" + clubID + "/",
 			{
@@ -228,7 +227,12 @@ function EventCreate() {
 											}
 										/>
 										<CardActionArea
-											sx={{ flexDirection: "column", height: "100%" }}
+											sx={{
+												flexDirection: "column",
+												height: "100%",
+												justifyContent: "center",
+												alignItems: "right",
+											}}
 											onClick={() => getMovieTitle(movie.id)}
 										>
 											<Grid
@@ -238,7 +242,14 @@ function EventCreate() {
 												textAlign={"center"}
 											>
 												<Tooltip title={movie.title} placement="top-start">
-													<h6 className={"new-event-movie-text"}>
+													<h6
+														className={"new-event-movie-text"}
+														sx={{
+															justifyContent: "center",
+															alignItems: "center",
+															textAlign: "center",
+														}}
+													>
 														{movie.title}
 													</h6>
 												</Tooltip>
