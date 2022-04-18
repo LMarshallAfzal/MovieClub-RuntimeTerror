@@ -182,7 +182,7 @@ function EventCreate() {
 		let data = await response.json();
 		if (response.status === 201) {
 			setMeetingData(data);
-			navigate(`/home/discussion/${clubID}`);
+			navigate(`/home/discussion/${clubID}/`);
 		} else {
 			errorHandler(data);
 		}
