@@ -19,7 +19,7 @@ function Clubs() {
 
 	let getMembershipData = async (e) => {
 		let { response, data } = await api(
-			`/get_user_joined_clubs/${user.user_id}`,
+			`/get_user_joined_clubs/${user.user_id}/`,
 			"GET"
 		);
 		if (response.status === 200) {
