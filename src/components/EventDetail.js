@@ -71,7 +71,8 @@ function EventDetail(props) {
 		setMeetingLinkErrorText("");
 	};
 
-	let errorHandler = (data) => {
+	let errorHandler = (e, data) => {
+		e.preventDefault();
 		if (Object.keys(data).includes("meeting_title")) {
 			setTitleError(true);
 			setTitleErrorText(data.meeting_title);
@@ -203,7 +204,7 @@ function EventDetail(props) {
 			setMyMeetingData(data);
 			setAlert(true);
 		} else {
-			errorHandler(data);
+			errorHandler(e, data);
 		}
 	};
 
@@ -261,7 +262,7 @@ function EventDetail(props) {
 
 	function EventEditButton() {
 		console.log("organiser", organiser);
-		if (!organiser.id === user.user_id) {
+		if (organiser.id === user.user_id) {
 			return (
 				<ThemeButton
 					text={"edit"}
@@ -275,7 +276,7 @@ function EventDetail(props) {
 	}
 
 	function EventDeleteButton() {
-		if (!organiser.id === user.user_id) {
+		if (organiser.id === user.user_id) {
 			return (
 				<ThemeButton
 					text={"delete"}

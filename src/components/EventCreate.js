@@ -92,7 +92,8 @@ function EventCreate() {
 		setMeetingLinkErrorText("");
 	};
 
-	let errorHandler = (data) => {
+	let errorHandler = (e, data) => {
+		e.preventDefault();
 		if (Object.keys(data).includes("meeting_title")) {
 			setTitleError(true);
 			setTitleErrorText(data.meeting_title);
@@ -175,7 +176,7 @@ function EventCreate() {
 			setMeetingData(data);
 			navigate(`/home/discussion/${clubID}`);
 		} else {
-			errorHandler(response.data);
+			errorHandler(e, data);
 		}
 	};
 
