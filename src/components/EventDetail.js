@@ -297,7 +297,7 @@ function EventDetail(props) {
 	}
 
 	function EventFields() {
-		if (!organiser.id === user.user_id) {
+		if (!(organiser.id === user.user_id)) {
 			return (
 				<Stack spacing={2}>
 					<TextField
@@ -602,7 +602,7 @@ function EventDetail(props) {
 					<Grid container spacing={2}>
 						<Grid item xs={3}>
 							<ThemeButton
-								style={!isOrganiser || !isAttending ? "disabled" : "primary"}
+								style={!isAttending ? "disabled" : "primary"}
 								text={"join"}
 								onClick={(e) => {
 									e.preventDefault();

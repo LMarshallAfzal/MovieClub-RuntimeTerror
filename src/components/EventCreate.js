@@ -184,7 +184,7 @@ function EventCreate() {
 			setMeetingData(data);
 			navigate(`/home/discussion/${clubID}/`);
 		} else {
-			errorHandler(data);
+			errorHandler(e, data);
 		}
 	};
 
