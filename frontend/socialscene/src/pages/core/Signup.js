@@ -11,6 +11,7 @@ import {
 	OutlinedInput,
 	FormControl,
 	InputLabel,
+	FormHelperText,
 } from "@mui/material";
 import ThemeButton from "../../components/core/ThemeButton";
 import CsrfToken from "../../components/helper/CsrfToken";
@@ -162,7 +163,7 @@ export const Signup = () => {
 			errorHandler(e, data);
 		}
 	};
-	
+
 	return (
 		<Grid container direction={"row"} className={"signup-grid"} spacing={2}>
 			<CsrfToken />
@@ -287,7 +288,6 @@ export const Signup = () => {
 								inputProps={{ "data-testid": "password" }}
 								error={passwordError}
 								fullWidth
-								helperText={errorPasswordText}
 								required
 								autoComplete="new-password"
 								id={"outlined-adornment-password"}
@@ -309,6 +309,11 @@ export const Signup = () => {
 									</InputAdornment>
 								}
 							/>
+							{passwordError ? (
+								<FormHelperText error>
+									{errorPasswordText}
+								</FormHelperText>
+							) : null}
 						</FormControl>
 						<FormControl fullWidth variant={"outlined"}>
 							<InputLabel htmlFor={"outlined-adornment-password"}>
@@ -316,9 +321,9 @@ export const Signup = () => {
 							</InputLabel>
 							<OutlinedInput
 								inputProps={{ "data-testid": "password_confirmation" }}
-								error={passwordConfirmationError}
+								error={passwordError}
 								fullWidth
-								helperText={errorPasswordConfirmationText}
+								helperText={errorPasswordText}
 								required
 								autoComplete="new-password"
 								id={"outlined-adornment-password"}
@@ -339,7 +344,13 @@ export const Signup = () => {
 									</InputAdornment>
 								}
 							/>
+							{passwordError ? (
+								<FormHelperText error>
+									{errorPasswordText}
+								</FormHelperText>
+							) : null}
 						</FormControl>
+
 						<div style={{ width: "100%" }}>
 							<ThemeButton style={"primary"} type="submit" text={"sign up"} />
 						</div>

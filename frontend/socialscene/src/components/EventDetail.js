@@ -55,6 +55,7 @@ function EventDetail(props) {
 	const [endTimeErrorText, setEndTimeErrorText] = useState("");
 	const [meetingLinkError, setMeetingLinkError] = useState(false);
 	const [meetingLinkErrorText, setMeetingLinkErrorText] = useState("");
+	
 
 	let resetErrorState = () => {
 		setTitleError(false);
@@ -71,7 +72,8 @@ function EventDetail(props) {
 		setMeetingLinkErrorText("");
 	};
 
-	let errorHandler = (data) => {
+	let errorHandler = (e, data) => {
+		e.preventDefault();
 		if (Object.keys(data).includes("meeting_title")) {
 			setTitleError(true);
 			setTitleErrorText(data.meeting_title);
@@ -100,6 +102,13 @@ function EventDetail(props) {
 			setError(true);
 			setErrorText("No upcoming meeting!");
 		}
+
+		if (Object.keys(data).includes("non_field_errors")) {
+			setDateError(true);
+			setDateErrorText(data.non_field_errors);
+		}
+
+		
 	};
 
 	let getUser = useCallback(async (id) => {
@@ -110,7 +119,7 @@ function EventDetail(props) {
 	}, []);
 
 	let getOwner = async () => {
-		let { response, data } = await api(`/club_owner/${clubID}`, "GET");
+		let { response, data } = await api(`/club_owner/${clubID}/`, "GET");
 		if (response.status === 200) {
 			setOrganiser(data[0]);
 		}
@@ -158,10 +167,9 @@ function EventDetail(props) {
 
 	let deleteMeeting = async (id) => {
 		let { response, data } = await api(`/cancel_meeting/${id}/`, "DELETE");
-		
 	};
 
-	let getMeetingData = async (id) => {
+	let getMeetingData = async (e,id) => {
 		let { response, data } = await api(
 			`/get_club_upcoming_meeting/${id}/`,
 			"GET"
@@ -178,7 +186,7 @@ function EventDetail(props) {
 				}
 			}
 		} else {
-			errorHandler(data);
+			errorHandler(e,data);
 		}
 	};
 
@@ -204,12 +212,12 @@ function EventDetail(props) {
 			setMyMeetingData(data);
 			setAlert(true);
 		} else {
-			errorHandler(data);
+			errorHandler(e, data);
 		}
 	};
 
 	let attendMeeting = async () => {
-		let { response, data } = await api(`/attend_meeting/${clubID}/`, "PUT", {
+		let { response } = await api(`/attend_meeting/${clubID}/`, "PUT", {
 			user: user.user_id,
 			meeting: myMeetingData.meeting_id,
 		});
@@ -219,7 +227,7 @@ function EventDetail(props) {
 	};
 
 	let leaveMeeting = async () => {
-		let { response, data } = await api(`/leave_meeting/${clubID}/`, "PUT", {
+		let { response } = await api(`/leave_meeting/${clubID}/`, "PUT", {
 			user: user.user_id,
 			meeting: myMeetingData.meeting_id,
 		});
@@ -277,12 +285,12 @@ function EventDetail(props) {
 
 	function EventDeleteButton() {
 		if (organiser.id === user.user_id) {
-			// replace with organiser condition
 			return (
 				<ThemeButton
 					text={"delete"}
 					onClick={() => {
-						deleteMeeting(clubID);window.location.reload(false);
+						deleteMeeting(clubID);
+						window.location.reload(false);
 					}}
 					style={"primary"}
 				/>
@@ -293,7 +301,7 @@ function EventDetail(props) {
 	}
 
 	function EventFields() {
-		if (!organiser.id === user.user_id) {
+		if (!(organiser.id === user.user_id)) {
 			return (
 				<Stack spacing={2}>
 					<TextField
@@ -302,6 +310,9 @@ function EventDetail(props) {
 						label={"title"}
 						value={myMeetingData.meeting_title}
 						InputProps={{ readOnly: true }}
+						InputLabelProps={{
+							shrink: true,
+						}}
 					/>
 
 					<TextField
@@ -310,6 +321,9 @@ function EventDetail(props) {
 						label={"description"}
 						value={myMeetingData.description}
 						InputProps={{ readOnly: true }}
+						InputLabelProps={{
+							shrink: true,
+						}}
 					/>
 
 					<TextField
@@ -367,6 +381,9 @@ function EventDetail(props) {
 						value={myMeetingData.meeting_title}
 						defaultValue={myMeetingData.meeting_title}
 						onChange={(e) => onChange(e)}
+						InputLabelProps={{
+							shrink: true,
+						}}
 					/>
 
 					<TextField
@@ -380,6 +397,9 @@ function EventDetail(props) {
 						value={myMeetingData.description}
 						defaultValue={myMeetingData.description}
 						onChange={(e) => onChange(e)}
+						InputLabelProps={{
+							shrink: true,
+						}}
 					/>
 
 					<TextField
@@ -496,7 +516,11 @@ function EventDetail(props) {
 												sx={{ fontSize: "1.2em" }}
 												precision={0.5}
 												name={"read-only"}
-											    value={movieAPIData ? parseFloat(movieAPIData.imdbRating)/2 : 0}
+												value={
+													movieAPIData
+														? parseFloat(movieAPIData.imdbRating) / 2
+														: 0
+												}
 											/>
 
 											<Tooltip
@@ -520,9 +544,7 @@ function EventDetail(props) {
 								<Grid container spacing={2}>
 									<Grid item xs={12}>
 										<Divider>
-											<Chip
-												sx={{ mr: 1, mt: 1 }}
-											/>
+											<Chip sx={{ mr: 1, mt: 1 }} />
 										</Divider>
 									</Grid>
 									<Grid item xs={4}>
@@ -547,7 +569,7 @@ function EventDetail(props) {
 										) : (
 											<></>
 										)}
-                    {EventFields()}
+										{EventFields()}
 									</Grid>
 								</Grid>
 							</Stack>
@@ -583,24 +605,22 @@ function EventDetail(props) {
 				<Grid item xs={12}>
 					<Grid container spacing={2}>
 						<Grid item xs={3}>
-							
 							<ThemeButton
-															style={"primary"}
-
+								style={!isAttending ? "disabled" : "primary"}
 								text={"join"}
 								onClick={(e) => {
 									e.preventDefault();
-									window.open(myMeetingData.meeting_link, '_blank');
+									window.open(myMeetingData.meeting_link, "_blank");
 								}}
 							/>
 						</Grid>
 
 						<Grid item xs={3}>
-              {EventEditButton()}
+							{EventEditButton()}
 						</Grid>
 
 						<Grid item xs={3}>
-              {EventDeleteButton()}
+							{EventDeleteButton()}
 						</Grid>
 					</Grid>
 				</Grid>
