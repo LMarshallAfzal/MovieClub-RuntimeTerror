@@ -123,7 +123,7 @@ function EventDetail(props) {
 	useEffect(() => {
 		getOwner();
 		getMembershipData();
-		getMeetingData(clubID);
+		getMeetingData();
 		console.log("that thingy", error)
 	}, [props, clubID]);
 
@@ -163,9 +163,9 @@ function EventDetail(props) {
 		await api(`/cancel_meeting/${id}/`, "DELETE");
 	};
 
-	let getMeetingData = async (e, id) => {
+	let getMeetingData = async () => {
 		let { response, data } = await api(
-			`/get_club_upcoming_meeting/${id}/`,
+			`/get_club_upcoming_meeting/${clubID}/`,
 			"GET"
 		);
 		if (response.status === 200) {
@@ -465,8 +465,9 @@ function EventDetail(props) {
 			);
 		}
 	}
-	if (error) {
-		return (
+	
+	return (
+		error ? (
 			<div className={"home-page-card-background"}>
 				<Grid container padding={2} spacing={2}>
 					<Grid item xs={12}>
@@ -476,9 +477,7 @@ function EventDetail(props) {
 					</Grid>
 				</Grid>
 			</div>
-		);
-	}
-	return (
+		) : (
 		<div className={"home-page-card-background"}>
 			<Grid container padding={2} spacing={2}>
 				<Grid item xs={10}>
