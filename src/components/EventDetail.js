@@ -124,8 +124,7 @@ function EventDetail(props) {
 		getOwner();
 		getMembershipData();
 		getMeetingData(clubID);
-		console.log(myMeetingData.movie);
-		console.log(myMeetingData.organiser);
+		console.log("that thingy", error)
 	}, [props, clubID]);
 
 	useEffect(() => {
