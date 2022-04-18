@@ -157,7 +157,6 @@ export const Signup = () => {
 			},
 		});
 		let data = await response.json();
-		console.log(data)
 		if (response.status === 201) {
 			navigate("/login/");
 		} else {
@@ -282,10 +281,12 @@ export const Signup = () => {
 							)}
 						/>
 						<FormControl fullWidth variant={"outlined"}>
-							<TextField
+							<InputLabel htmlFor={"outlined-adornment-password"}>
+								password
+							</InputLabel>
+							<OutlinedInput
 								inputProps={{ "data-testid": "password" }}
 								error={passwordError}
-								helperText={errorPasswordText}
 								fullWidth
 								required
 								autoComplete="new-password"
@@ -295,8 +296,8 @@ export const Signup = () => {
 								type={passwordVisibility ? "text" : "password"}
 								value={password}
 								onChange={(e) => onChange(e)}
-								InputProps={{
-									endAdornment: (
+								endAdornment={
+									<InputAdornment position="end">
 										<TextButton
 											onClick={() =>
 												togglePasswordVisibility(!passwordVisibility)
@@ -305,17 +306,24 @@ export const Signup = () => {
 											type={"button"}
 											style={{ marginTop: "-20px" }}
 										/>
-									),
-								}}
+									</InputAdornment>
+								}
 							/>
+							{passwordError ? (
+								<FormHelperText error>
+									{errorPasswordText}
+								</FormHelperText>
+							): null}
 						</FormControl>
 						<FormControl fullWidth variant={"outlined"}>
-							
-							<TextField
+							<InputLabel htmlFor={"outlined-adornment-password"}>
+								confirm
+							</InputLabel>
+							<OutlinedInput
 								inputProps={{ "data-testid": "password_confirmation" }}
 								error={passwordError}
-								helperText={errorPasswordText}
 								fullWidth
+								helperText={errorPasswordText}
 								required
 								autoComplete="new-password"
 								id={"outlined-adornment-password"}
@@ -324,19 +332,23 @@ export const Signup = () => {
 								type={passwordVisibility ? "text" : "password"}
 								value={password_confirmation}
 								onChange={(e) => onChange(e)}
-								InputProps={{
-									endAdornment: (
+								endAdornment={
+									<InputAdornment position="end">
 										<TextButton
 											onClick={() =>
 												togglePasswordVisibility(!passwordVisibility)
 											}
 											text={passwordVisibility ? "hide" : "show"}
-											type={"button"}
 											style={{ marginTop: "-20px" }}
 										/>
-									),
-								}}
+									</InputAdornment>
+								}
 							/>
+							{passwordError ? (
+								<FormHelperText error>
+									{errorPasswordText}
+								</FormHelperText>
+							): null}
 						</FormControl>
 						<div style={{ width: "100%" }}>
 							<ThemeButton style={"primary"} type="submit" text={"sign up"} />
