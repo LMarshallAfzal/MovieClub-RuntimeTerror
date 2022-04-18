@@ -115,7 +115,7 @@ function EventDetail(props) {
 	}, []);
 
 	let getOwner = async () => {
-		let { response, data } = await api(`/club_owner/${clubID}`, "GET");
+		let { response, data } = await api(`/club_owner/${clubID}/`, "GET");
 		if (response.status === 200) {
 			setOrganiser(data[0]);
 		}
@@ -165,7 +165,7 @@ function EventDetail(props) {
 		await api(`/cancel_meeting/${id}/`, "DELETE");
 	};
 
-	let getMeetingData = async (id) => {
+	let getMeetingData = async (e, id) => {
 		let { response, data } = await api(
 			`/get_club_upcoming_meeting/${id}/`,
 			"GET"
@@ -182,7 +182,7 @@ function EventDetail(props) {
 				}
 			}
 		} else {
-			errorHandler(data);
+			errorHandler(e, data);
 		}
 	};
 

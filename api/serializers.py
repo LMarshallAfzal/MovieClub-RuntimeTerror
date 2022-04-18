@@ -47,7 +47,7 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email',
-                  'bio', 'preferences','gravatar']
+                  'bio', 'preferences', 'gravatar']
 
 
 class ClubSerializer(ModelSerializer):
@@ -380,10 +380,12 @@ class CreateMeetingSerializer(serializers.Serializer):
         link = data['meeting_link']
 
         if meeting_date < datetime.date.today():
-            raise serializers.ValidationError({"date": "Date must be in the future"})
+            raise serializers.ValidationError(
+                {"date": "Date must be in the future"})
 
         if (meeting_date - datetime.date.today()).days < 3:
-            raise serializers.ValidationError({"meeting_date": "Date must be at least 3 days in the future."})
+            raise serializers.ValidationError(
+                {"meeting_date": "Date must be at least 3 days in the future."})
 
         start_time_delta = timedelta(hours=int(start_time.strftime(
             "%H")), minutes=int(start_time.strftime("%M")))
@@ -391,19 +393,21 @@ class CreateMeetingSerializer(serializers.Serializer):
             "%H")), minutes=int(end_time.strftime("%M")))
 
         if start_time > end_time:
-            raise serializers.ValidationError({"start_time": "Start time must be before end time."})
-            
+            raise serializers.ValidationError(
+                {"start_time": "Start time must be before end time."})
 
         if (end_time_delta-start_time_delta).total_seconds() < 3600:
-            raise serializers.ValidationError({"duration": "Duration must be at least 1 hour."})
+            raise serializers.ValidationError(
+                {"duration": "Duration must be at least 1 hour."})
 
         if start_time == end_time:
-            raise serializers.ValidationError({"end_time": 
-                "Start and End times cannot be the same."}
-            )
+            raise serializers.ValidationError({"end_time":
+                                               "Start and End times cannot be the same."}
+                                              )
 
         if not link.startswith("https://"):
-            raise serializers.ValidationError({"meeting_link": "Link must start with https://"})
+            raise serializers.ValidationError(
+                {"meeting_link": "Link must start with https://"})
 
         return data
 
@@ -452,6 +456,7 @@ class UpdateMeetingSerializer(serializers.ModelSerializer):
         meeting_date = data['date']
         start_time = data['start_time']
         end_time = data['end_time']
+        link = data['meeting_link']
 
         if meeting_date < datetime.date.today():
             raise serializers.ValidationError(
@@ -483,6 +488,10 @@ class UpdateMeetingSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Start and End times cannot be the same."
             )
+
+        if not link.startswith("https://"):
+            raise serializers.ValidationError(
+                {"meeting_link": "Link must start with https://"})
 
         return data
 
@@ -519,7 +528,7 @@ class ChangeRatingSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ['sender', 'club', 'message', 'timestamp','sender_gravatar']
+        fields = ['sender', 'club', 'message', 'timestamp', 'sender_gravatar']
 
 
 class WriteMessageSerializer(serializers.ModelSerializer):
@@ -537,15 +546,15 @@ class WriteMessageSerializer(serializers.ModelSerializer):
         required=True, allow_blank=False
     )
 
-    sender_gravatar = serializers.CharField(required = False,allow_blank=True)
+    sender_gravatar = serializers.CharField(required=False, allow_blank=True)
 
     class Meta:
         model = Message
-        fields = ['sender', 'club', 'message', 'timestamp','sender_gravatar']
+        fields = ['sender', 'club', 'message', 'timestamp', 'sender_gravatar']
 
     def create(self, validated_data):
         message = Message.objects.create(**validated_data)
-        user = User.objects.get(username = validated_data['sender'])
+        user = User.objects.get(username=validated_data['sender'])
         message.sender_gravatar = user.gravatar()
         message.save()
         return message
