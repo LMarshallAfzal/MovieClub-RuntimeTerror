@@ -209,7 +209,7 @@ function EventDetail(props) {
 	};
 
 	let attendMeeting = async () => {
-		let { response, data } = await api(`/attend_meeting/${clubID}/`, "PUT", {
+		let { response} = await api(`/attend_meeting/${clubID}/`, "PUT", {
 			user: user.user_id,
 			meeting: myMeetingData.meeting_id,
 		});
@@ -219,7 +219,7 @@ function EventDetail(props) {
 	};
 
 	let leaveMeeting = async () => {
-		let { response, data } = await api(`/leave_meeting/${clubID}/`, "PUT", {
+		let { response } = await api(`/leave_meeting/${clubID}/`, "PUT", {
 			user: user.user_id,
 			meeting: myMeetingData.meeting_id,
 		});
@@ -262,7 +262,7 @@ function EventDetail(props) {
 
 	function EventEditButton() {
 		console.log("organiser", organiser);
-		if (organiser.id === user.user_id) {
+		if (!organiser.id === user.user_id) {
 			return (
 				<ThemeButton
 					text={"edit"}
@@ -276,8 +276,7 @@ function EventDetail(props) {
 	}
 
 	function EventDeleteButton() {
-		if (organiser.id === user.user_id) {
-			// replace with organiser condition
+		if (!organiser.id === user.user_id) {
 			return (
 				<ThemeButton
 					text={"delete"}
@@ -583,10 +582,8 @@ function EventDetail(props) {
 				<Grid item xs={12}>
 					<Grid container spacing={2}>
 						<Grid item xs={3}>
-							
 							<ThemeButton
-															style={"primary"}
-
+								style={!isOrganiser || !isAttending ? "disabled":"primary"}
 								text={"join"}
 								onClick={(e) => {
 									e.preventDefault();

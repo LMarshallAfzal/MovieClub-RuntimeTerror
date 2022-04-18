@@ -60,29 +60,6 @@ const Home = () => {
                         <MovieQuote/>
                     </Grid>
 
-                    {/*<Grid item xs={3} overflow={"hidden"}>*/}
-                    {/*    <Box>*/}
-                    {/*        <ImageList cols={2} rowHeight={100}>*/}
-                    {/*            {DummyRecommendedMovies.map((item) => {*/}
-                    {/*                const movieData = MovieDataAPI(item.IMDB);*/}
-                    {/*                return (*/}
-
-                    {/*                    <LoadingSkeleton loading={movieData}>*/}
-                    {/*                        <ImageListItem key={item.poster}>*/}
-                    {/*                            <img*/}
-                    {/*                                src={`${movieData ? movieData.Poster : placeHolder}?w=100&h=100&fit=crop&auto=format`}*/}
-                    {/*                                srcSet={`${movieData ? movieData.Poster : placeHolder}?w=100&h=100&fit=crop&auto=format&dpr=2 2x`}*/}
-                    {/*                                alt={item.title}*/}
-                    {/*                                loading="lazy"*/}
-                    {/*                            />*/}
-                    {/*                        </ImageListItem>*/}
-                    {/*                    </LoadingSkeleton>*/}
-                    {/*                )*/}
-                    {/*            })}*/}
-                    {/*        </ImageList>*/}
-                    {/*    </Box>*/}
-                    {/*</Grid>*/}
-
                     <Grid item xs={12}>
                         <HomepageCard title={"recommended"} titleItem={
                             <TextButton

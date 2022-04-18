@@ -11,6 +11,7 @@ import {
 	OutlinedInput,
 	FormControl,
 	InputLabel,
+	FormHelperText,
 } from "@mui/material";
 import ThemeButton from "../../components/core/ThemeButton";
 import CsrfToken from "../../components/helper/CsrfToken";
@@ -132,7 +133,7 @@ export const Signup = () => {
 		}
 		if (Object.keys(data).includes("password_confirmation")) {
 			setPasswordConfirmationError(true);
-			setPasswordConfirmationErrorText("Error:" + data.password_confirmation);
+			setPasswordConfirmationErrorText("Error:" + data.password);
 		}
 	};
 
@@ -156,13 +157,14 @@ export const Signup = () => {
 			},
 		});
 		let data = await response.json();
+		console.log(data)
 		if (response.status === 201) {
 			navigate("/login/");
 		} else {
 			errorHandler(e, data);
 		}
 	};
-	
+
 	return (
 		<Grid container direction={"row"} className={"signup-grid"} spacing={2}>
 			<CsrfToken />
@@ -280,14 +282,11 @@ export const Signup = () => {
 							)}
 						/>
 						<FormControl fullWidth variant={"outlined"}>
-							<InputLabel htmlFor={"outlined-adornment-password"}>
-								password
-							</InputLabel>
-							<OutlinedInput
+							<TextField
 								inputProps={{ "data-testid": "password" }}
 								error={passwordError}
-								fullWidth
 								helperText={errorPasswordText}
+								fullWidth
 								required
 								autoComplete="new-password"
 								id={"outlined-adornment-password"}
@@ -296,8 +295,8 @@ export const Signup = () => {
 								type={passwordVisibility ? "text" : "password"}
 								value={password}
 								onChange={(e) => onChange(e)}
-								endAdornment={
-									<InputAdornment position="end">
+								InputProps={{
+									endAdornment: (
 										<TextButton
 											onClick={() =>
 												togglePasswordVisibility(!passwordVisibility)
@@ -306,19 +305,17 @@ export const Signup = () => {
 											type={"button"}
 											style={{ marginTop: "-20px" }}
 										/>
-									</InputAdornment>
-								}
+									),
+								}}
 							/>
 						</FormControl>
 						<FormControl fullWidth variant={"outlined"}>
-							<InputLabel htmlFor={"outlined-adornment-password"}>
-								confirm
-							</InputLabel>
-							<OutlinedInput
+							
+							<TextField
 								inputProps={{ "data-testid": "password_confirmation" }}
-								error={passwordConfirmationError}
+								error={passwordError}
+								helperText={errorPasswordText}
 								fullWidth
-								helperText={errorPasswordConfirmationText}
 								required
 								autoComplete="new-password"
 								id={"outlined-adornment-password"}
@@ -327,17 +324,18 @@ export const Signup = () => {
 								type={passwordVisibility ? "text" : "password"}
 								value={password_confirmation}
 								onChange={(e) => onChange(e)}
-								endAdornment={
-									<InputAdornment position="end">
+								InputProps={{
+									endAdornment: (
 										<TextButton
 											onClick={() =>
 												togglePasswordVisibility(!passwordVisibility)
 											}
 											text={passwordVisibility ? "hide" : "show"}
+											type={"button"}
 											style={{ marginTop: "-20px" }}
 										/>
-									</InputAdornment>
-								}
+									),
+								}}
 							/>
 						</FormControl>
 						<div style={{ width: "100%" }}>

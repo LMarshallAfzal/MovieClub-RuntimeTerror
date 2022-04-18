@@ -23,6 +23,7 @@ function Clubs() {
 			"GET"
 		);
 		if (response.status === 200) {
+			console.log(data);
 			setMyClubData(data);
 		}
 	};
@@ -58,7 +59,7 @@ function Clubs() {
 		getMembershipData();
 		getRecommendedClubs();
 		getAllClubs();
-	}, [user.user_id]);
+	}, []);
 
 
 	return (
