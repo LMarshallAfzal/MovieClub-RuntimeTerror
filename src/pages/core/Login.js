@@ -10,6 +10,7 @@ import {
 	OutlinedInput,
 	Stack,
 	TextField,
+	FormHelperText,
 } from "@mui/material";
 import ThemeButton from "../../components/core/ThemeButton";
 import CsrfToken from "../../components/helper/CsrfToken";
@@ -30,10 +31,6 @@ export function Login() {
 	} = useContext(AuthContext);
 
 	const { username, password } = loginCredentials;
-
-	// useEffect(() => {
-	//     loginUser()
-	// }, [])
 
 	const onChange = (e) => {
 		setLoginCredentials((fieldData) => ({
@@ -78,7 +75,6 @@ export function Login() {
 							<OutlinedInput
 								error={passwordError}
 								fullWidth
-								helperText={errorPasswordText}
 								required
 								autoComplete="current-password"
 								id={"outlined-adornment-password"}
@@ -91,24 +87,28 @@ export function Login() {
 								endAdornment={
 									<InputAdornment position="end">
 										<TextButton
-											onClick={() =>
+											onClick={(e) =>
+												e.preventDefault() ||
 												togglePasswordVisibility(!passwordVisibility)
 											}
 											text={passwordVisibility ? "hide" : "show"}
+											type={"button"}
 											style={{ marginTop: "-20px" }}
 										/>
 									</InputAdornment>
 								}
 							/>
+							<FormHelperText error>
+								{errorPasswordText}
+							</FormHelperText>
 						</FormControl>
 
 						<div style={{ width: "100%" }}>
 							<Grid container direction={"row"} spacing={2}>
 								<Grid item xs={4}>
 									<ThemeButton
-										type="submit"
+										type={"submit"}
 										text={"log in"}
-										onClick={loginUser}
 										style={"primary"}
 									/>
 								</Grid>

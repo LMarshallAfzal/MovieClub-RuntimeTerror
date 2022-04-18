@@ -22,7 +22,6 @@ import useFetch from "../../components/helper/useFetch";
 export const Signup = () => {
 	const [passwordVisibility, togglePasswordVisibility] = useState(false);
 	const navigate = useNavigate();
-	let api = useFetch();
 	let [signupCredentials, setSignupCredentials] = useState({
 		username: "",
 		first_name: "",
@@ -299,7 +298,8 @@ export const Signup = () => {
 								endAdornment={
 									<InputAdornment position="end">
 										<TextButton
-											onClick={() =>
+											onClick={(e) =>
+												e.preventDefault() ||
 												togglePasswordVisibility(!passwordVisibility)
 											}
 											text={passwordVisibility ? "hide" : "show"}
@@ -335,10 +335,12 @@ export const Signup = () => {
 								endAdornment={
 									<InputAdornment position="end">
 										<TextButton
-											onClick={() =>
+											onClick={(e) =>
+												e.preventDefault() ||
 												togglePasswordVisibility(!passwordVisibility)
 											}
 											text={passwordVisibility ? "hide" : "show"}
+											type={"button"}
 											style={{ marginTop: "-20px" }}
 										/>
 									</InputAdornment>

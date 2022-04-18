@@ -1,21 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
-	Checkbox,
 	FormControl,
-	FormControlLabel,
 	Grid,
 	InputAdornment,
 	InputLabel,
 	OutlinedInput,
 	Stack,
 	Alert,
+	FormHelperText,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import "../../styling/pages/Options.css";
-import AuthContext from "../../components/helper/AuthContext";
 import ThemeButton from "../../components/core/ThemeButton";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import TextButton from "../../components/core/TextButton";
 import useFetch from "../../components/helper/useFetch";
 
@@ -131,7 +127,6 @@ const Options = () => {
 									<OutlinedInput
 										error={oldPasswordError}
 										fullWidth
-										helperText={errorOldPasswordText}
 										placeholder={"your current password"}
 										required
 										autoComplete="none"
@@ -143,15 +138,20 @@ const Options = () => {
 										endAdornment={
 											<InputAdornment position="end">
 												<TextButton
-													onClick={() =>
+													onClick={(e) =>
+														e.preventDefault() ||
 														togglePasswordVisibility(!passwordVisibility)
 													}
 													text={passwordVisibility ? "hide" : "show"}
+													type={"button"}
 													style={{ marginTop: "-20px" }}
 												/>
 											</InputAdornment>
 										}
 									/>
+									<FormHelperText error>
+										{errorOldPasswordText}
+									</FormHelperText>
 								</FormControl>
 
 								<FormControl fullWidth variant={"outlined"}>
@@ -161,7 +161,6 @@ const Options = () => {
 									<OutlinedInput
 										error={newPasswordError}
 										fullWidth
-										helperText={errorNewPasswordText}
 										placeholder={"choose a new password"}
 										required
 										autoComplete="new-password"
@@ -173,15 +172,20 @@ const Options = () => {
 										endAdornment={
 											<InputAdornment position="end">
 												<TextButton
-													onClick={() =>
+													onClick={(e) =>
+														e.preventDefault() ||
 														togglePasswordVisibility(!passwordVisibility)
 													}
 													text={passwordVisibility ? "hide" : "show"}
+													type={"button"}
 													style={{ marginTop: "-20px" }}
 												/>
 											</InputAdornment>
 										}
 									/>
+									<FormHelperText error>
+										{errorNewPasswordText}
+									</FormHelperText>
 								</FormControl>
 
 								<FormControl fullWidth variant={"outlined"}>
@@ -191,7 +195,6 @@ const Options = () => {
 									<OutlinedInput
 										error={newPasswordConfirmationError}
 										fullWidth
-										helperText={errorNewPasswordConfirmationText}
 										required
 										autoComplete="new-password"
 										placeholder={"re-enter your new password"}
@@ -203,16 +206,20 @@ const Options = () => {
 										endAdornment={
 											<InputAdornment position="end">
 												<TextButton
-													onClick={() =>
+													onClick={(e) =>
+														e.preventDefault() ||
 														togglePasswordVisibility(!passwordVisibility)
 													}
-													data-testid={"password-visibility"}
 													text={passwordVisibility ? "hide" : "show"}
+													type={"button"}
 													style={{ marginTop: "-20px" }}
 												/>
 											</InputAdornment>
 										}
 									/>
+									<FormHelperText error>
+										{errorNewPasswordConfirmationText}
+									</FormHelperText>
 								</FormControl>
 
 								<ThemeButton
