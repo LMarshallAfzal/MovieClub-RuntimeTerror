@@ -23,7 +23,6 @@ function Clubs() {
 			"GET"
 		);
 		if (response.status === 200) {
-			console.log(data);
 			setMyClubData(data);
 		}
 	};

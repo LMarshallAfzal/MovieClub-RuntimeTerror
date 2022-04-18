@@ -71,8 +71,7 @@ function EventDetail(props) {
 		setMeetingLinkErrorText("");
 	};
 
-	let errorHandler = (e, data) => {
-		e.preventDefault();
+	let errorHandler = (data) => {
 		if (Object.keys(data).includes("meeting_title")) {
 			setTitleError(true);
 			setTitleErrorText(data.meeting_title);
@@ -171,18 +170,16 @@ function EventDetail(props) {
 			"GET"
 		);
 		if (response.status === 200) {
-			console.log(data.meeting_link);
 			setMyMeetingData(data);
 			getMovie(data.movie);
 			getUser(data.organiser);
-			console.log(data.attendees);
 			for (const element of data.attendees) {
 				if (element === user.user_id) {
 					setIsAttending(true);
 				}
 			}
 		} else {
-			errorHandler(e, data);
+			errorHandler(data);
 		}
 	};
 
@@ -208,7 +205,7 @@ function EventDetail(props) {
 			setMyMeetingData(data);
 			setAlert(true);
 		} else {
-			errorHandler(e, data);
+			errorHandler(data);
 		}
 	};
 
