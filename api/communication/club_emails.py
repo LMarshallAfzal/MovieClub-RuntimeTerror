@@ -24,11 +24,12 @@ class ClubEmail:
         'meeting_end_time':meeting.end_time,
         'meeting_link':meeting.meeting_link,
         'movie_title':meeting.movie.title,
-        'movie_year':meeting.movie.year}
+        'movie_year':meeting.movie.year,
+        'event_url' : f'https://social-scene.herokuapp.com/home/discussion/{meeting.club.id}'}
         )
         ICSGenerator(meeting).generate_ics()
         email = EmailMessage(
-            f"{meeting.club}'s upcoming meeting",
+            f"{meeting.club.club_name}'s upcoming meeting",
             html,
             EMAIL_HOST_USER,
             to = recipients,
@@ -53,7 +54,7 @@ class ClubEmail:
         )
         ICSGenerator(meeting).generate_ics()
         email = EmailMessage(
-            f"{meeting.club} meeting update!",
+            f"{meeting.club.club_name} meeting update!",
             html,
             EMAIL_HOST_USER,
             to = recipients,
@@ -75,7 +76,7 @@ class ClubEmail:
         }
         )
         email = EmailMessage(
-            f"{meeting.club} meeting update!",
+            f"{meeting.club.club_name} meeting update!",
             html,
             EMAIL_HOST_USER,
             to = recipients,
