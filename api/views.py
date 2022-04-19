@@ -381,7 +381,6 @@ def train_meeting_data(request):
 @permission_classes([IsAuthenticated])
 # @has_ratings_for_club_recommendations
 def recommend_club(request):
-    recommendations = recommend_clubs(request.user)
     recommendations = recommendations_based_on_preferences_for_clubs(request.user, request.user.get_user_preferences())
     # for club in recommendation_based_on_preferences:
     #         if not club in recommendations:
