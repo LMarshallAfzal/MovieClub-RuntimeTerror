@@ -168,15 +168,18 @@ class Genre(models.Model):
 
 class Club(models.Model):
 
-    club_name = models.TextField(
+    club_name = models.CharField(
+        max_length=50,
         blank=False,
         unique=True
     )
 
-    mission_statement = models.TextField(
+    mission_statement = models.CharField(
+        max_length=500,
         blank=False,
         unique=False
     )
+    
     theme = models.ForeignKey(Genre, on_delete=models.CASCADE)
 
     club_members = models.ManyToManyField(User, through='Membership')
