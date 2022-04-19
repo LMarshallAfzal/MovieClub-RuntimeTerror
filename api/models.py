@@ -13,21 +13,18 @@ from libgravatar import Gravatar
 
 class User(AbstractUser):
 
-    username = models.CharField(
-        max_length=50,
+    username = models.TextField(
         validators=[MinLengthValidator(4)],
         unique=True,
         blank=False
     )
 
-    first_name = models.CharField(
-        max_length=50,
+    first_name = models.TextField(
         blank=False,
         unique=False
     )
 
-    last_name = models.CharField(
-        max_length=50,
+    last_name = models.TextField(
         blank=False,
         unique=False,
     )
@@ -37,8 +34,7 @@ class User(AbstractUser):
         blank=False
     )
 
-    bio = models.CharField(
-        max_length=520,
+    bio = models.TextField(
         unique=False,
         blank=True
     )
@@ -52,7 +48,7 @@ class User(AbstractUser):
         'self', symmetrical=False, related_name='followees'
     )
 
-    gravatar = models.CharField(max_length=100, blank=True)
+    gravatar = models.TextField(blank=True)
 
     
     def toggle_follow(self, followee):
@@ -172,14 +168,12 @@ class Genre(models.Model):
 
 class Club(models.Model):
 
-    club_name = models.CharField(
-        max_length=50,
+    club_name = models.TextField(
         blank=False,
         unique=True
     )
 
-    mission_statement = models.CharField(
-        max_length=500,
+    mission_statement = models.TextField(
         blank=False,
         unique=False
     )
