@@ -294,8 +294,7 @@ class Movie(models.Model):
 
     imdb_id = models.CharField(max_length=10, unique=True)
 
-    title = models.CharField(
-        max_length=100,
+    title = models.TextField(
         blank=False,
         unique=False
     )
