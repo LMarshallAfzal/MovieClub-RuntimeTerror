@@ -289,12 +289,12 @@ class Movie(models.Model):
 
     ml_id = models.TextField(
         blank=False,
-        unique=False
+        unique=True
     )
 
     imdb_id = models.TextField(
         blank=False,
-        unique=False
+        unique=True
     )
 
     title = models.TextField(
