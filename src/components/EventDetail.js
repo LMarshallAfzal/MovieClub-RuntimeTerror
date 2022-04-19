@@ -124,7 +124,7 @@ function EventDetail(props) {
 		getOwner();
 		getMembershipData();
 		getMeetingData();
-		console.log("that thingy", error)
+		console.log("that thingy", error);
 	}, [props, clubID]);
 
 	useEffect(() => {
@@ -465,19 +465,18 @@ function EventDetail(props) {
 			);
 		}
 	}
-	
-	return (
-		error ? (
-			<div className={"home-page-card-background"}>
-				<Grid container padding={2} spacing={2}>
-					<Grid item xs={12}>
-						<Typography variant="h4" align="center">
-							{errorText}
-						</Typography>
-					</Grid>
+
+	return error ? (
+		<div className={"home-page-card-background"}>
+			<Grid container padding={2} spacing={2}>
+				<Grid item xs={12}>
+					<Typography variant="h4" align="center">
+						{errorText}
+					</Typography>
 				</Grid>
-			</div>
-		) : (
+			</Grid>
+		</div>
+	) : (
 		<div className={"home-page-card-background"}>
 			<Grid container padding={2} spacing={2}>
 				<Grid item xs={10}>
