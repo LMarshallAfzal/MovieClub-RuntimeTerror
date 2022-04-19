@@ -35,10 +35,10 @@ class Command(BaseCommand):
             genres = [get_genre_id(genre) for genre in row['genres'].split('|')]
             
             movie = Movie.objects.create(
-                ml_id = row['movieId'],
-                imdb_id = row['imdb_id'],
-                title = row['title'],
-                year = row['year'],
+                ml_id = str(row['movieId']),
+                imdb_id = str(row['imdb_id']),
+                title = str(row['title']),
+                year = str(row['year']),
             )
             movie.genres.set(genres)
             movie_count+=1
