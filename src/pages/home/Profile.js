@@ -211,22 +211,6 @@ const Profile = () => {
                                     ) : (
                                         <></>
                                     )}
-                                    <TextField
-                                        error={usernameError}
-                                        helperText={errorUsernameText}
-                                        placeholder={"choose a username"}
-                                        required
-                                        fullWidth
-                                        label={"username"}
-                                        name={"username"}
-                                        type={"text"}
-                                        value={userData.username}
-                                        defaultValue={userData.username}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        onChange={(e) => onChange(e)}
-                                    />
 
                                     <TextField
                                         error={firstNameError}
