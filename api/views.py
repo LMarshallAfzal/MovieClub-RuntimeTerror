@@ -379,13 +379,13 @@ def train_meeting_data(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-#@has_ratings_for_club_recommendations
+# @has_ratings_for_club_recommendations
 def recommend_club(request):
     recommendations = recommend_clubs(request.user)
-    recommendation_based_on_preferences = recommendations_based_on_preferences_for_clubs(request.user, request.user.get_user_preferences())
-    for club in recommendation_based_on_preferences:
-            if not club in recommendations:
-                recommendations.add(club)
+    recommendations = recommendations_based_on_preferences_for_clubs(request.user, request.user.get_user_preferences())
+    # for club in recommendation_based_on_preferences:
+    #         if not club in recommendations:
+    #             recommendations.add(club)
     serializer = ClubSerializer(recommendations, many=True)
     return Response(serializer.data)
     
