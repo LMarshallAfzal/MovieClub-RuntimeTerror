@@ -386,7 +386,7 @@ def recommend_club(request):
     #         if not club in recommendations:
     #             recommendations.add(club)
     serializer = ClubSerializer(recommendations, many=True)
-    return Response(serializer.data)
+    return Response(serializer.data,status=status.HTTP_200_OK)
     
 
 

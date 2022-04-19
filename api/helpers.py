@@ -50,7 +50,6 @@ def recommendations_based_on_theme_for_meeting_movies(club):
 
 
 def recommendations_based_on_preferences_for_clubs(user, user_preferences):
-    querysets = []
     querysets = Club.get_clubs_by_theme(user_preferences)
     clubs = set()
     for queryset in querysets:

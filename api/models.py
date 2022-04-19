@@ -179,7 +179,7 @@ class Club(models.Model):
         blank=False,
         unique=False
     )
-    
+
     theme = models.ForeignKey(Genre, on_delete=models.CASCADE)
 
     club_members = models.ManyToManyField(User, through='Membership')
@@ -210,12 +210,7 @@ class Club(models.Model):
         return self.club_members.filter(club=self, membership__is_organiser=True)
 
     def get_clubs_by_theme(preferences):
-        clubs = []
-        for preference in preferences:
-            clubs.append(Club.objects.annotate(
-                string=Value(preference)
-            ).filter(string__icontains=F('theme')))
-        return clubs
+        return Club.objects.filter(theme__id__in=preferences)
 
     def get_club_membership(self, user):
         membership = Membership.objects.get(user=user, club=self).role
