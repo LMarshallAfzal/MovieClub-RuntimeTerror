@@ -287,10 +287,7 @@ class Membership(models.Model):
 
 class Movie(models.Model):
 
-    ml_id = models.CharField(max_length=10,
-        unique=True,
-        default=0,
-    )
+    ml_id = models.CharField(max_length=10, unique=True, blank=False)
 
     imdb_id = models.CharField(max_length=10, unique=True)
 
