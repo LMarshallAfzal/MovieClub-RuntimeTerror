@@ -38,7 +38,7 @@ class Command(BaseCommand):
                 ml_id = row['movieId'],
                 imdb_id = row['imdb_id'],
                 title = row['title'],
-                year = int(row['year']),
+                year = row['year'],
             )
             movie.genres.set(genres)
             movie_count+=1

@@ -304,7 +304,7 @@ class Movie(models.Model):
 
     genres = models.ManyToManyField(Genre, related_name='genres')
 
-    year = models.PositiveIntegerField(default=0)
+    year = models.TextField(blank=False)
 
     ratings = models.ManyToManyField(User, through='Rating')
 
