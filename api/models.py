@@ -14,20 +14,20 @@ from libgravatar import Gravatar
 class User(AbstractUser):
 
     username = models.CharField(
-        max_length=15,
+        max_length=50,
         validators=[MinLengthValidator(4)],
         unique=True,
         blank=False
     )
 
     first_name = models.CharField(
-        max_length=30,
+        max_length=50,
         blank=False,
         unique=False
     )
 
     last_name = models.CharField(
-        max_length=30,
+        max_length=50,
         blank=False,
         unique=False,
     )
