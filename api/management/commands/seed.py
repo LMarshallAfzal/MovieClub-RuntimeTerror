@@ -35,7 +35,7 @@ class Command(BaseCommand):
             genres = [get_genre_id(genre) for genre in row['genres'].split('|')]
             
             movie = Movie.objects.create(
-                ml_id = int(row['movieId']),
+                ml_id = row['movieId'],
                 imdb_id = row['imdb_id'],
                 title = row['title'],
                 year = int(row['year']),
